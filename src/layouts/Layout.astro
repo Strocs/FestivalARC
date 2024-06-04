@@ -7,17 +7,43 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta
+      name="description"
+      content="El Festival de las Artes Región de Coquimbo (Festival ARC 2024) presenta novedades, trasladando sus fechas al periodo de las vacaciones de invierno, del 27 al 30 de junio. En esta décima tercera edición, el evento se concentra en la conurbación de La Serena y Coquimbo, extendiéndose a las comunas de Ovalle e Illapel."
+    />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/ARC24.png" />
-    <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/css-doodle/0.39.1/css-doodle.min.js"
-    ></script>
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://festivalarc.cl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta
+      property="og:description"
+      content="El Festival de las Artes Región de Coquimbo (Festival ARC 2024) presenta novedades, trasladando sus fechas al periodo de las vacaciones de invierno, del 27 al 30 de junio. En esta décima tercera edición, el evento se concentra en la conurbación de La Serena y Coquimbo, extendiéndose a las comunas de Ovalle e Illapel."
+    />
+    <meta
+      property="og:image"
+      content="https://static.wixstatic.com/media/1fc7ab_2d40f75745f94ef5a0d74916740e591e~mv2.png/v1/fill/w_1640,h_924,al_c/1fc7ab_2d40f75745f94ef5a0d74916740e591e~mv2.png"
+    />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="festivalarc.cl" />
+    <meta property="twitter:url" content="https://festivalarc.cl" />
+    <meta name="twitter:title" content={title} />
+    <meta
+      name="twitter:description"
+      content="El Festival de las Artes Región de Coquimbo (Festival ARC 2024) presenta novedades, trasladando sus fechas al periodo de las vacaciones de invierno, del 27 al 30 de junio. En esta décima tercera edición, el evento se concentra en la conurbación de La Serena y Coquimbo, extendiéndose a las comunas de Ovalle e Illapel."
+    />
+    <meta
+      name="twitter:image"
+      content="https://static.wixstatic.com/media/1fc7ab_2d40f75745f94ef5a0d74916740e591e~mv2.png/v1/fill/w_1640,h_924,al_c/1fc7ab_2d40f75745f94ef5a0d74916740e591e~mv2.png"
+    />
   </head>
   <body
     class="flex flex-col w-full h-full min-h-[100dvh] p-4 relative before:bg-primary bg-primary"
