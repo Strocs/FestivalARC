@@ -1,0 +1,25 @@
+---
+import { Image } from "astro:assets";
+import Logo from "@assets/Logo-ARC24.png";
+---
+
+<div class="grid grid-flow-col items-center gap-3">
+  <a
+    href="/"
+    class="w-32 hover:scale-105 transition duration-200"
+    aria-label="Inicio"
+  >
+    <Image
+      loading="eager"
+      height={46}
+      width={128}
+      src={Logo}
+      class="w-32 h-fit aspect-[128/46]"
+      alt="Logo del Festival ARC 2024"
+    />
+  </a>
+  <div class="text-xs sm:text-sm text-secondary">
+    <p class="font-bold leading-4">27, 28, 29 y 30 de Junio</p>
+    <p class="font-light leading-4">Coquimbo, La Serena, Ovalle, Illapel</p>
+  </div>
+</div>

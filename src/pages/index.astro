@@ -1,128 +1,62 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import LOGO from "../assets/Logo-ARC24.png";
-import ULSLogo from "../assets/ULS-Blanco.png";
-import SEREMILogo from "../assets/logo-seremi.png";
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
 import { Image } from "astro:assets";
-import ButtonLink from "../components/ButtonLink.astro";
-import { RESULTS } from "../data/RESULTS";
-import FacebookIcon from "../components/icons/FacebookIcon.astro";
-import YoutubeIcon from "../components/icons/YoutubeIcon.astro";
-import XIcon from "../components/icons/XIcon.astro";
-import InstagramIcon from "../components/icons/InstagramIcon.astro";
+import LogoARC from "@assets/Logo-ARC24.png";
+import TextTape from "@components/TextTape.astro";
 ---
 
-<Layout title="ARC 2024 | 27, 28, 29 y 30 de Junio">
-  <header class="grid justify-center w-fit mx-auto pt-10 gap-8 group pb-[6vh]">
-    <h1 class="sr-only">ARC 2024, Próximamente</h1>
-    <figure class="overfloh-hidden h-fit w-fit mx-auto">
-      <Image
-        src={LOGO}
-        width={500}
-        height={180}
-        alt="Logo Festival ARC 2024"
-        class="aspect-[500/180] h-fit"
-        loading="eager"
-      />
-    </figure>
-    <h2
-      class="text-secondary font-black text-2xl text-center md:text-5xl uppercase tracking-tighter bg-black w-fit pb-2 px-4 mx-auto scale-y-150 -skew-y-[8deg] group-hover:skew-y-0 transition duration-300 cursor-default delay-150"
-    >
-      27, 28, 29 y 30 de Junio
-    </h2>
-  </header>
-  <main class="h-full w-full max-w-2xl mx-auto space-y-12 py-10">
-    <section class="grid gap-5">
-      <h2
-        class="text-4xl uppercase tracking-tight text-white font-extrabold text-center"
-      >
-        Postulaciones Abiertas
-        <span class="block font-normal normal-case text-lg tracking-normal"
-          >Hasta el 10 de Junio</span
-        >
-      </h2>
-      <div class="flex gap-4 flex-wrap max-w-xl mx-auto justify-center">
-        <ButtonLink
-          element="a"
-          target="_blank"
-          href="https://drive.google.com/file/d/1_TfFTNhIwPefC5qjfODh8I7LFxy0OeHh/view"
-          class="text-black border-black text-xl whitespace-nowrap font-bold"
-        >
-          Artesanías
-        </ButtonLink>
-      </div>
+<Layout title="27, 28, 29 y 30 de Junio">
+  <Header />
+  <main class="h-full w-full flex justify-between relative overflow-hidden">
+    <video
+      src="/video_fondo_web.mp4"
+      class="absolute scale-105 -z-10 w-full h-fit"
+      muted
+      autoplay></video>
+    <section class="py-24 px-20 flex items-center h-full w-full">
+      <header class="space-y-4 w-full">
+        <Image
+          src={LogoARC}
+          width={500}
+          height={180}
+          class="mx-auto aspect-[500/180]"
+          alt="Logo del festival ARC 2024"
+        />
+        <TextTape />
+      </header>
     </section>
-    <section class="grid gap-5">
-      <h2
-        class="text-4xl uppercase tracking-tight text-white font-extrabold text-center"
-      >
-        Resultados Convocatoria
-      </h2>
-      <div class="flex gap-4 flex-wrap max-w-xl mx-auto justify-center">
-        {
-          RESULTS.map(({ title, docURL }) => (
-            <ButtonLink
-              element="a"
-              href={docURL}
-              class="text-black border-black text-xl whitespace-nowrap font-bold"
-            >
-              {title}
-            </ButtonLink>
-          ))
-        }
-      </div>
+    <section class="flex text-secondary">
+      <article class="bg-red-800 w-24 flex items-center">
+        <h2
+          class="[writing-mode:vertical-rl] mx-auto font-black uppercase text-4xl leading-none rotate-180"
+        >
+          Jueves 27
+        </h2>
+      </article>
+      <article class="bg-green-800 w-24 flex items-center">
+        <h2
+          class="[writing-mode:vertical-rl] mx-auto font-black uppercase text-4xl leading-none rotate-180"
+        >
+          Viernes 28
+        </h2>
+      </article>
+      <article class="bg-blue-800 w-24 flex items-center">
+        <h2
+          class="[writing-mode:vertical-rl] mx-auto font-black uppercase text-4xl leading-none rotate-180"
+        >
+          Sábado 29
+        </h2>
+      </article>
+      <article class="bg-yellow-800 w-24 flex items-center">
+        <h2
+          class="[writing-mode:vertical-rl] mx-auto font-black uppercase text-4xl leading-none rotate-180"
+        >
+          Domingo 30
+        </h2>
+      </article>
     </section>
-    <div class="flex gap-4 text-secondary w-fit mx-auto h-fit">
-      <a
-        aria-label="Visita nuestro Facebook"
-        href="https://web.facebook.com/FestivalARC"
-        target="_blank"
-      >
-        <FacebookIcon />
-      </a>
-      <a
-        aria-label="Visita nuestro Instagrma"
-        href="https://www.instagram.com/festival_arc"
-        target="_blank"><InstagramIcon /></a
-      >
-      <a
-        aria-label="Visita nuestro Twitter"
-        href="https://x.com/festivalarc"
-        target="_blank"><XIcon /></a
-      >
-      <a
-        aria-label="Visita nuestro Youtube"
-        href="https://www.youtube.com/@festivalarc5632"
-        target="_blank"><YoutubeIcon /></a
-      >
-    </div>
   </main>
-  <footer
-    class="justify-center grid md:grid-flow-col items-center gap-8 md:gap-20 h-fit p-4"
-  >
-    <div class="flex items-center gap-8">
-      <Image
-        height={64}
-        width={70}
-        src={SEREMILogo}
-        alt="Logo de SEREMI Región de Coquimbo"
-        class="h-16 w-fit aspect-[70/64] shrink-0"
-        loading="eager"
-      />
-      <Image
-        height={64}
-        width={156}
-        src={ULSLogo}
-        alt="Logo de la Universidad de La Serena"
-        class="h-16 w-fit aspect-[156/64] shrink-0"
-        loading="eager"
-      />
-    </div>
-    <p class="text-white">
-      <strong>ARC 2024</strong> | Desarrollado por <a
-        href="https://strocs.dev"
-        class="hover:text-black transition duration-150">StrocsDev</a
-      >
-    </p>
-  </footer>
+  <Footer />
 </Layout>

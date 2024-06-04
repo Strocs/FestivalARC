@@ -1,0 +1,28 @@
+---
+import ButtonLink from "./ButtonLink.astro";
+import LogoWithText from "./LogoWithText.astro";
+
+interface Props {
+  class?: string;
+}
+
+const { class: customStyle } = Astro.props;
+---
+
+<header
+  class:list={[
+    customStyle,
+    "w-full fixed left-0 right-0 top-0 bg-primary bg-texture bg-4xl sm:bg-xl z-50",
+  ]}
+>
+  <div
+    class={"grid grid-flow-col w-full items-center justify-between sm:px-14 px-4 py-2 sm:gap-14"}
+  >
+    <div class="grid grid-flow-col gap-14">
+      <LogoWithText />
+    </div>
+    <ButtonLink element="button" class="text-bold">
+      Descarga la Programación
+    </ButtonLink>
+  </div>
+</header>
