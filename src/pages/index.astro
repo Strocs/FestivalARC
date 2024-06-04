@@ -6,31 +6,38 @@ import SEREMILogo from "../assets/logo-seremi.png";
 import { Image } from "astro:assets";
 import ButtonLink from "../components/ButtonLink.astro";
 import { RESULTS } from "../data/RESULTS";
+import FacebookIcon from "../components/icons/FacebookIcon.astro";
+import YoutubeIcon from "../components/icons/YoutubeIcon.astro";
+import XIcon from "../components/icons/XIcon.astro";
+import InstagramIcon from "../components/icons/InstagramIcon.astro";
 ---
 
 <Layout title="ARC 2024">
-  <header class="grid justify-center w-fit mx-auto pt-10 gap-8 group pb-[8vh]">
+  <header class="grid justify-center w-fit mx-auto pt-10 gap-8 group pb-[6vh]">
     <h1 class="sr-only">ARC 2024, Próximamente</h1>
     <figure class="overfloh-hidden h-fit w-fit mx-auto">
       <Image
         src={LOGO}
         width={500}
+        height={180}
         alt="Logo Festival ARC 2024"
-        class="aspect-auto h-fit"
+        class="aspect-[500/180] h-fit"
         loading="eager"
       />
     </figure>
     <h2
-      class="text-secondary font-black text-2xl text-center md:text-5xl uppercase tracking-tighter bg-black w-fit pb-2 px-4 mx-auto scale-y-150 -skew-y-12 group-hover:skew-y-0 transition duration-300 cursor-default delay-150"
+      class="text-secondary font-black text-2xl text-center md:text-5xl uppercase tracking-tighter bg-black w-fit pb-2 px-4 mx-auto scale-y-150 -skew-y-[8deg] group-hover:skew-y-0 transition duration-300 cursor-default delay-150"
     >
       27, 28, 29 y 30 de Junio
     </h2>
   </header>
-  <main class="h-full w-full max-w-2xl mx-auto space-y-16 py-10">
+  <main class="h-full w-full max-w-2xl mx-auto space-y-12 py-10">
     <section class="grid gap-5">
-      <h2 class="text-5xl tracking-tighter text-white font-bold text-center">
+      <h2
+        class="text-4xl uppercase tracking-tight text-white font-extrabold text-center"
+      >
         Postulaciones Abiertas
-        <span class="block font-normal text-lg tracking-normal"
+        <span class="block font-normal normal-case text-lg tracking-normal"
           >Hasta el 10 de Junio</span
         >
       </h2>
@@ -45,7 +52,9 @@ import { RESULTS } from "../data/RESULTS";
       </div>
     </section>
     <section class="grid gap-5">
-      <h2 class="text-5xl tracking-tighter text-white font-bold text-center">
+      <h2
+        class="text-4xl uppercase tracking-tight text-white font-extrabold text-center"
+      >
         Resultados Convocatoria
       </h2>
       <div class="flex gap-4 flex-wrap max-w-xl mx-auto justify-center">
@@ -62,23 +71,49 @@ import { RESULTS } from "../data/RESULTS";
         }
       </div>
     </section>
+    <div class="flex gap-4 text-secondary w-fit mx-auto h-fit">
+      <a
+        aria-label="Visita nuestro Facebook"
+        href="https://web.facebook.com/FestivalARC"
+        target="_blank"
+      >
+        <FacebookIcon />
+      </a>
+      <a
+        aria-label="Visita nuestro Instagrma"
+        href="https://www.instagram.com/festival_arc"
+        target="_blank"><InstagramIcon /></a
+      >
+      <a
+        aria-label="Visita nuestro Twitter"
+        href="https://x.com/festivalarc"
+        target="_blank"><XIcon /></a
+      >
+      <a
+        aria-label="Visita nuestro Youtube"
+        href="https://www.youtube.com/@festivalarc5632"
+        target="_blank"><YoutubeIcon /></a
+      >
+    </div>
   </main>
   <footer
-    class="justify-center grid md:grid-flow-col items-center gap-8 md:gap-20 h-fit p-4 self-end"
+    class="justify-center grid md:grid-flow-col items-center gap-8 md:gap-20 h-fit p-4"
   >
     <div class="flex items-center gap-8">
       <Image
         height={64}
+        width={70}
         src={SEREMILogo}
         alt="Logo de SEREMI Región de Coquimbo"
-        class="h-16 w-fit aspect-auto shrink-0"
+        class="h-16 w-fit aspect-[70/64] shrink-0"
         loading="eager"
       />
       <Image
         height={64}
+        width={156}
         src={ULSLogo}
         alt="Logo de la Universidad de La Serena"
-        class="h-16 w-fit aspect-auto shrink-0"
+        class="h-16 w-fit aspect-[156/64] shrink-0"
         loading="eager"
       />
     </div>
