@@ -1,4 +1,6 @@
 ---
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
 import { SITE } from "@data/SITE";
 
 interface Props {
@@ -33,7 +35,9 @@ const { title } = Astro.props;
     <meta name="twitter:image" content={SITE.OG_image} />
   </head>
   <body class="w-full h-full min-h-[100dvh] before:bg-secondary bg-secondary">
+    <Header />
     <slot />
+    <Footer />
   </body>
 </html>
 
