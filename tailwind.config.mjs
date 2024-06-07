@@ -7,6 +7,9 @@ export default {
         primary: '#ee0175',
         secondary: '#f1f1f1'
       }
+    },
+    fontFamily: {
+      secondary: ['Fira Sans', 'sans-serif']
     }
   },
   plugins: []

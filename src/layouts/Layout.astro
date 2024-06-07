@@ -44,9 +44,15 @@ const { title } = Astro.props;
       name="twitter:image"
       content="https://static.wixstatic.com/media/1fc7ab_2d40f75745f94ef5a0d74916740e591e~mv2.png/v1/fill/w_1640,h_924,al_c/1fc7ab_2d40f75745f94ef5a0d74916740e591e~mv2.png"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body
-    class="flex flex-col w-full h-full min-h-[100dvh] p-4 relative bg-primary before:bg-[100%_auto] landscape:before:bg-[50%_auto]"
+    class="flex flex-col w-full h-full min-h-[100dvh] p-4 relative bg-primary before:bg-[100%_auto] landscape:before:bg-[50%_auto] font-secondary"
   >
     <slot />
   </body>
