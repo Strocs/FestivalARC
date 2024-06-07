@@ -7,7 +7,7 @@ interface RESULT {
 export const RESULTS: RESULT[] = [
   {
     title: 'Artes Escénicas',
-    docURL: 'https://drive.google.com/file/d/1F6L-qfqtRSrsi59Gy05P0L1s3xAUzILd/view?usp=share_link'
+    docURL: '#'
   },
   {
     title: 'Artes Visuales',
