@@ -4,7 +4,6 @@ import LOGO from "../assets/Logo-ARC24.png";
 import ULSLogo from "../assets/ULS-Blanco.png";
 import SEREMILogo from "../assets/logo-seremi.png";
 import { Image } from "astro:assets";
-import ButtonLink from "../components/ButtonLink.astro";
 import { RESULTS } from "../data/RESULTS";
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
 import YoutubeIcon from "../components/icons/YoutubeIcon.astro";
@@ -13,7 +12,9 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
 ---
 
 <Layout title="ARC 2024 | 27, 28, 29 y 30 de Junio">
-  <header class="grid justify-center w-fit mx-auto pt-10 gap-8 group pb-[6vh]">
+  <header
+    class="grid justify-center w-fit mx-auto pt-4 gap-4 md:gap-8 group pb-[6vh]"
+  >
     <h1 class="sr-only">ARC 2024, Próximamente</h1>
     <figure class="overfloh-hidden h-fit w-fit mx-auto">
       <Image
@@ -26,12 +27,12 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
       />
     </figure>
     <h2
-      class="text-secondary font-black text-2xl text-center md:text-5xl uppercase tracking-tighter bg-black w-fit pb-2 px-4 mx-auto scale-y-150 -skew-y-[8deg] group-hover:skew-y-0 transition duration-300 cursor-default delay-150"
+      class="text-secondary font-black text-2xl text-center md:text-5xl uppercase tracking-tighter bg-black w-fit pb-1 md:pb-2 px-4 mx-auto scale-y-150 -skew-y-[6deg] group-hover:skew-y-0 transition duration-300 cursor-default delay-150"
     >
-      27, 28, 29 y 30 de Junio
+      {"{"}&nbsp; Del 27 al 30 de Junio &nbsp;{"}"}
     </h2>
   </header>
-  <main class="h-full w-full max-w-2xl mx-auto space-y-12 py-8">
+  <main class="h-full w-full max-w-2xl mx-auto space-y-16 pb-72 sm:pb-20">
     <section class="grid gap-5">
       <h2
         class="text-4xl uppercase tracking-tight text-white font-extrabold text-center"
@@ -42,37 +43,60 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
         >
       </h2>
       <div class="flex gap-4 flex-wrap max-w-xl mx-auto justify-center">
-        <ButtonLink
-          element="a"
+        <a
           target="_blank"
           href="https://drive.google.com/file/d/1_TfFTNhIwPefC5qjfODh8I7LFxy0OeHh/view"
-          class="text-black border-black text-xl whitespace-nowrap font-bold"
+          class="text-secondary hover:text-[#fcea0d] font-black text-2xl text-center uppercase tracking-tighter bg-black w-fit pb-1 px-4 mx-auto scale-y-150 -skew-y-[6deg] hover:skew-y-0 transition duration-300 delay-100"
         >
           Artesanías
-        </ButtonLink>
+        </a>
       </div>
     </section>
-    <section class="grid gap-5">
+    <section class="grid gap-8">
       <h2
         class="text-4xl uppercase tracking-tight text-white font-extrabold text-center"
       >
         Resultados Convocatoria
       </h2>
-      <div class="flex gap-4 flex-wrap max-w-xl mx-auto justify-center">
+      <div
+        class="flex gap-x-4 gap-y-8 md:gap-y-12 flex-wrap max-w-xl mx-auto justify-center"
+      >
         {
           RESULTS.map(({ title, docURL }) => (
-            <ButtonLink
-              element="a"
+            <a
+              target="_blank"
               href={docURL}
-              class="text-black border-black text-xl whitespace-nowrap font-bold"
+              class="text-secondary hover:text-[#fcea0d] font-black text-2xl text-center  uppercase tracking-tighter bg-[#1d70b7] w-fit h-fit pb-1 px-4 scale-y-150 -skew-y-[6deg] hover:skew-y-0 transition duration-300 delay-100"
             >
               {title}
-            </ButtonLink>
+            </a>
           ))
         }
       </div>
     </section>
-    <div class="flex gap-4 text-secondary w-fit mx-auto h-fit">
+  </main>
+  <footer
+    class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-20 h-fit bg-black absolute bottom-0 w-full left-0 p-4"
+  >
+    <div class="flex items-center gap-8 w-fit">
+      <Image
+        height={64}
+        width={70}
+        src={SEREMILogo}
+        alt="Logo de SEREMI Región de Coquimbo"
+        class="h-16 w-fit aspect-[70/64] shrink-0"
+        loading="eager"
+      />
+      <Image
+        height={64}
+        width={156}
+        src={ULSLogo}
+        alt="Logo de la Universidad de La Serena"
+        class="h-16 w-fit aspect-[156/64] shrink-0"
+        loading="eager"
+      />
+    </div>
+    <div class="flex gap-4 text-secondary w-fit h-fit">
       <a
         aria-label="Visita nuestro Facebook"
         href="https://web.facebook.com/FestivalARC"
@@ -96,32 +120,10 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
         target="_blank"><YoutubeIcon /></a
       >
     </div>
-  </main>
-  <footer
-    class="justify-center grid md:grid-flow-col items-center gap-8 md:gap-20 h-fit"
-  >
-    <div class="flex items-center gap-8">
-      <Image
-        height={64}
-        width={70}
-        src={SEREMILogo}
-        alt="Logo de SEREMI Región de Coquimbo"
-        class="h-16 w-fit aspect-[70/64] shrink-0"
-        loading="eager"
-      />
-      <Image
-        height={64}
-        width={156}
-        src={ULSLogo}
-        alt="Logo de la Universidad de La Serena"
-        class="h-16 w-fit aspect-[156/64] shrink-0"
-        loading="eager"
-      />
-    </div>
     <p class="text-white">
       <strong>ARC 2024</strong> | Desarrollado por <a
         href="https://strocs.dev"
-        class="hover:text-black transition duration-150">StrocsDev</a
+        class="hover:text-primary transition duration-150">StrocsDev</a
       >
     </p>
   </footer>
