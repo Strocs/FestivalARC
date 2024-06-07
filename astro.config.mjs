@@ -9,5 +9,7 @@ import tailwind from '@astrojs/tailwind'
 export default defineConfig({
   integrations: [sitemap(), react(), tailwind()],
   output: 'static',
-  adapter: vercel()
+  adapter: vercel({
+    webAnalytics: { enabled: true }
+  })
 })
