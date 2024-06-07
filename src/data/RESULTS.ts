@@ -19,7 +19,7 @@ export const RESULTS: RESULT[] = [
   },
   {
     title: 'Literatura',
-    docURL: 'https://drive.google.com/file/d/1WbGR51Jl5Ffqh6dl86SdG7SvG19i1Psr/view?usp=share_link'
+    docURL: 'https://drive.google.com/file/d/1I6PWl8u1G_tdRWisWuW5wperTM321q0y/view?usp=share_link'
   },
   {
     title: 'Música',
