@@ -2,36 +2,50 @@
 interface Props {
   class?: string;
   element?: string;
-  size?: string;
-}
-
-interface TextSize {
-  [key: string]: string;
+  size?: "sm" | "md" | "base" | "lg" | "xl" | "2xl";
+  color?: "black" | "blue" | "white" | "pink";
+  [x: string]: any;
 }
 
 const {
   class: customStyle,
   element: Element = "h2",
   size = "base",
+  color = "black",
   ...props
 } = Astro.props;
 
-const textSize: TextSize = {
+const sizeVariants = {
   sm: "",
-  md: "",
-  base: "text-base md:text-base",
-  lg: "text-lg md:text-xl pb-0.5",
-  xl: "text-xl md:text-3xl tracking-tight pb-1",
-  "2xl": "text-2xl md:text-5xl tracking-tighter pb-2",
+  md: "text-xs md:text-sm px-3 pt-0.5",
+  base: "text-base md:text-base px-4",
+  lg: "text-lg md:text-xl px-4",
+  xl: "text-xl md:text-3xl tracking-tight py-1 px-4",
+  "2xl": "text-2xl md:text-5xl tracking-tighter py-2 px-8",
 };
+
+const colorVariants = {
+  black: "bg-black text-secondary",
+  blue: "bg-accent-blue text-secondary",
+  white: "bg-secondary text-black",
+  pink: "bg-primary text-secondary",
+};
+
+const isLink = Element === "a" || Element === "button";
+
+const withHover = isLink ? "hover:text-accent-yellow hover:skew-y-0" : "";
+const withClickAnimation = isLink ? "active:translate-y-2" : "";
 ---
 
 <Element
   {...props}
   class:list={[
     customStyle,
-    textSize[size],
-    "text-secondary font-black text-center uppercase bg-black w-fit h-fit px-4 mx-auto scale-y-150 -skew-y-[6deg] hover:skew-y-0 transition duration-300 cursor-default delay-150 shadow-xl",
+    sizeVariants[size],
+    colorVariants[color],
+    withHover,
+    withClickAnimation,
+    "text-secondary font-black text-base text-center  uppercase tracking-wide bg-accent-blue w-fit h-fit scale-y-150 -skew-y-[6deg] transition duration-300 origin-center",
   ]}
 >
   <slot />

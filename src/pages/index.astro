@@ -3,103 +3,49 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import LogoARC from "@assets/Logo-ARC24.png";
 import TextTape from "@components/TextTape.astro";
+import { DAYS } from "@data/DAYS";
+import { normalizePath } from "@utils/normalizePath";
 ---
 
-<Layout title="27, 28, 29 y 30 de Junio">
-  <main
-    class="h-full w-full grid grid-cols-2 items-center relative overflow-hidden"
-  >
-    <!-- <video
-      src="/video_fondo_web.mp4"
-      class="absolute scale-105 -z-10 w-full h-fit"
-      muted
-      autoplay></video> -->
+<Layout title="Del 27 al 30 de Junio" headerAs="hero">
+  <main class="h-full w-full flex items-center justify-evenly">
     <section
-      class="py-24 px-20 flex flex-col justify-center items-center gap-20 h-full w-full"
+      class="flex flex-col justify-center items-center h-fit w-fit relative z-50 pb-20"
     >
-      <header class="space-y-4 w-full">
+      <header class="space-y-10 w-full">
         <Image
           src={LogoARC}
           width={500}
           height={180}
-          class="mx-auto aspect-[500/180]"
+          class="mx-auto aspect-[500/180] drop-shadow-[0_20px_16px_rgb(0,0,0,0.5)]"
           alt="Logo del festival ARC 2024"
+          transition:name="logo"
         />
-        <TextTape size="2xl"> 27, 28, 29 y 30 de Junio </TextTape>
+        <TextTape size="2xl" class="mx-auto">
+          {"{"} Del 27 al 30 de Junio {"}"}
+        </TextTape>
       </header>
-      <section class="space-y-10">
-        <h2 class="font-bold text-2xl text-center">Filtrar por:</h2>
-        <div class="flex gap-10">
-          <TextTape> Día </TextTape>
-          <TextTape> Arte </TextTape>
-          <TextTape> Lugar </TextTape>
-        </div>
-      </section>
     </section>
-    <!-- <section class="flex text-secondary">
-      <article class="bg-red-800 w-24 flex items-center">
-        <h2
-          class="[writing-mode:vertical-rl] mx-auto font-black uppercase text-4xl leading-none rotate-180"
-        >
-          Jueves 27
-        </h2>
-      </article>
-      <article class="bg-green-800 w-24 flex items-center">
-        <h2
-          class="[writing-mode:vertical-rl] mx-auto font-black uppercase text-4xl leading-none rotate-180"
-        >
-          Viernes 28
-        </h2>
-      </article>
-      <article class="bg-blue-800 w-24 flex items-center">
-        <h2
-          class="[writing-mode:vertical-rl] mx-auto font-black uppercase text-4xl leading-none rotate-180"
-        >
-          Sábado 29
-        </h2>
-      </article>
-      <article class="bg-yellow-800 w-24 flex items-center">
-        <h2
-          class="[writing-mode:vertical-rl] mx-auto font-black uppercase text-4xl leading-none rotate-180"
-        >
-          Domingo 30
-        </h2>
-      </article> -->
     <section
-      class="grid grid-cols-2 gap-20 py-24 items-center h-fit shrink-0 px-40"
+      class="grid gap-y-20 items-center justify-items-center h-fit w-fit shrink-0 relative z-50"
     >
-      <TextTape
-        aria-label="Programación Jueves 27"
-        element="button"
-        class="whitespace-nowrap cursor-pointer"
-        size="xl"
-      >
-        Jueves 27
-      </TextTape>
-      <TextTape
-        aria-label="Programación Viernes 28"
-        element="button"
-        class="whitespace-nowrap cursor-pointer"
-        size="xl"
-      >
-        Viernes 28
-      </TextTape>
-      <TextTape
-        aria-label="Programación Sábado 29"
-        element="button"
-        class="whitespace-nowrap cursor-pointer"
-        size="xl"
-      >
-        Sábado 29
-      </TextTape>
-      <TextTape
-        aria-label="Programación Domingo 30"
-        element="button"
-        class="whitespace-nowrap cursor-pointer"
-        size="xl"
-      >
-        Domingo 30
-      </TextTape>
+      {
+        DAYS.map(({ day }) => {
+          const path = normalizePath(day);
+          return (
+            <TextTape
+              aria-label={`Programación ${day}`}
+              element="a"
+              href={path}
+              class="whitespace-nowrap cursor-pointer"
+              color="blue"
+              size="2xl"
+            >
+              {day}
+            </TextTape>
+          );
+        })
+      }
     </section>
   </main>
 </Layout>

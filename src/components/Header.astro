@@ -1,28 +1,60 @@
 ---
-import ButtonLink from "./ButtonLink.astro";
-import LogoWithText from "./LogoWithText.astro";
-
+import Image from "astro/components/Image.astro";
+import TextTape from "./TextTape.astro";
+import Logo from "@assets/Logo-ARC24.png";
 interface Props {
   class?: string;
+  as?: "hero" | "navbar";
 }
 
-const { class: customStyle } = Astro.props;
+const { class: customStyle, as = "navbar" } = Astro.props;
+
+const heroStyles =
+  as === "hero"
+    ? { wrapper: "h-full", logo: "hidden" }
+    : { wrapper: "min-h-16", logo: "grid" };
 ---
 
 <header
   class:list={[
     customStyle,
-    "w-full fixed left-0 right-0 top-0 bg-primary bg-texture bg-4xl sm:bg-xl z-50",
+    heroStyles.wrapper,
+    "w-full fixed left-0 right-0 top-0 bg-primary bg-texture bg-4xl sm:bg-xl z-40 bg-hero-image py-1",
   ]}
 >
   <div
-    class={"grid grid-flow-col w-full items-center justify-between sm:px-14 px-4 py-2 sm:gap-14"}
+    class="grid grid-cols-[1fr_auto_1fr] w-full items-center justify-items-end sm:px-14 px-4 py-2 sm:gap-14 min-h-16"
   >
-    <div class="grid grid-flow-col gap-14">
-      <LogoWithText />
+    <div class="grid grid-flow-col gap-14 justify-self-start">
+      <div class:list={[heroStyles.logo, "grid-flow-col items-center gap-3"]}>
+        <a
+          href="/"
+          class="w-32 hover:scale-105 transition duration-200"
+          aria-label="Inicio"
+        >
+          <Image
+            loading="eager"
+            height={46}
+            width={128}
+            src={Logo}
+            class="w-32 h-fit aspect-[128/46]"
+            alt="Logo del Festival ARC 2024"
+            transition:name="logo"
+          />
+        </a>
+        <div class="text-xs sm:text-sm text-secondary">
+          <p class="font-bold leading-4">Del 27 al 30 de Junio</p>
+          <p class="font-light leading-4">
+            Coquimbo - La Serena - Ovalle - Illapel
+          </p>
+        </div>
+      </div>
     </div>
-    <ButtonLink element="button" class="text-bold">
-      Descarga la Programación
-    </ButtonLink>
+    <nav class="flex gap-4">
+      <TextTape element="a" href="/" size="md">Inicio</TextTape>
+      <TextTape element="a" href="/prensa" size="md">Prensa</TextTape>
+      <TextTape element="a" href="/nosotros" size="md">Nosotros</TextTape>
+    </nav>
+    <TextTape element="button" size="md">Descarga la Programación</TextTape>
   </div>
 </header>
