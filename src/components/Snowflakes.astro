@@ -1,0 +1,75 @@
+---
+interface Props {
+  zIndex?: number;
+  amount?: number;
+}
+
+const { zIndex, amount = 10 } = Astro.props;
+---
+
+<div
+  class:list={[
+    "w-full h-[130%] flex justify-between absolute -top-20 left-0 overflow-hidden",
+    "*:animate-snowflakes *:bg-contain *:bg-no-repeat *:brightness-0 *:invert",
+    "[&>*:nth-child(even)]:bg-snow-ball [&>*:nth-child(odd)]:bg-snow-star",
+  ]}
+  style=`z-index: ${zIndex};`
+>
+  {Array.from(new Array(amount), () => <i />)}
+</div>
+
+<style>
+  i:nth-child(3n) {
+    width: 24px;
+    height: 24px;
+    animation-duration: 4s;
+    animation-iteration-count: 30;
+    transform-origin: center -45px;
+  }
+
+  i:nth-child(3n + 1) {
+    width: 32px;
+    height: 32px;
+    animation-duration: 6s;
+    animation-iteration-count: 45;
+    transform-origin: center -30px;
+  }
+
+  i:nth-child(3n + 2) {
+    width: 48px;
+    height: 48px;
+    animation-duration: 8s;
+    animation-iteration-count: 60;
+    transform-origin: center -15px;
+  }
+
+  /* different delays so they don't all start at the same time */
+  i:nth-child(5n) {
+    animation-delay: 0s;
+    animation-timing-function: ease-in;
+  }
+  i:nth-child(5n + 1) {
+    animation-delay: 1s;
+    animation-timing-function: ease-out;
+  }
+  i:nth-child(5n + 2) {
+    animation-delay: 1.5s;
+    animation-timing-function: linear;
+  }
+  i:nth-child(5n + 3) {
+    animation-delay: 2s;
+    animation-timing-function: ease-in;
+  }
+  i:nth-child(5n + 4) {
+    animation-delay: 2.5s;
+    animation-timing-function: linear;
+  }
+  i:nth-child(5n + 5) {
+    animation-delay: 3s;
+    animation-timing-function: ease-out;
+  }
+  i:nth-child(5n + 6) {
+    animation-delay: 3.5s;
+    animation-timing-function: ease-in;
+  }
+</style>

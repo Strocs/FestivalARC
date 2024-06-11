@@ -2,6 +2,7 @@
 import Image from "astro/components/Image.astro";
 import TextTape from "./TextTape.astro";
 import Logo from "@assets/Logo-ARC24.png";
+import Snowflakes from "./Snowflakes.astro";
 interface Props {
   class?: string;
   as?: "hero" | "navbar";
@@ -11,15 +12,15 @@ const { class: customStyle, as = "navbar" } = Astro.props;
 
 const heroStyles =
   as === "hero"
-    ? { wrapper: "h-full", logo: "hidden" }
-    : { wrapper: "min-h-16", logo: "grid" };
+    ? { wrapper: "bg-transparent", logo: "hidden" }
+    : { wrapper: "bg-hero-image", logo: "grid" };
 ---
 
 <header
   class:list={[
     customStyle,
     heroStyles.wrapper,
-    "w-full fixed left-0 right-0 top-0 bg-primary bg-texture bg-4xl sm:bg-xl z-40 bg-hero-image py-1",
+    "w-full fixed left-0 right-0 top-0 z-50 py-1",
   ]}
 >
   <div
@@ -53,7 +54,7 @@ const heroStyles =
     <nav class="flex gap-4">
       <TextTape element="a" href="/" size="md">Inicio</TextTape>
       <TextTape element="a" href="/prensa" size="md">Prensa</TextTape>
-      <TextTape element="a" href="/nosotros" size="md">Nosotros</TextTape>
+      <TextTape element="a" href="/arc-2024" size="md">ARC 2024</TextTape>
     </nav>
     <TextTape element="button" size="md">Descarga la Programación</TextTape>
   </div>

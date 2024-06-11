@@ -1,0 +1,23 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "@layouts/Layout.astro";
+import { DAYS } from "@data/DAYS";
+import { normalizePath } from "@utils/normalizePath";
+
+export const getStaticPaths = (() => {
+  return DAYS.map(({ day, color, schedule }) => {
+    const path = normalizePath(day);
+    return { params: { day: path }, props: { day, color, schedule } };
+  });
+}) satisfies GetStaticPaths;
+
+const { day, color, schedule } = Astro.props;
+---
+
+<Layout title={day}>
+  <main class="w-full h-full flex flex-col items-center justify-center">
+    <h1 class="text-center text-4xl font-black">
+      Programación del día {day} - En construcción
+    </h1>
+  </main>
+</Layout>

@@ -5,13 +5,16 @@ import LogoARC from "@assets/Logo-ARC24.png";
 import TextTape from "@components/TextTape.astro";
 import { DAYS } from "@data/DAYS";
 import { normalizePath } from "@utils/normalizePath";
+import { SITE } from "@data/SITE";
+import Snowflakes from "@components/Snowflakes.astro";
 ---
 
-<Layout title="Del 27 al 30 de Junio" headerAs="hero">
-  <main class="h-full w-full flex items-center justify-evenly">
-    <section
-      class="flex flex-col justify-center items-center h-fit w-fit relative z-50 pb-20"
-    >
+<Layout title={SITE.date} headerAs="hero">
+  <Snowflakes zIndex={10} amount={20} />
+  <main
+    class="h-full w-full flex flex-col items-center justify-center gap-32 pb-20 bg-hero-image"
+  >
+    <section class="flex flex-col justify-center items-center h-fit w-fit">
       <header class="space-y-10 w-full">
         <Image
           src={LogoARC}
@@ -21,31 +24,38 @@ import { normalizePath } from "@utils/normalizePath";
           alt="Logo del festival ARC 2024"
           transition:name="logo"
         />
-        <TextTape size="2xl" class="mx-auto">
-          {"{"} Del 27 al 30 de Junio {"}"}
+        <TextTape size="2xl" class="mx-auto px-14">
+          {"{"}&nbsp; {SITE.date} &nbsp;{"}"}
         </TextTape>
       </header>
     </section>
-    <section
-      class="grid gap-y-20 items-center justify-items-center h-fit w-fit shrink-0 relative z-50"
-    >
-      {
-        DAYS.map(({ day }) => {
-          const path = normalizePath(day);
-          return (
-            <TextTape
-              aria-label={`Programación ${day}`}
-              element="a"
-              href={path}
-              class="whitespace-nowrap cursor-pointer"
-              color="blue"
-              size="2xl"
-            >
-              {day}
-            </TextTape>
-          );
-        })
-      }
+    <section class="w-fit h-fit shrink-0 relative z-10 space-y-16">
+      <h2
+        class="text-4xl text-center tracking-wide font-climate text-secondary [font-variation-settings:'YEAR'_1980]"
+      >
+        ¡Revisa la programación!
+      </h2>
+      <div
+        class="grid grid-flow-col gap-x-10 items-center justify-items-center h-fit w-fit"
+      >
+        {
+          DAYS.map(({ day, color }) => {
+            const path = normalizePath(day);
+            return (
+              <TextTape
+                aria-label={`Programación ${day}`}
+                element="a"
+                href={path}
+                class={`whitespace-nowrap cursor-pointer hover:text-secondary ${color} shadow-xl`}
+                color="blue"
+                size="xl"
+              >
+                {day}
+              </TextTape>
+            );
+          })
+        }
+      </div>
     </section>
   </main>
 </Layout>
