@@ -26,7 +26,7 @@ export default {
         snowflakes: {
           '0%': { transform: 'translate3d(0, 0, 0) rotate(0deg)' },
           '100%': {
-            transform: 'translate3d(25px, 1200px, 0px) rotate(360deg)'
+            transform: 'translate3d(25px, 100dvh, 0px) rotate(360deg)'
           }
         }
       },
