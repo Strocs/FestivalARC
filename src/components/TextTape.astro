@@ -20,12 +20,12 @@ const sizeVariants = {
   md: "text-xs md:text-sm px-3 pt-0.5",
   base: "text-base md:text-base px-4",
   lg: "text-lg md:text-2xl px-4",
-  xl: "text-2xl md:text-4xl tracking-tight py-1 px-6",
-  "2xl": "text-3xl md:text-5xl tracking-tighter py-2 px-8",
+  xl: "text-3xl md:text-4xl tracking-tight px-4 py-1 landscape:px-6",
+  "2xl": "text-4xl md:text-5xl tracking-wider py-1 landscape:py-2 px-8",
 };
 
 const colorVariants = {
-  black: "bg-black text-secondary",
+  black: "bg-black text-secondary hover:",
   blue: "bg-accent-blue text-secondary",
   white: "bg-secondary text-black",
   pink: "bg-primary text-secondary",
@@ -33,7 +33,9 @@ const colorVariants = {
 
 const isLink = Element === "a" || Element === "button";
 
-const withHover = isLink ? "hover:text-accent-yellow hover:skew-y-0" : "";
+const withHover = isLink
+  ? "hover:text-accent-yellow hover:bg-accent-blue hover:skew-y-0"
+  : "";
 const withClickAnimation = isLink ? "active:translate-y-2" : "";
 ---
 
@@ -44,7 +46,7 @@ const withClickAnimation = isLink ? "active:translate-y-2" : "";
     colorVariants[color],
     withHover,
     withClickAnimation,
-    "text-secondary font-black text-base text-center  uppercase tracking-wide bg-accent-blue w-fit h-fit scale-y-150 -skew-y-[6deg] transition duration-300 origin-center",
+    "text-secondary font-black text-center uppercase w-fit h-fit scale-y-150 -skew-y-[6deg] transition duration-300 origin-center",
     customStyle,
   ]}
 >
