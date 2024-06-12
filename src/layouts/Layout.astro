@@ -43,14 +43,18 @@ const { title, headerAs } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Climate+Crisis:YEAR@1980&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-
-    <ViewTransitions fallback="none" />
+    <ViewTransitions />
   </head>
-  <body class="w-full h-full min-h-[100dvh] bg-secondary font-fira">
+  <body
+    class="w-full h-fit min-h-[100dvh] grid bg-secondary font-fira relative"
+  >
     <Header as={headerAs} />
     <slot />
     <Footer />
     <style is:global>
+      :root {
+        --footer-height: 5rem;
+      }
       html {
         height: 100%;
         width: 100%;
