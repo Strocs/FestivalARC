@@ -2,6 +2,12 @@
 import { Image } from "astro:assets";
 import Seremi from "@assets/logo-seremi.png";
 import Uls from "@assets/ULS-Blanco.png";
+import FacebookIcon from "./icons/FacebookIcon.astro";
+import InstagramIcon from "./icons/InstagramIcon.astro";
+import XIcon from "./icons/XIcon.astro";
+import YoutubeIcon from "./icons/YoutubeIcon.astro";
+import { SITE } from "@data/SITE";
+
 interface Props {
   class?: string;
 }
@@ -11,40 +17,65 @@ const { class: customStyle } = Astro.props;
 
 <footer
   class:list={[
-    "flex flex-col md:flex-row justify-between items-center w-full py-2 space-x-2 md:px-14 bottom-0 left-0 right-0 z-50 bg-texture bg-4xl sm:bg-xl bg-black absolute",
+    "landscape:grid flex justify-center grid-cols-[1fr_auto_1fr] items-center w-full h-[--footer-height] space-x-2 md:px-14 bottom-0 left-0 right-0 z-50 bg-black absolute",
     customStyle,
   ]}
 >
-  <div class="flex h-fit justify-center space-x-4 md:items-center md:space-x-8">
-    <div class="flex w-fit flex-shrink-0 items-center space-x-4">
-      <p class="text-sm md:text-base text-secondary">Organiza:</p>
-      <Image
-        loading="eager"
-        height={56}
-        class="h-12 w-fit md:h-14 aspect-[61/56]"
-        src={Seremi}
-        alt="Logo de la Seremi de la Región de Coquimbo"
-      />
-      <Image
-        loading="eager"
-        height={56}
-        class="h-12 w-fit md:h-14 aspect-[137/56]"
-        src={Uls}
-        alt="Logo de la Seremi de la Región de Coquimbo"
-      />
-    </div>
-  </div>
   <div
-    class="items-center justify-around gap-4 grid grid-flow-col text-secondary"
+    class="items-center justify-around gap-4 hidden landscape:grid grid-flow-col w-fit text-secondary"
   >
     <p class="text-lg font-bold leading-3">ARC 2024</p>
     |
     <p class="font-light leading-3">
       Desarrollado por <a
-        class="underline"
+        class="underline hover:text-primary duration-150"
         target="_blank"
         href="https://strocs.dev">StrocsDev</a
       >
     </p>
   </div>
+
+  <div class="flex w-fit shrink-0 items-center justify-center gap-x-4">
+    <p class="text-sm md:text-base text-secondary">Organiza:</p>
+    <Image
+      loading="eager"
+      height={56}
+      class="h-12 w-fit md:h-14 aspect-[61/56]"
+      src={Seremi}
+      alt="Logo de la Seremi de la Región de Coquimbo"
+    />
+    <Image
+      loading="eager"
+      height={56}
+      class="h-12 w-fit md:h-14 aspect-[137/56]"
+      src={Uls}
+      alt="Logo de la Seremi de la Región de Coquimbo"
+    />
+  </div>
+  <nav class="hidden landscape:flex gap-4 text-secondary justify-self-end">
+    <a
+      target="_blank"
+      aria-label="Visista nuestro Facebook"
+      class="w-fit h-fit"
+      href={SITE.URL.facebook}><FacebookIcon /></a
+    >
+    <a
+      target="_blank"
+      aria-label="Visista nuestro Instagram"
+      class="w-fit h-fit"
+      href={SITE.URL.instagram}><InstagramIcon /></a
+    >
+    <a
+      target="_blank"
+      aria-label="Visista nuestro X/Twitter"
+      class="w-fit h-fit"
+      href={SITE.URL.twitter}><XIcon /></a
+    >
+    <a
+      target="_blank"
+      aria-label="Visista nuestro Youtube"
+      class="w-fit h-fit"
+      href={SITE.URL.youtube}><YoutubeIcon /></a
+    >
+  </nav>
 </footer>

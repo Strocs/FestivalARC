@@ -1,42 +1,50 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
-import LogoARC from "@assets/Logo-ARC24.png";
-import TextTape from "@components/TextTape.astro";
+import Layout from "@layouts/Layout.astro";
 import { DAYS } from "@data/DAYS";
-import { normalizePath } from "@utils/normalizePath";
 import { SITE } from "@data/SITE";
+import { normalizePath } from "@utils/normalizePath";
+import TextTape from "@components/TextTape.astro";
 import Snowflakes from "@components/Snowflakes.astro";
+import SnowflakeOnIcon from "@components/icons/SnowflakeOnIcon.astro";
+import SnowflakeOffIcon from "@components/icons/SnowflakeOffIcon.astro";
+import LogoARC from "@assets/Logo-ARC24.png";
 ---
 
 <Layout title={SITE.date} headerAs="hero">
-  <Snowflakes zIndex={10} amount={20} />
+  <Snowflakes zIndex={10} amount={10} />
   <main
-    class="h-full w-full flex flex-col items-center justify-center gap-32 pb-20 bg-hero-image"
+    class="h-full w-full flex flex-col items-center justify-center gap-[8vh] landscape:gap-[12vh] pb-[calc(var(--footer-height)+5rem)] pt-[--footer-height] bg-primary bg-hero-image"
   >
     <section class="flex flex-col justify-center items-center h-fit w-fit">
-      <header class="space-y-10 w-full">
+      <header class="space-y-6 landscape:space-y-10 w-full">
         <Image
           src={LogoARC}
           width={500}
           height={180}
-          class="mx-auto aspect-[500/180] drop-shadow-[0_20px_16px_rgb(0,0,0,0.5)]"
+          class="w-4/5 landscape:w-5/6 mx-auto aspect-[500/180] drop-shadow-[0_20px_16px_rgb(0,0,0,0.5)]"
           alt="Logo del festival ARC 2024"
           transition:name="logo"
+          loading="eager"
         />
-        <TextTape size="2xl" class="mx-auto px-14">
+        <TextTape
+          size="2xl"
+          class="mx-auto md:px-14 text-[7vw] landscape:text-[6vh]"
+        >
           {"{"}&nbsp; {SITE.date} &nbsp;{"}"}
         </TextTape>
       </header>
     </section>
-    <section class="w-fit h-fit shrink-0 relative z-10 space-y-16">
+    <section
+      class="w-fit h-fit shrink-0 relative z-10 space-y-[5vh] landscape:space-y-12"
+    >
       <h2
-        class="text-4xl text-center tracking-wide font-climate text-secondary [font-variation-settings:'YEAR'_1980]"
+        class="text-2xl landscape:text-4xl text-center tracking-wide font-climate text-secondary [font-variation-settings:'YEAR'_1980]"
       >
         ¡Revisa la programación!
       </h2>
       <div
-        class="grid grid-flow-col gap-x-10 items-center justify-items-center h-fit w-fit"
+        class="grid landscape:grid-flow-col grid-cols-1 gap-y-12 landscape:gap-y-0 landscape:gap-x-10 items-center justify-items-center h-fit w-fit mx-auto"
       >
         {
           DAYS.map(({ day, color }) => {
@@ -46,7 +54,7 @@ import Snowflakes from "@components/Snowflakes.astro";
                 aria-label={`Programación ${day}`}
                 element="a"
                 href={path}
-                class={`whitespace-nowrap cursor-pointer hover:text-secondary ${color} shadow-xl`}
+                class={`whitespace-nowrap cursor-pointer hover:text-secondary ${color} shadow-xl w-full landscape:w-fit`}
                 color="blue"
                 size="xl"
               >
@@ -57,5 +65,78 @@ import Snowflakes from "@components/Snowflakes.astro";
         }
       </div>
     </section>
+    <section
+      class="h-fit z-50 absolute left-2 bottom-[calc(var(--footer-height)+0.5rem)] landscape:left-auto landscape:bottom-[calc(var(--footer-height)+3rem)] landscape:right-12"
+    >
+      <button
+        aria-label="Enciende o apaga la animación de copos de nieve"
+        id="disable-snowflakes"
+        class="bg-accent-blue text-secondary p-2 rounded-full hover:bg-black transition duration-150"
+        ><SnowflakeOnIcon /> <SnowflakeOffIcon hidden /></button
+      >
+    </section>
   </main>
 </Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    if (window.location.pathname !== "/") return;
+    addEventListenerToDisableButton();
+    getSnowflakesFromLocalStorage();
+  });
+
+  const addEventListenerToDisableButton = () => {
+    const { snowflakes, snowflakeOn, snowflakeOff, disableSnowflakesBtn } =
+      getDomElements();
+
+    disableSnowflakesBtn.addEventListener("click", () => {
+      toggleSnowflakes();
+      updateLocalStorageSnowflakes();
+    });
+
+    const toggleSnowflakes = () => {
+      snowflakes?.classList.toggle("hidden");
+      snowflakeOn?.classList.toggle("hidden");
+      snowflakeOff?.classList.toggle("hidden");
+    };
+
+    const updateLocalStorageSnowflakes = () => {
+      if (!!disableSnowflakesBtn?.getAttribute("data-disabled")) {
+        localStorage.setItem("snowflakes", "on");
+        disableSnowflakesBtn?.removeAttribute("data-disabled");
+      } else {
+        localStorage.setItem("snowflakes", "off");
+        disableSnowflakesBtn?.setAttribute("data-disabled", "true");
+      }
+    };
+  };
+
+  const getSnowflakesFromLocalStorage = () => {
+    const { snowflakes, snowflakeOn, snowflakeOff, disableSnowflakesBtn } =
+      getDomElements();
+    const isActive = localStorage.getItem("snowflakes");
+    if (isActive === null || isActive === "on") return;
+
+    snowflakes?.classList.add("hidden");
+    snowflakeOn?.classList.add("hidden");
+    snowflakeOff?.classList.remove("hidden");
+    disableSnowflakesBtn.setAttribute("data-disabled", "true");
+  };
+
+  const getDomElements = () => {
+    const snowflakes = document.querySelector("#snowflakes");
+    const disableSnowflakesBtn = document.querySelector(
+      "#disable-snowflakes"
+    ) as HTMLButtonElement;
+
+    const snowflakeOn = document.querySelector(".snowflake-on");
+    const snowflakeOff = document.querySelector(".snowflake-off");
+
+    return {
+      snowflakes,
+      snowflakeOn,
+      snowflakeOff,
+      disableSnowflakesBtn,
+    };
+  };
+</script>
