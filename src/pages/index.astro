@@ -12,9 +12,7 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
 ---
 
 <Layout title="ARC 2024 | Del 27 al 30 de Junio">
-  <header
-    class="grid justify-center w-fit mx-auto pt-2 gap-4 md:gap-8 group pb-[6vh]"
-  >
+  <header class="grid justify-center w-fit mx-auto pt-2 gap-4 md:gap-8 group">
     <h1 class="sr-only">ARC 2024, Próximamente</h1>
     <figure class="overfloh-hidden h-fit w-fit mx-auto">
       <Image
@@ -33,7 +31,7 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
     </h2>
   </header>
   <main class="h-full w-full max-w-2xl mx-auto space-y-14 pb-72 sm:pb-32">
-    <section class="grid gap-5">
+    <!-- <section class="grid gap-5">
       <h2
         class="text-3xl uppercase tracking-tight text-white font-extrabold text-center"
       >
@@ -51,7 +49,7 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
           Artesanía
         </a>
       </div>
-    </section>
+    </section> -->
     <div class="">
       <section class="grid gap-6 pb-10">
         <h2
@@ -67,7 +65,7 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
           RESOLUCIÓN Nº 195/2024
         </a>
       </section>
-      <section class="grid gap-6">
+      <section class="grid gap-8">
         <h2
           class="text-2xl uppercase tracking-tight text-white font-extrabold text-center"
         >
@@ -77,15 +75,22 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
           class="flex gap-x-2 gap-y-8 md:gap-y-8 flex-wrap max-w-xl mx-auto justify-center"
         >
           {
-            RESULTS.map(({ title, docURL }) => (
-              <a
-                target="_blank"
-                href={docURL}
-                class="text-secondary hover:text-[#fcea0d] font-black text-base text-center  uppercase tracking-wide bg-[#1d70b7] w-fit h-fit  px-4 scale-y-150 -skew-y-[6deg] hover:skew-y-0 transition duration-300 delay-100"
-              >
-                {title}
-              </a>
-            ))
+            RESULTS.map(({ title, docURL }) => {
+              const disabled = title === "Artesanía";
+
+              const styles = !disabled
+                ? "bg-[#1d70b7] hover:text-[#fcea0d] hover:skew-y-0"
+                : "bg-gray-400 before:content-['Próximamente'] before:absolute before:text-xs before:-top-4 landscape:before:-top-3 before:left-0 before:right-0 before:bg-black before:px-2 before:w-fit before:mx-auto before:py-[0.1rem] before:overflow-hidden before:opacity-100 landscape:before:opacity-0 hover:before:opacity-100 before:transition before:duration-150";
+              return (
+                <a
+                  target="_blank"
+                  href={docURL}
+                  class={`${styles} text-secondary font-black text-base text-center  uppercase tracking-wide w-fit h-fit  px-4 scale-y-150 -skew-y-[6deg] transition duration-300 delay-100`}
+                >
+                  {title}
+                </a>
+              );
+            })
           }
         </div>
       </section>
