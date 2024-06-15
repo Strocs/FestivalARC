@@ -32,6 +32,9 @@ export default {
       },
       animation: {
         snowflakes: 'snowflakes 3s linear 2s infinite'
+      },
+      screens: {
+        '1.5xl': '1440px'
       }
     }
   },

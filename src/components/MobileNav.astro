@@ -1,0 +1,39 @@
+---
+import ByStrocs from "./ByStrocs.astro";
+import Nav from "./Nav.astro";
+import ScheduleDays from "./ScheduleDays.astro";
+import SocialMediaLinks from "./SocialMediaLinks.astro";
+import TextTape from "./TextTape.astro";
+import Title from "./Title.astro";
+
+interface Props {
+  class?: string;
+}
+
+const { class: customStyles } = Astro.props;
+---
+
+<section
+  id="mobile-nav"
+  class:list={[
+    customStyles,
+    "w-screen h-full landscape:hidden flex justify-between flex-col ",
+  ]}
+>
+  <Nav size="base" wrapperClass="!flex justify-center" />
+  <div class="space-y-8">
+    <Title
+      element="h3"
+      class="text-secondary max-w-[90%] mx-auto text-2xl text-center leading-6"
+      >Revisa la Pogramación
+    </Title>
+    <ScheduleDays size="lg" wrapperClass="grid-cols-2 gap-x-4 gap-y-8" />
+  </div>
+  <TextTape element="button" size="lg" class="mx-auto"
+    >Descarga la Programación</TextTape
+  >
+  <div class="w-full space-y-2">
+    <SocialMediaLinks class="w-fit mx-auto" />
+    <ByStrocs class="mx-auto" />
+  </div>
+</section>

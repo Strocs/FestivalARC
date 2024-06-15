@@ -1,20 +1,20 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
-import { DAYS } from "@data/DAYS";
 import { SITE } from "@data/SITE";
-import { normalizePath } from "@utils/normalizePath";
 import TextTape from "@components/TextTape.astro";
 import Snowflakes from "@components/Snowflakes.astro";
 import SnowflakeOnIcon from "@components/icons/SnowflakeOnIcon.astro";
 import SnowflakeOffIcon from "@components/icons/SnowflakeOffIcon.astro";
 import LogoARC from "@assets/Logo-ARC24.png";
+import ScheduleDays from "@components/ScheduleDays.astro";
+import Title from "@components/Title.astro";
 ---
 
 <Layout title={SITE.date} headerAs="hero">
   <Snowflakes zIndex={10} amount={10} />
   <main
-    class="h-full w-full flex flex-col items-center justify-center gap-[8vh] landscape:gap-[12vh] pb-[calc(var(--footer-height)+5rem)] pt-[--footer-height] bg-primary bg-hero-image"
+    class="h-full w-full flex flex-col items-center justify-center gap-[8vh] landscape:gap-24 pb-[calc(var(--footer-height)+8rem)] pt-[calc(var(--footer-height)+2rem)] bg-primary bg-hero-image"
   >
     <section class="flex flex-col justify-center items-center h-fit w-fit">
       <header class="space-y-6 landscape:space-y-10 w-full">
@@ -38,35 +38,17 @@ import LogoARC from "@assets/Logo-ARC24.png";
     <section
       class="w-fit h-fit shrink-0 relative z-10 space-y-[5vh] landscape:space-y-12"
     >
-      <h2
-        class="text-2xl landscape:text-4xl text-center tracking-wide font-climate text-secondary [font-variation-settings:'YEAR'_1980]"
+      <Title
+        element="h2"
+        class="text-2xl landscape:text-4xl text-center text-secondary max-w-xl mx-auto"
       >
         ¡Revisa la programación!
-      </h2>
-      <div
-        class="grid landscape:grid-flow-col grid-cols-1 gap-y-12 landscape:gap-y-0 landscape:gap-x-10 items-center justify-items-center h-fit w-fit mx-auto"
-      >
-        {
-          DAYS.map(({ day, color }) => {
-            const path = normalizePath(day);
-            return (
-              <TextTape
-                aria-label={`Programación ${day}`}
-                element="a"
-                href={path}
-                class={`whitespace-nowrap cursor-pointer hover:text-secondary ${color} shadow-xl w-full landscape:w-fit`}
-                color="blue"
-                size="xl"
-              >
-                {day}
-              </TextTape>
-            );
-          })
-        }
-      </div>
+      </Title>
+
+      <ScheduleDays />
     </section>
     <section
-      class="h-fit z-50 absolute left-2 bottom-[calc(var(--footer-height)+0.5rem)] landscape:left-auto landscape:bottom-[calc(var(--footer-height)+3rem)] landscape:right-12"
+      class="h-fit z-50 absolute right-4 bottom-[calc(var(--footer-height)+1rem)] landscape:left-auto landscape:bottom-[calc(var(--footer-height)+3rem)] landscape:right-12"
     >
       <button
         aria-label="Enciende o apaga la animación de copos de nieve"

@@ -46,7 +46,7 @@ const { title, headerAs } = Astro.props;
     <ViewTransitions />
   </head>
   <body
-    class="w-full h-fit min-h-[100dvh] grid bg-secondary font-fira relative"
+    class="w-full h-fit min-h-[100dvh] grid bg-secondary font-fira relative bg-texture"
   >
     <Header as={headerAs} />
     <slot />
@@ -54,13 +54,15 @@ const { title, headerAs } = Astro.props;
     <style is:global>
       :root {
         --footer-height: 5rem;
+        --nav-offset-top: 16vh;
       }
+
       html {
         height: 100%;
         width: 100%;
       }
 
-      body::before {
+      .bg-texture::before {
         content: "";
         position: absolute;
         width: 100%;

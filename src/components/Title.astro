@@ -1,0 +1,17 @@
+---
+interface Props {
+  element: "h1" | "h2" | "h3" | "h4";
+  class?: string;
+}
+
+const { element: Element, class: customStyles } = Astro.props;
+---
+
+<Element
+  class:list={[
+    customStyles,
+    "tracking-wide font-climate [font-variation-settings:'YEAR'_1980]",
+  ]}
+>
+  <slot />
+</Element>

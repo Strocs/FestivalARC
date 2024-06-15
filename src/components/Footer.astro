@@ -7,6 +7,8 @@ import InstagramIcon from "./icons/InstagramIcon.astro";
 import XIcon from "./icons/XIcon.astro";
 import YoutubeIcon from "./icons/YoutubeIcon.astro";
 import { SITE } from "@data/SITE";
+import ByStrocs from "./ByStrocs.astro";
+import SocialMediaLinks from "./SocialMediaLinks.astro";
 
 interface Props {
   class?: string;
@@ -21,61 +23,23 @@ const { class: customStyle } = Astro.props;
     customStyle,
   ]}
 >
-  <div
-    class="items-center justify-around gap-4 hidden landscape:grid grid-flow-col w-fit text-secondary"
-  >
-    <p class="text-lg font-bold leading-3">ARC 2024</p>
-    |
-    <p class="font-light leading-3">
-      Desarrollado por <a
-        class="underline hover:text-primary duration-150"
-        target="_blank"
-        href="https://strocs.dev">StrocsDev</a
-      >
-    </p>
-  </div>
-
+  <ByStrocs class="hidden landscape:grid" />
   <div class="flex w-fit shrink-0 items-center justify-center gap-x-4">
     <p class="text-sm md:text-base text-secondary">Organiza:</p>
     <Image
       loading="eager"
-      height={56}
-      class="h-12 w-fit md:h-14 aspect-[61/56]"
+      height={80}
+      class="h-16 w-fit md:h-14 aspect-[61/56]"
       src={Seremi}
       alt="Logo de la Seremi de la Región de Coquimbo"
     />
     <Image
       loading="eager"
-      height={56}
-      class="h-12 w-fit md:h-14 aspect-[137/56]"
+      height={80}
+      class="h-16 w-fit md:h-14 aspect-[137/56]"
       src={Uls}
-      alt="Logo de la Seremi de la Región de Coquimbo"
+      alt="Logo de la Universidad de La Serena"
     />
   </div>
-  <nav class="hidden landscape:flex gap-4 text-secondary justify-self-end">
-    <a
-      target="_blank"
-      aria-label="Visista nuestro Facebook"
-      class="w-fit h-fit"
-      href={SITE.URL.facebook}><FacebookIcon /></a
-    >
-    <a
-      target="_blank"
-      aria-label="Visista nuestro Instagram"
-      class="w-fit h-fit"
-      href={SITE.URL.instagram}><InstagramIcon /></a
-    >
-    <a
-      target="_blank"
-      aria-label="Visista nuestro X/Twitter"
-      class="w-fit h-fit"
-      href={SITE.URL.twitter}><XIcon /></a
-    >
-    <a
-      target="_blank"
-      aria-label="Visista nuestro Youtube"
-      class="w-fit h-fit"
-      href={SITE.URL.youtube}><YoutubeIcon /></a
-    >
-  </nav>
+  <SocialMediaLinks class="hidden landscape:flex" />
 </footer>

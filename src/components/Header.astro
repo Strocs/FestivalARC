@@ -2,6 +2,9 @@
 import Image from "astro/components/Image.astro";
 import TextTape from "./TextTape.astro";
 import Logo from "@assets/Logo-ARC24.png";
+import MenuButton from "./MenuButton.astro";
+import Nav from "./Nav.astro";
+import MobileNav from "./MobileNav.astro";
 
 interface Props {
   class?: string;
@@ -12,22 +15,28 @@ const { class: customStyle, as = "navbar" } = Astro.props;
 
 const heroStyles =
   as === "hero"
-    ? { wrapper: "bg-transparent", logo: "hidden" }
+    ? { wrapper: "landscape:bg-transparent", logo: "hidden" }
     : { wrapper: "bg-hero-image", logo: "grid" };
 ---
 
 <header
+  id="header"
   class:list={[
     customStyle,
     heroStyles.wrapper,
-    "w-full fixed left-0 right-0 top-0 z-50 py-1",
+    "w-full fixed left-0 right-0 top-0 z-[99] py-1",
   ]}
 >
   <div
-    class="grid grid-cols-[auto_1fr] gap-4 landscape:grid-cols-[1fr_auto_1fr] w-full items-center justify-items-end sm:px-14 px-4 py-2 sm:gap-14 min-h-16"
+    class="grid grid-cols-[auto_1fr] gap-4 landscape:grid-cols-[1fr_auto_1fr] w-full items-center justify-items-end sm:px-14 px-4 py-2 sm:gap-14 min-h-16 relative z-50"
   >
-    <div class="grid grid-flow-col gap-14 justify-self-start">
-      <div class:list={[heroStyles.logo, "grid-flow-col items-center gap-3"]}>
+    <section class="grid grid-flow-col gap-14 justify-self-start">
+      <div
+        class:list={[
+          heroStyles.logo,
+          "grid-flow-col items-center gap-3 relative z-[99]",
+        ]}
+      >
         <a
           href="/"
           class="w-32 hover:scale-105 transition duration-200"
@@ -50,22 +59,19 @@ const heroStyles =
           </p>
         </div>
       </div>
-    </div>
-    <nav class="hidden landscape:flex gap-4">
-      <TextTape class="nav_links" element="a" href="/" size="md"
-        >Inicio</TextTape
-      >
-      <TextTape class="nav_links" element="a" href="/prensa" size="md"
-        >Prensa</TextTape
-      >
-      <TextTape class="nav_links" element="a" href="/arc-2024" size="md"
-        >ARC 2024</TextTape
-      >
-    </nav>
+    </section>
+    <Nav />
     <TextTape element="button" size="md" class="hidden landscape:inline-block"
       >Descarga la Programación</TextTape
     >
-    <div class="h-10 w-10 rounded-full bg-accent-blue landscape:hidden"></div>
+    <section id="toggle-nav-background" class="landscape:hidden flex">
+      <MenuButton id="toggle-nav-button" class="text-secondary relative z-50" />
+      <div
+        class="fixed left-0 top-0 bg-accent-blue w-0 h-full peer-checked:w-full transition-[width] duration-500 overflow-hidden bg-texture"
+      >
+        <MobileNav class="pb-4 pt-24" />
+      </div>
+    </section>
   </div>
 </header>
 
@@ -83,9 +89,41 @@ const heroStyles =
     });
   };
 
+  const blockScrollOnActiveNav = () => {
+    const body = document.querySelector("body");
+    const toggleNavButton = document.querySelector(
+      "#toggle-nav-button"
+    ) as HTMLInputElement;
+
+    toggleNavButton?.addEventListener("change", () => {
+      if (toggleNavButton.checked) {
+        body?.classList.add("overflow-hidden");
+      } else {
+        body?.classList.remove("overflow-hidden");
+      }
+    });
+  };
+
+  const showBodyHeaderBackgroundOnScroll = () => {
+    window.addEventListener("scroll", () => {
+      if (window.location.pathname !== "/") return;
+      const header = document.querySelector("#header");
+      const isLandscape = window.innerWidth > window.innerHeight;
+      if (isLandscape && window.scrollY > 0) {
+        header?.classList.add("bg-hero-image");
+      } else {
+        header?.classList.remove("bg-hero-image");
+      }
+    });
+  };
+
   document.addEventListener("astro:after-swap", () => {
-    setActiveNavLinkStyles();
+    // setActiveNavLinkStyles();
   });
 
-  setActiveNavLinkStyles();
+  document.addEventListener("astro:page-load", () => {
+    showBodyHeaderBackgroundOnScroll();
+    blockScrollOnActiveNav();
+    setActiveNavLinkStyles();
+  });
 </script>

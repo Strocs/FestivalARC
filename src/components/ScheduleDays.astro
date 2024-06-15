@@ -1,0 +1,37 @@
+---
+import { DAYS } from "@data/DAYS";
+import TextTape from "./TextTape.astro";
+import { normalizePath } from "@utils/normalizePath";
+
+interface Props {
+  size?: "sm" | "md" | "base" | "lg" | "xl" | "2xl";
+  wrapperClass?: string;
+  itemsClass?: string;
+}
+
+const { wrapperClass, itemsClass, size = "xl" } = Astro.props;
+---
+
+<div
+  class:list={[
+    wrapperClass,
+    "grid grid-cols-1 landscape:grid-cols-2 2xl:landscape:grid-flow-col gap-y-12 landscape:gap-y-16 2xl:landscape:gap-y-0 landscape:gap-x-10 items-center justify-items-center h-fit w-fit mx-auto",
+  ]}
+>
+  {
+    DAYS.map(({ day, color }) => {
+      const path = normalizePath(day);
+      return (
+        <TextTape
+          aria-label={`Programación ${day}`}
+          element="a"
+          href={path}
+          class={`${itemsClass} whitespace-nowrap cursor-pointer hover:text-secondary transition-[transform] ${color} shadow-xl w-full 2xl:landscape:w-fit`}
+          size={size}
+        >
+          {day}
+        </TextTape>
+      );
+    })
+  }
+</div>

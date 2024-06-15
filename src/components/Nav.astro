@@ -1,0 +1,29 @@
+---
+import TextTape from "./TextTape.astro";
+
+interface Props {
+  size?: "sm" | "md" | "base" | "lg" | "xl" | "2xl";
+  wrapperClass?: string;
+  itemsClass?: string;
+}
+
+const { wrapperClass, itemsClass, size = "md" } = Astro.props;
+---
+
+<nav class:list={[wrapperClass, "hidden landscape:flex gap-4"]}>
+  <TextTape class={`${itemsClass} nav_links`} element="a" href="/" size={size}
+    >Inicio</TextTape
+  >
+  <TextTape
+    class={`${itemsClass} nav_links`}
+    element="a"
+    href="/prensa"
+    size={size}>Prensa</TextTape
+  >
+  <TextTape
+    class={`${itemsClass} nav_links`}
+    element="a"
+    href="/arc-2024"
+    size={size}>ARC 2024</TextTape
+  >
+</nav>
