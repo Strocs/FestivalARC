@@ -36,19 +36,3 @@ const { amount = 14 } = Astro.props;
     {Array.from(new Array(amount), () => <i />)}
   </div>
 </div>
-
-<!-- <script>
-  function getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const elements = document.querySelectorAll("i");
-    elements.forEach((el) => {
-      const x = getRandomInt(1920 - el.offsetWidth);
-      const y = getRandomInt(window.innerHeight - el.offsetHeight);
-      el.style.top = `${y}px`;
-      el.style.left = `${x}px`;
-    });
-  });
-</script> -->
