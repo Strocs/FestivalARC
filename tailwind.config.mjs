@@ -24,14 +24,14 @@ export default {
       },
       keyframes: {
         snowflakes: {
-          '0%': { transform: 'translate3d(0, 0, 0) rotate(0deg)' },
+          '0%': { transform: 'scale(1) rotate(0deg)' },
           '100%': {
-            transform: 'translate3d(25px, 1200px, 0px) rotate(360deg)'
+            transform: 'scale(1.2) rotate(25deg)'
           }
         }
       },
       animation: {
-        snowflakes: 'snowflakes 3s linear 2s infinite'
+        snowflakes: 'snowflakes 300ms steps(2,end) alternate infinite'
       },
       screens: {
         '1.5xl': '1440px'

@@ -23,10 +23,11 @@ const { wrapperClass, itemsClass, size = "xl" } = Astro.props;
       const path = normalizePath(day);
       return (
         <TextTape
+          transition:name={`day-${path}`}
           aria-label={`Programación ${day}`}
           element="a"
           href={path}
-          class={`${itemsClass} whitespace-nowrap cursor-pointer hover:text-secondary transition-[transform] ${color} shadow-xl w-full 2xl:landscape:w-fit`}
+          class={`${itemsClass} whitespace-nowrap cursor-pointer hover:text-secondary transition-[transform] ${color.background} ${color.backgroundHover} shadow-xl w-full 2xl:landscape:w-fit`}
           size={size}
         >
           {day}

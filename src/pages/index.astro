@@ -4,15 +4,13 @@ import Layout from "@layouts/Layout.astro";
 import { SITE } from "@data/SITE";
 import TextTape from "@components/TextTape.astro";
 import Snowflakes from "@components/Snowflakes.astro";
-import SnowflakeOnIcon from "@components/icons/SnowflakeOnIcon.astro";
-import SnowflakeOffIcon from "@components/icons/SnowflakeOffIcon.astro";
 import LogoARC from "@assets/Logo-ARC24.png";
 import ScheduleDays from "@components/ScheduleDays.astro";
 import Title from "@components/Title.astro";
 ---
 
 <Layout title=`Programación ${SITE.date} de Junio` headerAs="hero">
-  <Snowflakes zIndex={10} amount={10} />
+  <Snowflakes />
   <main
     class="h-full w-full flex flex-col items-center justify-center gap-[8vh] landscape:gap-24 pb-[calc(var(--footer-height)+8rem)] pt-[calc(var(--footer-height)+2rem)] bg-primary bg-hero-image"
   >
@@ -42,20 +40,10 @@ import Title from "@components/Title.astro";
         element="h2"
         class="text-2xl landscape:text-4xl text-center text-secondary max-w-xl mx-auto"
       >
-        ¡Revisa la programación!
+        ¡Revisa la <span class="text-accent-yellow">programación!</span>
       </Title>
 
       <ScheduleDays />
-    </section>
-    <section
-      class="h-fit z-50 absolute right-4 bottom-[calc(var(--footer-height)+1rem)] landscape:left-auto landscape:bottom-[calc(var(--footer-height)+3rem)] landscape:right-12"
-    >
-      <button
-        aria-label="Enciende o apaga la animación de copos de nieve"
-        id="disable-snowflakes"
-        class="bg-accent-blue text-secondary p-2 rounded-full hover:bg-black transition duration-150"
-        ><SnowflakeOnIcon /> <SnowflakeOffIcon hidden /></button
-      >
     </section>
   </main>
 </Layout>

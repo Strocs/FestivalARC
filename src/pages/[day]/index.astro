@@ -3,21 +3,71 @@ import type { GetStaticPaths } from "astro";
 import Layout from "@layouts/Layout.astro";
 import { DAYS } from "@data/DAYS";
 import { normalizePath } from "@utils/normalizePath";
+import ScheduleByTime from "@components/ScheduleByTime.astro";
+import ActivityCard from "@components/ActivityCard.astro";
 
 export const getStaticPaths = (() => {
   return DAYS.map(({ day, color, schedule }) => {
     const path = normalizePath(day);
-    return { params: { day: path }, props: { day, color, schedule } };
+    const restOfDays = DAYS.map((otherDays) => {
+      if (otherDays.day === day) return;
+      return {
+        day: otherDays.day,
+        path: normalizePath(otherDays.day),
+        hover: otherDays.color.textHover,
+      };
+    });
+    return {
+      params: { day: path },
+      props: { day, color, schedule, restOfDays, path },
+    };
   });
 }) satisfies GetStaticPaths;
 
-const { day, color, schedule } = Astro.props;
+const { day, color, schedule, restOfDays, path } = Astro.props;
+
+const times = Object.keys(schedule);
 ---
 
 <Layout title={day}>
-  <main class="w-full h-full flex flex-col items-center justify-center">
-    <h1 class="text-center text-4xl font-black">
-      Programación del día {day} - En construcción
-    </h1>
+  <main
+    class="w-full h-full grid grid-cols-[auto_600px] py-[calc(var(--footer-height)+2rem)] px-14"
+  >
+    <article class="flex flex-col gap-16">
+      <header class="flex gap-4 h-fit pl-32 pt-4">
+        <h1
+          transition:name=`day-${path}`
+          class:list={[
+            color.background,
+            "text-center text-secondary px-10 py-3 text-6xl font-black uppercase",
+          ]}
+        >
+          {day}
+        </h1>
+        <nav class="grid">
+          {
+            restOfDays.map((day) => (
+              <a
+                class:list={["font-bold text-xl duration-100", day?.hover]}
+                href={`/${day?.path}`}
+              >
+                {day?.day}
+              </a>
+            ))
+          }
+        </nav>
+      </header>
+      {
+        times.map((time) => {
+          const activities = schedule[time];
+          return (
+            <ScheduleByTime color={color} time={time} schedule={activities} />
+          );
+        })
+      }
+    </article>
+    <article class="w-full h-full relative">
+      <div class="h-full w-full bg-black sticky"></div>
+    </article>
   </main>
 </Layout>
