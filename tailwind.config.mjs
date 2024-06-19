@@ -10,7 +10,7 @@ export default {
         'accent-blue': '#1d70b7',
         'day-1': '#04bfb1',
         'day-2': '#662482',
-        'day-3': '#d9e021',
+        'day-3': '#8dba1f',
         'day-4': '#f29100'
       },
       fontFamily: {
@@ -20,7 +20,9 @@ export default {
       backgroundImage: {
         'hero-image': "url('/images/hero-image.webp')",
         'snow-ball': "url('/images/snowflake-1.png')",
-        'snow-star': "url('/images/snowflake-2.png')"
+        'snow-star': "url('/images/snowflake-2.png')",
+        texture: "url('/images/texture.svg')",
+        'white-image': "url('/images/fondo-blanco.webp')"
       },
       keyframes: {
         snowflakes: {
