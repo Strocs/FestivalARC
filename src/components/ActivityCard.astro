@@ -2,6 +2,8 @@
 import type { ACTIVITY } from "@data/DAYS";
 import CategoryLabel from "./CategoryLabel.astro";
 import CityLabel from "./CityLabel.astro";
+import AddToCalendarIcon from "./icons/AddToCalendarIcon.astro";
+import LinkArrowIcon from "./icons/LinkArrowIcon.astro";
 
 interface Props extends ACTIVITY {
   color: {
@@ -9,54 +11,78 @@ interface Props extends ACTIVITY {
   };
 }
 
-const { title, subTitle, location, city, time, category } = Astro.props;
+const { title, subTitle, location, city, time, category, tickets, color } =
+  Astro.props;
 ---
 
 <li
   class:list={[
-    "min-h-44 h-fit w-full max-w-[330px] text-secondary leading-4 px-4 pt-8 pb-6 grid relative",
-    "before:content-[''] before:w-full before:h-full before:bg-black before:absolute before:-z-20",
-    "after:content-[''] after:w-full after:h-2 after:absolute after:-z-10 after:bottom-0 after:bg-day-1 group hover:after:h-3 after:duration-150",
+    "min-h-44 h-fit w-full max-w-[340px] text-secondary leading-4 px-4 pt-8 gap-2 grid relative",
+    "before:content-[''] before:w-full before:h-full before:bg-black/90 before:absolute before:-z-20",
+    "after:content-[''] after:w-full after:h-7 after:absolute after:-z-10 after:bottom-0 group hover:after:h-full after:duration-300",
+    color.afterBackground,
   ]}
 >
-  <CityLabel city={city} />
   <CategoryLabel category={category} />
-  <div>
+  <CityLabel city={city} />
+  <header>
     <h2 class="uppercase font-bold text-accent-yellow tracking-wide">
       {title}
     </h2>
-    <span class="font-light text-sm">{subTitle}</span>
-  </div>
-  <div class="flex justify-between items-end gap-2">
+    <span class="font-light text-sm leading-3">{subTitle}</span>
+  </header>
+  <section class="flex justify-between items-end gap-4 self-end">
     <div>
       <address>
         <a
+          target="_blank"
           class="font-medium text-sm leading-3 hover:text-accent-yellow duration-150"
-          href="#">{location.name}</a
+          href={location.maps}
+          >{location.name}
+          <LinkArrowIcon size={18} /></a
         >
       </address>
       <p class="text-sm">
         {
           typeof time === "string" ? (
-            <time>{time} hrs</time>
+            <time datetime={time}>{time}hrs</time>
           ) : (
             <>
-              <time datetime="10:00">{time[0]}</time> hrs hasta las{" "}
-              <time datetime="13:00">{time[1]}</time>
+              <time datetime={time[0]}>{time[0]}hrs</time> hasta las{" "}
+              <time datetime={time[1]}>{time[1]}hrs</time>
             </>
           )
         }
       </p>
     </div>
-    <div class="space-y-2 w-fit">
-      <a
-        class="bg-primary px-4 py-1 h-fit w-fit block hover:bg-accent-blue transition duration-300"
-        href="#">tickets</a
-      >
-      <button
-        class="bg-primary px-3 py-1 h-fit whitespace-nowrap hover:bg-accent-blue transition duration-300"
-        >ver más</button
-      >
-    </div>
-  </div>
+  </section>
+  <footer
+    class="flex w-full h-fit items-center justify-center text-center gap-2 self-end py-1"
+  >
+    <button
+      class="w-fit whitespace-nowrap hover:text-accent-yellow transition duration-300"
+      >Más info</button
+    >
+    <hr class="rotate-90 border-1 border-secondary w-4" />
+    {
+      !tickets && (
+        <>
+          <a
+            class="w-fit block hover:text-accent-yellow  transition duration-300"
+            href="#"
+          >
+            Tickets
+          </a>
+          <hr class="rotate-90 border-1 border-secondary w-4" />
+        </>
+      )
+    }
+    <a
+      class="w-fit h-fit inline-block hover:text-accent-yellow transition duration-300"
+      aria-label="Agrega el evento a tu calendario"
+      href="#"
+    >
+      <AddToCalendarIcon size={20} />
+    </a>
+  </footer>
 </li>
