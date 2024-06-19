@@ -41,7 +41,7 @@ export const DAYS: DAY[] = [
           title: 'José Luis Urquieta',
           subTitle: 'Inauguración ARC 2024',
           description: '',
-          category: 'Música',
+          category: CATEGORIES.musica,
           location: { name: 'Auditorio Consistorial Municipalidad de Coquimbo', maps: 'https://www.google.com/maps/place/Construcci%C3%B3n+Edificio+Consistorial+de+Coquimbo/@-29.9547736,-71.3371278,15z/data=!4m2!3m1!1s0x0:0xd10e3a76020a2809?sa=X&ved=1t:2428&ictx=111' },
           city: 'Coquimbo',
           time: '20:00'
@@ -50,7 +50,7 @@ export const DAYS: DAY[] = [
           title: 'Lican Antay',
           subTitle: 'Inauguración ARC 2024',
           description: '',
-          category: 'Música',
+          category: CATEGORIES.musica,
           location: { name: 'Auditorio Consistorial Municipalidad de Coquimbo', maps: 'https://www.google.com/maps/place/Construcci%C3%B3n+Edificio+Consistorial+de+Coquimbo/@-29.9547736,-71.3371278,15z/data=!4m2!3m1!1s0x0:0xd10e3a76020a2809?sa=X&ved=1t:2428&ictx=111' },
           city: 'Coquimbo',
           time: '20:00'
@@ -59,7 +59,7 @@ export const DAYS: DAY[] = [
           title: 'Congreso',
           subTitle: 'Inauguración ARC 2024',
           description: '',
-          category: 'Música',
+          category: CATEGORIES.musica,
           location: { name: 'Auditorio Consistorial Municipalidad de Coquimbo', maps: 'https://www.google.com/maps/place/Construcci%C3%B3n+Edificio+Consistorial+de+Coquimbo/@-29.9547736,-71.3371278,15z/data=!4m2!3m1!1s0x0:0xd10e3a76020a2809?sa=X&ved=1t:2428&ictx=111' },
           city: 'Coquimbo',
           time: '20:00'
@@ -78,15 +78,24 @@ export const DAYS: DAY[] = [
       backgroundHover: 'hover:bg-day-2'
     },
     schedule: {
-      '': [
+      '10:00': [
         {
-          title: '',
-          subTitle: '',
+          title: 'Inauguración Expo Arte Co',
+          subTitle: '10 Artistas Regionales',
           description: '',
-          category: '',
+          category: CATEGORIES.visuales,
+          location: { name: 'Sala de Exposiciones ULS', maps: '' },
+          city: 'La Serena',
+          time: ['10:00', '18:00']
+        },
+        {
+          title: 'TALLER "HASTA QUE LEER SE HAGA COSTUMBRE: PSICOPEDAGOGÍA DE LA MEDIACIÓN LECTORA"',
+          subTitle: 'IMPARTEN "DAVID SANTOS & CONSTANZA FERNANDEZ"',
+          description: '',
+          category: CATEGORIES.literatura,
           location: { name: '', maps: '' },
-          city: '',
-          time: ['']
+          city: 'La Serena',
+          time: ['10:00', '13:00']
         },
       ]
     }
