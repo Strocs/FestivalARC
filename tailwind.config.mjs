@@ -15,9 +15,9 @@ export default {
       }
     },
     backgroundImage: {
-      'hero-image': "url('hero-image.webp')",
-      'snow-ball': "url('snowflake-1.png')",
-      'snow-star': "url('snowflake-2.png')"
+      'hero-image': "url('/hero-image.webp')",
+      'snow-ball': "url('/snowflake-1.png')",
+      'snow-star': "url('/snowflake-2.png')"
     },
     fontFamily: {
       fira: ['Fira Sans', 'sans-serif', 'system-ui'],
