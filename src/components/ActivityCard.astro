@@ -4,6 +4,7 @@ import CategoryLabel from "./CategoryLabel.astro";
 import CityLabel from "./CityLabel.astro";
 import AddToCalendarIcon from "./icons/AddToCalendarIcon.astro";
 import LinkArrowIcon from "./icons/LinkArrowIcon.astro";
+import { MoreInfoButton } from "./MoreInfoButton";
 
 interface Props extends Activity {
   color: {
@@ -11,8 +12,16 @@ interface Props extends Activity {
   };
 }
 
-const { title, subTitle, location, city, time, category, tickets, color } =
-  Astro.props;
+const {
+  title,
+  subTitle,
+  location,
+  time,
+  category,
+  tickets,
+  description,
+  color,
+} = Astro.props;
 ---
 
 <li
@@ -24,7 +33,7 @@ const { title, subTitle, location, city, time, category, tickets, color } =
   ]}
 >
   <CategoryLabel category={category} />
-  <CityLabel city={city} />
+  <CityLabel city={location.city} />
   <header>
     <h2 class="uppercase font-bold text-accent-yellow tracking-wide">
       {title}
@@ -57,32 +66,35 @@ const { title, subTitle, location, city, time, category, tickets, color } =
     </div>
   </section>
   <footer
-    class="flex w-full h-fit items-center justify-center text-center gap-2 self-end py-1"
+    class="flex w-full h-fit items-center justify-center text-center gap-2 self-end"
   >
-    <button
-      class="w-fit whitespace-nowrap hover:text-accent-yellow transition duration-300"
-      >Más info</button
+    <MoreInfoButton
+      client:load
+      data={Astro.props}
+      className="w-fit whitespace-nowrap py-1.5 hover:text-accent-yellow transition duration-300"
     >
-    <hr class="rotate-90 border-1 border-secondary w-4" />
+      Más info
+    </MoreInfoButton>
     {
       !tickets && (
         <>
+          <hr class="rotate-90 border-1 border-secondary w-4" />
           <a
-            class="w-fit block hover:text-accent-yellow  transition duration-300"
+            class="w-fit block hover:text-accent-yellow py-1.5 transition duration-300"
             href="#"
           >
             Tickets
           </a>
-          <hr class="rotate-90 border-1 border-secondary w-4" />
+          {/* <hr class="rotate-90 border-1 border-secondary w-4" /> */}
         </>
       )
     }
-    <a
+    <!-- <a
       class="w-fit h-fit inline-block hover:text-accent-yellow transition duration-300"
       aria-label="Agrega el evento a tu calendario"
       href="#"
     >
       <AddToCalendarIcon size={20} />
-    </a>
+    </a> -->
   </footer>
 </li>

@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import { DAYS } from "@data/DAYS";
 import { normalizePath } from "@utils/normalizePath";
 import ScheduleByTime from "@components/ScheduleByTime.astro";
+import { MoreInfoPanel } from "@components/MoreInfoPanel";
 
 export const getStaticPaths = (() => {
   return DAYS.map(({ day, color, schedule }) => {
@@ -73,18 +74,8 @@ const times = Object.keys(schedule);
         }
       </section>
     </article>
-    <article class="w-full h-full relative">
-      <div
-        class="hidden h-[calc(100vh-(var(--footer-height))*2)] w-full bg-black/90 bg-blend-overlay sticky top-[calc(var(--footer-height)+2rem)] p-6 text-secondary"
-      >
-        <h2 class="text-4xl font-bold">HOLA MUNDO</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-          reprehenderit natus reiciendis earum quod pariatur dolorum fuga id
-          quae veritatis, sunt at dolor sequi assumenda esse autem. Odio, ipsa
-          veritatis?
-        </p>
-      </div>
+    <article class="w-full h-full relative" id="more-info-panel-wrapper">
+      <MoreInfoPanel client:load />
     </article>
   </main>
 </Layout>
