@@ -1,18 +1,23 @@
-export const CATEGORIES = {
-  visuales: 'Artes Visuales',
-  musica: 'Música',
-  literatura: 'Literatura',
-  audiovisual: 'Audiovisual',
-  escenicas: 'Artes Escénicas',
-  artesania: 'Artesanía'
+export const enum CATEGORIES {
+  visuales = 'Artes Visuales',
+  musica = 'Música',
+  literatura = 'Literatura',
+  audiovisual = 'Audiovisual',
+  escenicas = 'Artes Escénicas',
+  artesania = 'Artesanía'
+}
+
+export const enum ARTWORK {
+  obra = 'Obra',
+  perf = 'Obra/Performance'
 }
 
 
-export const CITIES = {
-  ls: 'La Serena',
-  cq: 'Coquimbo',
-  ov: 'Ovalle',
-  ill: 'Illapel'
+export const enum CITIES {
+  ls = 'La Serena',
+  cq = 'Coquimbo',
+  ov = 'Ovalle',
+  ill = 'Illapel'
 }
 
 
@@ -28,6 +33,8 @@ export const PLACES = {
   aulaMagna: { name: 'Aula Magna ULS', maps: '' },
   palace: { name: 'Centro Cultural Palace', maps: '' },
   museoArqueologico: { name: 'Salón Auditorio "Francisco Cornely" - Museo Arqueológico', maps: '' },
-  centenario: { name: 'Teatro Centenario', maps: '' }
-
+  centenario: { name: 'Teatro Centenario', maps: '' },
+  galeria: { name: 'Galería Chile Arte', maps: '' },
+  mall: { name: 'Mall VIVO Coquimbo', maps: '' },
+  trenes: { name: 'Estación de Trenes de Ovalle', maps: '' }
 }

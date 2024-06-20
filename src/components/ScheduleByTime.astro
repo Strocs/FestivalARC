@@ -1,5 +1,5 @@
 ---
-import type { ACTIVITY, DAY } from "@data/DAYS";
+import type { Activity } from "@cTypes/types";
 import ActivityCard from "./ActivityCard.astro";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
     [key: string]: string;
   };
   time: string[] | string;
-  schedule: ACTIVITY[];
+  schedule: Activity[];
 }
 
 const { color, time, schedule } = Astro.props;

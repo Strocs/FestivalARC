@@ -1,11 +1,11 @@
 ---
-import type { ACTIVITY } from "@data/DAYS";
+import type { Activity } from "@cTypes/types";
 import CategoryLabel from "./CategoryLabel.astro";
 import CityLabel from "./CityLabel.astro";
 import AddToCalendarIcon from "./icons/AddToCalendarIcon.astro";
 import LinkArrowIcon from "./icons/LinkArrowIcon.astro";
 
-interface Props extends ACTIVITY {
+interface Props extends Activity {
   color: {
     [key: string]: string;
   };
