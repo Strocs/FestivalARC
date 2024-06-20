@@ -22,10 +22,10 @@ export interface Activity {
   description: string
   category: string
   location: {
+    city: string
     name: string
     maps: string
   }
-  city: string
   time: string[] | string
   more_info?: Array<string>[]
   tickets?: string
