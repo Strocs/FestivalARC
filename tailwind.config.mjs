@@ -11,7 +11,8 @@ export default {
         'day-1': '#04bfb1',
         'day-2': '#662482',
         'day-3': '#8dba1f',
-        'day-4': '#f29100'
+        'day-4': '#f29100',
+        black: '#060012'
       },
       fontFamily: {
         fira: ['Fira Sans', 'sans-serif', 'system-ui'],
