@@ -30,9 +30,9 @@ const { day, color, schedule, restOfDays, path } = Astro.props;
 const times = Object.keys(schedule);
 ---
 
-<Layout title={day}>
+<Layout title=`Programación ${day} de Junio`>
   <main
-    class="w-full h-full grid grid-cols-[auto] xl:grid-cols-[auto_480px] py-[calc(var(--footer-height)+2rem)] px-2 md:px-14 gap-16"
+    class="w-full h-full grid grid-cols-[auto] xl:grid-cols-[auto_480px] py-[calc(var(--footer-height)+2rem)] px-2 md:px-12 gap-14"
   >
     <article class="flex flex-col gap-12">
       <header class="flex gap-8 h-fit pt-4 items-center flex-col md:flex-row">
@@ -68,7 +68,12 @@ const times = Object.keys(schedule);
           times.map((time) => {
             const activities = schedule[time];
             return (
-              <ScheduleByTime color={color} time={time} schedule={activities} />
+              <ScheduleByTime
+                day={day}
+                color={color}
+                time={time}
+                schedule={activities}
+              />
             );
           })
         }
@@ -79,3 +84,24 @@ const times = Object.keys(schedule);
     </article>
   </main>
 </Layout>
+
+<style is:global>
+  /* Styling the scrollbar in Firefox  */
+  .scroll-thin {
+    scrollbar-color: #ee0175 transparent;
+    scrollbar-width: thin;
+  }
+
+  /* Styling the scrollbar in Chrome and Safari */
+  .scroll-thin::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background-color: #ee0175; /* Set thumb color for Chrome and Safari */
+  }
+
+  .scroll-thin::-webkit-scrollbar-track {
+    background-color: transparent; /* Set track color for Chrome and Safari */
+  }
+</style>

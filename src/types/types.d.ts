@@ -1,6 +1,6 @@
 export interface Day {
   day: string
-  color: { [key: string]: string }
+  color: Color
   schedule: {
     [key: string]: Activity[]
   }
@@ -14,6 +14,17 @@ export interface SocialMedia {
   soundcloud?: string
   x?: string
   tumblr?: string
+  flickr?: string
+}
+
+export interface Color {
+  border?: string,
+  background?: string,
+  text?: string,
+  textHover?: string,
+  borderHover?: string,
+  backgroundHover?: string,
+  afterBackground?: string
 }
 
 export interface Activity {

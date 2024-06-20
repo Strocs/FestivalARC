@@ -68,7 +68,7 @@ export const PLACES: Places = {
   palace: { city: CITIES.cq, name: 'Centro Cultural Palace', maps: '' },
   museoArqueologico: {
     city: CITIES.ls,
-    name: 'Salón Auditorio "Francisco Cornely" - Museo Arqueológico',
+    name: 'Auditorio "Francisco Cornely" - Museo Arqueológico',
     maps: ''
   },
   centenario: { city: CITIES.ls, name: 'Teatro Centenario', maps: '' },

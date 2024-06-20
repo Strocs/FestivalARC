@@ -1,27 +1,16 @@
 ---
-import type { Activity } from "@cTypes/types";
 import CategoryLabel from "./CategoryLabel.astro";
 import CityLabel from "./CityLabel.astro";
 import AddToCalendarIcon from "./icons/AddToCalendarIcon.astro";
-import LinkArrowIcon from "./icons/LinkArrowIcon.astro";
 import { MoreInfoButton } from "./MoreInfoButton";
+import Time from "./Time.astro";
+import Address from "./Address.astro";
+import type { InfoPanel } from "@store/moreInfoStore";
 
-interface Props extends Activity {
-  color: {
-    [key: string]: string;
-  };
-}
+type Props = InfoPanel;
 
-const {
-  title,
-  subTitle,
-  location,
-  time,
-  category,
-  tickets,
-  description,
-  color,
-} = Astro.props;
+const { title, subTitle, category, location, time, tickets, color } =
+  Astro.props;
 ---
 
 <li
@@ -42,27 +31,8 @@ const {
   </header>
   <section class="flex justify-between items-end gap-4 self-end">
     <div>
-      <address>
-        <a
-          target="_blank"
-          class="font-medium text-sm leading-3 hover:text-accent-yellow duration-150"
-          href={location.maps}
-          >{location.name}
-          <LinkArrowIcon size={18} /></a
-        >
-      </address>
-      <p class="text-sm">
-        {
-          typeof time === "string" ? (
-            <time datetime={time}>{time}hrs</time>
-          ) : (
-            <>
-              <time datetime={time[0]}>{time[0]}hrs</time> hasta las{" "}
-              <time datetime={time[1]}>{time[1]}hrs</time>
-            </>
-          )
-        }
-      </p>
+      <Address name={location.name} maps={location.maps} />
+      <Time time={time} />
     </div>
   </section>
   <footer

@@ -1,16 +1,15 @@
 ---
-import type { Activity } from "@cTypes/types";
+import type { Activity, Color } from "@cTypes/types";
 import ActivityCard from "./ActivityCard.astro";
 
 interface Props {
-  color: {
-    [key: string]: string;
-  };
+  color: Color;
   time: string[] | string;
   schedule: Activity[];
+  day: string;
 }
 
-const { color, time, schedule } = Astro.props;
+const { color, time, schedule, day } = Astro.props;
 ---
 
 <div class="space-y-10">
@@ -24,8 +23,12 @@ const { color, time, schedule } = Astro.props;
     >
       {time}
     </h3>
-    <ul class="flex flex-wrap gap-8 w-full">
-      {schedule.map((activity) => <ActivityCard {...activity} color={color} />)}
+    <ul class="flex flex-wrap gap-6 w-full">
+      {
+        schedule.map((activity) => (
+          <ActivityCard {...activity} day={day} color={color} />
+        ))
+      }
     </ul>
   </section>
 </div>

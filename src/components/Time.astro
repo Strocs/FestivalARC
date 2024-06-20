@@ -1,0 +1,21 @@
+---
+interface Props {
+  time: string | string[];
+  class?: string;
+}
+
+const { time, class: customStyle } = Astro.props;
+---
+
+<p class:list={["text-sm", customStyle]}>
+  {
+    typeof time === "string" ? (
+      <time datetime={time}>{time}hrs</time>
+    ) : (
+      <>
+        <time datetime={time[0]}>{time[0]}hrs</time> hasta las{" "}
+        <time datetime={time[1]}>{time[1]}hrs</time>
+      </>
+    )
+  }
+</p>

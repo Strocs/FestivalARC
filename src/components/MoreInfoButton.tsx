@@ -1,8 +1,7 @@
-import type { Activity } from '@cTypes/types'
-import { openPanel } from '@store/MoreInfoStore'
+import { openPanel, type InfoPanel } from '@store/moreInfoStore'
 
 interface Props {
-  data: Activity
+  data: InfoPanel
   className: string
   children: React.ReactNode
 }

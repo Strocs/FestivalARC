@@ -1,0 +1,24 @@
+---
+import LinkArrowIcon from "./icons/LinkArrowIcon.astro";
+
+interface Props {
+  name: string;
+  maps: string;
+  class?: string;
+}
+
+const { name, maps, class: customStyle } = Astro.props;
+---
+
+<address>
+  <a
+    target="_blank"
+    class:list={[
+      "font-medium text-sm leading-3 hover:text-accent-yellow duration-150",
+      customStyle,
+    ]}
+    href={maps}
+    >{name}
+    <LinkArrowIcon size={18} /></a
+  >
+</address>
