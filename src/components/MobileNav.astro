@@ -20,16 +20,24 @@ const { class: customStyles } = Astro.props;
     "w-screen h-full landscape:hidden flex justify-between flex-col ",
   ]}
 >
-  <Nav size="base" wrapperClass="!flex justify-center" />
+  <Nav
+    size="base"
+    wrapperClass="!flex justify-center"
+    itemsClass="tracking-wider"
+  />
   <div class="space-y-8">
     <Title
       element="h3"
       class="text-secondary max-w-[90%] mx-auto text-2xl text-center leading-6"
       >Revisa la Pogramación
     </Title>
-    <ScheduleDays size="lg" wrapperClass="grid-cols-2 gap-x-4 gap-y-8" />
+    <ScheduleDays
+      size="lg"
+      wrapperClass="grid-cols-2 gap-x-4 gap-y-8"
+      itemsClass="tracking-wider"
+    />
   </div>
-  <TextTape element="button" size="lg" class="mx-auto"
+  <TextTape element="button" size="lg" class="mx-auto tracking-wider"
     >Descarga la Programación</TextTape
   >
   <div class="w-full space-y-2">
