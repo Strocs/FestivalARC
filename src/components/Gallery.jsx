@@ -12,7 +12,7 @@ export const Gallery = ({ gallery, category }) => {
         {gallery.map(img => {
           const categoryFolder = category.toLowerCase().replaceAll(' ', '-')
           const artistFolder = img.name.toLowerCase().replaceAll(' ', '-')
-          const imagePath = `../../public/images/gallery/${categoryFolder}/${artistFolder}/${img.imgName}`
+          const imagePath = `public/images/gallery/${categoryFolder}/${artistFolder}/${img.imgName}`
 
           const { image, error, loading } = useImage(imagePath)
 
