@@ -8,10 +8,10 @@ const useImage = (filePath: string) => {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const baseUrl = import.meta.env.BASE_URL || '/';
-        console.log(baseUrl)
-        const fullPath = `${baseUrl}${filePath}`;
-        const response = await import(fullPath) // change relative path to suit your needs
+        // const baseUrl = import.meta.env.BASE_URL || '/';
+        // console.log(baseUrl)
+        // const fullPath = `${baseUrl}${filePath}`;
+        const response = await import(filePath) // change relative path to suit your needs
         setImage(response.default)
       } catch (err) {
         setError(err)
