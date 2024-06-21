@@ -15,8 +15,8 @@ const { title, subTitle, category, location, time, tickets, color } =
 
 <li
   class:list={[
-    "min-h-44 h-fit w-full max-w-[340px] text-secondary leading-4 px-4 pt-8 gap-2 grid relative",
-    "before:content-[''] before:w-full before:h-full before:bg-black/90 before:absolute before:-z-20",
+    "min-h-44 h-fit w-full max-w-[340px] leading-4 text-black px-4 pt-8 gap-2 grid relative hover:text-secondary duration-300 group shadow-xl",
+    "before:content-[''] before:w-full before:h-full before:bg-secondary before:absolute before:-z-20",
     "after:content-[''] after:w-full after:h-7 after:absolute after:-z-10 after:bottom-0 group hover:after:h-full after:duration-300",
     color.afterBackground,
   ]}
@@ -24,7 +24,9 @@ const { title, subTitle, category, location, time, tickets, color } =
   <CategoryLabel category={category} />
   <CityLabel city={location.city} />
   <header>
-    <h2 class="uppercase font-bold text-accent-yellow tracking-wide">
+    <h2
+      class="uppercase font-bold text-black group-hover:text-secondary duration-300 tracking-wide"
+    >
       {title}
     </h2>
     <span class="font-light text-sm leading-3">{subTitle}</span>
@@ -36,35 +38,27 @@ const { title, subTitle, category, location, time, tickets, color } =
     </div>
   </section>
   <footer
-    class="flex w-full h-fit items-center justify-center text-center gap-2 self-end"
+    class="flex w-full h-fit items-center justify-center text-center gap-2 self-end text-white"
   >
     <MoreInfoButton
       client:load
       data={Astro.props}
-      className="w-fit whitespace-nowrap py-1.5 hover:text-accent-yellow transition duration-300"
+      className="w-full whitespace-nowrap py-1.5 hover:text-accent-yellow transition duration-300"
     >
       Más info
     </MoreInfoButton>
     {
-      !tickets && (
+      !!tickets && (
         <>
           <hr class="rotate-90 border-1 border-secondary w-4" />
           <a
-            class="w-fit block hover:text-accent-yellow py-1.5 transition duration-300"
+            class="w-full block hover:text-accent-yellow py-1.5 transition duration-300"
             href="#"
           >
             Tickets
           </a>
-          {/* <hr class="rotate-90 border-1 border-secondary w-4" /> */}
         </>
       )
     }
-    <!-- <a
-      class="w-fit h-fit inline-block hover:text-accent-yellow transition duration-300"
-      aria-label="Agrega el evento a tu calendario"
-      href="#"
-    >
-      <AddToCalendarIcon size={20} />
-    </a> -->
   </footer>
 </li>
