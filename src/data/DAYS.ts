@@ -24,6 +24,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.musica,
           location: PLACES.consistorial,
           time: '20:00',
+          gallery: [
+            { name: 'Congreso', imgName: 'congreso-1.jpg' },
+            { name: 'Lican Antay', imgName: 'lican-antay-3.jpg' },
+            { name: 'José Luis Urquieta', imgName: 'josé-luis-urquieta-3.jpg' },
+          ],
           exhibitors: [
             {
               name: 'José Luis Urquieta',

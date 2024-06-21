@@ -9,6 +9,7 @@ import { SpotifyIcon } from './icons/SpotifyIcon'
 import { SoundcloudIcon } from './icons/SoundcloudIcon'
 import { TumblrIcon } from './icons/TumblrIcon'
 import { FlickrIcon } from './icons/FlickrIcon'
+import { Gallery } from './Gallery'
 
 interface Icons {
   [key: string]: JSX.Element
@@ -113,11 +114,11 @@ export const MoreInfoPanel = () => {
           <ul className='space-y-8 pl-4'>
             {info.exhibitors.map(exhibitor => (
               <li key={exhibitor.name}>
-                <p className='leading-5'>
+                <h4 className='leading-5'>
                   <strong className='font-medium text-2xl'>
                     {exhibitor.name}
                   </strong>
-                </p>
+                </h4>
                 {!!exhibitor.artwork && (
                   <p>
                     <strong className='font-medium'>
@@ -144,6 +145,7 @@ export const MoreInfoPanel = () => {
             ))}
           </ul>
         )}
+        <Gallery gallery={info.gallery} category={info.category} />
       </section>
       <footer className='fixed xl:sticky bottom-0 flex items-center left-0 right-0 justify-between bg-secondary px-6 pt-4 pb-6 shadow-secondary shadow-[0_-20px_20px_0px_var(--tw-shadow-color)] justify-self-end w-full'>
         <button
