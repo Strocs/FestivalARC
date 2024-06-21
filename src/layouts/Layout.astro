@@ -61,6 +61,25 @@ const { title } = Astro.props;
         height: 100%;
         width: 100%;
       }
+
+      /* Styling the scrollbar in Firefox  */
+      .scroll-thin {
+        scrollbar-color: #ee0175 transparent;
+        scrollbar-width: thin;
+      }
+
+      /* Styling the scrollbar in Chrome and Safari */
+      .scroll-thin::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      .scroll-thin::-webkit-scrollbar-thumb {
+        background-color: #ee0175; /* Set thumb color for Chrome and Safari */
+      }
+
+      .scroll-thin::-webkit-scrollbar-track {
+        background-color: transparent; /* Set track color for Chrome and Safari */
+      }
     </style>
   </body>
 </html>
