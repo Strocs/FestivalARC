@@ -12,11 +12,12 @@ export const Gallery = ({ gallery, category }) => {
         {gallery.map(img => {
           const categoryFolder = category.toLowerCase().replaceAll(' ', '-')
           const artistFolder = img.name.toLowerCase().replaceAll(' ', '-')
-          const imagePath = `./images/gallery/${categoryFolder}/${artistFolder}/${img.imgName}`
+          const imagePath = `../gallery/${categoryFolder}/${artistFolder}/${img.imgName}`
 
           const { image, error, loading } = useImage(imagePath)
 
-          if (error) return <p>Error al cargar la galería {':('}</p>
+          if (error)
+            return <p key={img.imgName}>Error al cargar la imagen {':('}</p>
 
           return (
             <>
