@@ -14,7 +14,7 @@ export const MoreInfoPanel = () => {
     }
   }, [isOpen])
 
-  if (!isOpen) return null
+  if (!isOpen) return <></>
 
   return (
     <article className='h-full xl:h-fit z-50 max-h-[calc(100vh-(var(--footer-height)))] xl:max-h-[calc(100vh-(var(--footer-height)*3))] w-full bg-black xl:bg-black/90 fixed xl:sticky top-[--footer-height] left-0 right-0 xl:top-[calc(var(--footer-height)+6rem)] p-6 text-secondary space-y-4 overflow-y-scroll scroll-thin'>
@@ -103,7 +103,7 @@ export const MoreInfoPanel = () => {
                 {!!exhibitor.social_media && (
                   <ul className='flex gap-2'>
                     {Object.entries(exhibitor.social_media).map(rrss => (
-                      <li>
+                      <li key={rrss[1]}>
                         <a target='_blank' className='' href={rrss[1]}>
                           {rrss[0]}
                         </a>

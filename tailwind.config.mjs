@@ -37,7 +37,8 @@ export default {
         snowflakes: 'snowflakes 300ms steps(2,end) alternate infinite'
       },
       screens: {
-        '1.5xl': '1440px'
+        '1.5xl': '1440px',
+        '2xl': '1542px'
       }
     }
   },
