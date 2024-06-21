@@ -5,6 +5,7 @@ import { DAYS } from "@data/DAYS";
 import { normalizePath } from "@utils/normalizePath";
 import ScheduleByTime from "@components/ScheduleByTime.astro";
 import { MoreInfoPanel } from "@components/MoreInfoPanel";
+import ArrowUpIcon from "@components/icons/ArrowUpIcon.astro";
 
 export const getStaticPaths = (() => {
   return DAYS.map(({ day, color, schedule }) => {
@@ -15,7 +16,7 @@ export const getStaticPaths = (() => {
       return {
         day: otherDays.day,
         path: normalizePath(otherDays.day),
-        hover: otherDays.color.background,
+        hover: otherDays.color.backgroundHover,
       };
     }).filter((d) => d !== undefined);
     return {
@@ -31,8 +32,14 @@ const times = Object.keys(schedule);
 ---
 
 <Layout title=`Programación ${day} de Junio`>
+  <button
+    id="back-to-top"
+    class="fixed h-fit bottom-5 w-fit right-3 p-1 group bg-primary rounded-full z-50 text-secondary"
+  >
+    <ArrowUpIcon />
+  </button>
   <main
-    class="w-full h-full grid grid-cols-[auto] xl:grid-cols-[auto_480px] py-[calc(var(--footer-height)+2rem)] px-2 md:px-12 gap-14"
+    class="w-full h-full grid grid-cols-[auto] xl:grid-cols-[auto_480px] py-[calc(var(--footer-height)+2rem)] px-2 md:px-12 gap-14 relative"
   >
     <article class="flex flex-col gap-12">
       <header class="flex gap-8 h-fit pt-4 items-center flex-col md:flex-row">
@@ -52,7 +59,7 @@ const times = Object.keys(schedule);
             restOfDays.map((day) => (
               <a
                 class:list={[
-                  "font-bold text-xl duration-100 text-secondary px-2 md:min-w-32 text-center",
+                  "font-bold text-xl duration-100 text-secondary px-2 md:min-w-32 text-center bg-black/50",
                   day?.hover,
                 ]}
                 href={`/${day?.path}`}
@@ -85,23 +92,23 @@ const times = Object.keys(schedule);
   </main>
 </Layout>
 
-<style is:global>
-  /* Styling the scrollbar in Firefox  */
-  .scroll-thin {
-    scrollbar-color: #ee0175 transparent;
-    scrollbar-width: thin;
-  }
+<script>
+  import { closePanel } from "@stores/moreInfoStore";
 
-  /* Styling the scrollbar in Chrome and Safari */
-  .scroll-thin::-webkit-scrollbar {
-    width: 10px;
-  }
+  const backToTop = () => {
+    const backToTopButton = document.getElementById(
+      "back-to-top"
+    ) as HTMLButtonElement;
+    backToTopButton.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  };
+  document.addEventListener("astro:page-load", backToTop);
 
-  .scroll-thin::-webkit-scrollbar-thumb {
-    background-color: #ee0175; /* Set thumb color for Chrome and Safari */
-  }
-
-  .scroll-thin::-webkit-scrollbar-track {
-    background-color: transparent; /* Set track color for Chrome and Safari */
-  }
-</style>
+  document.addEventListener("astro:after-swap", () => {
+    closePanel();
+  });
+</script>
