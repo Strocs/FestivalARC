@@ -23,7 +23,7 @@ const { color, time, schedule, day } = Astro.props;
     >
       {time}
     </h3>
-    <ul class="flex flex-wrap gap-6 w-full">
+    <ul class="flex flex-wrap gap-x-6 gap-y-10 w-full">
       {
         schedule.map((activity) => (
           <ActivityCard {...activity} day={day} color={color} />
