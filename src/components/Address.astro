@@ -1,5 +1,5 @@
 ---
-import LinkArrowIcon from "./icons/LinkArrowIcon.astro";
+import { LinkArrowIcon } from "./icons/LinkArrowIcon";
 
 interface Props {
   name: string;
@@ -14,7 +14,7 @@ const { name, maps, class: customStyle } = Astro.props;
   <a
     target="_blank"
     class:list={[
-      "font-medium text-sm leading-3 hover:text-accent-yellow duration-150",
+      "font-medium text-sm leading-3 hover:text-accent-yellow",
       customStyle,
     ]}
     href={maps}

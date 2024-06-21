@@ -1,0 +1,36 @@
+---
+interface Props {
+  size?: number;
+}
+
+const { size = 24 } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="group-hover:[animation:bounce_1s_infinite]"
+  ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"
+  ></path><path d="M18 11l-6 -6"></path><path d="M6 11l6 -6"></path></svg
+>
+
+<style>
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+    50% {
+      transform: translateY(-20%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+  }
+</style>
