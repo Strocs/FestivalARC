@@ -1,5 +1,5 @@
 import type { Activity } from "@cTypes/types";
-import { ARTWORK, CATEGORIES, CITIES, PLACES } from "./CONSTANTS";
+import { ARTWORK, CATEGORIES, PLACES } from "./CONSTANTS";
 
 export const EXPO = (title: string): Activity => {
   return {

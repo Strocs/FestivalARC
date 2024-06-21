@@ -4,12 +4,12 @@ import Layout from "@layouts/Layout.astro";
 import { SITE } from "@data/SITE";
 import TextTape from "@components/TextTape.astro";
 import Snowflakes from "@components/Snowflakes.astro";
-import LogoARC from "@assets/Logo-ARC24.png";
 import ScheduleDays from "@components/ScheduleDays.astro";
 import Title from "@components/Title.astro";
+import LogoARC from "@assets/Logo-ARC24.png";
 ---
 
-<Layout title={SITE.date} headerAs="hero">
+<Layout title={SITE.date}>
   <Snowflakes />
   <main
     class="h-full w-full flex flex-col items-center justify-center gap-[8vh] landscape:gap-24 pb-[calc(var(--footer-height)+8rem)] pt-[calc(var(--footer-height)+2rem)] bg-primary bg-hero-image"
@@ -47,66 +47,3 @@ import Title from "@components/Title.astro";
     </section>
   </main>
 </Layout>
-
-<script>
-  document.addEventListener("astro:page-load", () => {
-    if (window.location.pathname !== "/") return;
-    addEventListenerToDisableButton();
-    getSnowflakesFromLocalStorage();
-  });
-
-  const addEventListenerToDisableButton = () => {
-    const { snowflakes, snowflakeOn, snowflakeOff, disableSnowflakesBtn } =
-      getDomElements();
-
-    disableSnowflakesBtn.addEventListener("click", () => {
-      toggleSnowflakes();
-      updateLocalStorageSnowflakes();
-    });
-
-    const toggleSnowflakes = () => {
-      snowflakes?.classList.toggle("hidden");
-      snowflakeOn?.classList.toggle("hidden");
-      snowflakeOff?.classList.toggle("hidden");
-    };
-
-    const updateLocalStorageSnowflakes = () => {
-      if (!!disableSnowflakesBtn?.getAttribute("data-disabled")) {
-        localStorage.setItem("snowflakes", "on");
-        disableSnowflakesBtn?.removeAttribute("data-disabled");
-      } else {
-        localStorage.setItem("snowflakes", "off");
-        disableSnowflakesBtn?.setAttribute("data-disabled", "true");
-      }
-    };
-  };
-
-  const getSnowflakesFromLocalStorage = () => {
-    const { snowflakes, snowflakeOn, snowflakeOff, disableSnowflakesBtn } =
-      getDomElements();
-    const isActive = localStorage.getItem("snowflakes");
-    if (isActive === null || isActive === "on") return;
-
-    snowflakes?.classList.add("hidden");
-    snowflakeOn?.classList.add("hidden");
-    snowflakeOff?.classList.remove("hidden");
-    disableSnowflakesBtn.setAttribute("data-disabled", "true");
-  };
-
-  const getDomElements = () => {
-    const snowflakes = document.querySelector("#snowflakes");
-    const disableSnowflakesBtn = document.querySelector(
-      "#disable-snowflakes"
-    ) as HTMLButtonElement;
-
-    const snowflakeOn = document.querySelector(".snowflake-on");
-    const snowflakeOff = document.querySelector(".snowflake-off");
-
-    return {
-      snowflakes,
-      snowflakeOn,
-      snowflakeOff,
-      disableSnowflakesBtn,
-    };
-  };
-</script>

@@ -6,10 +6,10 @@ import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
-  headerAs?: string;
+  onHome?: boolean;
 }
 
-const { title, headerAs } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -48,7 +48,7 @@ const { title, headerAs } = Astro.props;
   <body
     class="w-full h-fit min-h-[100dvh] grid bg-secondary font-fira relative bg-white-image [background-attachment:fixed]"
   >
-    <Header as={headerAs} />
+    <Header />
     <slot />
     <Footer />
     <style is:global>

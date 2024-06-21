@@ -8,13 +8,12 @@ import MobileNav from "./MobileNav.astro";
 
 interface Props {
   class?: string;
-  as?: "hero" | "navbar";
 }
 
-const { class: customStyle, as = "navbar" } = Astro.props;
+const { class: customStyle } = Astro.props;
 
 const heroStyles =
-  as === "hero"
+  Astro.url.pathname === "/"
     ? { wrapper: "landscape:bg-transparent", logo: "hidden" }
     : { wrapper: "bg-hero-image", logo: "grid" };
 ---
@@ -116,10 +115,6 @@ const heroStyles =
       }
     });
   };
-
-  document.addEventListener("astro:after-swap", () => {
-    // setActiveNavLinkStyles();
-  });
 
   document.addEventListener("astro:page-load", () => {
     showBodyHeaderBackgroundOnScroll();
