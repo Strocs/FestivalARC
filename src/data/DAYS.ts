@@ -97,7 +97,6 @@ export const DAYS: Day[] = [
           location: PLACES.kamino,
           time: ['10:00', '18:00'],
           more_info: [
-            //! REVISAR RANGO DE HORARIOS
             ['Duración:', 'De 10:00 a 13:00hrs y luego de 15:00 a 18:00hrs.']
           ]
         }
