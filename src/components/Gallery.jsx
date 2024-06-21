@@ -12,7 +12,7 @@ export const Gallery = ({ gallery, category }) => {
         {gallery.map(img => {
           const categoryFolder = category.toLowerCase().replaceAll(' ', '-')
           const artistFolder = img.name.toLowerCase().replaceAll(' ', '-')
-          const imagePath = `public/images/gallery/${categoryFolder}/${artistFolder}/${img.imgName}`
+          const imagePath = `images/gallery/${categoryFolder}/${artistFolder}/${img.imgName}`
 
           const { image, error, loading } = useImage(imagePath)
 
@@ -21,7 +21,10 @@ export const Gallery = ({ gallery, category }) => {
           return (
             <>
               {loading ? (
-                <div className='w-4/5 max-h-52 aspect-auto bg-black/20'></div>
+                <div
+                  key={img.imgName}
+                  className='w-4/5 max-h-52 aspect-auto bg-black/20'
+                ></div>
               ) : (
                 <SwiperSlide key={img.imgName} className='!w-fit h-52'>
                   <img
