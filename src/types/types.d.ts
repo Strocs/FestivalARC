@@ -27,6 +27,11 @@ export interface Color {
   afterBackground?: string
 }
 
+export interface Gallery {
+  name: string
+  imgName: string
+}
+
 export interface Activity {
   title: string
   subTitle?: string
@@ -40,7 +45,7 @@ export interface Activity {
   time: string[] | string
   more_info?: Array<string>[]
   tickets?: string
-  gallery?: string[]
+  gallery?: Gallery[]
   social_media?: SocialMedia
   exhibitors?: Array<{
     name: string
