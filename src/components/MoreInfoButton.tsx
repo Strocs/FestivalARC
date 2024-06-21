@@ -1,4 +1,4 @@
-import { openPanel, type InfoPanel } from '@store/moreInfoStore'
+import { openPanel, type InfoPanel } from '@stores/moreInfoStore.ts'
 
 interface Props {
   data: InfoPanel

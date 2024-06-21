@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react'
-import { closePanel, infoPanel, isPanelOpen } from '@store/moreInfoStore'
+import { closePanel, infoPanel, isPanelOpen } from '@stores/moreInfoStore.ts'
 import { useEffect } from 'react'
 
 export const MoreInfoPanel = () => {
