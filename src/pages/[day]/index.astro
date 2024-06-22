@@ -41,8 +41,10 @@ const times = Object.keys(schedule);
   <main
     class="w-full h-full grid grid-cols-[auto] xl:grid-cols-[auto_480px] py-[calc(var(--footer-height)+2rem)] px-2 md:px-12 gap-14 relative"
   >
-    <article class="flex flex-col gap-12">
-      <header class="flex gap-8 h-fit pt-4 items-center flex-col md:flex-row">
+    <article class="flex flex-col gap-12 pt-4">
+      <header
+        class="flex gap-8 items-center flex-col md:flex-row sticky top-[-1.2rem] xxs:top-[1.2rem] md:top-[--footer-height] z-20"
+      >
         <h1
           transition:name=`day-${path}`
           class:list={[
@@ -53,7 +55,7 @@ const times = Object.keys(schedule);
           {day}
         </h1>
         <nav
-          class="flex gap-2 2xl:gap-8 justify-center md:items-end flex-wrap md:self-end"
+          class="flex gap-2 2xl:gap-8 justify-center md:items-end flex-wrap md:self-center 2xl:self-start"
         >
           {
             restOfDays.map((day) => (
