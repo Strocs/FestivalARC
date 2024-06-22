@@ -27,7 +27,7 @@ export const DAYS: Day[] = [
           gallery: [
             { name: 'Congreso', imgName: 'congreso-1.jpg' },
             { name: 'Lican Antay', imgName: 'lican-antay-3.jpg' },
-            { name: 'José Luis Urquieta', imgName: 'josé-luis-urquieta-3.jpg' },
+            { name: 'José Luis Urquieta', imgName: 'josé-luis-urquieta-3.jpg' }
           ],
           exhibitors: [
             {
@@ -95,19 +95,32 @@ export const DAYS: Day[] = [
         {
           title:
             'Taller: "Hasta que leer se haga costumbre: Psicopedagogía de la mediación lectora"',
-          subTitle: 'Imparten: David Santos Arrieta y Constanza Fernandez López',
+          subTitle:
+            'Imparten: David Santos Arrieta y Constanza Fernandez López',
           description:
             'Este taller es una jornada de aprendizaje intensiva y de carácter formativo. Se basa en los principios del aprendizaje activo, y busca que los participantes mejoren sus conocimientos y habilidades en torno a la mediación lectora y escritora. Está dirigido a docentes, personal de la educación, familias y público en general interesado en promover la lectura y escritura. Lo imparten David Santos Arrieta y Constanza Fernández López.',
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['10:00', '18:00'],
           gallery: [
-            { name: 'Hasta que leer se haga costumbre', imgName: 'hasta-que-leer-se-haga-costumbre-1.jpeg' },
-            { name: 'Hasta que leer se haga costumbre', imgName: 'hasta-que-leer-se-haga-costumbre-3.jpeg' },
-            { name: 'Hasta que leer se haga costumbre', imgName: 'hasta-que-leer-se-haga-costumbre-4.jpeg' },
+            {
+              name: 'Hasta que leer se haga costumbre',
+              imgName: 'hasta-que-leer-se-haga-costumbre-1.jpeg'
+            },
+            {
+              name: 'Hasta que leer se haga costumbre',
+              imgName: 'hasta-que-leer-se-haga-costumbre-3.jpeg'
+            },
+            {
+              name: 'Hasta que leer se haga costumbre',
+              imgName: 'hasta-que-leer-se-haga-costumbre-4.jpeg'
+            }
           ],
           more_info: [
-            ['Duración:', 'De 10:00 a 13:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)']
+            [
+              'Duración:',
+              'De 10:00 a 13:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)'
+            ]
           ]
         }
       ],
@@ -121,9 +134,18 @@ export const DAYS: Day[] = [
           location: PLACES.teatroMunicipal,
           time: '12:00',
           gallery: [
-            { name: 'El Mensajero Sideral en la Region Estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-1.jpg' },
-            { name: 'El Mensajero Sideral en la Region Estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-2.jpg' },
-            { name: 'El Mensajero Sideral en la Region Estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-3.jpg' },
+            {
+              name: 'El Mensajero Sideral en la Region Estrella',
+              imgName: 'el-mensajero-sideral-en-la-region-estrella-1.jpg'
+            },
+            {
+              name: 'El Mensajero Sideral en la Region Estrella',
+              imgName: 'el-mensajero-sideral-en-la-region-estrella-2.jpg'
+            },
+            {
+              name: 'El Mensajero Sideral en la Region Estrella',
+              imgName: 'el-mensajero-sideral-en-la-region-estrella-3.jpg'
+            }
           ],
           social_media: {
             ig: 'https://www.instagram.com/titeresojosdeagua/',
@@ -146,9 +168,18 @@ export const DAYS: Day[] = [
           location: PLACES.salonAuditorioIllapel,
           time: '17:00',
           gallery: [
-            { name: 'Todo pal patron nada pal dolor', imgName: 'todo-pal-patron-nada-pal-dolor-1.jpg' },
-            { name: 'Todo pal patron nada pal dolor', imgName: 'todo-pal-patron-nada-pal-dolor-2.jpg' },
-            { name: 'Todo pal patron nada pal dolor', imgName: 'todo-pal-patron-nada-pal-dolor-3.jpg' },
+            {
+              name: 'Todo pal patron nada pal dolor',
+              imgName: 'todo-pal-patron-nada-pal-dolor-1.jpg'
+            },
+            {
+              name: 'Todo pal patron nada pal dolor',
+              imgName: 'todo-pal-patron-nada-pal-dolor-2.jpg'
+            },
+            {
+              name: 'Todo pal patron nada pal dolor',
+              imgName: 'todo-pal-patron-nada-pal-dolor-3.jpg'
+            }
           ],
           more_info: [
             ['Dirección y Dramaturgia:', 'Rodrigo Castillo Cuello.'],
@@ -168,7 +199,7 @@ export const DAYS: Day[] = [
           location: PLACES.casaEditorial,
           time: '18:00',
           gallery: [
-            { name: 'Conversas en Red', imgName: 'conversas-en-red-2.jpg' },
+            { name: 'Conversas en Red', imgName: 'conversas-en-red-2.jpg' }
           ],
           more_info: [
             [
@@ -177,8 +208,7 @@ export const DAYS: Day[] = [
             ],
             ['Moderadora:', 'Marcela Reyes Harris.']
           ]
-        },
-
+        }
       ],
       '18:30': [
         {
@@ -192,7 +222,7 @@ export const DAYS: Day[] = [
           gallery: [
             { name: 'IDILIO', imgName: 'idilio-1.jpg' },
             { name: 'IDILIO', imgName: 'idilio-3.jpg' },
-            { name: 'IDILIO', imgName: 'idilio-4.jpg' },
+            { name: 'IDILIO', imgName: 'idilio-4.jpg' }
           ],
           social_media: {
             ig: 'https://www.instagram.com/idilio.circo/'
@@ -206,7 +236,8 @@ export const DAYS: Day[] = [
       '19:00': [
         {
           title: 'Lanzamiento de libro: "Un largo solo"',
-          subTitle: 'Presentan: Bruno Montané Krebs, Cristian Geisse Navarro y Nibaldo Acero',
+          subTitle:
+            'Presentan: Bruno Montané Krebs, Cristian Geisse Navarro y Nibaldo Acero',
           description:
             '“Un largo solo” hace gala de lo conciso y maduro de Bruno Montané, de sus reiterados intentos de alumbrar el mundo, de hacerlo inteligible y habitable, y de una observación de la existencia que, a pesar de su sutileza y elegancia, manifiesta claramente un ímpetu y vitalidad admirable, que hicieron a su amigo Roberto Bolaño decir que era una poesía hecha de “sangre suspendida en el aire”.',
           category: CATEGORIES.literatura,
@@ -215,7 +246,7 @@ export const DAYS: Day[] = [
           gallery: [
             { name: 'Un Largo Solo', imgName: 'un-largo-solo-1.jpg' },
             { name: 'Un Largo Solo', imgName: 'un-largo-solo-2.jpg' },
-            { name: 'Un Largo Solo', imgName: 'un-largo-solo-3.jpg' },
+            { name: 'Un Largo Solo', imgName: 'un-largo-solo-3.jpg' }
           ],
           more_info: [
             ['Autor:', 'Bruno Montané Krebs.'],
@@ -235,7 +266,7 @@ export const DAYS: Day[] = [
           gallery: [
             { name: 'Letargia', imgName: 'letargia-1.jpg' },
             { name: 'Letargia', imgName: 'letargia-2.jpg' },
-            { name: 'Letargia', imgName: 'letargia-3.jpg' },
+            { name: 'Letargia', imgName: 'letargia-3.jpg' }
           ],
           social_media: {
             ig: 'https://www.instagram.com/colectivolasmairesteatro/?hl=es-la',
@@ -257,9 +288,18 @@ export const DAYS: Day[] = [
           location: PLACES.aulaMagna,
           time: '19:00',
           gallery: [
-            { name: 'Lambert La rebelion de los Serenos', imgName: 'lambert-la-rebelion-de-los-serenos-2.jpg' },
-            { name: 'Lambert La rebelion de los Serenos', imgName: 'lambert-la-rebelion-de-los-serenos-3.jpg' },
-            { name: 'Lambert La rebelion de los Serenos', imgName: 'lambert-la-rebelion-de-los-serenos-4.jpg' },
+            {
+              name: 'Lambert La rebelion de los Serenos',
+              imgName: 'lambert-la-rebelion-de-los-serenos-2.jpg'
+            },
+            {
+              name: 'Lambert La rebelion de los Serenos',
+              imgName: 'lambert-la-rebelion-de-los-serenos-3.jpg'
+            },
+            {
+              name: 'Lambert La rebelion de los Serenos',
+              imgName: 'lambert-la-rebelion-de-los-serenos-4.jpg'
+            }
           ],
           social_media: {
             ig: 'https://www.instagram.com/colectivoconzumoteatro/',
@@ -284,7 +324,7 @@ export const DAYS: Day[] = [
           gallery: [
             { name: 'PINO(SHIT)', imgName: 'pino(shit)-1.jpg' },
             { name: 'PINO(SHIT)', imgName: 'pino(shit)-2.jpg' },
-            { name: 'PINO(SHIT)', imgName: 'pino(shit)-3.jpg' },
+            { name: 'PINO(SHIT)', imgName: 'pino(shit)-3.jpg' }
           ],
           social_media: {
             ig: 'https://www.instagram.com/didascalia_y_viceversa/?hl=es-la',
@@ -305,7 +345,7 @@ export const DAYS: Day[] = [
           time: '19:00',
           gallery: [
             { name: 'Amadiela', imgName: 'amadiela-1.jpg' },
-            { name: 'Amadiela', imgName: 'amadiela-2.jpg' },
+            { name: 'Amadiela', imgName: 'amadiela-2.jpg' }
           ],
           more_info: [
             ['Duración:', '65 min'],
@@ -329,12 +369,13 @@ export const DAYS: Day[] = [
           time: '21:00',
           gallery: [
             { name: 'CaFuZo', imgName: 'cafuzo-1.jpg' },
-            { name: 'Chicoria Sanchez', imgName: 'chicoria-sanchez-2.jpeg' },
+            { name: 'Chicoria Sanchez', imgName: 'chicoria-sanchez-2.jpeg' }
           ],
           exhibitors: [
             {
               name: 'Chicoria Sánchez',
-              description: 'Juan Antonio "Chicoria" Sánchez Dittborn, más conocido en la escena musical chilena como Chicoria, es un guitarrista y compositor chileno nacido en Alemania dedicado principalmente a la fusión latinoamericana y el desarrollo del folklore desde técnicas de la música clásica. Además es considerado como uno de los compositores chilenos más importantes para guitarra en la actualidad.',
+              description:
+                'Juan Antonio "Chicoria" Sánchez Dittborn, más conocido en la escena musical chilena como Chicoria, es un guitarrista y compositor chileno nacido en Alemania dedicado principalmente a la fusión latinoamericana y el desarrollo del folklore desde técnicas de la música clásica. Además es considerado como uno de los compositores chilenos más importantes para guitarra en la actualidad.',
               social_media: {
                 ig: 'https://www.instagram.com/chicoriasanchez_oficial/?hl=es',
                 fb: 'https://es-la.facebook.com/JuanAntonioChicoriaSanchez/'
@@ -342,11 +383,13 @@ export const DAYS: Day[] = [
             },
             {
               name: 'CaFuZo Fusión Latinoamericana',
-              description: 'El grupo CaFuZo, nace el año 2001, formándose en sus inicios con la participación de integrantes provenientes de distintas agrupaciones musicales, reconocidas en el ámbito artístico- musical de la cuarta región – Chile. CaFuZo recoge lo esencial de los ritmos pertenecientes a América Latina, desarrollando su lenguaje musical a través de arreglos basados en los principios de la armonía popular, clásica y moderna.',
+              description:
+                'El grupo CaFuZo, nace el año 2001, formándose en sus inicios con la participación de integrantes provenientes de distintas agrupaciones musicales, reconocidas en el ámbito artístico- musical de la cuarta región – Chile. CaFuZo recoge lo esencial de los ritmos pertenecientes a América Latina, desarrollando su lenguaje musical a través de arreglos basados en los principios de la armonía popular, clásica y moderna.',
               social_media: {
                 ig: 'https://www.instagram.com/cafuzo_fusion/?hl=es',
                 fb: 'https://www.facebook.com/cafuzofusion/?locale=es_LA',
-                spotify: 'https://open.spotify.com/intl-es/artist/0Xnn3eYTjPRbp1nNyGGsFz'
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/0Xnn3eYTjPRbp1nNyGGsFz'
               }
             }
           ]
@@ -372,18 +415,25 @@ export const DAYS: Day[] = [
           title:
             'Taller: “Noche cerrada al descampado: Ejercicios de escritura para iluminar el camino”',
           subTitle: 'Imparten: "Los Viajeros del Mary Celeste"',
-          description: 'En este taller, impartido por Los Viajeros del Mary Celeste, se realizará una breve introducción sobre las dinámicas que se han utilizado en talleres previos, donde se entrega una síntesis de las principales herramientas y recursos temáticos que han podido explorar a lo largo de los años. Luego, se pondrá en práctica a través de cuatro ejercicios escriturales. La propuesta consta de un solo taller, dividido en dos sesiones.',
+          description:
+            'En este taller, impartido por Los Viajeros del Mary Celeste, se realizará una breve introducción sobre las dinámicas que se han utilizado en talleres previos, donde se entrega una síntesis de las principales herramientas y recursos temáticos que han podido explorar a lo largo de los años. Luego, se pondrá en práctica a través de cuatro ejercicios escriturales. La propuesta consta de un solo taller, dividido en dos sesiones.',
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['10:00', '18:00'],
           gallery: [
-            { name: 'Taller Noche cerrada al descampado', imgName: 'taller-noche-cerrada-al-descampado-1.png' },
+            {
+              name: 'Taller Noche cerrada al descampado',
+              imgName: 'taller-noche-cerrada-al-descampado-1.png'
+            }
           ],
           social_media: {
             spotify: 'https://open.spotify.com/show/0145EyAYA8vdCCFezFvfVd'
           },
           more_info: [
-            ['Duración:', 'De 10:00 a 13:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)']
+            [
+              'Duración:',
+              'De 10:00 a 13:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)'
+            ]
           ]
         }
       ],
@@ -392,15 +442,23 @@ export const DAYS: Day[] = [
           title:
             'Taller de introducción y apreciación musical y sonora para cine',
           subTitle: 'Imparte: Mijael Milies',
-          description: 'Impartido por el cineasta Mijael Milies, este taller es una experiencia donde los alumnos/as a través de la teoría y la práctica conocerán las herramientas necesarias para entender la importancia del sonido y la música en el cine. El taller pretende ahondar de forma individual para que el alumno/a logre comprender y generar sensaciones sonoras que se transmiten en una película.',
+          description:
+            'Impartido por el cineasta Mijael Milies, este taller es una experiencia donde los alumnos/as a través de la teoría y la práctica conocerán las herramientas necesarias para entender la importancia del sonido y la música en el cine. El taller pretende ahondar de forma individual para que el alumno/a logre comprender y generar sensaciones sonoras que se transmiten en una película.',
           category: CATEGORIES.audiovisual,
           location: PLACES.galeria,
           time: ['11:00', '18:00'],
           gallery: [
-            { name: 'Taller de introducción y apreciación musical y sonora para cine', imgName: 'taller-de-introducción-y-apreciación-musical-y-sonora-para-cine-1.jpg' }
+            {
+              name: 'Taller de introducción y apreciación musical y sonora para cine',
+              imgName:
+                'taller-de-introducción-y-apreciación-musical-y-sonora-para-cine-1.jpg'
+            }
           ],
           more_info: [
-            ['Duración:', 'De 11:00 a 14:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)']
+            [
+              'Duración:',
+              'De 11:00 a 14:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)'
+            ]
           ],
           social_media: {
             ig: 'https://www.instagram.com/sheitan_sata/?hl=am-et'
@@ -412,19 +470,35 @@ export const DAYS: Day[] = [
           title: 'Obra: "Caleta de canciones"',
           subTitle:
             'Banda Purreira de Chicoría Sánchez en colaboración con Colectiva de Danza La Manada',
-          description: 'Espectáculo interdisciplinario, un viaje de historias divertidas y cuentos, con música original de raíz latinoamericana con sonoridades del mundo, que mediante la danza, elementos teatrales y la música en vivo invitan al goce y disfrute. Destinado a las infancias y sus familias, la invitación es a cantar y jugar con las palabras y los sentidos.',
+          description:
+            'Espectáculo interdisciplinario, un viaje de historias divertidas y cuentos, con música original de raíz latinoamericana con sonoridades del mundo, que mediante la danza, elementos teatrales y la música en vivo invitan al goce y disfrute. Destinado a las infancias y sus familias, la invitación es a cantar y jugar con las palabras y los sentidos.',
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
           time: '12:00',
           gallery: [
-            { name: 'Caleta de canciones', imgName: 'caleta-de-canciones-1.jpg' },
-            { name: 'Caleta de canciones', imgName: 'caleta-de-canciones-2.jpg' },
-            { name: 'Caleta de canciones', imgName: 'caleta-de-canciones-3.jpg' },
+            {
+              name: 'Caleta de canciones',
+              imgName: 'caleta-de-canciones-1.jpg'
+            },
+            {
+              name: 'Caleta de canciones',
+              imgName: 'caleta-de-canciones-2.jpg'
+            },
+            {
+              name: 'Caleta de canciones',
+              imgName: 'caleta-de-canciones-3.jpg'
+            }
           ],
           more_info: [
-            ['Dirección musical y de danza:', 'Chicoria Sánchez y Natalie Gutiérrez.'],
+            [
+              'Dirección musical y de danza:',
+              'Chicoria Sánchez y Natalie Gutiérrez.'
+            ],
             ['Duración:', '40 minutos.'],
-            ['Elenco de música y de danza:', 'Chicoria Sánchez, Pola Castillo, Inti Sánchez, Ankatu Alquinta, América Janequeo, Talo Pinto y Colectiva de Danza La Manada.'],
+            [
+              'Elenco de música y de danza:',
+              'Chicoria Sánchez, Pola Castillo, Inti Sánchez, Ankatu Alquinta, América Janequeo, Talo Pinto y Colectiva de Danza La Manada.'
+            ]
           ],
           social_media: {
             ig: 'https://www.instagram.com/danzalamanada/?hl=am-et',
@@ -444,38 +518,44 @@ export const DAYS: Day[] = [
           gallery: [
             { name: 'Chinoy', imgName: 'chinoy-4.png' },
             { name: 'Franka Miranda', imgName: 'franka-miranda-2.jpg' },
-            { name: 'Sexto Sol', imgName: 'sexto-sol-3.jpg' },
+            { name: 'Sexto Sol', imgName: 'sexto-sol-3.jpg' }
           ],
           exhibitors: [
             {
               name: 'Sexto Sol',
-              description: 'Sexto Sol es una banda chilena independiente que cultiva la música fusión a través de la combinación de sonoridades y géneros musicales como el rock alternativo, el folklore andino y ritmos latinos, logrando con sus letras reflexivas, una identidad propia y un sonido innovador.',
+              description:
+                'Sexto Sol es una banda chilena independiente que cultiva la música fusión a través de la combinación de sonoridades y géneros musicales como el rock alternativo, el folklore andino y ritmos latinos, logrando con sus letras reflexivas, una identidad propia y un sonido innovador.',
               social_media: {
                 ig: 'https://www.instagram.com/sexto.sol/',
                 fb: 'https://www.facebook.com/sextosol.elqui/?locale=es_LA',
                 yt: 'https://www.youtube.com/channel/UC2CGsV5CcqUUUnLQFuHB2Zw',
-                spotify: 'https://open.spotify.com/artist/3sHPR6Q6XN7WUPJDJaVwme'
+                spotify:
+                  'https://open.spotify.com/artist/3sHPR6Q6XN7WUPJDJaVwme'
               }
             },
             {
               name: 'Franka Miranda',
-              description: 'Franka Miranda es cantautora, compositora, feminista y disidente andacollina presente en la escena cultural local hace más de cinco años. Su música nos invita a reflexionar sobre temáticas de contingencia social.',
+              description:
+                'Franka Miranda es cantautora, compositora, feminista y disidente andacollina presente en la escena cultural local hace más de cinco años. Su música nos invita a reflexionar sobre temáticas de contingencia social.',
               social_media: {
                 ig: 'https://www.instagram.com/franka.miranda/?hl=es',
                 fb: 'https://www.facebook.com/franka.miranda.r/',
                 yt: 'https://www.youtube.com/channel/UCt3JlmlrEOMLtYYT8iFnOXQ',
-                spotify: 'https://open.spotify.com/intl-es/artist/0g7OGTKlAWuwh7kdTR5ngF'
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/0g7OGTKlAWuwh7kdTR5ngF'
               }
             },
             {
               name: 'Chinoy',
-              description: 'Chinoy, uno de los más singulares músicos de Chile. Con una amplia trayectoria dentro del rock y la música popular contemporánea, ha dado conciertos y recitales en América Latina, Europa y Asia. En paralelo a la música, y con vehemencia expresionista, Chinoy se ha desarrollado como pintor. A partir del 2014, hasta el presente, realiza exposiciones itinerantes a lo largo de todo Chile.',
+              description:
+                'Chinoy, uno de los más singulares músicos de Chile. Con una amplia trayectoria dentro del rock y la música popular contemporánea, ha dado conciertos y recitales en América Latina, Europa y Asia. En paralelo a la música, y con vehemencia expresionista, Chinoy se ha desarrollado como pintor. A partir del 2014, hasta el presente, realiza exposiciones itinerantes a lo largo de todo Chile.',
               social_media: {
                 ig: 'https://www.instagram.com/chinoyoficial/?hl=es',
                 fb: 'https://www.facebook.com/ChinoyOficial/?locale=es_LA',
                 x: 'https://twitter.com/chinoyoficial',
                 yt: 'https://www.youtube.com/channel/UC_-UFHIiejTWKesw0d3GQZA',
-                spotify: 'https://open.spotify.com/intl-es/artist/7ah2GYpn05JkpAIk7vop8g'
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/7ah2GYpn05JkpAIk7vop8g'
               }
             }
           ]
@@ -485,53 +565,80 @@ export const DAYS: Day[] = [
         {
           title: 'Lanzamiento del libro: “Botánica”',
           subTitle: 'Presenta: Ashle Ozuljevic Subaique',
-          description: '“Botánica” encuentra en las plantas un espejo para preguntarnos por el Yo. Observa, en cada verso, el ritmo del crecimiento, los acontecimientos que nos conforman y quedan como un nudo en el tallo. El pulso de la semilla olvidada remueve la tierra que la cubre. Cuidados, podas, contemplación. Y las raíces, el origen, el propio y el de las plantas.',
+          description:
+            '“Botánica” encuentra en las plantas un espejo para preguntarnos por el Yo. Observa, en cada verso, el ritmo del crecimiento, los acontecimientos que nos conforman y quedan como un nudo en el tallo. El pulso de la semilla olvidada remueve la tierra que la cubre. Cuidados, podas, contemplación. Y las raíces, el origen, el propio y el de las plantas.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
           time: '18:00',
           gallery: [
             { name: 'Botanica', imgName: 'botanica-1.jpg' },
             { name: 'Botanica', imgName: 'botanica-2.jpg' },
-            { name: 'Botanica', imgName: 'botanica-4.jpg' },
+            { name: 'Botanica', imgName: 'botanica-4.jpg' }
           ],
           more_info: [
             ['Autor:', 'Ashle Ozuljevic Subaique'],
-            ['Editorial:', 'Editorial Liliputiense (España, 2020) y Oxímoron (Chile, 2023)']
+            [
+              'Editorial:',
+              'Editorial Liliputiense (España, 2020) y Oxímoron (Chile, 2023)'
+            ]
           ]
-        },
+        }
       ],
       '19:00': [
         {
           title:
             'Lanzamiento del libro: “Bajo el arco camaleónico el juguetero celestial escribe diarios químicos”',
           subTitle: 'Presenta: Pía Ahumada Seura',
-          description: 'Este libro fue escrito entre los años 2017 y 2022, premiado por el Fondo Editorial Municipal Manuel Concha (La Serena) y finalmente entregado (el libro físico) en verano de 2024. El lanzamiento del libro se realizó durante la 39a Feria del Libro de La Serena realizada en 2024. La publicación se divide en dos partes. El primero presenta una novela breve y el segundo una selección de cuentos.',
+          description:
+            'Este libro fue escrito entre los años 2017 y 2022, premiado por el Fondo Editorial Municipal Manuel Concha (La Serena) y finalmente entregado (el libro físico) en verano de 2024. El lanzamiento del libro se realizó durante la 39a Feria del Libro de La Serena realizada en 2024. La publicación se divide en dos partes. El primero presenta una novela breve y el segundo una selección de cuentos.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
           time: '19:00',
           gallery: [
-            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-1.jpg' },
-            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-2.jpg' },
-            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-3.jpg' },
+            {
+              name: 'Bajo el Arco Camaleonico',
+              imgName: 'bajo-el-arco-camaleonico-1.jpg'
+            },
+            {
+              name: 'Bajo el Arco Camaleonico',
+              imgName: 'bajo-el-arco-camaleonico-2.jpg'
+            },
+            {
+              name: 'Bajo el Arco Camaleonico',
+              imgName: 'bajo-el-arco-camaleonico-3.jpg'
+            }
           ],
           more_info: [
             ['Autor:', 'Pía Ahumada Seura.'],
             ['Año de publicación:', '2023.'],
-            ['Editorial:', 'Municipalidad de La Serena. Fondo Editorial Municipal Manuel Concha.']
+            [
+              'Editorial:',
+              'Municipalidad de La Serena. Fondo Editorial Municipal Manuel Concha.'
+            ]
           ]
         },
 
         {
           title: 'Obra: “Siervas del Buen Pastor”',
           subTitle: 'Compañía "Colectivo Teatral Con-Zumo"',
-          description: 'Esta obra tiene su inspiración dramatúrgica en acontecimientos que ocurrieron en un centro de prisioneras políticas el año 1973, en la ciudad de La Serena en el contexto del golpe de estado militar y la posterior dictadura política implantada en Chile por casi dos décadas.',
+          description:
+            'Esta obra tiene su inspiración dramatúrgica en acontecimientos que ocurrieron en un centro de prisioneras políticas el año 1973, en la ciudad de La Serena en el contexto del golpe de estado militar y la posterior dictadura política implantada en Chile por casi dos décadas.',
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,
           time: '19:00',
           gallery: [
-            { name: 'Siervas del Buen Pastor', imgName: 'siervas-del-buen-pastor-2.png' },
-            { name: 'Siervas del Buen Pastor', imgName: 'siervas-del-buen-pastor-3.jpg' },
-            { name: 'Siervas del Buen Pastor', imgName: 'siervas-del-buen-pastor-4.jpg' },
+            {
+              name: 'Siervas del Buen Pastor',
+              imgName: 'siervas-del-buen-pastor-2.png'
+            },
+            {
+              name: 'Siervas del Buen Pastor',
+              imgName: 'siervas-del-buen-pastor-3.jpg'
+            },
+            {
+              name: 'Siervas del Buen Pastor',
+              imgName: 'siervas-del-buen-pastor-4.jpg'
+            }
           ],
           social_media: {
             ig: 'https://www.instagram.com/colectivoconzumoteatro/',
@@ -539,21 +646,25 @@ export const DAYS: Day[] = [
           },
           more_info: [
             ['Dramaturgia y Dirección:', 'Héctor Álvarez Godoy.'],
-            ['Elenco:', 'Vanessa Vaccaro / Javiera Vegas / Margarita Castro / Camila Molina / Nicolás Yusta.'],
+            [
+              'Elenco:',
+              'Vanessa Vaccaro / Javiera Vegas / Margarita Castro / Camila Molina / Nicolás Yusta.'
+            ],
             ['Duración:', '60 minutos.']
           ]
         },
         {
           title: 'Obra: “Stella Terral”',
           subTitle: 'Compañía "TeatroPuerto"',
-          description: 'Este es el tercer montaje del Proyecto Escritoras, el cual, a través del armado del espacio para una conferencia de prensa, se visitará en presente a la escritora serenense Stella Díaz Varín, quien a través de su irreverencia nos llevará a cuestionarnos sobre temas como la muerte, el arte y la política.',
+          description:
+            'Este es el tercer montaje del Proyecto Escritoras, el cual, a través del armado del espacio para una conferencia de prensa, se visitará en presente a la escritora serenense Stella Díaz Varín, quien a través de su irreverencia nos llevará a cuestionarnos sobre temas como la muerte, el arte y la política.',
           category: CATEGORIES.escenicas,
           location: PLACES.palace,
           time: '19:00',
           gallery: [
             { name: 'Stella Terral', imgName: 'stella-terral-1.jpg' },
             { name: 'Stella Terral', imgName: 'stella-terral-2.jpg' },
-            { name: 'Stella Terral', imgName: 'stella-terral-3.jpg' },
+            { name: 'Stella Terral', imgName: 'stella-terral-3.jpg' }
           ],
           social_media: {
             ig: 'https://www.instagram.com/teatropuerto.cl/?hl=es',
@@ -562,7 +673,7 @@ export const DAYS: Day[] = [
           more_info: [
             ['Dramaturgia:', 'Dayán Guerrero.'],
             ['Dirección:', 'Rodrigo Zarricueta.'],
-            ['Elenco:', 'April Gregory'],
+            ['Elenco:', 'April Gregory']
           ]
         }
       ],
@@ -577,36 +688,42 @@ export const DAYS: Day[] = [
           gallery: [
             { name: 'PAU', imgName: 'pau-1.jpg' },
             { name: 'D43', imgName: 'd43-3.jpg' },
-            { name: '20.98', imgName: '20.98-1.jpeg' },
+            { name: '20.98', imgName: '20.98-1.jpeg' }
           ],
           exhibitors: [
             {
               name: '20.98',
-              description: 'La casa de un caracol, la cotidianidad y la psicodelia oscilan mezclados en las canciones de 20.98, un proyecto formado en el año 2020 por Fabian, experimentando con sonidos sacados del Lo-fi hiphop y el pop creando su primer álbum de bajo presupuesto instrumental llamado ATHOME.',
+              description:
+                'La casa de un caracol, la cotidianidad y la psicodelia oscilan mezclados en las canciones de 20.98, un proyecto formado en el año 2020 por Fabian, experimentando con sonidos sacados del Lo-fi hiphop y el pop creando su primer álbum de bajo presupuesto instrumental llamado ATHOME.',
               social_media: {
                 ig: 'https://www.instagram.com/20.98__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D',
                 yt: 'https://www.youtube.com/@user-io7sx7by1o/videos',
-                spotify: 'https://open.spotify.com/intl-es/artist/5BY3C7BPtWIrS3qXKvbQCB?si=fGO2_6q8SqGiAO_cDL14pA&nd=1&dlsi=255d105a551349ef',
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/5BY3C7BPtWIrS3qXKvbQCB?si=fGO2_6q8SqGiAO_cDL14pA&nd=1&dlsi=255d105a551349ef',
                 soundcloud: 'https://soundcloud.com/20-98'
               }
             },
             {
               name: 'D43',
-              description: 'D43 es una banda de rock pop unida por la sangre, ya que esta se conforma por familiares de la región de Coquimbo. La banda nace en el año 2018, convirtiéndose en un nombre recurrente de festivales y conciertos en la región, y posicionando a D43 como pista clave para entender la música Rock Pop de la escena actual.',
+              description:
+                'D43 es una banda de rock pop unida por la sangre, ya que esta se conforma por familiares de la región de Coquimbo. La banda nace en el año 2018, convirtiéndose en un nombre recurrente de festivales y conciertos en la región, y posicionando a D43 como pista clave para entender la música Rock Pop de la escena actual.',
               social_media: {
                 ig: 'https://www.instagram.com/d43banda/',
                 fb: 'https://www.facebook.com/D43banda',
-                spotify: 'https://open.spotify.com/intl-es/album/0kUk51sVaELlrRIxuHB6k1?si=ZUviZz-cR4ayBLxN5J3gQg&nd=1&dlsi=eaef5ee0b7364afb',
+                spotify:
+                  'https://open.spotify.com/intl-es/album/0kUk51sVaELlrRIxuHB6k1?si=ZUviZz-cR4ayBLxN5J3gQg&nd=1&dlsi=eaef5ee0b7364afb',
                 yt: 'https://www.youtube.com/watch?v=a2yigB1O0Fw'
               }
             },
             {
               name: 'PAU',
-              description: '“Pau” es Pablo Acuña, cantautor y productor musical chileno. El año 2020 debutó con su álbum “Latencia” que le valió el inmediato reconocimiento espontáneo entre sus pares. Este disco lo lleva a ganar el Premio Pulsar 2021 en la categoría “Mejor Nuevo Artista”. Actualmente, se encuentra en el proceso de composición de su siguiente disco el cual será publicado a través de BlackVitamina Records.',
+              description:
+                '“Pau” es Pablo Acuña, cantautor y productor musical chileno. El año 2020 debutó con su álbum “Latencia” que le valió el inmediato reconocimiento espontáneo entre sus pares. Este disco lo lleva a ganar el Premio Pulsar 2021 en la categoría “Mejor Nuevo Artista”. Actualmente, se encuentra en el proceso de composición de su siguiente disco el cual será publicado a través de BlackVitamina Records.',
               social_media: {
                 ig: 'https://www.instagram.com/paumusica/?hl=es',
                 x: 'https://twitter.com/paumusicacl?lang=es',
-                spotify: 'https://open.spotify.com/intl-es/artist/3K8xLmnOqUqGGaLzL0DvL3',
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/3K8xLmnOqUqGGaLzL0DvL3',
                 yt: 'https://www.youtube.com/channel/UCmL6JhLX8neSIXDSyimdKow'
               }
             }
@@ -626,45 +743,53 @@ export const DAYS: Day[] = [
             { name: 'Camiseta 22', imgName: 'camiseta-22-1.jpeg' },
             { name: 'La Cumbia Records', imgName: 'la-cumbia-records-1.jpeg' },
             { name: 'Natural Esencia', imgName: 'natural-esencia-1.jpg' },
-            { name: 'Buen Punto', imgName: 'buen-punto-2.jpg' },
+            { name: 'Buen Punto', imgName: 'buen-punto-2.jpg' }
           ],
           exhibitors: [
             {
               name: 'Buen Punto',
-              description: 'Buen Punto es una banda chilena que desde el año 2016 trabaja para crear música independiente, fusionando pop lationamericano, con funk y soul.',
+              description:
+                'Buen Punto es una banda chilena que desde el año 2016 trabaja para crear música independiente, fusionando pop lationamericano, con funk y soul.',
               social_media: {
-                spotify: 'https://open.spotify.com/intl-es/artist/6o69qjnuT4UNeKWx0JcLts?si=HM1VwpN-TyuU5AYjiT3Rlg&nd=1&dlsi=f014a620be054e7d',
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/6o69qjnuT4UNeKWx0JcLts?si=HM1VwpN-TyuU5AYjiT3Rlg&nd=1&dlsi=f014a620be054e7d',
                 ig: 'https://www.instagram.com/buenpunto.musica',
                 fb: 'https://www.facebook.com/buenpuntochile'
               }
             },
             {
               name: 'Natural Esencia',
-              description: 'Natural Esencia, es un grupo de música de Hip Hop y Reggae, conformado por Luis Morales / Mc Mao (cantante), Victor Daine / Dolape (cantante) y Manuel Saavedra / Manu RMX (dj / productor). Oriundos de la ciudad Illapel, el grupo se conformó en el año 2018.',
+              description:
+                'Natural Esencia, es un grupo de música de Hip Hop y Reggae, conformado por Luis Morales / Mc Mao (cantante), Victor Daine / Dolape (cantante) y Manuel Saavedra / Manu RMX (dj / productor). Oriundos de la ciudad Illapel, el grupo se conformó en el año 2018.',
               social_media: {
                 ig: 'http://www.instagram.com/naturalesenciaoficial',
                 yt: 'http://www.youtube.com/NaturalEsencia',
-                spotify: 'https://open.spotify.com/intl-es/artist/0PJ2BWfL0Fqo6JThPjIRdJ?si=dZqvgFVmQgu7hzHSsJUF-Q',
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/0PJ2BWfL0Fqo6JThPjIRdJ?si=dZqvgFVmQgu7hzHSsJUF-Q',
                 flickr: 'https://www.flickr.com/naturalesenciaoficial'
               }
             },
             {
               name: 'La Cumbia Records',
-              description: 'Esta agrupación musical de Coquimbo fue fundada en el 2022. Mezclan la cumbia con sonidos como la salsa, el ska, el rock, el reggae y el punk, otorgando a sus ritmos y melodías una riqueza y vitalidad inigualables. Se erigen como representantes de la nueva cumbia coquimbana.',
+              description:
+                'Esta agrupación musical de Coquimbo fue fundada en el 2022. Mezclan la cumbia con sonidos como la salsa, el ska, el rock, el reggae y el punk, otorgando a sus ritmos y melodías una riqueza y vitalidad inigualables. Se erigen como representantes de la nueva cumbia coquimbana.',
               social_media: {
                 ig: 'https://www.instagram.com/lacumbiarecords/',
                 fb: 'https://www.facebook.com/p/La-Cumbia-Records-100068493217367/',
                 yt: 'https://www.youtube.com/channel/UCWL28DkMaFdBb8kK90xulJA',
-                spotify: 'https://open.spotify.com/intl-es/artist/7hqJNHJj2CRGd7UPBNvZ5i'
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/7hqJNHJj2CRGd7UPBNvZ5i'
               }
             },
             {
               name: 'Camiseta 22',
-              description: 'Camiseta 22 es la continuación natural de Guachupé, una de las bandas más convocantes de la escena musical chilena y que traspasa dicha energía y compromiso con sus hinchas en este nuevo proyecto.',
+              description:
+                'Camiseta 22 es la continuación natural de Guachupé, una de las bandas más convocantes de la escena musical chilena y que traspasa dicha energía y compromiso con sus hinchas en este nuevo proyecto.',
               social_media: {
                 ig: 'https://www.instagram.com/camiseta22oficial/?hl=es',
                 fb: 'https://www.facebook.com/camiseta22_oficial/',
-                spotify: 'https://open.spotify.com/intl-es/artist/32lMy5o72ghZijsNvPOeUf?autoplay=true',
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/32lMy5o72ghZijsNvPOeUf?autoplay=true',
                 yt: 'https://www.youtube.com/channel/UCHE4s22M0xunLbN4Yal0vMw'
               }
             }
@@ -691,73 +816,84 @@ export const DAYS: Day[] = [
           //! REVISAR INFO ARTESANOS
           title: 'Muestra de Artesanía',
           subTitle: '10 Artesanos y 3 Expositores',
-          description: 'Esta exposición se realizará el domingo 30 de junio, desde las 10:00 a las 20:00 horas, en el Mall Vivo Coquimbo. Serán 10 artesanos y tres expositores (Valentina La Mura, Mario Ignacio Bubo Barahona y María Paz Lillo).',
+          description:
+            'Esta exposición se realizará el domingo 30 de junio, desde las 10:00 a las 20:00 horas, en el Mall Vivo Coquimbo. Serán 10 artesanos y tres expositores (Valentina La Mura, Mario Ignacio Bubo Barahona y María Paz Lillo).',
           category: CATEGORIES.artesania,
           location: PLACES.mall,
           time: ['10:00', '20:00'],
-          more_info: [
-            ['!Pronto más información!', '']
-          ]
+          more_info: [['!Pronto más información!', '']]
         }
       ],
       '12:00': [
         {
-          title: 'Taller de escritura y Bioma: Exploración de la naturaleza a través de la literatura',
+          title:
+            'Taller de escritura y Bioma: Exploración de la naturaleza a través de la literatura',
           subTitle: 'Imparte: Ashle Ozuljevic Subaique',
-          description: 'Taller de escritura creativa que reúne tres géneros literarios -poesía, crónica y relato breve- a partir de un tema central: la escritura de la naturaleza. Este foco temático que puede indagarse desde una gran diversidad de posibilidades (lo científico, lo ancestral-popular, lo psicoemocional, lo ecológico, entre otros), se desarrollará desde lo identitario regional.',
+          description:
+            'Taller de escritura creativa que reúne tres géneros literarios -poesía, crónica y relato breve- a partir de un tema central: la escritura de la naturaleza. Este foco temático que puede indagarse desde una gran diversidad de posibilidades (lo científico, lo ancestral-popular, lo psicoemocional, lo ecológico, entre otros), se desarrollará desde lo identitario regional.',
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['12:00', '14:00'],
           gallery: [
             { name: 'Bioma', imgName: 'bioma-1.jpg' },
             { name: 'Bioma', imgName: 'bioma-2.jpg' },
-            { name: 'Bioma', imgName: 'bioma-3.jpg' },
-          ],
+            { name: 'Bioma', imgName: 'bioma-3.jpg' }
+          ]
         },
         {
           title: 'Obra: "Tatul, el paraíso en la Tierra"',
           subTitle: 'Compañía "La chinchilla subversiva"',
-          description: 'Obra de teatro infantil - familiar narrada y musicalizada en vivo, que pone en valor elementos del Patrimonio Natural e Inmaterial del Valle de Choapa. El Churqui, la Toponimia Pikunche, los relatos orales vinculados a los duendes, el río, los cerros, la crisis ambiental y la fauna impactada son los componentes temáticos de la obra.',
+          description:
+            'Obra de teatro infantil - familiar narrada y musicalizada en vivo, que pone en valor elementos del Patrimonio Natural e Inmaterial del Valle de Choapa. El Churqui, la Toponimia Pikunche, los relatos orales vinculados a los duendes, el río, los cerros, la crisis ambiental y la fauna impactada son los componentes temáticos de la obra.',
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
           time: '12:00',
           gallery: [
             { name: 'Tatul', imgName: 'tatul-1.jpeg' },
             { name: 'Tatul', imgName: 'tatul-2.jpeg' },
-            { name: 'Tatul', imgName: 'tatul-3.jpeg' },
-          ],
+            { name: 'Tatul', imgName: 'tatul-3.jpeg' }
+          ]
         }
       ],
       '15:00': [
         {
           title: 'Taller “Cómo contar cuentos de terror y no morir de miedo”',
           subTitle: 'Imparte: Nancy Ramos Fuentes',
-          description: 'En este taller se trabajará con cuentos cortos de terror, misterio y/o suspenso. Se realizará un ejercicio práctico de escritura y luego tras la lectura de los textos creados y otros textos clásicos del terror, se dará paso de forma lúdica al arte de la narración oral. Se entregarán pautas para la creación de textos y de expresión en la narrativa oral.',
+          description:
+            'En este taller se trabajará con cuentos cortos de terror, misterio y/o suspenso. Se realizará un ejercicio práctico de escritura y luego tras la lectura de los textos creados y otros textos clásicos del terror, se dará paso de forma lúdica al arte de la narración oral. Se entregarán pautas para la creación de textos y de expresión en la narrativa oral.',
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['15:00', '18:00'],
           gallery: [
-            { name: 'Como contar cuentos de terror', imgName: 'como-contar-cuentos-de-terror-1.jpg' },
-            { name: 'Como contar cuentos de terror', imgName: 'como-contar-cuentos-de-terror-2.jpg' },
-            { name: 'Como contar cuentos de terror', imgName: 'como-contar-cuentos-de-terror-3.jpg' },
+            {
+              name: 'Como contar cuentos de terror',
+              imgName: 'como-contar-cuentos-de-terror-1.jpg'
+            },
+            {
+              name: 'Como contar cuentos de terror',
+              imgName: 'como-contar-cuentos-de-terror-2.jpg'
+            },
+            {
+              name: 'Como contar cuentos de terror',
+              imgName: 'como-contar-cuentos-de-terror-3.jpg'
+            }
           ],
-          more_info: [
-            ['Clasificación:', '+ 14 años.']
-          ]
+          more_info: [['Clasificación:', '+ 14 años.']]
         }
       ],
       '18:00': [
         {
           title: 'Obra Circo: "Vía"',
           subTitle: 'Compañía "Circo La Cuarta Estación"',
-          description: '“VIA” es un espectáculo de circo contemporáneo que utiliza las antiguas estaciones de trenes abandonadas como espacio y las vías del tren como soporte para desplegar 5 dispositivos escenotécnicos rodantes. Las estaciones se transforman en un gran escenario y el público se convierte en un pasajero más de este viaje en el tiempo.',
+          description:
+            '“VIA” es un espectáculo de circo contemporáneo que utiliza las antiguas estaciones de trenes abandonadas como espacio y las vías del tren como soporte para desplegar 5 dispositivos escenotécnicos rodantes. Las estaciones se transforman en un gran escenario y el público se convierte en un pasajero más de este viaje en el tiempo.',
           category: CATEGORIES.escenicas,
           location: PLACES.trenes,
           time: '18:00',
           gallery: [
             { name: 'Vía', imgName: 'vía-1.jpg' },
             { name: 'Vía', imgName: 'vía-2.jpg' },
-            { name: 'Vía', imgName: 'vía-3.jpg' },
+            { name: 'Vía', imgName: 'vía-3.jpg' }
           ],
           social_media: {
             ig: 'https://www.instagram.com/circolacuartaestacion/',
@@ -765,8 +901,14 @@ export const DAYS: Day[] = [
             yt: 'https://www.youtube.com/channel/UCJPKBpXnNA1AeCF-tE-6dOg'
           },
           more_info: [
-            ['Dirección teatro y circo:', 'Carolina Cuturrufo y Sebastián Araya.'],
-            ['Elenco:', 'Valentina Pierotic / Felipe Vergara / Paula Masciangelo / Álvaro Leiva / Julieta García / Sebastian Araya / Daniela Miles / Nicola Gonzalez / Joan Uren / Sofia Devoto / Mariano Scaldafferro/ Daniela Julian.'],
+            [
+              'Dirección teatro y circo:',
+              'Carolina Cuturrufo y Sebastián Araya.'
+            ],
+            [
+              'Elenco:',
+              'Valentina Pierotic / Felipe Vergara / Paula Masciangelo / Álvaro Leiva / Julieta García / Sebastian Araya / Daniela Miles / Nicola Gonzalez / Joan Uren / Sofia Devoto / Mariano Scaldafferro/ Daniela Julian.'
+            ],
             ['Duración:', '55 minutos.']
           ]
         }
@@ -775,14 +917,15 @@ export const DAYS: Day[] = [
         {
           title: 'Obra: “Víctor Trasciende”',
           subTitle: 'Compañía "Núcleo de Autoría Escénica"',
-          description: 'Es una obra de artes escénicas teatrales desarrollada como acto conmemorativo de los 50 años del Golpe de Estado en Chile. El espectáculo escénico unipersonal es construido a partir de una investigación que estudió la vida y obra del artista, asesinado en 1973.',
+          description:
+            'Es una obra de artes escénicas teatrales desarrollada como acto conmemorativo de los 50 años del Golpe de Estado en Chile. El espectáculo escénico unipersonal es construido a partir de una investigación que estudió la vida y obra del artista, asesinado en 1973.',
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,
           time: '19:00',
           gallery: [
             { name: 'Victor Trasciende', imgName: 'victor-trasciende-1.jpg' },
             { name: 'Victor Trasciende', imgName: 'victor-trasciende-4.jpg' },
-            { name: 'Victor Trasciende', imgName: 'victor-trasciende-6.jpg' },
+            { name: 'Victor Trasciende', imgName: 'victor-trasciende-6.jpg' }
           ],
           social_media: {
             ig: 'https://www.instagram.com/nucleo_autoria_escenica/',
@@ -790,7 +933,7 @@ export const DAYS: Day[] = [
           },
           more_info: [
             ['Dirección y dramaturgia:', 'Julio Bustamante - Luis Arenas.'],
-            ['Elenco:', 'Luis Arenas.'],
+            ['Elenco:', 'Luis Arenas.']
           ]
         }
       ],
@@ -804,38 +947,47 @@ export const DAYS: Day[] = [
           time: '20:00',
           gallery: [
             { name: 'Electrodomesticos', imgName: 'electrodomesticos-1.png' },
-            { name: 'Animales de Lumiere', imgName: 'animales-de-lumiere-3.png' },
-            { name: 'Natalia Corvetto', imgName: 'natalia-corvetto-3.jpg' },
+            {
+              name: 'Animales de Lumiere',
+              imgName: 'animales-de-lumiere-3.png'
+            },
+            { name: 'Natalia Corvetto', imgName: 'natalia-corvetto-3.jpg' }
           ],
           exhibitors: [
             {
               name: 'Natalia Corvetto',
-              description: 'La coquimbana Natalia Corvetto es parte de una extensa línea de cultoras de música moderna. Su propuesta se fundamenta en los ritmos de la música popular latinoamericana, el bolero y la bossa nova como columnas centrales. Corvetto se inició en el canto a temprana edad, primero en una Iglesia y luego como solista en conciertos de la Big Band de la Universidad de La Serena.',
+              description:
+                'La coquimbana Natalia Corvetto es parte de una extensa línea de cultoras de música moderna. Su propuesta se fundamenta en los ritmos de la música popular latinoamericana, el bolero y la bossa nova como columnas centrales. Corvetto se inició en el canto a temprana edad, primero en una Iglesia y luego como solista en conciertos de la Big Band de la Universidad de La Serena.',
               social_media: {
                 ig: 'https://www.instagram.com/nataliacorvetto/?hl=es',
                 fb: 'https://www.facebook.com/nataliacorvetto/?locale=es_LA',
                 yt: 'https://www.youtube.com/c/NataliaCorvetto',
-                spotify: 'https://open.spotify.com/intl-es/artist/28N1JN0g59VCHSfg2v2n75'
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/28N1JN0g59VCHSfg2v2n75'
               }
             },
             {
               name: 'Animales de Lumière',
-              description: 'Es una banda que emergió a mediados del 2012 en Chile, que fusiona sonidos del New Wave, el ambiente del post rock y el espíritu del post punk. Sus integrantes son: Ignacio Lemus (voz y guitarra), Felipe Cortés (bajo) y Gabriel Herrera (batería y secuencias).',
+              description:
+                'Es una banda que emergió a mediados del 2012 en Chile, que fusiona sonidos del New Wave, el ambiente del post rock y el espíritu del post punk. Sus integrantes son: Ignacio Lemus (voz y guitarra), Felipe Cortés (bajo) y Gabriel Herrera (batería y secuencias).',
               social_media: {
                 ig: 'https://www.instagram.com/animalesdelumiere/',
                 fb: 'https://www.facebook.com/animalesdelumiere/?locale=es_LA',
                 yt: 'https://www.youtube.com/channel/UCUKaayU5YSt0AGTyRTp7kyw',
-                spotify: 'https://open.spotify.com/intl-es/artist/3ohdepkEGvG0O1ZleThcia'
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/3ohdepkEGvG0O1ZleThcia'
               }
             },
             {
               name: 'Electrodomésticos',
-              description: 'Electrodomésticos es un grupo musical chileno de rock alternativo e industrial, formado en Santiago en 1984. Tras disolverse en 1992 con dos álbumes, la agrupación volvió en 2002 durante tres años, manteniéndose activo establemente desde 2011.',
+              description:
+                'Electrodomésticos es un grupo musical chileno de rock alternativo e industrial, formado en Santiago en 1984. Tras disolverse en 1992 con dos álbumes, la agrupación volvió en 2002 durante tres años, manteniéndose activo establemente desde 2011.',
               social_media: {
                 ig: 'https://www.instagram.com/loselectro/?hl=es',
                 fb: 'https://www.facebook.com/ElectrodomesticosOficial/?locale=es_LA',
                 yt: 'https://www.youtube.com/channel/UCEjZv4eRuoijq7mBpWH4Jvw',
-                spotify: 'https://open.spotify.com/intl-es/artist/1jW8O5TTQQUb1G05GLxSEn?autoplay=true'
+                spotify:
+                  'https://open.spotify.com/intl-es/artist/1jW8O5TTQQUb1G05GLxSEn?autoplay=true'
               }
             }
           ]

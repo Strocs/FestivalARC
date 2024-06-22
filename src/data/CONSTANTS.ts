@@ -44,14 +44,17 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['Festival ARC', 'https://www.portaldisc.com/evento/inauguracionfestivalarc2024'],
+        [
+          'Festival ARC',
+          'https://www.portaldisc.com/evento/inauguracionfestivalarc2024'
+        ]
       ]
     }
   },
   salaExposiciones: {
     city: CITIES.ls,
     name: 'Sala de Exposiciones ULS',
-    maps: 'https://maps.app.goo.gl/pisAF9ngFG5T4axT8',
+    maps: 'https://maps.app.goo.gl/pisAF9ngFG5T4axT8'
   },
   kamino: {
     city: CITIES.ls,
@@ -63,7 +66,7 @@ export const PLACES: Places = {
         ['descampado', 'https://forms.fillout.com/t/2BAonQG1FVus'],
         ['Hasta que leer', 'https://forms.fillout.com/t/iVkD68JP3Tus'],
         ['Bioma', 'https://forms.fillout.com/t/wm9RVtM31wus'],
-        ['cuentos de terror', 'https://forms.fillout.com/t/8BdAn2L6Jbus'],
+        ['cuentos de terror', 'https://forms.fillout.com/t/8BdAn2L6Jbus']
       ]
     }
   },
@@ -98,10 +101,22 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['largo solo', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=895b1e6e926e90df019f0cf8eb258f33'],
-        ['Conversas', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=895b1e6e926e90df019f0cf8eb258f33'],
-        ['camaleónico', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=b23ab3701f822a871805f744ad888a69'],
-        ['Botánica', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=b23ab3701f822a871805f744ad888a69']
+        [
+          'largo solo',
+          'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=895b1e6e926e90df019f0cf8eb258f33'
+        ],
+        [
+          'Conversas',
+          'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=895b1e6e926e90df019f0cf8eb258f33'
+        ],
+        [
+          'camaleónico',
+          'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=b23ab3701f822a871805f744ad888a69'
+        ],
+        [
+          'Botánica',
+          'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=b23ab3701f822a871805f744ad888a69'
+        ]
       ]
     }
   },
@@ -117,8 +132,14 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['Concierto en Ovalle', 'https://ticketplus.cl/events/festival-arc-2024-concierto-en-ovalle'],
-        ['Letargia', 'https://ticketplus.cl/events/festival-arc-2024-obra-letargia'],
+        [
+          'Concierto en Ovalle',
+          'https://ticketplus.cl/events/festival-arc-2024-concierto-en-ovalle'
+        ],
+        [
+          'Letargia',
+          'https://ticketplus.cl/events/festival-arc-2024-obra-letargia'
+        ]
       ]
     }
   },
@@ -129,9 +150,18 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['Lambert', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=c7e1bf1231b3f656f8314f352bc0a700'],
-        ['Siervas', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=0a2c4984bd2e989788ee90ab288a21d8'],
-        ['Víctor', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=11b9542f68b837608a638745c9f6af3a']
+        [
+          'Lambert',
+          'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=c7e1bf1231b3f656f8314f352bc0a700'
+        ],
+        [
+          'Siervas',
+          'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=0a2c4984bd2e989788ee90ab288a21d8'
+        ],
+        [
+          'Víctor',
+          'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=11b9542f68b837608a638745c9f6af3a'
+        ]
       ]
     }
   },
@@ -142,11 +172,16 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['PINO', 'https://www.portaldisc.com/evento/centroculturalpalacearc2024'],
-        ['Stella', 'https://www.portaldisc.com/evento/centroculturalpalacearc2024']
+        [
+          'PINO',
+          'https://www.portaldisc.com/evento/centroculturalpalacearc2024'
+        ],
+        [
+          'Stella',
+          'https://www.portaldisc.com/evento/centroculturalpalacearc2024'
+        ]
       ]
     }
-
   },
   museoArqueologico: {
     city: CITIES.ls,
@@ -155,7 +190,10 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['Preestreno', 'https://www.portaldisc.com/evento/museoarqueologicoarc2024']
+        [
+          'Preestreno',
+          'https://www.portaldisc.com/evento/museoarqueologicoarc2024'
+        ]
       ]
     }
   },
@@ -167,7 +205,10 @@ export const PLACES: Places = {
       title: TICKETS.ticket,
       url: [
         ['360', 'https://www.portaldisc.com/evento/teatrocentenarioarc2024'],
-        ['Centenario', 'https://www.portaldisc.com/evento/teatrocentenarioarc2024']
+        [
+          'Centenario',
+          'https://www.portaldisc.com/evento/teatrocentenarioarc2024'
+        ]
       ]
     }
   },
@@ -177,10 +218,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/UCCkdb6gUVPqqj8v7',
     tickets: {
       title: TICKETS.form,
-      url: [
-        ['musical y sonora', 'https://forms.fillout.com/t/aJvtV9czT1us']
-      ]
-
+      url: [['musical y sonora', 'https://forms.fillout.com/t/aJvtV9czT1us']]
     }
   },
   mall: {

@@ -8,7 +8,10 @@ import { SITE } from "@data/SITE";
 import LogoARC from "../assets/Logo-ARC24.png";
 import LogoSeremi from "../assets/logo-seremi.png";
 import LogoULS from "../assets/ULS-Blanco.png";
-import Snowflakes from "@components/Snowflakes.astro";
+import LogoLS from "../assets/la-serena-logo.png";
+import LogoCoquimbo from "../assets/logos-COQUIMBO.png";
+import LogoOvalle from "../assets/logo-ovalle.png";
+import LogoIllapel from "../assets/muni-illapel.png";
 
 const organizan = [
   {
@@ -24,19 +27,19 @@ const organizan = [
 const colaboran = [
   {
     name: "Municipalidad de La Serena",
-    src: "",
+    src: LogoLS,
   },
   {
     name: "Municipalidad de Coquimbo",
-    src: "",
+    src: LogoCoquimbo,
   },
   {
     name: "Municipalidad de Ovalle",
-    src: "",
+    src: LogoOvalle,
   },
   {
     name: "Municipalidad de Illapel",
-    src: "",
+    src: LogoIllapel,
   },
 ];
 ---
@@ -96,41 +99,41 @@ const colaboran = [
         >
       </p>
     </section>
-    <div class="pt-28 space-y-4">
-      <h2 class="font-medium text-center md:text-start">Organizan:</h2>
-      <ul
-        class="flex gap-2 flex-wrap items-center justify-center md:justify-normal"
-      >
-        {
-          organizan.map((logo) => (
-            <li class="h-fit w-fit">
-              <Image
-                loading="lazy"
-                src={logo.src}
-                alt={logo.name}
-                class="max-h-32 h-full w-fit brightness-0"
-              />
-            </li>
-          ))
-        }
-      </ul>
-      <!-- <h2 class="font-medium text-center md:text-start">Colaboran:</h2>
-      <ul
-        class="flex gap-2 flex-wrap items-center justify-center md:justify-normal"
-      >
-        {
-          colaboran.map((logo) => (
-            <li class="h-fit w-fit">
-              <img
-                loading="lazy"
-                src={logo.src}
-                alt={logo.name}
-                class="max-h-24 h-full w-fit"
-              />
-            </li>
-          ))
-        }
-      </ul> -->
+    <div class="pt-28 space-y-16">
+      <div class="space-y-6">
+        <h2 class="font-medium text-center">Organizan:</h2>
+        <ul class="flex gap-2 flex-wrap items-center justify-center">
+          {
+            organizan.map((logo) => (
+              <li class="h-fit w-fit">
+                <Image
+                  loading="lazy"
+                  src={logo.src}
+                  alt={logo.name}
+                  class="max-h-32 h-full w-fit brightness-0"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="space-y-6">
+        <h2 class="font-medium text-center">Colaboran:</h2>
+        <ul class="flex gap-12 flex-wrap items-center justify-center">
+          {
+            colaboran.map((logo) => (
+              <li class="h-fit w-fit">
+                <Image
+                  loading="lazy"
+                  src={logo.src}
+                  alt={logo.name}
+                  class="max-h-24 h-full w-fit brightness-0"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </main>
 </Layout>

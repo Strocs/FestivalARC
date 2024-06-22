@@ -1,5 +1,5 @@
-import type { Activity } from "@cTypes/types";
-import { ARTWORK, CATEGORIES, PLACES } from "./CONSTANTS";
+import type { Activity } from '@cTypes/types'
+import { ARTWORK, CATEGORIES, PLACES } from './CONSTANTS'
 
 export const EXPO = (title: string): Activity => {
   return {
@@ -50,7 +50,7 @@ export const EXPO = (title: string): Activity => {
       {
         name: 'Andre Álvarez',
         imgName: 'andre-álvarez-5.jpg'
-      },
+      }
     ],
     exhibitors: [
       {
@@ -101,9 +101,7 @@ export const EXPO = (title: string): Activity => {
           type: ARTWORK.obra,
           name: 'Que no se vaya la vida'
         },
-        social_media: {
-
-        }
+        social_media: {}
       },
       {
         name: 'Felipe de Ferrari',
@@ -135,7 +133,7 @@ export const EXPO = (title: string): Activity => {
         },
         social_media: {
           ig: 'https://www.instagram.com/artistaclaudiacampos/?hl=es',
-          fb: 'https://www.facebook.com/p/Artista-Claudia-Campos-100070728224331/?locale=hi_IN&_rdr',
+          fb: 'https://www.facebook.com/p/Artista-Claudia-Campos-100070728224331/?locale=hi_IN&_rdr'
         }
       },
       {
@@ -145,8 +143,7 @@ export const EXPO = (title: string): Activity => {
           name: 'Nado en el humedal + Alzar el vuelo'
         },
         social_media: {
-          ig: 'https://www.instagram.com/lagranca/',
-
+          ig: 'https://www.instagram.com/lagranca/'
         }
       },
       {
@@ -159,7 +156,7 @@ export const EXPO = (title: string): Activity => {
           ig: 'https://www.instagram.com/lazurcida/?hl=es',
           fb: 'https://www.facebook.com/AndreAlvaoli'
         }
-      },
+      }
     ]
   }
 }
