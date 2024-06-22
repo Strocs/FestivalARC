@@ -37,7 +37,7 @@ export const EXPO = (title: string): Activity => {
       },
       {
         name: 'Claudia Suárez Jansson',
-        imgName: 'claudia-suárez-7.jpg'
+        imgName: 'claudia-suárez-jansson-7.jpg'
       },
       {
         name: 'Claudia Campos',
