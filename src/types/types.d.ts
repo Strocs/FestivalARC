@@ -32,6 +32,16 @@ export interface Gallery {
   imgName: string
 }
 
+export interface Exhibitors {
+  name: string
+  description?: string
+  artwork?: {
+    type: string
+    name: string
+  }
+  social_media: SocialMedia
+}
+
 export interface Activity {
   title: string
   subTitle?: string
@@ -47,13 +57,5 @@ export interface Activity {
   tickets?: string
   gallery?: Gallery[]
   social_media?: SocialMedia
-  exhibitors?: Array<{
-    name: string
-    description?: string
-    artwork?: {
-      type: string
-      name: string
-    }
-    social_media: SocialMedia
-  }>
+  exhibitors?: Array<Exhibitors>
 }

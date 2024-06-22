@@ -97,6 +97,15 @@ const { title } = Astro.props;
       .scroll-thin::-webkit-scrollbar-track {
         background-color: transparent; /* Set track color for Chrome and Safari */
       }
+
+      .medium-zoom-overlay {
+        z-index: 51;
+      }
+
+      .medium-zoom-image--opened {
+        z-index: 60;
+        height: 60vh;
+      }
     </style>
   </body>
 </html>

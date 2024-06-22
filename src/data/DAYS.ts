@@ -101,6 +101,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['10:00', '18:00'],
+          gallery: [
+            { name: 'Hasta que leer se haga costumbre', imgName: 'hasta-que-leer-se-haga-costumbre-1.jpeg' },
+            { name: 'Hasta que leer se haga costumbre', imgName: 'hasta-que-leer-se-haga-costumbre-3.jpeg' },
+            { name: 'Hasta que leer se haga costumbre', imgName: 'hasta-que-leer-se-haga-costumbre-4.jpeg' },
+          ],
           more_info: [
             ['Duración:', 'De 10:00 a 13:00hrs y luego de 15:00 a 18:00hrs.']
           ]
@@ -115,6 +120,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
           time: '12:00',
+          gallery: [
+            { name: 'El mensajero sideral en la region estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-1.jpg' },
+            { name: 'El mensajero sideral en la region estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-2.jpg' },
+            { name: 'El mensajero sideral en la region estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-3.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/titeresojosdeagua/',
             fb: 'https://www.facebook.com/titeresojosdeagua'
@@ -135,6 +145,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.salonAuditorioIllapel,
           time: '17:00',
+          gallery: [
+            { name: 'Todo pal patron nada pal dolor', imgName: 'todo-pal-patron-nada-pal-dolor-1.jpg' },
+            { name: 'Todo pal patron nada pal dolor', imgName: 'todo-pal-patron-nada-pal-dolor-2.jpg' },
+            { name: 'Todo pal patron nada pal dolor', imgName: 'todo-pal-patron-nada-pal-dolor-3.jpg' },
+          ],
           more_info: [
             ['Dirección y Dramaturgia:', 'Rodrigo Castillo Cuello.'],
             ['Elenco:', 'Luis Jiménez, Jean Franco Mendieta, Rodrigo Carmona.'],
@@ -151,6 +166,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
           time: '18:00',
+          gallery: [
+            { name: 'Un Largo Solo', imgName: 'un-largo-solo-1.jpg' },
+            { name: 'Un Largo Solo', imgName: 'un-largo-solo-2.jpg' },
+            { name: 'Un Largo Solo', imgName: 'un-largo-solo-3.jpg' },
+          ],
           more_info: [
             ['Autor:', 'Bruno Montané Krebs.'],
             ['Edición:', 'Geisse Navarro.'],
@@ -168,6 +188,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.plazaIllapel,
           time: '18:30',
+          gallery: [
+            { name: 'Idilio', imgName: 'idilio-1.jpg' },
+            { name: 'Idilio', imgName: 'idilio-3.jpg' },
+            { name: 'Idilio', imgName: 'idilio-4.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/idilio.circo/'
           },
@@ -187,6 +212,10 @@ export const DAYS: Day[] = [
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
           time: '19:00',
+          gallery: [
+            { name: 'Conversas en Red', imgName: 'conversas-en-red-1.jpeg' },
+            { name: 'Conversas en Red', imgName: 'conversas-en-red-2.jpg' },
+          ],
           more_info: [
             [
               'Participan:',
@@ -203,6 +232,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.tmo,
           time: '19:00',
+          gallery: [
+            { name: 'Letargia', imgName: 'letargia-1.jpg' },
+            { name: 'Letargia', imgName: 'letargia-2.jpg' },
+            { name: 'Letargia', imgName: 'letargia-3.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/colectivolasmairesteatro/?hl=es-la',
             fb: 'https://www.facebook.com/colectivolasmairesteatro/?locale=es_LA'
@@ -222,6 +256,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,
           time: '19:00',
+          gallery: [
+            { name: 'Lambert La rebelion de los Serenos', imgName: 'lambert-la-rebelion-de-los-serenos-2.jpg' },
+            { name: 'Lambert La rebelion de los Serenos', imgName: 'lambert-la-rebelion-de-los-serenos-3.jpg' },
+            { name: 'Lambert La rebelion de los Serenos', imgName: 'lambert-la-rebelion-de-los-serenos-4.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/colectivoconzumoteatro/',
             fb: 'https://www.facebook.com/colectivoteatral.conzumo/'
@@ -242,6 +281,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.palace,
           time: '19:00',
+          gallery: [
+            { name: 'Pino(shit)', imgName: 'pino(shit)-1.jpg' },
+            { name: 'Pino(shit)', imgName: 'pino(shit)-2.jpg' },
+            { name: 'Pino(shit)', imgName: 'pino(shit)-3.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/didascalia_y_viceversa/?hl=es-la',
             fb: 'https://www.facebook.com/obratango.barrial'
@@ -259,6 +303,10 @@ export const DAYS: Day[] = [
           category: CATEGORIES.audiovisual,
           location: PLACES.museoArqueologico,
           time: '19:00',
+          gallery: [
+            { name: 'Amadiela', imgName: 'amadiela-1.jpg' },
+            { name: 'Amadiela', imgName: 'amadiela-2.jpg' },
+          ],
           more_info: [
             ['Duración:', '65 min'],
             ['Dirección:', 'Mijael Milies'],
@@ -279,6 +327,10 @@ export const DAYS: Day[] = [
           category: CATEGORIES.musica,
           location: PLACES.centenario,
           time: '21:00',
+          gallery: [
+            { name: 'CaFuZo', imgName: 'cafuzo-1.jpg' },
+            { name: 'Chicoria Sanchez', imgName: 'chicoria-sanchez-2.jpeg' },
+          ],
           exhibitors: [
             {
               name: 'Chicoria Sánchez',
@@ -324,6 +376,9 @@ export const DAYS: Day[] = [
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['10:00', '18:00'],
+          gallery: [
+            { name: 'Taller Noche cerrada al descampado', imgName: 'taller-noche-cerrada-al-descampado-1.jpeg' },
+          ],
           social_media: {
             spotify: 'https://open.spotify.com/show/0145EyAYA8vdCCFezFvfVd'
           },
@@ -341,6 +396,9 @@ export const DAYS: Day[] = [
           category: CATEGORIES.audiovisual,
           location: PLACES.galeria,
           time: ['11:00', '18:00'],
+          gallery: [
+            { name: 'Taller de introducción y apreciación musical y sonora para cine', imgName: 'taller-de-introducción-y-apreciación-musical-y-sonora-para-cine-1.jpg' }
+          ],
           social_media: {
             ig: 'https://www.instagram.com/sheitan_sata/?hl=am-et'
           }
@@ -355,6 +413,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
           time: '12:00',
+          gallery: [
+            { name: 'Caleta de canciones', imgName: 'caleta-de-canciones-1.jpg' },
+            { name: 'Caleta de canciones', imgName: 'caleta-de-canciones-2.jpg' },
+            { name: 'Caleta de canciones', imgName: 'caleta-de-canciones-3.jpg' },
+          ],
           more_info: [
             ['Dirección musical y de danza:', 'Chicoria Sánchez y Natalie Gutiérrez.'],
             ['Duración:', '40 minutos.'],
@@ -375,6 +438,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.musica,
           location: PLACES.plazaIllapel,
           time: '16:00',
+          gallery: [
+            { name: 'Chinoy', imgName: 'chinoy-4.png' },
+            { name: 'Franka Miranda', imgName: 'franka-miranda-2.jpg' },
+            { name: 'Sexto Sol', imgName: 'sexto-sol-3.jpg' },
+          ],
           exhibitors: [
             {
               name: 'Sexto Sol',
@@ -419,6 +487,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
           time: '18:00',
+          gallery: [
+            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-1.jpg' },
+            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-2.jpg' },
+            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-3.jpg' },
+          ],
           more_info: [
             ['Autor:', 'Pía Ahumada Seura.'],
             ['Año de publicación:', '2023.'],
@@ -434,6 +507,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
           time: '19:00',
+          gallery: [
+            { name: 'Botanica', imgName: 'botanica-1.jpg' },
+            { name: 'Botanica', imgName: 'botanica-2.jpg' },
+            { name: 'Botanica', imgName: 'botanica-4.jpg' },
+          ],
           more_info: [
             ['Autor:', 'Ashle Ozuljevic Subaique'],
             ['Editorial:', 'Editorial Liliputiense (España, 2020) y Oxímoron (Chile, 2023)']
@@ -446,6 +524,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,
           time: '19:00',
+          gallery: [
+            { name: 'Siervas del buen pastor', imgName: 'siervas-del-buen-pastor-2.png' },
+            { name: 'Siervas del buen pastor', imgName: 'siervas-del-buen-pastor-3.jpg' },
+            { name: 'Siervas del buen pastor', imgName: 'siervas-del-buen-pastor-4.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/colectivoconzumoteatro/',
             fb: 'https://www.facebook.com/colectivoteatral.conzumo/'
@@ -463,6 +546,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.palace,
           time: '19:00',
+          gallery: [
+            { name: 'Stella terral', imgName: 'stella-terral-1.jpg' },
+            { name: 'Stella terral', imgName: 'stella-terral-2.jpg' },
+            { name: 'Stella terral', imgName: 'stella-terral-3.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/teatropuerto.cl/?hl=es',
             fb: 'https://www.facebook.com/teatropuerto/?locale=es_LA'
@@ -482,10 +570,15 @@ export const DAYS: Day[] = [
           category: CATEGORIES.musica,
           location: PLACES.teatroMunicipal,
           time: '20:00',
+          gallery: [
+            { name: 'PAU', imgName: 'pau-1.jpg' },
+            { name: 'D43', imgName: 'd43-3.jpg' },
+            { name: '20.98', imgName: '20.98-1.jpeg' },
+          ],
           exhibitors: [
             {
               name: '20.98',
-              description: 'La casa de un caracol, la cotidianidad y la psicodelia oscilan mezclados en las canciones de 20.98, un proyecto formado en el año 2020 por Fabiann, experimentando con sonidos sacados del Lo-fi hiphop y el pop creando su primer álbum de bajo presupuesto instrumental llamado ATHOME.',
+              description: 'La casa de un caracol, la cotidianidad y la psicodelia oscilan mezclados en las canciones de 20.98, un proyecto formado en el año 2020 por Fabian, experimentando con sonidos sacados del Lo-fi hiphop y el pop creando su primer álbum de bajo presupuesto instrumental llamado ATHOME.',
               social_media: {
                 ig: 'https://www.instagram.com/20.98__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D',
                 yt: 'https://www.youtube.com/@user-io7sx7by1o/videos',
@@ -525,6 +618,12 @@ export const DAYS: Day[] = [
           category: CATEGORIES.musica,
           location: PLACES.centenario,
           time: '21:00',
+          gallery: [
+            { name: 'Camiseta 22', imgName: 'camiseta-22-1.jpeg' },
+            { name: 'Cumbia Records', imgName: 'cumbia-records-1.jpeg' },
+            { name: 'Natural Esencia', imgName: 'natural-esencia-1.jpg' },
+            { name: 'Buen Punto', imgName: 'buen-punto-2.jpg' },
+          ],
           exhibitors: [
             {
               name: 'Buen Punto',
@@ -603,7 +702,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['11:00', '12:30'],
-
+          gallery: [
+            { name: 'Bioma', imgName: 'bioma-1.jpg' },
+            { name: 'Bioma', imgName: 'bioma-2.jpg' },
+            { name: 'Bioma', imgName: 'bioma-3.jpg' },
+          ],
         }
       ],
       '12:00': [
@@ -614,7 +717,12 @@ export const DAYS: Day[] = [
           description: '',
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
-          time: '12:00'
+          time: '12:00',
+          gallery: [
+            { name: 'Tatul', imgName: 'tatul-1.jpeg' },
+            { name: 'Tatul', imgName: 'tatul-2.jpeg' },
+            { name: 'Tatul', imgName: 'tatul-3.jpeg' },
+          ],
         }
       ],
       '15:00': [
@@ -625,6 +733,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['15:00', '18:00'],
+          gallery: [
+            { name: 'Como contar cuentos de terror', imgName: 'como-contar-cuentos-de-terror-1.jpg' },
+            { name: 'Como contar cuentos de terror', imgName: 'como-contar-cuentos-de-terror-2.jpg' },
+            { name: 'Como contar cuentos de terror', imgName: 'como-contar-cuentos-de-terror-3.jpg' },
+          ],
           more_info: [
             ['Clasificación:', '+ 14 años.']
           ]
@@ -638,6 +751,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.trenes,
           time: '18:00',
+          gallery: [
+            { name: 'Vía', imgName: 'vía-1.jpg' },
+            { name: 'Vía', imgName: 'vía-2.jpg' },
+            { name: 'Vía', imgName: 'vía-3.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/circolacuartaestacion/',
             fb: 'https://www.facebook.com/circolacuarta.estacion.18/?locale=es_LA',
@@ -658,6 +776,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,
           time: '19:00',
+          gallery: [
+            { name: 'Victor Trasciende', imgName: 'victor-trasciende-1.jpg' },
+            { name: 'Victor Trasciende', imgName: 'victor-trasciende-4.jpg' },
+            { name: 'Victor Trasciende', imgName: 'victor-trasciende-6.jpg' },
+          ],
           social_media: {
             ig: 'https://www.instagram.com/nucleo_autoria_escenica/',
             fb: 'https://www.facebook.com/NucleoAutoriaEscenica/'
@@ -676,6 +799,11 @@ export const DAYS: Day[] = [
           category: CATEGORIES.musica,
           location: PLACES.centenario,
           time: '20:00',
+          gallery: [
+            { name: 'Electrodomesticos', imgName: 'electrodomesticos-1.png' },
+            { name: 'Animales de Lumiere', imgName: 'animales-de-lumiere-3.png' },
+            { name: 'Natalia Corvetto', imgName: 'natalia-corvetto-3.jpg' },
+          ],
           exhibitors: [
             {
               name: 'Natalia Corvetto',

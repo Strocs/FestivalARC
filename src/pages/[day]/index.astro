@@ -4,7 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import { DAYS } from "@data/DAYS";
 import { normalizePath } from "@utils/normalizePath";
 import ScheduleByTime from "@components/ScheduleByTime.astro";
-import { MoreInfoPanel } from "@components/MoreInfoPanel";
+import { ActivityPanel } from "@components/ActivityPanel";
 import ArrowUpIcon from "@components/icons/ArrowUpIcon.astro";
 
 export const getStaticPaths = (() => {
@@ -87,13 +87,13 @@ const times = Object.keys(schedule);
       </section>
     </article>
     <article class="w-full h-full relative" id="more-info-panel-wrapper">
-      <MoreInfoPanel client:load />
+      <ActivityPanel client:load />
     </article>
   </main>
 </Layout>
 
 <script>
-  import { closePanel } from "@stores/moreInfoStore";
+  import { closePanel } from "@stores/activityInfoStore";
 
   const backToTop = () => {
     const backToTopButton = document.getElementById(

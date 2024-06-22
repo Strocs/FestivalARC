@@ -1,4 +1,4 @@
-import { openPanel, type InfoPanel } from '@stores/moreInfoStore.ts'
+import { openPanel, type InfoPanel } from '@stores/activityInfoStore'
 
 interface Props {
   data: InfoPanel
@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export const MoreInfoButton = ({
+export const OpenActivityPanel = ({
   data,
   children,
   className: customStyle

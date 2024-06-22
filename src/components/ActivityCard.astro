@@ -2,10 +2,10 @@
 import CategoryLabel from "./CategoryLabel.astro";
 import CityLabel from "./CityLabel.astro";
 // import AddToCalendarIcon from "./icons/AddToCalendarIcon.astro";
-import { MoreInfoButton } from "./MoreInfoButton";
+import { OpenActivityPanel } from "./OpenActivityPanel";
 import Time from "./Time.astro";
 import Address from "./Address.astro";
-import type { InfoPanel } from "@stores/moreInfoStore";
+import type { InfoPanel } from "@stores/activityInfoStore";
 
 type Props = InfoPanel;
 
@@ -40,13 +40,13 @@ const { title, subTitle, category, location, time, tickets, color } =
   <footer
     class="flex w-full h-fit items-center justify-center text-center gap-2 self-end text-white"
   >
-    <MoreInfoButton
+    <OpenActivityPanel
       client:load
       data={Astro.props}
       className="w-full whitespace-nowrap py-1.5 hover:text-accent-yellow transition duration-300"
     >
       Más info
-    </MoreInfoButton>
+    </OpenActivityPanel>
     {
       !!tickets && (
         <>

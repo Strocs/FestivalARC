@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react'
-import { closePanel, infoPanel, isPanelOpen } from '@stores/moreInfoStore.ts'
+import { closePanel, infoPanel, isPanelOpen } from '@stores/activityInfoStore'
 import { useEffect } from 'react'
 import { InstagramIcon } from './icons/InstagramIcon'
 import { FacebookIcon } from './icons/FacebookIcon'
@@ -9,7 +9,9 @@ import { SpotifyIcon } from './icons/SpotifyIcon'
 import { SoundcloudIcon } from './icons/SoundcloudIcon'
 import { TumblrIcon } from './icons/TumblrIcon'
 import { FlickrIcon } from './icons/FlickrIcon'
-import { Gallery } from './Gallery'
+import { ActivityGallery } from './ActivityGallery'
+import { ActivityExhibitors } from './ActivityExhibitors'
+import { ActivityMoreInfo } from './ActivityMoreInfo'
 
 interface Icons {
   [key: string]: JSX.Element
@@ -26,7 +28,7 @@ const ICONS: Icons = {
   flickr: <FlickrIcon size={24} />
 }
 
-export const MoreInfoPanel = () => {
+export const ActivityPanel = () => {
   const isOpen = useStore(isPanelOpen)
   const info = useStore(infoPanel)
 
@@ -78,74 +80,9 @@ export const MoreInfoPanel = () => {
       </header>
       <section className='space-y-4 pb-[calc(var(--footer-height)+4rem)] px-6'>
         <p className='leading-5 max-w-prose'>{info.description}</p>
-        {!!info.more_info && (
-          <ul className='space-y-2'>
-            {info.more_info.map(item => {
-              function Item ({ children }: React.PropsWithChildren) {
-                return (
-                  <li>
-                    <p className='leading-5'>
-                      <strong className='font-medium'>{item[0]}</strong>{' '}
-                      {children}
-                    </p>
-                  </li>
-                )
-              }
-
-              if (item[0].includes('Teaser')) {
-                return (
-                  <Item key={item[0]}>
-                    <a
-                      target='_blank'
-                      href={item[1]}
-                      className='hover:text-accent-yellow underline'
-                    >
-                      Ver en YouTube
-                    </a>
-                  </Item>
-                )
-              }
-              return <Item key={item[0]}>{item[1]}</Item>
-            })}
-          </ul>
-        )}
-
-        {!!info.exhibitors && (
-          <ul className='space-y-8 pl-4'>
-            {info.exhibitors.map(exhibitor => (
-              <li key={exhibitor.name}>
-                <h4 className='leading-5'>
-                  <strong className='font-medium text-2xl'>
-                    {exhibitor.name}
-                  </strong>
-                </h4>
-                {!!exhibitor.artwork && (
-                  <p>
-                    <strong className='font-medium'>
-                      {exhibitor.artwork.type}:{' '}
-                    </strong>
-                    {exhibitor.artwork.name}
-                  </p>
-                )}
-                {!!exhibitor.social_media && (
-                  <ul className='flex gap-2 items-center my-1'>
-                    {Object.entries(exhibitor.social_media).map(rrss => (
-                      <li key={rrss[1]}>
-                        <a target='_blank' className='block' href={rrss[1]}>
-                          {ICONS[rrss[0]]}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <p className='text-sm font-light text-pretty'>
-                  {exhibitor.description}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
-        <Gallery gallery={info.gallery} category={info.category} />
+        <ActivityMoreInfo moreInfo={info.more_info} />
+        <ActivityExhibitors exhibitors={info.exhibitors} ICONS={ICONS} />
+        <ActivityGallery gallery={info.gallery} category={info.category} />
       </section>
       <footer className='fixed xl:sticky bottom-0 flex items-center left-0 right-0 justify-between bg-secondary px-6 pt-4 pb-6 shadow-secondary shadow-[0_-20px_20px_0px_var(--tw-shadow-color)] justify-self-end w-full'>
         <button

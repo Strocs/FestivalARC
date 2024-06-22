@@ -10,6 +10,48 @@ export const EXPO = (title: string): Activity => {
     category: CATEGORIES.visuales,
     location: PLACES.salaExposiciones,
     time: ['10:00', '18:00'],
+    gallery: [
+      {
+        name: 'Ulises López',
+        imgName: 'ulises-lópez-1.jpg'
+      },
+      {
+        name: 'Sandy Baptista',
+        imgName: 'sandy-baptista-7.jpg'
+      },
+      {
+        name: 'María Piedad Aguirre',
+        imgName: 'maría-piedad-aguirre-2.jpeg'
+      },
+      {
+        name: 'Luis Cáceres',
+        imgName: 'luis-cáceres-6.jpg'
+      },
+      {
+        name: 'Fernando Pizarro',
+        imgName: 'fernando-pizarro-3.jpg'
+      },
+      {
+        name: 'Felipe de Ferrari',
+        imgName: 'felipe-de-ferrari-4.jpg'
+      },
+      {
+        name: 'Claudia Suárez',
+        imgName: 'claudia-suárez-7.jpg'
+      },
+      {
+        name: 'Claudia Campos',
+        imgName: 'claudia-campos-1.jpg'
+      },
+      {
+        name: 'Carolina Muñoz',
+        imgName: 'carolina-muñoz-6.jpg'
+      },
+      {
+        name: 'Andre Álvarez',
+        imgName: 'andre-álvarez-5.jpg'
+      },
+    ],
     exhibitors: [
       {
         name: 'Ulises López',
