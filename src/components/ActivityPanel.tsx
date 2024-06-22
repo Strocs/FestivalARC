@@ -57,23 +57,37 @@ export const ActivityPanel = () => {
             </>
           )}
         </p>
-        <ul className='flex gap-2 flex-wrap mt-2'>
-          <li className='bg-black/30 text-secondary font-medium px-2 py-1 leading-4'>
+        {!!info.location.tickets ? (
+          <a
+            href={info.location.tickets.url}
+            className={`block px-2 py-1 text-secondary w-fit my-6 ${info.color.background} hover:bg-primary duration-150`}
+          >
+            {info.location.tickets.title}
+          </a>
+        ) : (
+          <p
+            className={`block px-2 py-1 text-secondary w-fit my-6 ${info.color.background} hover:bg-primary duration-150 cursor-default`}
+          >
+            Entrada liberada
+          </p>
+        )}
+        <ul className='flex gap-2 flex-wrap my-2'>
+          <li className='bg-black/30 text-secondary font-medium px-2 py-1 '>
             {info.day}
           </li>
-          <li className='bg-black/30 text-secondary font-medium px-2 py-1 leading-4'>
+          <li className='bg-black/30 text-secondary font-medium px-2 py-1 '>
             {info.category}
           </li>
           <li className='bg-black/30 text-secondary font-medium'>
             <a
               target='_blank'
-              className='px-2 py-1 block hover:text-accent-yellow leading-4'
+              className='px-2 py-1 block hover:text-accent-yellow '
               href={info.location.maps}
             >
               {info.location.name}
             </a>
           </li>
-          <li className='bg-black/30 text-secondary font-medium px-2 py-1 leading-4'>
+          <li className='bg-black/30 text-secondary font-medium px-2 py-1 '>
             {info.location.city}
           </li>
         </ul>
@@ -86,7 +100,7 @@ export const ActivityPanel = () => {
       </section>
       <footer className='fixed xl:sticky bottom-0 flex items-center left-0 right-0 justify-between bg-secondary px-6 pt-4 pb-6 shadow-secondary shadow-[0_-20px_20px_0px_var(--tw-shadow-color)] justify-self-end w-full'>
         <button
-          className={`px-4 py-0.5 bg-primary text-white ${info.color.backgroundHover} duration-150`}
+          className={`px-4 py-0.5 text-white ${info.color.background} hover:bg-primary duration-150`}
           onClick={closePanel}
         >
           Cerrar

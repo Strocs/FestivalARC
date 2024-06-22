@@ -51,10 +51,13 @@ export interface Activity {
     city: string
     name: string
     maps: string
+    tickets?: {
+      title: string
+      url: string
+    }
   }
   time: string[] | string
   more_info?: Array<string>[]
-  tickets?: string
   gallery?: Gallery[]
   social_media?: SocialMedia
   exhibitors?: Array<Exhibitors>

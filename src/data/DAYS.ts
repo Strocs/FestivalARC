@@ -274,7 +274,7 @@ export const DAYS: Day[] = [
           ]
         },
         {
-          title: 'Obra: "Pino(shit)"',
+          title: 'Obra: "PINO(SHIT)"',
           subTitle: 'Compañía "Didascalia y viceversa"',
           description:
             'Una cocinera prepara la tradicional empanada de pino mientras viaja con los ingredientes e historias llenas de recuerdos impregnados de una cultura típica chilena.',
@@ -282,9 +282,9 @@ export const DAYS: Day[] = [
           location: PLACES.palace,
           time: '19:00',
           gallery: [
-            { name: 'Pino(shit)', imgName: 'pino(shit)-1.jpg' },
-            { name: 'Pino(shit)', imgName: 'pino(shit)-2.jpg' },
-            { name: 'Pino(shit)', imgName: 'pino(shit)-3.jpg' },
+            { name: 'PINO(SHIT)', imgName: 'pino(shit)-1.jpg' },
+            { name: 'PINO(SHIT)', imgName: 'pino(shit)-2.jpg' },
+            { name: 'PINO(SHIT)', imgName: 'pino(shit)-3.jpg' },
           ],
           social_media: {
             ig: 'https://www.instagram.com/didascalia_y_viceversa/?hl=es-la',
@@ -377,7 +377,7 @@ export const DAYS: Day[] = [
           location: PLACES.kamino,
           time: ['10:00', '18:00'],
           gallery: [
-            { name: 'Taller Noche cerrada al descampado', imgName: 'taller-noche-cerrada-al-descampado-1.jpeg' },
+            { name: 'Taller Noche cerrada al descampado', imgName: 'taller-noche-cerrada-al-descampado-1.png' },
           ],
           social_media: {
             spotify: 'https://open.spotify.com/show/0145EyAYA8vdCCFezFvfVd'
@@ -564,11 +564,11 @@ export const DAYS: Day[] = [
       ],
       '20:00': [
         {
-          title: 'Concierto en La Serena',
+          title: 'Concierto en Ovalle',
           subTitle: '20.98, D43 y PAU',
           description: '',
           category: CATEGORIES.musica,
-          location: PLACES.teatroMunicipal,
+          location: PLACES.tmo,
           time: '20:00',
           gallery: [
             { name: 'PAU', imgName: 'pau-1.jpg' },
@@ -620,7 +620,7 @@ export const DAYS: Day[] = [
           time: '21:00',
           gallery: [
             { name: 'Camiseta 22', imgName: 'camiseta-22-1.jpeg' },
-            { name: 'Cumbia Records', imgName: 'cumbia-records-1.jpeg' },
+            { name: 'La Cumbia Records', imgName: 'la-cumbia-records-1.jpeg' },
             { name: 'Natural Esencia', imgName: 'natural-esencia-1.jpg' },
             { name: 'Buen Punto', imgName: 'buen-punto-2.jpg' },
           ],
@@ -645,7 +645,7 @@ export const DAYS: Day[] = [
               }
             },
             {
-              name: 'Cumbia Records',
+              name: 'La Cumbia Records',
               description: 'Esta agrupación musical de Coquimbo fue fundada en el 2022. Mezclan la cumbia con sonidos como la salsa, el ska, el rock, el reggae y el punk, otorgando a sus ritmos y melodías una riqueza y vitalidad inigualables. Se erigen como representantes de la nueva cumbia coquimbana.',
               social_media: {
                 ig: 'https://www.instagram.com/lacumbiarecords/',

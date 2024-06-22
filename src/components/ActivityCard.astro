@@ -1,7 +1,6 @@
 ---
 import CategoryLabel from "./CategoryLabel.astro";
 import CityLabel from "./CityLabel.astro";
-// import AddToCalendarIcon from "./icons/AddToCalendarIcon.astro";
 import { OpenActivityPanel } from "./OpenActivityPanel";
 import Time from "./Time.astro";
 import Address from "./Address.astro";
@@ -9,8 +8,7 @@ import type { InfoPanel } from "@stores/activityInfoStore";
 
 type Props = InfoPanel;
 
-const { title, subTitle, category, location, time, tickets, color } =
-  Astro.props;
+const { title, subTitle, category, location, time, color } = Astro.props;
 ---
 
 <li
@@ -38,7 +36,8 @@ const { title, subTitle, category, location, time, tickets, color } =
     </div>
   </section>
   <footer
-    class="flex w-full h-fit items-center justify-center text-center gap-2 self-end text-white"
+    class="flex w-full h-fit items-center justify-center text-center gap-2 self-end
+  text-white"
   >
     <OpenActivityPanel
       client:load
@@ -48,15 +47,20 @@ const { title, subTitle, category, location, time, tickets, color } =
       Más info
     </OpenActivityPanel>
     {
-      !!tickets && (
+      !!location.tickets ? (
         <>
           <hr class="rotate-90 border-1 border-secondary w-4" />
           <a
             class="w-full block hover:text-accent-yellow py-1.5 transition duration-300"
             href="#"
           >
-            Tickets
+            {location.tickets.title}
           </a>
+        </>
+      ) : (
+        <>
+          <hr class="rotate-90 border-1 border-secondary w-4" />
+          <p class="whitespace-nowrap w-full">Entrada liberada</p>
         </>
       )
     }
