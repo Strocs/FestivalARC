@@ -1,0 +1,71 @@
+---
+import TextTape from "@components/TextTape.astro";
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="Prensa">
+  <main
+    class="w-full h-full py-[calc(var(--footer-height)+5rem)] px-14 space-y-28"
+  >
+    <article class="space-y-20">
+      <TextTape element="h1" size="2xl" class=""> Prensa </TextTape>
+      <ul class="flex flex-wrap gap-8">
+        <li
+          class="w-full max-w-[340px] shadow-xl h-full min-h-[500px] bg-secondary relative group before:content-[''] before:w-full before:h-8 before:bg-primary before:absolute before:bottom-0 before:left-0 before:right-0 hover:before:h-12 before:duration-300"
+        >
+          <a href="#" class="absolute inset-0">
+            <div class="w-full h-1/3 bg-black"></div>
+            <section class="flex justify-between flex-col h-2/3">
+              <div class="p-4 space-y-4">
+                <h2 class="font-medium uppercase text-xl leading-none">
+                  Título de la entrada de prensa
+                </h2>
+                <p class="font-light text-ellipsis">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
+                  sint repellat, voluptatibus alias accusantium ratione illum
+                  fugiat illo dicta et error eum numquam. Obcaecati modi
+                  possimus repudiandae, error rem sequi!
+                </p>
+              </div>
+              <button class="px-3 py-1 text-secondary w-full">Leer más</button>
+            </section>
+          </a>
+        </li>
+        <li
+          class="w-full max-w-[340px] shadow-xl h-full min-h-[500px] bg-secondary relative"
+        >
+          <a href="#" class="absolute inset-0"></a>
+        </li>
+        <li
+          class="w-full max-w-[340px] shadow-xl h-full min-h-[500px] bg-secondary relative"
+        >
+          <a href="#" class="absolute inset-0"></a>
+        </li>
+      </ul>
+    </article>
+
+    <section class="space-y-12">
+      <TextTape size="lg" class="">ARC 2024 en los medios</TextTape>
+      <ul>
+        <li>
+          <p>
+            <strong>Radio XXXXX</strong> - Festival ARC anuncia su programación para
+            ...
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Radio XXXXX</strong> - Festival ARC anuncia su programación para
+            ...
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Radio XXXXX</strong> - Festival ARC anuncia su programación para
+            ...
+          </p>
+        </li>
+      </ul>
+    </section>
+  </main>
+</Layout>
