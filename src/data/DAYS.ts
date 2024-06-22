@@ -695,6 +695,9 @@ export const DAYS: Day[] = [
           category: CATEGORIES.artesania,
           location: PLACES.mall,
           time: ['10:00', '20:00'],
+          more_info: [
+            ['!Pronto más información!', '']
+          ]
         }
       ],
       '12:00': [
