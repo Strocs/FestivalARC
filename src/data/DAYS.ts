@@ -497,7 +497,7 @@ export const DAYS: Day[] = [
             ['Duración:', '40 minutos.'],
             [
               'Elenco de música y de danza:',
-              'Chicoria Sánchez, Pola Castillo, Inti Sánchez, Ankatu Alquinta, América Janequeo, Talo Pinto y Colectiva de Danza La Manada.'
+              'Chicoria Sánchez, Pola Castillo, Inti Sánchez, Ankatu Alquinta, América Janequeo, Sebastián Guerrero y Colectiva de Danza La Manada.'
             ]
           ],
           social_media: {
