@@ -52,7 +52,7 @@ export const ActivityGallery = ({ gallery, category }) => {
             category === 'Música' || category === 'Artes Visuales'
 
           return loadingImg ? (
-            <p>Cargado...</p>
+            <p key={img.imgName}>Cargado...</p>
           ) : (
             <li
               key={img.imgName}
