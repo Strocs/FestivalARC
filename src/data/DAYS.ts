@@ -734,7 +734,7 @@ export const DAYS: Day[] = [
         {
           title: 'Concierto en el Centenario',
           subTitle:
-            'Buen Punto, Natural Esencia, La Cumbia Record y Camiseta 22',
+            'Buen Punto, Natural Esencia, La Cumbia Records y Camiseta 22',
           description: '',
           category: CATEGORIES.musica,
           location: PLACES.centenario,
