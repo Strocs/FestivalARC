@@ -166,7 +166,7 @@ export const DAYS: Day[] = [
             'Este conversatorio tiene como propósitos dar a conocer y difundir la poesía de Elvira Hernández como referente poético para generaciones jóvenes de poetas, vincular la poesía como género discursivo que rebasa los límites de la misma creación estética, y relacionar la poesía con aristas políticas propias del discurso artístico.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
-          time: '19:00',
+          time: '18:00',
           gallery: [
             { name: 'Conversas en Red', imgName: 'conversas-en-red-2.jpg' },
           ],
@@ -211,7 +211,7 @@ export const DAYS: Day[] = [
             '“Un largo solo” hace gala de lo conciso y maduro de Bruno Montané, de sus reiterados intentos de alumbrar el mundo, de hacerlo inteligible y habitable, y de una observación de la existencia que, a pesar de su sutileza y elegancia, manifiesta claramente un ímpetu y vitalidad admirable, que hicieron a su amigo Roberto Bolaño decir que era una poesía hecha de “sangre suspendida en el aire”.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
-          time: '18:00',
+          time: '19:00',
           gallery: [
             { name: 'Un Largo Solo', imgName: 'un-largo-solo-1.jpg' },
             { name: 'Un Largo Solo', imgName: 'un-largo-solo-2.jpg' },
