@@ -91,13 +91,13 @@ export const DAYS: Day[] = [
     },
     schedule: {
       '10:00': [
-        EXPO('Inauguración Expo Arte Co'),
+        EXPO('Inauguración Expo Arte.Co'),
         {
           title:
             'Taller: "Hasta que leer se haga costumbre: Psicopedagogía de la mediación lectora"',
-          subTitle: 'Imparten: David Santos y Constanza Fernandez',
+          subTitle: 'Imparten: David Santos Arrieta y Constanza Fernandez López',
           description:
-            'Este taller es una jornada de aprendizaje intensiva y de carácter formativo. Se basa en los principios del aprendizaje activo, y busca que los participantes mejoren sus conocimientos y habilidades en torno a la mediación lectora y escritora. Está dirigido a docentes, personal de la educación, familias y público en general interesado en promover la lectura y escritura. Lo imparten David Santos Arrieta y Constanza Fernández López.',
+            'Exposición de artes visuales que contará con la participación de diez artistas regionales, tales como: Ulises López, Sandy Baptista, María Piedad Aguirre, Luis Cáceres, Fernando Pizarro, Felipe de Ferrari, Claudia Suárez Jansson, Claudia Campos, Carolina Muñoz y André Álvarez, la muestra estará abierta a la comunidad del 28 de junio al 27 de julio en la Sala de Exposiciones de la Universidad de La Serena, ubicada a un costado del Aula Magna.',
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['10:00', '18:00'],
@@ -113,24 +113,24 @@ export const DAYS: Day[] = [
       ],
       '12:00': [
         {
-          title: 'Obra: "El mensajero sideral en la región estrella"',
+          title: 'Obra: "El Mensajero Sideral en la Región Estrella"',
           subTitle: 'Compañía "Ojos de Agua"',
           description:
-            'Una obra que invita a conocer a Galileo Galilei en su desenfrenada búsqueda de respuestas sobre el universo y su mágico encuentro con una sabia del mundo antiguo en la región estrella.',
+            'Una obra que invita a conocer a Galileo Galilei en su desenfrenada búsqueda de respuestas sobre el universo y su mágico encuentro con una sabia del mundo antiguo en la Región Estrella.',
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
           time: '12:00',
           gallery: [
-            { name: 'El mensajero sideral en la region estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-1.jpg' },
-            { name: 'El mensajero sideral en la region estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-2.jpg' },
-            { name: 'El mensajero sideral en la region estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-3.jpg' },
+            { name: 'El Mensajero Sideral en la Region Estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-1.jpg' },
+            { name: 'El Mensajero Sideral en la Region Estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-2.jpg' },
+            { name: 'El Mensajero Sideral en la Region Estrella', imgName: 'el-mensajero-sideral-en-la-region-estrella-3.jpg' },
           ],
           social_media: {
             ig: 'https://www.instagram.com/titeresojosdeagua/',
             fb: 'https://www.facebook.com/titeresojosdeagua'
           },
           more_info: [
-            ['Elenco:', 'Dos actrices titiriteras y un técnico audiovisual.'],
+            ['Elenco:', 'Dupla titiritera y un técnico audiovisual.'],
             ['Duración:', '60 minutos.'],
             ['Clasificación:', 'Todo espectador.']
           ]
@@ -138,7 +138,7 @@ export const DAYS: Day[] = [
       ],
       '17:00': [
         {
-          title: 'Obra: "Todo pa`l patrón, nada pa`l dolor"',
+          title: `Obra: "Todo pa'l patrón, nada pa'l dolor"`,
           subTitle: 'Compañía "Teatro Gárgaras"',
           description:
             'Un derrumbe apocalíptico surgido por la depredación de la minería, provoca un nuevo socavón en Tierra Amarilla quedando atrapados dos hombres bajo un ambiente oscuro y oprimente. Estos dos hombres se enfrentan a sus propios temores, sus rencores, se desafían entre ellos mismos, sin importarles la situación desesperada que están viviendo.',
@@ -160,7 +160,7 @@ export const DAYS: Day[] = [
       '18:00': [
         {
           title: 'Lanzamiento de libro: "Un largo solo"',
-          subTitle: 'Expone: Bruno Montané Krebs',
+          subTitle: 'Presentan: Bruno Montané Krebs, Cristian Geisse Navarro y Nibaldo Acero',
           description:
             '“Un largo solo” hace gala de lo conciso y maduro de Bruno Montané, de sus reiterados intentos de alumbrar el mundo, de hacerlo inteligible y habitable, y de una observación de la existencia que, a pesar de su sutileza y elegancia, manifiesta claramente un ímpetu y vitalidad admirable, que hicieron a su amigo Roberto Bolaño decir que era una poesía hecha de “sangre suspendida en el aire”.',
           category: CATEGORIES.literatura,
@@ -173,7 +173,7 @@ export const DAYS: Day[] = [
           ],
           more_info: [
             ['Autor:', 'Bruno Montané Krebs.'],
-            ['Edición:', 'Geisse Navarro.'],
+            ['Edición:', 'Cristian Geisse Navarro.'],
             ['Prólogo:', 'Nibaldo Acero.'],
             ['Editorial:', 'Bordelibre Ediciones.']
           ]
@@ -181,17 +181,17 @@ export const DAYS: Day[] = [
       ],
       '18:30': [
         {
-          title: 'Obra "Idilio"',
+          title: 'Obra "IDILIO"',
           subTitle: 'Compañía "La Voraz"',
           description:
-            '“Idilio” narra la historia de cómo dos individuos completamente desconocidos y de realidades muy diferentes logran entablar una relación basada en el concepto de amor romántico. Esta historia aparenta ser idílica, pero esconde la realidad de violencia que sufren muchas familias chilenas.',
+            '“IDILIO” narra la historia de cómo dos individuos completamente desconocidos y de realidades muy diferentes logran entablar una relación basada en el concepto de amor romántico. Esta historia aparenta ser idílica, pero esconde la realidad de violencia que sufren muchas familias chilenas.',
           category: CATEGORIES.escenicas,
           location: PLACES.plazaIllapel,
           time: '18:30',
           gallery: [
-            { name: 'Idilio', imgName: 'idilio-1.jpg' },
-            { name: 'Idilio', imgName: 'idilio-3.jpg' },
-            { name: 'Idilio', imgName: 'idilio-4.jpg' },
+            { name: 'IDILIO', imgName: 'idilio-1.jpg' },
+            { name: 'IDILIO', imgName: 'idilio-3.jpg' },
+            { name: 'IDILIO', imgName: 'idilio-4.jpg' },
           ],
           social_media: {
             ig: 'https://www.instagram.com/idilio.circo/'
@@ -206,7 +206,7 @@ export const DAYS: Day[] = [
         {
           title:
             'Conversatorio: "Conversas en Red: La bandera de Chile, un homenaje a la resistencia y la memoria"',
-          subTitle: 'Expone: Red Feminista del Libro',
+          subTitle: 'Participan: Red Feminista del Libro',
           description:
             'Este taller tiene como propósitos dar a conocer y difundir la poesía de Elvira Hernández como referente poético para generaciones jóvenes de poetas, vincular la poesía como género discursivo que rebasa los límites de la misma creación estética, y relacionar la poesía con aristas políticas propias del discurso artístico.',
           category: CATEGORIES.literatura,
@@ -482,7 +482,8 @@ export const DAYS: Day[] = [
         {
           title:
             'Lanzamiento del libro: “Bajo el arco camaleónico el juguetero celestial escribe diarios químicos”',
-          subTitle: 'Expone: Pía Ahumada',
+          //! Segundo apellido
+          subTitle: 'Presenta: Pía Ahumada ',
           description: 'Este libro fue escrito entre los años 2017 y 2022, premiado por el Fondo Editorial Municipal Manuel Concha (La Serena) y finalmente entregado (el libro físico) en verano de 2024. El lanzamiento del libro se realizó durante la 39a Feria del Libro de La Serena realizada en 2024. La publicación se divide en dos partes. El primero presenta una novela breve y el segundo una selección de cuentos.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
@@ -502,7 +503,7 @@ export const DAYS: Day[] = [
       '19:00': [
         {
           title: 'Lanzamiento del libro: “Botánica”',
-          subTitle: 'Expone: "Caos de Couve"',
+          subTitle: 'Presenta: Ashle Ozuljevic Subaique',
           description: '“Botánica” encuentra en las plantas un espejo para preguntarnos por el Yo. Observa, en cada verso, el ritmo del crecimiento, los acontecimientos que nos conforman y quedan como un nudo en el tallo. El pulso de la semilla olvidada remueve la tierra que la cubre. Cuidados, podas, contemplación. Y las raíces, el origen, el propio y el de las plantas.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
@@ -518,16 +519,16 @@ export const DAYS: Day[] = [
           ]
         },
         {
-          title: 'Obra: “Siervas del buen pastor”',
+          title: 'Obra: “Siervas del Buen Pastor”',
           subTitle: 'Compañía "Colectivo Teatral Con-Zumo"',
           description: 'Esta obra tiene su inspiración dramatúrgica en acontecimientos que ocurrieron en un centro de prisioneras políticas el año 1973, en la ciudad de La Serena en el contexto del golpe de estado militar y la posterior dictadura política implantada en Chile por casi dos décadas.',
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,
           time: '19:00',
           gallery: [
-            { name: 'Siervas del buen pastor', imgName: 'siervas-del-buen-pastor-2.png' },
-            { name: 'Siervas del buen pastor', imgName: 'siervas-del-buen-pastor-3.jpg' },
-            { name: 'Siervas del buen pastor', imgName: 'siervas-del-buen-pastor-4.jpg' },
+            { name: 'Siervas del Buen Pastor', imgName: 'siervas-del-buen-pastor-2.png' },
+            { name: 'Siervas del Buen Pastor', imgName: 'siervas-del-buen-pastor-3.jpg' },
+            { name: 'Siervas del Buen Pastor', imgName: 'siervas-del-buen-pastor-4.jpg' },
           ],
           social_media: {
             ig: 'https://www.instagram.com/colectivoconzumoteatro/',
@@ -540,16 +541,16 @@ export const DAYS: Day[] = [
           ]
         },
         {
-          title: 'Obra: “Stella terral”',
+          title: 'Obra: “Stella Terral”',
           subTitle: 'Compañía "TeatroPuerto"',
           description: 'Este es el tercer montaje del Proyecto Escritoras, el cual, a través del armado del espacio para una conferencia de prensa, se visitará en presente a la escritora serenense Stella Díaz Varín, quien a través de su irreverencia nos llevará a cuestionarnos sobre temas como la muerte, el arte y la política.',
           category: CATEGORIES.escenicas,
           location: PLACES.palace,
           time: '19:00',
           gallery: [
-            { name: 'Stella terral', imgName: 'stella-terral-1.jpg' },
-            { name: 'Stella terral', imgName: 'stella-terral-2.jpg' },
-            { name: 'Stella terral', imgName: 'stella-terral-3.jpg' },
+            { name: 'Stella Terral', imgName: 'stella-terral-1.jpg' },
+            { name: 'Stella Terral', imgName: 'stella-terral-2.jpg' },
+            { name: 'Stella Terral', imgName: 'stella-terral-3.jpg' },
           ],
           social_media: {
             ig: 'https://www.instagram.com/teatropuerto.cl/?hl=es',
@@ -695,9 +696,8 @@ export const DAYS: Day[] = [
       ],
       '11:00': [
         {
-          title: 'Taller de escritura y Bioma: exploración de la naturaleza a través de la literatura',
-          //! REVISAR QUIEN IMPARTE
-          subTitle: 'Expone: Caos de Couve',
+          title: 'Taller de escritura y Bioma: Exploración de la naturaleza a través de la literatura',
+          subTitle: 'Imparte: Ashle Ozuljevic Subaique',
           description: 'Taller de escritura creativa que reúne tres géneros literarios -poesía, crónica y relato breve- a partir de un tema central: la escritura de la naturaleza. Este foco temático que puede indagarse desde una gran diversidad de posibilidades (lo científico, lo ancestral-popular, lo psicoemocional, lo ecológico, entre otros), se desarrollará desde lo identitario regional.',
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
@@ -711,10 +711,9 @@ export const DAYS: Day[] = [
       ],
       '12:00': [
         {
-          //! FALTA INFO
-          title: 'Obra: "Tatul, el paraíso en la tierra"',
+          title: 'Obra: "Tatul, el paraíso en la Tierra"',
           subTitle: 'Compañía "La chinchilla subversiva"',
-          description: '',
+          description: 'Obra de teatro infantil - familiar narrada y musicalizada en vivo, que pone en valor elementos del Patrimonio Natural e Inmaterial del Valle de Choapa. El Churqui, la Toponimia Pikunche, los relatos orales vinculados a los duendes, el río, los cerros, la crisis ambiental y la fauna impactada son los componentes temáticos de la obra.',
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
           time: '12:00',
@@ -771,7 +770,7 @@ export const DAYS: Day[] = [
       '19:00': [
         {
           title: 'Obra: “Víctor Trasciende”',
-          subTitle: 'Compañía "Núcleo de autoría escénica"',
+          subTitle: 'Compañía "Núcleo de Autoría Escénica"',
           description: 'Es una obra de artes escénicas teatrales desarrollada como acto conmemorativo de los 50 años del Golpe de Estado en Chile. El espectáculo escénico unipersonal es construido a partir de una investigación que estudió la vida y obra del artista, asesinado en 1973.',
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,

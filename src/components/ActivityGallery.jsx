@@ -12,11 +12,11 @@ const getImagesAttributes = src => {
 
 export const ActivityGallery = ({ gallery, category }) => {
   const [images, setImages] = useState({})
-
+  const [loadingImg, setLoadingImg] = useState(false)
   useEffect(() => {
     const loadImages = async () => {
       const images = {}
-
+      setLoadingImg(true)
       if (!gallery) return
 
       for (let img of gallery) {
@@ -33,8 +33,8 @@ export const ActivityGallery = ({ gallery, category }) => {
         }
       }
       setImages(images)
+      setLoadingImg(false)
     }
-
     loadImages()
   }, [gallery, category])
 
@@ -51,7 +51,9 @@ export const ActivityGallery = ({ gallery, category }) => {
           const withSpan =
             category === 'Música' || category === 'Artes Visuales'
 
-          return (
+          return loadingImg ? (
+            <p>Cargado...</p>
+          ) : (
             <li
               key={img.imgName}
               className='w-full h-fit relative mb-2'

@@ -32,6 +32,15 @@ export const ActivityPanel = () => {
   const isOpen = useStore(isPanelOpen)
   const info = useStore(infoPanel)
 
+  const getTicketURL = () => {
+    const filter = info.location.tickets?.url.filter(url =>
+      info.title.includes(url[0])
+    )
+    return !!filter && !!filter[0] ? filter[0][1] : '#'
+  }
+
+  const ticket = getTicketURL()
+
   useEffect(() => {
     if (isOpen && window.innerWidth < 1280) {
       document.body.style.overflow = 'hidden'
@@ -59,7 +68,7 @@ export const ActivityPanel = () => {
         </p>
         {!!info.location.tickets ? (
           <a
-            href={info.location.tickets.url}
+            href={ticket}
             className={`block px-2 py-1 text-secondary w-fit my-6 ${info.color.background} hover:bg-primary duration-150`}
           >
             {info.location.tickets.title}
@@ -96,15 +105,6 @@ export const ActivityPanel = () => {
         <p className='leading-5 max-w-prose'>{info.description}</p>
         <ActivityMoreInfo moreInfo={info.more_info} />
         <ActivityExhibitors exhibitors={info.exhibitors} ICONS={ICONS} />
-        <ActivityGallery gallery={info.gallery} category={info.category} />
-      </section>
-      <footer className='fixed xl:sticky bottom-0 flex items-center left-0 right-0 justify-between bg-secondary px-6 pt-4 pb-6 shadow-secondary shadow-[0_-20px_20px_0px_var(--tw-shadow-color)] justify-self-end w-full'>
-        <button
-          className={`px-4 py-0.5 text-white ${info.color.background} hover:bg-primary duration-150`}
-          onClick={closePanel}
-        >
-          Cerrar
-        </button>
         {!!info.social_media && (
           <nav className='w-fit'>
             <ul className='flex gap-2'>
@@ -122,6 +122,15 @@ export const ActivityPanel = () => {
             </ul>
           </nav>
         )}
+        <ActivityGallery gallery={info.gallery} category={info.category} />
+      </section>
+      <footer className='fixed xl:sticky bottom-0 flex items-center justify-end left-0 right-0 bg-secondary px-6 pt-4 pb-6 shadow-secondary shadow-[0_-30px_20px_0px_var(--tw-shadow-color)] justify-self-end w-full'>
+        <button
+          className={`px-4 py-0.5 text-white ${info.color.background} hover:bg-primary duration-150`}
+          onClick={closePanel}
+        >
+          Cerrar
+        </button>
       </footer>
     </article>
   )

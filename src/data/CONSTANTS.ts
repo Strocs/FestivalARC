@@ -26,7 +26,7 @@ interface Places {
     maps: string
     tickets?: {
       title: string
-      url: string
+      url: Array<string[]>
     }
   }
 }
@@ -43,7 +43,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/gjx2duh2gBYcgavS9',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: []
     }
   },
   salaExposiciones: {
@@ -57,7 +57,12 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/cvmGA86tmypHZBdi6',
     tickets: {
       title: TICKETS.form,
-      url: ''
+      url: [
+        ['descampado', 'https://forms.fillout.com/t/2BAonQG1FVus'],
+        ['Hasta que leer', 'https://forms.fillout.com/t/iVkD68JP3Tus'],
+        ['Bioma', 'https://forms.fillout.com/t/wm9RVtM31wus'],
+        ['cuentos de terror', 'https://forms.fillout.com/t/8BdAn2L6Jbus'],
+      ]
     }
   },
   teatroMunicipal: {
@@ -66,7 +71,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/y7FDYBx99Rqe74zp9',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: []
     }
   },
   salonAuditorioIllapel: {
@@ -76,7 +81,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/i57HCbemPUR8fncM6',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: []
     }
   },
   casaEditorial: {
@@ -85,7 +90,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/EEebachieKw2XMFg8',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: []
     }
   },
   plazaIllapel: {
@@ -99,7 +104,10 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/UMdNtVXba8yXuwbW7',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: [
+        ['Concierto en Ovalle', 'https://ticketplus.cl/events/festival-arc-2024-concierto-en-ovalle'],
+        ['Letargia', 'https://ticketplus.cl/events/festival-arc-2024-obra-letargia'],
+      ]
     }
   },
   aulaMagna: {
@@ -108,7 +116,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/LXGkY7zeLjkUzMk56',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: []
     }
   },
   palace: {
@@ -117,7 +125,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/B2WmfVJsYDXPpN2SA',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: []
     }
 
   },
@@ -127,7 +135,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/v3UzAYEbksXcpP6r7',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: []
     }
   },
   centenario: {
@@ -136,7 +144,7 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/481jS6rK1gF2sbzU6',
     tickets: {
       title: TICKETS.ticket,
-      url: ''
+      url: []
 
     }
   },
@@ -146,7 +154,9 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/UCCkdb6gUVPqqj8v7',
     tickets: {
       title: TICKETS.form,
-      url: ''
+      url: [
+        ['musical y sonora', 'https://forms.fillout.com/t/aJvtV9czT1us']
+      ]
 
     }
   },

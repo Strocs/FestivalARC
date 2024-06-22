@@ -53,7 +53,7 @@ export interface Activity {
     maps: string
     tickets?: {
       title: string
-      url: string
+      url: Array<string[]>
     }
   }
   time: string[] | string

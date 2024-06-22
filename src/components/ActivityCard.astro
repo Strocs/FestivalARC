@@ -9,6 +9,13 @@ import type { InfoPanel } from "@stores/activityInfoStore";
 type Props = InfoPanel;
 
 const { title, subTitle, category, location, time, color } = Astro.props;
+
+const getTicketURL = () => {
+  const filter = location.tickets?.url.filter((url) => title.includes(url[0]));
+  return !!filter && !!filter[0] ? filter[0][1] : "#";
+};
+
+const ticket = getTicketURL();
 ---
 
 <li
@@ -52,7 +59,7 @@ const { title, subTitle, category, location, time, color } = Astro.props;
           <hr class="rotate-90 border-1 border-secondary w-4" />
           <a
             class="w-full block hover:text-accent-yellow py-1.5 transition duration-300"
-            href="#"
+            href={ticket}
           >
             {location.tickets.title}
           </a>
