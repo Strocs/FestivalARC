@@ -51,7 +51,8 @@ export const PLACES: Places = {
   salonAuditorioIllapel: {
     city: CITIES.ill,
     name: 'Salón Auditorio Casa de la Cultura',
-    maps: ''
+    //!CONFIRMAR
+    maps: 'https://maps.app.goo.gl/1HsbeJyJsNGqupmN9'
   },
   casaEditorial: {
     city: CITIES.ls,
@@ -61,18 +62,46 @@ export const PLACES: Places = {
   plazaIllapel: {
     city: CITIES.ill,
     name: 'Plaza de Armas de Illapel',
-    maps: ''
+    maps: 'https://maps.app.goo.gl/Yhp6wgqTXBwnkz2L8'
   },
-  tmo: { city: CITIES.ov, name: 'TMO', maps: '' },
-  aulaMagna: { city: CITIES.ls, name: 'Aula Magna ULS', maps: '' },
-  palace: { city: CITIES.cq, name: 'Centro Cultural Palace', maps: '' },
+  tmo: {
+    city: CITIES.ov,
+    name: 'TMO',
+    maps: 'https://maps.app.goo.gl/UMdNtVXba8yXuwbW7'
+  },
+  aulaMagna: {
+    city: CITIES.ls,
+    name: 'Aula Magna ULS',
+    maps: 'https://maps.app.goo.gl/LXGkY7zeLjkUzMk56'
+  },
+  palace: {
+    city: CITIES.cq,
+    name: 'Centro Cultural Palace',
+    maps: 'https://maps.app.goo.gl/B2WmfVJsYDXPpN2SA'
+  },
   museoArqueologico: {
     city: CITIES.ls,
     name: 'Auditorio "Francisco Cornely" - Museo Arqueológico',
-    maps: ''
+    maps: 'https://maps.app.goo.gl/v3UzAYEbksXcpP6r7'
   },
-  centenario: { city: CITIES.ls, name: 'Teatro Centenario', maps: '' },
-  galeria: { city: CITIES.cq, name: 'Galería Chile Arte', maps: '' },
-  mall: { city: CITIES.cq, name: 'Mall VIVO Coquimbo', maps: '' },
-  trenes: { city: CITIES.ov, name: 'Estación de Trenes de Ovalle', maps: '' }
+  centenario: {
+    city: CITIES.ls,
+    name: 'Teatro Centenario',
+    maps: 'https://maps.app.goo.gl/481jS6rK1gF2sbzU6'
+  },
+  galeria: {
+    city: CITIES.cq,
+    name: 'Galería Chile Arte',
+    maps: 'https://maps.app.goo.gl/UCCkdb6gUVPqqj8v7'
+  },
+  mall: {
+    city: CITIES.cq,
+    name: 'Mall VIVO Coquimbo',
+    maps: 'https://maps.app.goo.gl/JDjx58sF5rf4Gf3H6'
+  },
+  trenes: {
+    city: CITIES.ov,
+    name: 'Estación de Trenes de Ovalle',
+    maps: 'https://maps.app.goo.gl/Xe8JCsaNnChKuUfc8'
+  }
 }
