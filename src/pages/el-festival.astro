@@ -6,9 +6,9 @@ import TextTape from "@components/TextTape.astro";
 import { SITE } from "@data/SITE";
 
 import LogoARC from "../assets/Logo-ARC24.png";
-import LogoSeremi from '../assets/logo-seremi.png'
-import LogoULS from '../assets/ULS-Blanco.png'
-
+import LogoSeremi from "../assets/logo-seremi.png";
+import LogoULS from "../assets/ULS-Blanco.png";
+import Snowflakes from "@components/Snowflakes.astro";
 
 const organizan = [
   {
@@ -23,108 +23,114 @@ const organizan = [
 
 const colaboran = [
   {
-    name: "",
+    name: "Municipalidad de La Serena",
     src: "",
   },
   {
-    name: "",
+    name: "Municipalidad de Coquimbo",
     src: "",
   },
   {
-    name: "",
+    name: "Municipalidad de Ovalle",
     src: "",
   },
   {
-    name: "",
+    name: "Municipalidad de Illapel",
     src: "",
   },
 ];
 ---
 
 <Layout title="El Festival">
+  <!-- <Snowflakes /> -->
   <main
     class="w-full h-full flex flex-col items-center justify-center py-[calc(var(--footer-height)+5rem)] px-2"
   >
     <header class="space-y-6 landscape:space-y-10 pb-28 w-full">
       <Image
         src={LogoARC}
-        width={500}
-        height={180}
-        class="w-full max-w-[520px] mx-auto aspect-[500/180] drop-shadow-[0_20px_16px_rgb(0,0,0,0.5)]"
+        width={540}
+        class="w-full max-w-[540px] mx-auto aspect-[500/180] drop-shadow-[0_20px_16px_rgb(0,0,0,0.5)]"
         alt="Logo del festival ARC 2024"
         transition:name="logo"
         loading="eager"
       />
-      <TextTape
-        size="2xl"
-        class="mx-auto md:px-14 text-[7vw] landscape:text-[6vh]"
-      >
+      <TextTape size="2xl" class="mx-auto md:px-14 text-xl landscape:text-5xl">
         {"{"}&nbsp; {SITE.date} &nbsp;{"}"}
       </TextTape>
     </header>
-    <p class="text-center text-lg max-w-prose">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit laborum
-      voluptatum ullam magnam voluptates nobis architecto consequuntur neque
-      debitis fugit incidunt labore perspiciatis, ratione perferendis ipsam.
-      Debitis optio distinctio asperiores quisquam, nobis aut blanditiis quas!
-      Doloribus sunt non quo praesentium dolorem neque maxime consequuntur
-      veniam voluptates voluptate. Sapiente maiores, exercitationem laboriosam,
-      est corrupti officiis nihil repellendus quod, reprehenderit consequuntur
-      ipsum neque nisi fugit minima blanditiis recusandae tempora sint. Alias
-      perspiciatis accusantium ad non ipsa impedit. Est ea, eaque minus expedita
-      nobis exercitationem recusandae cupiditate aliquam repudiandae facilis
-      eum, consectetur minima necessitatibus perspiciatis maxime dolorem? Eum
-      autem vero repudiandae natus odio. Incidunt odit perspiciatis veritatis
-      dolore ad, ipsam repellendus ullam asperiores provident aliquid natus
-      explicabo molestias itaque sunt quia voluptatum at quibusdam eaque
-      reiciendis quisquam repudiandae qui voluptatibus amet! Est distinctio at
-      illo nulla deserunt facere fugiat animi laborum, minus vel. Praesentium
-      voluptatum illo consequuntur neque laboriosam fuga corporis minus totam
-      perspiciatis, temporibus cumque assumenda similique? Unde consequuntur sed
-      impedit nihil modi, labore alias architecto non repellat aut veritatis
-      doloribus dignissimos deleniti. Corrupti, mollitia quasi minima est
-      suscipit, consequatur voluptatum distinctio iusto iure nulla nihil
-      dignissimos odit fugit modi optio doloribus aut molestiae amet tempora
-      esse perspiciatis! Nulla eaque sint sit alias distinctio voluptates eos
-      error magnam, laborum, aspernatur animi tempore debitis rem esse!
-      Repellendus necessitatibus deserunt harum nemo, delectus quisquam soluta
-      perferendis cumque expedita ad hic officiis adipisci eos aperiam
-      excepturi, suscipit animi! Hic, rem neque. Iste in doloremque porro
-      laborum, cumque blanditiis. Nisi explicabo similique provident repellat,
-      odit labore quidem dolores nostrum suscipit ad saepe ipsum? Corrupti quos
-      unde tenetur veritatis at. In, voluptatibus, voluptate, voluptatum dolor
-      veritatis corrupti adipisci officiis facilis laboriosam quaerat quas
-      numquam doloremque natus unde vitae repudiandae eos ipsum. Cupiditate
-      rerum officia animi eius nemo aliquam. Delectus pariatur libero reiciendis
-      animi odit perferendis. Repudiandae pariatur, sit ullam voluptas tempore
-      sapiente, fugiat ipsum eveniet nobis dolorum perspiciatis itaque, odit
-      voluptates magni ducimus eaque dolore laboriosam! Sit, iusto pariatur est
-      delectus hic dolorem maxime saepe incidunt tempora tempore in optio? Sed
-      nemo neque praesentium atque, nostrum odio aliquam eos tempora vel id
-      labore distinctio hic dolorum, illo ut deserunt fuga rerum quibusdam
-      consectetur ab incidunt? Laboriosam aliquam quae aperiam minus distinctio
-      quis laborum tempora saepe, quia cum accusamus omnis? Labore quae non
-      aperiam, maiores enim at temporibus maxime. Hic, doloremque minima illo
-      adipisci tempore, eos excepturi dicta voluptatibus reprehenderit beatae
-      similique iste molestias totam blanditiis aspernatur ea.
-    </p>
+    <section class="text-lg max-w-prose space-y-4">
+      <p>
+        <strong>Festival ARC 2024:</strong> Una Vitrina Artística para la Región
+        de Coquimbo
+      </p>
+      <p>
+        El <b>"Festival de las Artes Región de Coquimbo, Festival ARC 2024"</b> tiene
+        como objetivo consolidar y expandir su impacto cultural en la región, posicionándose
+        como la principal vitrina artística de la zona. El evento se llevará a cabo
+        del 27 al 30 de junio de 2024, en plena conurbación de La Serena y Coquimbo,
+        extendiéndose también a las ciudades de Ovalle e Illapel. Una colaboración
+        estratégica con la Universidad de La Serena es fundamental para fortalecer
+        el desarrollo de una programación participativa y enriquecedora para la comunidad.
+        Este festival, realizado durante las vacaciones de invierno, es un evento
+        imperdible para toda la familia.
+      </p>
+      <p>
+        El festival exhibe las más recientes creaciones artísticas regionales,
+        provenientes de las tres provincias de la Región de Coquimbo. El público
+        asistente puede disfrutar de una amplia variedad de disciplinas,
+        incluyendo artes escénicas, música, artesanía, audiovisual, literatura y
+        artes visuales. Además, se cuenta con la participación de destacados
+        artistas nacionales.
+      </p>
+      <p>
+        ARC está diseñado para ser un espacio inclusivo y participativo, donde
+        la comunidad puede disfrutar y celebrar la rica diversidad artística
+        cultural de nuestro territorio.
+      </p>
+      <p>
+        Te invitamos a ser parte del Festival ARC 2024. Marca las fechas en tu
+        calendario y prepárate para sumergirte en el vibrante mundo de las artes
+        y las culturas de la Región de Coquimbo. <b
+          >¡Nos vemos del 27 al 30 junio!</b
+        >
+      </p>
+    </section>
     <div class="pt-28 space-y-4">
       <h2 class="font-medium text-center md:text-start">Organizan:</h2>
-      <ul class="flex gap-2 flex-wrap items-center justify-center md:justify-normal">
+      <ul
+        class="flex gap-2 flex-wrap items-center justify-center md:justify-normal"
+      >
         {
-          organizan.map(logo => <li class="h-fit w-fit">
-            <Image src={logo.src} alt={logo.name} class='max-h-32 h-full w-fit mix-blend-difference' />
-          </a></li>)
+          organizan.map((logo) => (
+            <li class="h-fit w-fit">
+              <Image
+                loading="lazy"
+                src={logo.src}
+                alt={logo.name}
+                class="max-h-32 h-full w-fit brightness-0"
+              />
+            </li>
+          ))
         }
       </ul>
-      <h2 class="font-medium text-center md:text-start">Colaboran:</h2>
-      <ul class="flex gap-2 flex-wrap items-center justify-center md:justify-normal">
+      <!-- <h2 class="font-medium text-center md:text-start">Colaboran:</h2>
+      <ul
+        class="flex gap-2 flex-wrap items-center justify-center md:justify-normal"
+      >
         {
-          colaboran.map(logo => <li class="h-24 w-24 bg-primary">
-            <img src={logo.src} alt={logo.name} />
-          </a></li>)
+          colaboran.map((logo) => (
+            <li class="h-fit w-fit">
+              <img
+                loading="lazy"
+                src={logo.src}
+                alt={logo.name}
+                class="max-h-24 h-full w-fit"
+              />
+            </li>
+          ))
         }
-      </ul>
+      </ul> -->
     </div>
   </main>
 </Layout>

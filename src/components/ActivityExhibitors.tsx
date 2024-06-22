@@ -34,9 +34,7 @@ export const ActivityExhibitors = ({ exhibitors, ICONS }: Props) => {
 
           {!!exhibitor.artwork && (
             <p>
-              <strong className='font-medium'>
-                {exhibitor.artwork.type}:{' '}
-              </strong>
+              <strong className='font-medium'>{exhibitor.artwork.type} </strong>
               {exhibitor.artwork.name}
             </p>
           )}

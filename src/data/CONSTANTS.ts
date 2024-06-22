@@ -8,8 +8,8 @@ export const enum CATEGORIES {
 }
 
 export const enum ARTWORK {
-  obra = 'Obra',
-  perf = 'Obra/Performance'
+  obra = 'Obra:',
+  perf = 'Obra/Performance:'
 }
 
 export const enum CITIES {
@@ -44,7 +44,7 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['festival ARC', ''],
+        ['Festival ARC', 'https://www.portaldisc.com/evento/inauguracionfestivalarc2024'],
       ]
     }
   },
@@ -74,9 +74,9 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['Sideral', ''],
-        ['Caleta', ''],
-        ['Tatul', '']
+        ['Sideral', 'https://www.portaldisc.com/evento/teatromunicipalarc2024'],
+        ['Caleta', 'https://www.portaldisc.com/evento/teatromunicipalarc2024'],
+        ['Tatul', 'https://www.portaldisc.com/evento/teatromunicipalarc2024']
       ]
     }
   },
@@ -87,7 +87,7 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['patrón', '']
+        ['patrón', 'https://www.portaldisc.com/evento/casadelaculturaarc2024']
       ]
     }
   },
@@ -129,9 +129,9 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['Lambert', ''],
-        ['Siervas', ''],
-        ['Víctor', '']
+        ['Lambert', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=c7e1bf1231b3f656f8314f352bc0a700'],
+        ['Siervas', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=0a2c4984bd2e989788ee90ab288a21d8'],
+        ['Víctor', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=11b9542f68b837608a638745c9f6af3a']
       ]
     }
   },
@@ -142,8 +142,8 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['PINO', ''],
-        ['Stella', '']
+        ['PINO', 'https://www.portaldisc.com/evento/centroculturalpalacearc2024'],
+        ['Stella', 'https://www.portaldisc.com/evento/centroculturalpalacearc2024']
       ]
     }
 
@@ -155,7 +155,7 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['Preestreno', '']
+        ['Preestreno', 'https://www.portaldisc.com/evento/museoarqueologicoarc2024']
       ]
     }
   },
@@ -166,8 +166,8 @@ export const PLACES: Places = {
     tickets: {
       title: TICKETS.ticket,
       url: [
-        ['Centenario', ''],
-        ['Teatro Centenario', '']
+        ['360', 'https://www.portaldisc.com/evento/teatrocentenarioarc2024'],
+        ['Centenario', 'https://www.portaldisc.com/evento/teatrocentenarioarc2024']
       ]
     }
   },
@@ -190,7 +190,7 @@ export const PLACES: Places = {
   },
   trenes: {
     city: CITIES.ov,
-    name: 'Estación de Trenes de Ovalle',
-    maps: 'https://maps.app.goo.gl/Xe8JCsaNnChKuUfc8'
+    name: 'Frontis Museo del Limarí, Ovalle',
+    maps: 'https://maps.app.goo.gl/Ub3v26eYG7T8G4hP6'
   }
 }

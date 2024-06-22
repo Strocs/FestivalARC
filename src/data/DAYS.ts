@@ -35,7 +35,7 @@ export const DAYS: Day[] = [
               description:
                 'Reconocido como un importante y activo artista latinoamericano. Sus propuestas lo han llevado a realizar conciertos por más de treinta países, en diversos continentes. Nace en La Serena, donde comienza sus estudios en la cátedra de Oboe de su padre José Urquieta Varela en la Escuela Experimental de Música “Jorge Peña Hen”. Luego estudia en la Pontificia Universidad Católica de Chile y más tarde se radica en Europa.',
               artwork: {
-                type: 'Nombre del concierto',
+                type: '',
                 name: 'Nuevos Aires Chilenos para Oboe'
               },
               social_media: {
@@ -51,7 +51,7 @@ export const DAYS: Day[] = [
               description:
                 'Desde sus inicios en 2003, este grupo musical andino se ha dedicado a crear, recrear, interpretar y difundir  manifestaciones musicales propias de la tradición latinoamericana,  con acento en las costumbres de los pueblos del altiplano andino. Su repertorio se nutre de variadas formas musicales tradicionales andinas, que representan el legado patrimonial musical, que nos han heredado los antiguos hombres del altiplano andino.',
               artwork: {
-                type: 'Nombre del concierto',
+                type: '',
                 name: 'Concierto MACHAQ MARA Cosmovisión en el Imaginario Andino'
               },
               social_media: {
@@ -107,7 +107,7 @@ export const DAYS: Day[] = [
             { name: 'Hasta que leer se haga costumbre', imgName: 'hasta-que-leer-se-haga-costumbre-4.jpeg' },
           ],
           more_info: [
-            ['Duración:', 'De 10:00 a 13:00hrs y luego de 15:00 a 18:00hrs.']
+            ['Duración:', 'De 10:00 a 13:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)']
           ]
         }
       ],
@@ -130,7 +130,7 @@ export const DAYS: Day[] = [
             fb: 'https://www.facebook.com/titeresojosdeagua'
           },
           more_info: [
-            ['Elenco:', 'Dupla titiritera y un técnico audiovisual.'],
+            ['Elenco:', 'Bárbara Salinas y Luis Figueroa.'],
             ['Duración:', '60 minutos.'],
             ['Clasificación:', 'Todo espectador.']
           ]
@@ -153,31 +153,32 @@ export const DAYS: Day[] = [
           more_info: [
             ['Dirección y Dramaturgia:', 'Rodrigo Castillo Cuello.'],
             ['Elenco:', 'Luis Jiménez, Jean Franco Mendieta, Rodrigo Carmona.'],
-            ['Clasificación:', 'Todo espectador.']
+            ['Clasificación:', '+ 12 años.']
           ]
         }
       ],
       '18:00': [
         {
-          title: 'Lanzamiento de libro: "Un largo solo"',
-          subTitle: 'Presentan: Bruno Montané Krebs, Cristian Geisse Navarro y Nibaldo Acero',
+          title:
+            'Conversatorio: "Conversas en Red: La bandera de Chile, un homenaje a la resistencia y la memoria"',
+          subTitle: 'Participan: Red Feminista del Libro',
           description:
-            '“Un largo solo” hace gala de lo conciso y maduro de Bruno Montané, de sus reiterados intentos de alumbrar el mundo, de hacerlo inteligible y habitable, y de una observación de la existencia que, a pesar de su sutileza y elegancia, manifiesta claramente un ímpetu y vitalidad admirable, que hicieron a su amigo Roberto Bolaño decir que era una poesía hecha de “sangre suspendida en el aire”.',
+            'Este conversatorio tiene como propósitos dar a conocer y difundir la poesía de Elvira Hernández como referente poético para generaciones jóvenes de poetas, vincular la poesía como género discursivo que rebasa los límites de la misma creación estética, y relacionar la poesía con aristas políticas propias del discurso artístico.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
-          time: '18:00',
+          time: '19:00',
           gallery: [
-            { name: 'Un Largo Solo', imgName: 'un-largo-solo-1.jpg' },
-            { name: 'Un Largo Solo', imgName: 'un-largo-solo-2.jpg' },
-            { name: 'Un Largo Solo', imgName: 'un-largo-solo-3.jpg' },
+            { name: 'Conversas en Red', imgName: 'conversas-en-red-2.jpg' },
           ],
           more_info: [
-            ['Autor:', 'Bruno Montané Krebs.'],
-            ['Edición:', 'Cristian Geisse Navarro.'],
-            ['Prólogo:', 'Nibaldo Acero.'],
-            ['Editorial:', 'Bordelibre Ediciones.']
+            [
+              'Participan:',
+              'Paula Ceballos Huerta, Ehurodice Rivera Oyarce y Valeria Maturana Fuentes.'
+            ],
+            ['Moderadora:', 'Marcela Reyes Harris.']
           ]
-        }
+        },
+
       ],
       '18:30': [
         {
@@ -204,28 +205,28 @@ export const DAYS: Day[] = [
       ],
       '19:00': [
         {
-          title:
-            'Conversatorio: "Conversas en Red: La bandera de Chile, un homenaje a la resistencia y la memoria"',
-          subTitle: 'Participan: Red Feminista del Libro',
+          title: 'Lanzamiento de libro: "Un largo solo"',
+          subTitle: 'Presentan: Bruno Montané Krebs, Cristian Geisse Navarro y Nibaldo Acero',
           description:
-            'Este taller tiene como propósitos dar a conocer y difundir la poesía de Elvira Hernández como referente poético para generaciones jóvenes de poetas, vincular la poesía como género discursivo que rebasa los límites de la misma creación estética, y relacionar la poesía con aristas políticas propias del discurso artístico.',
+            '“Un largo solo” hace gala de lo conciso y maduro de Bruno Montané, de sus reiterados intentos de alumbrar el mundo, de hacerlo inteligible y habitable, y de una observación de la existencia que, a pesar de su sutileza y elegancia, manifiesta claramente un ímpetu y vitalidad admirable, que hicieron a su amigo Roberto Bolaño decir que era una poesía hecha de “sangre suspendida en el aire”.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
-          time: '19:00',
+          time: '18:00',
           gallery: [
-            { name: 'Conversas en Red', imgName: 'conversas-en-red-2.jpg' },
+            { name: 'Un Largo Solo', imgName: 'un-largo-solo-1.jpg' },
+            { name: 'Un Largo Solo', imgName: 'un-largo-solo-2.jpg' },
+            { name: 'Un Largo Solo', imgName: 'un-largo-solo-3.jpg' },
           ],
           more_info: [
-            [
-              'Participan:',
-              'Paula Ceballos Huerta, Ehurodice Rivera Oyarce y Valeria Maturana Fuentes.'
-            ],
-            ['Moderadora:', 'Marcela Reyes Harris.']
+            ['Autor:', 'Bruno Montané Krebs.'],
+            ['Edición:', 'Cristian Geisse Navarro.'],
+            ['Prólogo:', 'Nibaldo Acero.'],
+            ['Editorial:', 'Bordelibre Ediciones.']
           ]
         },
         {
           title: 'Obra: "Letargia"',
-          subTitle: 'Compañía "Las Maires"',
+          subTitle: 'Compañía "Colectivo Las Maires Teatro"',
           description:
             'Nury, una profesora de 60 años padece de una enfermedad colectiva- Letargia – Un estado de somnolencia prolongada. Para su tratamiento y pronta recuperación habita en su última clase, las memorias más oscuras de la vida. Nury recurre a exponer momentos preliminares de su propia vida para reflexionar sobre la educación sistemática, la educación emocional y familiar a través de los típicos juegos didácticos de enseñanza.',
           category: CATEGORIES.escenicas,
@@ -248,10 +249,10 @@ export const DAYS: Day[] = [
           ]
         },
         {
-          title: 'Obra: "Lambert. La rebelión de los Serenos"',
+          title: 'Obra: "Lambert, La rebelión de los Serenos"',
           subTitle: 'Compañía "Colectivo Teatral Con-Zumo"',
           description:
-            '"Lambert. La rebelión de los Serenos" es una obra que mezcla realidad histórica con ficción para hacer un paralelo con el Chile actual y traer a la memoria sucesos narrados desde nuestra propia identidad regional.',
+            '"Lambert, La rebelión de los Serenos" es una obra que mezcla realidad histórica con ficción para hacer un paralelo con el Chile actual y traer a la memoria sucesos narrados desde nuestra propia identidad regional.',
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,
           time: '19:00',
@@ -274,7 +275,7 @@ export const DAYS: Day[] = [
         },
         {
           title: 'Obra: "PINO(SHIT)"',
-          subTitle: 'Compañía "Didascalia y viceversa"',
+          subTitle: 'Compañía "Colectivo Artístico Didascalia y viceversa"',
           description:
             'Una cocinera prepara la tradicional empanada de pino mientras viaja con los ingredientes e historias llenas de recuerdos impregnados de una cultura típica chilena.',
           category: CATEGORIES.escenicas,
@@ -321,7 +322,7 @@ export const DAYS: Day[] = [
       '21:00': [
         {
           title: 'Concierto 360°',
-          subTitle: 'Chicoria Sánchez y CaFuZo',
+          subTitle: 'Juan Antonio "Chicoria" Sánchez y CaFuZo',
           description: '',
           category: CATEGORIES.musica,
           location: PLACES.centenario,
@@ -333,7 +334,7 @@ export const DAYS: Day[] = [
           exhibitors: [
             {
               name: 'Chicoria Sánchez',
-              description: 'Juan Antonio Sánchez Dittborn, más conocido en la escena musical chilena como Chicoria, es un guitarrista y compositor chileno nacido en Alemania dedicado principalmente a la fusión latinoamericana y el desarrollo del folklore desde técnicas de la música clásica. Además es considerado como uno de los compositores chilenos más importantes para guitarra en la actualidad.',
+              description: 'Juan Antonio "Chicoria" Sánchez Dittborn, más conocido en la escena musical chilena como Chicoria, es un guitarrista y compositor chileno nacido en Alemania dedicado principalmente a la fusión latinoamericana y el desarrollo del folklore desde técnicas de la música clásica. Además es considerado como uno de los compositores chilenos más importantes para guitarra en la actualidad.',
               social_media: {
                 ig: 'https://www.instagram.com/chicoriasanchez_oficial/?hl=es',
                 fb: 'https://es-la.facebook.com/JuanAntonioChicoriaSanchez/'
@@ -382,7 +383,7 @@ export const DAYS: Day[] = [
             spotify: 'https://open.spotify.com/show/0145EyAYA8vdCCFezFvfVd'
           },
           more_info: [
-            ['Duración:', 'De 10:00 a 13:00hrs y luego de 15:00 a 18:00hrs.']
+            ['Duración:', 'De 10:00 a 13:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)']
           ]
         }
       ],
@@ -398,6 +399,9 @@ export const DAYS: Day[] = [
           gallery: [
             { name: 'Taller de introducción y apreciación musical y sonora para cine', imgName: 'taller-de-introducción-y-apreciación-musical-y-sonora-para-cine-1.jpg' }
           ],
+          more_info: [
+            ['Duración:', 'De 11:00 a 14:00hrs. y luego de 15:00 a 18:00hrs. (Incluye almuerzo)']
+          ],
           social_media: {
             ig: 'https://www.instagram.com/sheitan_sata/?hl=am-et'
           }
@@ -407,7 +411,7 @@ export const DAYS: Day[] = [
         {
           title: 'Obra: "Caleta de canciones"',
           subTitle:
-            'Banda Purreira de Chicoría Sánchez en colaboración con Colectiva Danza La Manada',
+            'Banda Purreira de Chicoría Sánchez en colaboración con Colectiva de Danza La Manada',
           description: 'Espectáculo interdisciplinario, un viaje de historias divertidas y cuentos, con música original de raíz latinoamericana con sonoridades del mundo, que mediante la danza, elementos teatrales y la música en vivo invitan al goce y disfrute. Destinado a las infancias y sus familias, la invitación es a cantar y jugar con las palabras y los sentidos.',
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
@@ -420,7 +424,7 @@ export const DAYS: Day[] = [
           more_info: [
             ['Dirección musical y de danza:', 'Chicoria Sánchez y Natalie Gutiérrez.'],
             ['Duración:', '40 minutos.'],
-            ['Elenco de música y de danza:', 'Chicoria Sánchez, Pola Castillo, Inti Sánchez, Ankatu Alquinta, América Janequeo, Talo Pinto y Compañía de Danza La Manada.'],
+            ['Elenco de música y de danza:', 'Chicoria Sánchez, Pola Castillo, Inti Sánchez, Ankatu Alquinta, América Janequeo, Talo Pinto y Colectiva de Danza La Manada.'],
           ],
           social_media: {
             ig: 'https://www.instagram.com/danzalamanada/?hl=am-et',
@@ -479,33 +483,12 @@ export const DAYS: Day[] = [
       ],
       '18:00': [
         {
-          title:
-            'Lanzamiento del libro: “Bajo el arco camaleónico el juguetero celestial escribe diarios químicos”',
-          subTitle: 'Presenta: Pía Ahumada Seura',
-          description: 'Este libro fue escrito entre los años 2017 y 2022, premiado por el Fondo Editorial Municipal Manuel Concha (La Serena) y finalmente entregado (el libro físico) en verano de 2024. El lanzamiento del libro se realizó durante la 39a Feria del Libro de La Serena realizada en 2024. La publicación se divide en dos partes. El primero presenta una novela breve y el segundo una selección de cuentos.',
-          category: CATEGORIES.literatura,
-          location: PLACES.casaEditorial,
-          time: '18:00',
-          gallery: [
-            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-1.jpg' },
-            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-2.jpg' },
-            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-3.jpg' },
-          ],
-          more_info: [
-            ['Autor:', 'Pía Ahumada Seura.'],
-            ['Año de publicación:', '2023.'],
-            ['Editorial:', 'Municipalidad de La Serena. Fondo Editorial Municipal Manuel Concha.']
-          ]
-        }
-      ],
-      '19:00': [
-        {
           title: 'Lanzamiento del libro: “Botánica”',
           subTitle: 'Presenta: Ashle Ozuljevic Subaique',
           description: '“Botánica” encuentra en las plantas un espejo para preguntarnos por el Yo. Observa, en cada verso, el ritmo del crecimiento, los acontecimientos que nos conforman y quedan como un nudo en el tallo. El pulso de la semilla olvidada remueve la tierra que la cubre. Cuidados, podas, contemplación. Y las raíces, el origen, el propio y el de las plantas.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
-          time: '19:00',
+          time: '18:00',
           gallery: [
             { name: 'Botanica', imgName: 'botanica-1.jpg' },
             { name: 'Botanica', imgName: 'botanica-2.jpg' },
@@ -516,6 +499,28 @@ export const DAYS: Day[] = [
             ['Editorial:', 'Editorial Liliputiense (España, 2020) y Oxímoron (Chile, 2023)']
           ]
         },
+      ],
+      '19:00': [
+        {
+          title:
+            'Lanzamiento del libro: “Bajo el arco camaleónico el juguetero celestial escribe diarios químicos”',
+          subTitle: 'Presenta: Pía Ahumada Seura',
+          description: 'Este libro fue escrito entre los años 2017 y 2022, premiado por el Fondo Editorial Municipal Manuel Concha (La Serena) y finalmente entregado (el libro físico) en verano de 2024. El lanzamiento del libro se realizó durante la 39a Feria del Libro de La Serena realizada en 2024. La publicación se divide en dos partes. El primero presenta una novela breve y el segundo una selección de cuentos.',
+          category: CATEGORIES.literatura,
+          location: PLACES.casaEditorial,
+          time: '19:00',
+          gallery: [
+            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-1.jpg' },
+            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-2.jpg' },
+            { name: 'Bajo el Arco Camaleonico', imgName: 'bajo-el-arco-camaleonico-3.jpg' },
+          ],
+          more_info: [
+            ['Autor:', 'Pía Ahumada Seura.'],
+            ['Año de publicación:', '2023.'],
+            ['Editorial:', 'Municipalidad de La Serena. Fondo Editorial Municipal Manuel Concha.']
+          ]
+        },
+
         {
           title: 'Obra: “Siervas del Buen Pastor”',
           subTitle: 'Compañía "Colectivo Teatral Con-Zumo"',
@@ -692,22 +697,20 @@ export const DAYS: Day[] = [
           time: ['10:00', '20:00'],
         }
       ],
-      '11:00': [
+      '12:00': [
         {
           title: 'Taller de escritura y Bioma: Exploración de la naturaleza a través de la literatura',
           subTitle: 'Imparte: Ashle Ozuljevic Subaique',
           description: 'Taller de escritura creativa que reúne tres géneros literarios -poesía, crónica y relato breve- a partir de un tema central: la escritura de la naturaleza. Este foco temático que puede indagarse desde una gran diversidad de posibilidades (lo científico, lo ancestral-popular, lo psicoemocional, lo ecológico, entre otros), se desarrollará desde lo identitario regional.',
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
-          time: ['11:00', '12:30'],
+          time: ['12:00', '14:00'],
           gallery: [
             { name: 'Bioma', imgName: 'bioma-1.jpg' },
             { name: 'Bioma', imgName: 'bioma-2.jpg' },
             { name: 'Bioma', imgName: 'bioma-3.jpg' },
           ],
-        }
-      ],
-      '12:00': [
+        },
         {
           title: 'Obra: "Tatul, el paraíso en la Tierra"',
           subTitle: 'Compañía "La chinchilla subversiva"',
@@ -813,7 +816,7 @@ export const DAYS: Day[] = [
               }
             },
             {
-              name: 'Animales de Lumiere',
+              name: 'Animales de Lumière',
               description: 'Es una banda que emergió a mediados del 2012 en Chile, que fusiona sonidos del New Wave, el ambiente del post rock y el espíritu del post punk. Sus integrantes son: Ignacio Lemus (voz y guitarra), Felipe Cortés (bajo) y Gabriel Herrera (batería y secuencias).',
               social_media: {
                 ig: 'https://www.instagram.com/animalesdelumiere/',
