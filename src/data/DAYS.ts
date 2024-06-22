@@ -213,7 +213,6 @@ export const DAYS: Day[] = [
           location: PLACES.casaEditorial,
           time: '19:00',
           gallery: [
-            { name: 'Conversas en Red', imgName: 'conversas-en-red-1.jpeg' },
             { name: 'Conversas en Red', imgName: 'conversas-en-red-2.jpg' },
           ],
           more_info: [
