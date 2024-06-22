@@ -6,7 +6,7 @@ export const EXPO = (title: string): Activity => {
     title: title || '',
     subTitle: '10 Artistas Regionales',
     description:
-      'Muestra de artes visuales desarrollada por diez artistas regionales, tales como: Ulises López, Sandy Baptista, María Piedad Aguirre, Luis Cáceres, Fernando Pizarro, Felipe de Ferrari, Claudia Suárez, Claudia Campos, Carolina Muñoz y Andrés Álvarez, que se desarrollará en la Sala de Exposiciones de la Universidad de La Serena, ubicada a un costado del Aula Magna.',
+      'Exposición de artes visuales que contará con la participación de diez artistas regionales, tales como: Ulises López, Sandy Baptista, María Piedad Aguirre, Luis Cáceres, Fernando Pizarro, Felipe de Ferrari, Claudia Suárez Jansson, Claudia Campos, Carolina Muñoz y Andre Álvarez, la muestra estará abierta a la comunidad del 28 de junio al 27 de julio en la Sala de Exposiciones de la Universidad de La Serena, ubicada a un costado del Aula Magna.',
     category: CATEGORIES.visuales,
     location: PLACES.salaExposiciones,
     time: ['10:00', '18:00'],

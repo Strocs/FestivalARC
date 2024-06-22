@@ -1,12 +1,68 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
+import TextTape from "@components/TextTape.astro";
+
+import { SITE } from "@data/SITE";
+
+import LogoARC from "../assets/Logo-ARC24.png";
+import LogoSeremi from '../assets/logo-seremi.png'
+import LogoULS from '../assets/ULS-Blanco.png'
+
+
+const organizan = [
+  {
+    name: "Seremia",
+    src: LogoSeremi,
+  },
+  {
+    name: "Universidad de La Serena",
+    src: LogoULS,
+  },
+];
+
+const colaboran = [
+  {
+    name: "",
+    src: "",
+  },
+  {
+    name: "",
+    src: "",
+  },
+  {
+    name: "",
+    src: "",
+  },
+  {
+    name: "",
+    src: "",
+  },
+];
 ---
 
 <Layout title="El Festival">
   <main
-    class="w-full h-full flex flex-col items-center justify-center py-[calc(var(--footer-height)+2rem)]"
+    class="w-full h-full flex flex-col items-center justify-center py-[calc(var(--footer-height)+5rem)] px-2"
   >
-    <h1 class="text-center text-lg max-w-prose">
+    <header class="space-y-6 landscape:space-y-10 pb-28 w-full">
+      <Image
+        src={LogoARC}
+        width={500}
+        height={180}
+        class="w-full max-w-[520px] mx-auto aspect-[500/180] drop-shadow-[0_20px_16px_rgb(0,0,0,0.5)]"
+        alt="Logo del festival ARC 2024"
+        transition:name="logo"
+        loading="eager"
+      />
+      <TextTape
+        size="2xl"
+        class="mx-auto md:px-14 text-[7vw] landscape:text-[6vh]"
+      >
+        {"{"}&nbsp; {SITE.date} &nbsp;{"}"}
+      </TextTape>
+    </header>
+    <p class="text-center text-lg max-w-prose">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit laborum
       voluptatum ullam magnam voluptates nobis architecto consequuntur neque
       debitis fugit incidunt labore perspiciatis, ratione perferendis ipsam.
@@ -51,6 +107,24 @@ import Layout from "@layouts/Layout.astro";
       aperiam, maiores enim at temporibus maxime. Hic, doloremque minima illo
       adipisci tempore, eos excepturi dicta voluptatibus reprehenderit beatae
       similique iste molestias totam blanditiis aspernatur ea.
-    </h1>
+    </p>
+    <div class="pt-28 space-y-4">
+      <h2 class="font-medium text-center md:text-start">Organizan:</h2>
+      <ul class="flex gap-2 flex-wrap items-center justify-center md:justify-normal">
+        {
+          organizan.map(logo => <li class="h-fit w-fit">
+            <Image src={logo.src} alt={logo.name} class='max-h-32 h-full w-fit mix-blend-difference' />
+          </a></li>)
+        }
+      </ul>
+      <h2 class="font-medium text-center md:text-start">Colaboran:</h2>
+      <ul class="flex gap-2 flex-wrap items-center justify-center md:justify-normal">
+        {
+          colaboran.map(logo => <li class="h-24 w-24 bg-primary">
+            <img src={logo.src} alt={logo.name} />
+          </a></li>)
+        }
+      </ul>
+    </div>
   </main>
 </Layout>

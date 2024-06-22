@@ -97,7 +97,7 @@ export const DAYS: Day[] = [
             'Taller: "Hasta que leer se haga costumbre: Psicopedagogía de la mediación lectora"',
           subTitle: 'Imparten: David Santos Arrieta y Constanza Fernandez López',
           description:
-            'Exposición de artes visuales que contará con la participación de diez artistas regionales, tales como: Ulises López, Sandy Baptista, María Piedad Aguirre, Luis Cáceres, Fernando Pizarro, Felipe de Ferrari, Claudia Suárez Jansson, Claudia Campos, Carolina Muñoz y André Álvarez, la muestra estará abierta a la comunidad del 28 de junio al 27 de julio en la Sala de Exposiciones de la Universidad de La Serena, ubicada a un costado del Aula Magna.',
+            'Este taller es una jornada de aprendizaje intensiva y de carácter formativo. Se basa en los principios del aprendizaje activo, y busca que los participantes mejoren sus conocimientos y habilidades en torno a la mediación lectora y escritora. Está dirigido a docentes, personal de la educación, familias y público en general interesado en promover la lectura y escritura. Lo imparten David Santos Arrieta y Constanza Fernández López.',
           category: CATEGORIES.literatura,
           location: PLACES.kamino,
           time: ['10:00', '18:00'],
@@ -482,8 +482,7 @@ export const DAYS: Day[] = [
         {
           title:
             'Lanzamiento del libro: “Bajo el arco camaleónico el juguetero celestial escribe diarios químicos”',
-          //! Segundo apellido
-          subTitle: 'Presenta: Pía Ahumada ',
+          subTitle: 'Presenta: Pía Ahumada Seura',
           description: 'Este libro fue escrito entre los años 2017 y 2022, premiado por el Fondo Editorial Municipal Manuel Concha (La Serena) y finalmente entregado (el libro físico) en verano de 2024. El lanzamiento del libro se realizó durante la 39a Feria del Libro de La Serena realizada en 2024. La publicación se divide en dos partes. El primero presenta una novela breve y el segundo una selección de cuentos.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
@@ -792,7 +791,7 @@ export const DAYS: Day[] = [
       ],
       '20:00': [
         {
-          title: 'Concierto en el Centenario',
+          title: 'Concierto en el Teatro Centenario',
           subTitle: 'Natalia Corvetto, Animales de Lumiere, Electrodomésticos',
           description: '',
           category: CATEGORIES.musica,

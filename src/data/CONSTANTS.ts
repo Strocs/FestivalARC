@@ -43,7 +43,9 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/gjx2duh2gBYcgavS9',
     tickets: {
       title: TICKETS.ticket,
-      url: []
+      url: [
+        ['festival ARC', ''],
+      ]
     }
   },
   salaExposiciones: {
@@ -71,17 +73,22 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/y7FDYBx99Rqe74zp9',
     tickets: {
       title: TICKETS.ticket,
-      url: []
+      url: [
+        ['Sideral', ''],
+        ['Caleta', ''],
+        ['Tatul', '']
+      ]
     }
   },
   salonAuditorioIllapel: {
     city: CITIES.ill,
     name: 'Salón Auditorio Casa de la Cultura',
-    //!CONFIRMAR
     maps: 'https://maps.app.goo.gl/i57HCbemPUR8fncM6',
     tickets: {
       title: TICKETS.ticket,
-      url: []
+      url: [
+        ['patrón', '']
+      ]
     }
   },
   casaEditorial: {
@@ -90,7 +97,12 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/EEebachieKw2XMFg8',
     tickets: {
       title: TICKETS.ticket,
-      url: []
+      url: [
+        ['largo solo', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=895b1e6e926e90df019f0cf8eb258f33'],
+        ['Conversas', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=895b1e6e926e90df019f0cf8eb258f33'],
+        ['camaleónico', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=b23ab3701f822a871805f744ad888a69'],
+        ['Botánica', 'https://phoenix.cic.userena.cl/modulos/actividades_vcm/fx_extension_entradas.php?evento=b23ab3701f822a871805f744ad888a69']
+      ]
     }
   },
   plazaIllapel: {
@@ -116,7 +128,11 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/LXGkY7zeLjkUzMk56',
     tickets: {
       title: TICKETS.ticket,
-      url: []
+      url: [
+        ['Lambert', ''],
+        ['Siervas', ''],
+        ['Víctor', '']
+      ]
     }
   },
   palace: {
@@ -125,7 +141,10 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/B2WmfVJsYDXPpN2SA',
     tickets: {
       title: TICKETS.ticket,
-      url: []
+      url: [
+        ['PINO', ''],
+        ['Stella', '']
+      ]
     }
 
   },
@@ -135,7 +154,9 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/v3UzAYEbksXcpP6r7',
     tickets: {
       title: TICKETS.ticket,
-      url: []
+      url: [
+        ['Preestreno', '']
+      ]
     }
   },
   centenario: {
@@ -144,8 +165,10 @@ export const PLACES: Places = {
     maps: 'https://maps.app.goo.gl/481jS6rK1gF2sbzU6',
     tickets: {
       title: TICKETS.ticket,
-      url: []
-
+      url: [
+        ['Centenario', ''],
+        ['Teatro Centenario', '']
+      ]
     }
   },
   galeria: {
