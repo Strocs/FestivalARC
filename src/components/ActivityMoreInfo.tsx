@@ -24,7 +24,7 @@ export const ActivityMoreInfo = ({ moreInfo }: Props) => {
               <a
                 target='_blank'
                 href={item[1]}
-                className='hover:text-accent-yellow underline'
+                className='hover:text-accent-blue underline'
               >
                 Ver en YouTube
               </a>
