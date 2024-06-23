@@ -675,16 +675,14 @@ export const DAYS: Day[] = [
             ['Dirección:', 'Rodrigo Zarricueta.'],
             ['Elenco:', 'April Gregory']
           ]
-        }
-      ],
-      '20:00': [
+        },
         {
           title: 'Concierto en Ovalle',
           subTitle: '20.98, D43 y PAU',
           description: '',
           category: CATEGORIES.musica,
           location: PLACES.tmo,
-          time: '20:00',
+          time: '19:00',
           gallery: [
             { name: 'PAU', imgName: 'pau-1.jpg' },
             { name: 'D43', imgName: 'd43-3.jpg' },
