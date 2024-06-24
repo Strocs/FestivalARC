@@ -22,13 +22,23 @@ const posts = (await getCollection("prensa")) as Prensa[];
             return (
               <li class="w-full max-w-[340px] shadow-xl h-full min-h-[500px] bg-secondary relative group before:content-[''] before:w-full before:h-8 before:bg-primary before:absolute before:bottom-0 before:left-0 before:right-0 hover:before:h-12 before:duration-300">
                 <a href={"/prensa/" + path} class="absolute inset-0">
-                  <div class="w-full h-1/3 bg-black" />
+                  <img
+                    transition:name={`${post.data.author}-image`}
+                    src={post.data.image}
+                    class="w-full h-1/3 bg-black object-cover object-center"
+                  />
                   <section class="flex justify-between flex-col h-2/3">
                     <div class="p-4 space-y-4">
-                      <h2 class="font-medium uppercase text-xl leading-none">
+                      <h2
+                        transition:name={`${post.data.author}-title`}
+                        class="font-medium uppercase text-xl leading-none"
+                      >
                         {post.data.title}
                       </h2>
-                      <p class="font-light text-ellipsis">
+                      <relative-time datetime={post.data.date.toISOString()}>
+                        {post.data.date}
+                      </relative-time>
+                      <p class="font-light line-clamp-6">
                         {post.data.description}
                       </p>
                     </div>
@@ -69,3 +79,7 @@ const posts = (await getCollection("prensa")) as Prensa[];
     </section>
   </main>
 </Layout>
+
+<script>
+  import "@github/relative-time-element";
+</script>

@@ -1,16 +1,46 @@
 ---
 import Prose from "@components/Prose.astro";
 import Layout from "./Layout.astro";
+import TextTape from "@components/TextTape.astro";
+import { Image } from "astro:assets";
 
 const { frontmatter } = Astro.props;
 ---
 
 <Layout title={frontmatter.title}>
-  <main class="py-[calc(var(--footer-height)*2)] w-full max-w-prose mx-auto">
-    <h1 class="text-4xl fonr-medium">{frontmatter.title}</h1>
-    <time datetime=""></time>
-    <Prose class="max-w-prose">
+  <main
+    class="py-[calc(var(--footer-height)*2)] w-full max-w-prose mx-auto space-y-8"
+  >
+    <h1
+      transition:name={`${frontmatter.author}-title`}
+      class="text-4xl font-bold text-center"
+    >
+      {frontmatter.title}
+    </h1>
+    <section class="flex gap-4">
+      <TextTape size="md" class="mx-auto">
+        <relative-time datetime={frontmatter.date}
+          >{frontmatter.date}</relative-time
+        >
+      </TextTape>
+    </section>
+    <Image
+      transition:name={`${frontmatter.author}-image`}
+      src={frontmatter.image}
+      alt={frontmatter.title}
+      inferSize={true}
+      class="w-full max-h-[300px] object-cover object-center"
+    />
+    <Prose class="max-w-prose py-12">
       <slot />
     </Prose>
+
+    <TextTape size="lg" element="a" href="/prensa" class="mx-auto"
+      >Volver atrás</TextTape
+    >
   </main>
 </Layout>
+
+<script>
+  import "@github/relative-time-element";
+</script>

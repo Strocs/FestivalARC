@@ -1,9 +1,10 @@
 ---
 layout: '@layouts/PrensaLayout.astro'
 title: 'El mejor artículo de todos los tiempos'
-author: 'Ben'
+author: '1'
 description: 'Cuando leemos un texto, ya sea en Internet, en una revista o en un libro impreso, esperamos un formato determinado: las palabras importantes están en negrita, los títulos se distinguen del resto del texto de un vistazo y las listas lo estructuran y permiten verlo más claramente'
 date: 2024-06-24
+image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJSOEwrOi66IUkuzSJX2J3QhaY3zEzx8eFhw&s'
 ---
 
 # Markdown: introducción al lenguaje de marcado
