@@ -8,8 +8,7 @@ const { frontmatter } = Astro.props;
 <Layout title={frontmatter.title}>
   <main class="py-[calc(var(--footer-height)*2)] w-full max-w-prose mx-auto">
     <h1 class="text-4xl fonr-medium">{frontmatter.title}</h1>
-    <h2>Autor: {frontmatter.author}</h2>
-    <p>{frontmatter.description}</p>
+    <time datetime=""></time>
     <Prose class="max-w-prose">
       <slot />
     </Prose>

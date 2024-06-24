@@ -5,7 +5,8 @@ import { z, defineCollection, type Render } from 'astro:content';
 const prensaSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
-  author: z.string(),
+  author: z.string().optional(),
+  date: z.date()
 })
 
 // 2. Define tu colección(es)

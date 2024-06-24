@@ -10,11 +10,11 @@ const posts = (await getCollection("prensa")) as Prensa[];
 
 <Layout title="Prensa">
   <main
-    class="w-full h-full py-[calc(var(--footer-height)+5rem)] px-14 space-y-28"
+    class="w-full h-full py-[calc(var(--footer-height)+5rem)] space-y-28 max-w-4xl mx-auto"
   >
     <article class="space-y-20">
-      <TextTape element="h1" size="2xl" class=""> Prensa </TextTape>
-      <ul class="flex flex-wrap gap-8">
+      <TextTape element="h1" size="2xl" class="mx-auto"> Prensa </TextTape>
+      <ul class="flex flex-wrap gap-8 items-center justify-center">
         {
           posts.map((post) => {
             const path = normalizePath(post.data.title);
@@ -45,21 +45,21 @@ const posts = (await getCollection("prensa")) as Prensa[];
     </article>
 
     <section class="space-y-12">
-      <TextTape size="lg" class="">ARC 2024 en los medios</TextTape>
+      <TextTape size="lg" class="mx-auto">ARC 2024 en los medios</TextTape>
       <ul>
-        <li>
+        <li class="text-center">
           <p>
             <strong>Radio XXXXX</strong> - Festival ARC anuncia su programación para
             ...
           </p>
         </li>
-        <li>
+        <li class="text-center">
           <p>
             <strong>Radio XXXXX</strong> - Festival ARC anuncia su programación para
             ...
           </p>
         </li>
-        <li>
+        <li class="text-center">
           <p>
             <strong>Radio XXXXX</strong> - Festival ARC anuncia su programación para
             ...
