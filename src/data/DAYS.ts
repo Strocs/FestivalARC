@@ -513,7 +513,7 @@ export const DAYS: Day[] = [
           subTitle: 'Sexto Sol, Franka Miranda y Chinoy',
           description: '',
           category: CATEGORIES.musica,
-          location: PLACES.plazaIllapel,
+          location: PLACES.mirador,
           time: '16:00',
           gallery: [
             { name: 'Chinoy', imgName: 'chinoy-4.png' },
@@ -563,10 +563,10 @@ export const DAYS: Day[] = [
       ],
       '18:00': [
         {
-          title: 'Lanzamiento del libro: “Botánica”',
-          subTitle: 'Presenta: Ashle Ozuljevic Subaique',
+          title: 'Lanzamiento musical del libro Botánica',
+          subTitle: 'Presenta: Felipe Cortés',
           description:
-            '“Botánica” encuentra en las plantas un espejo para preguntarnos por el Yo. Observa, en cada verso, el ritmo del crecimiento, los acontecimientos que nos conforman y quedan como un nudo en el tallo. El pulso de la semilla olvidada remueve la tierra que la cubre. Cuidados, podas, contemplación. Y las raíces, el origen, el propio y el de las plantas.',
+            '“Botánica” encuentra en las plantas un espejo para preguntarnos por el Yo. Observa, en cada verso, el ritmo del crecimiento, los acontecimientos que nos conforman y quedan como un nudo en el tallo. El pulso de la semilla olvidada remueve la tierra que la cubre. En esta ocasión la autora estará acompañada de los músicos Vicente Atal y Nacho Aquea proponiendo un recital inmersivo.',
           category: CATEGORIES.literatura,
           location: PLACES.casaEditorial,
           time: '18:00',
@@ -577,6 +577,7 @@ export const DAYS: Day[] = [
           ],
           more_info: [
             ['Autor:', 'Ashle Ozuljevic Subaique'],
+            ['Música:', 'Vicente Atal, Nacho Aquea, Caos de Couve.'],
             [
               'Editorial:',
               'Editorial Liliputiense (España, 2020) y Oxímoron (Chile, 2023)'
