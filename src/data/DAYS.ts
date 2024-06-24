@@ -921,7 +921,7 @@ export const DAYS: Day[] = [
           title: 'Obra: “Víctor Trasciende”',
           subTitle: 'Compañía "Núcleo de Autoría Escénica"',
           description:
-            'Es una obra de artes escénicas teatrales desarrollada como acto conmemorativo de los 50 años del Golpe de Estado en Chile. El espectáculo escénico unipersonal es construido a partir de una investigación que estudió la vida y obra del artista, asesinado en 1973.',
+            'Es una obra de artes escénicas teatrales desarrollada como acto conmemorativo de los 50 años del Golpe de Estado en Chile. El espectáculo escénico unipersonal es construido a partir de una investigación que estudió la vida y obra del artista, asesinado en 1973. La obra ofrece una combinación de estilos interpretativos, el actor despliega técnicas del teatro gestual, el mimo y el clown con técnicas provenientes de métodos de Realismo Sicológico y Brechtiano.',
           category: CATEGORIES.escenicas,
           location: PLACES.aulaMagna,
           time: '19:00',
@@ -936,7 +936,9 @@ export const DAYS: Day[] = [
           },
           more_info: [
             ['Dirección y dramaturgia:', 'Julio Bustamante - Luis Arenas.'],
-            ['Elenco:', 'Luis Arenas.']
+            ['Elenco:', 'Luis Arenas.'],
+            ['Dirección de Arte:', 'La Velocidad de la Luz'],
+            ['Producción:', 'Núcleo de Autoría Escénica']
           ]
         }
       ],
