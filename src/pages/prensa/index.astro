@@ -1,4 +1,5 @@
 ---
+import Snowflakes from "@components/Snowflakes.astro";
 import TextTape from "@components/TextTape.astro";
 import type { Prensa } from "@content/config";
 import Layout from "@layouts/Layout.astro";
@@ -9,8 +10,9 @@ const posts = (await getCollection("prensa")) as Prensa[];
 ---
 
 <Layout title="Prensa">
+  <Snowflakes isWhite={false} />
   <main
-    class="w-full h-full py-[calc(var(--footer-height)+5rem)] space-y-28 max-w-4xl mx-auto"
+    class="w-full h-full py-[calc(var(--footer-height)+5rem)] space-y-28 max-w-4xl mx-auto px-4"
   >
     <article class="space-y-20">
       <TextTape element="h1" size="2xl" class="mx-auto"> Prensa </TextTape>

@@ -3,6 +3,7 @@ import type { GetStaticPaths } from "astro";
 import { normalizePath } from "@utils/normalizePath";
 import { getCollection } from "astro:content";
 import type { Prensa } from "@content/config";
+import Snowflakes from "@components/Snowflakes.astro";
 
 export const getStaticPaths = (async () => {
   const posts = (await getCollection("prensa")) as Prensa[];
@@ -22,4 +23,5 @@ const { post } = Astro.props;
 const { Content, headings } = await post.render();
 ---
 
+<Snowflakes isWhite={false} />
 <Content />

@@ -9,7 +9,7 @@ const { frontmatter } = Astro.props;
 
 <Layout title={frontmatter.title}>
   <main
-    class="py-[calc(var(--footer-height)*2)] w-full max-w-prose mx-auto space-y-8"
+    class="py-[calc(var(--footer-height)*2)] w-full max-w-prose mx-auto space-y-8 px-4"
   >
     <h1
       transition:name={`${frontmatter.author}-title`}
