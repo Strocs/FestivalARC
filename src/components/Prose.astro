@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: customStyle } = Astro.props;
+---
+
+<article
+  class:list={[
+    "prose",
+    "prose-h1:font-bold prose-h1:text-2xl",
+    "prose-a:text-blue-600 prose-img:rounded-xl prose-headings:text-black",
+    customStyle,
+  ]}
+>
+  <slot />
+</article>

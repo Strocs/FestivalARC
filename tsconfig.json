@@ -11,7 +11,8 @@
       "@utils/*": ["src/utils/*"],
       "@services/*": ["src/services/*"],
       "@cTypes/*": ["src/types/*"],
-      "@stores/*": ["src/stores/*"]
+      "@stores/*": ["src/stores/*"],
+      "@content/*": ["src/content/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
