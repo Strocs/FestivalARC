@@ -37,6 +37,11 @@ export const TICKETS = {
 }
 
 export const PLACES: Places = {
+  'mirador': {
+    city: CITIES.ill,
+    name: 'Calle Mirador esquina Manuel de Gorotizaga, Illapel',
+    maps: 'https://maps.app.goo.gl/2hJMTHi7daJ43A8u7'
+  },
   consistorial: {
     city: CITIES.cq,
     name: 'Auditorio Consistorial Municipalidad de Coquimbo',
