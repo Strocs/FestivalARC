@@ -847,6 +847,10 @@ export const DAYS: Day[] = [
           category: CATEGORIES.escenicas,
           location: PLACES.teatroMunicipal,
           time: '12:00',
+          more_info: [
+            ['Dirección:', 'Vianni Manque.'],
+            ['Elenco:', 'Natalia Peña, Yaritza Rodríguez, Vianni Manque.']
+          ],
           gallery: [
             { name: 'Tatul', imgName: 'tatul-1.jpeg' },
             { name: 'Tatul', imgName: 'tatul-2.jpeg' },
