@@ -12,6 +12,7 @@ import { FlickrIcon } from './icons/FlickrIcon'
 import { ActivityGallery } from './ActivityGallery'
 import { ActivityExhibitors } from './ActivityExhibitors'
 import { ActivityMoreInfo } from './ActivityMoreInfo'
+import { getTicketURL } from '@utils/getTicketURL'
 
 interface Icons {
   [key: string]: JSX.Element
@@ -32,14 +33,10 @@ export const ActivityPanel = () => {
   const isOpen = useStore(isPanelOpen)
   const info = useStore(infoPanel)
 
-  const getTicketURL = () => {
-    const filter = info.location.tickets?.url.filter(url =>
-      info.title.includes(url[0])
-    )
-    return !!filter && !!filter[0] ? filter[0][1] : '#'
-  }
-
-  const ticket = getTicketURL()
+  const ticket = getTicketURL({
+    urlArray: info.location.tickets?.url,
+    title: info.title
+  })
 
   useEffect(() => {
     if (isOpen && window.innerWidth < 1280) {

@@ -5,17 +5,16 @@ import { OpenActivityPanel } from "./OpenActivityPanel";
 import Time from "./Time.astro";
 import Address from "./Address.astro";
 import type { InfoPanel } from "@stores/activityInfoStore";
+import { getTicketURL } from "@utils/getTicketURL";
 
 type Props = InfoPanel;
 
 const { title, subTitle, category, location, time, color } = Astro.props;
 
-const getTicketURL = () => {
-  const filter = location.tickets?.url.filter((url) => title.includes(url[0]));
-  return !!filter && !!filter[0] ? filter[0][1] : "#";
-};
-
-const ticket = getTicketURL();
+const ticket = getTicketURL({
+  urlArray: location.tickets?.url,
+  title,
+});
 ---
 
 <li
