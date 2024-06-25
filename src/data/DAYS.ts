@@ -938,7 +938,7 @@ export const DAYS: Day[] = [
             ['Dirección y dramaturgia:', 'Julio Bustamante - Luis Arenas.'],
             ['Elenco:', 'Luis Arenas.'],
             ['Dirección de Arte:', 'La Velocidad de la Luz'],
-            ['Producción:', 'Núcleo de Autoría Escénica']
+            ['Producción:', 'Núcleo de Autoría Escénica']
           ]
         }
       ],
