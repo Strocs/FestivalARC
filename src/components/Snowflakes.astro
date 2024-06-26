@@ -3,41 +3,44 @@ interface Props {
   amount?: number;
   isWhite?: boolean;
 }
-const { amount = 14, isWhite = true } = Astro.props;
 
-const snowflakesWhites = isWhite ? "*:brightness-0 *:invert" : "";
+const { amount = 14, isWhite } = Astro.props;
+
+const snowflakesWhite = isWhite ? "*:brightness-0 *:invert" : "";
 ---
 
-<div class="fixed -z-10">
-  <div class="fixed w-screen h-full overflow-hidden -z-10 top-0 bottom-0">
+<div class="hidden xl:block fixed">
+  <div
+    class="fixed w-screen h-full overflow-hidden -z-10 flex items-center justify-center"
+  >
     <div
       id="snowflakes"
       class:list={[
-        "w-[1920px] h-full absolute -top-16 left-0 right-0",
-        "md:*:absolute *:animate-snowflakes *:bg-contain *:bg-no-repeat *:opacity-80",
-        snowflakesWhites,
+        "w-[1920px] h-full",
+        "*:absolute *:animate-snowflakes *:bg-contain *:bg-no-repeat *:opacity-80",
+        snowflakesWhite,
         "[&>*:nth-child(odd)]:bg-snow-ball [&>*:nth-child(even)]:bg-snow-star",
         "[&>*:nth-child(3n)]:w-4 [&>*:nth-child(3n)]:h-4",
         "[&>*:nth-child(3n+1)]:w-6 [&>*:nth-child(3n+1)]:h-6",
         "[&>*:nth-child(3n+2)]:w-8 [&>*:nth-child(3n+2)]:h-8",
         "[&>*:nth-child(odd)]:[animation-delay:100ms]",
-        "[&>*:nth-child(1)]:top-[16%] [&>*:nth-child(1)]:left-[2%]",
-        "[&>*:nth-child(2)]:top-[20%] [&>*:nth-child(2)]:left-[22%]",
+        "[&>*:nth-child(1)]:top-[22%] [&>*:nth-child(1)]:left-[5%]",
+        "[&>*:nth-child(2)]:top-[36%] [&>*:nth-child(2)]:left-[21%]",
         "[&>*:nth-child(3)]:top-[30%] [&>*:nth-child(3)]:left-[75%]",
         "[&>*:nth-child(4)]:top-[40%] [&>*:nth-child(4)]:left-[80%]",
         "[&>*:nth-child(5)]:top-[50%] [&>*:nth-child(5)]:left-[10%]",
         "[&>*:nth-child(6)]:top-[25%] [&>*:nth-child(6)]:left-[95%]",
-        "[&>*:nth-child(7)]:top-[70%] [&>*:nth-child(7)]:left-[70%]",
+        "[&>*:nth-child(7)]:top-[60%] [&>*:nth-child(7)]:left-[74%]",
         "[&>*:nth-child(8)]:top-[80%] [&>*:nth-child(8)]:left-[87%]",
-        "[&>*:nth-child(9)]:top-[92%] [&>*:nth-child(9)]:left-[20%]",
+        "[&>*:nth-child(9)]:top-[16%] [&>*:nth-child(9)]:left-[22%]",
         "[&>*:nth-child(10)]:top-[82%] [&>*:nth-child(10)]:left-[3%]",
         "[&>*:nth-child(11)]:top-[16%] [&>*:nth-child(11)]:left-[88%]",
-        "[&>*:nth-child(12)]:top-[52%] [&>*:nth-child(12)]:left-[28%]",
-        "[&>*:nth-child(13)]:top-[64%] [&>*:nth-child(13)]:left-[30%]",
+        "[&>*:nth-child(12)]:top-[62%] [&>*:nth-child(12)]:left-[16%]",
+        "[&>*:nth-child(13)]:top-[78%] [&>*:nth-child(13)]:left-[22%]",
         "[&>*:nth-child(14)]:top-[62%] [&>*:nth-child(14)]:left-[92%]",
       ]}
     >
-      {Array.from(new Array(amount), () => <i />)}
+      {Array.from(new Array(amount), (_, i) => <span id={"sf-" + (i + 1)} />)}
     </div>
   </div>
 </div>
