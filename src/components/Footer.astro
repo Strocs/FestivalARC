@@ -13,6 +13,7 @@ const { class: customStyle } = Astro.props;
 ---
 
 <footer
+  data-testId="footer"
   class:list={[
     "landscape:grid flex justify-center grid-cols-[1fr_auto_1fr] items-center w-full h-[--footer-height] space-x-2 md:px-14 bottom-0 left-0 right-0 z-40 bg-black absolute",
     customStyle,
