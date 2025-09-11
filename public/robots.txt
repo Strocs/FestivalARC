@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.festivalarc.cl/sitemap-index.xml
+Sitemap: https://www.festivalarc.com/sitemap-index.xml

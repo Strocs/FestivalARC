@@ -1,21 +1,20 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import LOGO from "../assets/Logo-ARC24.png";
+import LOGO from "../assets/ARC25.png";
 import ULSLogo from "../assets/ULS-Blanco.png";
 import SEREMILogo from "../assets/logo-seremi.png";
 import { Image } from "astro:assets";
-import { RESULTS } from "../data/RESULTS";
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
-import YoutubeIcon from "../components/icons/YoutubeIcon.astro";
-import XIcon from "../components/icons/XIcon.astro";
 import InstagramIcon from "../components/icons/InstagramIcon.astro";
+import XIcon from "../components/icons/XIcon.astro";
+import YoutubeIcon from "../components/icons/YoutubeIcon.astro";
 ---
 
-<Layout title="ARC 2024 | Del 27 al 30 de Junio">
+<Layout title="ARC 2025 | Postulaciones abiertas">
   <header
-    class="grid justify-center w-fit mx-auto pt-2 gap-4 md:gap-8 group pb-[6vh]"
+    class="grid justify-center w-fit mx-auto gap-4 md:gap-8 group px-4 pt-6"
   >
-    <h1 class="sr-only">ARC 2024, Próximamente</h1>
+    <h1 class="sr-only">ARC 2025, Próximamente</h1>
     <figure class="overfloh-hidden h-fit w-fit mx-auto">
       <Image
         src={LOGO}
@@ -26,73 +25,39 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
         loading="eager"
       />
     </figure>
-    <h2
-      class="text-secondary font-black text-2xl text-center md:text-4xl uppercase tracking-wide bg-black w-fit py-1 md:py-2 px-4 md:px-8 mx-auto scale-y-150 -skew-y-[6deg] group-hover:skew-y-0 transition duration-300 cursor-default delay-150"
-    >
-      {"{"}&nbsp; Del 27 al 30 de Junio &nbsp;{"}"}
-    </h2>
   </header>
-  <main class="h-full w-full max-w-2xl mx-auto space-y-14 pb-72 sm:pb-32">
+  <main class="h-full w-full max-w-2xl mx-auto space-y-14 px-4 pb-4">
     <section class="grid gap-5">
       <h2
         class="text-3xl uppercase tracking-tight text-white font-extrabold text-center"
       >
         Postulaciones Abiertas
         <span class="block font-normal normal-case text-lg tracking-normal"
-          >Hasta el 12 de Junio</span
+          >Hasta el 21 de Septiembre</span
         >
       </h2>
-      <div class="flex gap-4 flex-wrap max-w-xl mx-auto justify-center">
+      <div class="flex flex-col gap-4 max-w-xl mx-auto justify-center mt-10">
         <a
           target="_blank"
           href="https://drive.google.com/file/d/1_TfFTNhIwPefC5qjfODh8I7LFxy0OeHh/view"
-          class="text-secondary hover:text-[#fcea0d] font-black text-2xl text-center uppercase tracking-wide bg-black w-fit py-1 px-4 mx-auto scale-y-150 -skew-y-[6deg] hover:skew-y-0 transition duration-300 delay-100"
+          class="text-[#9f00d3] font-bestoom hover:text-black text-2xl md:text-3xl text-center uppercase tracking-wider bg-[#f3d33d] w-fit pb-2 pt-3 px-4 mx-auto  -skew-y-0 hover:skew-y-[-4deg] transition duration-300 delay-100"
         >
-          Artesanía
+          Lee atentamente las bases
+        </a>
+
+        <a
+          href="/postulaciones"
+          class="bg-[#2495e9] font-dk hover:text-black text-2xl leading-none text-center uppercase tracking-wider text-white w-fit py-3 px-4 mx-auto -skew-y-[4deg] hover:skew-y-0 transition duration-300 delay-100"
+        >
+          Llena el formulario de postulación
         </a>
       </div>
-    </section>
-    <div class="">
-      <section class="grid gap-6 pb-10">
-        <h2
-          class="text-2xl uppercase tracking-tight text-white font-extrabold text-center"
-        >
-          Resolución Seleccionados
-        </h2>
-        <a
-          target="_blank"
-          href="https://drive.google.com/file/d/1bE7lnA3j5EZDKsh5bA6sF4eA7GdGjL0O/view?usp=share_link"
-          class="text-secondary mx-auto hover:text-[#fcea0d] font-black text-lg text-center uppercase tracking-wide bg-black w-fit h-fit px-4 scale-y-150 -skew-y-[6deg] hover:skew-y-0 transition duration-300 delay-100"
-        >
-          RESOLUCIÓN Nº 195/2024
-        </a>
+      <p class="text-center text-white mt-10">¡Nos pondremos en contacto contigo muy pronto!</p>
       </section>
-      <section class="grid gap-6">
-        <h2
-          class="text-2xl uppercase tracking-tight text-white font-extrabold text-center"
-        >
-          Actas de Evaluación
-        </h2>
-        <div
-          class="flex gap-x-2 gap-y-8 md:gap-y-8 flex-wrap max-w-xl mx-auto justify-center"
-        >
-          {
-            RESULTS.map(({ title, docURL }) => (
-              <a
-                target="_blank"
-                href={docURL}
-                class="text-secondary hover:text-[#fcea0d] font-black text-base text-center  uppercase tracking-wide bg-[#1d70b7] w-fit h-fit  px-4 scale-y-150 -skew-y-[6deg] hover:skew-y-0 transition duration-300 delay-100"
-              >
-                {title}
-              </a>
-            ))
-          }
-        </div>
-      </section>
-    </div>
   </main>
+
   <footer
-    class="grid xl:grid-flow-col justify-center items-center gap-8 xl:gap-20 bg-black absolute bottom-0 w-full left-0 p-4"
+    class="grid xl:grid-flow-col justify-center items-center gap-8 xl:gap-20 bg-[#170d19] relative bottom-0 w-full left-0 p-4"
   >
     <div class="flex items-center gap-8 w-fit mx-auto">
       <Image
@@ -110,7 +75,7 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
         loading="eager"
       />
     </div>
-    <!-- <div class="flex gap-4 text-secondary w-fit h-fit">
+    <div class="flex gap-4 text-secondary w-fit h-fit mx-auto">
       <a
         aria-label="Visita nuestro Facebook"
         href="https://web.facebook.com/FestivalARC"
@@ -133,12 +98,12 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
         href="https://www.youtube.com/@festivalarc5632"
         target="_blank"><YoutubeIcon /></a
       >
-    </div> -->
+    </div>
     <p
       class="text-white xl:absolute xl:right-8 xl:bottom-4 text-sm w-fit mx-auto self-end"
     >
-      <strong>ARC 2024</strong> | Desarrollado por <a
-        href="https://strocs.dev"
+      <strong>ARC 2025</strong> | Desarrollado por <a
+        href="https://github.com/strocs"
         class="hover:text-[#fcea0d] transition duration-150">StrocsDev</a
       >
     </p>

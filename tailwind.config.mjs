@@ -9,7 +9,9 @@ export default {
       }
     },
     fontFamily: {
-      secondary: ['Fira Sans', 'sans-serif']
+      dk: ['DK Appelstroop', 'sans-serif'],
+      secondary: ['Fira Sans', 'sans-serif'],
+      bestoom: ['Bestoom', 'sans-serif']
     }
   },
   plugins: []
