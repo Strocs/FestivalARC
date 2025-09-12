@@ -10,7 +10,8 @@ export default {
     },
     fontFamily: {
       dk: ['DK Appelstroop', 'sans-serif'],
-      bestoom: ['Bestoom', 'sans-serif']
+      bestoom: ['Bestoom', 'sans-serif'],
+      neris: ['Neris', 'sans-serif']
     }
   },
   plugins: []
