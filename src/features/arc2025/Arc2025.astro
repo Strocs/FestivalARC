@@ -1,10 +1,9 @@
 ---
-import Schedule2025 from "./components/Schedule2025.astro";
-import Layout from "./layouts/Layout.astro";
-
+import Arc2025Layout from "./layouts/Arc2025Layout.astro";
+import Arc2025Schedule from "./sections/schedule/components/Arc2025Schedule.astro";
 ---
 
-<Layout title="Programación | Festival ARC 2025">
+<Arc2025Layout>
   <main class="min-h-screen w-full mx-auto px-4 py-16">
     <header class="mb-12 text-center">
       <h1 class="text-4xl md:text-5xl font-bestoom text-[#efd43d] mb-4">
@@ -15,6 +14,6 @@ import Layout from "./layouts/Layout.astro";
       </p>
     </header>
 
-  <Schedule2025 />
+  <Arc2025Schedule />
   </main>
-</Layout>
+</Arc2025Layout>

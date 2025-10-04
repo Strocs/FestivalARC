@@ -6,7 +6,9 @@ interface Props {
 }
 
 const { gridData } = Astro.props
-const { timeSlots, categories, rows } = gridData
+const { timeSlots, tracks, rows } = gridData
+
+console.log(rows[0].cells)
 ---
 
 <div class="w-full overflow-x-auto py-4">
@@ -22,7 +24,7 @@ const { timeSlots, categories, rows } = gridData
     ))}
 
     {rows.map(row => {
-      const category = categories.find(c => c.id === row.categoryId)!
+      const category = tracks.find(c => c.id === row.trackId)!
       
       return (
         <>
@@ -40,8 +42,8 @@ const { timeSlots, categories, rows } = gridData
                 >
                   <div class="h-full flex flex-col gap-2">
                     <h3 class="text-lg font-bold m-0 text-[#170d19]">{event.title}</h3>
-                    <p class="text-sm text-gray-600 m-0">{event.description}</p>
-                    <p class="text-xs text-gray-400 m-0 font-semibold">{event.startTime} - {event.endTime}</p>
+                    <!-- <p class="text-sm text-gray-600 m-0">{event.description}</p> -->
+                    <p class="text-xs text-gray-400 m-0 font-semibold">{event.time.start} - {event.time.end}</p>
                   </div>
                 </div>
               )
