@@ -1,0 +1,89 @@
+{
+  "timeSlot": {
+    "startTime": "18:00",
+    "endTime": "23:00",
+    "interval": 30
+  },
+  "categories": [
+    {
+      "id": "stage-main",
+      "name": "Escenario Principal",
+      "color": "#f70d61",
+      "order": 1
+    },
+    {
+      "id": "stage-indie",
+      "name": "Escenario Indie",
+      "color": "#2495e9",
+      "order": 2
+    },
+    {
+      "id": "stage-electronic",
+      "name": "Escenario Electrónico",
+      "color": "#efd43d",
+      "order": 3
+    }
+  ],
+  "events": [
+    {
+      "id": "evt-1",
+      "title": "Los Bunkers",
+      "description": "Concierto de rock chileno",
+      "categoryId": "stage-main",
+      "startTime": "22:00",
+      "endTime": "23:00",
+      "metadata": {
+        "artist": "Los Bunkers",
+        "genre": "Rock"
+      }
+    },
+    {
+      "id": "evt-2",
+      "title": "Gepe",
+      "description": "Música indie nacional",
+      "categoryId": "stage-indie",
+      "startTime": "20:00",
+      "endTime": "21:30",
+      "metadata": {
+        "artist": "Gepe",
+        "genre": "Indie"
+      }
+    },
+    {
+      "id": "evt-3",
+      "title": "DJ Raff",
+      "description": "Set electrónico",
+      "categoryId": "stage-electronic",
+      "startTime": "19:00",
+      "endTime": "20:00",
+      "metadata": {
+        "artist": "DJ Raff",
+        "genre": "Electronic"
+      }
+    },
+    {
+      "id": "evt-4",
+      "title": "Javiera Mena",
+      "description": "Pop electrónico",
+      "categoryId": "stage-main",
+      "startTime": "20:00",
+      "endTime": "21:00",
+      "metadata": {
+        "artist": "Javiera Mena",
+        "genre": "Pop"
+      }
+    },
+    {
+      "id": "evt-5",
+      "title": "Fakuta",
+      "description": "Beats y freestyle",
+      "categoryId": "stage-electronic",
+      "startTime": "21:00",
+      "endTime": "22:00",
+      "metadata": {
+        "artist": "Fakuta",
+        "genre": "Electronic"
+      }
+    }
+  ]
+}
