@@ -1,0 +1,34 @@
+[
+  {
+    "id": "disena-tu-propio-azulejo-ceramico",
+    "title": "Diseña tu Propio Azulejo Cerámico",
+    "subTitle": "",
+    "description": "En este taller aprenderemos la técnica bajo cubierta, a través de placas previamente bizcochadas de cerámica. El taller permitirá a la comunidad acceder a materiales y conocimientos gratuitos propios de la disciplina cerámica, la cual es de vital importancia en la región por nuestro legado alfarero.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "15:30",
+      "end": "17:00"
+    },
+    "metadata": {
+      "category": "Talleres",
+      "duration": "90 minutos",
+      "gallery": []
+    }
+  },
+  {
+    "id": "taller-de-alfareria",
+    "title": "Taller de Alfarería",
+    "subTitle": "",
+    "description": "El taler busca acercar a la comunidad al oficio ancestral de la alfarería mediante una experiencia intensiva de un día, combinando práctica manual, exploración creativa y contexto cultural. A través del modelado en arcila, los participantes podrán crear sus propias piezas, comprender la importancia de este arte en la historia y reflexionar sobre la conexión entre territorio, materia y expresión personal.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "18:00",
+      "end": "20:00"
+    },
+    "metadata": {
+      "category": "Talleres",
+      "duration": "120 minutos",
+      "gallery": []
+    }
+  }
+]

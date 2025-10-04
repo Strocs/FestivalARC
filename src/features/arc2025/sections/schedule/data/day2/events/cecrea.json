@@ -1,0 +1,18 @@
+[
+  {
+    "id": "taller-astronautiko",
+    "title": "Taller Astronautiko",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-i",
+    "time": {
+      "start": "15:30",
+      "end": "16:00"
+    },
+    "metadata": {
+      "category": "Cecrea",
+      "duration": "30 minutos",
+      "gallery": []
+    }
+  }
+]

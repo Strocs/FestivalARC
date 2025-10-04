@@ -1,0 +1,72 @@
+[
+  {
+    "id": "stage-a",
+    "name": "Teatro (Escenario A)",
+    "color": "#f70d61",
+    "order": 1,
+    "type": "stage"
+  },
+  {
+    "id": "stage-b",
+    "name": "Escenario B (Circo/Danza)",
+    "color": "#2495e9",
+    "order": 2,
+    "type": "stage"
+  },
+  {
+    "id": "stage-c",
+    "name": "Escenario C (Música)",
+    "color": "#efd43d",
+    "order": 3,
+    "type": "stage"
+  },
+  {
+    "id": "stage-d",
+    "name": "Escenario D (Títeres)",
+    "color": "#34c759",
+    "order": 4,
+    "type": "stage"
+  },
+  {
+    "id": "stage-e",
+    "name": "Escenario E (Espacio Literatura)",
+    "color": "#ff9500",
+    "order": 5,
+    "type": "stage"
+  },
+  {
+    "id": "stage-f",
+    "name": "Escenario F (Talleres)",
+    "color": "#af52de",
+    "order": 6,
+    "type": "stage"
+  },
+  {
+    "id": "stage-g",
+    "name": "Escenario G (Charlas)",
+    "color": "#5ac8fa",
+    "order": 7,
+    "type": "stage"
+  },
+  {
+    "id": "stage-h",
+    "name": "Escenario H (Espacio IMREC)",
+    "color": "#ffcc00",
+    "order": 8,
+    "type": "stage"
+  },
+  {
+    "id": "stage-i",
+    "name": "Escenario I (Espacio Cecrea)",
+    "color": "#ff3b30",
+    "order": 9,
+    "type": "stage"
+  },
+  {
+    "id": "stage-j",
+    "name": "Instalaciones",
+    "color": "#8e8e93",
+    "order": 10,
+    "type": "open-space"
+  }
+]

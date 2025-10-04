@@ -1,0 +1,34 @@
+[
+  {
+    "id": "taller-de-alfareria-sonora-construccion-de-aerofonos-de-la-cultura-diaguita",
+    "title": "Taller de Alfarería Sonora: \"Construcción de Aerófonos de la Cultura Diaguita\"",
+    "subTitle": "",
+    "description": "Taller práctico de 2 horas donde niños, jóvenes y familias construyen silbatos y flautas en greda inspirados en la Cultura Diaguita. Sin requerir experiencia previa, los participantes aprenden técnicas de modelado y esgrafiado, experimentan con el sonido de los aerófonos y se llevan su obra, fortaleciendo la creatividad y la valoración del patrimonio cultural local.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "15:30",
+      "end": "17:30"
+    },
+    "metadata": {
+      "category": "Talleres",
+      "duration": "120 minutos",
+      "gallery": []
+    }
+  },
+  {
+    "id": "bestiario-del-parque-pedro-de-valdivia-de-la-biodiversidad-a-la-biofantasia",
+    "title": "Bestiario del Parque Pedro de Valdivia: De la Biodiversidad a la Biofantasía",
+    "subTitle": "",
+    "description": "El taller Bestiario del Parque Pedro de Valdivia es una experiencia de dos horas dirigida a familias, con un enfoque en infancias, jóvenes y adultos. Su objetivo es fusionar la observación de la biodiversidad local con la expresión artística para que las familias, trabajando juntas, transformen la flora y fauna del parque en criaturas de fantasía a través de la ilustración. Este proceso busca fortalecer la identidad territorial y la participación cultural, culminando en la creación de un bestiario colectivo que celebra la naturaleza desde una perspectiva familiar y creativa.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "18:00",
+      "end": "20:00"
+    },
+    "metadata": {
+      "category": "Talleres",
+      "duration": "120 minutos",
+      "gallery": []
+    }
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "por-una-vida-entera-susana-rigollet-marsalado",
+    "title": "Por una Vida Entera",
+    "subTitle": "Susana Rigollet - Marsalado",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "15:00",
+      "end": "15:30"
+    },
+    "metadata": {
+      "category": "Literatura",
+      "duration": "30 minutos",
+      "gallery": []
+    }
+  },
+  {
+    "id": "presentacion-solido-20-marcelo-tapia-solid-ediciones",
+    "title": "Presentación Sólido 20",
+    "subTitle": "Marcelo Tapia - Solid Ediciones",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "16:00",
+      "end": "16:30"
+    },
+    "metadata": {
+      "category": "Literatura",
+      "duration": "30 minutos",
+      "gallery": []
+    }
+  },
+  {
+    "id": "presentacion-gabriela-mistral-ojos-clavados-poemas-sobre-la-muerte",
+    "title": "Presentación del Libro \"Gabriela Mistral. Ojos Clavados. Poemas sobre la Muerte\"",
+    "subTitle": "Selección y Presentación Paula Ceballos Huerta - Bordelibre Ediciones",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "17:00",
+      "end": "17:30"
+    },
+    "metadata": {
+      "category": "Literatura",
+      "duration": "30 minutos",
+      "gallery": []
+    }
+  },
+  {
+    "id": "ollie-francisca-torrealba-y-belen-varas-marsalado",
+    "title": "Ollie",
+    "subTitle": "Francisca Torrealba y Belén Varas - Marsalado",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "18:00",
+      "end": "18:30"
+    },
+    "metadata": {
+      "category": "Literatura",
+      "duration": "30 minutos",
+      "gallery": []
+    }
+  },
+  {
+    "id": "presentacion-lecturas-aberrantes-y-hermeneutica-esquizo-cristian-geisse",
+    "title": "Presentación del Libro \"Lecturas Aberrantes y Hermenéutica Esquizo\"",
+    "subTitle": "Cristian Geisse - Bordelibre Ediciones",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "19:00",
+      "end": "19:30"
+    },
+    "metadata": {
+      "category": "Literatura",
+      "duration": "30 minutos",
+      "gallery": []
+    }
+  },
+  {
+    "id": "aves-migratorias-de-la-region-de-coquimbo-guillotina-editorial",
+    "title": "Aves Migratorias de la Región de Coquimbo",
+    "subTitle": "Guillotina Editorial",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "20:00",
+      "end": "20:30"
+    },
+    "metadata": {
+      "category": "Literatura",
+      "duration": "30 minutos",
+      "gallery": []
+    }
+  }
+]

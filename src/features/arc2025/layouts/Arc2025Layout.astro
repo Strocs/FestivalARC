@@ -1,0 +1,17 @@
+---
+import '../styles/styles.css'
+import Layout from '@/layouts/Layout.astro'
+
+---
+
+<Layout 
+  title="Festival ARC 2025 - Festival de las Artes Región de Coquimbo" 
+  description="Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena." 
+  favicon="/ARC25.png">
+  <body
+    class="flex flex-col w-full h-full min-h-[100dvh] relative items-center justify-between bg-[url('/FONDO_WEB.png')] bg-no-repeat bg-cover bg-left xl:bg-center font-neris"
+  >
+    <slot />
+  </body>
+</Layout>
+
