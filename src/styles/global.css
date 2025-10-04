@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --color-primary: '#ee0175';
+  --color-secondary: '#f1f1f1';
+
+  --font-dk: 'DK Appelstroop', sans-serif;
+  --font-bestoom: 'Bestoom', sans-serif;
+  --font-neris: 'Neris', sans-serif;
+}
