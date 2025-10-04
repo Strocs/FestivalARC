@@ -1,73 +1,77 @@
-import type { GridData, GridRow, GridCell, GridCategory } from '../types'
+import type { GridData, Row, Cell } from '../types/grid'
+import type { Event } from '../types/models'
+import { generateTimeSlots } from '../utils'
 import type { ProcessedSchedule } from './schedule'
-import { generateTimeSlots, calculateSpan, toMinutes } from '../utils'
 
 export function buildGridData(processed: ProcessedSchedule): GridData {
-  const { input, eventsByCategory } = processed
-  const { startTime, endTime, intervalMinutes } = input.timeConfig
-  
-  const timeSlots = generateTimeSlots(startTime, endTime, intervalMinutes)
-  
-  const categories: GridCategory[] = [...input.categories]
-    .sort((a, b) => a.order - b.order)
-    .map(cat => ({
-      id: cat.id,
-      name: cat.name,
-      color: cat.color
-    }))
-  
-  const rows: GridRow[] = categories.map(category => {
-    const events = eventsByCategory.get(category.id) || []
-    const cells = buildCellsForCategory(events, timeSlots, intervalMinutes)
-    
+  const {
+    startMinutes,
+    endMinutes,
+    intervalMinutes,
+    sortedTracks,
+    eventsByTrack,
+  } = processed
+
+  const timeSlots = generateTimeSlots(
+    formatMinutesToTime(startMinutes),
+    formatMinutesToTime(endMinutes),
+    intervalMinutes,
+  )
+
+  const rows: Row[] = sortedTracks.map((track) => {
+    const events = eventsByTrack.get(track.id) || []
+    const cells = buildCells(events, startMinutes, endMinutes, intervalMinutes)
+
     return {
-      categoryId: category.id,
-      cells
+      trackId: track.id,
+      cells,
     }
   })
-  
+
   return {
     timeSlots,
-    categories,
-    rows
+    trackSlots: sortedTracks,
+    rows,
   }
 }
 
-function buildCellsForCategory(
-  events: ReadonlyArray<ProcessedSchedule['input']['events'][number]>,
-  timeSlots: string[],
-  intervalMinutes: number
-): GridCell[] {
-  const cells: GridCell[] = new Array(timeSlots.length).fill(null).map(() => ({ type: 'empty' }))
-  
-  const sortedEvents = [...events].sort((a, b) => 
-    toMinutes(a.startTime) - toMinutes(b.startTime)
-  )
-  
-  for (const event of sortedEvents) {
-    const eventStartMinutes = toMinutes(event.startTime)
-    const slotStartMinutes = toMinutes(timeSlots[0])
-    
-    const slotIndex = Math.floor((eventStartMinutes - slotStartMinutes) / intervalMinutes)
-    
-    if (slotIndex >= 0 && slotIndex < cells.length) {
-      const span = calculateSpan(event.startTime, event.endTime, intervalMinutes)
-      
-      cells[slotIndex] = {
-        type: 'event',
-        gridColumn: `span ${span}`,
-        data: {
-          id: event.id,
-          title: event.title,
-          description: event.description,
-          startTime: event.startTime,
-          endTime: event.endTime,
-          span,
-          metadata: event.metadata
-        }
-      }
+function buildCells(
+  events: ReadonlyArray<Event>,
+  startMinutes: number,
+  endMinutes: number,
+  intervalMinutes: number,
+): Cell[] {
+  if (startMinutes >= endMinutes) return []
+
+  const cells: Cell[] = []
+
+  const addEmptyCell = (fromMin: number, toMin: number) => {
+    const cellCount = (toMin - fromMin) / intervalMinutes
+    if (cellCount > 0) {
+      cells.push({ cell: cellCount })
     }
   }
-  
+
+  let cursor = startMinutes
+
+  for (const event of events) {
+    addEmptyCell(cursor, event.time.startMinutes)
+
+    cells.push({
+      cell: (event.time.endMinutes - event.time.startMinutes) / intervalMinutes,
+      data: event,
+    })
+
+    cursor = event.time.endMinutes
+  }
+
+  addEmptyCell(cursor, endMinutes)
+
   return cells
+}
+
+function formatMinutesToTime(totalMinutes: number): string {
+  const hours = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`
 }

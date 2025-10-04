@@ -1,14 +1,27 @@
-export function toMinutes(time: string): number {
+export function toMinutes(time: string | number): number {
+  // user can provide minutes directly
+  if (typeof time === 'number') {
+    if (time < 0 || time >= 1440) {
+      throw new Error(`Minutes out of range: ${time}`)
+    }
+    return time
+  }
+
+  // expect time in "HH:MM" format
+  if (typeof time !== 'string' || !/^\d{1,2}:\d{2}$/.test(time)) {
+    throw new Error(`Invalid time format: "${time}". Expected "HH:MM"`)
+  }
+
   const [hours, minutes] = time.split(':').map(Number)
-  
+
   if (isNaN(hours) || isNaN(minutes)) {
     throw new Error(`Invalid time format: "${time}". Expected "HH:MM"`)
   }
-  
+
   if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
     throw new Error(`Time out of range: "${time}"`)
   }
-  
+
   return hours * 60 + minutes
 }
 
@@ -16,7 +29,7 @@ export function fromMinutes(totalMinutes: number): string {
   if (totalMinutes < 0 || totalMinutes >= 1440) {
     throw new Error(`Minutes out of range: ${totalMinutes}`)
   }
-  
+
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60
   return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`
@@ -25,31 +38,33 @@ export function fromMinutes(totalMinutes: number): string {
 export function generateTimeSlots(
   startTime: string,
   endTime: string,
-  intervalMinutes: number
+  intervalMinutes: number,
 ): string[] {
   const start = toMinutes(startTime)
   const end = toMinutes(endTime)
-  
+
   if (end <= start) {
-    throw new Error(`End time (${endTime}) must be after start time (${startTime})`)
+    throw new Error(
+      `End time (${endTime}) must be after start time (${startTime})`,
+    )
   }
-  
+
   if (intervalMinutes <= 0) {
     throw new Error(`Interval must be positive, got ${intervalMinutes}`)
   }
-  
+
   const slots: string[] = []
   for (let current = start; current <= end; current += intervalMinutes) {
     slots.push(fromMinutes(current))
   }
-  
+
   return slots
 }
 
 export function calculateSpan(
   startTime: string,
   endTime: string,
-  intervalMinutes: number
+  intervalMinutes: number,
 ): number {
   const start = toMinutes(startTime)
   const end = toMinutes(endTime)
