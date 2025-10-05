@@ -1,8 +1,9 @@
 @import 'tailwindcss';
 
-@theme inline {
+@theme {
   --color-primary: '#ee0175';
   --color-secondary: '#f1f1f1';
+  --color-red-light: '#ff7f7f';
 
   --font-dk: 'DK Appelstroop', sans-serif;
   --font-bestoom: 'Bestoom', sans-serif;
