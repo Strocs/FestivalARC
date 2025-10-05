@@ -1,12 +1,18 @@
-import type { Event, Track } from './models'
+import type {
+  NormalizedEvent,
+  ScheduleEvent,
+  ScheduleTime,
+  ScheduleTrack,
+} from './models'
 
 export interface ScheduleInput {
-  readonly time: {
-    readonly start: string | number
-    readonly end: string | number
-    readonly intervalMinutes: number
-  }
+  readonly scheduleTime: ScheduleTime
+  readonly tracks: ReadonlyArray<ScheduleTrack>
+  readonly events: ReadonlyArray<ScheduleEvent>
+}
 
-  readonly tracks: ReadonlyArray<Track>
-  readonly events: ReadonlyArray<Event>
+export interface NormalizedScheduleInput {
+  readonly scheduleTime: ScheduleTime<number>
+  readonly sortedTracks: ReadonlyArray<ScheduleTrack>
+  readonly eventsByTrack: Map<string, ReadonlyArray<NormalizedEvent>>
 }

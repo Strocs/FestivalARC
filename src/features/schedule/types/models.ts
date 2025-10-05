@@ -1,32 +1,39 @@
-export interface Track {
+export interface ScheduleTrack {
   id: string
-  name: string
-  type?: string
-  color: string
   order: number
+  payload?: {
+    name: string
+    color: string
+  }
 }
 
-export interface Event {
+export interface ScheduleEvent {
   id: string
-  title: string
-  subTitle: string
-  description: string
   trackId: string
   time: {
-    start: string | number
-    end: string | number
+    start: string
+    end: string
   }
-  metadata?: EventMetadata
+  payload?: {
+    title: string
+    subTitle?: string
+    description?: string
+    category: string
+    duration: string
+    galleryUrl?: string
+  }
 }
 
-export interface EventMetadata {
-  gallery: {
-    src: string
-    alt: string
-    width: number
-    height: number
-  }[]
-  category: string
-  duration?: string
-  place?: string
+export interface NormalizedEvent {
+  event: ScheduleEvent
+  time: {
+    start: number
+    end: number
+  }
+}
+
+export interface ScheduleTime<T = string> {
+  start: T
+  end: T
+  intervalMinutes: number
 }
