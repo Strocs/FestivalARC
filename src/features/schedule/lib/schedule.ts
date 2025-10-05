@@ -1,22 +1,16 @@
-import type { Event, Track } from '../types/models'
-import type { ScheduleInput } from '../types/services'
+import type { NormalizedEvent } from '../types/models'
+import type { NormalizedScheduleInput, ScheduleInput } from '../types/services'
 import { toMinutes } from '../utils'
 import { validateScheduleInput, validateNoOverlaps } from './validation'
 
-export interface ProcessedSchedule {
-  readonly intervalMinutes: number
-  readonly sortedTracks: ReadonlyArray<Track>
-  readonly eventsByTrack: Map<string, ReadonlyArray<Event>>
-}
-
-export function processSchedule(input: ScheduleInput): ProcessedSchedule {
+export function normalizeScheduleInput(
+  input: ScheduleInput,
+): NormalizedScheduleInput {
   validateScheduleInput(input)
 
-  // this must be a validation instead force the map of this tracks, if there is duplication an error must be showed
-  // transform to a map only to do a has maybe is overkill? analize this
-  const trackMap = new Map(input.tracks.map((cat) => [cat.id, cat]))
-
-  const eventsByTrack = new Map<string, Event[]>()
+  // Create maps to search and set with more efficency
+  const trackMap = new Map(input.tracks.map((track) => [track.id, track]))
+  const eventsByTrack = new Map<string, NormalizedEvent[]>()
 
   for (const event of input.events) {
     if (!trackMap.has(event.trackId)) {
@@ -25,8 +19,9 @@ export function processSchedule(input: ScheduleInput): ProcessedSchedule {
       )
     }
 
-    const normalizedEvent: Event = {
-      ...event,
+    // Normalize event times to minutes
+    const normalizedEvent: NormalizedEvent = {
+      event,
       time: {
         start: toMinutes(event.time.start),
         end: toMinutes(event.time.end),
@@ -42,12 +37,18 @@ export function processSchedule(input: ScheduleInput): ProcessedSchedule {
   for (const [trackId, events] of eventsByTrack) {
     const sortedEvents = [...events].sort((a, b) => a.time.start - b.time.start)
 
+    // TODO: schedule must allow overlaps in some cases (e.g., parallel sessions) - revisit this
+    // NOTE: when an overlap is detected, we need o create a parallel track in the same trackId to handle it
     validateNoOverlaps(sortedEvents, trackId)
     eventsByTrack.set(trackId, sortedEvents)
   }
 
   return {
-    intervalMinutes: input.time.intervalMinutes,
+    scheduleTime: {
+      start: toMinutes(input.scheduleTime.start),
+      end: toMinutes(input.scheduleTime.end),
+      intervalMinutes: input.scheduleTime.intervalMinutes,
+    },
     sortedTracks: [...input.tracks].sort((a, b) => a.order - b.order),
     eventsByTrack,
   }
