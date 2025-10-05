@@ -1,6 +1,65 @@
 ---
-import ScheduleGrid from '@/features/shared/components/ScheduleGrid.astro'
-import { scheduleDay1GridData } from '../data'
+import {
+  ScheduleLayoutGrid,
+  type ScheduleLayoutGridProps,
+} from '@/features/shared/components/ScheduleLayoutGrid'
+import { arc2025Day1ScheduleLayout } from '../data'
+import type { GridLayout } from '@/features/schedule'
+
+const mappedData = (data: GridLayout): ScheduleLayoutGridProps => {
+  const rows: ScheduleLayoutGridProps['data']['rows'] = data.rows.map(
+    ({ trackId, cells }) => {
+      const track = [...data.trackSlots].find((t) => t.id === trackId)
+
+      if (!track) {
+        throw new Error(`Track with id ${trackId} not found`)
+      }
+
+      const mappedCells = cells.map(({ cell, data }) => {
+        if (!data) return { span: cell }
+
+        return {
+          span: cell,
+          cell: {
+            id: data.id,
+            trackId,
+            header: {
+              title: data.payload?.title || '',
+              subTitle: data.payload?.subTitle || '',
+            },
+            body: {
+              duration: data.payload?.duration,
+              time: {
+                start: data.time.start,
+                end: data.time.end,
+              },
+            },
+            footer: {},
+            labels: {
+              left: data.payload?.category || '',
+              right: track.payload?.name || '',
+            },
+          },
+        } satisfies ScheduleLayoutGridProps['data']['rows'][number]['cells'][number]
+      })
+
+      return {
+        track: {
+          id: track.id,
+          name: track.payload?.name as string,
+          color: track.payload?.color as string,
+        },
+        cells: mappedCells,
+      }
+    },
+  )
+  return {
+    data: {
+      timeSlots: [...data.timeSlots],
+      rows,
+    },
+  }
+}
 ---
 
-<ScheduleGrid gridData={scheduleDay1GridData} />
+<ScheduleLayoutGrid data={mappedData(arc2025Day1ScheduleLayout).data} />
