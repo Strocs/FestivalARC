@@ -1,13 +1,17 @@
-import { processSchedule } from './lib/schedule'
-import { buildGridData } from './lib/grid'
+import { buildScheduleLayout } from './lib/layout'
+import { normalizeScheduleInput } from './lib/schedule'
+import type { GridLayout } from './types/layout'
 import type { ScheduleInput } from './types/services'
-import type { GridData } from './types/grid'
 
-export type { GridData, Row, Cell } from './types/grid'
-export type { ScheduleInput } from './types/services'
-export type { Event, Track, NormalizedEvent } from './types/models'
+export type { GridLayout, LayoutCell, LayoutRow } from './types/layout'
+export type { ScheduleInput, NormalizedScheduleInput } from './types/services'
+export type {
+  ScheduleEvent,
+  ScheduleTrack,
+  NormalizedEvent,
+} from './types/models'
 
-export function createScheduleGrid(input: ScheduleInput): GridData {
-  const processed = processSchedule(input)
-  return buildGridData(processed)
+export function createScheduleLayout(input: ScheduleInput): GridLayout {
+  const normalizedInput = normalizeScheduleInput(input)
+  return buildScheduleLayout(normalizedInput)
 }
