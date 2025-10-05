@@ -1,4 +1,4 @@
-import type { Event } from '@/features/schedule/types/models'
+import type { Arc2025Event } from '../../types'
 import { events } from './events'
 
-export const day2Events: Event[] = events
+export const day2Events: Arc2025Event[] = events
