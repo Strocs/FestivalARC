@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildGridData } from '../../lib/grid'
+import { buildGridData } from '../../lib/layout'
 import { processSchedule } from '../../lib/schedule'
 import type { ScheduleInput } from '../../types/services'
 
