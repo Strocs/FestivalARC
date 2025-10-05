@@ -1,0 +1,48 @@
+---
+import '@/styles/global.css'
+
+interface Props {
+  title: string
+  description: string
+  favicon: string
+}
+
+const { title, description, favicon } = Astro.props
+---
+
+<!doctype html>
+<html lang='es'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content={description} />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/png' href={favicon} />
+    <title>{title}</title>
+
+    <!-- Facebook Meta Tags -->
+    <meta property='og:url' content='https://festivalarc.com' />
+    <meta property='og:type' content='website' />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:image' content='/og_image.png' />
+
+    <!-- Twitter Meta Tags -->
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta property='twitter:domain' content='festivalarc.com' />
+    <meta property='twitter:url' content='https://festivalarc.com' />
+    <meta name='twitter:title' content={title} />
+    <meta name='twitter:description' content={description} />
+    <meta name='twitter:image' content='/og_image.png' />
+    <link rel='sitemap' href='/sitemap-index.xml' />
+    <link
+      href='https://fonts.cdnfonts.com/css/dk-appelstroop'
+      rel='stylesheet'
+    />
+    <link href='https://fonts.cdnfonts.com/css/bestoom' rel='stylesheet' />
+    <link href='https://fonts.cdnfonts.com/css/neris' rel='stylesheet' />
+  </head>
+  <body
+    class="font-neris relative flex h-full min-h-[100dvh] w-screen flex-col items-center justify-between overflow-x-hidden bg-[url('/FONDO_WEB.png')] bg-cover bg-fixed bg-left bg-no-repeat xl:bg-center">
+    <slot />
+  </body>
+</html>
