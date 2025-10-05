@@ -36,14 +36,11 @@ export function fromMinutes(totalMinutes: number): string {
 }
 
 export function generateTimeSlots(
-  startTime: string,
-  endTime: string,
+  startTime: number,
+  endTime: number,
   intervalMinutes: number,
 ): string[] {
-  const start = toMinutes(startTime)
-  const end = toMinutes(endTime)
-
-  if (end <= start) {
+  if (endTime <= startTime) {
     throw new Error(
       `End time (${endTime}) must be after start time (${startTime})`,
     )
@@ -54,19 +51,21 @@ export function generateTimeSlots(
   }
 
   const slots: string[] = []
-  for (let current = start; current <= end; current += intervalMinutes) {
+  for (
+    let current = startTime;
+    current <= endTime;
+    current += intervalMinutes
+  ) {
     slots.push(fromMinutes(current))
   }
 
   return slots
 }
 
-export function calculateSpan(
-  startTime: string,
-  endTime: string,
+export function calculateOcuppiedCells(
+  startTime: number,
+  endTime: number,
   intervalMinutes: number,
 ): number {
-  const start = toMinutes(startTime)
-  const end = toMinutes(endTime)
-  return Math.ceil((end - start) / intervalMinutes)
+  return Math.ceil((endTime - startTime) / intervalMinutes)
 }
