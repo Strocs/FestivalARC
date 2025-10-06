@@ -1,4 +1,3 @@
-import type { Event } from '@/features/schedule/types/models'
 import teatro from './teatro.json'
 import danza from './danza.json'
 import musica from './musica.json'
@@ -9,8 +8,9 @@ import charlas from './charlas.json'
 import imrec from './imrec.json'
 import cecrea from './cecrea.json'
 import instalaciones from './instalaciones.json'
+import type { Arc2025Event } from '../../../types'
 
-export const events: Event[] = [
+export const events: Arc2025Event[] = [
   ...teatro,
   ...danza,
   ...musica,
@@ -20,5 +20,5 @@ export const events: Event[] = [
   ...charlas,
   ...imrec,
   ...cecrea,
-  ...instalaciones
+  ...instalaciones,
 ]
