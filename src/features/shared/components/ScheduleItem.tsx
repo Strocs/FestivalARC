@@ -1,66 +1,94 @@
 import { cn } from '@/features/shared/utils'
+import { ScheduleInfoButton } from './ScheduleInfoButton'
 
 export interface ScheduleItemProps {
-  event: {
-    id: string
-    header: {
-      title: string
-      subTitle?: string
-    }
-    description: string
-    eventTime: {
-      start: string
-      end: string
-    }
-    footer: {
-      leftButton?: string | (e: React.MouseEvent) => void | React.ReactNode
-      rightLink?: string
-    }
-    activityType: string
-    duration: number
-    speakerSocialLink?: string
+  id: string
+  trackId: string
+  header: {
+    title: string
+    subTitle?: string
   }
+  eventTime: {
+    start: string
+    end: string
+  }
+  footer: {
+    leftButton?: string
+    rightLink?: string
+  }
+  activityType?: string
+  duration?: string
+  color: string
+  location: string
 }
 
-export const ScheduleItem = ({id, title, footer}: ScheduleItemProps) => {
+export const ScheduleItem = ({
+  id,
+  trackId,
+  header,
+  footer,
+  eventTime,
+  activityType,
+  duration,
+  color,
+  location,
+}: ScheduleItemProps) => {
+  const { title, subTitle } = header
+  const { leftButton, rightLink: inscriptionLink } = footer
 
   return (
     <li
       id={id}
       className={cn([
-        'hover:text-2025-white text-fm-black before:bg-2025-white after:bg-fm-black',
-        'group relative grid h-fit min-h-44 w-full max-w-[340px] gap-4 px-4 pt-8 leading-4 shadow-lg duration-300',
-        "before:absolute before:-z-20 before:h-full before:w-full before:rounded-xl before:content-['']",
-        "after:absolute after:bottom-0 after:-z-10 after:h-7 after:w-full after:rounded-b-xl after:duration-300 after:content-[''] hover:after:h-full hover:after:rounded-t-xl",
+        'before:bg-25-white after:bg-25-black hover:text-25-white text-25-black sticky top-6 z-10',
+        'group grid h-fit min-h-[200px] w-full gap-2 px-4 pt-8 leading-4 shadow-lg duration-300',
+        "before:absolute before:-z-20 before:h-full before:w-full before:content-['']",
+        "after:absolute after:bottom-0 after:-z-10 after:h-7 after:w-full after:duration-300 after:content-[''] hover:after:h-full",
       ])}>
-      {/* <ScheduleItemLabel text={activityType} /> */}
+      <span
+        className={cn(
+          'absolute -top-3 -skew-y-6 bg-black px-4 py-2 font-bold text-white uppercase',
+        )}
+        style={{ backgroundColor: color }}>
+        {activityType || 'Actividad'}
+      </span>
+      <span className='bg-25-white text-25-black absolute -top-2 right-4 w-fit px-2 font-sans text-sm uppercase'>
+        {location}
+      </span>
       <header>
-        <h2 className='group-hover:text-2025-yellow text-fm-black font-bold tracking-wide uppercase duration-300'>
+        <h2 className='h-fit font-bold tracking-wide text-black uppercase duration-300 group-hover:text-yellow-200'>
           {title}
         </h2>
-        {/* <ScheduleSpeakerName */}
-        {/*   speaker={speaker} */}
-        {/*   speakerSocialLink={speakerSocialLink} */}
-        {/* /> */}
+        <span className='text-sm leading-3 font-light'>{subTitle}</span>
       </header>
-      <section className='grid gap-4'>
-        <div className='flex items-end justify-between gap-4 self-end'>
-          <p>{startingTime}</p>
-          {duration > 0 && <p>Duración: {duration} min</p>}
-        </div>
-        <p className='text-sm leading-5'>{description}</p>
+      <section className='flex flex-col'>
+        <p className='text-sm'>
+          {!eventTime.end ? (
+            <time>{eventTime.start}hrs</time>
+          ) : (
+            <>
+              <time>{eventTime.start}hrs</time> hasta las{' '}
+              <time>{eventTime.end}hrs</time>
+            </>
+          )}
+        </p>
+        {!!duration && <p className='text-sm'>Duración: {duration}</p>}
       </section>
       <footer className='text-fm-white flex h-fit min-h-8 w-full items-center justify-center gap-2 self-end text-center'>
-        {
-          typeof footer.leftButton === 'string' ? ()
-
-        }
-        <hr className='border-2025-white w-4 rotate-90 border-1' />
+        {!!leftButton && (
+          <ScheduleInfoButton
+            onClick={() => console.log(trackId)}
+            label={leftButton}
+          />
+        )}
+        {!!leftButton && !!inscriptionLink && (
+          <hr className='border-2025-white w-4 rotate-90 border-1' />
+        )}
         {!!inscriptionLink && (
           <a
             target='_blank'
             rel='noopener noreferrer'
-            className='hover:text-2025-yellow w-full py-1.5 whitespace-nowrap transition duration-300'
+            className='w-full py-1.5 whitespace-nowrap text-white transition duration-300 hover:text-yellow-200'
             href={inscriptionLink}>
             Inscríbete aquí
           </a>

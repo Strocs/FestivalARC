@@ -6,11 +6,11 @@ interface ScheduleInfo {
   className?: string
 }
 
-type ScheduleInfoButton =
-  ScheduleInfo & {} & React.ButtonHTMLAttributes<HTMLButtonElement>
+type ScheduleInfoButton = ScheduleInfo &
+  React.ButtonHTMLAttributes<HTMLButtonElement>
 
-type ScheduleInfoLink =
-  ScheduleInfo & {} & React.AnchorHTMLAttributes<HTMLAnchorElement>
+type ScheduleInfoLink = ScheduleInfo &
+  React.AnchorHTMLAttributes<HTMLAnchorElement>
 
 // polymorphic basedo on type
 export type ScheduleInfoButtonProps = ScheduleInfoButton | ScheduleInfoLink
@@ -24,14 +24,14 @@ export function ScheduleInfoButton({
   const buttonLabel = label || 'Más info'
   const buttonStyle = cn(
     ' w-full py-1.5 whitespace-nowrap transition duration-300',
-    !!className ? className : 'text-slate-900 hover:text-blue-400',
+    !!className ? className : 'text-25-white hover:text-25-blue',
   )
 
   if (props.hasOwnProperty('onClick')) {
     const buttonProps = props as React.ButtonHTMLAttributes<HTMLButtonElement>
 
     return (
-      <button className={buttonStyle} {...buttonProps}>
+      <button className={cn(buttonStyle, 'cursor-pointer')} {...buttonProps}>
         {buttonLabel}
       </button>
     )

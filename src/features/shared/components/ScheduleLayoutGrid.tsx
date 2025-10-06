@@ -1,131 +1,147 @@
-import { Fragment } from '@astrojs/react/jsx-runtime'
+import { Fragment, useMemo } from 'react'
+import { ScheduleSidebar, useStageSelection } from './ScheduleSidebar'
+import { ScheduleItem } from './ScheduleItem'
+import { cn } from '../utils'
 
 export interface ScheduleLayoutGridProps {
-  data: {
-    timeSlots: string[]
-    rows: {
-      track: {
-        id: string
-        name: string
-        color: string
-      }
-      cells: {
+  timeSlots: string[]
+  rows: {
+    track: {
+      id: string
+      name: string
+      color: string
+      order: number
+      category?: string
+    }
+    slots: {
+      position: {
+        start: number
         span: number
-        cell?: {
-          id: string
-          trackId: string
-          header: {
-            title: string
-            subTitle: string
+      }
+      slot: {
+        id: string
+        trackId: string
+        header: {
+          title: string
+          subTitle: string
+        }
+        body: {
+          duration?: string
+          location?: {
+            name: string
+            url?: string
           }
-          body: {
-            duration?: string
-            location?: {
-              name: string
-              url?: string
-            }
-            time: {
-              start: string
-              end: string
-            }
-          }
-          footer: {
-            infoButton?: string
-            inscription?: string
-          }
-          labels?: {
-            left?: string
-            right?: string
+          time: {
+            start: string
+            end: string
           }
         }
-      }[]
+        footer: {
+          infoButton?: string
+          inscription?: string
+        }
+        labels?: {
+          left?: string
+          right?: string
+        }
+      }
     }[]
-  }
+  }[]
 }
 
-const getOrientation = {
-  horizontal: {
-    template: (columns: number) => ({
-      gridTemplateColumns: `250px repeat(${columns}, minmax(280px, 1fr))`,
-    }),
-    span: (span: number) => ({
-      gridColumn: `span ${span}`,
-    }),
-  },
-  vertical: {
-    template: (rows: number, columns: number) => ({
-      gridTemplateRows: `80px repeat(${rows}, minmax(120px, 1fr))`,
-      gridTemplateColumns: `250px repeat(${columns}, minmax(280px, 1fr))`,
-    }),
-    span: (span: number) => ({
-      gridRow: `span ${span}`,
-    }),
-  },
-}
+export function ScheduleLayoutGrid({
+  timeSlots,
+  rows,
+}: ScheduleLayoutGridProps) {
+  const stages = useMemo(() => {
+    return rows.map(({ track }) => track)
+  }, [rows])
 
-export function ScheduleLayoutGrid({ data }: ScheduleLayoutGridProps) {
-  const { timeSlots, rows } = data
-  const orientation = 'horizontal'
+  const { selectedStageIds, setSelectedStageIds } = useStageSelection(stages)
+
+  const filteredRows = useMemo(() => {
+    return rows.filter((row) => selectedStageIds.includes(row.track.id))
+  }, [rows, selectedStageIds])
+
+  const tracks = filteredRows.map((row) => row.track)
 
   return (
-    <div className='w-full overflow-x-auto py-4'>
-      <div
-        className='grid min-w-[800px] gap-2'
-        style={{
-          ...getOrientation[orientation].template(timeSlots.length),
-        }}>
-        <div className='flex items-center justify-center rounded-lg bg-[#170d19] p-3 text-center text-sm font-bold text-white'>
-          Escenario / Hora
-        </div>
+    <div className='flex gap-4 py-4'>
+      <ScheduleSidebar
+        stages={stages}
+        selectedStageIds={selectedStageIds}
+        onStageSelectionChange={setSelectedStageIds}
+      />
 
-        {timeSlots.map((slot) => (
-          <div
-            key={slot}
-            className='flex items-center justify-center rounded-lg bg-[#170d19] p-3 text-center font-bold text-white'>
-            {slot}
+      <div className='flex-1'>
+        <div
+          className='font-neris grid max-w-[320px] min-w-[300px] gap-x-2 gap-y-6'
+          style={{
+            gridTemplateRows: `40px repeat(${timeSlots.length}, minmax(100px, 1fr))`,
+            gridTemplateColumns: `70px repeat(${tracks.length}, minmax(320px, 1fr))`,
+          }}>
+          <div className='text-25-white bg-25-black flex items-center justify-center text-center font-bold'>
+            Horario
           </div>
-        ))}
 
-        {rows.map(({ track, cells }) => {
-          return (
-            <Fragment key={track.id}>
-              {/* Header */}
-              <div
-                key={track.id}
-                className='rounded-lg py-4 text-center font-bold text-white'
-                style={{ background: `${track.color}`, gridColumn: 1 }}>
-                {track.name}
-              </div>
+          {tracks.map((track) => (
+            <div
+              key={track.id}
+              className='text-25-white flex items-center justify-center text-center font-bold'
+              style={{ backgroundColor: track.color }}>
+              {track.name} {track.category && ` - ${track.category}`}
+            </div>
+          ))}
 
-              {cells.map(({ span, cell }, index) => {
-                if (!cell)
+          {timeSlots.map((time, index) => (
+            <time
+              dateTime={time}
+              className='font-nerus text-25-white -mt-4 text-2xl font-bold'
+              key={time + index}
+              style={{ gridRow: index + 2, gridColumn: 1 }}>
+              {time}
+            </time>
+          ))}
+
+          {filteredRows.map(({ track, slots }, trackIndex) => {
+            return (
+              <Fragment key={track.id}>
+                {slots.map((item) => {
                   return (
                     <div
-                      key={'empty-' + span + index}
+                      key={item.slot.trackId + '-' + item.slot.id}
+                      className={cn(
+                        'relative',
+                        item.position.span > 1 && 'bg-white/30',
+                      )}
                       style={{
-                        ...getOrientation[orientation].span(span),
-                      }}></div>
-                  )
-
-                return (
-                  <div
-                    key={cell.trackId + '-' + cell.id}
-                    className='rounded-lg border-2 bg-white p-3'
-                    style={{ ...getOrientation[orientation].span(span) }}>
-                    <div className='flex h-full flex-col gap-2'>
-                      <h3 className='m-0 text-lg font-bold text-[#170d19]'>
-                        {cell.header.title}
-                      </h3>
-                      <p className='m-0 text-xs font-semibold text-gray-400'>
-                        {cell.body.time.start} - {cell.body.time.end}
-                      </p>
+                        gridRow: `${item.position.start + 2} / span ${item.position.span}`,
+                        gridColumn: trackIndex + 2,
+                      }}>
+                      <ScheduleItem
+                        id={item.slot.id}
+                        trackId={item.slot.trackId}
+                        eventTime={{
+                          start: item.slot.body.time.start,
+                          end: item.slot.body.time.end,
+                        }}
+                        header={item.slot.header}
+                        footer={{
+                          leftButton: item.slot.footer.infoButton,
+                          rightLink: item.slot.footer.inscription,
+                        }}
+                        activityType={item.slot.labels?.left}
+                        duration={item.slot.body.duration}
+                        color={tracks[trackIndex].color}
+                        location={tracks[trackIndex].name.split('(')[0]}
+                      />
                     </div>
-                  </div>
-                )
-              })}
-            </Fragment>
-          )
-        })}
+                  )
+                })}
+              </Fragment>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
