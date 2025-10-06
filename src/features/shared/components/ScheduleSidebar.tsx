@@ -90,16 +90,24 @@ export function ScheduleSidebar({
 export function useStageSelection(stages: Stage[]) {
   const stagesIds = stages.map((s) => s.id)
 
-  const storedIds = stageSelectionStorage.get()
-  const validStoredIds = getValidStageIds(storedIds, stagesIds)
-
-  const initialSelectedIds =
-    validStoredIds.length > 0
-      ? validStoredIds
-      : [stagesIds[0], stagesIds[1], stagesIds[2], stagesIds[3]]
+  const initialSelectedIds = [
+    stagesIds[0],
+    stagesIds[1],
+    stagesIds[2],
+    stagesIds[3],
+  ]
 
   const [selectedStageIds, setSelectedStageIds] =
     useState<string[]>(initialSelectedIds)
+
+  useEffect(() => {
+    const storedIds = stageSelectionStorage.get()
+    const validStoredIds = getValidStageIds(storedIds, stagesIds)
+
+    if (validStoredIds.length > 0) {
+      setSelectedStageIds(validStoredIds)
+    }
+  }, [])
 
   useEffect(() => {
     stageSelectionStorage.set(selectedStageIds)
