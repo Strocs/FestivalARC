@@ -1,9 +1,12 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-primary: '#ee0175';
-  --color-secondary: '#f1f1f1';
-  --color-red-light: '#ff7f7f';
+  --color-25-primary: #db0078;
+  --color-25-white: #f1f1f1;
+  --color-25-black: #170d19;
+  --color-25-accent: #f0d11f;
+  --color-25-purple: #bc00ef;
+  --color-25-blue: #279ff5;
 
   --font-dk: 'DK Appelstroop', sans-serif;
   --font-bestoom: 'Bestoom', sans-serif;
