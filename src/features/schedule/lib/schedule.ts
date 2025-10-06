@@ -1,15 +1,15 @@
 import type { NormalizedEvent } from '../types/models'
 import type { NormalizedScheduleInput, ScheduleInput } from '../types/services'
 import { toMinutes } from '../utils'
-import { validateScheduleInput, validateNoOverlaps } from './validation'
+import { validateScheduleInput } from './validation'
+import { groupOverlappingEvents, type EventGroup } from './grouping'
 
 export function normalizeScheduleInput(
   input: ScheduleInput,
 ): NormalizedScheduleInput {
   validateScheduleInput(input)
 
-  let sortedEvents = new Map<string, NormalizedEvent[]>()
-  // Create maps to search and set with more efficency
+  let sortedEvents = new Map<string, (NormalizedEvent | EventGroup)[]>()
   const sortedTracks = [...input.tracks].sort((a, b) => {
     return a.order - b.order
   })
@@ -26,11 +26,9 @@ export function normalizeScheduleInput(
       }))
       .sort((a, b) => a.time.start - b.time.start)
 
-    // TODO: schedule must allow overlaps in some cases (e.g., parallel sessions) - revisit this
-    // NOTE: when an overlap is detected, we need o create a parallel track in the same trackId to handle it
-    validateNoOverlaps(events, track.id)
+    const groupedEvents = groupOverlappingEvents(events)
 
-    sortedEvents.set(track.id, events)
+    sortedEvents.set(track.id, groupedEvents)
   })
 
   return {
