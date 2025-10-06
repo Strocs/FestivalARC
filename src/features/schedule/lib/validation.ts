@@ -1,4 +1,4 @@
-import type { NormalizedEvent, ScheduleEvent } from '../types/models'
+import type { NormalizedEvent } from '../types/models'
 import type { ScheduleInput } from '../types/services'
 import { toMinutes } from '../utils'
 

@@ -1,12 +1,12 @@
-import type { GridLayout, LayoutCell, LayoutRow } from '../types/layout'
+import type { GridLayout, LayoutEvent } from '../types/layout'
 import type { NormalizedEvent, ScheduleTime } from '../types/models'
 import type { NormalizedScheduleInput } from '../types/services'
-import { calculateOcuppiedCells, generateTimeSlots } from '../utils'
+import { generateTimeSlots } from '../utils'
 
 export function buildScheduleLayout(
   normalizedInput: NormalizedScheduleInput,
 ): GridLayout {
-  const { scheduleTime, sortedTracks, eventsByTrack } = normalizedInput
+  const { scheduleTime, sortedTracks, sortedEvents } = normalizedInput
 
   const timeSlots = generateTimeSlots(
     scheduleTime.start,
@@ -14,52 +14,35 @@ export function buildScheduleLayout(
     scheduleTime.intervalMinutes,
   )
 
-  const rows: LayoutRow[] = sortedTracks.map((track) => {
-    const events = eventsByTrack.get(track.id) || []
-    const cells = buildCells(events, scheduleTime)
-
-    return {
-      trackId: track.id,
-      cells,
-    }
-  })
+  const eventsByTrack = buildEventsWithPosition(sortedEvents, scheduleTime)
 
   return {
     timeSlots,
     trackSlots: sortedTracks,
-    rows,
+    eventsByTrack,
   }
 }
 
-function buildCells(
-  normalizedEvents: ReadonlyArray<NormalizedEvent>,
-  { start, end, intervalMinutes }: ScheduleTime<number>,
-): LayoutCell[] {
-  if (start >= end) return []
-
-  const cells: LayoutCell[] = []
-
-  const addEmptyCell = (fromMin: number, toMin: number) => {
-    const cellCount = calculateOcuppiedCells(fromMin, toMin, intervalMinutes)
-    if (cellCount > 0) {
-      cells.push({ cell: cellCount })
-    }
+function buildEventsWithPosition(
+  normalizedEvent: Map<string, ReadonlyArray<NormalizedEvent>>,
+  trackTime: ScheduleTime<number>,
+): Map<string, ReadonlyArray<LayoutEvent>> {
+  if (trackTime.start >= trackTime.end) {
+    throw new Error('Invalid track time range configuration')
   }
 
-  let cursor = start
-
-  for (const { event, time } of normalizedEvents) {
-    addEmptyCell(cursor, time.start)
-
-    cells.push({
-      cell: calculateOcuppiedCells(time.start, time.end, intervalMinutes),
-      data: event,
-    })
-
-    cursor = time.end
-  }
-
-  addEmptyCell(cursor, end)
-
-  return cells
+  return new Map(
+    Array.from(normalizedEvent, ([trackId, events]) => [
+      trackId,
+      [...events].map(({ event, time }) => ({
+        position: {
+          start: Math.floor(
+            (time.start - trackTime.start) / trackTime.intervalMinutes,
+          ),
+          span: Math.ceil((time.end - time.start) / trackTime.intervalMinutes),
+        },
+        event,
+      })),
+    ]),
+  )
 }

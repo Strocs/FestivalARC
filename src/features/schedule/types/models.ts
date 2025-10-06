@@ -1,27 +1,17 @@
-export interface ScheduleTrack {
+export interface ScheduleTrack<Payload = Record<string, unknown>> {
   id: string
   order: number
-  payload?: {
-    name: string
-    color: string
-  }
+  payload?: Payload
 }
 
-export interface ScheduleEvent {
+export interface ScheduleEvent<Payload = Record<string, unknown>> {
   id: string
   trackId: string
   time: {
     start: string
     end: string
   }
-  payload?: {
-    title: string
-    subTitle?: string
-    description?: string
-    category: string
-    duration: string
-    galleryUrl?: string
-  }
+  payload?: Payload
 }
 
 export interface NormalizedEvent {

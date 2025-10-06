@@ -5,14 +5,17 @@ import type {
   ScheduleTrack,
 } from './models'
 
-export interface ScheduleInput {
+export interface ScheduleInput<
+  TrackPayload = Record<string, unknown>,
+  EventPayload = Record<string, unknown>,
+> {
   readonly scheduleTime: ScheduleTime
-  readonly tracks: ReadonlyArray<ScheduleTrack>
-  readonly events: ReadonlyArray<ScheduleEvent>
+  readonly tracks: ReadonlyArray<ScheduleTrack<TrackPayload>>
+  readonly events: ReadonlyArray<ScheduleEvent<EventPayload>>
 }
 
 export interface NormalizedScheduleInput {
   readonly scheduleTime: ScheduleTime<number>
-  readonly sortedTracks: ReadonlyArray<ScheduleTrack>
-  readonly eventsByTrack: Map<string, ReadonlyArray<NormalizedEvent>>
+  readonly sortedTracks: ScheduleTrack[]
+  readonly sortedEvents: Map<string, ReadonlyArray<NormalizedEvent>>
 }

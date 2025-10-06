@@ -3,7 +3,7 @@ import { normalizeScheduleInput } from './lib/schedule'
 import type { GridLayout } from './types/layout'
 import type { ScheduleInput } from './types/services'
 
-export type { GridLayout, LayoutCell, LayoutRow } from './types/layout'
+export type { GridLayout, LayoutEvent } from './types/layout'
 export type { ScheduleInput, NormalizedScheduleInput } from './types/services'
 export type {
   ScheduleEvent,
@@ -11,7 +11,9 @@ export type {
   NormalizedEvent,
 } from './types/models'
 
-export function createScheduleLayout(input: ScheduleInput): GridLayout {
-  const normalizedInput = normalizeScheduleInput(input)
-  return buildScheduleLayout(normalizedInput)
+export function createScheduleLayout<T, E>(
+  input: ScheduleInput<T, E>,
+): GridLayout<T, E> {
+  const normalizedInput = normalizeScheduleInput(input as ScheduleInput)
+  return buildScheduleLayout(normalizedInput) as GridLayout<T, E>
 }
