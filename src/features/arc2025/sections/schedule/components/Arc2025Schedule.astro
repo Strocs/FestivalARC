@@ -1,9 +1,9 @@
 ---
 import { ScheduleLayoutGrid } from '@/features/shared/components/ScheduleLayoutGrid'
-import type { ScheduleLayoutGridProps } from '@/features/shared/components/ScheduleLayoutGrid/types'
 import { arc2025Day1ScheduleLayout } from '../data'
 import type { GridLayout } from '@/features/schedule'
 import type { Arc2025StagePayload, Arc2025EventPayload } from '../types'
+import type { ScheduleLayoutGridProps } from '@/features/shared/components/types'
 
 const mapScheduleLayoutDataToUI = ({
   trackSlots,
@@ -65,34 +65,38 @@ const mapScheduleLayoutDataToUI = ({
         } satisfies ScheduleLayoutGridProps['rows'][number]['slots'][number]
       }
 
-      return {
-        position: item.position,
-        slot: {
-          id: item.event.id,
-          trackId: item.event.trackId,
-          header: {
-            title: item.event.payload?.title ?? '',
-            subTitle: item.event.payload?.subTitle ?? '',
-          },
-          body: {
-            duration: item.event.payload?.duration,
-            time: {
-              start: item.event.time.start,
-              end: item.event.time.end,
+      if ('event' in item) {
+        return {
+          position: item.position,
+          slot: {
+            id: item.event.id,
+            trackId: item.event.trackId,
+            header: {
+              title: item.event.payload?.title ?? '',
+              subTitle: item.event.payload?.subTitle ?? '',
+            },
+            body: {
+              duration: item.event.payload?.duration,
+              time: {
+                start: item.event.time.start,
+                end: item.event.time.end,
+              },
+            },
+            footer: {
+              infoButton:
+                item.event.payload?.description ||
+                item.event.payload?.galleryUrl
+                  ? 'Más Info'
+                  : undefined,
+            },
+            labels: {
+              left: item.event.payload?.category ?? '',
+              right: track.payload?.name ?? '',
             },
           },
-          footer: {
-            infoButton:
-              item.event.payload?.description || item.event.payload?.galleryUrl
-                ? 'Más Info'
-                : undefined,
-          },
-          labels: {
-            left: item.event.payload?.category ?? '',
-            right: track.payload?.name ?? '',
-          },
-        },
-      } satisfies ScheduleLayoutGridProps['rows'][number]['slots'][number]
+        } satisfies ScheduleLayoutGridProps['rows'][number]['slots'][number]
+      }
+      throw new Error('Unknown item type in eventsByTrack mapping')
     })
 
     return {
