@@ -4,6 +4,7 @@ import type {
   ScheduleTime,
   ScheduleTrack,
 } from './models'
+import type { EventGroup } from '../lib/grouping'
 
 export interface ScheduleInput<
   TrackPayload = Record<string, unknown>,
@@ -17,5 +18,8 @@ export interface ScheduleInput<
 export interface NormalizedScheduleInput {
   readonly scheduleTime: ScheduleTime<number>
   readonly sortedTracks: ScheduleTrack[]
-  readonly sortedEvents: Map<string, ReadonlyArray<NormalizedEvent>>
+  readonly sortedEvents: Map<
+    string,
+    ReadonlyArray<NormalizedEvent | EventGroup>
+  >
 }
