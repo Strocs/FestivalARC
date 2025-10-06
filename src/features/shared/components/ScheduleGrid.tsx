@@ -1,6 +1,7 @@
 import { ScheduleGridHeader } from './ScheduleGridHeader'
 import { ScheduleGridTimeSlots } from './ScheduleGridTimeSlots'
 import { ScheduleGridEvents } from './ScheduleGridEvents'
+import type { GroupSlot, IndividualSlot } from './types'
 
 interface Track {
   id: string
@@ -11,39 +12,7 @@ interface Track {
 
 interface FilteredRow {
   track: Track
-  slots: {
-    position: {
-      start: number
-      span: number
-    }
-    slot: {
-      id: string
-      trackId: string
-      header: {
-        title: string
-        subTitle: string
-      }
-      body: {
-        duration?: string
-        location?: {
-          name: string
-          url?: string
-        }
-        time: {
-          start: string
-          end: string
-        }
-      }
-      footer: {
-        infoButton?: string
-        inscription?: string
-      }
-      labels?: {
-        left?: string
-        right?: string
-      }
-    }
-  }[]
+  slots: (IndividualSlot | GroupSlot)[]
 }
 
 interface ScheduleGridProps {
