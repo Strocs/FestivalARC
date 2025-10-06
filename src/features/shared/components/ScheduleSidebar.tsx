@@ -1,4 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import {
+  stageSelectionStorage,
+  getValidStageIds,
+} from '@/features/schedule/lib/stageSelectionStorage'
 
 export interface Stage {
   id: string
@@ -85,12 +89,21 @@ export function ScheduleSidebar({
 
 export function useStageSelection(stages: Stage[]) {
   const stagesIds = stages.map((s) => s.id)
-  const [selectedStageIds, setSelectedStageIds] = useState<string[]>([
-    stagesIds[0],
-    stagesIds[1],
-    stagesIds[2],
-    stagesIds[3],
-  ])
+
+  const storedIds = stageSelectionStorage.get()
+  const validStoredIds = getValidStageIds(storedIds, stagesIds)
+
+  const initialSelectedIds =
+    validStoredIds.length > 0
+      ? validStoredIds
+      : [stagesIds[0], stagesIds[1], stagesIds[2], stagesIds[3]]
+
+  const [selectedStageIds, setSelectedStageIds] =
+    useState<string[]>(initialSelectedIds)
+
+  useEffect(() => {
+    stageSelectionStorage.set(selectedStageIds)
+  }, [selectedStageIds])
 
   return {
     selectedStageIds,

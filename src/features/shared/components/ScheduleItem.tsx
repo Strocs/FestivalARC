@@ -20,6 +20,7 @@ export interface ScheduleItemProps {
   duration?: string
   color: string
   location: string
+  stackOffset?: number
 }
 
 export const ScheduleItem = ({
@@ -32,19 +33,24 @@ export const ScheduleItem = ({
   duration,
   color,
   location,
+  stackOffset = 0,
 }: ScheduleItemProps) => {
   const { title, subTitle } = header
   const { leftButton, rightLink: inscriptionLink } = footer
+
+  const stickyTop = `calc(1.5rem + ${stackOffset * 200}px)`
 
   return (
     <li
       id={id}
       className={cn([
-        'before:bg-25-white after:bg-25-black hover:text-25-white text-25-black sticky top-6 z-10',
-        'group grid h-fit min-h-[200px] w-full gap-2 px-4 pt-8 leading-4 shadow-lg duration-300',
+        'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10',
+        'pointer-events-none',
+        'grid h-fit min-h-[200px] w-full gap-2 px-4 pt-8 leading-4 shadow-lg duration-300',
         "before:absolute before:-z-20 before:h-full before:w-full before:content-['']",
-        "after:absolute after:bottom-0 after:-z-10 after:h-7 after:w-full after:duration-300 after:content-[''] hover:after:h-full",
-      ])}>
+        "after:absolute after:bottom-0 after:-z-10 after:h-7 after:w-full after:duration-300 after:content-[''] group-hover:after:h-full",
+      ])}
+      style={{ top: stickyTop }}>
       <span
         className={cn(
           'absolute -top-3 -skew-y-6 bg-black px-4 py-2 font-bold text-white uppercase',
@@ -52,7 +58,7 @@ export const ScheduleItem = ({
         style={{ backgroundColor: color }}>
         {activityType || 'Actividad'}
       </span>
-      <span className='bg-25-white text-25-black absolute -top-2 right-4 w-fit px-2 font-sans text-sm uppercase'>
+      <span className='bg-25-white text-25-black absolute -top-2 right-4 w-fit px-2 font-sans text-xs uppercase'>
         {location}
       </span>
       <header>
@@ -74,7 +80,11 @@ export const ScheduleItem = ({
         </p>
         {!!duration && <p className='text-sm'>Duración: {duration}</p>}
       </section>
-      <footer className='text-fm-white flex h-fit min-h-8 w-full items-center justify-center gap-2 self-end text-center'>
+      <footer
+        className={cn(
+          'text-fm-white flex h-fit min-h-8 w-full items-center justify-center gap-2 self-end text-center',
+          'pointer-events-auto',
+        )}>
         {!!leftButton && (
           <ScheduleInfoButton
             onClick={() => console.log(trackId)}
