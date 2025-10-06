@@ -1,4 +1,3 @@
-import type { NormalizedEvent } from '../types/models'
 import type { ScheduleInput } from '../types/services'
 import { toMinutes } from '../utils'
 
@@ -43,27 +42,6 @@ export function validateScheduleInput(input: ScheduleInput): void {
     if (eventStart < start || eventEnd > end) {
       throw new Error(
         `Event "${event.id}" (${event.time.start} - ${event.time.end}) is outside schedule range (${input.scheduleTime.start} - ${input.scheduleTime.end})`,
-      )
-    }
-  }
-}
-
-export function validateNoOverlaps(
-  events: ReadonlyArray<NormalizedEvent>,
-  trackId: string,
-): void {
-  if (events.length <= 1) return
-
-  for (let i = 0; i < events.length - 1; i++) {
-    const { event, time } = events[i]
-    const { event: nextEvent, time: nextTime } = events[i + 1]
-
-    if (nextTime.start < time.end) {
-      throw new Error(
-        `Events overlap in category "${trackId}":\n` +
-          `  - Event "${event.id}" (${event.time.start} - ${event.time.end})\n` +
-          `  - Event "${nextEvent.id}" (${nextEvent.time.start} - ${nextEvent.time.end})\n` +
-          `Events in the same category cannot overlap.`,
       )
     }
   }
