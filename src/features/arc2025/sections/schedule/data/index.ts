@@ -6,7 +6,13 @@ import day2Config from './day2/config.json' with { type: 'json' }
 
 import { day1Events } from './day1'
 import { day2Events } from './day2'
-import type { Arc2025Event, Arc2025Stage } from '../types'
+
+import type {
+  Arc2025Event,
+  Arc2025EventPayload,
+  Arc2025Stage,
+  Arc2025StagePayload,
+} from '../types'
 import { createScheduleLayout, type ScheduleInput } from '@/features/schedule'
 
 interface Arc2025Data {
@@ -19,41 +25,45 @@ interface Arc2025Data {
   events: Arc2025Event[]
 }
 
-export function mapArc2025DataToScheduleInput(
-  data: Arc2025Data,
-): ScheduleInput {
+type Arc2025ScheduleInput = ScheduleInput<
+  Arc2025StagePayload,
+  Arc2025EventPayload
+> // specify payload type hereScheduleInput<
+
+export function mapArc2025DataToScheduleInput({
+  time,
+  stages,
+  events,
+}: Arc2025Data): Arc2025ScheduleInput {
   // get data from data source and parse to ScheduleInput
   return {
     scheduleTime: {
-      start: data.time.start,
-      end: data.time.end,
-      intervalMinutes: data.time.interval,
+      ...time,
+      intervalMinutes: time.interval,
     },
-    tracks: data.stages.map((stage) => ({
+    tracks: stages.map((stage) => ({
       id: stage.id,
       order: stage.order,
       payload: {
         name: stage.name,
         color: stage.color,
+        category: stage.category,
       },
     })),
-    events: data.events.map((event) => ({
+    events: events.map((event) => ({
       id: event.id,
       trackId: event.trackId,
-      time: {
-        start: event.time.start,
-        end: event.time.end,
-      },
+      time: event.time,
       payload: {
         title: event.title,
         subTitle: event.subTitle,
         description: event.description,
-        category: event.metadata.category,
-        duration: event.metadata.duration,
-        galleryUrl: event.metadata.galleryUrl,
+        category: event.category,
+        duration: event.duration,
+        galleryUrl: event.galleryUrl,
       },
     })),
-  } satisfies ScheduleInput
+  }
 }
 
 const arc2025Day1InputData = mapArc2025DataToScheduleInput({

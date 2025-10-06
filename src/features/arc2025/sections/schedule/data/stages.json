@@ -1,72 +1,71 @@
 [
   {
     "id": "stage-a",
-    "name": "Teatro (Escenario A)",
+    "name": "Escenario A",
     "color": "#f70d61",
     "order": 1,
-    "type": "stage"
+    "category": "Teatro"
   },
   {
     "id": "stage-b",
-    "name": "Escenario B (Circo/Danza)",
+    "name": "Escenario B",
     "color": "#2495e9",
     "order": 2,
-    "type": "stage"
+    "category": "Circo/Danza"
   },
   {
     "id": "stage-c",
-    "name": "Escenario C (Música)",
+    "name": "Escenario C",
     "color": "#efd43d",
     "order": 3,
-    "type": "stage"
+    "category": "Música"
   },
   {
     "id": "stage-d",
-    "name": "Escenario D (Títeres)",
+    "name": "Escenario D",
     "color": "#34c759",
     "order": 4,
-    "type": "stage"
+    "category": "Títeres"
   },
   {
     "id": "stage-e",
-    "name": "Escenario E (Espacio Literatura)",
+    "name": "Escenario E",
     "color": "#ff9500",
     "order": 5,
-    "type": "stage"
+    "category": "Espacio Literatura"
   },
   {
     "id": "stage-f",
-    "name": "Escenario F (Talleres)",
+    "name": "Escenario F",
     "color": "#af52de",
     "order": 6,
-    "type": "stage"
+    "category": "Talleres"
   },
   {
     "id": "stage-g",
-    "name": "Escenario G (Charlas)",
+    "name": "Escenario G",
     "color": "#5ac8fa",
     "order": 7,
-    "type": "stage"
+    "category": "charlas"
   },
   {
     "id": "stage-h",
-    "name": "Escenario H (Espacio IMREC)",
+    "name": "Escenario H",
     "color": "#ffcc00",
     "order": 8,
-    "type": "stage"
+    "category": "Espacio IMREC"
   },
   {
     "id": "stage-i",
-    "name": "Escenario I (Espacio Cecrea)",
+    "name": "Escenario I",
     "color": "#ff3b30",
     "order": 9,
-    "type": "stage"
+    "category": "Espacio Cecrea"
   },
   {
     "id": "stage-j",
     "name": "Instalaciones",
     "color": "#8e8e93",
-    "order": 10,
-    "type": "open-space"
+    "order": 10
   }
 ]
