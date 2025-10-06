@@ -4,7 +4,7 @@ export interface Arc2025Event {
   subTitle: string
   description: string
   category: string
-  duration: string
+  duration?: string
   galleryUrl?: string
   time: {
     start: string
