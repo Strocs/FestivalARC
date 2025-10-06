@@ -9,15 +9,13 @@
       "start": "15:00",
       "end": "15:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "presentacion-solido-20-marcelo-tapia-solid-ediciones",
-    "title": "Presentación Sólido 20",
+    "title": "Sólido 20",
     "subTitle": "Marcelo Tapia - Solid Ediciones",
     "description": "",
     "trackId": "stage-e",
@@ -25,15 +23,13 @@
       "start": "16:00",
       "end": "16:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "presentacion-gabriela-mistral-ojos-clavados-poemas-sobre-la-muerte",
-    "title": "Presentación del Libro \"Gabriela Mistral. Ojos Clavados. Poemas sobre la Muerte\"",
+    "title": "Gabriela Mistral - Ojos Clavados - Poemas sobre la Muerte",
     "subTitle": "Selección y Presentación Paula Ceballos Huerta - Bordelibre Ediciones",
     "description": "",
     "trackId": "stage-e",
@@ -41,11 +37,9 @@
       "start": "17:00",
       "end": "17:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "ollie-francisca-torrealba-y-belen-varas-marsalado",
@@ -57,15 +51,13 @@
       "start": "18:00",
       "end": "18:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "presentacion-lecturas-aberrantes-y-hermeneutica-esquizo-cristian-geisse",
-    "title": "Presentación del Libro \"Lecturas Aberrantes y Hermenéutica Esquizo\"",
+    "title": "Lecturas Aberrantes y Hermenéutica Esquizo",
     "subTitle": "Cristian Geisse - Bordelibre Ediciones",
     "description": "",
     "trackId": "stage-e",
@@ -73,11 +65,9 @@
       "start": "19:00",
       "end": "19:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "aves-migratorias-de-la-region-de-coquimbo-guillotina-editorial",
@@ -89,10 +79,8 @@
       "start": "20:00",
       "end": "20:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   }
 ]

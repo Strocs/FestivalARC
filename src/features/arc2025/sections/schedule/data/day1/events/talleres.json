@@ -9,11 +9,9 @@
       "start": "15:30",
       "end": "17:00"
     },
-    "metadata": {
-      "category": "Talleres",
-      "duration": "90 minutos",
-      "gallery": []
-    }
+    "category": "Talleres",
+    "duration": "90 minutos",
+    "gallery": []
   },
   {
     "id": "taller-de-alfareria",
@@ -25,10 +23,8 @@
       "start": "18:00",
       "end": "20:00"
     },
-    "metadata": {
-      "category": "Talleres",
-      "duration": "120 minutos",
-      "gallery": []
-    }
+    "category": "Talleres",
+    "duration": "120 minutos",
+    "gallery": []
   }
 ]

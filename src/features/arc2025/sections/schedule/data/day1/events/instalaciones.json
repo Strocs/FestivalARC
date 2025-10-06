@@ -9,11 +9,9 @@
       "start": "15:00",
       "end": "19:00"
     },
-    "metadata": {
-      "category": "Instalaciones",
-      "duration": "480 minutos",
-      "gallery": []
-    }
+    "category": "Instalaciones",
+    "duration": "480 minutos",
+    "gallery": []
   },
   {
     "id": "fondo-marino",
@@ -25,10 +23,8 @@
       "start": "19:00",
       "end": "23:00"
     },
-    "metadata": {
-      "category": "Instalaciones",
-      "duration": "480 minutos",
-      "gallery": []
-    }
+    "category": "Instalaciones",
+    "duration": "480 minutos",
+    "gallery": []
   }
 ]

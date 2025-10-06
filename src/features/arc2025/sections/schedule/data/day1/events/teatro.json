@@ -9,10 +9,8 @@
       "start": "15:30",
       "end": "16:00"
     },
-    "metadata": {
-      "category": "Teatro",
-      "gallery": []
-    }
+    "category": "Teatro",
+    "gallery": []
   },
   {
     "id": "zumbido-de-alarma",
@@ -24,11 +22,9 @@
       "start": "17:00",
       "end": "17:45"
     },
-    "metadata": {
-      "category": "Teatro",
-      "duration": "45 minutos",
-      "gallery": []
-    }
+    "category": "Teatro",
+    "duration": "45 minutos",
+    "gallery": []
   },
   {
     "id": "descarrilados",
@@ -40,11 +36,9 @@
       "start": "18:30",
       "end": "20:00"
     },
-    "metadata": {
-      "category": "Teatro",
-      "duration": "105 minutos",
-      "gallery": []
-    }
+    "category": "Teatro",
+    "duration": "105 minutos",
+    "gallery": []
   },
   {
     "id": "lucila-del-valle",
@@ -56,9 +50,7 @@
       "start": "20:00",
       "end": "20:30"
     },
-    "metadata": {
-      "category": "Teatro",
-      "gallery": []
-    }
+    "category": "Teatro",
+    "gallery": []
   }
 ]

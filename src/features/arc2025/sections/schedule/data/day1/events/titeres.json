@@ -9,11 +9,9 @@
       "start": "15:00",
       "end": "15:30"
     },
-    "metadata": {
-      "category": "Títeres",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Títeres",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "historia-de-la-bateria-para-ninos",
@@ -25,10 +23,8 @@
       "start": "16:30",
       "end": "17:00"
     },
-    "metadata": {
-      "category": "Títeres",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Títeres",
+    "duration": "30 minutos",
+    "gallery": []
   }
 ]
