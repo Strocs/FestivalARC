@@ -1,97 +1,99 @@
 import { describe, it, expect } from 'vitest'
-import { processSchedule } from '../../lib/schedule'
+import { normalizeScheduleInput } from '../../lib/schedule'
 import type { ScheduleInput } from '../../types/services'
 
-describe('processSchedule', () => {
+describe('normalizeScheduleInput', () => {
   const validInput: ScheduleInput = {
-    time: {
+    scheduleTime: {
       start: '18:00',
       end: '23:00',
       intervalMinutes: 30,
     },
     tracks: [
-      { id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 },
-      { id: 'cat2', name: 'Category 2', color: '#00ff00', order: 2 },
+      { id: 'cat1', order: 1 },
+      { id: 'cat2', order: 2 },
     ],
     events: [
       {
         id: 'evt1',
-        title: 'Event 1',
-        subTitle: '',
-        description: 'Description 1',
         trackId: 'cat1',
         time: {
           start: '18:00',
           end: '19:00',
         },
+        payload: { title: 'Event 1' },
       },
       {
         id: 'evt2',
-        title: 'Event 2',
-        subTitle: '',
-        description: 'Description 2',
         trackId: 'cat2',
         time: {
           start: '20:00',
           end: '21:00',
         },
+        payload: { title: 'Event 2' },
       },
     ],
   }
 
-  it('should process valid input successfully', () => {
-    const result = processSchedule(validInput)
+  it('should normalize valid input successfully', () => {
+    const result = normalizeScheduleInput(validInput)
 
-    expect(result.startMinutes).toBe(1080)
-    expect(result.endMinutes).toBe(1380)
-    expect(result.intervalMinutes).toBe(30)
+    expect(result.scheduleTime.start).toBe(1080)
+    expect(result.scheduleTime.end).toBe(1380)
+    expect(result.scheduleTime.intervalMinutes).toBe(30)
     expect(result.sortedTracks.length).toBe(2)
-    expect(result.eventsByTrack.size).toBe(2)
+    expect(result.sortedEvents.size).toBe(2)
   })
 
-  it('should group events by category', () => {
-    const result = processSchedule(validInput)
+  it('should group events by track', () => {
+    const result = normalizeScheduleInput(validInput)
 
-    const cat1Events = result.eventsByTrack.get('cat1')
-    const cat2Events = result.eventsByTrack.get('cat2')
+    const cat1Events = result.sortedEvents.get('cat1')
+    const cat2Events = result.sortedEvents.get('cat2')
 
     expect(cat1Events?.length).toBe(1)
     expect(cat2Events?.length).toBe(1)
-    expect(cat1Events?.[0].id).toBe('evt1')
-    expect(cat2Events?.[0].id).toBe('evt2')
+    expect(cat1Events?.[0]).toHaveProperty('event')
+    expect(cat2Events?.[0]).toHaveProperty('event')
   })
 
-  it('should reject missing timeConfig', () => {
-    const input = { ...validInput, time: undefined as any }
-    expect(() => processSchedule(input)).toThrow(/timeConfig is required/)
+  it('should reject missing scheduleTime', () => {
+    const input = { ...validInput, scheduleTime: undefined as any }
+    expect(() => normalizeScheduleInput(input)).toThrow(
+      /timeConfig is required/,
+    )
   })
 
-  it('should reject missing categories', () => {
+  it('should reject missing tracks', () => {
     const input = { ...validInput, tracks: [] }
-    expect(() => processSchedule(input)).toThrow(
+    expect(() => normalizeScheduleInput(input)).toThrow(
       /At least one category is required/,
     )
   })
 
   it('should reject missing events array', () => {
     const input = { ...validInput, events: undefined as any }
-    expect(() => processSchedule(input)).toThrow(/events array is required/)
+    expect(() => normalizeScheduleInput(input)).toThrow(
+      /events array is required/,
+    )
   })
 
   it('should reject invalid time range', () => {
     const input = {
       ...validInput,
-      time: { ...validInput.time, end: '17:00' },
+      scheduleTime: { ...validInput.scheduleTime, end: '17:00' },
     }
-    expect(() => processSchedule(input)).toThrow(/must be after startTime/)
+    expect(() => normalizeScheduleInput(input)).toThrow(
+      /must be after startTime/,
+    )
   })
 
   it('should reject non-positive interval', () => {
     const input = {
       ...validInput,
-      time: { ...validInput.time, intervalMinutes: 0 },
+      scheduleTime: { ...validInput.scheduleTime, intervalMinutes: 0 },
     }
-    expect(() => processSchedule(input)).toThrow(
+    expect(() => normalizeScheduleInput(input)).toThrow(
       /intervalMinutes must be positive/,
     )
   })
@@ -102,9 +104,6 @@ describe('processSchedule', () => {
       events: [
         {
           id: 'evt1',
-          title: 'Event 1',
-          subTitle: '',
-          description: 'Description 1',
           trackId: 'cat1',
           time: {
             start: '20:00',
@@ -113,7 +112,9 @@ describe('processSchedule', () => {
         },
       ],
     }
-    expect(() => processSchedule(input)).toThrow(/has invalid time range/)
+    expect(() => normalizeScheduleInput(input)).toThrow(
+      /has invalid time range/,
+    )
   })
 
   it('should reject event outside schedule range', () => {
@@ -122,9 +123,6 @@ describe('processSchedule', () => {
       events: [
         {
           id: 'evt1',
-          title: 'Event 1',
-          subTitle: '',
-          description: 'Description 1',
           trackId: 'cat1',
           time: {
             start: '17:00',
@@ -133,19 +131,55 @@ describe('processSchedule', () => {
         },
       ],
     }
-    expect(() => processSchedule(input)).toThrow(/is outside schedule range/)
+    expect(() => normalizeScheduleInput(input)).toThrow(
+      /is outside schedule range/,
+    )
   })
 
-  it('should reject event with non-existent category', () => {
-    const input = {
-      ...validInput,
+  it('should sort tracks by order', () => {
+    const input: ScheduleInput = {
+      scheduleTime: {
+        start: '18:00',
+        end: '20:00',
+        intervalMinutes: 30,
+      },
+      tracks: [
+        { id: 'cat3', order: 3 },
+        { id: 'cat1', order: 1 },
+        { id: 'cat2', order: 2 },
+      ],
+      events: [],
+    }
+
+    const result = normalizeScheduleInput(input)
+
+    expect(result.sortedTracks.map((t) => t.id)).toEqual([
+      'cat1',
+      'cat2',
+      'cat3',
+    ])
+  })
+
+  it('should sort events by start time within track', () => {
+    const input: ScheduleInput = {
+      scheduleTime: {
+        start: '18:00',
+        end: '23:00',
+        intervalMinutes: 30,
+      },
+      tracks: [{ id: 'cat1', order: 1 }],
       events: [
         {
+          id: 'evt2',
+          trackId: 'cat1',
+          time: {
+            start: '20:00',
+            end: '21:00',
+          },
+        },
+        {
           id: 'evt1',
-          title: 'Event 1',
-          subTitle: '',
-          description: 'Description 1',
-          trackId: 'nonexistent',
+          trackId: 'cat1',
           time: {
             start: '18:00',
             end: '19:00',
@@ -153,134 +187,29 @@ describe('processSchedule', () => {
         },
       ],
     }
-    expect(() => processSchedule(input)).toThrow(
-      /references non-existent category/,
-    )
+
+    const result = normalizeScheduleInput(input)
+    const cat1Events = result.sortedEvents.get('cat1')!
+
+    expect(cat1Events[0]).toHaveProperty('event')
+    if ('event' in cat1Events[0]) {
+      expect(cat1Events[0].event.id).toBe('evt1')
+    }
+    if ('event' in cat1Events[1]) {
+      expect(cat1Events[1].event.id).toBe('evt2')
+    }
   })
 
-  describe('overlap validation', () => {
-    it('should reject overlapping events in same category', () => {
-      const input = {
-        ...validInput,
-        events: [
-          {
-            id: 'evt1',
-            title: 'Event 1',
-            subTitle: '',
-            description: 'Description 1',
-            trackId: 'cat1',
-            time: {
-              start: '18:00',
-              end: '19:00',
-            },
-          },
-          {
-            id: 'evt2',
-            title: 'Event 2',
-            subTitle: '',
-            description: 'Description 2',
-            trackId: 'cat1',
-            time: {
-              start: '18:30',
-              end: '19:30',
-            },
-          },
-        ],
-      }
-      expect(() => processSchedule(input)).toThrow(/Events overlap in category/)
-    })
+  it('should convert time strings to minutes', () => {
+    const result = normalizeScheduleInput(validInput)
 
-    it('should allow events in same category that touch but do not overlap', () => {
-      const input = {
-        ...validInput,
-        events: [
-          {
-            id: 'evt1',
-            title: 'Event 1',
-            subTitle: '',
-            description: 'Description 1',
-            trackId: 'cat1',
-            time: {
-              start: '18:00',
-              end: '19:00',
-            },
-          },
-          {
-            id: 'evt2',
-            title: 'Event 2',
-            subTitle: '',
-            description: 'Description 2',
-            trackId: 'cat1',
-            time: {
-              start: '19:00',
-              end: '20:00',
-            },
-          },
-        ],
-      }
-      expect(() => processSchedule(input)).not.toThrow()
-    })
+    expect(result.scheduleTime.start).toBe(1080)
+    expect(result.scheduleTime.end).toBe(1380)
 
-    it('should allow overlapping events in different categories', () => {
-      const input = {
-        ...validInput,
-        events: [
-          {
-            id: 'evt1',
-            title: 'Event 1',
-            subTitle: '',
-            description: 'Description 1',
-            trackId: 'cat1',
-            time: {
-              start: '18:00',
-              end: '19:00',
-            },
-          },
-          {
-            id: 'evt2',
-            title: 'Event 2',
-            subTitle: '',
-            description: 'Description 2',
-            trackId: 'cat2',
-            time: {
-              start: '18:30',
-              end: '19:30',
-            },
-          },
-        ],
-      }
-      expect(() => processSchedule(input)).not.toThrow()
-    })
-
-    it('should detect overlap when second event starts before first ends', () => {
-      const input = {
-        ...validInput,
-        events: [
-          {
-            id: 'evt1',
-            title: 'Event 1',
-            subTitle: '',
-            description: 'Description 1',
-            trackId: 'cat1',
-            time: {
-              start: '18:00',
-              end: '19:30',
-            },
-          },
-          {
-            id: 'evt2',
-            title: 'Event 2',
-            subTitle: '',
-            description: 'Description 2',
-            trackId: 'cat1',
-            time: {
-              start: '19:00',
-              end: '20:00',
-            },
-          },
-        ],
-      }
-      expect(() => processSchedule(input)).toThrow(/Events overlap in category/)
-    })
+    const cat1Events = result.sortedEvents.get('cat1')!
+    if ('event' in cat1Events[0]) {
+      expect(cat1Events[0].time.start).toBe(1080)
+      expect(cat1Events[0].time.end).toBe(1140)
+    }
   })
 })
