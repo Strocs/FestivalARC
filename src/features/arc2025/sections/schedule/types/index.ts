@@ -3,16 +3,14 @@ export interface Arc2025Event {
   title: string
   subTitle: string
   description: string
-  trackId: string
+  category: string
+  duration: string
+  galleryUrl?: string
   time: {
     start: string
     end: string
   }
-  metadata: {
-    category: string
-    duration: string
-    galleryUrl?: string
-  }
+  trackId: string
 }
 
 export interface Arc2025Stage {
@@ -20,4 +18,9 @@ export interface Arc2025Stage {
   name: string
   color: string
   order: number
+  category?: string
 }
+
+export type Arc2025EventPayload = Omit<Arc2025Event, 'id' | 'time' | 'trackId'>
+
+export type Arc2025StagePayload = Omit<Arc2025Stage, 'id' | 'order'>
