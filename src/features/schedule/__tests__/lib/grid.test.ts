@@ -1,26 +1,26 @@
 import { describe, it, expect } from 'vitest'
-import { buildGridData } from '../../lib/layout'
-import { processSchedule } from '../../lib/schedule'
+import { buildScheduleLayout } from '../../lib/layout'
+import { normalizeScheduleInput } from '../../lib/schedule'
 import type { ScheduleInput } from '../../types/services'
 
-describe('buildGridData', () => {
-  const createProcessedSchedule = (input: ScheduleInput) => {
-    return processSchedule(input)
+describe('buildScheduleLayout', () => {
+  const createNormalizedSchedule = (input: ScheduleInput) => {
+    return normalizeScheduleInput(input)
   }
 
   it('should generate correct time slots', () => {
     const input: ScheduleInput = {
-      time: {
+      scheduleTime: {
         start: '18:00',
         end: '20:00',
         intervalMinutes: 30,
       },
-      tracks: [{ id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 }],
+      tracks: [{ id: 'cat1', order: 1 }],
       events: [],
     }
 
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
 
     expect(result.timeSlots).toEqual([
       '18:00',
@@ -31,83 +31,61 @@ describe('buildGridData', () => {
     ])
   })
 
-  it('should sort categories by order', () => {
+  it('should sort tracks by order', () => {
     const input: ScheduleInput = {
-      time: {
+      scheduleTime: {
         start: '18:00',
         end: '20:00',
         intervalMinutes: 30,
       },
       tracks: [
-        { id: 'cat3', name: 'Category 3', color: '#0000ff', order: 3 },
-        { id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 },
-        { id: 'cat2', name: 'Category 2', color: '#00ff00', order: 2 },
+        { id: 'cat3', order: 3 },
+        { id: 'cat1', order: 1 },
+        { id: 'cat2', order: 2 },
       ],
       events: [],
     }
 
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
 
-    expect(result.tracks.map((c) => c.id)).toEqual(['cat1', 'cat2', 'cat3'])
+    expect(result.trackSlots.map((c) => c.id)).toEqual(['cat1', 'cat2', 'cat3'])
   })
 
-  it('should create rows for each category', () => {
+  it('should create entries for each track', () => {
     const input: ScheduleInput = {
-      time: {
+      scheduleTime: {
         start: '18:00',
         end: '20:00',
         intervalMinutes: 30,
       },
       tracks: [
-        { id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 },
-        { id: 'cat2', name: 'Category 2', color: '#00ff00', order: 2 },
+        { id: 'cat1', order: 1 },
+        { id: 'cat2', order: 2 },
       ],
       events: [],
     }
 
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
 
-    expect(result.rows.length).toBe(2)
-    expect(result.rows[0].trackId).toBe('cat1')
-    expect(result.rows[1].trackId).toBe('cat2')
+    expect(result.trackSlots.length).toBe(2)
+    expect(result.eventsByTrack.size).toBe(2)
+    expect(result.eventsByTrack.get('cat1')).toEqual([])
+    expect(result.eventsByTrack.get('cat2')).toEqual([])
   })
 
-  it('should create empty cells for categories with no events', () => {
+  it('should place event with correct position', () => {
     const input: ScheduleInput = {
-      time: {
-        start: '18:00',
-        end: '19:00',
-        intervalMinutes: 30,
-      },
-      tracks: [{ id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 }],
-      events: [],
-    }
-
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
-
-    expect(result.rows[0].cells.length).toBe(3)
-    expect(result.rows[0].cells.every((cell) => cell.type === 'empty')).toBe(
-      true,
-    )
-  })
-
-  it('should place event in correct slot', () => {
-    const input: ScheduleInput = {
-      time: {
+      scheduleTime: {
         start: '18:00',
         end: '20:00',
         intervalMinutes: 30,
       },
-      tracks: [{ id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 }],
+      tracks: [{ id: 'cat1', order: 1 }],
       events: [
         {
           id: 'evt1',
-          title: 'Event 1',
-          subTitle: '',
-          description: 'Description 1',
           trackId: 'cat1',
           time: {
             start: '18:30',
@@ -117,33 +95,31 @@ describe('buildGridData', () => {
       ],
     }
 
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
 
-    const cells = result.rows[0].cells
-    expect(cells[0].type).toBe('empty')
-    expect(cells[1].type).toBe('event')
-    if (cells[1].type === 'event') {
-      expect(cells[1].data.id).toBe('evt1')
-      expect(cells[1].data.span).toBe(1)
-      expect(cells[1].gridColumn).toBe('span 1')
+    const cat1Events = result.eventsByTrack.get('cat1')!
+    expect(cat1Events.length).toBe(1)
+
+    const layoutEvent = cat1Events[0]
+    if ('event' in layoutEvent) {
+      expect(layoutEvent.position.start).toBe(1)
+      expect(layoutEvent.position.span).toBe(1)
+      expect(layoutEvent.event.id).toBe('evt1')
     }
   })
 
   it('should calculate correct span for multi-slot events', () => {
     const input: ScheduleInput = {
-      time: {
+      scheduleTime: {
         start: '18:00',
         end: '20:00',
         intervalMinutes: 30,
       },
-      tracks: [{ id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 }],
+      tracks: [{ id: 'cat1', order: 1 }],
       events: [
         {
           id: 'evt1',
-          title: 'Event 1',
-          subTitle: '',
-          description: 'Description 1',
           trackId: 'cat1',
           time: {
             start: '18:00',
@@ -153,62 +129,29 @@ describe('buildGridData', () => {
       ],
     }
 
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
 
-    const cells = result.rows[0].cells
-    expect(cells[0].type).toBe('event')
-    if (cells[0].type === 'event') {
-      expect(cells[0].data.span).toBe(2)
-      expect(cells[0].gridColumn).toBe('span 2')
+    const cat1Events = result.eventsByTrack.get('cat1')!
+    const layoutEvent = cat1Events[0]
+
+    if ('event' in layoutEvent) {
+      expect(layoutEvent.position.start).toBe(0)
+      expect(layoutEvent.position.span).toBe(2)
     }
   })
 
-  it('should not create span cells after event', () => {
+  it('should handle multiple events in same track', () => {
     const input: ScheduleInput = {
-      time: {
-        start: '18:00',
-        end: '20:00',
-        intervalMinutes: 30,
-      },
-      tracks: [{ id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 }],
-      events: [
-        {
-          id: 'evt1',
-          title: 'Event 1',
-          subTitle: '',
-          description: 'Description 1',
-          trackId: 'cat1',
-          time: {
-            start: '18:00',
-            end: '19:00',
-          },
-        },
-      ],
-    }
-
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
-
-    const cells = result.rows[0].cells
-    expect(cells[1].type).toBe('empty')
-    expect(cells[2].type).toBe('empty')
-  })
-
-  it('should handle multiple events in same category', () => {
-    const input: ScheduleInput = {
-      time: {
+      scheduleTime: {
         start: '18:00',
         end: '21:00',
         intervalMinutes: 30,
       },
-      tracks: [{ id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 }],
+      tracks: [{ id: 'cat1', order: 1 }],
       events: [
         {
           id: 'evt1',
-          title: 'Event 1',
-          subTitle: '',
-          description: 'Description 1',
           trackId: 'cat1',
           time: {
             start: '18:00',
@@ -217,9 +160,6 @@ describe('buildGridData', () => {
         },
         {
           id: 'evt2',
-          title: 'Event 2',
-          subTitle: '',
-          description: 'Description 2',
           trackId: 'cat1',
           time: {
             start: '20:00',
@@ -229,48 +169,126 @@ describe('buildGridData', () => {
       ],
     }
 
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
 
-    const cells = result.rows[0].cells
-    expect(cells[0].type).toBe('event')
-    expect(cells[4].type).toBe('event')
-    if (cells[0].type === 'event' && cells[4].type === 'event') {
-      expect(cells[0].data.id).toBe('evt1')
-      expect(cells[4].data.id).toBe('evt2')
+    const cat1Events = result.eventsByTrack.get('cat1')!
+    expect(cat1Events.length).toBe(2)
+
+    if ('event' in cat1Events[0]) {
+      expect(cat1Events[0].event.id).toBe('evt1')
+      expect(cat1Events[0].position.start).toBe(0)
+    }
+
+    if ('event' in cat1Events[1]) {
+      expect(cat1Events[1].event.id).toBe('evt2')
+      expect(cat1Events[1].position.start).toBe(4)
     }
   })
 
-  it('should preserve event metadata', () => {
+  it('should preserve event payload', () => {
     const input: ScheduleInput = {
-      time: {
+      scheduleTime: {
         start: '18:00',
         end: '20:00',
         intervalMinutes: 30,
       },
-      tracks: [{ id: 'cat1', name: 'Category 1', color: '#ff0000', order: 1 }],
+      tracks: [{ id: 'cat1', order: 1 }],
       events: [
         {
           id: 'evt1',
-          title: 'Event 1',
-          subTitle: '',
-          description: 'Description 1',
           trackId: 'cat1',
           time: {
             start: '18:00',
             end: '19:00',
           },
-          metadata: { category: 'Rock', gallery: [] },
+          payload: { title: 'Event 1', category: 'Rock' },
         },
       ],
     }
 
-    const processed = createProcessedSchedule(input)
-    const result = buildGridData(processed)
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
 
-    const cell = result.rows[0].cells[0]
-    if (cell.type === 'event') {
-      expect(cell.data.metadata).toEqual({ category: 'Rock', gallery: [] })
+    const layoutEvent = result.eventsByTrack.get('cat1')![0]
+    if ('event' in layoutEvent) {
+      expect(layoutEvent.event.payload).toEqual({
+        title: 'Event 1',
+        category: 'Rock',
+      })
+    }
+  })
+
+  it('should group overlapping events', () => {
+    const input: ScheduleInput = {
+      scheduleTime: {
+        start: '18:00',
+        end: '21:00',
+        intervalMinutes: 30,
+      },
+      tracks: [{ id: 'cat1', order: 1 }],
+      events: [
+        {
+          id: 'evt1',
+          trackId: 'cat1',
+          time: {
+            start: '18:00',
+            end: '19:00',
+          },
+        },
+        {
+          id: 'evt2',
+          trackId: 'cat1',
+          time: {
+            start: '18:30',
+            end: '19:30',
+          },
+        },
+      ],
+    }
+
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
+
+    const cat1Events = result.eventsByTrack.get('cat1')!
+    expect(cat1Events.length).toBe(1)
+
+    const layoutItem = cat1Events[0]
+    expect(layoutItem).toHaveProperty('type', 'group')
+
+    if ('type' in layoutItem && layoutItem.type === 'group') {
+      expect(layoutItem.events.length).toBe(2)
+      expect(layoutItem.position.start).toBe(0)
+      expect(layoutItem.position.span).toBe(3)
+    }
+  })
+
+  it('should calculate position relative to schedule start', () => {
+    const input: ScheduleInput = {
+      scheduleTime: {
+        start: '10:00',
+        end: '12:00',
+        intervalMinutes: 30,
+      },
+      tracks: [{ id: 'cat1', order: 1 }],
+      events: [
+        {
+          id: 'evt1',
+          trackId: 'cat1',
+          time: {
+            start: '10:30',
+            end: '11:00',
+          },
+        },
+      ],
+    }
+
+    const normalized = createNormalizedSchedule(input)
+    const result = buildScheduleLayout(normalized)
+
+    const layoutEvent = result.eventsByTrack.get('cat1')![0]
+    if ('event' in layoutEvent) {
+      expect(layoutEvent.position.start).toBe(1)
     }
   })
 })
