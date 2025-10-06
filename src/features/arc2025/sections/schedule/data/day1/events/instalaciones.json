@@ -3,28 +3,28 @@
     "id": "camara-oscura-inmersiva",
     "title": "Cámara Oscura Inmersiva",
     "subTitle": "",
-    "description": "",
+    "description": "test",
     "trackId": "stage-j",
     "time": {
       "start": "15:00",
-      "end": "19:00"
+      "end": "23:00"
     },
     "category": "Instalaciones",
-    "duration": "480 minutos",
-    "gallery": []
+    "duration": "",
+    "galleryUrl": ""
   },
   {
     "id": "fondo-marino",
     "title": "Fondo Marino, Instalación Textil",
     "subTitle": "",
-    "description": "",
+    "description": "test",
     "trackId": "stage-j",
     "time": {
-      "start": "19:00",
-      "end": "23:00"
+      "start": "16:00",
+      "end": "19:00"
     },
     "category": "Instalaciones",
-    "duration": "480 minutos",
-    "gallery": []
+    "duration": "180 minutos",
+    "galleryUrl": ""
   }
 ]

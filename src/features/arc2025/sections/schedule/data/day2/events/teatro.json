@@ -11,7 +11,7 @@
     },
     "category": "Teatro",
     "duration": "60 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "nota-7",
@@ -25,7 +25,7 @@
     },
     "category": "Teatro",
     "duration": "45 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "el-lazarillo-de-tormes",
@@ -39,7 +39,7 @@
     },
     "category": "Teatro",
     "duration": "45 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "re-cuerdo",
@@ -53,6 +53,6 @@
     },
     "category": "Teatro",
     "duration": "45 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]

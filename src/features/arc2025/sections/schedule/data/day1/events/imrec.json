@@ -11,7 +11,7 @@
     },
     "category": "IMREC",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "actividad-3",
@@ -25,7 +25,7 @@
     },
     "category": "IMREC",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "actividad-4-dia-1",
@@ -39,7 +39,7 @@
     },
     "category": "IMREC",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "actividad-4-continuacion-dia-1",
@@ -53,7 +53,7 @@
     },
     "category": "IMREC",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "actividad-6-dia-1",
@@ -67,6 +67,6 @@
     },
     "category": "IMREC",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]

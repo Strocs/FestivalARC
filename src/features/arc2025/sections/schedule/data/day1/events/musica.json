@@ -11,7 +11,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "marineros",
@@ -25,7 +25,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "valle-de-copaos",
@@ -39,7 +39,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "tunacola",
@@ -53,7 +53,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "excentricapiola",
@@ -67,7 +67,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "lillia",
@@ -81,7 +81,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "fother-mockers",
@@ -95,6 +95,6 @@
     },
     "category": "Música",
     "duration": "60 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]

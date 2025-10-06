@@ -11,7 +11,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "presentacion-solido-20-marcelo-tapia-solid-ediciones",
@@ -25,7 +25,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "presentacion-gabriela-mistral-ojos-clavados-poemas-sobre-la-muerte",
@@ -39,7 +39,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "ollie-francisca-torrealba-y-belen-varas-marsalado",
@@ -53,7 +53,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "presentacion-lecturas-aberrantes-y-hermeneutica-esquizo-cristian-geisse",
@@ -67,7 +67,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "aves-migratorias-de-la-region-de-coquimbo-guillotina-editorial",
@@ -81,6 +81,6 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]

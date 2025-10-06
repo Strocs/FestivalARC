@@ -11,7 +11,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "curi-rosales",
@@ -25,7 +25,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "astronautiko",
@@ -39,7 +39,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "chini-png",
@@ -53,7 +53,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "los-lobitos",
@@ -67,7 +67,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "fonk-machine",
@@ -81,7 +81,7 @@
     },
     "category": "Música",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "los-tetas",
@@ -95,6 +95,6 @@
     },
     "category": "Música",
     "duration": "60 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]

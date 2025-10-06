@@ -11,7 +11,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "4-arcos-1-un-puzzle-editorial-uls",
@@ -25,7 +25,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "albricias-ediciones",
@@ -39,7 +39,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "taller-editorial-me-pego-un-tiro",
@@ -53,7 +53,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "red-feminista-del-libro",
@@ -67,7 +67,7 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "grandes-coquimbanos-felipe-fernandez-libreria-de-libros",
@@ -81,6 +81,6 @@
     },
     "category": "Literatura",
     "duration": "30 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]

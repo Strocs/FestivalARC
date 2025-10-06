@@ -11,7 +11,7 @@
     },
     "category": "Talleres",
     "duration": "90 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "taller-de-alfareria",
@@ -25,6 +25,6 @@
     },
     "category": "Talleres",
     "duration": "120 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]

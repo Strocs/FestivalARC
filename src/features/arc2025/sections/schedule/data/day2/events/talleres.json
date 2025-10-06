@@ -11,7 +11,7 @@
     },
     "category": "Talleres",
     "duration": "120 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "bestiario-del-parque-pedro-de-valdivia-de-la-biodiversidad-a-la-biofantasia",
@@ -25,6 +25,6 @@
     },
     "category": "Talleres",
     "duration": "120 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]

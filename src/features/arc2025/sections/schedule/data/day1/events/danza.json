@@ -10,7 +10,7 @@
       "end": "16:20"
     },
     "category": "Danza",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "lollapayasa",
@@ -23,7 +23,7 @@
       "end": "18:00"
     },
     "category": "Danza",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "zoologicas",
@@ -37,7 +37,7 @@
     },
     "category": "Danza",
     "duration": "50 minutos",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "calle",
@@ -50,7 +50,7 @@
       "end": "20:55"
     },
     "category": "Circo",
-    "gallery": []
+    "galleryUrl": ""
   },
   {
     "id": "latidos-de-fuego",
@@ -60,10 +60,10 @@
     "trackId": "stage-b",
     "time": {
       "start": "21:30",
-      "end": "22:00"
+      "end": "22:15"
     },
     "category": "Circo",
     "duration": "45 minutos",
-    "gallery": []
+    "galleryUrl": ""
   }
 ]
