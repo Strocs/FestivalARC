@@ -9,11 +9,9 @@
       "start": "15:30",
       "end": "16:00"
     },
-    "metadata": {
-      "category": "Danza y Circo",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Danza y Circo",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "en-busqueda-del-arrecife-arcoiris",
@@ -25,11 +23,9 @@
       "start": "17:00",
       "end": "17:45"
     },
-    "metadata": {
-      "category": "Danza y Circo",
-      "duration": "45 minutos",
-      "gallery": []
-    }
+    "category": "Danza y Circo",
+    "duration": "45 minutos",
+    "gallery": []
   },
   {
     "id": "suena-flamenco",
@@ -41,11 +37,9 @@
       "start": "18:30",
       "end": "19:30"
     },
-    "metadata": {
-      "category": "Danza y Circo",
-      "duration": "60 minutos",
-      "gallery": []
-    }
+    "category": "Danza y Circo",
+    "duration": "60 minutos",
+    "gallery": []
   },
   {
     "id": "sin-pies-ni-cabeza",
@@ -57,10 +51,8 @@
       "start": "20:00",
       "end": "20:50"
     },
-    "metadata": {
-      "category": "Danza y Circo",
-      "duration": "50 minutos",
-      "gallery": []
-    }
+    "category": "Danza y Circo",
+    "duration": "50 minutos",
+    "gallery": []
   }
 ]

@@ -9,11 +9,9 @@
       "start": "15:30",
       "end": "16:00"
     },
-    "metadata": {
-      "category": "IMREC",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "IMREC",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "actividad-6-dia-2",
@@ -25,11 +23,9 @@
       "start": "17:00",
       "end": "17:30"
     },
-    "metadata": {
-      "category": "IMREC",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "IMREC",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "actividad-7",
@@ -41,11 +37,9 @@
       "start": "18:30",
       "end": "19:00"
     },
-    "metadata": {
-      "category": "IMREC",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "IMREC",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "actividad-8",
@@ -57,11 +51,9 @@
       "start": "20:00",
       "end": "20:30"
     },
-    "metadata": {
-      "category": "IMREC",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "IMREC",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "actividad-6-continuacion",
@@ -73,10 +65,8 @@
       "start": "20:30",
       "end": "21:00"
     },
-    "metadata": {
-      "category": "IMREC",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "IMREC",
+    "duration": "30 minutos",
+    "gallery": []
   }
 ]

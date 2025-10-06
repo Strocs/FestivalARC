@@ -9,11 +9,9 @@
       "start": "15:00",
       "end": "15:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "4-arcos-1-un-puzzle-editorial-uls",
@@ -25,11 +23,9 @@
       "start": "16:00",
       "end": "16:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "albricias-ediciones",
@@ -41,11 +37,9 @@
       "start": "17:00",
       "end": "17:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "taller-editorial-me-pego-un-tiro",
@@ -57,11 +51,9 @@
       "start": "18:00",
       "end": "18:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "red-feminista-del-libro",
@@ -73,11 +65,9 @@
       "start": "19:00",
       "end": "19:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   },
   {
     "id": "grandes-coquimbanos-felipe-fernandez-libreria-de-libros",
@@ -89,10 +79,8 @@
       "start": "20:00",
       "end": "20:30"
     },
-    "metadata": {
-      "category": "Literatura",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Literatura",
+    "duration": "30 minutos",
+    "gallery": []
   }
 ]

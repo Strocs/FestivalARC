@@ -9,11 +9,9 @@
       "start": "15:30",
       "end": "17:30"
     },
-    "metadata": {
-      "category": "Talleres",
-      "duration": "120 minutos",
-      "gallery": []
-    }
+    "category": "Talleres",
+    "duration": "120 minutos",
+    "gallery": []
   },
   {
     "id": "bestiario-del-parque-pedro-de-valdivia-de-la-biodiversidad-a-la-biofantasia",
@@ -25,10 +23,8 @@
       "start": "18:00",
       "end": "20:00"
     },
-    "metadata": {
-      "category": "Talleres",
-      "duration": "120 minutos",
-      "gallery": []
-    }
+    "category": "Talleres",
+    "duration": "120 minutos",
+    "gallery": []
   }
 ]

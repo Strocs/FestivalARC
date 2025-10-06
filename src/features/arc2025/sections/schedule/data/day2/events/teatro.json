@@ -9,11 +9,9 @@
       "start": "15:30",
       "end": "16:30"
     },
-    "metadata": {
-      "category": "Teatro",
-      "duration": "60 minutos",
-      "gallery": []
-    }
+    "category": "Teatro",
+    "duration": "60 minutos",
+    "gallery": []
   },
   {
     "id": "nota-7",
@@ -25,11 +23,9 @@
       "start": "17:00",
       "end": "17:45"
     },
-    "metadata": {
-      "category": "Teatro",
-      "duration": "45 minutos",
-      "gallery": []
-    }
+    "category": "Teatro",
+    "duration": "45 minutos",
+    "gallery": []
   },
   {
     "id": "el-lazarillo-de-tormes",
@@ -41,11 +37,9 @@
       "start": "18:30",
       "end": "19:15"
     },
-    "metadata": {
-      "category": "Teatro",
-      "duration": "45 minutos",
-      "gallery": []
-    }
+    "category": "Teatro",
+    "duration": "45 minutos",
+    "gallery": []
   },
   {
     "id": "re-cuerdo",
@@ -57,10 +51,8 @@
       "start": "20:00",
       "end": "20:45"
     },
-    "metadata": {
-      "category": "Teatro",
-      "duration": "45 minutos",
-      "gallery": []
-    }
+    "category": "Teatro",
+    "duration": "45 minutos",
+    "gallery": []
   }
 ]

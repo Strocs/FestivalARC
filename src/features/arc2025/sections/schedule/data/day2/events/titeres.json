@@ -9,11 +9,9 @@
       "start": "15:00",
       "end": "16:00"
     },
-    "metadata": {
-      "category": "Títeres",
-      "duration": "60 minutos",
-      "gallery": []
-    }
+    "category": "Títeres",
+    "duration": "60 minutos",
+    "gallery": []
   },
   {
     "id": "marina-y-su-inolvidable-viaje-bajo-el-mar",
@@ -25,10 +23,8 @@
       "start": "18:00",
       "end": "18:30"
     },
-    "metadata": {
-      "category": "Títeres",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Títeres",
+    "duration": "30 minutos",
+    "gallery": []
   }
 ]

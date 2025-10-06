@@ -9,10 +9,8 @@
       "start": "15:30",
       "end": "16:00"
     },
-    "metadata": {
-      "category": "Cecrea",
-      "duration": "30 minutos",
-      "gallery": []
-    }
+    "category": "Cecrea",
+    "duration": "30 minutos",
+    "gallery": []
   }
 ]
