@@ -1,124 +1,48 @@
 ---
-import { ScheduleGrid } from '@/features/schedule'
-import { arc2025Day1ScheduleLayout } from '../data'
-import type { GridLayout } from '@/features/schedule'
+import { ScheduleGrid, adaptScheduleDataToGrid } from '@/features/schedule'
+import { arc2025Day1ScheduleData } from '../data'
+import type { ScheduleTrack } from '@/features/schedule'
+import type { LayoutEvent } from '@/features/schedule'
 import type { Arc2025StagePayload, Arc2025EventPayload } from '../types'
-import type { ScheduleLayoutGridProps } from '@/features/schedule/ui/types'
+import type { UIHeaderItem, UIColumnItem } from '@/features/schedule'
 
-const mapScheduleLayoutDataToUI = ({
-  trackSlots,
-  eventsByTrack,
-  timeSlots,
-}: GridLayout<
-  Arc2025StagePayload,
-  Arc2025EventPayload
->): ScheduleLayoutGridProps => {
-  const rows = trackSlots.map((track) => {
-    const items = eventsByTrack.get(track.id)
+const mapTrack = (track: ScheduleTrack<Arc2025StagePayload>): UIHeaderItem => ({
+  id: track.id,
+  name: track.payload?.name ?? '',
+  color: track.payload?.color ?? '',
+  order: track.order,
+  category: track.payload?.category ?? '',
+})
 
-    if (!items) {
-      return {
-        track: {
-          id: track.id,
-          name: track.payload?.name ?? '',
-          color: track.payload?.color ?? '',
-          order: track.order,
-          category: track.payload?.category ?? '',
-        },
-        slots: [],
-      }
-    }
+const mapEvent = (event: LayoutEvent<Arc2025EventPayload>): UIColumnItem => ({
+  id: event.event.id,
+  header: {
+    title: event.event.payload?.title ?? '',
+    subTitle: event.event.payload?.subTitle ?? '',
+  },
+  body: {
+    duration: event.event.payload?.duration,
+    time: {
+      start: event.event.time.start,
+      end: event.event.time.end,
+    },
+  },
+  footer: {
+    infoButton:
+      event.event.payload?.description || event.event.payload?.galleryUrl
+        ? 'Más Info'
+        : undefined,
+  },
+  labels: {
+    left: event.event.payload?.category ?? '',
+  },
+})
 
-    const mappedSlots = items.map((item) => {
-      if ('type' in item && item.type === 'group') {
-        return {
-          type: 'group' as const,
-          position: item.position,
-          slots: item.events.map(({ position, event }) => ({
-            position,
-            slot: {
-              id: event.id,
-              trackId: event.trackId,
-              header: {
-                title: event.payload?.title ?? '',
-                subTitle: event.payload?.subTitle ?? '',
-              },
-              body: {
-                duration: event.payload?.duration,
-                time: {
-                  start: event.time.start,
-                  end: event.time.end,
-                },
-              },
-              footer: {
-                infoButton:
-                  event.payload?.description || event.payload?.galleryUrl
-                    ? 'Más Info'
-                    : undefined,
-              },
-              labels: {
-                left: event.payload?.category ?? '',
-                right: track.payload?.name ?? '',
-              },
-            },
-          })),
-        } satisfies ScheduleLayoutGridProps['rows'][number]['slots'][number]
-      }
-
-      if ('event' in item) {
-        return {
-          position: item.position,
-          slot: {
-            id: item.event.id,
-            trackId: item.event.trackId,
-            header: {
-              title: item.event.payload?.title ?? '',
-              subTitle: item.event.payload?.subTitle ?? '',
-            },
-            body: {
-              duration: item.event.payload?.duration,
-              time: {
-                start: item.event.time.start,
-                end: item.event.time.end,
-              },
-            },
-            footer: {
-              infoButton:
-                item.event.payload?.description ||
-                item.event.payload?.galleryUrl
-                  ? 'Más Info'
-                  : undefined,
-            },
-            labels: {
-              left: item.event.payload?.category ?? '',
-              right: track.payload?.name ?? '',
-            },
-          },
-        } satisfies ScheduleLayoutGridProps['rows'][number]['slots'][number]
-      }
-      throw new Error('Unknown item type in eventsByTrack mapping')
-    })
-
-    return {
-      track: {
-        id: track.id,
-        name: track.payload?.name ?? '',
-        color: track.payload?.color ?? '',
-        order: track.order,
-        category: track.payload?.category ?? '',
-      },
-      slots: mappedSlots,
-    }
-  })
-
-  return {
-    timeSlots: [...timeSlots],
-    rows,
-  }
-}
+const gridProps = adaptScheduleDataToGrid(
+  arc2025Day1ScheduleData,
+  mapTrack,
+  mapEvent,
+)
 ---
 
-<ScheduleGrid
-  client:idle
-  {...mapScheduleLayoutDataToUI(arc2025Day1ScheduleLayout)}
-/>
+<ScheduleGrid client:idle {...gridProps} />
