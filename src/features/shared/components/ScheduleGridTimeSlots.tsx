@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { cn } from '../utils'
 
 interface ScheduleGridTimeSlotsProps {
   timeSlots: string[]
@@ -7,24 +7,16 @@ interface ScheduleGridTimeSlotsProps {
 export function ScheduleGridTimeSlots({
   timeSlots,
 }: ScheduleGridTimeSlotsProps) {
-  return (
-    <>
-      {timeSlots.map((time, index) => {
-        const timeRowIndex = index * 2 + 2
-
-        return (
-          <Fragment key={time + index}>
-            <time
-              dateTime={time}
-              className='font-nerus text-25-white border-t-25-white/30 col-span-full flex items-center border-t-3 border-dashed text-2xl font-bold'
-              style={{
-                gridRow: timeRowIndex,
-              }}>
-              {time}
-            </time>
-          </Fragment>
-        )
-      })}
-    </>
-  )
+  return timeSlots.map((time, index) => (
+    <time
+      key={time}
+      dateTime={time}
+      className={cn(
+        'font-nerus text-25-white relative -mt-3 text-2xl font-bold',
+        'before:border-25-white/30 before:absolute before:mt-[3px] before:h-full before:w-screen before:border-b-3 before:border-dashed',
+        index === timeSlots.length - 1 && 'before:border-b-0',
+      )}>
+      {time}
+    </time>
+  ))
 }
