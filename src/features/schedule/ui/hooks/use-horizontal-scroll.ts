@@ -17,6 +17,32 @@ interface UseHorizontalDragReturn {
   currentColumnIndex: number
 }
 
+type DragState = 'idle' | 'detecting' | 'dragging'
+
+const DRAG_THRESHOLD = 10
+const RUBBER_BAND_RESISTANCE = 0.3
+
+function applyRubberBandResistance(
+  offset: number,
+  min: number,
+  max: number,
+  resistance: number,
+): number {
+  if (offset >= min && offset <= max) return offset
+
+  if (offset > max) {
+    const overscroll = offset - max
+    return max + overscroll * resistance
+  }
+
+  if (offset < min) {
+    const overscroll = min - offset
+    return min - overscroll * resistance
+  }
+
+  return offset
+}
+
 export function useHorizontalDrag({
   columnWidth,
   totalColumns,
@@ -27,10 +53,16 @@ export function useHorizontalDrag({
   const [currentColumnIndex, setCurrentColumnIndex] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const dragStateRef = useRef({
+  const dragStateRef = useRef<{
+    state: DragState
+    startX: number
+    startY: number
+    startOffset: number
+  }>({
+    state: 'idle',
     startX: 0,
+    startY: 0,
     startOffset: 0,
-    isDragging: false,
   })
   const offsetRef = useRef(0)
 
@@ -91,41 +123,84 @@ export function useHorizontalDrag({
     goToColumn(currentColumnIndex - 1)
   }, [currentColumnIndex, goToColumn])
 
-  const handleDragStart = useCallback((clientX: number) => {
+  const handleDragStart = useCallback((clientX: number, clientY: number) => {
     dragStateRef.current = {
+      state: 'detecting',
       startX: clientX,
+      startY: clientY,
       startOffset: offsetRef.current,
-      isDragging: true,
     }
-    setIsDragging(true)
   }, [])
 
   const handleDragMove = useCallback(
-    (clientX: number) => {
-      if (!dragStateRef.current.isDragging) return
+    (clientX: number, clientY: number) => {
+      const state = dragStateRef.current.state
 
-      const deltaX = clientX - dragStateRef.current.startX
-      const newOffset = dragStateRef.current.startOffset + deltaX
-      const clampedOffset = clampOffset(newOffset)
-      applyTransform(clampedOffset, false)
+      if (state === 'idle') return
+
+      if (state === 'detecting') {
+        const deltaX = Math.abs(clientX - dragStateRef.current.startX)
+        const deltaY = Math.abs(clientY - dragStateRef.current.startY)
+        const distanceSquared = deltaX * deltaX + deltaY * deltaY
+
+        if (distanceSquared < DRAG_THRESHOLD * DRAG_THRESHOLD) {
+          return
+        }
+
+        if (deltaX > deltaY) {
+          dragStateRef.current.state = 'dragging'
+          setIsDragging(true)
+        } else {
+          dragStateRef.current.state = 'idle'
+          return
+        }
+      }
+
+      if (dragStateRef.current.state === 'dragging') {
+        const deltaX = clientX - dragStateRef.current.startX
+        const newOffset = dragStateRef.current.startOffset + deltaX
+        const offsetWithRubberBand = applyRubberBandResistance(
+          newOffset,
+          minOffset,
+          0,
+          RUBBER_BAND_RESISTANCE,
+        )
+        applyTransform(offsetWithRubberBand, false)
+      }
     },
     [clampOffset, applyTransform],
   )
 
   const handleDragEnd = useCallback(() => {
-    if (!dragStateRef.current.isDragging) return
+    const wasDragging = dragStateRef.current.state === 'dragging'
 
-    dragStateRef.current.isDragging = false
+    dragStateRef.current.state = 'idle'
     setIsDragging(false)
 
-    const snappedOffset = snapToColumn(offsetRef.current)
-    const columnIndex = Math.round(-snappedOffset / columnWidth)
+    if (!wasDragging) return
 
-    setOffset(snappedOffset)
-    setCurrentColumnIndex(columnIndex)
-    applyTransform(snappedOffset, true)
-    onPositionChange?.(columnIndex)
-  }, [snapToColumn, columnWidth, onPositionChange, applyTransform])
+    const currentOffset = offsetRef.current
+
+    const isOverscrolled = currentOffset > 0 || currentOffset < minOffset
+
+    if (isOverscrolled) {
+      const targetOffset = currentOffset > 0 ? 0 : minOffset
+      const columnIndex = Math.round(-targetOffset / columnWidth)
+
+      setOffset(targetOffset)
+      setCurrentColumnIndex(columnIndex)
+      applyTransform(targetOffset, true)
+      onPositionChange?.(columnIndex)
+    } else {
+      const snappedOffset = snapToColumn(currentOffset)
+      const columnIndex = Math.round(-snappedOffset / columnWidth)
+
+      setOffset(snappedOffset)
+      setCurrentColumnIndex(columnIndex)
+      applyTransform(snappedOffset, true)
+      onPositionChange?.(columnIndex)
+    }
+  }, [minOffset, columnWidth, snapToColumn, onPositionChange, applyTransform])
 
   useEffect(() => {
     const wrapper = wrapperRef.current
@@ -133,11 +208,14 @@ export function useHorizontalDrag({
 
     const onMouseDown = (e: MouseEvent) => {
       e.preventDefault()
-      handleDragStart(e.clientX)
+      handleDragStart(e.clientX, e.clientY)
     }
 
     const onMouseMove = (e: MouseEvent) => {
-      handleDragMove(e.clientX)
+      if (dragStateRef.current.state === 'dragging') {
+        e.preventDefault()
+      }
+      handleDragMove(e.clientX, e.clientY)
     }
 
     const onMouseUp = () => {
@@ -145,11 +223,16 @@ export function useHorizontalDrag({
     }
 
     const onTouchStart = (e: TouchEvent) => {
-      handleDragStart(e.touches[0].clientX)
+      const touch = e.touches[0]
+      handleDragStart(touch.clientX, touch.clientY)
     }
 
     const onTouchMove = (e: TouchEvent) => {
-      handleDragMove(e.touches[0].clientX)
+      if (dragStateRef.current.state === 'dragging') {
+        e.preventDefault()
+      }
+      const touch = e.touches[0]
+      handleDragMove(touch.clientX, touch.clientY)
     }
 
     const onTouchEnd = () => {
@@ -161,7 +244,7 @@ export function useHorizontalDrag({
     window.addEventListener('mouseup', onMouseUp)
 
     wrapper.addEventListener('touchstart', onTouchStart, { passive: false })
-    window.addEventListener('touchmove', onTouchMove, { passive: true })
+    window.addEventListener('touchmove', onTouchMove, { passive: false })
     window.addEventListener('touchend', onTouchEnd, { passive: true })
 
     return () => {
