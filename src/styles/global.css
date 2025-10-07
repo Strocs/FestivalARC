@@ -12,3 +12,11 @@
   --font-bestoom: 'Bestoom', sans-serif;
   --font-neris: 'Neris', sans-serif;
 }
+
+@utility snap-smooth {
+  transition-property: transform;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  transform: translateZ(0);
+}
