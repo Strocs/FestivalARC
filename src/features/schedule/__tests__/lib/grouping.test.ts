@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { groupOverlappingEvents, type EventGroup } from '../../lib/grouping'
-import type { NormalizedEvent } from '../../types/models'
+import {
+  groupOverlappingEvents,
+  type EventGroup,
+} from '../../core/layout/group-events'
+import type { NormalizedEvent } from '../../models/event'
 
 describe('groupOverlappingEvents', () => {
   it('should return empty array for empty input', () => {

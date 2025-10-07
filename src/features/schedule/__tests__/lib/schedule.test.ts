@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { normalizeScheduleInput } from '../../lib/schedule'
-import type { ScheduleInput } from '../../types/services'
+import { normalizeScheduleInput } from '../../core/layout/normalize-schedule'
+import type { ScheduleInput } from '../../models/schedule-input'
 
 describe('normalizeScheduleInput', () => {
   const validInput: ScheduleInput = {

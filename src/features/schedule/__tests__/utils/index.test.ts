@@ -1,10 +1,9 @@
 import { describe, it, expect } from 'vitest'
+import { toMinutes, fromMinutes } from '../../core/time/normalize-time'
 import {
-  toMinutes,
-  fromMinutes,
   generateTimeSlots,
   calculateOcuppiedCells,
-} from '../../utils/index'
+} from '../../core/layout/calculate-positions'
 
 describe('toMinutes', () => {
   it('should convert valid time to minutes', () => {

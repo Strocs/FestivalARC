@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { validateScheduleInput } from '../../lib/validation'
-import type { ScheduleInput } from '../../types/services'
+import { validateScheduleInput } from '../../core/validation/validate-events'
+import type { ScheduleInput } from '../../models/schedule-input'
 
 describe('validateScheduleInput', () => {
   const validInput: ScheduleInput = {

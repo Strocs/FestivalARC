@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { buildScheduleLayout } from '../../lib/layout'
-import { normalizeScheduleInput } from '../../lib/schedule'
-import type { ScheduleInput } from '../../types/services'
+import { buildScheduleLayout } from '../../core/layout/build-layout'
+import { normalizeScheduleInput } from '../../core/layout/normalize-schedule'
+import type { ScheduleInput } from '../../models/schedule-input'
 
 describe('buildScheduleLayout', () => {
   const createNormalizedSchedule = (input: ScheduleInput) => {
