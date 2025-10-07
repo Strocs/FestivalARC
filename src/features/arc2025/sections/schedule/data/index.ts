@@ -13,7 +13,7 @@ import type {
   Arc2025Stage,
   Arc2025StagePayload,
 } from '../types'
-import { createScheduleLayout, type ScheduleInput } from '@/features/schedule'
+import { createScheduleData, type ScheduleInput } from '@/features/schedule'
 
 interface Arc2025Data {
   time: {
@@ -86,7 +86,5 @@ const arc2025Day2InputData = mapArc2025DataToScheduleInput({
   events: day2Events,
 })
 
-export const arc2025Day1ScheduleLayout =
-  createScheduleLayout(arc2025Day1InputData)
-export const arc2025Day2ScheduleLayout =
-  createScheduleLayout(arc2025Day2InputData)
+export const arc2025Day1ScheduleData = createScheduleData(arc2025Day1InputData)
+export const arc2025Day2ScheduleData = createScheduleData(arc2025Day2InputData)

@@ -2,70 +2,70 @@
   {
     "id": "stage-a",
     "name": "Escenario A",
-    "color": "#f70d61",
+    "color": "#5b9bd5",
     "order": 1,
     "category": "Teatro"
   },
   {
     "id": "stage-b",
     "name": "Escenario B",
-    "color": "#2495e9",
+    "color": "#ffc000",
     "order": 2,
     "category": "Circo/Danza"
   },
   {
     "id": "stage-c",
     "name": "Escenario C",
-    "color": "#efd43d",
+    "color": "#92d050",
     "order": 3,
     "category": "Música"
   },
   {
     "id": "stage-d",
     "name": "Escenario D",
-    "color": "#34c759",
+    "color": "#741b47",
     "order": 4,
     "category": "Títeres"
   },
   {
     "id": "stage-e",
     "name": "Escenario E",
-    "color": "#ff9500",
+    "color": "#00b0f0",
     "order": 5,
     "category": "Espacio Literatura"
   },
   {
     "id": "stage-f",
     "name": "Escenario F",
-    "color": "#af52de",
+    "color": "#ff0000",
     "order": 6,
     "category": "Talleres"
   },
   {
     "id": "stage-g",
     "name": "Escenario G",
-    "color": "#5ac8fa",
+    "color": "#333f4f",
     "order": 7,
-    "category": "charlas"
+    "category": "Charlas"
   },
   {
     "id": "stage-h",
     "name": "Escenario H",
-    "color": "#ffcc00",
+    "color": "#a5a5a5",
     "order": 8,
     "category": "Espacio IMREC"
   },
   {
     "id": "stage-i",
     "name": "Escenario I",
-    "color": "#ff3b30",
+    "color": "#ed7d31",
     "order": 9,
     "category": "Espacio Cecrea"
   },
   {
     "id": "stage-j",
     "name": "Instalaciones",
-    "color": "#8e8e93",
+    "color": "#7030a0",
     "order": 10
   }
 ]
