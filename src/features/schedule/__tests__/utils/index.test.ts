@@ -1,9 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { toMinutes, fromMinutes } from '../../core/time/normalize-time'
-import {
-  generateTimeSlots,
-  calculateOcuppiedCells,
-} from '../../core/layout/calculate-positions'
+import { generateTimeSlots } from '../../core/layout/calculate-positions'
 
 describe('toMinutes', () => {
   it('should convert valid time to minutes', () => {
@@ -100,24 +97,5 @@ describe('generateTimeSlots', () => {
     expect(() => generateTimeSlots(1080, 1200, -30)).toThrow(
       /Interval must be positive/,
     )
-  })
-})
-
-describe('calculateOcuppiedCells', () => {
-  it('should calculate exact spans', () => {
-    expect(calculateOcuppiedCells(1200, 1260, 30)).toBe(2)
-    expect(calculateOcuppiedCells(1200, 1320, 30)).toBe(4)
-    expect(calculateOcuppiedCells(1200, 1260, 60)).toBe(1)
-  })
-
-  it('should ceil partial spans', () => {
-    expect(calculateOcuppiedCells(1200, 1245, 30)).toBe(2)
-    expect(calculateOcuppiedCells(1200, 1215, 30)).toBe(1)
-    expect(calculateOcuppiedCells(1200, 1290, 60)).toBe(2)
-  })
-
-  it('should handle very short events', () => {
-    expect(calculateOcuppiedCells(1200, 1201, 30)).toBe(1)
-    expect(calculateOcuppiedCells(1200, 1229, 30)).toBe(1)
   })
 })

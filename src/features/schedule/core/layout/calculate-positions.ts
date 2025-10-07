@@ -26,11 +26,3 @@ export function generateTimeSlots(
 
   return slots
 }
-
-export function calculateOcuppiedCells(
-  startTime: number,
-  endTime: number,
-  intervalMinutes: number,
-): number {
-  return Math.ceil((endTime - startTime) / intervalMinutes)
-}
