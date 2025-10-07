@@ -42,20 +42,20 @@ export function ScheduleSidebar({
   const sortedStages = [...stages].sort((a, b) => a.order - b.order)
 
   return (
-    <aside className='sticky top-4 flex h-fit w-64 flex-col gap-4 bg-[#170d19] px-4 pt-4 pb-8'>
-      <div className='flex items-center justify-between'>
-        <h3 className='m-0 text-sm font-bold text-white'>Escenarios</h3>
-        <div className='flex gap-2'>
+    <aside className='bg-25-black sticky top-4 flex h-fit max-w-62 shrink-0 flex-col gap-4 p-4'>
+      <div className='flex items-center gap-4'>
+        <h3 className='text-25-white font-bold'>Escenarios</h3>
+        <div className='mt-1 flex gap-2'>
           <button
             onClick={handleSelectAll}
-            className='text-xs text-gray-400 hover:text-white'
+            className='hover:text-25-white cursor-pointer text-xs text-gray-400'
             type='button'>
             Todos
           </button>
           <span className='text-gray-600'>|</span>
           <button
             onClick={handleDeselectAll}
-            className='text-xs text-gray-400 hover:text-white'
+            className='hover:text-25-white cursor-pointer text-xs text-gray-400'
             type='button'>
             Ninguno
           </button>
@@ -66,7 +66,7 @@ export function ScheduleSidebar({
         {sortedStages.map((stage) => (
           <label
             key={stage.id}
-            className='flex cursor-pointer items-center gap-3 rounded p-2 hover:bg-[#2a1a2f]'>
+            className='hover:bg-25-white/10 flex min-h-13 cursor-pointer items-center gap-3 rounded p-2'>
             <input
               type='checkbox'
               checked={selectedStageIds.includes(stage.id)}
@@ -77,9 +77,17 @@ export function ScheduleSidebar({
               className='h-3 w-3 shrink-0 rounded-full'
               style={{ backgroundColor: stage.color }}
             />
-            <span className='text-sm text-white'>
-              {stage.name} {stage.category && ' - ' + stage.category}
-            </span>
+            <p className='text-25-white leading-none'>
+              {stage.name}
+              {stage.category && (
+                <>
+                  <br />{' '}
+                  <span className='text-25-white/70 text-sm capitalize'>
+                    {stage.category}
+                  </span>
+                </>
+              )}
+            </p>
           </label>
         ))}
       </div>
