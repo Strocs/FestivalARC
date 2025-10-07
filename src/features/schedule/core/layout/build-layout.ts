@@ -33,10 +33,6 @@ function buildEventsWithPosition(
   normalizedEvents: Map<string, ReadonlyArray<NormalizedEvent | EventGroup>>,
   trackTime: ScheduleTime<number>,
 ): Map<string, ReadonlyArray<LayoutEvent | LayoutEventGroup>> {
-  if (trackTime.start >= trackTime.end) {
-    throw new Error('Invalid track time range configuration')
-  }
-
   return new Map(
     Array.from(normalizedEvents, ([trackId, items]) => [
       trackId,
