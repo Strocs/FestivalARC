@@ -3,19 +3,17 @@ import type { GroupSlot } from './types'
 
 interface ScheduleEventGroupProps {
   group: GroupSlot
-  trackIndex: number
   trackColor: string
   trackName: string
 }
 
 export function ScheduleEventGroup({
   group,
-  trackIndex,
   trackColor,
   trackName,
 }: ScheduleEventGroupProps) {
-  const adjustedStart = group.position.start * 2 + 3
-  const adjustedSpan = group.position.span * 2 - 1
+  const adjustedStart = group.position.start * 2 + 2
+  const adjustedSpan = group.position.span
 
   const totalRows = group.position.span
 
@@ -24,13 +22,11 @@ export function ScheduleEventGroup({
       className='group relative bg-white/30'
       style={{
         gridRow: `${adjustedStart} / span ${adjustedSpan}`,
-        gridColumn: trackIndex + 2,
       }}>
       <div
-        className='grid h-full gap-[30px]'
+        className='grid h-full gap-6'
         style={{
           gridTemplateRows: `repeat(${totalRows}, 200px)`,
-          gridTemplateColumns: '1fr',
         }}>
         {group.slots.map((item, index) => {
           const internalAdjustedStart = item.position.start + 1
