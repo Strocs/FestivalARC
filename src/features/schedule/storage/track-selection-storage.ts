@@ -2,6 +2,7 @@ const STORAGE_KEY = 'arc2025:selectedStageIds'
 
 const isClient = typeof window !== 'undefined'
 
+// NOTE: Maybe create a repository with dependency injection?
 export const trackSelectionStorage = {
   get(): string[] | null {
     if (!isClient) return null
