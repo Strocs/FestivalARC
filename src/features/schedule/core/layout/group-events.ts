@@ -13,14 +13,13 @@ export function groupOverlappingEvents(
 ): (NormalizedEvent | EventGroup)[] {
   if (events.length === 0) return []
 
-  const sortedEvents = [...events].sort((a, b) => a.time.start - b.time.start)
-
   const result: (NormalizedEvent | EventGroup)[] = []
   let currentGroup: EventGroup | null = null
 
-  for (const event of sortedEvents) {
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i]
+    const nextEvent = events[i + 1]
     if (!currentGroup) {
-      const nextEvent = sortedEvents[sortedEvents.indexOf(event) + 1]
       if (nextEvent && eventsOverlap(event, nextEvent)) {
         currentGroup = {
           events: [event],
@@ -42,11 +41,10 @@ export function groupOverlappingEvents(
         event.time.end,
       )
     } else {
-      currentGroup.events.sort((a, b) => a.time.end - b.time.end)
       result.push(currentGroup)
       currentGroup = null
 
-      const nextEvent = sortedEvents[sortedEvents.indexOf(event) + 1]
+      const nextEvent = events[i + 1]
       if (nextEvent && eventsOverlap(event, nextEvent)) {
         currentGroup = {
           events: [event],
@@ -62,7 +60,6 @@ export function groupOverlappingEvents(
   }
 
   if (currentGroup) {
-    currentGroup.events.sort((a, b) => a.time.end - b.time.end)
     result.push(currentGroup)
   }
 
