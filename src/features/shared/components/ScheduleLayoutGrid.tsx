@@ -1,7 +1,9 @@
 import { useMemo } from 'react'
 import { ScheduleSidebar, useStageSelection } from './ScheduleSidebar'
-import { ScheduleGrid } from './ScheduleGrid'
 import type { ScheduleLayoutGridProps } from './types'
+import { ScheduleGridColumn } from './ScheduleGridColumn'
+import { ScheduleGridEvents } from './ScheduleGridEvents'
+import { ScheduleGridTimeSlots } from './ScheduleGridTimeSlots'
 
 export function ScheduleLayoutGrid({
   timeSlots,
@@ -20,18 +22,27 @@ export function ScheduleLayoutGrid({
   const tracks = filteredRows.map((row) => row.track)
 
   return (
-    <div className='flex gap-4 py-4'>
+    <div className='flex flex-nowrap gap-4 py-4'>
       <ScheduleSidebar
         stages={stages}
         selectedStageIds={selectedStageIds}
         onStageSelectionChange={setSelectedStageIds}
       />
 
-      <div className='flex-1'>
-        <ScheduleGrid
-          timeSlots={timeSlots}
-          tracks={tracks}
+      <ScheduleGridColumn rowsLength={timeSlots.length}>
+        <ScheduleGridTimeSlots timeSlots={timeSlots} />
+      </ScheduleGridColumn>
+
+      <div
+        className='grid flex-1 gap-4 overflow-x-clip'
+        style={{
+          gridTemplateColumns: `repeat(${tracks.length}, 320px)`,
+          gridRow: 1,
+        }}>
+        <ScheduleGridEvents
           filteredRows={filteredRows}
+          tracks={tracks}
+          rowsLength={timeSlots.length}
         />
       </div>
     </div>
