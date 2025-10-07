@@ -1,5 +1,6 @@
 import { cn } from '@/features/shared/utils'
 import { ScheduleInfoButton } from './ScheduleInfoButton'
+import { useMemo } from 'react'
 
 export interface EventItemProps {
   id: string
@@ -38,8 +39,10 @@ export const EventItem = ({
   const { title, subTitle } = header
   const { leftButton, rightLink: inscriptionLink } = footer
 
-  const stickyTop = `calc(1.5rem + ${stackOffset * 200}px)`
-
+  const stickyTop = useMemo(
+    () => `calc(1.5rem + ${stackOffset * 200}px)`,
+    [stackOffset],
+  )
   return (
     <li
       id={id}

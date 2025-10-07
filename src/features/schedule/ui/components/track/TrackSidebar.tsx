@@ -1,27 +1,17 @@
-import { useState, useEffect } from 'react'
-import {
-  trackSelectionStorage,
-  getValidTrackIds,
-} from '../../../storage/track-selection-storage'
-
-export interface Stage {
-  id: string
-  name: string
-  color: string
-  order: number
-  category?: string
-}
+import type { UIHeaderItem } from '../../types'
 
 interface TrackSidebarProps {
-  stages: Stage[]
+  stages: ReadonlyArray<UIHeaderItem>
   selectedStageIds: string[]
   onStageSelectionChange: (stageIds: string[]) => void
+  navigation?: React.ReactNode
 }
 
 export function TrackSidebar({
   stages,
   selectedStageIds,
   onStageSelectionChange,
+  navigation,
 }: TrackSidebarProps) {
   const handleToggleStage = (stageId: string) => {
     if (selectedStageIds.includes(stageId)) {
@@ -42,27 +32,8 @@ export function TrackSidebar({
   const sortedStages = [...stages].sort((a, b) => a.order - b.order)
 
   return (
-    <aside className='bg-25-black sticky top-4 flex h-fit max-w-62 shrink-0 flex-col gap-4 p-4'>
-      <div className='flex items-center gap-4'>
-        <h3 className='text-25-white font-bold'>Escenarios</h3>
-        <div className='mt-1 flex gap-2'>
-          <button
-            onClick={handleSelectAll}
-            className='hover:text-25-white cursor-pointer text-xs text-gray-400'
-            type='button'>
-            Todos
-          </button>
-          <span className='text-gray-600'>|</span>
-          <button
-            onClick={handleDeselectAll}
-            className='hover:text-25-white cursor-pointer text-xs text-gray-400'
-            type='button'>
-            Ninguno
-          </button>
-        </div>
-      </div>
-
-      <div className='flex flex-col'>
+    <aside className='bg-25-black ml-4 flex h-fit w-56 shrink-0 flex-col gap-2 p-4 pt-8'>
+      <section className='flex flex-col'>
         {sortedStages.map((stage) => (
           <label
             key={stage.id}
@@ -81,7 +52,7 @@ export function TrackSidebar({
               {stage.name}
               {stage.category && (
                 <>
-                  <br />{' '}
+                  <br />
                   <span className='text-25-white/70 text-sm capitalize'>
                     {stage.category}
                   </span>
@@ -90,39 +61,25 @@ export function TrackSidebar({
             </p>
           </label>
         ))}
-      </div>
+
+        <div className='flex items-center justify-center gap-2 pt-2'>
+          <button
+            onClick={handleSelectAll}
+            className='hover:text-25-white cursor-pointer text-sm text-gray-400'
+            type='button'>
+            Todos
+          </button>
+          <span className='text-gray-600'>|</span>
+          <button
+            onClick={handleDeselectAll}
+            className='hover:text-25-white cursor-pointer text-sm text-gray-400'
+            type='button'>
+            Ninguno
+          </button>
+        </div>
+
+        {navigation}
+      </section>
     </aside>
   )
-}
-
-export function useStageSelection(stages: Stage[]) {
-  const stagesIds = stages.map((s) => s.id)
-
-  const initialSelectedIds = [
-    stagesIds[0],
-    stagesIds[1],
-    stagesIds[2],
-    stagesIds[3],
-  ]
-
-  const [selectedStageIds, setSelectedStageIds] =
-    useState<string[]>(initialSelectedIds)
-
-  useEffect(() => {
-    const storedIds = trackSelectionStorage.get()
-    const validStoredIds = getValidTrackIds(storedIds, stagesIds)
-
-    if (validStoredIds.length > 0) {
-      setSelectedStageIds(validStoredIds)
-    }
-  }, [])
-
-  useEffect(() => {
-    trackSelectionStorage.set(selectedStageIds)
-  }, [selectedStageIds])
-
-  return {
-    selectedStageIds,
-    setSelectedStageIds,
-  }
 }

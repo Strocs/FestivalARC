@@ -1,58 +1,55 @@
 import { EventItem } from './EventItem'
-import type { GroupSlot } from '../../types'
+import type { UINestedColumn } from '../../types'
 
 interface EventGroupProps {
-  group: GroupSlot
-  trackColor: string
-  trackName: string
+  group: UINestedColumn
+  header: {
+    color: string
+    name: string
+    id: string
+  }
 }
 
-export function EventGroup({ group, trackColor, trackName }: EventGroupProps) {
-  const adjustedStart = group.position.start * 2 + 2
-  const adjustedSpan = group.position.span
-
+export function EventGroup({ group, header }: EventGroupProps) {
   const totalRows = group.position.span
 
   return (
     <div
       className='group relative bg-white/30'
       style={{
-        gridRow: `${adjustedStart} / span ${adjustedSpan}`,
+        gridRow: `${group.position.start} / span ${group.position.span}`,
       }}>
       <div
         className='grid h-full gap-6'
         style={{
           gridTemplateRows: `repeat(${totalRows}, 200px)`,
         }}>
-        {group.slots.map((item, index) => {
-          const internalAdjustedStart = item.position.start + 1
-          const internalAdjustedSpan = item.position.span
-
+        {group.columnData.map((item, index) => {
           return (
             <div
-              key={item.slot.id}
+              key={item.columnData.id}
               className='pointer-events-none relative'
               style={{
-                gridRow: `${internalAdjustedStart} / span ${internalAdjustedSpan}`,
+                gridRow: `${item.position.start} / span ${item.position.span}`,
                 gridColumn: 1,
                 zIndex: index,
               }}>
               <EventItem
-                id={item.slot.id}
-                trackId={item.slot.trackId}
+                id={item.columnData.id}
+                trackId={header.id}
                 eventTime={{
-                  start: item.slot.body.time.start,
-                  end: item.slot.body.time.end,
+                  start: item.columnData.body.time.start,
+                  end: item.columnData.body.time.end,
                 }}
-                header={item.slot.header}
+                header={item.columnData.header}
                 footer={{
-                  leftButton: item.slot.footer.infoButton,
-                  rightLink: item.slot.footer.inscription,
+                  leftButton: item.columnData.footer.infoButton,
+                  rightLink: item.columnData.footer.inscription,
                 }}
-                activityType={item.slot.labels?.left}
-                duration={item.slot.body.duration}
-                color={trackColor}
-                location={trackName}
+                activityType={item.columnData.labels?.left}
+                duration={item.columnData.body.duration}
+                color={header.color}
+                location={header.name}
                 stackOffset={index * 1.2}
               />
             </div>

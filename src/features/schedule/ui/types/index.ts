@@ -1,6 +1,5 @@
-export interface SlotData {
+export interface UIColumnItem {
   id: string
-  trackId: string
   header: {
     title: string
     subTitle: string
@@ -26,40 +25,34 @@ export interface SlotData {
   }
 }
 
-export type IndividualSlot = {
-  type?: 'individual'
+export type UIColumn = {
+  type?: 'individual' | 'group'
   position: {
     start: number
     span: number
   }
-  slot: SlotData
+  columnData: UIColumnItem
 }
 
-export type GroupSlot = {
-  type: 'group'
-  position: {
-    start: number
-    span: number
-  }
-  slots: {
-    position: {
-      start: number
-      span: number
-    }
-    slot: SlotData
-  }[]
+export interface UINestedColumn extends Omit<UIColumn, 'columnData'> {
+  columnData: Omit<UIColumn, 'type'>[]
 }
 
-export interface ScheduleLayoutGridProps {
-  timeSlots: string[]
-  rows: {
-    track: {
-      id: string
-      name: string
-      color: string
-      order: number
-      category?: string
-    }
-    slots: (IndividualSlot | GroupSlot)[]
-  }[]
+export interface UIHeaderItem {
+  id: string
+  name: string
+  color: string
+  order: number
+  category?: string
+}
+
+export interface UIColumns {
+  header: UIHeaderItem
+  column: (UIColumn | UINestedColumn)[]
+}
+
+export interface UIGridLayout {
+  timeColumn: ReadonlyArray<string>
+  headerRow: ReadonlyArray<UIHeaderItem>
+  columns: UIColumns[]
 }

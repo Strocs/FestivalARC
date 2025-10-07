@@ -1,29 +1,39 @@
 import { cn } from '@/features/shared/utils'
-
-interface Track {
-  id: string
-  name: string
-  color: string
-  category?: string
-}
+import type { UIHeaderItem } from '../../types'
 
 interface GridColumnProps {
-  rowsLength: number
+  length: {
+    rows: number
+    columns: number
+  }
   children: React.ReactNode
-  header?: Track
+  header?: UIHeaderItem
+  config?: {
+    columnWidth: number
+    gapWidth: number
+  }
 }
 
-export function GridColumn({ rowsLength, children, header }: GridColumnProps) {
+export function GridColumn({
+  length,
+  children,
+  header,
+  config,
+}: GridColumnProps) {
   return (
     <section
       className='relative grid gap-6'
       style={{
-        gridTemplateRows: `40px repeat(${rowsLength}, 200px)`,
+        gridTemplateRows: `60px repeat(${length.rows}, 200px)`,
+        contentVisibility: config ? 'auto' : 'visible',
+        containIntrinsicSize: config
+          ? `${config.columnWidth + config.gapWidth / 2} ${length.columns * config.columnWidth + config.gapWidth}px`
+          : 'auto',
       }}>
       <span
         className={cn(
           header &&
-            'text-25-white flex h-full items-center justify-center text-center font-bold capitalize',
+            'text-25-white font-neris flex h-full items-center justify-center p-2 text-center text-xl leading-none font-bold capitalize',
         )}
         style={{ backgroundColor: header?.color || 'transparent' }}>
         {header?.name} {header?.category && ` - ${header?.category}`}

@@ -21,7 +21,7 @@ export function NavigationButtons({
         onClick={onPrev}
         disabled={!canGoPrev}
         className={cn(
-          'bg-25-black text-25-white hover:bg-25-primary flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200',
+          'bg-25-black text-25-white hover:text-25-accent flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
           !canGoPrev && 'cursor-not-allowed opacity-30',
         )}
         type='button'
@@ -43,7 +43,7 @@ export function NavigationButtons({
         onClick={onNext}
         disabled={!canGoNext}
         className={cn(
-          'bg-25-black text-25-white hover:bg-25-primary flex h-12 w-12 items-center justify-center rounded-full transition-colors duration-200',
+          'bg-25-black text-25-white hover:text-25-accent flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
           !canGoNext && 'cursor-not-allowed opacity-30',
         )}
         type='button'
