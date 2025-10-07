@@ -1,9 +1,9 @@
 ---
-import { ScheduleLayoutGrid } from '@/features/shared/components/ScheduleLayoutGrid'
+import { ScheduleGrid } from '@/features/schedule'
 import { arc2025Day1ScheduleLayout } from '../data'
 import type { GridLayout } from '@/features/schedule'
 import type { Arc2025StagePayload, Arc2025EventPayload } from '../types'
-import type { ScheduleLayoutGridProps } from '@/features/shared/components/types'
+import type { ScheduleLayoutGridProps } from '@/features/schedule/ui/types'
 
 const mapScheduleLayoutDataToUI = ({
   trackSlots,
@@ -118,7 +118,7 @@ const mapScheduleLayoutDataToUI = ({
 }
 ---
 
-<ScheduleLayoutGrid
+<ScheduleGrid
   client:idle
   {...mapScheduleLayoutDataToUI(arc2025Day1ScheduleLayout)}
 />
