@@ -38,10 +38,10 @@ export function TrackSidebar({
   return (
     <aside
       className={cn(
-        'ml-8 flex h-fit shrink-0 flex-col gap-2 transition-all duration-300 ease-in-out',
-        isExpanded ? 'w-64' : 'w-22',
+        'sticky top-2 z-10 flex h-fit w-full shrink-0 flex-col gap-2 px-3 transition-[width] duration-300 ease-in-out md:top-4 md:px-4',
+        isExpanded ? 'md:w-72' : 'md:w-30',
       )}>
-      <div className='bg-25-black rounded-xs px-4 py-2'>
+      <div className='bg-25-black hidden rounded-xs px-4 py-2 md:block'>
         <CollapseButton
           isExpanded={isExpanded}
           onToggle={() => setIsExpanded(!isExpanded)}
@@ -50,14 +50,12 @@ export function TrackSidebar({
 
       {daySelector?.(isExpanded)}
 
-      <div className='bg-25-black rounded-xs p-4'>
-        <StageSelection
-          stages={stages}
-          selectedStageIds={selectedStageIds}
-          onStageSelectionChange={onStageSelectionChange}
-          isExpanded={isExpanded}
-        />
-      </div>
+      <StageSelection
+        stages={stages}
+        selectedStageIds={selectedStageIds}
+        onStageSelectionChange={onStageSelectionChange}
+        isExpanded={isExpanded}
+      />
 
       {navigation}
     </aside>
