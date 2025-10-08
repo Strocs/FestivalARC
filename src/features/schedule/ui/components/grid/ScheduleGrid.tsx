@@ -53,7 +53,7 @@ export function ScheduleGrid({
                 onPrev={goToPrev}
                 canGoNext={canGoNext}
                 canGoPrev={canGoPrev}
-                className='flex items-center justify-between px-4'
+                className='flex items-center justify-between'
               />
             }
           />
