@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets'
+
+import LOGO from '@/features/arc2025/assets/ARC25.png'
+---
+
+<header class='group mx-auto grid w-fit justify-center px-4 pt-24'>
+  <h1 class='sr-only'>Festival ARC 2025, Próximamente</h1>
+  <figure class='overfloh-hidden mx-auto h-fit w-fit pb-4'>
+    <Image
+      src={LOGO}
+      width={500}
+      height={180}
+      alt='Logo Festival ARC 2024'
+      class='aspect-[500/180] h-fit'
+      loading='eager'
+    />
+  </figure>
+</header>

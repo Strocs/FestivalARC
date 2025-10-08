@@ -1,33 +1,13 @@
 ---
-import { Image } from 'astro:assets'
-
-import LOGO from './assets/ARC25.png'
-import LOGOS_FOOTER from './assets/LOGOS_FOOTER.png'
-
-import FacebookIcon from '@/features/shared/components/icons/FacebookIcon.astro'
-import InstagramIcon from '@/features/shared/components/icons/InstagramIcon.astro'
-import XIcon from '@/features/shared/components/icons/XIcon.astro'
-import YoutubeIcon from '@/features/shared/components/icons/YoutubeIcon.astro'
-
 import Arc2025Layout from './layouts/Arc2025Layout.astro'
-import Arc2025Schedule from './sections/schedule/components/Arc2025Schedule.astro'
+import Arc2025Schedule from './components/schedule/Arc2025Schedule.astro'
+import Footer from './components/footer/Footer.astro'
+import Header from './components/header/Header.astro'
+import Arc2025Streaming from './components/streaming/Arc2025Streaming.astro'
 ---
 
 <Arc2025Layout>
-  <header class='group mx-auto grid w-fit justify-center px-4 pt-24'>
-    <h1 class='sr-only'>Festival ARC 2025, Próximamente</h1>
-    <figure class='overfloh-hidden mx-auto h-fit w-fit pb-4'>
-      <Image
-        src={LOGO}
-        width={500}
-        height={180}
-        alt='Logo Festival ARC 2024'
-        class='aspect-[500/180] h-fit'
-        loading='eager'
-      />
-    </figure>
-  </header>
-
+  <Header />
   <main class='mx-auto h-full w-full pb-16'>
     <section class='grid gap-5'>
       <div class='relative mx-auto flex max-w-xl flex-col justify-center gap-2'>
@@ -41,6 +21,12 @@ import Arc2025Schedule from './sections/schedule/components/Arc2025Schedule.astr
           Pronto más información
         </p>
       </div>
+    </section>
+    <Arc2025Streaming />
+
+    <Arc2025Schedule />
+
+    <section>
       <p class='text-25-white mt-14 text-center leading-none'>
         ¿Tienes alguna duda? escríbenos a <a
           target='_blank'
@@ -50,50 +36,6 @@ import Arc2025Schedule from './sections/schedule/components/Arc2025Schedule.astr
         >
       </p>
     </section>
-
-    <Arc2025Schedule />
   </main>
-
-  <footer
-    class='bg-25-black relative bottom-0 left-0 grid w-full items-center justify-center gap-8 p-4 xl:grid-flow-col xl:gap-20'>
-    <div class='mx-auto flex w-fit items-center gap-8'>
-      <Image
-        height={100}
-        src={LOGOS_FOOTER}
-        alt='Logo de SEREMI Región de Coquimbo'
-        class='h-14 w-fit shrink-0'
-        loading='eager'
-      />
-    </div>
-    <div class='text-25-white mx-auto flex h-fit w-fit gap-4'>
-      <a
-        aria-label='Visita nuestro Facebook'
-        href='https://facebook.com/FestivalARC'
-        target='_blank'>
-        <FacebookIcon />
-      </a>
-      <a
-        aria-label='Visita nuestro Instagrma'
-        href='https://www.instagram.com/festival_arc'
-        target='_blank'><InstagramIcon /></a
-      >
-      <a
-        aria-label='Visita nuestro Twitter'
-        href='https://x.com/festivalarc'
-        target='_blank'><XIcon /></a
-      >
-      <a
-        aria-label='Visita nuestro Youtube'
-        href='https://www.youtube.com/channel/UC5dv2x9AcqEAgKcuRBMHlgg'
-        target='_blank'><YoutubeIcon /></a
-      >
-    </div>
-    <p
-      class='text-25-white mx-auto w-fit self-end text-sm xl:absolute xl:right-8 xl:bottom-4'>
-      <strong>ARC 2025</strong> | Desarrollado por <a
-        href='https://github.com/strocs'
-        class='hover:text-25-accent transition duration-150'>StrocsDev</a
-      >
-    </p>
-  </footer>
+  <Footer />
 </Arc2025Layout>
