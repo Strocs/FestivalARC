@@ -39,7 +39,7 @@ export function TrackSidebar({
     <aside
       className={cn(
         'ml-8 flex h-fit shrink-0 flex-col gap-2 transition-all duration-300 ease-in-out',
-        isExpanded ? 'w-60' : 'w-22',
+        isExpanded ? 'w-64' : 'w-22',
       )}>
       <div className='bg-25-black rounded-xs px-4 py-2'>
         <CollapseButton
