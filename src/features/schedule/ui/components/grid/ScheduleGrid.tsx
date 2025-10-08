@@ -59,61 +59,61 @@ export function ScheduleGrid(props: ScheduleGridProps) {
 
   return (
     <section className='flex flex-col gap-4 overflow-x-clip py-4 md:w-full'>
-      <div className='flex w-screen flex-nowrap gap-1 md:gap-4'>
-        <section className='sticky top-4 hidden h-fit md:block'>
-          <TrackSidebar
-            stages={stages}
-            selectedStageIds={selectedStageIds}
-            onStageSelectionChange={setSelectedStageIds}
-            daySelector={
-              showDaySelector
-                ? (isExpanded) => (
-                    <DaySelector
-                      days={days}
-                      currentDayIndex={currentDayIndex}
-                      onDayChange={setCurrentDay}
-                      isExpanded={isExpanded}
-                    />
-                  )
-                : undefined
-            }
-            navigation={
-              <NavigationButtons
-                onNext={goToNext}
-                onPrev={goToPrev}
-                canGoNext={canGoNext}
-                canGoPrev={canGoPrev}
-                className='flex items-center justify-between rounded-xs px-4 py-2'
-              />
-            }
-          />
-        </section>
+      <div className='flex w-screen flex-col flex-nowrap gap-2 md:flex-row md:gap-4'>
+        <TrackSidebar
+          stages={stages}
+          selectedStageIds={selectedStageIds}
+          onStageSelectionChange={setSelectedStageIds}
+          daySelector={
+            showDaySelector
+              ? (isExpanded) => (
+                  <DaySelector
+                    days={days}
+                    currentDayIndex={currentDayIndex}
+                    onDayChange={setCurrentDay}
+                    isExpanded={isExpanded}
+                  />
+                )
+              : undefined
+          }
+          navigation={
+            <NavigationButtons
+              onNext={goToNext}
+              onPrev={goToPrev}
+              canGoNext={canGoNext}
+              canGoPrev={canGoPrev}
+              className='hidden items-center justify-between rounded-xs px-4 py-2 md:flex'
+            />
+          }
+        />
 
-        <GridColumn length={{ rows: timeColumn.length, columns: 1 }}>
-          <GridTimeSlots timeColumn={timeColumn} />
-        </GridColumn>
+        <section className='flex gap-2'>
+          <GridColumn length={{ rows: timeColumn.length, columns: 1 }}>
+            <GridTimeSlots timeColumn={timeColumn} />
+          </GridColumn>
 
-        <section className='flex-1 overflow-x-clip'>
-          <div
-            ref={wrapperRef}
-            className={cn(
-              'will-change-transform',
-              isDragging && 'cursor-grabbing',
-              !isDragging && 'cursor-grab',
-            )}>
+          <section className='flex-1 overflow-x-clip'>
             <div
-              className='grid gap-4'
-              style={{
-                gridTemplateColumns: `repeat(${columns.length}, 320px)`,
-                gridRow: 1,
-              }}>
-              <GridColumns
-                config={{ columnWidth: COLUMN_WIDTH, gapWidth: GAP_WIDTH }}
-                filteredRows={filteredRows}
-                rowsLength={timeColumn.length}
-              />
+              ref={wrapperRef}
+              className={cn(
+                'will-change-transform',
+                isDragging && 'cursor-grabbing',
+                !isDragging && 'cursor-grab',
+              )}>
+              <div
+                className='grid gap-4'
+                style={{
+                  gridTemplateColumns: `repeat(${columns.length}, 320px)`,
+                  gridRow: 1,
+                }}>
+                <GridColumns
+                  config={{ columnWidth: COLUMN_WIDTH, gapWidth: GAP_WIDTH }}
+                  filteredRows={filteredRows}
+                  rowsLength={timeColumn.length}
+                />
+              </div>
             </div>
-          </div>
+          </section>
         </section>
       </div>
     </section>
