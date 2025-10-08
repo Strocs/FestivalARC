@@ -1,0 +1,58 @@
+[
+  {
+    "id": "circo-minero",
+    "title": "Circo Minero",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-b",
+    "time": {
+      "start": "15:30",
+      "end": "16:30"
+    },
+    "category": "Circo",
+    "duration": "",
+    "galleryUrl": ""
+  },
+  {
+    "id": "en-busqueda-del-arrecife-arcoiris",
+    "title": "En Búsqueda del Arrecife Arcoíris",
+    "subTitle": "",
+    "description": "Sumérgete en un viaje fascinante que comienza con datos sorprendentes sobre la biología de las medusas, su increíble capacidad de auto regeneración y sus secretos más asombrosos. Todo explicado de forma interactiva, con voz creada por inteligencia artificial e imágenes impactantes que despiertan la curiosidad de grandes y pequeños. Un audiocuento de dos medusas amigas con características neurodivergentes que emprenden una aventura inolvidable en busca del Gran Arrecife Arcoíris. En su recorrido conocerán a un pez globo tímido que sufre bullying y a un solitario tiburón, rey del fondo marino, descubriendo juntos el valor de la amistad, la empatía y la diversidad. 10 talentosos bailarines dan vida a esta historia con una puesta en escena que fusiona lírica, jazz, danza moderna y contemporánea, acompañada por los mágicos cantos de las ballenas, creando un espectáculo inmersivo que emocionará a toda la familia, especialmente a los más pequeños.",
+    "trackId": "stage-b",
+    "time": {
+      "start": "17:00",
+      "end": "17:45"
+    },
+    "category": "Danza",
+    "duration": "45 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "suena-flamenco",
+    "title": "Suena Flamenco",
+    "subTitle": "Agrupación Artístico Cultural Flamenco Elqui",
+    "description": "El espectáculo de Flamenco reúne a profesionales de este arte en un recorrido a través de distintos ritmos y formas dibujando en escena cuadros en que los bailaores, guitarristas, cantaores y percusionistas dialogan y crean un mundo cautivante lleno de fuerza, celebración y vida, donde este estilo de danza puede verse en su expresión más auténtica y cercana. Estos eventos son una oportunidad para presenciar un espectáculo que combina la técnica, el sentimiento y la autenticidad del flamenco, brindando al público la posibilidad de experimentar este arte en su máxima expresión.",
+    "trackId": "stage-b",
+    "time": {
+      "start": "18:30",
+      "end": "19:30"
+    },
+    "category": "Danza",
+    "duration": "1 Hora",
+    "galleryUrl": ""
+  },
+  {
+    "id": "calle",
+    "title": "Calle",
+    "subTitle": "Circo Kalendero",
+    "description": "\"Calle\" es una obra dramática de circo contemporáneo dirigida por Sebastián A. C. e inspirada en relatos reales de abandono, vulnerabilidad y violencia psicológica y física que podemos ver día a día en nuestras poblaciones.\nLos personajes abordan las diferentes temáticas mediante el lenguaje del gesto, físico y expresivo, apoyado principalmente de coreografías grupales, las cuales llevarán al público a sumergirse en la realidad de cada personaje.\nEl teatro físico, ritmos urbanos y las técnicas del circo contemporáneo son las herramientas fundamentales de esta obra, logrando conectar y empatizar al público con la historia de cada uno de nuestros personajes.\nCalle utiliza 5 aparatos esceno-técnicos en forma de poliedro para transformar el espacio escénico en distintas estructuras en las que se ejecutan disciplinas circenses con un sinfín de posibilidades.\nLos intérpretes demuestran sus destrezas acrobáticas con peripecias y equilibrios sobre los poliedros, completando la dramaturgia espacial con el ensamble perfecto entre artista y aparato escénico.",
+    "trackId": "stage-b",
+    "time": {
+      "start": "20:00",
+      "end": "20:55"
+    },
+    "category": "Circo",
+    "duration": "55 Minutos",
+    "galleryUrl": ""
+  }
+]

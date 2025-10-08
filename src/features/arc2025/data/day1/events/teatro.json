@@ -1,0 +1,58 @@
+[
+  {
+    "id": "gaspar-semilla",
+    "title": "Gaspar Semilla",
+    "subTitle": "",
+    "description": "Gaspar Semilla es una obra de teatro familiar que se crea a raiz de una problematica urgente: Los habitos alimenticios en la infancia. Gaspar es un nino que no se alimenta de la comida que su mama le cocina, por lo que al dormir es parte de una pesadilla, donde no existe la comida saludable y el es el unico encargado de recolectar diferentes semillas de colores para sobrevivir. En el transcurso conocera y se encontrara con amigos muy particulares que convertiran esta pesadilla en un aprendizaje para toda la vida.",
+    "trackId": "stage-a",
+    "time": {
+      "start": "15:30",
+      "end": "16:30"
+    },
+    "category": "Teatro",
+    "duration": "30 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "zumbido-de-alarma",
+    "title": "Zumbido de Alarma",
+    "subTitle": "Teatro de Cabeza",
+    "description": "Cuatro hermanas abejas han viajado miles de kilómetros para encontrar una nueva y mejor vida, pensando que la han encontrado, tierra de abundantes flores, comienzan a echar raíces hasta que el peligro que antes las acechaba, regresa. Se preguntan si tendrán energía para emigrar o tendrán las herramientas para defender su nuevo hogar del peligro que genera para ellas la utilización desmedida de la tecnología.",
+    "trackId": "stage-a",
+    "time": {
+      "start": "17:00",
+      "end": "18:00"
+    },
+    "category": "Teatro",
+    "duration": "45 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "el-lazarillo-de-tormes",
+    "title": "El Lazarillo de Tormes",
+    "subTitle": "Compañía Teatro El Encanto",
+    "description": "La puesta en escena está basada en el libro del mismo nombre escrito en España en 1554 por un autor anónimo. En el escenario se presenta la vida de Lazaro de Tormes con sus tres primeros amos: El Ciego, el Clérigo de Makeda y por ultimo el Escudero. La actuación se complementa con la participación de un narrador que los situa en el contexto histórico y literario en qué transcurre la historia. En un formato minimalista la puesta busca estimular la imaginación, el gusto por la lectura entre los estudiantes y la difusión de los derechos de niños, niñas y adolescentes.",
+    "trackId": "stage-a",
+    "time": {
+      "start": "18:30",
+      "end": "19:30"
+    },
+    "category": "Teatro",
+    "duration": "45 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "re-cuerdo",
+    "title": "Re-cuerdo: Una Historia sobre la Vejez",
+    "subTitle": "Amapola Araya",
+    "description": "Un viaje atemporal por la vida de una Gabriela Mistral aventurera, a través de sus propios versos interpretados en diversos lenguajes, tales como, teatro, danza, poesía y sonoridades.",
+    "trackId": "stage-a",
+    "time": {
+      "start": "20:00",
+      "end": "21:00"
+    },
+    "category": "Teatro",
+    "duration": "50 Minutos",
+    "galleryUrl": ""
+  }
+]

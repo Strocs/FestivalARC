@@ -1,0 +1,72 @@
+[
+  {
+    "id": "fiestas-de-chile",
+    "title": "Fiestas de Chile",
+    "subTitle": "Ballet Folklórico La Serena",
+    "description": "\"Fiestas de Chile\" es una obra del Ballet Folclórico de La Serena en la cual se plasman expresiones culturales de distintos territorios del país, mostrando a la audiencia un Chile vivo que celebra mediante la danza, los acontecimientos más importantes de su vida comunitaria. La muestra deambula desde los carnavales del norte grande hasta las tradicionales mingas en el archipiélago Chiloé, pasando por Bohemia del puerto de Valparaíso y las trilla de los sectores campesinos.",
+    "trackId": "stage-b",
+    "time": {
+      "start": "15:30",
+      "end": "16:20"
+    },
+    "category": "Danza",
+    "duration": "50 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "lollapayasa",
+    "title": "Lollapayasa",
+    "subTitle": "Noche de Payasas",
+    "description": "Noche de payasas, presenta \"Lollapayasa\" El primer concierto musical de payasas de Chile, una mezcla de teatro, comedia, danza y por supuesto música, con canciones de autoría propia. 5 payasas multidisciplinarias vienen a deslumbrar con su talento musical y entregar una experiencia llena de risas y colores. El público viajará por diferentes estilos musicales y disfrutará de canciones grupales, teatro y comedia.",
+    "trackId": "stage-b",
+    "time": {
+      "start": "17:00",
+      "end": "18:00"
+    },
+    "category": "Danza",
+    "duration": "1 Hora",
+    "galleryUrl": ""
+  },
+  {
+    "id": "zoologicas",
+    "title": "Zoológicas",
+    "subTitle": "Colectivo Zona de Obras",
+    "description": "ZOOLÓGICAS es una respuesta, ¿cuál es la pregunta?. Lo que preguntamos tanto al potencial creativo como a la fuerza coercitiva de una exposición como Zoológico es: ¿qué se nos permite decir, qué se nos fuerza a decir, qué se nos impide decir? Queremos responder presencialmente a :¿Hay lugar para la articulación y diálogo entre artistas escénicos que quieren exponerse compartiendo sus obras en un mismo lugar extenso y en un tiempo paralelo? Y este mismo diálogo puede extenderse hacia los espectadores, con ellos? Queremos hacer posible estas manifestaciones al interior de, en sintonía con, contra o a pesar de una forma contemporánea de poder social? La obra \"ZOOLÓGICAS\", ofrece un minucioso ensamblaje heterogéneo de discursos,formas, lenguajes, decisiones, afirmaciones, negaciones, etc. Es una estructura que busca responder a una necesidad urgente de encuentro en un momento histórico que vivimos. ZOOLOGICAS  se construye como estrategia de encuentro para  sostenernos y alimentarnos como artistas escénicos. Queremos preguntar sobre la necesidad que nuestra civilización tiene de una articulación de estética y pensamiento: sobre la necesidad de una creatividad cognitiva, en el tipo particular de sociedades que habitamos hoy.",
+    "trackId": "stage-b",
+    "time": {
+      "start": "18:30",
+      "end": "19:20"
+    },
+    "category": "Danza",
+    "duration": "50 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "sin-pies-ni-cabeza",
+    "title": "Sin Pies ni Cabeza",
+    "subTitle": "Vendaval Compañía",
+    "description": "Sin pies ni cabeza es una historia irreverente de dos personajes cómicos que transitan una fantasía de ilusiones y mágicos momentos, a través de prácticas circenses y teatrales.",
+    "trackId": "stage-b",
+    "time": {
+      "start": "20:00",
+      "end": "20:50"
+    },
+    "category": "Circo",
+    "duration": "50 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "latidos-de-fuego",
+    "title": "Latidos de Fuego",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-b",
+    "time": {
+      "start": "21:30",
+      "end": "22:00"
+    },
+    "category": "Circo",
+    "duration": "",
+    "galleryUrl": ""
+  }
+]

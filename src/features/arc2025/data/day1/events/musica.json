@@ -1,0 +1,94 @@
+[
+  {
+    "id": "ensamble-popular-experimental",
+    "title": "Ensamble Popular Experimental",
+    "subTitle": "Ensamble Popular",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "15:00",
+      "end": "15:30"
+    },
+    "category": "Música",
+    "galleryUrl": ""
+  },
+  {
+    "id": "marineros",
+    "title": "Marineros",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "16:30",
+      "end": "17:00"
+    },
+    "category": "Música",
+    "galleryUrl": ""
+  },
+  {
+    "id": "valle-de-copaos",
+    "title": "Valle de Copaos",
+    "subTitle": "Artista Regional Limarí",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "18:00",
+      "end": "18:30"
+    },
+    "category": "Música",
+    "galleryUrl": ""
+  },
+  {
+    "id": "tunacola",
+    "title": "Tunacola",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "19:30",
+      "end": "20:00"
+    },
+    "category": "Música",
+    "galleryUrl": ""
+  },
+  {
+    "id": "excentricapiola",
+    "title": "Excentricapiola",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "21:00",
+      "end": "21:30"
+    },
+    "category": "Música",
+    "galleryUrl": ""
+  },
+  {
+    "id": "lillia",
+    "title": "Lillia",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "21:30",
+      "end": "22:00"
+    },
+    "category": "Música",
+    "galleryUrl": ""
+  },
+  {
+    "id": "fother-muckers",
+    "title": "Fother Muckers",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "22:00",
+      "end": "23:00"
+    },
+    "category": "Música",
+    "duration": "1 Hora",
+    "galleryUrl": ""
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "id": "camara-oscura-inmersiva",
+    "title": "Cámara Oscura Inmersiva",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-j",
+    "time": {
+      "start": "15:00",
+      "end": "20:30"
+    },
+    "category": "Instalacion",
+    "galleryUrl": ""
+  },
+  {
+    "id": "fondo-marino-instalacion-textil",
+    "title": "Fondo Marino, Instalación Textil",
+    "subTitle": "Intervenciones Artísticas con Talleres",
+    "description": "",
+    "trackId": "stage-j",
+    "time": {
+      "start": "15:00",
+      "end": "20:30"
+    },
+    "category": "Instalacion",
+    "duration": "",
+    "galleryUrl": ""
+  },
+  {
+    "id": "taller-fondo-marino-instalacion-textil",
+    "title": "Taller: Fondo Marino, Instalación Textil",
+    "subTitle": "Intervenciones Artísticas con Talleres",
+    "description": "",
+    "trackId": "stage-j",
+    "time": {
+      "start": "16:00",
+      "end": "19:00"
+    },
+    "category": "Taller",
+    "duration": "3 Horas",
+    "galleryUrl": ""
+  }
+]

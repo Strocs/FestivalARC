@@ -1,0 +1,71 @@
+[
+  {
+    "id": "stage-a",
+    "name": "Teatro",
+    "color": "#4f8fcc",
+    "order": 1,
+    "category": "Escenario A"
+  },
+  {
+    "id": "stage-b",
+    "name": "Circo/Danza",
+    "color": "#ffbf26",
+    "order": 2,
+    "category": "Escenario B"
+  },
+  {
+    "id": "stage-c",
+    "name": "Música",
+    "color": "#89cc48",
+    "order": 3,
+    "category": "Escenario C"
+  },
+  {
+    "id": "stage-d",
+    "name": "Títeres",
+    "color": "#81235a",
+    "order": 4,
+    "category": "Escenario D"
+  },
+  {
+    "id": "stage-e",
+    "name": "Espacio Literatura",
+    "color": "#00a4e6",
+    "order": 5,
+    "category": "Escenario E"
+  },
+  {
+    "id": "stage-f",
+    "name": "Talleres/Charlas",
+    "color": "#e62020",
+    "order": 6,
+    "category": "Escenario F"
+  },
+  {
+    "id": "stage-g",
+    "name": "Charlas",
+    "color": "#3c4b5c",
+    "order": 7,
+    "category": "Escenario G"
+  },
+  {
+    "id": "stage-h",
+    "name": "Espacio IMREC",
+    "color": "#b3b3b3",
+    "order": 8,
+    "category": "Escenario H"
+  },
+  {
+    "id": "stage-i",
+    "name": "Espacio Cecrea",
+    "color": "#e87428",
+    "order": 9,
+    "category": "Escenario I"
+  },
+  {
+    "id": "stage-j",
+    "name": "Instalaciones",
+    "color": "#7b38b0",
+    "order": 10
+  }
+]

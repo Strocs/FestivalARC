@@ -1,0 +1,44 @@
+[
+  {
+    "id": "camara-oscura-inmersiva",
+    "title": "Cámara Oscura Inmersiva",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-j",
+    "time": {
+      "start": "15:00",
+      "end": "20:30"
+    },
+    "category": "Instalacion",
+    "duration": "",
+    "galleryUrl": ""
+  },
+  {
+    "id": "ananucas-colores-semiarido",
+    "title": "Añañucas: Los Colores del Semiárido",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-j",
+    "time": {
+      "start": "15:00",
+      "end": "20:30"
+    },
+    "category": "Instalacion",
+    "duration": "",
+    "galleryUrl": ""
+  },
+  {
+    "id": "taller-colores-semiarido",
+    "title": "Taller: Colores del Semiárido",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-j",
+    "time": {
+      "start": "17:30",
+      "end": "19:00"
+    },
+    "category": "Taller",
+    "duration": "1 Hora 30 Minutos",
+    "galleryUrl": ""
+  }
+]
