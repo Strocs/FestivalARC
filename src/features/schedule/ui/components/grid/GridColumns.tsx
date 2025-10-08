@@ -39,11 +39,7 @@ export function GridColumns({
             <EventGroup
               key={`group-${header.id}-${item.position.start}`}
               group={item}
-              header={{
-                id: header.id,
-                color: header.color,
-                name: header.name,
-              }}
+              header={header}
             />
           )
         }
@@ -73,7 +69,7 @@ export function GridColumns({
               activityType={item.columnData.labels?.left}
               duration={item.columnData.body.duration}
               color={header.color}
-              location={header.name}
+              location={header.category || header.name}
             />
           </li>
         )

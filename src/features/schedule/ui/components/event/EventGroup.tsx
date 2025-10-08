@@ -1,13 +1,9 @@
 import { EventItem } from './EventItem'
-import type { UINestedColumn } from '../../types'
+import type { UIHeaderItem, UINestedColumn } from '../../types'
 
 interface EventGroupProps {
   group: UINestedColumn
-  header: {
-    color: string
-    name: string
-    id: string
-  }
+  header: UIHeaderItem
 }
 
 export function EventGroup({ group, header }: EventGroupProps) {
@@ -28,7 +24,7 @@ export function EventGroup({ group, header }: EventGroupProps) {
           return (
             <li
               key={item.columnData.id}
-              className='pointer-events-none relative'
+              className='pointer-events-none relative rounded'
               style={{
                 gridRow: `${item.position.start} / span ${item.position.span}`,
                 gridColumn: 1,
@@ -49,7 +45,7 @@ export function EventGroup({ group, header }: EventGroupProps) {
                 activityType={item.columnData.labels?.left}
                 duration={item.columnData.body.duration}
                 color={header.color}
-                location={header.name}
+                location={header.category || header.name}
                 stackOffset={index * 1.2}
               />
             </li>

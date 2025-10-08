@@ -56,3 +56,8 @@ export interface UIGridLayout {
   headerRow: ReadonlyArray<UIHeaderItem>
   columns: UIColumns[]
 }
+
+export interface ScheduleDay {
+  label: string
+  data: UIGridLayout
+}

@@ -16,12 +16,12 @@ export function NavigationButtons({
   className,
 }: ScheduleNavigationButtonsProps) {
   return (
-    <div className={cn('flex gap-2', className)}>
+    <div className={cn('bg-25-black flex gap-2', className)}>
       <button
         onClick={onPrev}
         disabled={!canGoPrev}
         className={cn(
-          'bg-25-black text-25-white hover:text-25-accent flex size-8 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
+          'bg-25-black text-25-white hover:text-25-accent flex h-8 w-full cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
           !canGoPrev && 'cursor-not-allowed opacity-30',
         )}
         type='button'
@@ -43,7 +43,7 @@ export function NavigationButtons({
         onClick={onNext}
         disabled={!canGoNext}
         className={cn(
-          'bg-25-black text-25-white hover:text-25-accent flex size-8 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
+          'bg-25-black text-25-white hover:text-25-accent flex h-8 w-full cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
           !canGoNext && 'cursor-not-allowed opacity-30',
         )}
         type='button'

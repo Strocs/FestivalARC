@@ -48,7 +48,7 @@ export const EventItem = ({
     <section
       id={id}
       className={cn([
-        'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10',
+        'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10 before:rounded after:rounded-b group-hover:after:rounded',
         'pointer-events-none',
         'grid h-fit min-h-[200px] w-full min-w-[320px] gap-2 px-4 pt-8 leading-4 shadow-lg duration-300',
         "before:absolute before:-z-20 before:h-full before:w-full before:content-['']",
@@ -66,19 +66,24 @@ export const EventItem = ({
         {location}
       </span>
       <header>
-        <h2 className='h-fit font-bold tracking-wide text-black uppercase duration-300 group-hover:text-yellow-200'>
+        <h2 className='text-25-black h-fit font-bold tracking-wide uppercase duration-300 group-hover:text-yellow-200'>
           {title}
         </h2>
-        <span className='text-sm leading-3 font-light'>{subTitle}</span>
+        {subTitle &&
+          subTitle.split('\n').map((line) => (
+            <div key={line} className=''>
+              <span className='text-sm leading-3 font-light'>{line}</span>
+            </div>
+          ))}
       </header>
-      <section className='flex flex-col'>
+      <section className=''>
         <p className='text-sm'>
           {!eventTime.end ? (
             <time>{eventTime.start}hrs</time>
           ) : (
             <>
-              <time>{eventTime.start}hrs</time> hasta las{' '}
-              <time>{eventTime.end}hrs</time>
+              <time className='font-semibold'>{eventTime.start}hrs</time> hasta
+              las <time className='font-semibold'>{eventTime.end}hrs</time>
             </>
           )}
         </p>

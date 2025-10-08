@@ -21,6 +21,7 @@ export type {
   UIHeaderItem,
   UIColumns,
   UIColumnItem,
+  ScheduleDay,
 } from './ui/types'
 
 export type {
