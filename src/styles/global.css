@@ -20,3 +20,43 @@
   will-change: transform;
   transform: translateZ(0);
 }
+
+@font-face {
+  font-family: 'DK Appelstroop';
+  src: url('/fonts/DKAppelstroop.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bestoom';
+  src: url('/fonts/BestoomBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neris';
+  src: url('/fonts/NerisSemiBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neris';
+  src: url('/fonts/NerisLight.woff2') format('woff2');
+  font-weight: light;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neris';
+  src: url('/fonts/NerisBlack.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
