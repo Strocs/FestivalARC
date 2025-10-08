@@ -1,11 +1,21 @@
 ---
 import '@/styles/global.css'
 import Layout from '@/features/shared/layouts/Layout.astro'
+import { Image } from 'astro:assets'
+import FONDO_WEB from '@/features/arc2025/assets/FONDO_WEB.png'
 ---
 
 <Layout
   title='Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
   description='Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena.'
   favicon='/ARC25.png'>
+  <Image
+    src={FONDO_WEB}
+    height={FONDO_WEB.height}
+    width={FONDO_WEB.width}
+    alt=''
+    loading='eager'
+    class='fixed inset-0 -z-10 h-dvh w-full object-cover object-left md:object-center'
+  />
   <slot />
 </Layout>
