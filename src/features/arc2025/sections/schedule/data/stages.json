@@ -1,71 +1,71 @@
 [
   {
     "id": "stage-a",
-    "name": "Escenario A",
-    "color": "#5b9bd5",
+    "name": "Teatro",
+    "color": "#4f8fcc",
     "order": 1,
-    "category": "Teatro"
+    "category": "Escenario A"
   },
   {
     "id": "stage-b",
-    "name": "Escenario B",
-    "color": "#ffc000",
+    "name": "Circo/Danza",
+    "color": "#ffbf26",
     "order": 2,
-    "category": "Circo/Danza"
+    "category": "Escenario B"
   },
   {
     "id": "stage-c",
-    "name": "Escenario C",
-    "color": "#92d050",
+    "name": "Música",
+    "color": "#89cc48",
     "order": 3,
-    "category": "Música"
+    "category": "Escenario C"
   },
   {
     "id": "stage-d",
-    "name": "Escenario D",
-    "color": "#741b47",
+    "name": "Títeres",
+    "color": "#81235a",
     "order": 4,
-    "category": "Títeres"
+    "category": "Escenario D"
   },
   {
     "id": "stage-e",
-    "name": "Escenario E",
-    "color": "#00b0f0",
+    "name": "Espacio Literatura",
+    "color": "#00a4e6",
     "order": 5,
-    "category": "Espacio Literatura"
+    "category": "Escenario E"
   },
   {
     "id": "stage-f",
-    "name": "Escenario F",
-    "color": "#ff0000",
+    "name": "Talleres",
+    "color": "#e62020",
     "order": 6,
-    "category": "Talleres"
+    "category": "Escenario F"
   },
   {
     "id": "stage-g",
-    "name": "Escenario G",
-    "color": "#333f4f",
+    "name": "Charlas",
+    "color": "#3c4b5c",
     "order": 7,
-    "category": "Charlas"
+    "category": "Escenario G"
   },
   {
     "id": "stage-h",
-    "name": "Escenario H",
-    "color": "#a5a5a5",
+    "name": "Espacio IMREC",
+    "color": "#b3b3b3",
     "order": 8,
-    "category": "Espacio IMREC"
+    "category": "Escenario H"
   },
   {
     "id": "stage-i",
-    "name": "Escenario I",
-    "color": "#ed7d31",
+    "name": "Espacio Cecrea",
+    "color": "#e87428",
     "order": 9,
-    "category": "Espacio Cecrea"
+    "category": "Escenario I"
   },
   {
     "id": "stage-j",
     "name": "Instalaciones",
-    "color": "#7030a0",
+    "color": "#7b38b0",
     "order": 10
   }
 ]
