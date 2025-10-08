@@ -14,19 +14,19 @@ export function EventGroup({ group, header }: EventGroupProps) {
   const totalRows = group.position.span
 
   return (
-    <div
+    <li
       className='group relative bg-white/30'
       style={{
         gridRow: `${group.position.start} / span ${group.position.span}`,
       }}>
-      <div
+      <ul
         className='grid h-full gap-6'
         style={{
           gridTemplateRows: `repeat(${totalRows}, 200px)`,
         }}>
         {group.columnData.map((item, index) => {
           return (
-            <div
+            <li
               key={item.columnData.id}
               className='pointer-events-none relative'
               style={{
@@ -52,10 +52,10 @@ export function EventGroup({ group, header }: EventGroupProps) {
                 location={header.name}
                 stackOffset={index * 1.2}
               />
-            </div>
+            </li>
           )
         })}
-      </div>
-    </div>
+      </ul>
+    </li>
   )
 }

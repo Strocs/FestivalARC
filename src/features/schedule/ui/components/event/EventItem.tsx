@@ -39,12 +39,13 @@ export const EventItem = ({
   const { title, subTitle } = header
   const { leftButton, rightLink: inscriptionLink } = footer
 
+  // add height of headers
   const stickyTop = useMemo(
-    () => `calc(1.5rem + ${stackOffset * 200}px)`,
+    () => `calc(7rem + ${stackOffset * 200}px)`,
     [stackOffset],
   )
   return (
-    <li
+    <section
       id={id}
       className={cn([
         'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10',
@@ -107,6 +108,6 @@ export const EventItem = ({
           </a>
         )}
       </footer>
-    </li>
+    </section>
   )
 }
