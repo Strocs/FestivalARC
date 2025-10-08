@@ -40,9 +40,9 @@ export function ScheduleGrid({
   const canGoPrev = currentColumnIndex > 0
 
   return (
-    <div className='flex flex-col gap-4 overflow-x-clip py-4 md:w-full'>
+    <section className='flex flex-col gap-4 overflow-x-clip py-4 md:w-full'>
       <div className='flex w-screen flex-nowrap gap-1 md:gap-4'>
-        <div className='sticky top-4 hidden h-fit md:block'>
+        <section className='sticky top-4 hidden h-fit md:block'>
           <TrackSidebar
             stages={stages}
             selectedStageIds={selectedStageIds}
@@ -57,13 +57,13 @@ export function ScheduleGrid({
               />
             }
           />
-        </div>
+        </section>
 
         <GridColumn length={{ rows: timeColumn.length, columns: 1 }}>
           <GridTimeSlots timeColumn={timeColumn} />
         </GridColumn>
 
-        <div className='flex-1 overflow-x-clip'>
+        <section className='flex-1 overflow-x-clip'>
           <div
             ref={wrapperRef}
             className={cn(
@@ -84,8 +84,8 @@ export function ScheduleGrid({
               />
             </div>
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </section>
   )
 }
