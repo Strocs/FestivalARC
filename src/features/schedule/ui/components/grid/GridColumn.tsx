@@ -21,7 +21,7 @@ export function GridColumn({
   config,
 }: GridColumnProps) {
   return (
-    <section
+    <ul
       className='relative grid gap-6'
       style={{
         gridTemplateRows: `60px repeat(${length.rows}, 200px)`,
@@ -30,15 +30,28 @@ export function GridColumn({
           ? `${config.columnWidth + config.gapWidth / 2} ${length.columns * config.columnWidth + config.gapWidth}px`
           : 'auto',
       }}>
-      <span
-        className={cn(
-          header &&
-            'text-25-white font-neris flex h-full items-center justify-center p-2 text-center text-xl leading-none font-bold capitalize',
-        )}
-        style={{ backgroundColor: header?.color || 'transparent' }}>
-        {header?.name} {header?.category && ` - ${header?.category}`}
-      </span>
+      {header ? (
+        <li
+          className={cn(
+            header &&
+              'font-neris sticky top-4 z-50 flex h-full flex-col justify-center text-center font-bold capitalize',
+          )}
+          style={{ backgroundColor: header.color }}>
+          <h2 className='text-2xl leading-none text-[#f7f7f7]'>
+            {header.name}
+          </h2>
+          {header.category && (
+            <>
+              <span className='text-25-white/90 block text-lg leading-none'>
+                {header.category}
+              </span>
+            </>
+          )}
+        </li>
+      ) : (
+        <div className='opacity-0'></div>
+      )}
       {children}
-    </section>
+    </ul>
   )
 }
