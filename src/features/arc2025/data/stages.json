@@ -1,71 +1,72 @@
 [
   {
     "id": "stage-a",
-    "name": "Teatro",
+    "name": "Escenario Teatro",
     "color": "#4f8fcc",
     "order": 1,
-    "category": "Escenario A"
+    "category": ""
   },
   {
     "id": "stage-b",
-    "name": "Circo/Danza",
+    "name": "Escenario Circo/Danza",
     "color": "#ffbf26",
     "order": 2,
-    "category": "Escenario B"
+    "category": ""
   },
   {
     "id": "stage-c",
-    "name": "Música",
+    "name": "Escenario Música",
     "color": "#89cc48",
     "order": 3,
-    "category": "Escenario C"
+    "category": ""
   },
   {
     "id": "stage-d",
-    "name": "Títeres",
+    "name": "Espacio Narración Oral",
     "color": "#81235a",
     "order": 4,
-    "category": "Escenario D"
+    "category": ""
   },
   {
     "id": "stage-e",
-    "name": "Espacio Literatura",
+    "name": "Bulevar Literario",
     "color": "#00a4e6",
     "order": 5,
-    "category": "Escenario E"
+    "category": "Escenario Modular"
   },
   {
     "id": "stage-f",
     "name": "Talleres/Charlas",
     "color": "#e62020",
     "order": 6,
-    "category": "Escenario F"
+    "category": "Escenario Modular"
   },
   {
     "id": "stage-g",
     "name": "Charlas",
     "color": "#3c4b5c",
     "order": 7,
-    "category": "Escenario G"
+    "category": "Escenario Modular"
   },
   {
     "id": "stage-h",
-    "name": "Espacio IMREC",
+    "name": "Espacio Estelar",
     "color": "#b3b3b3",
     "order": 8,
-    "category": "Escenario H"
+    "category": ""
   },
   {
     "id": "stage-i",
     "name": "Espacio Cecrea",
     "color": "#e87428",
     "order": 9,
-    "category": "Escenario I"
+    "category": ""
   },
   {
     "id": "stage-j",
-    "name": "Instalaciones",
+    "name": "Artes de La Visualidad",
     "color": "#7b38b0",
-    "order": 10
+    "order": 10,
+    "category": "Instalaciones y Talleres"
   }
 ]
