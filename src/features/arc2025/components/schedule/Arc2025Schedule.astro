@@ -39,10 +39,11 @@ const mapEvent = (event: LayoutEvent<Arc2025EventPayload>): UIColumnItem => ({
     },
   },
   footer: {
-    infoButton:
-      event.event.payload?.description || event.event.payload?.galleryUrl
-        ? 'Más Info'
-        : undefined,
+    // TODO: add more info when add modal component to schedule ui
+    // infoButton:
+    //   event.event.payload?.description || event.event.payload?.galleryUrl
+    //     ? 'Más Info'
+    //     : undefined,
   },
   labels: {
     left: event.event.payload?.category ?? '',
