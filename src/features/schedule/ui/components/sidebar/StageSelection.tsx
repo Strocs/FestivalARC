@@ -41,7 +41,7 @@ export function StageSelection({
   const sortedStages = [...stages].sort((a, b) => a.order - b.order)
 
   return (
-    <section className='flex flex-col'>
+    <section className='bg-25-black hidden flex-col rounded-xs p-4 md:flex'>
       {sortedStages.map((stage) => (
         <label
           key={stage.id}
