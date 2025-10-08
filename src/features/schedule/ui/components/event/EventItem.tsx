@@ -48,7 +48,7 @@ export const EventItem = ({
     <section
       id={id}
       className={cn([
-        'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10 before:rounded after:rounded-b group-hover:after:rounded',
+        'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10 before:rounded-xs after:rounded-b-xs group-hover:after:rounded-xs',
         'pointer-events-none',
         'grid h-fit min-h-[200px] w-full min-w-[320px] gap-2 px-4 pt-8 leading-4 shadow-lg duration-300',
         "before:absolute before:-z-20 before:h-full before:w-full before:content-['']",

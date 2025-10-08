@@ -46,7 +46,7 @@ export function StageSelection({
         <label
           key={stage.id}
           className={cn(
-            'hover:bg-25-white/10 flex h-13 cursor-pointer items-center gap-2 rounded p-2 transition-all duration-200',
+            'hover:bg-25-white/10 flex h-13 cursor-pointer items-center gap-2 rounded-xs p-2 transition-all duration-200',
           )}>
           <input
             type='checkbox'
@@ -104,7 +104,7 @@ export function StageSelection({
         <div className='flex h-6 items-center'>
           <button
             onClick={handleToggleAllStages}
-            className='hover:text-25-accent text-25-white mx-auto flex size-8 cursor-pointer items-center justify-center rounded transition-colors duration-200'
+            className='hover:text-25-accent text-25-white mx-auto flex size-8 cursor-pointer items-center justify-center rounded-xs transition-colors duration-200'
             type='button'
             aria-label={
               selectedStageIds.length === stages.length

@@ -83,7 +83,7 @@ export function ScheduleGrid(props: ScheduleGridProps) {
                 onPrev={goToPrev}
                 canGoNext={canGoNext}
                 canGoPrev={canGoPrev}
-                className='flex items-center justify-between rounded px-4 py-2'
+                className='flex items-center justify-between rounded-xs px-4 py-2'
               />
             }
           />

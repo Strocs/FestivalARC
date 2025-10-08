@@ -41,7 +41,7 @@ export function TrackSidebar({
         'ml-8 flex h-fit shrink-0 flex-col gap-2 transition-all duration-300 ease-in-out',
         isExpanded ? 'w-60' : 'w-22',
       )}>
-      <div className='bg-25-black rounded px-4 py-2'>
+      <div className='bg-25-black rounded-xs px-4 py-2'>
         <CollapseButton
           isExpanded={isExpanded}
           onToggle={() => setIsExpanded(!isExpanded)}
@@ -50,7 +50,7 @@ export function TrackSidebar({
 
       {daySelector?.(isExpanded)}
 
-      <div className='bg-25-black rounded p-4'>
+      <div className='bg-25-black rounded-xs p-4'>
         <StageSelection
           stages={stages}
           selectedStageIds={selectedStageIds}

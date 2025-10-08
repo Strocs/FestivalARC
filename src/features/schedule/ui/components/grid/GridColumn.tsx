@@ -34,12 +34,12 @@ export function GridColumn({
         <li
           className={cn(
             header &&
-              'font-neris sticky top-4 z-50 flex h-full flex-col justify-center rounded text-center font-bold capitalize',
+              'font-neris sticky top-4 bottom-100 z-50 flex h-full flex-col justify-center rounded-xs text-center font-bold capitalize',
           )}
           style={{ backgroundColor: header.color }}>
-          <h2 className='text-2xl leading-none text-[#f7f7f7]'>
+          <h3 className='text-2xl leading-none text-[#f7f7f7]'>
             {header.name}
-          </h2>
+          </h3>
           {header.category && (
             <>
               <span className='text-25-white/90 block text-lg leading-none'>
