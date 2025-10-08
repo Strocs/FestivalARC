@@ -15,6 +15,7 @@ import type {
   UIColumnItem,
   ScheduleDay,
 } from '@/features/schedule'
+import Title from '../ui/Title.astro'
 
 const mapTrack = (track: ScheduleTrack<Arc2025StagePayload>): UIHeaderItem => ({
   id: track.id,
@@ -60,4 +61,7 @@ const scheduleDays: ScheduleDay[] = [
 ]
 ---
 
-<ScheduleGrid client:idle days={scheduleDays} />
+<section class=''>
+  <Title subTitle='Sábado 18 y Domingo 19'>Programación</Title>
+  <ScheduleGrid client:idle days={scheduleDays} />
+</section>
