@@ -73,7 +73,7 @@ function disableStage(stageId: string | string[], stages: Arc2025Stage[]) {
   )
 }
 
-const stages = disableStage(['stage-h', 'stage-g'], stagesData)
+const stages = disableStage(['stage-g'], stagesData)
 
 const arc2025Day1InputData = mapArc2025DataToScheduleInput({
   time: {
