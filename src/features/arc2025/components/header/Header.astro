@@ -4,9 +4,9 @@ import { Image } from 'astro:assets'
 import LOGO from '@/features/arc2025/assets/ARC25.png'
 ---
 
-<header class='group mx-auto grid w-fit justify-center px-4 pt-24'>
-  <h1 class='sr-only'>Festival ARC 2025, Próximamente</h1>
-  <figure class='overfloh-hidden mx-auto h-fit w-fit pb-4'>
+<header
+  class='group mx-auto flex h-[90dvh] w-fit flex-col items-center justify-center px-4'>
+  <figure class='mx-auto h-fit w-fit pb-4'>
     <Image
       src={LOGO}
       width={500}
@@ -16,4 +16,17 @@ import LOGO from '@/features/arc2025/assets/ARC25.png'
       loading='eager'
     />
   </figure>
+  <div class='h-fit space-y-1 md:space-y-3'>
+    <p
+      class='font-dk bg-25-blue relative z-10 mx-auto w-fit -skew-3 rounded-xs px-4 text-center text-4xl text-white shadow-md md:text-7xl'>
+      18 y 19 de Octubre
+    </p>
+    <p
+      class='font-bestoom bg-25-accent text-25-primary mx-auto w-fit px-2 pt-1.5 text-center text-2xl shadow-md md:pt-2 md:text-5xl'>
+      Parque Pedro de Valdivia
+    </p>
+    <p class='text-25-white font-bestoom mx-auto w-fit text-2xl md:text-4xl'>
+      La Serena
+    </p>
+  </div>
 </header>
