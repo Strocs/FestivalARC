@@ -22,9 +22,9 @@ export function GridColumn({
 }: GridColumnProps) {
   return (
     <ul
-      className='relative grid gap-6'
+      className='relative grid gap-6 [--header-height:50px] [--item-height:180px] md:[--header-height:60px] md:[--item-height:200px]'
       style={{
-        gridTemplateRows: `60px repeat(${length.rows}, 200px)`,
+        gridTemplateRows: `var(--header-height) repeat(${length.rows}, var(--item-height))`,
         contentVisibility: config ? 'auto' : 'visible',
         containIntrinsicSize: config
           ? `${config.columnWidth + config.gapWidth / 2} ${length.columns * config.columnWidth + config.gapWidth}px`
@@ -34,7 +34,7 @@ export function GridColumn({
         <li
           className={cn(
             header &&
-              'font-neris sticky top-4 bottom-100 z-50 flex h-full flex-col justify-center rounded-xs text-center font-bold capitalize',
+              'font-neris sticky top-16 z-50 flex h-full flex-col justify-center rounded-xs text-center font-bold capitalize md:top-4',
           )}
           style={{ backgroundColor: header.color }}>
           <h3 className='text-2xl leading-none text-[#f7f7f7]'>
