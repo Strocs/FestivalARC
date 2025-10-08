@@ -66,9 +66,9 @@ export const EventItem = ({
         {location}
       </span>
       <header>
-        <h2 className='text-25-black h-fit font-bold tracking-wide uppercase duration-300 group-hover:text-yellow-200'>
+        <h4 className='text-25-black h-fit font-bold tracking-wide uppercase duration-300 group-hover:text-yellow-200'>
           {title}
-        </h2>
+        </h4>
         {subTitle &&
           subTitle.split('\n').map((line) => (
             <div key={line} className=''>
