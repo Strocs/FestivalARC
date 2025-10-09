@@ -17,7 +17,7 @@
     "id": "curi-rosales",
     "title": "Curi Rosales",
     "subTitle": "",
-    "description": "",
+    "description": "Curi Rosales es un artista interdisciplinario que visibiliza las disidencias e identidades de género. Con una formación principalmente autodidacta, ha desarrollado una carrera versátil, transitando por diferentes géneros. Su trabajo lo ha consolidado en la escena musical de la Región de Coquimbo.",
     "trackId": "stage-c",
     "time": {
       "start": "16:30",
@@ -25,7 +25,7 @@
     },
     "category": "Música",
     "duration": "30 Minutos",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/CORIROSALES.png"
   },
   {
     "id": "astronautiko",
@@ -53,13 +53,13 @@
     },
     "category": "Música",
     "duration": "30 Minutos",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/ARTISTAS_NACIONALES/chini.jpg"
   },
   {
     "id": "los-lobitos",
     "title": "Los Lobitos",
     "subTitle": "",
-    "description": "",
+    "description": "Formado por destacados músicos de la Región de Coquimbo. Su propuesta combina la influencias del jazz y diversos ritmos locales con experiencia, creatividad y participación del público, integrando instrumentos, dinámicas grupales y composiciones originales. Los Lobitos desarrollan música interactiva que trasciende géneros y escenarios.",
     "trackId": "stage-c",
     "time": {
       "start": "21:00",
@@ -67,13 +67,13 @@
     },
     "category": "Música",
     "duration": "30 Minutos",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/LOSLOBITOS.jpg"
   },
   {
     "id": "fonk-machine",
     "title": "Fonk Machine",
     "subTitle": "",
-    "description": "",
+    "description": "Banda independiente nacida en 2012 en La Serena, inspirada en la música urbana y el concepto de hip-hop band. Su propuesta fusiona rap, R&B y neosoul, creando un sonido contemporáneo que dialoga con las raíces del hip-hop y las nuevas corrientes musicales.",
     "trackId": "stage-c",
     "time": {
       "start": "21:30",
@@ -81,7 +81,7 @@
     },
     "category": "Música",
     "duration": "30 Minutos",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/FONKMACHINE.jpg"
   },
   {
     "id": "los-tetas",
@@ -95,6 +95,6 @@
     },
     "category": "Música",
     "duration": "1 Hora",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/ARTISTAS_NACIONALES/los tetas.png"
   }
 ]

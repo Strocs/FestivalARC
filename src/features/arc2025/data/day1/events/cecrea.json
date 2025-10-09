@@ -12,5 +12,20 @@
     "category": "Cecrea",
     "duration": "",
     "galleryUrl": ""
+  },
+
+  {
+    "id": "espacio-de-bienestar",
+    "title": "Espacio de Bienestar",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-i",
+    "time": {
+      "start": "17:00",
+      "end": "18:00"
+    },
+    "category": "Cecrea",
+    "duration": "",
+    "galleryUrl": ""
   }
 ]

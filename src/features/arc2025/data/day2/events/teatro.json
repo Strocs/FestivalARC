@@ -3,7 +3,7 @@
     "id": "mestiza-navegante",
     "title": "Mestiza Navegante",
     "subTitle": "La Feroz Compañía",
-    "description": "Re-cuerdo, una historia sobre la vejez es una obra que mezcla el teatro y el circo para invitar al público a sumergirse en las complejas y a menudo emotivas experiencias que rodean la memoria, la vejez y las historias personales. A través de una narrativa poética y visualmente impactante, la obra aborda temas universales como el olvido, la nostalgia, y la importancia de mantener vivos los recuerdos de quienes somos y quienes fuimos.",
+    "description": "La obra Mestiza Navegante se inspira en los poemas de Gabriela Mistral, especialmente Poema de Chile, y en sus vivencias como poeta y maestra rural en la Provincia de Elqui. La dramaturgia aborda su visión sobre educación, tierra y cultura en una época de silencio femenino, invitando al público a un viaje atemporal por su vida mediante teatro, danza, poesía y sonoridad.",
     "trackId": "stage-a",
     "time": {
       "start": "15:30",
@@ -11,13 +11,13 @@
     },
     "category": "Teatro",
     "duration": "1 Hora",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/TEATRO/MESTIZA.jpg"
   },
   {
     "id": "nota-7",
     "title": "Nota 7",
-    "subTitle": "Compañía Teatro El Encanto",
-    "description": "La obra cuenta la historia de 4 estudiantes que son el grupo B del electivo de música del colegio… No se conocen y son muy distintos entre sí. ¿Qué pasa cuando se tiene la presión de una tarea con nota? La Sofi, el Balo, el Bicho y la Pato, dan vida (y música) a Nota 7.",
+    "subTitle": "Teatro Musical\nCompañía Teatro El Encanto",
+    "description": "Nota 7 sigue a cuatro estudiantes del grupo B del electivo de Música, quienes, pese a sus diferencias, deben trabajar juntos en una tarea calificada. Entre acordes y aprendizajes, descubren que la música es una forma de conectar, crear y reconocerse. La obra combina humor, ritmo y reflexión sobre el trabajo en equipo y creatividad.",
     "trackId": "stage-a",
     "time": {
       "start": "17:00",
@@ -25,32 +25,32 @@
     },
     "category": "Teatro",
     "duration": "45 Minutos",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/TEATRO/NOTA7.jpg"
   },
   {
     "id": "descarrilados",
     "title": "Descarrilados",
     "subTitle": "Compañía Teatro del Viento",
-    "description": "Descarrilados narra, desde una perspectiva surrealista, el descarrilamiento del tren Elquino ocurrido en 1971 en Gualliguaica, comuna de Vicuña, Región de Coquimbo. El tren transportaba a 350 pasajeros provenientes de campamentos sociales organizados por el gobierno de la Unidad Popular. En la obra, los pasajeros reviven su viaje una y otra vez en un intento por desentrañar las causas de lo sucedido y descubrir la verdad.",
+    "description": "Esta obra narra de manera surrealista el descarrilamiento del Tren Elquino en 1971 en Gualliguaica, con 350 pasajeros de campamentos sociales de la Unidad Popular. La obra muestra cómo los pasajeros reviven su viaje repetidamente, buscando comprender lo sucedido y descubrir la verdad",
     "trackId": "stage-a",
     "time": {
-      "start": "19:00",
+      "start": "18:30",
       "end": "19:30"
     },
     "category": "Teatro",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/TEATRO/DESCARRILADOS.jpg"
   },
   {
     "id": "lucila-del-valle",
     "title": "Lucila del Valle",
     "subTitle": "Patiperra Teatro",
-    "description": "Esta obra familiar nos invita a recorrer la infancia y adolescencia de Lucila Godoy Alcayaga antes de convertirse en Gabriela Mistral. A través de episodios claves de su vida en el Valle de Elqui, conoceremos a la niña soñadora, sensible y apasionada por las letras, marcada por el amor incondicional de su madre y el apoyo fundamental de su hermana. Con una puesta en escena emotiva y cercana, la obra busca humanizar a la poetisa, mostrando los desafíos y alegrías que moldearon su espíritu y la impulsaron a convertirse en una de las voces más importantes de la literatura latinoamericana.",
+    "description": "Lucila del valle es una obra familiar que recorre la infancia y adolescencia de Lucila Godoy Alcayaga, antes de ser Gabriela Mistral. A través de episodios clave en el Valle de Elqui, muestra a la niña soñadora y apasionada por la lectura, destacando el amor de su madre y el apoyo de su hermana. La puesta en escena busca humanizar a la poetisa y revelar los desafíos y alegrías que moldearon su espíritu y su obra.",
     "trackId": "stage-a",
     "time": {
       "start": "20:00",
-      "end": "20:30"
+      "end": "21:00"
     },
     "category": "Teatro",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/TEATRO/LUCILADELVALLE.jpg"
   }
 ]

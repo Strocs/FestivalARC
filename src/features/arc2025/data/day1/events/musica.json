@@ -2,7 +2,7 @@
   {
     "id": "ensamble-popular-experimental",
     "title": "Ensamble Popular Experimental",
-    "subTitle": "Ensamble Popular",
+    "subTitle": "",
     "description": "",
     "trackId": "stage-c",
     "time": {
@@ -10,7 +10,7 @@
       "end": "15:30"
     },
     "category": "Música",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/ENSAMBLEPOPULAR.jpg"
   },
   {
     "id": "marineros",
@@ -23,20 +23,20 @@
       "end": "17:00"
     },
     "category": "Música",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/ARTISTAS_NACIONALES/MARINEROS.jpg"
   },
   {
     "id": "valle-de-copaos",
     "title": "Valle de Copaos",
     "subTitle": "Artista Regional Limarí",
-    "description": "",
+    "description": "Agrupación ovallina, que desarrolla una propuesta musical denominada \"La cumbia guachaca y vacilona\". Su sonido combina influencias de la cumbia chilena, la cumbia argentina y elementos de la movida sound, creando un estilo alegre y festivo que refleja la riqueza y diversidad de las tradiciones musicales locales.",
     "trackId": "stage-c",
     "time": {
       "start": "18:00",
       "end": "18:30"
     },
     "category": "Música",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/VALLEDECOPAOS.jpg"
   },
   {
     "id": "tunacola",
@@ -49,33 +49,33 @@
       "end": "20:00"
     },
     "category": "Música",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/ARTISTAS_NACIONALES/TUNACOLA0941-scaled.jpg"
   },
   {
     "id": "excentricapiola",
     "title": "Excentricapiola",
     "subTitle": "",
-    "description": "",
+    "description": "Excentricapiola, nace en medio de la pandemia como un proyecto que combina la melancolía e introspección a través de un sonido indie minimalista. Guitarra, voz y sintetizadores crean melodías nostálgicas que exploran la dualidad entre influencias modernas y clásicas.",
     "trackId": "stage-c",
     "time": {
       "start": "21:00",
       "end": "21:30"
     },
     "category": "Música",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/EXCENTRICAPIOLA.jpg"
   },
   {
     "id": "lillia",
     "title": "Lillia",
     "subTitle": "",
-    "description": "",
+    "description": "Proyecto de rock alternativo, compuesto por músicos de la Región de Coquimbo, que fusiona influencias de post-rock, screamo, ambient y pop. Su propuesta busca explorar la emocionalidad, siendo reconocidos como uno de los proyectos más destacados de la región, ha logrado traspasar fronteras regionales y nacionales.",
     "trackId": "stage-c",
     "time": {
       "start": "21:30",
       "end": "22:00"
     },
     "category": "Música",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/LILLIA.jpg"
   },
   {
     "id": "fother-muckers",
@@ -89,6 +89,6 @@
     },
     "category": "Música",
     "duration": "1 Hora",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/ARTISTAS_NACIONALES/fother.jpg"
   }
 ]

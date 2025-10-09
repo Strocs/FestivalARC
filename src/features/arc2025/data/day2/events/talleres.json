@@ -11,13 +11,13 @@
     },
     "category": "Taller",
     "duration": "2 Horas",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/ALFARERIAEROFONOS.jpg"
   },
   {
-    "id": "bestiario-del-parque-pedro-de-valdivia-de-la-biodiversidad-a-la-biofantasia",
-    "title": "Bestiario del Parque Pedro de Valdivia: De la Biodiversidad a la Biofantasía",
+    "id": "taller-de-alfareria",
+    "title": "Taller de Alfarería",
     "subTitle": "",
-    "description": "El taller Bestiario del Parque Pedro de Valdivia es una experiencia de dos horas dirigida a familias, con un enfoque en infancias, jóvenes y adultos. Su objetivo es fusionar la observación de la biodiversidad local con la expresión artística para que las familias, trabajando juntas, transformen la flora y fauna del parque en criaturas de fantasía a través de la ilustración. Este proceso busca fortalecer la identidad territorial y la participación cultural, culminando en la creación de un bestiario colectivo que celebra la naturaleza desde una perspectiva familiar y creativa.",
+    "description": "El taler busca acercar a la comunidad al oficio ancestral de la alfarería mediante una experiencia intensiva de un día, combinando práctica manual, exploración creativa y contexto cultural. A través del modelado en arcila, los participantes podrán crear sus propias piezas, comprender la importancia de este arte en la historia y reflexionar sobre la conexión entre territorio, materia y expresión personal.",
     "trackId": "stage-f",
     "time": {
       "start": "17:30",
@@ -25,7 +25,7 @@
     },
     "category": "Taller",
     "duration": "2 Horas",
-    "galleryUrl": ""
+    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/TALLERARFALERIA.jpg"
   },
   {
     "id": "futuro-comics-creando-una-revista-de-comics-desde-cero",
@@ -35,7 +35,7 @@
     "trackId": "stage-f",
     "time": {
       "start": "19:30",
-      "end": "21:30"
+      "end": "21:00"
     },
     "category": "Charla",
     "duration": "",
