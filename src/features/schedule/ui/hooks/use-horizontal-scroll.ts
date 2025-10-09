@@ -19,7 +19,7 @@ interface UseHorizontalDragReturn {
 
 type DragState = 'idle' | 'detecting' | 'dragging'
 
-const DRAG_THRESHOLD = 10
+const DRAG_THRESHOLD = 0
 const RUBBER_BAND_RESISTANCE = 0.3
 
 function applyRubberBandResistance(
