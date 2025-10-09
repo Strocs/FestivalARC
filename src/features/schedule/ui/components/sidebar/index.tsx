@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import type { UIHeaderItem } from '../../types'
 import { cn } from '@/features/shared/utils'
-import { CollapseButton } from '../sidebar/CollapseButton'
-import { StageSelection } from '../sidebar/StageSelection'
+import { CollapseButton } from './CollapseButton'
+import { StageSelection } from './StageSelection'
 
-interface TrackSidebarProps {
+interface SidebarProps {
   stages: ReadonlyArray<UIHeaderItem>
   selectedStageIds: string[]
   onStageSelectionChange: (stageIds: string[]) => void
@@ -14,13 +14,13 @@ interface TrackSidebarProps {
 
 const STORAGE_KEY = 'festivalarc-sidebar-expanded'
 
-export function TrackSidebar({
+export function Sidebar({
   stages,
   selectedStageIds,
   onStageSelectionChange,
   daySelector,
   navigation,
-}: TrackSidebarProps) {
+}: SidebarProps) {
   const [isExpanded, setIsExpanded] = useState(() => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem(STORAGE_KEY)
