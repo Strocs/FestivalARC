@@ -32,7 +32,6 @@ export function EventGroup({ group, header }: EventGroupProps) {
               }}>
               <EventItem
                 id={item.columnData.id}
-                trackId={header.id}
                 eventTime={{
                   start: item.columnData.body.time.start,
                   end: item.columnData.body.time.end,
@@ -43,6 +42,7 @@ export function EventGroup({ group, header }: EventGroupProps) {
                   rightLink: item.columnData.footer.inscription,
                 }}
                 activityType={item.columnData.labels?.left}
+                description={item.columnData.body.description}
                 duration={item.columnData.body.duration}
                 color={header.color}
                 location={header.category || header.name}

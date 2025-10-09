@@ -6,6 +6,7 @@ export interface UIColumnItem {
   }
   body: {
     duration?: string
+    description?: string
     location?: {
       name: string
       url?: string

@@ -1,10 +1,11 @@
 import { cn } from '@/features/shared/utils'
 import { ScheduleInfoButton } from './ScheduleInfoButton'
+import { EventModal } from './EventModal'
+import { useEventModal } from '../../hooks/use-event-modal'
 import { useMemo } from 'react'
 
 export interface EventItemProps {
   id: string
-  trackId: string
   header: {
     title: string
     subTitle?: string
@@ -22,11 +23,12 @@ export interface EventItemProps {
   color: string
   location: string
   stackOffset?: number
+  description?: string
+  galleryUrl?: string
 }
 
 export const EventItem = ({
   id,
-  trackId,
   header,
   footer,
   eventTime,
@@ -35,9 +37,12 @@ export const EventItem = ({
   color,
   location,
   stackOffset = 0,
+  description,
+  galleryUrl,
 }: EventItemProps) => {
   const { title, subTitle } = header
   const { leftButton, rightLink: inscriptionLink } = footer
+  const { isOpen, openModal, closeModal } = useEventModal()
 
   // add height of headers
   const stickyTop = useMemo(
@@ -98,10 +103,7 @@ export const EventItem = ({
           'pointer-events-auto',
         )}>
         {!!leftButton && (
-          <ScheduleInfoButton
-            onClick={() => console.log(trackId)}
-            label={leftButton}
-          />
+          <ScheduleInfoButton onClick={openModal} label={leftButton} />
         )}
         {!!leftButton && !!inscriptionLink && (
           <hr className='border-2025-white w-4 rotate-90 border-1' />
@@ -116,6 +118,22 @@ export const EventItem = ({
           </a>
         )}
       </footer>
+
+      <EventModal
+        isOpen={isOpen}
+        onClose={closeModal}
+        event={{
+          title,
+          subTitle,
+          activityType,
+          location,
+          eventTime,
+          duration,
+          description,
+          color,
+          inscriptionLink,
+        }}
+      />
     </section>
   )
 }
