@@ -21,6 +21,27 @@
   transform: translateZ(0);
 }
 
+/* Styling the scrollbar in Firefox  */
+.scroll-thin {
+  scrollbar-color: var(--color-25-primary) transparent;
+  scrollbar-width: thin;
+}
+
+/* Styling the scrollbar in Chrome and Safari */
+.scroll-thin::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scroll-thin::-webkit-scrollbar-thumb {
+  background-color: var(
+    --color-25-primary
+  ); /* Set thumb color for Chrome and Safari */
+}
+
+.scroll-thin::-webkit-scrollbar-track {
+  background-color: transparent; /* Set track color for Chrome and Safari */
+}
+
 @font-face {
   font-family: 'DK Appelstroop';
   src: url('/fonts/DKAppelstroop.woff2') format('woff2');
