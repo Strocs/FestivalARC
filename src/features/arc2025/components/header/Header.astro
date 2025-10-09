@@ -1,32 +1,30 @@
----
-import { Image } from 'astro:assets'
-
-import LOGO from '@/features/arc2025/assets/ARC25.webp'
----
-
 <header
-  class='group mx-auto flex h-[75lvh] w-fit flex-col items-center justify-center px-4 md:h-[90lvh]'>
-  <figure class='mx-auto h-fit w-fit pb-4'>
-    <Image
-      src={LOGO}
-      width={500}
-      height={180}
-      alt='Logo Festival ARC 2024'
-      class='aspect-[500/180] h-fit'
-      loading='eager'
-    />
-  </figure>
-  <div class='h-fit space-y-1 md:space-y-3'>
-    <p
-      class='font-dk bg-25-blue relative z-10 mx-auto w-fit -skew-3 rounded-xs px-4 text-center text-4xl text-white shadow-md md:text-7xl'>
-      18 y 19 de Octubre
-    </p>
-    <p
-      class='font-bestoom bg-25-accent text-25-primary mx-auto w-fit px-2 pt-1.5 text-center text-2xl shadow-md md:pt-2 md:text-5xl'>
-      Parque Pedro de Valdivia
-    </p>
-    <p class='text-25-white font-bestoom mx-auto w-fit text-2xl md:text-4xl'>
-      La Serena
-    </p>
-  </div>
+  class='absolute top-0 left-0 z-50 flex min-h-20 w-full items-center justify-center'>
+  <nav
+    class='absolute top-0 left-0 flex min-h-20 w-full items-center justify-center'>
+    <ul class='font-neris flex gap-4 text-lg'>
+      <li
+        class='-skew-y-3 font-medium transition-transform duration-150 hover:-skew-0'>
+        <button class='bg-25-black text-25-white cursor-pointer px-3 pt-1 pb-2'>
+          Inicio
+        </button>
+      </li>
+      <li
+        class='-skew-y-3 font-medium transition-transform duration-150 hover:-skew-0'>
+        <a
+          href='#programacion'
+          class='bg-25-black text-25-white cursor-pointer px-3 pt-1 pb-2'>
+          Programación
+        </a>
+      </li>
+      <li
+        class='-skew-y-3 font-medium transition-transform duration-150 hover:-skew-0'>
+        <a
+          href='#mapa'
+          class='bg-25-black text-25-white cursor-pointer px-3 pt-1 pb-2'>
+          Mapa
+        </a>
+      </li>
+    </ul>
+  </nav>
 </header>
