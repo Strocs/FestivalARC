@@ -10,40 +10,52 @@ import YoutubeIcon from "../components/icons/YoutubeIcon.astro";
 ---
 
 <Layout title="Festival ARC 2025 | La Serena">
-  <header
-    class="grid justify-center w-fit mx-auto group px-4 pt-24"
-  >
+  <header class="grid justify-center w-fit mx-auto group px-4 pt-24">
     <h1 class="sr-only">Festival ARC 2025, Próximamente</h1>
-    <figure class="overfloh-hidden h-fit w-fit mx-auto pb-4">
+  </header>
+
+  <main class="flex h-full flex-col items-center justify-center">
+    <figure class="mx-auto h-fit w-fit pb-4">
       <Image
         src={LOGO}
         width={500}
         height={180}
-        alt="Logo Festival ARC 2024"
+        alt="Logo Festival ARC 2025"
         class="aspect-[500/180] h-fit"
         loading="eager"
       />
     </figure>
-  </header>
+    <div class="h-fit space-y-1 md:space-y-3">
+      <p
+        class="font-dk bg-[#279ff5] relative z-10 mx-auto w-fit -skew-y-3 rounded-xs px-4 text-center text-4xl text-white shadow-md md:text-7xl"
+      >
+        18 y 19 de Octubre
+      </p>
+      <p
+        class="font-bestoom bg-[#f0d11f] text-[#db0078] mx-auto w-fit px-2 pt-1.5 text-center text-2xl shadow-md md:pt-2 md:text-5xl"
+      >
+        Parque Pedro de Valdivia
+      </p>
+      <p class="text-white font-bestoom mx-auto w-fit text-2xl md:text-4xl">
+        La Serena
+      </p>
+    </div>
 
-  <main class="h-full w-full max-w-2xl mx-auto px-4 pb-16">
-    <section class="grid gap-5">
-      <div class="flex flex-col gap-2 max-w-xl mx-auto justify-center relative">
-        <p
-class="text-[#f70d61] font-bestoom text-2xl md:text-4xl text-center uppercase tracking-wide bg-[#efd43d] w-fit pb-0.5 pt-2 md:pt-3 px-6 mx-auto z-10 relative shadow-lg shadow-black/20"
-        >
-          Convocatoria cerrada
-        </p>
+    <p
+      class="text-dk text-white w-full max-w-prose text-3xl md:text-5xl text-center"
+    >
+      Pronto Programación Completa!
+    </p>
 
-        <p
-class="bg-[#2495e9] font-dk text-2xl md:text-4xl leading-none text-center tracking-wide text-secondary w-fit py-2 md:py-3 px-6 mx-auto -skew-y-[4deg] shadow-lg shadow-black/20"
-        >
-          Pronto más información
-        </p>
-      </div>
-      <p class="text-center text-secondary mt-14 leading-none">¿Tienes alguna duda? escríbenos a <a target="_blank" href='mailto:programacion@festivalarc.com' class="text-[#efd43d] hover:text-secondary duration-150">programacion@festivalarc.com</a></p>
-      </section>
-  </main> 
+    <p class="text-center text-secondary mt-14 leading-none">
+      ¿Tienes alguna duda? escríbenos a <a
+        target="_blank"
+        href="mailto:programacion@festivalarc.com"
+        class="text-[#efd43d] hover:text-secondary duration-150"
+        >programacion@festivalarc.com</a
+      >
+    </p>
+  </main>
 
   <footer
     class="grid xl:grid-flow-col justify-center items-center gap-8 xl:gap-20 bg-[#170d19] relative bottom-0 w-full left-0 p-4"
