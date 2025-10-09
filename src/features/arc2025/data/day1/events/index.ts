@@ -18,7 +18,7 @@ export const events: Arc2025Event[] = [
   ...literatura,
   ...talleres,
   ...charlas,
-  // ...imrec,
+  ...imrec,
   ...cecrea,
   ...instalaciones,
 ]
