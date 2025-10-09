@@ -2,7 +2,7 @@
 import '@/styles/global.css'
 import Layout from '@/features/shared/layouts/Layout.astro'
 import { Image } from 'astro:assets'
-import FONDO_WEB_VERDE from '@/features/arc2025/assets/FONDO_WEB_VERDE.png'
+import FONDO_WEB_VERDE from '@/features/arc2025/assets/FONDO_WEB_VERDE.webp'
 ---
 
 <Layout
@@ -24,8 +24,9 @@ import FONDO_WEB_VERDE from '@/features/arc2025/assets/FONDO_WEB_VERDE.png'
 
 <script>
   const backgroundImage = document.getElementById('background-image')
+  const isLandscape = window.matchMedia('(orientation: landscape)')
 
-  if (backgroundImage) {
+  if (backgroundImage && isLandscape.matches) {
     const SCROLL_TOLERANCE = 0
     const RESIZE_DEBOUNCE_MS = 150
     const WILL_CHANGE_CLEANUP_MS = 500
