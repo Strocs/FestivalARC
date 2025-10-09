@@ -10,6 +10,7 @@ import vercel from '@astrojs/vercel'
 export default defineConfig({
   integrations: [sitemap(), react()],
   output: 'static',
+  site: 'https://festivalarc.com',
 
   vite: {
     plugins: [tailwindcss()],
