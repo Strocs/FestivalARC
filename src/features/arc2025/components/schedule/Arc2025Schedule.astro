@@ -1,5 +1,6 @@
 ---
 import { ScheduleGrid, adaptScheduleDataToGrid } from '@/features/schedule'
+import FONDO_WEB_PROGRAMACION from '@/features/arc2025/assets/FONDO_VERDE.webp'
 import {
   arc2025Day1ScheduleData,
   arc2025Day2ScheduleData,
@@ -33,6 +34,7 @@ const mapEvent = (event: LayoutEvent<Arc2025EventPayload>): UIColumnItem => ({
   },
   body: {
     description: event.event.payload?.description ?? '',
+    galleryUrl: event.event.payload?.galleryUrl,
     duration: event.event.payload?.duration,
     time: {
       start: event.event.time.start,
@@ -62,7 +64,16 @@ const scheduleDays: ScheduleDay[] = [
 ]
 ---
 
-<section class=''>
+<section id='programacion' class='relative min-h-screen'>
+  <img
+    aria-hidden='true'
+    alt='Fondo de la sección Programación del Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
+    src={FONDO_WEB_PROGRAMACION.src}
+    height={FONDO_WEB_PROGRAMACION.height}
+    width={FONDO_WEB_PROGRAMACION.width}
+    loading='lazy'
+    class='fixed top-0 right-0 left-0 -z-30 h-lvh w-full object-cover object-center landscape:h-full'
+  />
   <Title subTitle='Sábado 18 y Domingo 19'>Programación</Title>
   <ScheduleGrid client:idle days={scheduleDays} />
 </section>
