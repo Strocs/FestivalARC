@@ -11,6 +11,8 @@
   --font-dk: 'DK Appelstroop', sans-serif;
   --font-bestoom: 'Bestoom', sans-serif;
   --font-neris: 'Neris', sans-serif;
+
+  --breakpoint-2xl: 90rem;
 }
 
 @utility snap-smooth {
