@@ -1,7 +1,7 @@
 [
   {
-    "id": "actividad-1",
-    "title": "Actividad 1",
+    "id": "escucha-inmersiva",
+    "title": "Escucha inmersiva",
     "subTitle": "",
     "description": "",
     "trackId": "stage-h",
@@ -9,13 +9,12 @@
       "start": "15:30",
       "end": "16:00"
     },
-    "category": "IMREC",
-    "duration": "30 Minutos",
+    "category": "Estelar",
     "galleryUrl": ""
   },
   {
-    "id": "actividad-3",
-    "title": "Actividad 3",
+    "id": "bioarte-sonoro",
+    "title": "BíoArte Sonoro: Viaje de Tierra y Aire",
     "subTitle": "",
     "description": "",
     "trackId": "stage-h",
@@ -23,13 +22,12 @@
       "start": "17:00",
       "end": "17:30"
     },
-    "category": "IMREC",
-    "duration": "30 Minutos",
+    "category": "Estelar",
     "galleryUrl": ""
   },
   {
-    "id": "actividad-4-dia-1",
-    "title": "Actividad 4",
+    "id": "duo-pola-castillo",
+    "title": "Dúo Pola Castillo y Chicoria Sánchez: Concierto íntimo",
     "subTitle": "",
     "description": "",
     "trackId": "stage-h",
@@ -37,13 +35,12 @@
       "start": "18:30",
       "end": "19:00"
     },
-    "category": "IMREC",
-    "duration": "30 Minutos",
+    "category": "Estelar",
     "galleryUrl": ""
   },
   {
-    "id": "actividad-4-continuacion-dia-1",
-    "title": "Actividad 4",
+    "id": "fundacion-villanueva",
+    "title": "Fundación Villanueva: Las Delicias de la Soledad",
     "subTitle": "",
     "description": "",
     "trackId": "stage-h",
@@ -51,22 +48,7 @@
       "start": "20:00",
       "end": "20:30"
     },
-    "category": "IMREC",
-    "duration": "30 Minutos",
-    "galleryUrl": ""
-  },
-  {
-    "id": "actividad-6-dia-1",
-    "title": "Actividad 6",
-    "subTitle": "",
-    "description": "",
-    "trackId": "stage-h",
-    "time": {
-      "start": "20:30",
-      "end": "21:00"
-    },
-    "category": "IMREC",
-    "duration": "30 Minutos",
+    "category": "Estelar",
     "galleryUrl": ""
   }
 ]
