@@ -47,6 +47,7 @@ export function EventGroup({ group, header }: EventGroupProps) {
                 color={header.color}
                 location={header.category || header.name}
                 stackOffset={index * 1.2}
+                galleryUrl={item.columnData.body.galleryUrl}
               />
             </li>
           )

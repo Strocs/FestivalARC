@@ -132,6 +132,7 @@ export const EventItem = ({
           description,
           color,
           inscriptionLink,
+          imageUrl: galleryUrl,
         }}
       />
     </section>

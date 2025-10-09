@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/features/shared/utils'
-import { Image } from 'astro:assets'
 
 export interface EventModalProps {
   isOpen: boolean
@@ -43,6 +42,21 @@ export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
     }
   }, [isOpen, onClose])
 
+  // Handle back gesture (popstate) to close the panel instead of navigating back
+  useEffect(() => {
+    if (!isOpen) return
+    const handlePopState = () => {
+      if (isOpen) {
+        onClose()
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [isOpen, onClose])
+
   if (!isOpen) return null
 
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -63,7 +77,7 @@ export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
         ])}>
         <button
           onClick={onClose}
-          className='bg-25-blue text-25-white hover:bg-25-primary absolute -top-3 -right-3 z-6 flex size-8 cursor-pointer items-center justify-center rounded-full transition-colors duration-300 md:-top-5 md:-right-5 md:size-10'
+          className='bg-25-blue text-25-white hover:bg-25-primary absolute top-3 right-3 z-6 flex size-8 cursor-pointer items-center justify-center rounded-full transition-colors duration-300 md:-top-5 md:-right-5 md:size-10'
           aria-label='Cerrar modal'>
           {/* Change to svg X shape  */}
           <svg
@@ -92,17 +106,21 @@ export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
             <img
               src={event.imageUrl}
               alt={'Imagen de ' + event.title}
-              className='bg-25-black/30 h-42 w-full shrink-0 object-cover'
+              className='bg-25-black/30 h-40 w-full shrink-0 rounded-t-sm object-cover object-center md:h-64'
             />
           )
         }
 
         <section className='scroll-thin min-h-0 flex-1 overflow-y-auto p-8'>
           <header className='mb-6'>
-            <h2 className='text-3xl font-bold uppercase'>{event.title}</h2>
+            <h2 className='text-3xl leading-none font-bold uppercase'>
+              {event.title}
+            </h2>
             {event.subTitle &&
               event.subTitle.split('\n').map((line, idx) => (
-                <p key={idx} className='mb-1 text-lg text-gray-700'>
+                <p
+                  key={idx}
+                  className='my-1 text-lg leading-none text-gray-700'>
                   {line}
                 </p>
               ))}
