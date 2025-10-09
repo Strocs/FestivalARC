@@ -36,7 +36,13 @@ const { title, description, favicon } = Astro.props
     <link rel='sitemap' href='/sitemap-index.xml' />
   </head>
   <body
-    class='font-neris relative flex h-full min-h-dvh w-screen flex-col items-center justify-between overflow-x-hidden'>
+    class='font-neris relative flex h-full min-h-dvh w-screen flex-col items-center justify-between'>
     <slot />
   </body>
 </html>
+<style>
+  html {
+    overflow-x: hidden;
+    width: 100vw;
+  }
+</style>
