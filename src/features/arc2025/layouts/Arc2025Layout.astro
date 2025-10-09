@@ -1,150 +1,138 @@
 ---
 import '@/styles/global.css'
 import Layout from '@/features/shared/layouts/Layout.astro'
-import { Image } from 'astro:assets'
-import FONDO_WEB_VERDE from '@/features/arc2025/assets/FONDO_WEB_VERDE.webp'
 ---
 
 <Layout
   title='Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
   description='Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena.'
   favicon='/ARC25.png'>
-  <Image
-    id='background-image'
-    src={FONDO_WEB_VERDE}
-    height={FONDO_WEB_VERDE.height}
-    width={FONDO_WEB_VERDE.width}
-    alt=''
-    loading='eager'
-    class='fixed right-0 left-0 -z-10 h-screen object-cover object-center landscape:absolute landscape:-top-100 landscape:h-auto'
-    style='contain: layout style paint;'
-  />
   <slot />
 </Layout>
 
-<script>
-  const backgroundImage = document.getElementById('background-image')
-  const isLandscape = window.matchMedia('(orientation: landscape)')
+<!-- <script>
+  // const backgroundImage = document.getElementById('background-image')
+  // const isLandscape = window.matchMedia('(orientation: landscape)')
 
-  if (backgroundImage && isLandscape.matches) {
-    const SCROLL_TOLERANCE = 0
-    const RESIZE_DEBOUNCE_MS = 150
-    const WILL_CHANGE_CLEANUP_MS = 500
-
-    let isFixed = false
-    let stickyThreshold = 0
-    let cachedBodyWidth = 0
-    let ticking = false
-    let resizeTimer: number | undefined
-    let scrollTimeout: number | undefined
-
-    /**
-     * Aplica width consistente para evitar saltos entre absolute/fixed
-     */
-    const setWidth = (width: number) => {
-      backgroundImage.style.width = `${width}px`
-      backgroundImage.style.minWidth = `${width}px`
-      backgroundImage.style.maxWidth = `${width}px`
-    }
-
-    /**
-     * Resetea a posición absolute (estado inicial)
-     */
-    const applyAbsolutePosition = () => {
-      backgroundImage.style.position = ''
-      backgroundImage.style.bottom = ''
-      backgroundImage.style.top = ''
-      setWidth(cachedBodyWidth)
-    }
-
-    /**
-     * Aplica posición fixed al fondo del viewport
-     */
-    const applyFixedPosition = () => {
-      setWidth(cachedBodyWidth)
-      backgroundImage.style.position = 'fixed'
-      backgroundImage.style.bottom = '0'
-      backgroundImage.style.top = 'auto'
-    }
-
-    /**
-     * Calcula el punto de scroll donde debe activarse el fixed
-     */
-    const calculateThreshold = () => {
-      cachedBodyWidth = document.body.clientWidth
-      const rect = backgroundImage.getBoundingClientRect()
-      stickyThreshold =
-        window.scrollY + rect.bottom - window.innerHeight - SCROLL_TOLERANCE
-    }
-
-    /**
-     * Verifica y aplica el cambio de posición según scroll
-     */
-    const checkPosition = () => {
-      const currentScroll = window.scrollY
-      const shouldBeFixed = currentScroll >= stickyThreshold
-
-      if (shouldBeFixed !== isFixed) {
-        if (shouldBeFixed) {
-          applyFixedPosition()
-          isFixed = true
-        } else {
-          applyAbsolutePosition()
-          isFixed = false
-        }
-      }
-
-      ticking = false
-    }
-
-    /**
-     * Activa will-change durante scroll y lo limpia después
-     */
-    const activateWillChange = () => {
-      backgroundImage.style.willChange = 'position'
-      clearTimeout(scrollTimeout)
-      scrollTimeout = setTimeout(() => {
-        backgroundImage.style.willChange = 'auto'
-      }, WILL_CHANGE_CLEANUP_MS) as unknown as number
-    }
-
-    /**
-     * Handler de scroll con requestAnimationFrame throttling
-     */
-    const onScroll = () => {
-      if (!ticking) {
-        activateWillChange()
-        requestAnimationFrame(checkPosition)
-        ticking = true
-      }
-    }
-
-    /**
-     * Handler de resize que recalcula dimensiones
-     */
-    const onResize = () => {
-      isFixed = false
-      calculateThreshold()
-      applyAbsolutePosition()
-      checkPosition()
-    }
-
-    /**
-     * Debounced resize handler
-     */
-    const debouncedResize = () => {
-      clearTimeout(resizeTimer)
-      resizeTimer = setTimeout(
-        onResize,
-        RESIZE_DEBOUNCE_MS,
-      ) as unknown as number
-    }
-
-    calculateThreshold()
-    setWidth(cachedBodyWidth)
-    checkPosition()
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', debouncedResize, { passive: true })
-  }
-</script>
+  // if (backgroundImage && isLandscape.matches) {
+  //   const SCROLL_TOLERANCE = 0
+  //   const RESIZE_DEBOUNCE_MS = 150
+  //   const WILL_CHANGE_CLEANUP_MS = 500
+  //
+  //   let isFixed = false
+  //   let stickyThreshold = 0
+  //   let cachedBodyWidth = 0
+  //   let ticking = false
+  //   let resizeTimer: number | undefined
+  //   let scrollTimeout: number | undefined
+  //
+  //   /**
+  //    * Aplica width consistente para evitar saltos entre absolute/fixed
+  //    */
+  //   const setWidth = (width: number) => {
+  //     backgroundImage.style.width = `${width}px`
+  //     backgroundImage.style.minWidth = `${width}px`
+  //     backgroundImage.style.maxWidth = `${width}px`
+  //   }
+  //
+  //   /**
+  //    * Resetea a posición absolute (estado inicial)
+  //    */
+  //   const applyAbsolutePosition = () => {
+  //     backgroundImage.style.position = ''
+  //     backgroundImage.style.bottom = ''
+  //     backgroundImage.style.top = ''
+  //     setWidth(cachedBodyWidth)
+  //   }
+  //
+  //   /**
+  //    * Aplica posición fixed al fondo del viewport
+  //    */
+  //   const applyFixedPosition = () => {
+  //     setWidth(cachedBodyWidth)
+  //     backgroundImage.style.position = 'fixed'
+  //     backgroundImage.style.bottom = '0'
+  //     backgroundImage.style.top = 'auto'
+  //   }
+  //
+  //   /**
+  //    * Calcula el punto de scroll donde debe activarse el fixed
+  //    */
+  //   const calculateThreshold = () => {
+  //     cachedBodyWidth = document.body.clientWidth
+  //     const rect = backgroundImage.getBoundingClientRect()
+  //     stickyThreshold =
+  //       window.scrollY + rect.bottom - window.innerHeight - SCROLL_TOLERANCE
+  //   }
+  //
+  //   /**
+  //    * Verifica y aplica el cambio de posición según scroll
+  //    */
+  //   const checkPosition = () => {
+  //     const currentScroll = window.scrollY
+  //     const shouldBeFixed = currentScroll >= stickyThreshold
+  //
+  //     if (shouldBeFixed !== isFixed) {
+  //       if (shouldBeFixed) {
+  //         applyFixedPosition()
+  //         isFixed = true
+  //       } else {
+  //         applyAbsolutePosition()
+  //         isFixed = false
+  //       }
+  //     }
+  //
+  //     ticking = false
+  //   }
+  //
+  //   /**
+  //    * Activa will-change durante scroll y lo limpia después
+  //    */
+  //   const activateWillChange = () => {
+  //     backgroundImage.style.willChange = 'position'
+  //     clearTimeout(scrollTimeout)
+  //     scrollTimeout = setTimeout(() => {
+  //       backgroundImage.style.willChange = 'auto'
+  //     }, WILL_CHANGE_CLEANUP_MS) as unknown as number
+  //   }
+  //
+  //   /**
+  //    * Handler de scroll con requestAnimationFrame throttling
+  //    */
+  //   const onScroll = () => {
+  //     if (!ticking) {
+  //       activateWillChange()
+  //       requestAnimationFrame(checkPosition)
+  //       ticking = true
+  //     }
+  //   }
+  //
+  //   /**
+  //    * Handler de resize que recalcula dimensiones
+  //    */
+  //   const onResize = () => {
+  //     isFixed = false
+  //     calculateThreshold()
+  //     applyAbsolutePosition()
+  //     checkPosition()
+  //   }
+  //
+  //   /**
+  //    * Debounced resize handler
+  //    */
+  //   const debouncedResize = () => {
+  //     clearTimeout(resizeTimer)
+  //     resizeTimer = setTimeout(
+  //       onResize,
+  //       RESIZE_DEBOUNCE_MS,
+  //     ) as unknown as number
+  //   }
+  //
+  //   calculateThreshold()
+  //   setWidth(cachedBodyWidth)
+  //   checkPosition()
+  //
+  //   window.addEventListener('scroll', onScroll, { passive: true })
+  //   window.addEventListener('resize', debouncedResize, { passive: true })
+  // }
+</script> -->
