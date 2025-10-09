@@ -2,7 +2,7 @@
 import '@/styles/global.css'
 import Layout from '@/features/shared/layouts/Layout.astro'
 import { Image } from 'astro:assets'
-import FONDO_WEB from '@/features/arc2025/assets/FONDO_WEB.png'
+import FONDO_WEB_VERDE from '@/features/arc2025/assets/FONDO_WEB_VERDE.png'
 ---
 
 <Layout
@@ -10,12 +10,85 @@ import FONDO_WEB from '@/features/arc2025/assets/FONDO_WEB.png'
   description='Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena.'
   favicon='/ARC25.png'>
   <Image
-    src={FONDO_WEB}
-    height={FONDO_WEB.height}
-    width={FONDO_WEB.width}
+    id='background-image'
+    src={FONDO_WEB_VERDE}
+    height={FONDO_WEB_VERDE.height}
+    width={FONDO_WEB_VERDE.width}
     alt=''
     loading='eager'
-    class='fixed inset-0 -z-10 h-full min-h-screen w-full object-cover object-left md:object-center'
+    class='fixed left-0 -z-10 h-screen w-full object-cover object-center will-change-[position] landscape:absolute landscape:-top-100 landscape:h-auto'
   />
   <slot />
 </Layout>
+
+<script>
+  const backgroundImage = document.getElementById('background-image')
+
+  if (backgroundImage) {
+    const SCROLL_TOLERANCE = 100
+    const RESIZE_DEBOUNCE_MS = 150
+    const DEFAULT_THRESHOLD = 0
+
+    let isSticky = false
+    let stickyThreshold = DEFAULT_THRESHOLD
+    let ticking = false
+    let resizeTimer: NodeJS.Timeout
+
+    const resetStyles = () => {
+      backgroundImage.style.position = ''
+      backgroundImage.style.bottom = ''
+      backgroundImage.style.top = ''
+    }
+
+    const applyFixedStyles = () => {
+      backgroundImage.style.position = 'fixed'
+      backgroundImage.style.bottom = '0'
+      backgroundImage.style.top = 'auto'
+    }
+
+    const calculateThreshold = () => {
+      const rect = backgroundImage.getBoundingClientRect()
+      stickyThreshold =
+        window.scrollY + rect.bottom - window.innerHeight - SCROLL_TOLERANCE
+    }
+
+    const checkPosition = () => {
+      const currentScroll = window.scrollY
+
+      if (currentScroll >= stickyThreshold && !isSticky) {
+        applyFixedStyles()
+        isSticky = true
+      } else if (currentScroll < stickyThreshold && isSticky) {
+        resetStyles()
+        isSticky = false
+      }
+
+      ticking = false
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(checkPosition)
+        ticking = true
+      }
+    }
+
+    const onResize = () => {
+      isSticky = false
+      resetStyles()
+      calculateThreshold()
+      checkPosition()
+    }
+
+    const debouncedResize = () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(onResize, RESIZE_DEBOUNCE_MS)
+    }
+
+    calculateThreshold()
+    checkPosition()
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', debouncedResize, { passive: true })
+  }
+</script>
