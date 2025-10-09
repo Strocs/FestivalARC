@@ -42,42 +42,6 @@ export function StageSelection({
 
   return (
     <section className='bg-25-black hidden flex-col rounded-xs p-4 md:flex'>
-      {sortedStages.map((stage) => (
-        <label
-          key={stage.id}
-          className={cn(
-            'hover:bg-25-white/10 flex h-13 cursor-pointer items-center gap-2 rounded-xs p-2 transition-all duration-200',
-          )}>
-          <input
-            type='checkbox'
-            checked={selectedStageIds.includes(stage.id)}
-            onChange={() => handleToggleStage(stage.id)}
-            className='h-4 w-4 shrink-0 cursor-pointer'
-          />
-          <div
-            className='h-3 w-3 shrink-0 rounded-full'
-            style={{ backgroundColor: stage.color }}
-          />
-          <p
-            className={cn(
-              'text-25-white leading-none transition-all duration-300',
-              isExpanded
-                ? 'visible h-fit opacity-100 delay-150'
-                : 'invisible w-0 overflow-hidden opacity-0',
-            )}>
-            {stage.name}
-            {stage.category && (
-              <>
-                <br />
-                <span className='text-25-white/70 text-sm capitalize'>
-                  {stage.category}
-                </span>
-              </>
-            )}
-          </p>
-        </label>
-      ))}
-
       <div
         className={cn(
           'flex items-center justify-center gap-2 transition-all duration-300',
@@ -136,6 +100,41 @@ export function StageSelection({
           </button>
         </div>
       )}
+      {sortedStages.map((stage) => (
+        <label
+          key={stage.id}
+          className={cn(
+            'hover:bg-25-white/10 flex h-10 cursor-pointer items-center gap-2 rounded-xs px-2 transition-all duration-200 2xl:h-13',
+          )}>
+          <input
+            type='checkbox'
+            checked={selectedStageIds.includes(stage.id)}
+            onChange={() => handleToggleStage(stage.id)}
+            className='h-4 w-4 shrink-0 cursor-pointer'
+          />
+          <div
+            className='h-3 w-3 shrink-0 rounded-full'
+            style={{ backgroundColor: stage.color }}
+          />
+          <p
+            className={cn(
+              'text-25-white leading-none transition-all duration-300',
+              isExpanded
+                ? 'visible h-fit opacity-100 delay-150'
+                : 'invisible w-0 overflow-hidden opacity-0',
+            )}>
+            {stage.name}
+            {stage.category && (
+              <>
+                <br />
+                <span className='text-25-white/70 text-sm capitalize'>
+                  {stage.category}
+                </span>
+              </>
+            )}
+          </p>
+        </label>
+      ))}
     </section>
   )
 }

@@ -59,8 +59,8 @@ export function ScheduleGrid(props: ScheduleGridProps) {
   const showDaySelector = !isSingleDay(props)
 
   return (
-    <section className='relative flex flex-col gap-4 overflow-x-clip py-4 md:w-full'>
-      <ShowHint isDragging={isDragging} />
+    <section className='relative flex flex-col gap-4 overflow-x-clip py-4 [--header-height:50px] [--item-height:180px] md:w-full md:[--header-height:60px] md:[--item-height:200px]'>
+      {/* <ShowHint isDragging={isDragging} /> */}
       <div className='flex w-screen flex-col flex-nowrap gap-2 md:flex-row md:gap-4'>
         <Sidebar
           stages={stages}

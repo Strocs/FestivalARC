@@ -7,6 +7,7 @@ export interface UIColumnItem {
   body: {
     duration?: string
     description?: string
+    galleryUrl?: string
     location?: {
       name: string
       url?: string

@@ -41,15 +41,9 @@ export function Sidebar({
         'sticky top-2 z-10 flex h-fit w-full shrink-0 flex-col gap-2 px-3 transition-[width] duration-300 ease-in-out md:top-4 md:px-4',
         isExpanded ? 'md:w-72' : 'md:w-30',
       )}>
-      <div className='bg-25-black hidden rounded-xs px-4 py-2 md:block'>
-        <CollapseButton
-          isExpanded={isExpanded}
-          onToggle={() => setIsExpanded(!isExpanded)}
-        />
-      </div>
+      {navigation}
 
       {daySelector?.(isExpanded)}
-
       <StageSelection
         stages={stages}
         selectedStageIds={selectedStageIds}
@@ -57,7 +51,12 @@ export function Sidebar({
         isExpanded={isExpanded}
       />
 
-      {navigation}
+      <div className='bg-25-black hidden rounded-xs px-4 py-2 md:block'>
+        <CollapseButton
+          isExpanded={isExpanded}
+          onToggle={() => setIsExpanded(!isExpanded)}
+        />
+      </div>
     </aside>
   )
 }

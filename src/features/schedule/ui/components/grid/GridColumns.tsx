@@ -70,6 +70,7 @@ export function GridColumns({
               duration={item.columnData.body.duration}
               color={header.color}
               location={header.category || header.name}
+              galleryUrl={item.columnData.body.galleryUrl}
             />
           </li>
         )

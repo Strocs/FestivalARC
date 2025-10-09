@@ -16,24 +16,28 @@ export function NavigationButtons({
   className,
 }: ScheduleNavigationButtonsProps) {
   return (
-    <div className={cn('bg-25-black flex gap-2', className)}>
+    <nav
+      className={cn(
+        'bg-25-black -mr-24 flex h-[var(--header-height)] items-center justify-between gap-4',
+        className,
+      )}>
       <button
         onClick={onPrev}
         disabled={!canGoPrev}
         className={cn(
-          'bg-25-black text-25-white hover:text-25-accent flex h-8 w-full cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
+          'bg-25-white/50 hover:bg-25-accent text-25-white flex h-9 w-full cursor-pointer items-center justify-center rounded-xs transition-colors duration-200',
           !canGoPrev && 'cursor-not-allowed opacity-30',
         )}
         type='button'
         aria-label='Anterior'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          width='24'
-          height='24'
+          width='34'
+          height='34'
           viewBox='0 0 24 24'
           fill='none'
           stroke='currentColor'
-          strokeWidth='2'
+          strokeWidth='3'
           strokeLinecap='round'
           strokeLinejoin='round'>
           <path d='M15 18l-6-6 6-6' />
@@ -43,24 +47,24 @@ export function NavigationButtons({
         onClick={onNext}
         disabled={!canGoNext}
         className={cn(
-          'bg-25-black text-25-white hover:text-25-accent flex h-8 w-full cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
+          'bg-25-white/50 hover:bg-25-accent text-25-white flex h-9 w-full cursor-pointer items-center justify-center rounded-xs transition-colors duration-200',
           !canGoNext && 'cursor-not-allowed opacity-30',
         )}
         type='button'
         aria-label='Siguiente'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
-          width='24'
-          height='24'
+          width='34'
+          height='34'
           viewBox='0 0 24 24'
           fill='none'
           stroke='currentColor'
-          strokeWidth='2'
+          strokeWidth='3'
           strokeLinecap='round'
           strokeLinejoin='round'>
           <path d='M9 18l6-6-6-6' />
         </svg>
       </button>
-    </div>
+    </nav>
   )
 }

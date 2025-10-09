@@ -22,7 +22,7 @@ export function GridColumn({
 }: GridColumnProps) {
   return (
     <ul
-      className='relative grid gap-6 [--header-height:50px] [--item-height:180px] md:[--header-height:60px] md:[--item-height:200px]'
+      className='relative grid gap-6'
       style={{
         gridTemplateRows: `var(--header-height) repeat(${length.rows}, var(--item-height))`,
         contentVisibility: config ? 'auto' : 'visible',
