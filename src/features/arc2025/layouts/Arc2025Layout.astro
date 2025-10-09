@@ -16,7 +16,8 @@ import FONDO_WEB_VERDE from '@/features/arc2025/assets/FONDO_WEB_VERDE.png'
     width={FONDO_WEB_VERDE.width}
     alt=''
     loading='eager'
-    class='fixed left-0 -z-10 h-screen w-full object-cover object-center will-change-[position] landscape:absolute landscape:-top-100 landscape:h-auto'
+    class='fixed right-0 left-0 -z-10 h-screen object-cover object-center landscape:absolute landscape:-top-100 landscape:h-auto'
+    style='contain: layout style paint;'
   />
   <slot />
 </Layout>
@@ -25,67 +26,121 @@ import FONDO_WEB_VERDE from '@/features/arc2025/assets/FONDO_WEB_VERDE.png'
   const backgroundImage = document.getElementById('background-image')
 
   if (backgroundImage) {
-    const SCROLL_TOLERANCE = 100
+    const SCROLL_TOLERANCE = 0
     const RESIZE_DEBOUNCE_MS = 150
-    const DEFAULT_THRESHOLD = 0
+    const WILL_CHANGE_CLEANUP_MS = 500
 
-    let isSticky = false
-    let stickyThreshold = DEFAULT_THRESHOLD
+    let isFixed = false
+    let stickyThreshold = 0
+    let cachedBodyWidth = 0
     let ticking = false
-    let resizeTimer: NodeJS.Timeout
+    let resizeTimer: number | undefined
+    let scrollTimeout: number | undefined
 
-    const resetStyles = () => {
+    /**
+     * Aplica width consistente para evitar saltos entre absolute/fixed
+     */
+    const setWidth = (width: number) => {
+      backgroundImage.style.width = `${width}px`
+      backgroundImage.style.minWidth = `${width}px`
+      backgroundImage.style.maxWidth = `${width}px`
+    }
+
+    /**
+     * Resetea a posición absolute (estado inicial)
+     */
+    const applyAbsolutePosition = () => {
       backgroundImage.style.position = ''
       backgroundImage.style.bottom = ''
       backgroundImage.style.top = ''
+      setWidth(cachedBodyWidth)
     }
 
-    const applyFixedStyles = () => {
+    /**
+     * Aplica posición fixed al fondo del viewport
+     */
+    const applyFixedPosition = () => {
+      setWidth(cachedBodyWidth)
       backgroundImage.style.position = 'fixed'
       backgroundImage.style.bottom = '0'
       backgroundImage.style.top = 'auto'
     }
 
+    /**
+     * Calcula el punto de scroll donde debe activarse el fixed
+     */
     const calculateThreshold = () => {
+      cachedBodyWidth = document.body.clientWidth
       const rect = backgroundImage.getBoundingClientRect()
       stickyThreshold =
         window.scrollY + rect.bottom - window.innerHeight - SCROLL_TOLERANCE
     }
 
+    /**
+     * Verifica y aplica el cambio de posición según scroll
+     */
     const checkPosition = () => {
       const currentScroll = window.scrollY
+      const shouldBeFixed = currentScroll >= stickyThreshold
 
-      if (currentScroll >= stickyThreshold && !isSticky) {
-        applyFixedStyles()
-        isSticky = true
-      } else if (currentScroll < stickyThreshold && isSticky) {
-        resetStyles()
-        isSticky = false
+      if (shouldBeFixed !== isFixed) {
+        if (shouldBeFixed) {
+          applyFixedPosition()
+          isFixed = true
+        } else {
+          applyAbsolutePosition()
+          isFixed = false
+        }
       }
 
       ticking = false
     }
 
+    /**
+     * Activa will-change durante scroll y lo limpia después
+     */
+    const activateWillChange = () => {
+      backgroundImage.style.willChange = 'position'
+      clearTimeout(scrollTimeout)
+      scrollTimeout = setTimeout(() => {
+        backgroundImage.style.willChange = 'auto'
+      }, WILL_CHANGE_CLEANUP_MS) as unknown as number
+    }
+
+    /**
+     * Handler de scroll con requestAnimationFrame throttling
+     */
     const onScroll = () => {
       if (!ticking) {
+        activateWillChange()
         requestAnimationFrame(checkPosition)
         ticking = true
       }
     }
 
+    /**
+     * Handler de resize que recalcula dimensiones
+     */
     const onResize = () => {
-      isSticky = false
-      resetStyles()
+      isFixed = false
       calculateThreshold()
+      applyAbsolutePosition()
       checkPosition()
     }
 
+    /**
+     * Debounced resize handler
+     */
     const debouncedResize = () => {
       clearTimeout(resizeTimer)
-      resizeTimer = setTimeout(onResize, RESIZE_DEBOUNCE_MS)
+      resizeTimer = setTimeout(
+        onResize,
+        RESIZE_DEBOUNCE_MS,
+      ) as unknown as number
     }
 
     calculateThreshold()
+    setWidth(cachedBodyWidth)
     checkPosition()
 
     window.addEventListener('scroll', onScroll, { passive: true })
