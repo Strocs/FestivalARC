@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo } from 'react'
 import { Sidebar } from '../sidebar'
 import { GridColumn } from './GridColumn'
 import { GridColumns } from './GridColumns'
