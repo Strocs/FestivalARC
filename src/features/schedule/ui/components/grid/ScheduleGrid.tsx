@@ -1,15 +1,16 @@
-import { useMemo } from 'react'
-import { TrackSidebar } from '../track/TrackSidebar'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Sidebar } from '../sidebar'
 import { GridColumn } from './GridColumn'
 import { GridColumns } from './GridColumns'
 import { GridTimeSlots } from './GridTimeSlots'
-import { NavigationButtons } from '../navigation/NavigationButtons'
-import { DaySelector } from '../navigation/DaySelector'
+import { NavigationButtons } from '../sidebar/NavigationButtons'
+import { DaySelector } from '../sidebar/DaySelector'
 import { useHorizontalDrag } from '../../hooks/use-horizontal-scroll'
 import { useDaySelection } from '../../hooks/use-day-selection'
 import { cn } from '@/features/shared/utils'
 import type { UIGridLayout, ScheduleDay } from '../../types'
 import { useStageSelection } from '../../hooks/use-stage-selection'
+import { ShowHint } from '../general/ShowHint'
 
 const COLUMN_WIDTH = 320
 const GAP_WIDTH = 16
@@ -58,9 +59,10 @@ export function ScheduleGrid(props: ScheduleGridProps) {
   const showDaySelector = !isSingleDay(props)
 
   return (
-    <section className='flex flex-col gap-4 overflow-x-clip py-4 md:w-full'>
+    <section className='relative flex flex-col gap-4 overflow-x-clip py-4 md:w-full'>
+      <ShowHint isDragging={isDragging} />
       <div className='flex w-screen flex-col flex-nowrap gap-2 md:flex-row md:gap-4'>
-        <TrackSidebar
+        <Sidebar
           stages={stages}
           selectedStageIds={selectedStageIds}
           onStageSelectionChange={setSelectedStageIds}
