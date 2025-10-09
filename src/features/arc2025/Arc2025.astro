@@ -1,14 +1,19 @@
 ---
 import Arc2025Layout from './layouts/Arc2025Layout.astro'
 import Arc2025Schedule from './components/schedule/Arc2025Schedule.astro'
+import Arc2025Map from './components/map/Arc2025Map.astro'
+import Hero from './components/hero/Hero.astro'
 import Footer from './components/footer/Footer.astro'
 import Header from './components/header/Header.astro'
+
+import { Image } from 'astro:assets'
+import FONDO_WEB from '@/features/arc2025/assets/fondo_arc.webp'
 // import Arc2025Streaming from './components/streaming/Arc2025Streaming.astro'
 ---
 
 <Arc2025Layout>
   <Header />
-  <main class='mx-auto h-full w-full pb-16'>
+  <main class='mx-auto h-full w-full'>
     <!-- <section class='grid gap-5'> 
       <div class='relative mx-auto flex max-w-xl flex-col justify-center gap-2'>
         <p
@@ -25,10 +30,29 @@ import Header from './components/header/Header.astro'
 
     <!-- <Arc2025Streaming /> -->
 
+    <section class='relative'>
+      <div class='sticky top-0 -z-20 h-screen w-full overflow-hidden'>
+        <Image
+          aria-hidden='true'
+          alt='Fondo del Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
+          src={FONDO_WEB}
+          quality={90}
+          height={FONDO_WEB.height}
+          width={FONDO_WEB.width}
+          class='h-full w-full object-cover object-left xl:object-center'
+          loading='eager'
+        />
+      </div>
+
+      <div class='-mt-[100lvh]'>
+        <Hero />
+        <Arc2025Map />
+      </div>
+    </section>
     <Arc2025Schedule />
 
-    <section class='pt-100'>
-      <p class='text-25-white mt-14 text-center leading-none'>
+    <section class='pt-100 pb-20'>
+      <p class='text-25-white text-center leading-none'>
         ¿Tienes alguna duda? escríbenos a <a
           target='_blank'
           href='mailto:programacion@festivalarc.com'
