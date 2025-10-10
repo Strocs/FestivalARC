@@ -6,6 +6,14 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 
 ## 📐 REGLAS GENERALES
 
+### 🚦 **REGLA DE APROBACIÓN OBLIGATORIA**
+
+**⚠️ NO AVANZAR A LA SIGUIENTE FASE SIN APROBACIÓN EXPLÍCITA DEL USUARIO ⚠️**
+
+- Cada fase debe ser **consultada y aprobada** antes de continuar
+- El agente debe **esperar confirmación** del usuario después de completar cada fase
+- Nunca asumir que se debe continuar automáticamente
+
 ### 🔒 **REGLA DE TESTING OBLIGATORIA**
 
 **Antes de cada fase, SIEMPRE crear los archivos de test correspondientes:**
@@ -14,6 +22,13 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 2. ✅ **Durante Refactor**: Los tests deben pasar con implementación actual Y nueva
 3. ✅ **Post-Fase**: Todos los tests deben pasar sin modificaciones
 4. ✅ **Cobertura**: Cada store, hook y función debe tener su test correspondiente
+
+**⚠️ NOTA SOBRE TIMEOUTS EN TESTS:**
+
+- Actualmente los tests usan `userEvent.setup({ delay: null })` para evitar timeouts
+- Esto es una solución temporal debido a la complejidad de montaje de componentes
+- En FASE 2-ALT se debe verificar que las optimizaciones permitan usar delays reales
+- Objetivo: Tiempo de montaje de ScheduleGrid <200ms con delays habilitados
 
 ### 🚫 **RESTRICCIONES**
 
@@ -33,33 +48,35 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 
 ## 🚀 FASES DE REFACTORIZACIÓN
 
-### **FASE 0: Setup Inicial** ⚙️
+### **FASE 0: Setup Inicial** ⚙️ ✅
 
 **Objetivo**: Instalar Zustand y crear estructura base
 
 **Issues que resuelve**: Setup de infraestructura
 
+**Estado**: ✅ **COMPLETADA**
+
 #### 📋 TODO LIST - FASE 0
 
-- [ ] **Testing Pre-Fase**
-  - [ ] Crear `src/features/schedule/ui/__tests__/setup.test.ts`
-  - [ ] Test que valide que todos los componentes renderizan sin errores
-  - [ ] Test de integración básica de ScheduleGrid
-  - [ ] Ejecutar `pnpm test` - debe pasar
+- [x] **Testing Pre-Fase**
+  - [x] Crear `src/features/schedule/ui/__tests__/setup.test.tsx`
+  - [x] Test que valide que todos los componentes renderizan sin errores
+  - [x] Test de integración básica de ScheduleGrid
+  - [x] Ejecutar `pnpm test` - debe pasar (5/5 tests pasando)
 
-- [ ] **Instalación**
-  - [ ] Ejecutar `pnpm add zustand`
-  - [ ] Verificar que se agregó a package.json
+- [x] **Instalación**
+  - [x] Ejecutar `pnpm add zustand`
+  - [x] Verificar que se agregó a package.json (v5.0.8 instalada)
 
-- [ ] **Estructura Base**
-  - [ ] Crear directorio `src/features/schedule/ui/stores/`
-  - [ ] Crear `src/features/schedule/ui/stores/types.ts`
-  - [ ] Definir interfaces base para stores
+- [x] **Estructura Base**
+  - [x] Crear directorio `src/features/schedule/ui/stores/`
+  - [x] Crear `src/features/schedule/ui/stores/types.ts`
+  - [x] Definir interfaces base para stores (NavigationStore, StageSelectionStore, ScrollStore, UIStore)
 
-- [ ] **Testing Post-Fase**
-  - [ ] Ejecutar `pnpm build` - debe pasar
-  - [ ] Ejecutar `pnpm test` - debe pasar
-  - [ ] Verificar que no hay errores en consola
+- [x] **Testing Post-Fase**
+  - [x] Ejecutar `pnpm build` - debe pasar
+  - [x] Ejecutar `pnpm test` - debe pasar (67/68 tests - 1 pre-existente fallando en core/)
+  - [x] Verificar que no hay errores en consola
 
 **Archivos creados**:
 
@@ -70,53 +87,48 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 
 ---
 
-### **FASE 1: Store de Navegación (Day + Column)** 🗂️
+### **FASE 1: Store de Navegación (Days)** 🗂️ ✅
 
-**Objetivo**: Centralizar navegación de días y columnas
+**Objetivo**: Centralizar navegación de días
 
-**Issues que resuelve**: CRÍTICO #1 (lógica compleja en useEffect de ScheduleGrid)
+**Issues que resuelve**: Navegación de días fragmentada
+
+**Estado**: ✅ **COMPLETADA**
 
 #### 📋 TODO LIST - FASE 1
 
-- [ ] **Testing Pre-Fase**
-  - [ ] Crear `src/features/schedule/ui/__tests__/stores/navigation-store.test.ts`
-  - [ ] Tests para useDaySelection hook actual
-  - [ ] Tests para lógica de navegación en ScheduleGrid
-  - [ ] Crear `src/features/schedule/ui/__tests__/hooks/use-navigation.test.ts`
-  - [ ] Ejecutar tests - deben pasar con implementación actual
+- [x] **Testing Pre-Fase**
+  - [x] Crear `src/features/schedule/ui/__tests__/stores/navigation-store.test.ts`
+  - [x] Tests para useDaySelection hook actual
+  - [x] Tests para lógica de navegación en ScheduleGrid
+  - [x] Crear `src/features/schedule/ui/__tests__/hooks/use-navigation.test.ts`
+  - [x] Ejecutar tests - deben pasar con implementación actual
 
-- [ ] **Implementación Store**
-  - [ ] Crear `stores/navigation-store.ts`
-    - [ ] Estado: `currentDayIndex`, `currentColumnIndex`, `totalDays`, `totalColumns`
-    - [ ] Acciones: `setDay`, `nextDay`, `prevDay`, `goToColumn`, `resetColumn`
-    - [ ] Derivados: `canGoNextDay`, `canGoPrevDay`, `canGoNextColumn`, `canGoPrevColumn`
-  - [ ] Crear `hooks/use-navigation.ts` (wrapper tipado)
+- [x] **Implementación Store**
+  - [x] Crear `stores/navigation-store.ts`
+    - [x] Estado: `currentDayIndex`, `totalDays`
+    - [x] Acciones: `setDay`, `nextDay`, `prevDay`
+    - [x] Derivados: `canGoNextDay`, `canGoPrevDay`
+  - [x] Crear `hooks/use-navigation.ts` (wrapper tipado)
 
-- [ ] **Refactoring ScheduleGrid**
-  - [ ] Eliminar `useDaySelection()` import
-  - [ ] Eliminar `useEffect` complejo (líneas 81-164)
-  - [ ] Reemplazar con `useNavigation()` del store
-  - [ ] Mantener misma funcionalidad
+- [x] **Refactoring ScheduleGrid**
+  - [x] Eliminar `useDaySelection()` import
+  - [x] Integrar `useNavigation()` para day navigation
 
-- [ ] **Refactoring DaySelector**
-  - [ ] Eliminar props `currentDayIndex`, `onDayChange`
-  - [ ] Usar `useNavigation()` directamente
-  - [ ] Verificar que navegación funciona igual
+- [x] **Refactoring DaySelector**
+  - [x] Eliminar props `currentDayIndex`, `onDayChange`
+  - [x] Usar `useNavigation()` directamente
+  - [x] Verificar que navegación funciona igual
 
-- [ ] **Refactoring NavigationButtons**
-  - [ ] Eliminar props `canGoNext`, `canGoPrev`, `onNext`, `onPrev`
-  - [ ] Usar `useNavigation()` directamente
-  - [ ] Mantener disabled states correctos
+- [x] **Limpieza**
+  - [x] Eliminar `hooks/use-day-selection.ts`
+  - [x] Verificar que no hay imports rotos
 
-- [ ] **Limpieza**
-  - [ ] Eliminar `hooks/use-day-selection.ts`
-  - [ ] Verificar que no hay imports rotos
-
-- [ ] **Testing Post-Fase**
-  - [ ] Todos los tests de navegación deben pasar
-  - [ ] Ejecutar `pnpm build` - debe pasar
-  - [ ] Ejecutar `pnpm test` - debe pasar
-  - [ ] Testing manual: navegación de días funciona idéntica
+- [x] **Testing Post-Fase**
+  - [x] Todos los tests de navegación deben pasar
+  - [x] Ejecutar `pnpm build` - debe pasar (0 errors, 0 warnings)
+  - [x] Ejecutar `pnpm test` - debe pasar (82/82 tests)
+  - [x] Testing manual: navegación de días funciona idéntica
 
 **Archivos afectados**:
 
@@ -124,7 +136,6 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 - ✨ `hooks/use-navigation.ts` (nuevo)
 - 🔧 `components/grid/ScheduleGrid.tsx` (refactor)
 - 🔧 `components/sidebar/DaySelector.tsx` (refactor)
-- 🔧 `components/sidebar/NavigationButtons.tsx` (refactor)
 - 🗑️ `hooks/use-day-selection.ts` (eliminar)
 
 **Impacto esperado**: 30-40% mejora en renders de navegación
@@ -133,150 +144,75 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 
 ---
 
-### **FASE 2: Store de Selección de Stages** 🎭
+### **FASE 2-ALT: Column Management Store - Arquitectura Unificada** 🎯
 
-**Objetivo**: Centralizar selección con localStorage integrado
+**Objetivo**: Centralizar TODA la lógica relacionada con columnas en un único store
 
-**Issues que resuelve**: CRÍTICO #2, #3, #4A, #7
+**Issues que resuelve**: CRÍTICO #1, #2, #3, #4A, #4B, #7
 
-#### 📋 TODO LIST - FASE 2
+**Estado**: ⏳ **PENDIENTE**
 
-- [ ] **Testing Pre-Fase**
-  - [ ] Crear `src/features/schedule/ui/__tests__/stores/stage-selection-store.test.ts`
-  - [ ] Tests para useStageSelection hook actual
-  - [ ] Tests para handlers de StageSelection component
-  - [ ] Tests para integración localStorage
-  - [ ] Crear `src/features/schedule/ui/__tests__/hooks/use-stage-selection.test.ts`
-  - [ ] Crear `src/features/schedule/ui/__tests__/hooks/use-stage-actions.test.ts`
-  - [ ] Ejecutar tests - deben pasar con implementación actual
+**Detalles**: Ver [PLAN-FASE-2.md](./PLAN-FASE-2.md) para arquitectura completa y pasos detallados
 
-- [ ] **Implementación Store**
-  - [ ] Crear `stores/stage-selection-store.ts`
-    - [ ] Estado: `selectedStageIds`, `availableStageIds`
-    - [ ] Acciones: `toggleStage`, `selectAll`, `deselectAll`, `toggleAll`, `setStages`
-    - [ ] Derivados: `isAllSelected`, `isNoneSelected`, `selectedCount`
-    - [ ] Integrar localStorage directamente
-  - [ ] Crear `hooks/use-stage-selection.ts` (wrapper store)
-  - [ ] Crear `hooks/use-stage-actions.ts` (acciones separadas)
+#### 📋 TODO LIST SIMPLIFICADO - FASE 2-ALT
 
-- [ ] **Refactoring ScheduleGrid**
-  - [ ] Eliminar `useStageSelection()` hook import
-  - [ ] Usar `useStageSelection()` del store para leer
-  - [ ] Eliminar props de stage selection al Sidebar
-  - [ ] Mantener `filteredRows` calculation pero con nueva fuente
+- [ ] **1. Tests Primero (TDD)**
+  - [ ] Crear tests del store unificado (`schedule-columns-store.test.ts`)
+  - [ ] Crear tests del hook wrapper (`use-schedule-columns.test.ts`)
+  - [ ] Definir comportamiento esperado de filtrado + navegación + auto-ajuste
 
-- [ ] **Refactoring Sidebar**
-  - [ ] Eliminar props `selectedStageIds`, `onStageSelectionChange`
-  - [ ] Pasar solo `stages` (data)
-  - [ ] Verificar que StageSelection sigue funcionando
+- [ ] **2. Implementar Store Unificado**
+  - [ ] Crear `stores/schedule-columns-store.ts` con:
+    - Estado: `allColumns`, `selectedStageIds`, `currentIndex`
+    - Derived: `filteredColumns`, `canGoNext`, `canGoPrev`, etc.
+    - Acciones: Filtrado (toggle, selectAll) + Navegación (next, prev, selectStage)
+  - [ ] Crear `hooks/use-schedule-columns.ts` (wrapper del store)
 
-- [ ] **Refactoring StageSelection**
-  - [ ] Eliminar todos los handlers internos (líneas 17-39)
-  - [ ] Usar `useStageActions()` del store
-  - [ ] Usar `useStageSelection()` para estado
-  - [ ] Mantener sorting local: `sortedStages`
-  - [ ] Verificar checkboxes y botones funcionan igual
+- [ ] **3. Refactorizar Componentes (Simplificación Masiva)**
+  - [ ] ScheduleGrid: Eliminar 86 líneas de `useEffect`, usar `useScheduleColumns()`
+  - [ ] use-horizontal-scroll: Recibir `currentIndex` + callbacks en lugar de estado interno
+  - [ ] StageSelection: Usar store/props para selección
+  - [ ] NavigationButtons: Recibir callbacks + estados del hook
+  - [ ] StageNavigator: Usar `selectStage` del hook
 
-- [ ] **Limpieza**
-  - [ ] Eliminar `hooks/use-stage-selection.ts` (old)
-  - [ ] Mantener `storage/track-selection-storage.ts` (usado por store)
-  - [ ] Verificar que no hay imports rotos
+- [ ] **4. Limpieza**
+  - [ ] Eliminar `stores/stage-selection-store.ts`
+  - [ ] Eliminar `hooks/use-stage-selection.ts`
+  - [ ] Eliminar `hooks/use-stage-actions.ts`
 
-- [ ] **Testing Post-Fase**
-  - [ ] Todos los tests de selección deben pasar
-  - [ ] Test localStorage: selección persiste en reload
-  - [ ] Ejecutar `pnpm build` - debe pasar
-  - [ ] Ejecutar `pnpm test` - debe pasar
-  - [ ] Testing manual: selección de stages idéntica
+- [ ] **5. Testing Post-Fase**
+  - [ ] Todos los tests pasan
+  - [ ] `pnpm build` sin errores
+  - [ ] Testing manual: filtrado + navegación + localStorage
 
-**Archivos afectados**:
+**Archivos principales**:
 
-- ✨ `stores/stage-selection-store.ts` (nuevo)
-- ✨ `hooks/use-stage-selection.ts` (nuevo - wrapper)
-- ✨ `hooks/use-stage-actions.ts` (nuevo)
-- 🔧 `components/grid/ScheduleGrid.tsx` (refactor)
-- 🔧 `components/sidebar/index.tsx` (refactor)
-- 🔧 `components/sidebar/StageSelection.tsx` (refactor)
-- 🗑️ `hooks/use-stage-selection.ts` (eliminar - old)
-- 🔒 `storage/track-selection-storage.ts` (mantener)
+- ✨ `stores/schedule-columns-store.ts` (nuevo ~250 líneas)
+- ✨ `hooks/use-schedule-columns.ts` (nuevo ~60 líneas)
+- 🔧 `components/grid/ScheduleGrid.tsx` (262 → ~120 líneas, 54% reducción)
+- 🔧 `hooks/use-horizontal-scroll.ts` (277 → ~150 líneas, 46% reducción)
+- 🗑️ 3 archivos eliminados (~164 líneas)
 
-**Impacto esperado**: 40-50% reducción en re-renders de sidebar y grid
+**Impacto esperado**:
 
-**Tiempo estimado**: 1.5 horas
+- 70% reducción en re-renders
+- ~200 líneas netas eliminadas
+- Single Source of Truth para columnas
+- Sin sincronización manual
+
+**Tiempo estimado**: 2.5-3 horas
 
 ---
 
-### **FASE 3: Store de Scroll/Drag** 🖱️
-
-**Objetivo**: Separar lógica de drag de eventos DOM
-
-**Issues que resuelve**: CRÍTICO #4B (useHorizontalDrag muy complejo)
-
-#### 📋 TODO LIST - FASE 3
-
-- [ ] **Testing Pre-Fase**
-  - [ ] Crear `src/features/schedule/ui/__tests__/stores/scroll-store.test.ts`
-  - [ ] Tests para useHorizontalDrag hook actual
-  - [ ] Tests para lógica de drag, scroll, rubber band
-  - [ ] Crear `src/features/schedule/ui/__tests__/hooks/use-drag-handlers.test.ts`
-  - [ ] Crear `src/features/schedule/ui/__tests__/hooks/use-scroll-position.test.ts`
-  - [ ] Ejecutar tests - deben pasar con implementación actual
-
-- [ ] **Implementación Store**
-  - [ ] Crear `stores/scroll-store.ts`
-    - [ ] Estado: `offset`, `isDragging`, `currentColumnIndex`
-    - [ ] Acciones: `setOffset`, `setDragging`, `goToColumn`, `goNext`, `goPrev`, `reset`
-    - [ ] Derivados: `canGoNext`, `canGoPrev`
-  - [ ] Crear `hooks/use-scroll-position.ts` (wrapper store)
-
-- [ ] **Separación de Handlers**
-  - [ ] Crear `hooks/use-drag-handlers.ts`
-    - [ ] Extraer `handleDragStart`, `handleDragMove`, `handleDragEnd`
-    - [ ] Usar scroll store para actualizar estado
-    - [ ] Mantener lógica de rubber band resistance
-    - [ ] Memoizar handlers correctamente
-
-- [ ] **Refactoring useHorizontalDrag**
-  - [ ] Reducir de 277 líneas a ~80 líneas
-  - [ ] Solo manejar: refs, event listeners, transformaciones CSS
-  - [ ] Leer estado del scroll store
-  - [ ] Usar handlers de `use-drag-handlers`
-  - [ ] Mantener misma API externa
-
-- [ ] **Refactoring ScheduleGrid**
-  - [ ] Usar `useScrollPosition()` para leer estado
-  - [ ] Mantener `useHorizontalDrag()` solo para DOM interactions
-  - [ ] Verificar que drag & scroll funcionan igual
-
-- [ ] **Testing Post-Fase**
-  - [ ] Todos los tests de scroll/drag deben pasar
-  - [ ] Ejecutar `pnpm build` - debe pasar
-  - [ ] Ejecutar `pnpm test` - debe pasar
-  - [ ] Testing manual: drag horizontal funciona idéntico
-  - [ ] Testing manual: navegación con botones funciona
-  - [ ] Testing manual: rubber band effect funciona
-
-**Archivos afectados**:
-
-- ✨ `stores/scroll-store.ts` (nuevo)
-- ✨ `hooks/use-drag-handlers.ts` (nuevo)
-- ✨ `hooks/use-scroll-position.ts` (nuevo)
-- 🔧 `hooks/use-horizontal-scroll.ts` (refactor - 70% reducción)
-- 🔧 `components/grid/ScheduleGrid.tsx` (refactor)
-
-**Impacto esperado**: 20% mejora en performance de drag, código más testeable
-
-**Tiempo estimado**: 1.5 horas
-
----
-
-### **FASE 4: Store de UI Global (Modals + Dropdowns)** 🎨
+### **FASE 3: Store de UI Global (Modals + Dropdowns)** 🎨
 
 **Objetivo**: Gestión centralizada de overlays
 
 **Issues que resuelve**: CRÍTICO #5, #6
 
-#### 📋 TODO LIST - FASE 4
+**Estado**: ⏳ **PENDIENTE** (después de FASE 2-ALT)
+
+#### 📋 TODO LIST - FASE 3
 
 - [ ] **Testing Pre-Fase**
   - [ ] Crear `src/features/schedule/ui/__tests__/stores/ui-store.test.ts`
@@ -356,13 +292,15 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 
 ---
 
-### **FASE 5: Optimización con React.memo** ⚡
+### **FASE 4: Optimización con React.memo** ⚡
 
 **Objetivo**: Memoizar componentes que no deben re-renderizar
 
 **Issues que resuelve**: CRÍTICO #8
 
-#### 📋 TODO LIST - FASE 5
+**Estado**: ⏳ **PENDIENTE** (después de FASE 3)
+
+#### 📋 TODO LIST - FASE 4
 
 - [ ] **Testing Pre-Fase**
   - [ ] Crear `src/features/schedule/ui/__tests__/utils/memo-comparators.test.ts`
@@ -420,143 +358,18 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 
 ---
 
-### **FASE 6: Selectores Derivados y Computaciones Memoizadas** 🧮
-
-**Objetivo**: Evitar cálculos repetidos con selectores
-
-#### 📋 TODO LIST - FASE 6
-
-- [ ] **Testing Pre-Fase**
-  - [ ] Crear `src/features/schedule/ui/__tests__/stores/selectors.test.ts`
-  - [ ] Tests para cálculos actuales de `filteredRows`
-  - [ ] Tests para `sortedStages` calculation
-  - [ ] Benchmark de performance en cálculos pesados
-  - [ ] Ejecutar tests - deben pasar
-
-- [ ] **Implementación Selectores**
-  - [ ] Crear `stores/selectors.ts`
-    - [ ] `selectFilteredColumns(state, columns)` - memoizado
-    - [ ] `selectSortedStages(state, stages)` - memoizado
-    - [ ] `selectCanNavigate(state)` - derivados de navegación
-    - [ ] `selectVisibleEvents(state, events)` - eventos filtrados
-
-- [ ] **Actualización de Stores**
-  - [ ] Agregar selectores a `stage-selection-store.ts`
-  - [ ] Agregar selectores a `navigation-store.ts`
-  - [ ] Verificar memoización correcta
-
-- [ ] **Refactoring ScheduleGrid**
-  - [ ] Eliminar `useMemo` para `filteredRows`
-  - [ ] Usar selector `selectFilteredColumns`
-  - [ ] Verificar que filtrado sigue funcionando
-
-- [ ] **Refactoring StageSelection**
-  - [ ] Eliminar sorting inline
-  - [ ] Usar selector `selectSortedStages`
-  - [ ] Verificar orden de stages correcto
-
-- [ ] **Testing Post-Fase**
-  - [ ] Tests de selectores deben pasar
-  - [ ] Benchmark: cálculos pesados solo cuando cambia data
-  - [ ] Ejecutar `pnpm build` - debe pasar
-  - [ ] Ejecutar `pnpm test` - debe pasar
-  - [ ] Testing manual: filtrado funciona idéntico
-  - [ ] Testing manual: sorting funciona idéntico
-
-**Archivos afectados**:
-
-- ✨ `stores/selectors.ts` (nuevo)
-- 🔧 `stores/stage-selection-store.ts` (agregar selectores)
-- 🔧 `stores/navigation-store.ts` (agregar selectores)
-- 🔧 `components/grid/ScheduleGrid.tsx` (usar selectores)
-- 🔧 `components/sidebar/StageSelection.tsx` (usar selectores)
-
-**Impacto esperado**: 20-30% mejora en renders con datasets grandes
-
-**Tiempo estimado**: 1 hora
-
----
-
-### **FASE 7: Sincronización Store con Scroll Navigation** 🔄
-
-**Objetivo**: Coordinar navegación automática con selección
-
-**Issues que resuelve**: CRÍTICO #1 (lógica compleja reimplementada en store)
-
-#### 📋 TODO LIST - FASE 7
-
-- [ ] **Testing Pre-Fase**
-  - [ ] Crear `src/features/schedule/ui/__tests__/stores/middleware/navigation-sync.test.ts`
-  - [ ] Tests para lógica de auto-navegación actual (ScheduleGrid useEffect)
-  - [ ] Tests para casos edge: agregar/remover stages
-  - [ ] Crear `src/features/schedule/ui/__tests__/hooks/use-auto-navigation.test.ts`
-  - [ ] Ejecutar tests - deben pasar
-
-- [ ] **Implementación Middleware**
-  - [ ] Crear `stores/middleware/navigation-sync.ts`
-    - [ ] Middleware de Zustand para escuchar `selectedStageIds`
-    - [ ] Lógica de auto-navegación cuando se agrega stage
-    - [ ] Lógica de auto-navegación cuando se remueve stage
-    - [ ] Replicar exactamente el comportamiento del `useEffect` original
-
-- [ ] **Integración con Stores**
-  - [ ] Integrar middleware en `stage-selection-store.ts`
-  - [ ] Integrar middleware en `navigation-store.ts`
-  - [ ] Verificar que coordinación funciona
-
-- [ ] **Hook de Auto-navegación**
-  - [ ] Crear `hooks/use-auto-navigation.ts`
-    - [ ] Hook que activa la lógica de auto-navegación
-    - [ ] Solo usado en ScheduleGrid
-    - [ ] Wrapper para el middleware
-
-- [ ] **Refactoring ScheduleGrid**
-  - [ ] Eliminar `useEffect` de sincronización (líneas 81-164) - COMPLETAMENTE
-  - [ ] Eliminar `previousSelectionRef`
-  - [ ] Eliminar `currentColumnRef`
-  - [ ] Usar `useAutoNavigation()` hook
-  - [ ] Verificar que auto-navegación funciona idéntica
-
-- [ ] **Testing Post-Fase**
-  - [ ] Tests de middleware deben pasar
-  - [ ] Test auto-navegación: agregar stage navega correctamente
-  - [ ] Test auto-navegación: remover stage ajusta posición
-  - [ ] Test auto-navegación: selectAll/deselectAll resetea posición
-  - [ ] Ejecutar `pnpm build` - debe pasar
-  - [ ] Ejecutar `pnpm test` - debe pasar
-  - [ ] Testing manual: auto-navegación funciona idéntica
-
-**Archivos afectados**:
-
-- ✨ `stores/middleware/navigation-sync.ts` (nuevo)
-- ✨ `hooks/use-auto-navigation.ts` (nuevo)
-- 🔧 `stores/stage-selection-store.ts` (integrar middleware)
-- 🔧 `stores/navigation-store.ts` (integrar middleware)
-- 🔧 `components/grid/ScheduleGrid.tsx` (simplificar masivamente)
-
-**Impacto esperado**: 25% mejora en sincronización, código centralizado y testeable
-
-**Tiempo estimado**: 1.5 horas
-
----
-
-### **FASE 8: Limpieza y Documentación** 🧹
+### **FASE 5: Limpieza y Documentación** 🧹
 
 **Objetivo**: Eliminar código legacy y documentar
 
-#### 📋 TODO LIST - FASE 8
+**Estado**: ⏳ **PENDIENTE** (después de FASE 4)
+
+#### 📋 TODO LIST - FASE 5
 
 - [ ] **Testing Pre-Fase**
-  - [ ] Verificar que no existen imports a archivos que serán eliminados
+  - [ ] Verificar que no existen imports a archivos que fueron eliminados
   - [ ] Ejecutar `pnpm build` - debe pasar
   - [ ] Ejecutar `pnpm test` - debe pasar
-
-- [ ] **Eliminación de Legacy**
-  - [ ] 🗑️ Eliminar `hooks/use-day-selection.ts`
-  - [ ] 🗑️ Eliminar `hooks/use-stage-selection.ts` (old)
-  - [ ] 🗑️ Eliminar `hooks/use-event-modal.ts`
-  - [ ] 🗑️ Eliminar `hooks/use-stage-navigator.ts`
-  - [ ] Verificar que no hay imports rotos
 
 - [ ] **Constantes Centralizadas**
   - [ ] Crear `constants.ts`
@@ -571,10 +384,12 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
     - [ ] Arquitectura de stores
     - [ ] Cuándo usar cada store
     - [ ] Ejemplos de uso
+    - [ ] Diagrama de flujo de datos
   - [ ] Crear `hooks/README.md`
     - [ ] Guía de hooks
     - [ ] Cuándo crear nuevos hooks
     - [ ] Patterns recomendados
+    - [ ] Ejemplos de uso común
 
 - [ ] **Tipos Estrictos**
   - [ ] Revisar todos los stores tengan types explícitos
@@ -585,20 +400,17 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
   - [ ] Ejecutar `pnpm build` - debe pasar
   - [ ] Ejecutar `pnpm test` - debe pasar
   - [ ] Test de integración completa
-  - [ ] Verificar bundle size (debe ser menor)
+  - [ ] Verificar bundle size (debe ser menor o igual)
   - [ ] Testing manual: funcionalidad completa idéntica
 
 **Archivos afectados**:
 
-- 🗑️ `hooks/use-day-selection.ts` (eliminar)
-- 🗑️ `hooks/use-stage-selection.ts` (eliminar - old)
-- 🗑️ `hooks/use-event-modal.ts` (eliminar)
-- 🗑️ `hooks/use-stage-navigator.ts` (eliminar)
 - ✨ `stores/README.md` (nuevo)
 - ✨ `hooks/README.md` (nuevo)
 - ✨ `constants.ts` (nuevo)
+- 🔧 Múltiples archivos (actualizar imports de constantes)
 
-**Impacto esperado**: 5-10% bundle size reducido, código más mantenible
+**Impacto esperado**: Código más mantenible, documentado y profesional
 
 **Tiempo estimado**: 1 hora
 
@@ -611,59 +423,56 @@ Optimizar el módulo `src/features/schedule/ui/` reemplazando estado local fragm
 ```
 src/features/schedule/ui/
 ├── stores/
-│   ├── navigation-store.ts         ✨ NUEVO
-│   ├── stage-selection-store.ts    ✨ NUEVO
-│   ├── scroll-store.ts             ✨ NUEVO
-│   ├── ui-store.ts                 ✨ NUEVO
-│   ├── selectors.ts                ✨ NUEVO
-│   ├── types.ts                    ✨ NUEVO
-│   ├── middleware/
-│   │   └── navigation-sync.ts      ✨ NUEVO
-│   └── README.md                   ✨ NUEVO
+│   ├── navigation-store.ts           ✅ COMPLETADO (FASE 1)
+│   ├── schedule-columns-store.ts     ✨ NUEVO (FASE 2-ALT - reemplaza 3 stores)
+│   ├── ui-store.ts                   ✨ NUEVO (FASE 3)
+│   ├── types.ts                      ✅ COMPLETADO (FASE 0)
+│   └── README.md                     ✨ NUEVO (FASE 5)
 ├── hooks/
-│   ├── use-navigation.ts           ✨ NUEVO
-│   ├── use-stage-selection.ts      ✨ NUEVO (wrapper)
-│   ├── use-stage-actions.ts        ✨ NUEVO
-│   ├── use-scroll-position.ts      ✨ NUEVO
-│   ├── use-drag-handlers.ts        ✨ NUEVO
-│   ├── use-modal-control.ts        ✨ NUEVO
-│   ├── use-ui-state.ts             ✨ NUEVO
-│   ├── use-auto-navigation.ts      ✨ NUEVO
-│   ├── use-horizontal-scroll.ts    🔧 REFACTORED (70% reducido)
-│   ├── use-container-visibility.ts ✅ MANTENER
-│   └── README.md                   ✨ NUEVO
+│   ├── use-navigation.ts             ✅ COMPLETADO (FASE 1)
+│   ├── use-schedule-columns.ts       ✨ NUEVO (FASE 2-ALT)
+│   ├── use-modal-control.ts          ✨ NUEVO (FASE 3)
+│   ├── use-ui-state.ts               ✨ NUEVO (FASE 3)
+│   ├── use-horizontal-scroll.ts      🔧 REFACTORED (FASE 2-ALT - 46% reducido)
+│   ├── use-container-visibility.ts   ✅ MANTENER
+│   └── README.md                     ✨ NUEVO (FASE 5)
 ├── utils/
-│   └── memo-comparators.ts         ✨ NUEVO
-├── constants.ts                    ✨ NUEVO
-├── components/                     🔧 TODOS REFACTORED + MEMO
-├── adapters/                       ✅ MANTENER
-└── types/                          ✅ MANTENER
+│   └── memo-comparators.ts           ✨ NUEVO (FASE 4)
+├── constants.ts                      ✨ NUEVO (FASE 5)
+├── components/                       🔧 REFACTORED (FASES 2-ALT, 3, 4)
+├── adapters/                         ✅ MANTENER
+└── types/                            ✅ MANTENER
 
 ELIMINADOS:
-❌ hooks/use-day-selection.ts
-❌ hooks/use-stage-selection.ts (old)
-❌ hooks/use-event-modal.ts
-❌ hooks/use-stage-navigator.ts
+❌ hooks/use-day-selection.ts (FASE 1)
+❌ stores/stage-selection-store.ts (FASE 2-ALT)
+❌ hooks/use-stage-selection.ts (FASE 2-ALT)
+❌ hooks/use-stage-actions.ts (FASE 2-ALT)
+❌ hooks/use-event-modal.ts (FASE 3)
+❌ hooks/use-stage-navigator.ts (FASE 3)
 ```
 
 ### **Métricas de Impacto Esperadas**
 
-| Métrica                       | Antes     | Después       | Mejora     |
-| ----------------------------- | --------- | ------------- | ---------- |
-| Re-renders en cambio de stage | ~15-20    | ~3-5          | **70-75%** |
-| Re-renders en navegación      | ~10-12    | ~2-3          | **80%**    |
-| Re-renders en abrir modal     | ~50+      | 1             | **98%**    |
-| Memoria (estados duplicados)  | N × items | Centralizados | **60%**    |
-| Líneas en ScheduleGrid        | 270       | ~120          | **55%**    |
-| Bundle size                   | Actual    | Reducido      | **5-10%**  |
+| Métrica                         | Antes     | Después            | Mejora     |
+| ------------------------------- | --------- | ------------------ | ---------- |
+| Re-renders en cambio de stage   | ~15-20    | ~3-5               | **70-75%** |
+| Re-renders en navegación        | ~10-12    | ~2-3               | **80%**    |
+| Re-renders en abrir modal       | ~50+      | 1                  | **98%**    |
+| Memoria (estados duplicados)    | N × items | Centralizados      | **60%**    |
+| Líneas en ScheduleGrid          | 262       | ~120               | **54%**    |
+| Líneas en use-horizontal-scroll | 277       | ~150               | **46%**    |
+| Stores separados para columnas  | 2         | 1                  | **50%**    |
+| Bundle size                     | Actual    | Similar o reducido | **0-5%**   |
 
-### **Tiempo Total Estimado**: 10-12 horas
+### **Tiempo Total Estimado**: 7-8 horas (reducido de 10-12)
 
 ### **Orden de Ejecución**:
 
 ```
-FASE 0 → FASE 1 → FASE 2 → FASE 3 → FASE 4 → FASE 5 → FASE 6 → FASE 7 → FASE 8
-  ⚙️      🗂️       🎭       🖱️       🎨       ⚡       🧮       🔄       🧹
+FASE 0 → FASE 1 → FASE 2-ALT → FASE 3 → FASE 4 → FASE 5
+  ⚙️      🗂️       🎯          🎨       ⚡       🧹
+  ✅      ✅       ⏳          ⏳       ⏳       ⏳
 ```
 
 ---
@@ -695,6 +504,48 @@ Si una fase falla:
 
 ---
 
-## 🎯 ¿LISTO PARA COMENZAR?
+## 🎯 PRÓXIMOS PASOS
 
-Ejecutar: `git status` para verificar estado limpio, luego comenzar con **FASE 0**.
+**Estado actual**: FASE 1 completada ✅
+
+**Siguiente**: FASE 2-ALT - Column Management Store (Arquitectura Unificada)
+
+**Recomendación**: Solicitar aprobación del usuario antes de comenzar FASE 2-ALT.
+
+---
+
+## 📝 NOTAS SOBRE CAMBIOS AL PLAN
+
+### **Cambios Arquitectónicos vs Plan Original**
+
+Este plan ha sido reestructurado basándose en feedback arquitectónico para consolidar responsabilidades:
+
+**Plan Original**:
+
+- FASE 2: Store de Selección de Stages (solo filtrado)
+- FASE 3: Store de Scroll/Drag (solo navegación)
+- FASE 6: Selectores Derivados (cálculos separados)
+- FASE 7: Sincronización (coordinación manual)
+
+**Plan Actualizado**:
+
+- **FASE 2-ALT**: Column Management Store (TODO unificado)
+  - Consolida filtrado + navegación + sincronización + derived state
+  - Elimina necesidad de coordinación manual
+  - Single Source of Truth para columnas
+
+**Ventajas del cambio**:
+
+1. ✅ Menos stores = menos complejidad
+2. ✅ Sin sincronización manual = menos bugs
+3. ✅ Derived state automático = siempre consistente
+4. ✅ Una fuente de verdad = más fácil de razonar
+5. ✅ Menos código total = más mantenible
+6. ✅ Testeable en aislamiento = mayor calidad
+
+**Trade-offs**:
+
+- ⚠️ FASE 2-ALT es más grande (pero reemplaza 4 fases originales)
+- ⚠️ Requiere más planificación inicial (pero menos iteraciones)
+
+**Resultado**: Mejor arquitectura, menos tiempo total, código más limpio.

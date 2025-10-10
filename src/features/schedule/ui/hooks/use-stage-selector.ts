@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-export function useStageNavigator() {
+export function useStageSelector() {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 

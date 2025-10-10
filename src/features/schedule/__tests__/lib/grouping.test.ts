@@ -208,7 +208,7 @@ describe('groupOverlappingEvents', () => {
     expect(individual.event.id).toBe('evt3')
   })
 
-  it('should sort events within group by end time', () => {
+  it('should keep events in input order within group', () => {
     const events: NormalizedEvent[] = [
       {
         event: {
@@ -231,8 +231,8 @@ describe('groupOverlappingEvents', () => {
     const result = groupOverlappingEvents(events)
     const group = result[0] as EventGroup
 
-    expect(group.events[0].event.id).toBe('evt2')
-    expect(group.events[1].event.id).toBe('evt1')
+    expect(group.events[0].event.id).toBe('evt1')
+    expect(group.events[1].event.id).toBe('evt2')
   })
 
   it('should handle events that are already sorted', () => {

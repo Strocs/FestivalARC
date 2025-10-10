@@ -1,5 +1,5 @@
 ---
-import { ScheduleGrid, adaptScheduleDataToGrid } from '@/features/schedule'
+import { ScheduleLayout, adaptScheduleDataToGrid } from '@/features/schedule'
 
 import {
   arc2025Day1ScheduleData,
@@ -14,7 +14,7 @@ import type {
 import type {
   UIHeaderItem,
   UIColumnItem,
-  ScheduleDay,
+  UIScheduleDay,
 } from '@/features/schedule'
 import { FESTIVAL_DAYS } from '@/features/arc2025/constants'
 
@@ -52,7 +52,7 @@ const mapEvent = (event: LayoutEvent<Arc2025EventPayload>): UIColumnItem => ({
   },
 })
 
-const scheduleDays: ScheduleDay[] = [
+const scheduleDays: UIScheduleDay[] = [
   {
     label: FESTIVAL_DAYS[0],
     data: adaptScheduleDataToGrid(arc2025Day1ScheduleData, mapTrack, mapEvent),
@@ -64,4 +64,4 @@ const scheduleDays: ScheduleDay[] = [
 ]
 ---
 
-<ScheduleGrid client:idle days={scheduleDays} />
+<ScheduleLayout client:idle groups={scheduleDays} />

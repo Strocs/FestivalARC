@@ -3,9 +3,9 @@ import { Image } from 'astro:assets'
 import Header from '../../components/ui/Header.astro'
 import Arc2025Layout from '../../Arc2025Layout.astro'
 import Schedule from './sections/Schedule.astro'
-import Title from '@/features/arc2025/components/ui/Title.astro'
 
 import FONDO_WEB_PROGRAMACION from '@/features/arc2025/assets/FONDO_VERDE.webp'
+import Title from '../../components/ui/Title.astro'
 ---
 
 <Arc2025Layout>
@@ -21,9 +21,8 @@ import FONDO_WEB_PROGRAMACION from '@/features/arc2025/assets/FONDO_VERDE.webp'
     class='fixed top-0 right-0 left-0 -z-30 h-lvh w-full object-cover object-center landscape:h-full'
   />
 
-  <Title subTitle='Sábado 18 y Domingo 19' class=''>Programación</Title>
-
   <main>
+    <Title subTitle='Sábado 18 y Domingo 19'>Programación</Title>
     <Schedule />
   </main>
 </Arc2025Layout>

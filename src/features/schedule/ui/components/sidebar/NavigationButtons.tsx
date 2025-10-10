@@ -1,20 +1,17 @@
 import { cn } from '@/features/shared/utils'
-
+import { useColumnsStore } from '../../stores/schedule-columns-store'
 interface ScheduleNavigationButtonsProps {
-  onNext: () => void
-  onPrev: () => void
-  canGoNext: boolean
-  canGoPrev: boolean
   className?: string
 }
 
 export function NavigationButtons({
-  onNext,
-  onPrev,
-  canGoNext,
-  canGoPrev,
   className,
 }: ScheduleNavigationButtonsProps) {
+  const canGoNext = useColumnsStore((state) => state.canGoNext)
+  const canGoPrev = useColumnsStore((state) => state.canGoPrev)
+  const goToNext = useColumnsStore((state) => state.goToNext)
+  const goToPrev = useColumnsStore((state) => state.goToPrev)
+
   return (
     <nav
       className={cn(
@@ -22,7 +19,7 @@ export function NavigationButtons({
         className,
       )}>
       <button
-        onClick={onPrev}
+        onClick={goToPrev}
         disabled={!canGoPrev}
         className={cn(
           'bg-25-black hover:bg-25-primary text-25-white flex h-full w-full cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
@@ -44,7 +41,7 @@ export function NavigationButtons({
         </svg>
       </button>
       <button
-        onClick={onNext}
+        onClick={goToNext}
         disabled={!canGoNext}
         className={cn(
           'bg-25-black hover:bg-25-primary text-25-white flex h-full w-full cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',

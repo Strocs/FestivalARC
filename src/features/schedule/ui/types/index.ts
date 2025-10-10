@@ -59,7 +59,7 @@ export interface UIGridLayout {
   columns: UIColumns[]
 }
 
-export interface ScheduleDay {
-  label: string
+export interface UIScheduleDay {
+  label?: string
   data: UIGridLayout
 }

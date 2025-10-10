@@ -21,7 +21,7 @@ export type {
   UIHeaderItem,
   UIColumns,
   UIColumnItem,
-  ScheduleDay,
+  UIScheduleDay,
 } from './ui/types'
 
 export type {
@@ -45,4 +45,4 @@ export function createScheduleData<T, E>(
 
 export { ScheduleData } from './core/schedule-data'
 export { adaptScheduleDataToGrid } from './ui/adapters/grid-adapter'
-export { ScheduleGrid } from './ui/components/grid/ScheduleGrid'
+export { ScheduleLayout } from './ui/components/grid/ScheduleLayout'

@@ -1,44 +1,20 @@
 import { cn } from '@/features/shared/utils'
 import type { UIHeaderItem } from '../../types'
+import { useColumnsStore } from '../../stores/schedule-columns-store'
 
-interface StageSelectionProps {
+interface StageFilterProps {
   stages: ReadonlyArray<UIHeaderItem>
-  selectedStageIds: string[]
-  onStageSelectionChange: (stageIds: string[]) => void
   isExpanded: boolean
 }
 
-export function StageSelection({
-  stages,
-  selectedStageIds,
-  onStageSelectionChange,
-  isExpanded,
-}: StageSelectionProps) {
-  const handleToggleStage = (stageId: string) => {
-    if (selectedStageIds.includes(stageId)) {
-      onStageSelectionChange(selectedStageIds.filter((id) => id !== stageId))
-    } else {
-      onStageSelectionChange([...selectedStageIds, stageId])
-    }
-  }
+export function StageFilter({ stages, isExpanded }: StageFilterProps) {
+  const selectedStageIds = useColumnsStore((state) => state.selectedStageIds)
 
-  const handleSelectAll = () => {
-    onStageSelectionChange(stages.map((stage) => stage.id))
-  }
-
-  const handleDeselectAll = () => {
-    onStageSelectionChange([])
-  }
-
-  const handleToggleAllStages = () => {
-    if (selectedStageIds.length === stages.length) {
-      handleDeselectAll()
-    } else {
-      handleSelectAll()
-    }
-  }
-
-  const sortedStages = [...stages].sort((a, b) => a.order - b.order)
+  const isAllSelected = useColumnsStore((state) => state.isAllSelected)
+  const toggleStage = useColumnsStore((state) => state.toggleStage)
+  const selectAll = useColumnsStore((state) => state.selectAll)
+  const deselectAll = useColumnsStore((state) => state.deselectAll)
+  const toggleAll = useColumnsStore((state) => state.toggleAll)
 
   return (
     <section className='bg-25-black hidden flex-col rounded-sm p-4 md:flex'>
@@ -50,14 +26,14 @@ export function StageSelection({
             : 'invisible h-0 w-0 overflow-hidden opacity-0',
         )}>
         <button
-          onClick={handleSelectAll}
+          onClick={selectAll}
           className='hover:text-25-white cursor-pointer text-sm text-gray-400'
           type='button'>
           Todos
         </button>
         <span className='text-gray-600'>|</span>
         <button
-          onClick={handleDeselectAll}
+          onClick={deselectAll}
           className='hover:text-25-white cursor-pointer text-sm text-gray-400'
           type='button'>
           Ninguno
@@ -67,13 +43,11 @@ export function StageSelection({
       {!isExpanded && (
         <div className='flex h-6 items-center'>
           <button
-            onClick={handleToggleAllStages}
-            className='hover:text-25-accent text-25-white mx-auto flex size-8 cursor-pointer items-center justify-center rounded-sm transition-colors duration-200'
+            onClick={toggleAll}
+            className='hover:text-25-accent text-25-white mx-auto flex size-8 cursor-pointer items-center justify-center rounded-xs transition-colors duration-200'
             type='button'
             aria-label={
-              selectedStageIds.length === stages.length
-                ? 'Deseleccionar todos'
-                : 'Seleccionar todos'
+              isAllSelected ? 'Deseleccionar todos' : 'Seleccionar todos'
             }>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -85,7 +59,7 @@ export function StageSelection({
               strokeWidth='2'
               strokeLinecap='round'
               strokeLinejoin='round'>
-              {selectedStageIds.length === stages.length ? (
+              {isAllSelected ? (
                 <>
                   <path d='M18 6L6 18' />
                   <path d='M6 6l12 12' />
@@ -100,16 +74,16 @@ export function StageSelection({
           </button>
         </div>
       )}
-      {sortedStages.map((stage) => (
+      {stages.map((stage) => (
         <label
           key={stage.id}
           className={cn(
-            'hover:bg-25-white/10 flex h-10 cursor-pointer items-center gap-2 rounded-sm px-2 transition-all duration-200 2xl:h-13',
+            'hover:bg-25-white/10 flex h-10 cursor-pointer items-center gap-2 rounded-xs px-2 transition-all duration-200 2xl:h-13',
           )}>
           <input
             type='checkbox'
             checked={selectedStageIds.includes(stage.id)}
-            onChange={() => handleToggleStage(stage.id)}
+            onChange={() => toggleStage(stage.id)}
             className='h-4 w-4 shrink-0 cursor-pointer'
           />
           <div

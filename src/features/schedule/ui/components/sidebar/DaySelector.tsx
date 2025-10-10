@@ -1,51 +1,49 @@
 import { cn } from '@/features/shared/utils'
+import { useDaysStore } from '../../stores/days-store'
 
 interface DaySelectorProps {
-  days: ReadonlyArray<{ label: string }>
-  currentDayIndex: number
-  onDayChange: (index: number) => void
   isExpanded?: boolean
 }
 
-export function DaySelector({
-  days,
-  currentDayIndex,
-  onDayChange,
-  isExpanded = true,
-}: DaySelectorProps) {
-  const canGoPrev = currentDayIndex > 0
-  const canGoNext = currentDayIndex < days.length - 1
+export function DaySelector({ isExpanded = true }: DaySelectorProps) {
+  const currentDayIndex = useDaysStore((state) => state.currentDayIndex)
+  const canGoPrevDay = useDaysStore((state) => state.canGoPrevDay)
+  const canGoNextDay = useDaysStore((state) => state.canGoNextDay)
+  const prevDay = useDaysStore((state) => state.prevDay)
+  const nextDay = useDaysStore((state) => state.nextDay)
+  const days = useDaysStore((state) => state.days)
 
   const handlePrevious = () => {
-    if (canGoPrev) {
-      onDayChange(currentDayIndex - 1)
+    if (canGoPrevDay) {
+      // TODO: link columnsStore with dayStore
+      // Here we need to trigger a columnStore change setting the new columns
+      prevDay()
     }
   }
 
   const handleNext = () => {
-    if (canGoNext) {
-      onDayChange(currentDayIndex + 1)
+    if (canGoNextDay) {
+      // Here we need to trigger a columnStore change setting the new columns
+      nextDay()
     }
   }
 
-  if (days.length <= 1) {
-    return null
-  }
-
-  const currentLabel = days[currentDayIndex].label
+  // Techincal Doubt: this information must came from the implementation of the schedule.
+  const currentLabel = days[currentDayIndex]
   const dayParts = currentLabel.split(' ')
   const dayName = dayParts[0] || ''
   const dayNumber = dayParts[1] || ''
+
   return (
     <div className='bg-25-black flex items-center justify-center rounded-sm px-4 py-2'>
       <button
         onClick={handlePrevious}
-        disabled={!canGoPrev}
+        disabled={!canGoPrevDay}
         type='button'
         aria-label='Día anterior'
         className={cn(
           'text-25-white hover:text-25-accent flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
-          !canGoPrev && 'cursor-not-allowed opacity-30',
+          !canGoPrevDay && 'cursor-not-allowed opacity-30',
         )}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -79,12 +77,12 @@ export function DaySelector({
 
       <button
         onClick={handleNext}
-        disabled={!canGoNext}
+        disabled={!canGoNextDay}
         type='button'
         aria-label='Día siguiente'
         className={cn(
           'text-25-white hover:text-25-accent flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
-          !canGoNext && 'cursor-not-allowed opacity-30',
+          !canGoNextDay && 'cursor-not-allowed opacity-30',
         )}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
