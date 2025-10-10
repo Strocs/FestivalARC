@@ -11,10 +11,11 @@ interface UseHorizontalDragReturn {
   offset: number
   isDragging: boolean
   wrapperRef: React.RefObject<HTMLDivElement | null>
-  goToColumn: (index: number) => void
+  goToColumn: (index: number, animated?: boolean) => void
   goToNext: () => void
   goToPrev: () => void
   currentColumnIndex: number
+  resetPosition: () => void
 }
 
 type DragState = 'idle' | 'detecting' | 'dragging'
@@ -95,7 +96,7 @@ export function useHorizontalDrag({
   }, [])
 
   const goToColumn = useCallback(
-    (index: number) => {
+    (index: number, animated: boolean = true) => {
       const clampedIndex = Math.max(
         0,
         Math.min(index, totalColumns - visibleColumns),
@@ -103,7 +104,7 @@ export function useHorizontalDrag({
       const newOffset = -clampedIndex * columnWidth
       setOffset(newOffset)
       setCurrentColumnIndex(clampedIndex)
-      applyTransform(newOffset, true)
+      applyTransform(newOffset, animated)
       onPositionChange?.(clampedIndex)
     },
     [
@@ -122,6 +123,10 @@ export function useHorizontalDrag({
   const goToPrev = useCallback(() => {
     goToColumn(currentColumnIndex - 1)
   }, [currentColumnIndex, goToColumn])
+
+  const resetPosition = useCallback(() => {
+    goToColumn(0)
+  }, [goToColumn])
 
   const handleDragStart = useCallback((clientX: number, clientY: number) => {
     dragStateRef.current = {
@@ -266,5 +271,6 @@ export function useHorizontalDrag({
     goToNext,
     goToPrev,
     currentColumnIndex,
+    resetPosition,
   }
 }
