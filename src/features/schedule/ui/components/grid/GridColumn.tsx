@@ -33,8 +33,8 @@ export function GridColumn({
       {header ? (
         <li
           className={cn(
-            header &&
-              'font-neris sticky top-16 z-50 flex h-full flex-col justify-center rounded-xs text-center font-bold capitalize md:top-4',
+            'font-neris sticky top-16 z-50 flex h-full flex-col justify-center rounded-xs text-center font-bold capitalize md:top-4',
+            'opacity-0 md:opacity-100',
           )}
           style={{ backgroundColor: header.color }}>
           <h3 className='text-2xl leading-none text-[#f7f7f7]'>
