@@ -2,29 +2,46 @@
   class='absolute top-0 left-0 z-50 flex min-h-20 w-full items-center justify-center'>
   <nav
     class='absolute top-0 left-0 flex min-h-20 w-full items-center justify-center'>
-    <ul class='font-neris flex gap-4 text-lg'>
+    <ul class='font-neris flex items-center gap-4 text-lg'>
       <li
-        class='-skew-y-3 font-medium transition-transform duration-150 hover:-skew-0'>
-        <button class='bg-25-black text-25-white cursor-pointer px-3 pt-1 pb-2'>
+        class='-skew-y-6 font-medium transition-transform duration-150 hover:skew-0'>
+        <button
+          data-scroll-to='hero'
+          class='bg-25-black text-25-white cursor-pointer px-3 pt-1 pb-2'>
           Inicio
         </button>
       </li>
       <li
-        class='-skew-y-3 font-medium transition-transform duration-150 hover:-skew-0'>
-        <a
-          href='#programacion'
-          class='bg-25-black text-25-white cursor-pointer px-3 pt-1 pb-2'>
-          Programación
-        </a>
-      </li>
-      <li
-        class='-skew-y-3 font-medium transition-transform duration-150 hover:-skew-0'>
-        <a
-          href='#mapa'
+        class='-skew-y-6 font-medium transition-transform duration-150 hover:skew-0'>
+        <button
+          data-scroll-to='mapa'
           class='bg-25-black text-25-white cursor-pointer px-3 pt-1 pb-2'>
           Mapa
-        </a>
+        </button>
+      </li>
+      <li
+        class='-skew-y-6 font-medium transition-transform duration-150 hover:skew-0'>
+        <button
+          data-scroll-to='programacion'
+          class='bg-25-black text-25-white cursor-pointer px-3 pt-1 pb-2'>
+          Programación
+        </button>
       </li>
     </ul>
   </nav>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-scroll-to]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const targetId = button.getAttribute('data-scroll-to') ?? ''
+        const targetElement = document.getElementById(targetId)
+
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' })
+        }
+      })
+    })
+  })
+</script>
