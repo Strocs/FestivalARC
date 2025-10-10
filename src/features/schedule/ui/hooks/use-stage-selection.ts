@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {
   getValidTrackIds,
   trackSelectionStorage,
 } from '../../storage/track-selection-storage'
 
-export function useStageSelection(stagesIds: string[]) {
+export function useStageSelection(
+  stagesIds: string[],
+  onSelectionChange?: () => void,
+) {
   const [selectedStageIds, setSelectedStageIds] = useState<string[]>(stagesIds)
+  const isInitialMount = useRef(true)
 
   useEffect(() => {
     const storedIds = trackSelectionStorage.get()
@@ -18,7 +22,15 @@ export function useStageSelection(stagesIds: string[]) {
 
   useEffect(() => {
     trackSelectionStorage.set(selectedStageIds)
-  }, [selectedStageIds])
+
+    if (!isInitialMount.current && onSelectionChange) {
+      onSelectionChange()
+    }
+
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+    }
+  }, [selectedStageIds, onSelectionChange])
 
   return {
     selectedStageIds,
