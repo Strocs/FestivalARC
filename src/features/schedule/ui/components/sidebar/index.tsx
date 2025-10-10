@@ -10,6 +10,7 @@ interface SidebarProps {
   onStageSelectionChange: (stageIds: string[]) => void
   daySelector?: (isExpanded: boolean) => React.ReactNode
   navigation?: React.ReactNode
+  stageNavigator?: React.ReactNode
 }
 
 const STORAGE_KEY = 'festivalarc-sidebar-expanded'
@@ -20,6 +21,7 @@ export function Sidebar({
   onStageSelectionChange,
   daySelector,
   navigation,
+  stageNavigator,
 }: SidebarProps) {
   const [isExpanded, setIsExpanded] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -44,6 +46,9 @@ export function Sidebar({
       {navigation}
 
       {daySelector?.(isExpanded)}
+
+      {stageNavigator}
+
       <StageSelection
         stages={stages}
         selectedStageIds={selectedStageIds}
