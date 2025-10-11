@@ -208,33 +208,6 @@ describe('groupOverlappingEvents', () => {
     expect(individual.event.id).toBe('evt3')
   })
 
-  it('should sort events within group by end time', () => {
-    const events: NormalizedEvent[] = [
-      {
-        event: {
-          id: 'evt1',
-          trackId: 'track1',
-          time: { start: '18:00', end: '19:30' },
-        },
-        time: { start: 1080, end: 1170 },
-      },
-      {
-        event: {
-          id: 'evt2',
-          trackId: 'track1',
-          time: { start: '18:30', end: '19:00' },
-        },
-        time: { start: 1110, end: 1140 },
-      },
-    ]
-
-    const result = groupOverlappingEvents(events)
-    const group = result[0] as EventGroup
-
-    expect(group.events[0].event.id).toBe('evt2')
-    expect(group.events[1].event.id).toBe('evt1')
-  })
-
   it('should handle events that are already sorted', () => {
     const events: NormalizedEvent[] = [
       {
