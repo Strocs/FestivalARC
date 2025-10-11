@@ -40,14 +40,13 @@ export function Sidebar({
   return (
     <aside
       className={cn(
-        'sticky top-2 z-10 flex h-fit w-full shrink-0 flex-col gap-2 px-3 transition-[width] duration-300 ease-in-out md:top-4 md:px-4',
+        'sticky top-[84vh] z-10 flex h-fit w-full shrink-0 flex-col gap-2 px-3 transition-[width] duration-300 ease-in-out md:top-4 md:px-4',
         isExpanded ? 'md:w-72' : 'md:w-30',
       )}>
       {navigation}
 
-      {daySelector?.(isExpanded)}
-
       {stageNavigator}
+      {daySelector?.(isExpanded)}
 
       <StageSelection
         stages={stages}
