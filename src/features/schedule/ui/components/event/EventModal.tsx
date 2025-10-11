@@ -77,7 +77,7 @@ export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
         ])}>
         <button
           onClick={onClose}
-          className='bg-25-blue text-25-white hover:bg-25-primary absolute top-3 right-3 z-6 flex size-8 cursor-pointer items-center justify-center rounded-full transition-colors duration-300 md:-top-5 md:-right-5 md:size-10'
+          className='bg-25-blue text-25-white hover:bg-25-primary absolute top-auto right-3 bottom-3 z-6 flex size-8 cursor-pointer items-center justify-center rounded-full transition-colors duration-300 md:-top-5 md:-right-5 md:size-10 xl:top-3 xl:bottom-auto'
           aria-label='Cerrar modal'>
           {/* Change to svg X shape  */}
           <svg
