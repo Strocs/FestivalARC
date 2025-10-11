@@ -30,43 +30,9 @@ export function StageNavigator({
       ref={dropdownRef}
       className='font-neris relative flex h-[var(--header-height)] rounded-xs text-center capitalize md:top-4 md:hidden'
       style={{ backgroundColor: currentStage.color }}>
-      <button
-        onClick={onToggle}
-        type='button'
-        className='hover:bg-25-white/10 flex w-full items-center justify-between gap-2 px-4 py-3 transition-colors duration-200'>
-        <div className='mx-auto flex w-fit flex-col items-center'>
-          <h3 className='text-xl leading-none font-bold text-[#f7f7f7]'>
-            {currentStage.name}
-          </h3>
-          {currentStage.category && (
-            <>
-              <span className='text-25-white/90 block leading-none'>
-                {currentStage.category}
-              </span>
-            </>
-          )}
-        </div>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          width='20'
-          height='20'
-          viewBox='0 0 24 24'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='2'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          className={cn(
-            'text-25-white shrink-0 transition-transform duration-200',
-            isOpen && 'rotate-180',
-          )}>
-          <path d='M6 9l6 6 6-6' />
-        </svg>
-      </button>
-
       <div
         className={cn(
-          'absolute top-full left-0 z-20 mt-2 w-full overflow-hidden rounded-xs p-2 transition-all duration-200',
+          'absolute bottom-full left-0 z-20 mb-2 w-full overflow-hidden rounded-xs p-2 transition-all duration-200',
           isOpen
             ? 'bg-25-black visible max-h-fit opacity-100 shadow-lg'
             : 'invisible max-h-0 opacity-0',
@@ -107,6 +73,40 @@ export function StageNavigator({
           })}
         </div>
       </div>
+
+      <button
+        onClick={onToggle}
+        type='button'
+        className='hover:bg-25-white/10 flex w-full items-center justify-between gap-2 px-6 py-3 transition-colors duration-200'>
+        <div className='mx-auto flex w-fit flex-col items-center'>
+          <h3 className='text-xl leading-none font-bold text-[#f7f7f7]'>
+            {currentStage.name}
+          </h3>
+          {currentStage.category && (
+            <>
+              <span className='text-25-white/90 block leading-none'>
+                {currentStage.category}
+              </span>
+            </>
+          )}
+        </div>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='20'
+          height='20'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          strokeWidth='4'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          className={cn(
+            'text-25-white shrink-0 transition-transform duration-200',
+            !isOpen && 'rotate-180',
+          )}>
+          <path d='M6 9l6 6 6-6' />
+        </svg>
+      </button>
     </div>
   )
 }
