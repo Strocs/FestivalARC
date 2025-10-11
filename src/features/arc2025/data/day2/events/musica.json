@@ -1,0 +1,100 @@
+[
+  {
+    "id": "purreira",
+    "title": "Purreira",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "15:00",
+      "end": "15:30"
+    },
+    "category": "Música",
+    "duration": "30 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "curi-rosales",
+    "title": "Curi Rosales",
+    "subTitle": "",
+    "description": "Curi Rosales es un artista interdisciplinario que visibiliza las disidencias e identidades de género. Con una formación principalmente autodidacta, ha desarrollado una carrera versátil, transitando por diferentes géneros. Su trabajo lo ha consolidado en la escena musical de la Región de Coquimbo.",
+    "trackId": "stage-c",
+    "time": {
+      "start": "16:30",
+      "end": "17:00"
+    },
+    "category": "Música",
+    "duration": "30 Minutos",
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/CORIROSALES.png"
+  },
+  {
+    "id": "astronautiko",
+    "title": "Astronautiko",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "18:00",
+      "end": "18:30"
+    },
+    "category": "Música",
+    "duration": "30 Minutos",
+    "galleryUrl": ""
+  },
+  {
+    "id": "chini-png",
+    "title": "Chini PNG",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "19:30",
+      "end": "20:00"
+    },
+    "category": "Música",
+    "duration": "30 Minutos",
+    "galleryUrl": "/FOTOS_ARTISTAS/ARTISTAS_NACIONALES/chini.jpg"
+  },
+  {
+    "id": "los-lobitos",
+    "title": "Los Lobitos",
+    "subTitle": "",
+    "description": "Formado por destacados músicos de la Región de Coquimbo. Su propuesta combina la influencias del jazz y diversos ritmos locales con experiencia, creatividad y participación del público, integrando instrumentos, dinámicas grupales y composiciones originales. Los Lobitos desarrollan música interactiva que trasciende géneros y escenarios.",
+    "trackId": "stage-c",
+    "time": {
+      "start": "21:00",
+      "end": "21:30"
+    },
+    "category": "Música",
+    "duration": "30 Minutos",
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/LOSLOBITOS.jpg"
+  },
+  {
+    "id": "fonk-machine",
+    "title": "Fonk Machine",
+    "subTitle": "",
+    "description": "Banda independiente nacida en 2012 en La Serena, inspirada en la música urbana y el concepto de hip-hop band. Su propuesta fusiona rap, R&B y neosoul, creando un sonido contemporáneo que dialoga con las raíces del hip-hop y las nuevas corrientes musicales.",
+    "trackId": "stage-c",
+    "time": {
+      "start": "21:30",
+      "end": "22:00"
+    },
+    "category": "Música",
+    "duration": "30 Minutos",
+    "galleryUrl": "/FOTOS_ARTISTAS/MUSICA/FONKMACHINE.jpg"
+  },
+  {
+    "id": "los-tetas",
+    "title": "Los Tetas",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-c",
+    "time": {
+      "start": "22:00",
+      "end": "23:00"
+    },
+    "category": "Música",
+    "duration": "1 Hora",
+    "galleryUrl": "/FOTOS_ARTISTAS/ARTISTAS_NACIONALES/los tetas.png"
+  }
+]

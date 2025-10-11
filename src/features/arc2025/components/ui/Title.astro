@@ -1,0 +1,33 @@
+---
+import { cn } from '@/features/shared/utils'
+
+interface Props {
+  subTitle?: string
+  size?: 'md' | 'lg' | 'xl'
+}
+
+const { subTitle, size = 'xl' } = Astro.props
+
+const sizeClasses: Record<'md' | 'lg' | 'xl', string> = {
+  md: 'text-[2.8rem] leading-[2.8rem] md:text-7xl md:leading-none',
+  lg: 'text-6xl leading-tight md:text-7xl',
+  xl: 'text-[3.4rem] leading-[3.4rem] md:text-8xl md:leading-none',
+}
+---
+
+<h2 class='mx-auto w-fit py-12 md:space-y-2'>
+  <span
+    class={cn(
+      'font-dk bg-25-accent text-25-primary mx-auto block w-fit -skew-y-3 rounded-xs px-6 text-center shadow-xl',
+      sizeClasses[size],
+    )}>
+    <slot />
+  </span>
+  {
+    subTitle && (
+      <span class='font-neris bg-25-blue text-25-white mx-auto block w-fit rounded-xs px-4 pb-2 text-2xl font-semibold shadow-md md:text-4xl'>
+        {subTitle}
+      </span>
+    )
+  }
+</h2>

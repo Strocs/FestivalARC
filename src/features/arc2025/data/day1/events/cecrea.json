@@ -1,0 +1,41 @@
+[
+  {
+    "id": "experiencia-creativa-parque-sonoro",
+    "title": "Experiencia Creativa Parque Sonoro",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-i",
+    "time": {
+      "start": "15:30",
+      "end": "16:00"
+    },
+    "category": "Cecrea",
+    "galleryUrl": ""
+  },
+  {
+    "id": "espacio-de-bienestar",
+    "title": "Espacio de Bienestar",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-i",
+    "time": {
+      "start": "17:00",
+      "end": "18:00"
+    },
+    "category": "Cecrea",
+    "galleryUrl": ""
+  },
+  {
+    "id": "experiencia-escritura-creativa-2",
+    "title": "Experiencia de Escritura Creativa",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-i",
+    "time": {
+      "start": "18:30",
+      "end": "19:00"
+    },
+    "category": "Cecrea",
+    "galleryUrl": ""
+  }
+]

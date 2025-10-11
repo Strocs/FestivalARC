@@ -1,0 +1,93 @@
+[
+  {
+    "id": "apuntes-de-tres-siglos",
+    "title": "Apuntes de Tres Siglos. Liceo de Niñas Gabriela Mistral de La Serena",
+    "subTitle": "Orieta Collao Mierzejerosky y Gabriel Canihuante Maureira\nNueva Mirada Ediciones\nPresenta: Lorena Arenas López",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "15:00",
+      "end": "16:00"
+    },
+    "category": "Literatura",
+    "galleryUrl": ""
+  },
+  {
+    "id": "solido-comix-20",
+    "title": "Sólido Comix N.º 20",
+    "subTitle": "Solid Ediciones\nPresenta: Marcelo Tapia",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "16:00",
+      "end": "17:00"
+    },
+    "category": "Literatura",
+    "galleryUrl": ""
+  },
+  {
+    "id": "extrapicante-y-otros-relatos-perversos",
+    "title": "Extrapicante y Otros Relatos Perversos",
+    "subTitle": "Claudio Ríos Espinoza\nEditorial Caburé\nSech. Sociedad de Escritores de Chile\nPresenta: Viviana Larrondo",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "17:00",
+      "end": "17:30"
+    },
+    "category": "Literatura",
+    "galleryUrl": ""
+  },
+  {
+    "id": "recetario-de-recuerdos",
+    "title": "Recetario de Recuerdos",
+    "subTitle": "Anni Garrido Rodríguez\nMarciano Ediciones\nSech. Sociedad de Escritores de Chile\nPresenta: Clo Domínguez",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "17:30",
+      "end": "18:00"
+    },
+    "category": "Literatura",
+    "galleryUrl": ""
+  },
+  {
+    "id": "ollie",
+    "title": "Ollie",
+    "subTitle": "Francisca Torrealba y Belén Varas\nMarsalado Ediciones\nPresenta: Patricia Vega",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "18:00",
+      "end": "19:00"
+    },
+    "category": "Literatura",
+    "galleryUrl": ""
+  },
+  {
+    "id": "lecturas-aberrantes-y-hermeneutica-esquizo",
+    "title": "Lecturas Aberrantes y Hermenéutica Esquizo",
+    "subTitle": "Cristian Geisse\nBordelibre Ediciones\nPresenta: Paula Ceballos Huerta",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "19:00",
+      "end": "20:00"
+    },
+    "category": "Literatura",
+    "galleryUrl": ""
+  },
+  {
+    "id": "cuatro-arcos-y-un-puzle",
+    "title": "Cuatro Arcos y un Puzle. Un Método Cooperativo para el Aprendizaje  de Técnicas de Arco en el Cuarteto de Cuerdas",
+    "subTitle": "Monserrat Trujillo-Peña y Leonardo Godoy Sepúlveda\nCasa Editorial Universidad de La Serena\nPresenta: Michèle Rouliez",
+    "description": "",
+    "trackId": "stage-e",
+    "time": {
+      "start": "20:00",
+      "end": "21:00"
+    },
+    "category": "Literatura",
+    "galleryUrl": ""
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "stage-a",
+    "name": "Escenario Teatro",
+    "color": "#4f8fcc",
+    "order": 1,
+    "category": ""
+  },
+  {
+    "id": "stage-b",
+    "name": "Escenario Circo/Danza",
+    "color": "#ffbf26",
+    "order": 2,
+    "category": ""
+  },
+  {
+    "id": "stage-c",
+    "name": "Escenario Música",
+    "color": "#89cc48",
+    "order": 3,
+    "category": ""
+  },
+  {
+    "id": "stage-d",
+    "name": "Espacio Narración Oral",
+    "color": "#81235a",
+    "order": 4,
+    "category": ""
+  },
+  {
+    "id": "stage-e",
+    "name": "Bulevar Literario",
+    "color": "#00a4e6",
+    "order": 5,
+    "category": "Escenario Modular"
+  },
+  {
+    "id": "stage-f",
+    "name": "Talleres/Charlas",
+    "color": "#e62020",
+    "order": 6,
+    "category": "Escenario Modular"
+  },
+  {
+    "id": "stage-g",
+    "name": "Charlas",
+    "color": "#3c4b5c",
+    "order": 7,
+    "category": "Escenario Modular"
+  },
+  {
+    "id": "stage-h",
+    "name": "Espacio Estelar",
+    "color": "#b3b3b3",
+    "order": 8,
+    "category": ""
+  },
+  {
+    "id": "stage-i",
+    "name": "Espacio Cecrea",
+    "color": "#e87428",
+    "order": 9,
+    "category": ""
+  },
+  {
+    "id": "stage-j",
+    "name": "Artes de La Visualidad",
+    "color": "#7b38b0",
+    "order": 10,
+    "category": "Instalaciones y Talleres"
+  }
+]

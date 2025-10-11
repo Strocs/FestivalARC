@@ -1,0 +1,54 @@
+[
+  {
+    "id": "escucha-inmersiva",
+    "title": "Escucha inmersiva",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-h",
+    "time": {
+      "start": "15:30",
+      "end": "16:00"
+    },
+    "category": "Estelar",
+    "galleryUrl": ""
+  },
+  {
+    "id": "bioarte-sonoro",
+    "title": "BíoArte Sonoro: Viaje de Tierra y Aire",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-h",
+    "time": {
+      "start": "17:00",
+      "end": "17:30"
+    },
+    "category": "Estelar",
+    "galleryUrl": ""
+  },
+  {
+    "id": "duo-pola-castillo",
+    "title": "Dúo Pola Castillo y Chicoria Sánchez: Concierto íntimo",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-h",
+    "time": {
+      "start": "18:30",
+      "end": "19:00"
+    },
+    "category": "Estelar",
+    "galleryUrl": ""
+  },
+  {
+    "id": "fundacion-villanueva",
+    "title": "Fundación Villanueva: Las Delicias de la Soledad",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-h",
+    "time": {
+      "start": "20:00",
+      "end": "20:30"
+    },
+    "category": "Estelar",
+    "galleryUrl": ""
+  }
+]
