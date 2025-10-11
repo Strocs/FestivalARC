@@ -56,7 +56,7 @@ export const EventItem = ({
       id={id}
       className={cn([
         'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10 before:rounded-xs after:rounded-b-xs group-hover:after:rounded-xs',
-        '[--sticky-top-height:9rem] md:[--sticky-top-height:7rem]',
+        '[--sticky-top-height:4rem] md:[--sticky-top-height:7rem]',
         'pointer-events-none',
         'grid h-fit min-h-[var(--item-height)] w-full min-w-[320px] gap-2 px-4 pt-8 leading-4 shadow-lg duration-300',
         "before:absolute before:-z-20 before:h-full before:w-full before:content-['']",
