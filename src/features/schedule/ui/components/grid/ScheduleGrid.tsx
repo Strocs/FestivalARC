@@ -182,6 +182,7 @@ export function ScheduleGrid(props: ScheduleGridProps) {
 
     if (stageIndexInFiltered !== -1) {
       goToColumn(stageIndexInFiltered)
+      handleFloatingButtonClick()
     }
 
     closeStageNavigator()
@@ -229,7 +230,7 @@ export function ScheduleGrid(props: ScheduleGridProps) {
           }
         />
 
-        <section className='flex gap-2'>
+        <section className='-mt-[150px] flex gap-2 md:mt-auto'>
           <GridColumn length={{ rows: timeColumn.length, columns: 1 }}>
             <GridTimeSlots timeColumn={timeColumn} />
           </GridColumn>
