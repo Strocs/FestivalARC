@@ -19,7 +19,7 @@ export function FloatingButton({
     <button
       onClick={onClick}
       className={cn(
-        'font-neris fixed right-4 bottom-4 z-50',
+        'font-neris fixed top-4 right-4 z-50 md:top-auto md:bottom-4',
         'bg-25-primary cursor-pointer rounded-full px-3 pt-1 pb-1.5 shadow-lg',
         'text-25-white font-bold',
         'transition-all duration-300 ease-in-out',
