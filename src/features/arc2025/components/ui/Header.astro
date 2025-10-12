@@ -1,0 +1,70 @@
+---
+import Logo from '../ui/Logo.astro'
+import { cn } from '@/features/shared/utils'
+
+interface Props {
+  withLogo?: boolean
+}
+
+const { withLogo = true } = Astro.props
+
+const navItems = [
+  { id: 'hero', label: 'Inicio', path: '/' },
+  { id: 'programacion', label: 'Programación', path: '/programacion' },
+]
+---
+
+<header
+  class={cn(
+    'w-full min-h-20 relative flex items-center justify-between px-4',
+    withLogo && 'bg-25-black',
+  )}>
+  {
+    withLogo && (
+      <section class='flex gap-4 items-center justify-center z-20'>
+        <Logo transitionName='main-logo'  />
+        <div class="text-25-white font-neris">
+          <strong>18 y 19 de Octubre</strong>
+          <p>Parque Pedro de Valdivia, La Serena</p>
+        </div>
+      </section>
+      <section class='flex text-25-white gap-4 z-20'>
+    <a  
+          href='https://www.portaldisc.com/evento/festivalarc2025-18oct'
+          aria-label='Comprar ticket para el día sábado 18 de octubre'
+          rel='noopener noreferrer'
+      target="_blank" class='text-center leading-none px-4 block'>Tickets<span class='block text-xl leading-none'>Viernes 18</span></a>
+    <a 
+
+          href='https://www.portaldisc.com/evento/festivalarc2025-19oct'
+          aria-label='Comprar ticket para el Sábado 19 de Octubre'
+          target='_blank'
+      target="_blank" class='text-center leading-none px-4 block'>Tickets<span class='block text-xl leading-none'>Sábado 19</span></a>
+      </section>
+    )
+  }
+
+
+
+  <nav class={cn('absolute z-10 flex w-full items-center justify-center')}>
+    <ul class='font-neris flex items-center gap-4 text-lg'>
+      {
+        navItems.map(({ id, label, path }) => (
+          <li
+            id={'nav-' + id}
+            class={cn(
+              'text-25-white font-dk text-xl rounded-xs font-medium transition-transform duration-150 hover:-skew-y-4  cursor-pointer',
+              withLogo ? 'bg-25-primary' : 'bg-25-black',
+            )}>
+            <a
+              href={path}
+          class="size-full  block px-4"
+              >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>

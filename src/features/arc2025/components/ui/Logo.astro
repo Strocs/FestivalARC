@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets'
+import { cn } from '@/features/shared/utils'
+
+import LOGO from '@/features/arc2025/assets/ARC25.webp'
+
+interface Props {
+  class?: string
+  size?: 'small' | 'large'
+  transitionName?: string
+}
+
+const { class: customClass, size = 'small', transitionName } = Astro.props
+
+const sizeVariants = {
+  small: 'w-28',
+  large: 'w-60 md:w-[500px]',
+}
+---
+
+<figure
+  class='mx-auto size-fit'
+  style={transitionName
+    ? `view-transition-name: ${transitionName}`
+    : undefined}>
+  <Image
+    src={LOGO}
+    width={LOGO.width}
+    height={LOGO.height}
+    alt='Logo Festival ARC 2025'
+    class={cn('aspect-[500/180] h-fit', sizeVariants[size], customClass)}
+    loading='eager'
+  />
+</figure>
