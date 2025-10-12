@@ -6,11 +6,12 @@ import { Image } from 'astro:assets'
 
 <section class='relative w-full px-4'>
   <Title subTitle='Distribución de Espacios' class=''>Mapa ARC</Title>
+  <!-- TODO: Need to add a zoom feature on the map -->
   <Image
     src={MAPA}
     alt='Mapa de Distribución de Espacios del Festival ARC 2025'
     width={MAPA.width}
     height={MAPA.height}
-    class='mx-auto -mt-18 aspect-auto h-fit w-full rounded-sm'
+    class='mx-auto aspect-auto h-fit w-full rounded-sm md:-mt-10 lg:-mt-18'
   />
 </section>
