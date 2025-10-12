@@ -215,7 +215,7 @@ export function ScheduleGrid(props: ScheduleGridProps) {
               onPrev={goToPrev}
               canGoNext={canGoNext}
               canGoPrev={canGoPrev}
-              className='hidden items-center justify-between rounded-xs px-4 py-2 md:flex'
+              className='hidden items-center justify-between md:flex'
             />
           }
           stageNavigator={
