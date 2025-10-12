@@ -10,18 +10,18 @@ import FONDO_WEB from '@/features/arc2025/assets/fondo_arc.webp'
 ---
 
 <Arc2025Layout>
+  <Image
+    aria-hidden='true'
+    alt='Fondo del Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
+    src={FONDO_WEB}
+    quality={90}
+    height={FONDO_WEB.height}
+    width={FONDO_WEB.width}
+    class='fixed inset-0 -z-20 h-full min-h-screen w-full object-cover object-left xl:object-center'
+    loading='eager'
+  />
   <Header withLogo={false} />
   <main class='mx-auto h-full w-full'>
-    <Image
-      aria-hidden='true'
-      alt='Fondo del Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
-      src={FONDO_WEB}
-      quality={90}
-      height={FONDO_WEB.height}
-      width={FONDO_WEB.width}
-      class='fixed top-0 -z-20 h-screen w-full overflow-hidden object-cover object-left xl:object-center'
-      loading='eager'
-    />
     <Hero />
     <Map />
   </main>
