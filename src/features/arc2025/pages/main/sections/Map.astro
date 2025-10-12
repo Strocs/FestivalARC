@@ -6,12 +6,262 @@ import { Image } from 'astro:assets'
 
 <section class='relative w-full px-4'>
   <Title subTitle='Distribución de Espacios' class=''>Mapa ARC</Title>
-  <!-- TODO: Need to add a zoom feature on the map -->
-  <Image
-    src={MAPA}
-    alt='Mapa de Distribución de Espacios del Festival ARC 2025'
-    width={MAPA.width}
-    height={MAPA.height}
-    class='mx-auto aspect-auto h-fit w-full rounded-sm md:-mt-10 lg:-mt-18'
-  />
+  <div
+    id='map-container'
+    class='relative cursor-pointer transition-opacity hover:opacity-90'
+  >
+    <Image
+      id='map-image'
+      src={MAPA}
+      alt='Mapa de Distribución de Espacios del Festival ARC 2025'
+      width={MAPA.width}
+      height={MAPA.height}
+      class='mx-auto aspect-auto h-fit w-full max-w-6xl rounded-sm md:-mt-10 lg:-mt-18'
+    />
+  </div>
+
+  <div
+    id='map-modal'
+    class='pointer-events-none fixed inset-0 z-50 opacity-0 transition-opacity duration-300'
+    role='dialog'
+    aria-modal='true'
+    aria-label='Vista ampliada del mapa'
+  >
+    <div id='modal-backdrop' class='fixed inset-0 bg-black/90'></div>
+    <div class='fixed inset-0'>
+      <button
+        id='close-modal'
+        class='fixed right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-2xl leading-none transition-colors hover:bg-white focus:outline-none focus:ring-2 focus:ring-white/50 md:h-12 md:w-12 md:text-3xl'
+        aria-label='Cerrar vista ampliada'
+      >
+        ×
+      </button>
+      <div
+        id='panzoom-container'
+        class='fixed inset-0 h-[100dvh] w-full overflow-hidden p-8 md:p-16'
+        style='touch-action: none;'
+      >
+        <div id='panzoom-wrapper' class='relative h-full w-full overflow-hidden'>
+          <img
+            id='panzoom-image'
+            src={MAPA.src}
+            alt='Mapa de Distribución de Espacios del Festival ARC 2025'
+            class='touch-none select-none'
+            style='cursor: grab;'
+            draggable='false'
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  import Panzoom from '@panzoom/panzoom'
+
+  const mapContainer = document.getElementById('map-container')
+  const mapModal = document.getElementById('map-modal')
+  const modalBackdrop = document.getElementById('modal-backdrop')
+  const closeButton = document.getElementById('close-modal')
+  const panzoomContainer = document.getElementById('panzoom-container')
+  const panzoomWrapper = document.getElementById('panzoom-wrapper')
+  const panzoomImage = document.getElementById('panzoom-image') as HTMLImageElement
+
+  let panzoomInstance: ReturnType<typeof Panzoom> | null = null
+  let wheelListener: ((event: WheelEvent) => void) | null = null
+
+  function initializePanzoom() {
+    if (!panzoomWrapper || !panzoomImage) return
+
+    const wrapperRect = panzoomWrapper.getBoundingClientRect()
+    const imageAspect = panzoomImage.naturalWidth / panzoomImage.naturalHeight
+    const wrapperAspect = wrapperRect.width / wrapperRect.height
+
+    let initialWidth: number, initialHeight: number
+
+    if (imageAspect > wrapperAspect) {
+      initialWidth = wrapperRect.width
+      initialHeight = initialWidth / imageAspect
+    } else {
+      initialHeight = wrapperRect.height
+      initialWidth = initialHeight * imageAspect
+    }
+
+    panzoomImage.style.width = `${initialWidth}px`
+    panzoomImage.style.height = `${initialHeight}px`
+
+    const centerX = (wrapperRect.width - initialWidth) / 2
+    const centerY = (wrapperRect.height - initialHeight) / 2
+
+    panzoomImage.style.position = 'absolute'
+    panzoomImage.style.left = '0px'
+    panzoomImage.style.top = '0px'
+    panzoomImage.style.transform = `translate(${centerX}px, ${centerY}px)`
+
+    panzoomInstance = Panzoom(panzoomImage, {
+      maxScale: 5,
+      minScale: 1,
+      startScale: 1,
+      startX: centerX,
+      startY: centerY,
+      step: 0.3,
+      canvas: true,
+      setTransform: (elem, { scale, x, y }) => {
+        const rect = panzoomWrapper!.getBoundingClientRect()
+        const imgWidth = initialWidth * scale
+        const imgHeight = initialHeight * scale
+
+        let clampedX = x
+        let clampedY = y
+
+        if (imgWidth > rect.width) {
+          const minX = rect.width - imgWidth
+          const maxX = 0
+          clampedX = Math.min(maxX, Math.max(minX, x))
+        } else {
+          clampedX = (rect.width - imgWidth) / 2
+        }
+
+        if (imgHeight > rect.height) {
+          const minY = rect.height - imgHeight
+          const maxY = 0
+          clampedY = Math.min(maxY, Math.max(minY, y))
+        } else {
+          clampedY = (rect.height - imgHeight) / 2
+        }
+
+        elem.style.transform = `translate(${clampedX}px, ${clampedY}px) scale(${scale})`
+      },
+    })
+
+    const onWheel = (event: WheelEvent) => {
+      if (!panzoomInstance) return
+      event.preventDefault()
+      
+      const rect = panzoomImage.getBoundingClientRect()
+      const x = event.clientX - rect.left
+      const y = event.clientY - rect.top
+      
+      panzoomInstance.zoomWithWheel(event, { focal: { x, y } })
+    }
+
+    wheelListener = onWheel
+    panzoomContainer?.addEventListener('wheel', wheelListener, { passive: false })
+
+    panzoomImage.addEventListener('panzoomstart', () => {
+      if (panzoomImage) {
+        panzoomImage.style.cursor = 'grabbing'
+      }
+    })
+
+    panzoomImage.addEventListener('panzoomend', () => {
+      if (panzoomImage) {
+        panzoomImage.style.cursor = 'grab'
+      }
+    })
+  }
+
+  function openModal() {
+    if (!mapModal || !panzoomImage || !panzoomContainer) return
+
+    mapModal.classList.remove('opacity-0', 'pointer-events-none')
+    mapModal.classList.add('opacity-100', 'pointer-events-auto')
+    document.body.style.overflow = 'hidden'
+
+    setTimeout(() => {
+      if (!panzoomInstance) {
+        initializePanzoom()
+
+        let initialDistance = 0
+        let initialScale = 1
+        let isPinching = false
+
+        panzoomContainer.addEventListener(
+          'touchstart',
+          (e) => {
+            if (e.touches.length === 2) {
+              e.preventDefault()
+              isPinching = true
+              const touch1 = e.touches[0]
+              const touch2 = e.touches[1]
+              initialDistance = Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+              )
+              initialScale = panzoomInstance?.getScale() || 1
+            } else {
+              isPinching = false
+            }
+          },
+          { passive: false }
+        )
+
+        panzoomContainer.addEventListener(
+          'touchmove',
+          (e) => {
+            if (e.touches.length === 2 && panzoomInstance && isPinching) {
+              e.preventDefault()
+              const touch1 = e.touches[0]
+              const touch2 = e.touches[1]
+              const currentDistance = Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+              )
+              const scale = (currentDistance / initialDistance) * initialScale
+              const clampedScale = Math.max(1, Math.min(5, scale))
+
+              const centerX = (touch1.clientX + touch2.clientX) / 2
+              const centerY = (touch1.clientY + touch2.clientY) / 2
+
+              panzoomInstance.zoom(clampedScale, {
+                focal: { x: centerX, y: centerY },
+              })
+            }
+          },
+          { passive: false }
+        )
+
+        panzoomContainer.addEventListener(
+          'touchend',
+          () => {
+            isPinching = false
+          },
+          { passive: false }
+        )
+      } else {
+        panzoomInstance.reset()
+      }
+    }, 50)
+  }
+
+  function closeModal() {
+    if (!mapModal) return
+    mapModal.classList.add('opacity-0', 'pointer-events-none')
+    mapModal.classList.remove('opacity-100', 'pointer-events-auto')
+    document.body.style.overflow = ''
+
+    if (panzoomInstance) {
+      panzoomInstance.reset()
+    }
+  }
+
+  function cleanup() {
+    if (wheelListener && panzoomContainer) {
+      panzoomContainer.removeEventListener('wheel', wheelListener)
+    }
+    if (panzoomInstance) {
+      panzoomInstance.destroy()
+      panzoomInstance = null
+    }
+  }
+
+  mapContainer?.addEventListener('click', openModal)
+  closeButton?.addEventListener('click', closeModal)
+  modalBackdrop?.addEventListener('click', closeModal)
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal()
+  })
+
+  window.addEventListener('beforeunload', cleanup)
+</script>
