@@ -55,7 +55,7 @@ export function Sidebar({
         isExpanded={isExpanded}
       />
 
-      <div className='bg-25-black hidden rounded-xs px-4 py-2 md:block'>
+      <div className='bg-25-black hidden rounded-sm px-4 py-2 md:block'>
         <CollapseButton
           isExpanded={isExpanded}
           onToggle={() => setIsExpanded(!isExpanded)}
