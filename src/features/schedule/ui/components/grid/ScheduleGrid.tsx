@@ -8,7 +8,7 @@ import { DaySelector } from '../sidebar/DaySelector'
 import { StageNavigator } from '../sidebar/StageNavigator'
 import { useHorizontalDrag } from '../../hooks/use-horizontal-scroll'
 import { useDaySelection } from '../../hooks/use-day-selection'
-import { useContainerVisibility } from '../../hooks/use-container-visibility'
+import { useScrollVisibility } from '../../hooks/use-container-visibility'
 import { useStageNavigator } from '../../hooks/use-stage-navigator'
 import { cn } from '@/features/shared/utils'
 import type { UIGridLayout, ScheduleDay } from '../../types'
@@ -63,17 +63,14 @@ export function ScheduleGrid(props: ScheduleGridProps) {
     visibleColumns: VISIBLE_COLUMNS,
   })
 
-  const { containerRef, isVisible } = useContainerVisibility({
-    threshold: 0.1,
-    rootMargin: '0px',
-  })
-
   const {
     isOpen: isStageNavigatorOpen,
     toggle: toggleStageNavigator,
     close: closeStageNavigator,
     dropdownRef: stageNavigatorRef,
   } = useStageNavigator()
+
+  const { isVisible } = useScrollVisibility(1000)
 
   const previousSelectionRef = useRef<string[]>(selectedStageIds)
   const currentColumnRef = useRef(currentColumnIndex)
@@ -169,9 +166,9 @@ export function ScheduleGrid(props: ScheduleGridProps) {
   const showDaySelector = !isSingleDay(props)
 
   const handleFloatingButtonClick = () => {
-    containerRef.current?.scrollIntoView({
+    window.scrollTo({
+      top: 0,
       behavior: 'smooth',
-      block: 'start',
     })
   }
 
@@ -189,9 +186,7 @@ export function ScheduleGrid(props: ScheduleGridProps) {
   }
 
   return (
-    <section
-      ref={containerRef}
-      className='relative flex flex-col gap-4 overflow-x-clip py-4 [--header-height:50px] [--item-height:180px] md:w-full md:[--header-height:60px] md:[--item-height:200px]'>
+    <section className='relative flex flex-col gap-4 overflow-x-clip py-4 [--header-height:50px] [--item-height:180px] md:w-full md:[--header-height:60px] md:[--item-height:200px]'>
       <div className='flex w-screen flex-col flex-nowrap gap-2 md:flex-row md:gap-4'>
         <Sidebar
           stages={stages}
