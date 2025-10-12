@@ -41,7 +41,7 @@ export function StageSelection({
   const sortedStages = [...stages].sort((a, b) => a.order - b.order)
 
   return (
-    <section className='bg-25-black hidden flex-col rounded-xs p-4 md:flex'>
+    <section className='bg-25-black hidden flex-col rounded-sm p-4 md:flex'>
       <div
         className={cn(
           'flex items-center justify-center gap-2 transition-all duration-300',
@@ -68,7 +68,7 @@ export function StageSelection({
         <div className='flex h-6 items-center'>
           <button
             onClick={handleToggleAllStages}
-            className='hover:text-25-accent text-25-white mx-auto flex size-8 cursor-pointer items-center justify-center rounded-xs transition-colors duration-200'
+            className='hover:text-25-accent text-25-white mx-auto flex size-8 cursor-pointer items-center justify-center rounded-sm transition-colors duration-200'
             type='button'
             aria-label={
               selectedStageIds.length === stages.length
@@ -104,7 +104,7 @@ export function StageSelection({
         <label
           key={stage.id}
           className={cn(
-            'hover:bg-25-white/10 flex h-10 cursor-pointer items-center gap-2 rounded-xs px-2 transition-all duration-200 2xl:h-13',
+            'hover:bg-25-white/10 flex h-10 cursor-pointer items-center gap-2 rounded-sm px-2 transition-all duration-200 2xl:h-13',
           )}>
           <input
             type='checkbox'

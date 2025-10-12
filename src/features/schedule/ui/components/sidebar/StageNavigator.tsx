@@ -28,11 +28,11 @@ export function StageNavigator({
   return (
     <div
       ref={dropdownRef}
-      className='font-neris relative flex h-[var(--header-height)] rounded-xs text-center capitalize md:top-4 md:hidden'
+      className='font-neris relative flex h-[var(--header-height)] rounded-sm text-center capitalize md:top-4 md:hidden'
       style={{ backgroundColor: currentStage.color }}>
       <div
         className={cn(
-          'absolute bottom-full left-0 z-20 mb-2 w-full overflow-hidden rounded-xs p-2 transition-all duration-200',
+          'absolute bottom-full left-0 z-20 mb-2 w-full overflow-hidden rounded-sm p-2 transition-all duration-200',
           isOpen
             ? 'bg-25-black visible max-h-fit opacity-100 shadow-lg'
             : 'invisible max-h-0 opacity-0',

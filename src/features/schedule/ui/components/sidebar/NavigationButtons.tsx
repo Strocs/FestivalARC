@@ -18,15 +18,15 @@ export function NavigationButtons({
   return (
     <nav
       className={cn(
-        'bg-25-black -mr-24 flex h-[var(--header-height)] items-center justify-between gap-4',
+        '-mr-24 flex h-[var(--header-height)] items-center justify-between gap-4',
         className,
       )}>
       <button
         onClick={onPrev}
         disabled={!canGoPrev}
         className={cn(
-          'bg-25-white/50 hover:bg-25-accent text-25-white flex h-9 w-full cursor-pointer items-center justify-center rounded-xs transition-colors duration-200',
-          !canGoPrev && 'cursor-not-allowed opacity-30',
+          'bg-25-black hover:bg-25-primary text-25-white flex h-full w-full cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
+          !canGoPrev && 'cursor-not-allowed opacity-50',
         )}
         type='button'
         aria-label='Anterior'>
@@ -47,8 +47,8 @@ export function NavigationButtons({
         onClick={onNext}
         disabled={!canGoNext}
         className={cn(
-          'bg-25-white/50 hover:bg-25-accent text-25-white flex h-9 w-full cursor-pointer items-center justify-center rounded-xs transition-colors duration-200',
-          !canGoNext && 'cursor-not-allowed opacity-30',
+          'bg-25-black hover:bg-25-primary text-25-white flex h-full w-full cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
+          !canGoNext && 'cursor-not-allowed opacity-50',
         )}
         type='button'
         aria-label='Siguiente'>

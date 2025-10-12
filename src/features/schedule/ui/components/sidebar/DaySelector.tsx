@@ -37,14 +37,14 @@ export function DaySelector({
   const dayName = dayParts[0] || ''
   const dayNumber = dayParts[1] || ''
   return (
-    <div className='bg-25-black flex items-center justify-center rounded-xs px-4 py-2'>
+    <div className='bg-25-black flex items-center justify-center rounded-sm px-4 py-2'>
       <button
         onClick={handlePrevious}
         disabled={!canGoPrev}
         type='button'
         aria-label='Día anterior'
         className={cn(
-          'text-25-white hover:text-25-accent flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-xs transition-colors duration-200',
+          'text-25-white hover:text-25-accent flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
           !canGoPrev && 'cursor-not-allowed opacity-30',
         )}>
         <svg
@@ -83,7 +83,7 @@ export function DaySelector({
         type='button'
         aria-label='Día siguiente'
         className={cn(
-          'text-25-white hover:text-25-accent flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-xs transition-colors duration-200',
+          'text-25-white hover:text-25-accent flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
           !canGoNext && 'cursor-not-allowed opacity-30',
         )}>
         <svg
