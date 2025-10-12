@@ -1,0 +1,52 @@
+---
+import Title from '@/features/arc2025/components/ui/Title.astro'
+import Logo from '@/features/arc2025/components/ui/Logo.astro'
+---
+
+<section class='relative h-[75svh] px-4'>
+  <div
+    class='container mx-auto mt-10 flex h-full flex-col items-center justify-center gap-8 md:gap-0 xl:flex-row xl:justify-between 2xl:justify-around'>
+    <section class='flex flex-col items-center justify-center'>
+      <Logo transitionName='main-logo' size='large' class='pb-4' />
+      <div class='h-fit space-y-1 md:space-y-3'>
+        <p
+          class='font-dk bg-25-blue relative z-10 mx-auto w-fit -skew-y-3 rounded-sm px-4 text-center text-4xl text-white shadow-md md:text-7xl'>
+          18 y 19 de Octubre
+        </p>
+        <p
+          class='font-bestoom bg-25-accent text-25-primary mx-auto w-fit rounded-xs px-2 pt-1.5 text-center text-2xl shadow-md md:pt-2 md:text-5xl'>
+          Parque Pedro de Valdivia
+        </p>
+        <p
+          class='text-25-white font-bestoom mx-auto w-fit text-2xl md:text-4xl'>
+          La Serena
+        </p>
+      </div>
+    </section>
+    <section class='w-fit'>
+      <Title size='md'>Tickets Diarios</Title>
+      <p
+        class='font-bestoom text-25-white -mt-8 max-w-xl pb-4 text-center text-xl leading-none md:-mt-4 md:text-3xl'>
+        Adquiere tus tickets diarios en los siguientes enlaces:
+      </p>
+      <div class='mx-auto flex w-fit items-center gap-8'>
+        <a
+          href='https://www.portaldisc.com/evento/festivalarc2025-18oct'
+          aria-label='Comprar ticket para el día sábado 18 de octubre'
+          target='_blank'
+          rel='noopener noreferrer'
+          class='bg-25-black text-25-white hover:bg-25-accent hover:text-25-primary rounded-xs px-4 pt-1 pb-2 text-lg font-bold transition-colors duration-300 md:text-3xl'
+          >Viernes 18</a
+        >
+        <a
+          href='https://www.portaldisc.com/evento/festivalarc2025-19oct'
+          aria-label='Comprar ticket para el Sábado 19 de Octubre'
+          target='_blank'
+          rel='noopener noreferrer'
+          class='bg-25-black text-25-white hover:bg-25-accent hover:text-25-primary rounded-xs px-4 pt-1 pb-2 text-lg font-bold transition-colors duration-300 md:text-3xl'
+          >Sábado 19</a
+        >
+      </div>
+    </section>
+  </div>
+</section>

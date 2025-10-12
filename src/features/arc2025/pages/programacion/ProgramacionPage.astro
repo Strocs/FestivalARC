@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets'
+import Header from '../../components/ui/Header.astro'
+import Arc2025Layout from '../../Layout.astro'
+import Schedule from './sections/Schedule.astro'
+import Title from '@/features/arc2025/components/ui/Title.astro'
+
+import FONDO_WEB_PROGRAMACION from '@/features/arc2025/assets/FONDO_VERDE.webp'
+---
+
+<Arc2025Layout>
+  <Header />
+
+  <Image
+    aria-hidden='true'
+    alt='Fondo de la sección Programación del Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
+    src={FONDO_WEB_PROGRAMACION}
+    height={FONDO_WEB_PROGRAMACION.height}
+    width={FONDO_WEB_PROGRAMACION.width}
+    loading='lazy'
+    class='fixed top-0 right-0 left-0 -z-30 h-lvh w-full object-cover object-center landscape:h-full'
+  />
+
+  <Title subTitle='Sábado 18 y Domingo 19'>Programación</Title>
+
+  <main>
+    <Schedule />
+  </main>
+</Arc2025Layout>
