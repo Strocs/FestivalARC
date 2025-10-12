@@ -1,37 +1,23 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
-interface UseContainerVisibilityOptions {
-  threshold?: number
-  rootMargin?: string
-}
-
-export function useContainerVisibility({
-  threshold = 0.1,
-  rootMargin = '0px',
-}: UseContainerVisibilityOptions = {}) {
+export function useScrollVisibility(scrollThreshold: number = 1000) {
   const [isVisible, setIsVisible] = useState(false)
-  const containerRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
+    const handleScroll = () => {
+      const scrollPosition =
+        window.scrollY || document.documentElement.scrollTop
+      setIsVisible(scrollPosition > scrollThreshold)
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting)
-      },
-      {
-        threshold,
-        rootMargin,
-      },
-    )
+    handleScroll()
 
-    observer.observe(container)
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => {
-      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
     }
-  }, [threshold, rootMargin])
+  }, [scrollThreshold])
 
-  return { containerRef, isVisible }
+  return { isVisible }
 }
