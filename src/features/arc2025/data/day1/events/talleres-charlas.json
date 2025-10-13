@@ -1,0 +1,43 @@
+[
+  {
+    "id": "disena-tu-propio-azulejo-ceramico",
+    "title": "Diseña tu Propio Azulejo Cerámico",
+    "subTitle": "",
+    "description": "En este taller aprenderemos  la técnica  bajo cubierta, a través de placas previamente bizcochadas de cerámica. El taller permitirá a la comunidad acceder a materiales y conocimientos gratuitos propios de la disciplina cerámica, la cual es de vital importancia en la región por nuestro legado alfarero.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "15:30",
+      "end": "17:30"
+    },
+    "category": "Taller",
+    "duration": "1 Hora 30 Minutos",
+    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/AZULEJOS4.jpg"
+  },
+  {
+    "id": "bestiario-del-parque-pedro-de-valdivia-de-la-biodiversidad-a-la-biofantasia",
+    "title": "Bestiario del Parque Pedro de Valdivia: De la Biodiversidad a la Biofantasía",
+    "subTitle": "",
+    "description": "El taller Bestiario del Parque Pedro de Valdivia es una experiencia de dos horas dirigida a familias, con un enfoque en infancias, jóvenes y adultos. Su objetivo es fusionar la observación de la biodiversidad local con la expresión artística para que las familias, trabajando juntas, transformen la flora y fauna del parque en criaturas de fantasía a través de la ilustración. Este proceso busca fortalecer la identidad territorial y la participación cultural, culminando en la creación de un bestiario colectivo que celebra la naturaleza desde una perspectiva familiar y creativa.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "17:30",
+      "end": "19:30"
+    },
+    "category": "Taller",
+    "duration": "2 Horas",
+    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/BESTIARIO.jpg"
+  },
+  {
+    "id": "charla-cortometraje-memorias-de-un-desconocido",
+    "title": "Charla Cortometraje Memorias de un Desconocido",
+    "subTitle": "",
+    "description": "",
+    "trackId": "stage-f",
+    "time": {
+      "start": "19:30",
+      "end": "21:00"
+    },
+    "category": "Charla",
+    "galleryUrl": ""
+  }
+]
