@@ -29,7 +29,7 @@
   },
   {
     "id": "stage-e",
-    "name": "Bulevar Literario",
+    "name": "Espacio Literario",
     "color": "#00a4e6",
     "order": 5,
     "category": "Escenario Modular"
@@ -57,7 +57,7 @@
   },
   {
     "id": "stage-j",
-    "name": "Artes de La Visualidad",
+    "name": "Artes de la Visualidad",
     "color": "#7b38b0",
     "order": 10,
     "category": "Instalaciones y Talleres"
