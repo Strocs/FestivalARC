@@ -16,6 +16,7 @@ import type {
   UIColumnItem,
   ScheduleDay,
 } from '@/features/schedule'
+import { FESTIVAL_DAYS } from '@/features/arc2025/constants'
 
 const mapTrack = (track: ScheduleTrack<Arc2025StagePayload>): UIHeaderItem => ({
   id: track.id,
@@ -53,11 +54,11 @@ const mapEvent = (event: LayoutEvent<Arc2025EventPayload>): UIColumnItem => ({
 
 const scheduleDays: ScheduleDay[] = [
   {
-    label: 'Sábado 18',
+    label: FESTIVAL_DAYS[0],
     data: adaptScheduleDataToGrid(arc2025Day1ScheduleData, mapTrack, mapEvent),
   },
   {
-    label: 'Domingo 19',
+    label: FESTIVAL_DAYS[1],
     data: adaptScheduleDataToGrid(arc2025Day2ScheduleData, mapTrack, mapEvent),
   },
 ]
