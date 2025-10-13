@@ -1,9 +1,9 @@
 [
   {
     "id": "escucha-inmersiva",
-    "title": "Escucha inmersiva",
+    "title": "Escucha inmersiva en Dolby Atmos",
     "subTitle": "",
-    "description": "",
+    "description": "Escucha inmersiva en formato Dolby Atmos con una playlist de artistas nacionales e internacionales. Un recorrido por diversos estilos que van de lo popular a lo docto, revelando nuevas dimensiones, texturas y matices del sonido tridimensional. Una experiencia única para descubrir la música desde una perspectiva envolvente y contemporánea.",
     "trackId": "stage-h",
     "time": {
       "start": "15:30",
@@ -14,9 +14,9 @@
   },
   {
     "id": "bioarte-sonoro",
-    "title": "BíoArte Sonoro: Viaje de Tierra y Aire",
+    "title": "Bioarte Sonoro: Viaje de Tierra y Aire",
     "subTitle": "",
-    "description": "",
+    "description": "Una experiencia inmersiva y terapéutica que une guitarras, percusiones sudamericanas y voces colectivas en un viaje sonoro entre lo íntimo y lo expansivo. En círculo de participación, los asistentes viven una meditación activa guiada por la vibración compartida. El cierre evoca lo ancestral con flautas y cañas. Dirigen Rodrigo Órdenes y Geovani Flores, integrando arte, sanación y conciencia.",
     "trackId": "stage-h",
     "time": {
       "start": "17:00",
@@ -27,9 +27,9 @@
   },
   {
     "id": "duo-pola-castillo",
-    "title": "Dúo Pola Castillo y Chicoria Sánchez: Concierto íntimo",
-    "subTitle": "",
-    "description": "",
+    "title": "Dúo Pola Castillo y Chicoria Sánchez",
+    "subTitle": "Concierto íntimo",
+    "description": "Un viaje por una experiencia musical inspiradora, con composiciones originales de raíz latinoamericana y sonoridades del mundo. Pola Castillo y Chicoria Sánchez nos invitan a compartir un momento íntimo y emotivo, donde la música y el diálogo se entrelazan para crear un espacio de encuentro, conexión y reflexión a través del arte sonoro.",
     "trackId": "stage-h",
     "time": {
       "start": "18:30",
@@ -40,9 +40,9 @@
   },
   {
     "id": "fundacion-villanueva",
-    "title": "Fundación Villanueva: Las Delicias de la Soledad",
-    "subTitle": "",
-    "description": "",
+    "title": "Las Delicias de la Soledad",
+    "subTitle": "Fundación Cultural Villanueva de La Serena",
+    "description": "Las Delicias de la Soledad es un programa dedicado al repertorio solista y sonatas con bajo continuo del Renacimiento y Barroco. Busca rescatar obras íntimas y tímbricamente ricas, interpretadas con instrumentos poco comunes como la viola da gamba, clavecín, violín barroco y archilaúd. Participan Richard Dillems (cuerdas pulsadas), Vanessa Flores (violín barroco) y Adolfo Ramírez (clavecín).",
     "trackId": "stage-h",
     "time": {
       "start": "20:00",
