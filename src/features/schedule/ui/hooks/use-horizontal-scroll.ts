@@ -67,20 +67,29 @@ export function useHorizontalDrag({
   const maxOffset = Math.max(0, (totalColumns - visibleColumns) * columnWidth)
   const minOffset = -maxOffset
 
-  const clampOffset = useCallback(
-    (value: number) => {
-      return Math.max(minOffset, Math.min(0, value))
-    },
-    [minOffset],
-  )
+  const minOffsetRef = useRef(minOffset)
+  const maxOffsetRef = useRef(maxOffset)
+  const columnWidthRef = useRef(columnWidth)
+
+  useEffect(() => {
+    minOffsetRef.current = minOffset
+    maxOffsetRef.current = maxOffset
+    columnWidthRef.current = columnWidth
+  }, [minOffset, maxOffset, columnWidth])
+
+  const clampOffset = useCallback((value: number) => {
+    const min = minOffsetRef.current
+    return Math.max(min, Math.min(0, value))
+  }, [])
 
   const snapToColumn = useCallback(
     (currentOffset: number) => {
-      const columnIndex = Math.round(-currentOffset / columnWidth)
-      const snappedOffset = -columnIndex * columnWidth
+      const width = columnWidthRef.current
+      const columnIndex = Math.round(-currentOffset / width)
+      const snappedOffset = -columnIndex * width
       return clampOffset(snappedOffset)
     },
-    [columnWidth],
+    [clampOffset],
   )
 
   const applyTransform = useCallback((value: number, smooth: boolean) => {
@@ -97,7 +106,7 @@ export function useHorizontalDrag({
 
     setOffset(newOffset)
     applyTransform(newOffset, shouldAnimate)
-  }, [currentIndex, columnWidth, shouldAnimate])
+  }, [currentIndex, columnWidth, shouldAnimate, applyTransform, setOffset])
 
   const handleDragStart = useCallback((clientX: number, clientY: number) => {
     dragStateRef.current = {
@@ -135,16 +144,17 @@ export function useHorizontalDrag({
       if (dragStateRef.current.state === 'dragging') {
         const deltaX = clientX - dragStateRef.current.startX
         const newOffset = dragStateRef.current.startOffset + deltaX
+        const min = minOffsetRef.current
         const offsetWithRubberBand = applyRubberBandResistance(
           newOffset,
-          minOffset,
+          min,
           0,
           RUBBER_BAND_RESISTANCE,
         )
         applyTransform(offsetWithRubberBand, false)
       }
     },
-    [minOffset, applyTransform],
+    [applyTransform],
   )
 
   const handleDragEnd = useCallback(() => {
@@ -156,29 +166,29 @@ export function useHorizontalDrag({
     if (!wasDragging) return
 
     const currentOffset = offsetRef.current
+    const min = minOffsetRef.current
+    const width = columnWidthRef.current
 
-    const isOverscrolled = currentOffset > 0 || currentOffset < minOffset
+    const isOverscrolled = currentOffset > 0 || currentOffset < min
 
     if (isOverscrolled) {
-      const targetOffset = currentOffset > 0 ? 0 : minOffset
-      const columnIndex = Math.round(-targetOffset / columnWidth)
+      const targetOffset = currentOffset > 0 ? 0 : min
+      const columnIndex = Math.round(-targetOffset / width)
 
       setOffset(targetOffset)
       applyTransform(targetOffset, true)
 
-      // Mark as internal change to prevent useEffect from re-applying transform
       goToIndex(columnIndex)
     } else {
       const snappedOffset = snapToColumn(currentOffset)
-      const columnIndex = Math.round(-snappedOffset / columnWidth)
+      const columnIndex = Math.round(-snappedOffset / width)
 
       setOffset(snappedOffset)
       applyTransform(snappedOffset, true)
 
-      // Mark as internal change to prevent useEffect from re-applying transform
       goToIndex(columnIndex)
     }
-  }, [minOffset, columnWidth])
+  }, [snapToColumn, applyTransform, goToIndex])
 
   useEffect(() => {
     const wrapper = wrapperRef.current
