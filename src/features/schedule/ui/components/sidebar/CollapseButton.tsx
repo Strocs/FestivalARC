@@ -22,7 +22,7 @@ export function CollapseButton({ isExpanded, onToggle }: CollapseButtonProps) {
         strokeWidth='2'
         strokeLinecap='round'
         strokeLinejoin='round'
-        className='w-fit shrink-0 transition-all duration-300'>
+        className='shrink-0'>
         {isExpanded ? (
           <>
             <path d='M12 18l-6-6 6-6' />
@@ -37,7 +37,7 @@ export function CollapseButton({ isExpanded, onToggle }: CollapseButtonProps) {
       </svg>
       <span
         className={cn(
-          'block w-fit text-sm transition-all duration-300',
+          'inline-block w-fit text-sm transition-all duration-300',
           isExpanded
             ? 'visible opacity-100 delay-150'
             : 'invisible w-0 overflow-hidden opacity-0',
