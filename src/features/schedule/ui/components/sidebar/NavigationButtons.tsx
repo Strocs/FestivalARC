@@ -15,7 +15,7 @@ export function NavigationButtons({
   return (
     <nav
       className={cn(
-        '-mr-24 flex h-[var(--header-height)] items-center justify-between gap-4',
+        '-mr-23 flex h-[var(--header-height)] items-center justify-between gap-4',
         className,
       )}>
       <button
