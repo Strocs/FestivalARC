@@ -17,6 +17,7 @@ type DragState = 'idle' | 'detecting' | 'dragging'
 
 const DRAG_THRESHOLD = 10
 const RUBBER_BAND_RESISTANCE = 0.3
+const SNAP_THRESHOLD = 1 / 3
 
 function applyRubberBandResistance(
   offset: number,
@@ -83,9 +84,15 @@ export function useHorizontalDrag({
   }, [])
 
   const snapToColumn = useCallback(
-    (currentOffset: number) => {
+    (currentOffset: number, startOffset: number) => {
       const width = columnWidthRef.current
-      const columnIndex = Math.round(-currentOffset / width)
+      const position = -currentOffset / width
+
+      const isDraggingForward = currentOffset > startOffset
+
+      const threshold = isDraggingForward ? SNAP_THRESHOLD : 1 - SNAP_THRESHOLD
+
+      const columnIndex = Math.floor(position + threshold)
       const snappedOffset = -columnIndex * width
       return clampOffset(snappedOffset)
     },
@@ -180,7 +187,11 @@ export function useHorizontalDrag({
 
       goToIndex(columnIndex)
     } else {
-      const snappedOffset = snapToColumn(currentOffset)
+      const snappedOffset = snapToColumn(
+        currentOffset,
+        dragStateRef.current.startOffset,
+      )
+      console.log(snappedOffset)
       const columnIndex = Math.round(-snappedOffset / width)
 
       setOffset(snappedOffset)
