@@ -7,6 +7,7 @@ import {
 import {
   createContext,
   useContext,
+  useEffect,
   useRef,
   type PropsWithChildren,
 } from 'react'
@@ -338,22 +339,29 @@ type ColumnProviderProps = PropsWithChildren<{ columns: UIColumns[] }>
 
 export function ColumnsProvider({ children, columns }: ColumnProviderProps) {
   const storeRef = useRef<StoreApi<ColumnsStore>>(null)
+  const availableTrackIds = columns.map((col) => col.header.id)
 
   if (!storeRef.current) {
-    const storedIds = trackSelectionStorage.get()
-    const availableTrackIds = columns.map((col) => col.header.id)
-    const validStoredIds = getValidTrackIds(storedIds, availableTrackIds)
-    const derived = computeDerivedState(columns, validStoredIds, 0)
+    const derived = computeDerivedState(columns, [], 0)
 
     storeRef.current = createColumnsStore({
       columns,
-      selectedStageIds: validStoredIds,
+      selectedStageIds: [],
       availableStageIds: availableTrackIds,
       currentIndex: 0,
       shouldAnimate: true,
       ...derived,
     })
   }
+
+  useEffect(() => {
+    const storedIds = trackSelectionStorage.get()
+    if (!storedIds || storedIds.length <= 0) return
+    const validStoredIds = getValidTrackIds(storedIds, availableTrackIds)
+
+    const derived = computeDerivedState(columns, validStoredIds, 0)
+    storeRef.current?.setState({ selectedStageIds: validStoredIds, ...derived })
+  }, [])
 
   return (
     <ColumnContext.Provider value={storeRef.current}>
