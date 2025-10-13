@@ -35,6 +35,7 @@ export function GridSchedule({ rowsLenght, groups }: GridScheduleProps) {
   return (
     <div
       ref={wrapperRef}
+      suppressHydrationWarning
       className={cn(
         'will-change-transform',
         isDragging && 'cursor-grabbing',
@@ -44,7 +45,6 @@ export function GridSchedule({ rowsLenght, groups }: GridScheduleProps) {
         className='grid gap-4'
         style={{
           gridTemplateColumns: `repeat(${filteredColumns.length}, 320px)`,
-          gridRow: 1,
         }}>
         <GridColumns
           config={{ columnWidth: COLUMN_WIDTH, gapWidth: GAP_WIDTH }}

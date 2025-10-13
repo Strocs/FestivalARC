@@ -1,3 +1,5 @@
+'use server'
+
 import { Sidebar } from '../sidebar'
 import { GridColumn } from './GridColumn'
 import { GridTimeSlots } from './GridTimeSlots'
@@ -16,6 +18,7 @@ export function ScheduleLayout({ groups }: ScheduleLayoutProps) {
   const initialDay = 0 // Allow get this from implementation
   const { timeColumn, columns, headerRow: stages } = groups[initialDay].data
   const listOfColumns = groups.map((group) => group.data.columns)
+
   const days = groups
     .map((day) => day.label)
     .filter((label) => label) as string[]
