@@ -15,6 +15,15 @@ export function StageSelector({ stages }: StageSelectorProps) {
 
   const currentStage = stages[currentIndex]
 
+  const handleSelectStage = (stageId: string) => {
+    selectStage(stageId)
+    toggle()
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+
   return (
     <div
       ref={dropdownRef}
@@ -67,7 +76,7 @@ export function StageSelector({ stages }: StageSelectorProps) {
             return (
               <button
                 key={stage.id}
-                onClick={() => selectStage(stage.id)}
+                onClick={() => handleSelectStage(stage.id)}
                 type='button'
                 className={cn(
                   'hover:bg-25-white/10 flex h-12 w-full items-center gap-2 px-4 text-left transition-colors duration-200',
