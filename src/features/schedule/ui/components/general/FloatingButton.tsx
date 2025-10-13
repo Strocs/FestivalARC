@@ -12,7 +12,7 @@ export function FloatingButton({
   icon,
   className,
 }: FloatingButtonProps) {
-  const { isVisible } = useScrollVisibility(0.1)
+  const isVisible = useScrollVisibility(500)
 
   const handleFloatingButtonClick = () => {
     window?.scrollTo({
@@ -34,8 +34,7 @@ export function FloatingButton({
           ? 'pointer-events-auto translate-y-0 opacity-100'
           : 'pointer-events-none translate-y-2 opacity-0',
         className,
-      )}
-      aria-hidden={!isVisible}>
+      )}>
       <div className='flex items-center gap-2'>
         {icon && <span className='flex items-center'>{icon}</span>}
         {label && <span>{label}</span>}
