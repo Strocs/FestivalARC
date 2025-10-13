@@ -87,7 +87,6 @@ export function useHorizontalDrag({
     const wrapper = wrapperRef.current
     if (!wrapper) return
 
-    console.log({ value, animate: smooth })
     offsetRef.current = value
     wrapper.style.transform = `translate3d(${value}px, 0, 0)`
     wrapper.style.transition = smooth ? 'transform 300ms ease-out' : 'none'
