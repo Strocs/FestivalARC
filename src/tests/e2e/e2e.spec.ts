@@ -1,5 +1,5 @@
-import { test } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 test('abrir navegador en ruta dev', async ({ page }) => {
-  await page.goto('http://localhost:4321')
+  await page.goto('/programacion')
 })
