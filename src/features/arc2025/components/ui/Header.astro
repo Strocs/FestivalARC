@@ -1,4 +1,11 @@
 ---
+import { FESTIVAL_DAYS } from '../../constants'
+import {
+  FESTIVAL_CITY,
+  FESTIVAL_DAYS_SHORT,
+  FESTIVAL_PLACE,
+  FESTIVAL_TICKETS_URL,
+} from '../../constants'
 import Logo from '../ui/Logo.astro'
 import { cn } from '@/features/shared/utils'
 
@@ -32,8 +39,8 @@ const currentPath = Astro.url.pathname
     </a>
     <div
       class='text-25-white font-neris md:font-base text-sm leading-none md:leading-normal'>
-      <strong>18 y 19 de Octubre</strong>
-      <p>Parque Pedro de Valdivia, La Serena</p>
+      <strong>{FESTIVAL_DAYS_SHORT}</strong>
+      <p>{FESTIVAL_PLACE}, {FESTIVAL_CITY}</p>
     </div>
   </section>
 
@@ -49,7 +56,7 @@ const currentPath = Astro.url.pathname
           <li
             id={'nav-' + id}
             class={cn(
-              'text-25-white font-dk cursor-pointer rounded-xs text-xl font-medium transition-transform duration-150 hover:-skew-y-4',
+              'text-25-white cursor-pointer rounded-xs pb-1 text-xl font-bold transition-transform duration-150 hover:-skew-y-4',
               withLogo ? 'bg-25-primary' : 'bg-25-black',
             )}>
             <a href={path} class='block size-full px-4'>
@@ -67,26 +74,21 @@ const currentPath = Astro.url.pathname
       'text-25-black z-20 hidden gap-4 lg:flex',
       !withLogo && 'invisible',
     )}>
-    <a
-      href='https://www.portaldisc.com/evento/festivalarc2025-18oct'
-      aria-label='Comprar ticket para el día sábado 18 de octubre'
-      rel='noopener noreferrer'
-      target='_blank'
-      class='bg-25-white hover:bg-25-accent block rounded px-4 py-1 text-center leading-none transition-colors duration-150'
-      >Tickets<strong class='text-25-primary block text-xl leading-none'
-        >Viernes 18</strong
-      ></a
-    >
-    <a
-      href='https://www.portaldisc.com/evento/festivalarc2025-19oct'
-      aria-label='Comprar ticket para el Sábado 19 de Octubre'
-      target='_blank'
-      target='_blank'
-      class='bg-25-white hover:bg-25-accent block rounded px-4 py-1 text-center leading-none transition-colors duration-150'
-      >Tickets<strong class='text-25-primary block text-xl leading-none'
-        >Sábado 19</strong
-      ></a
-    >
+    {
+      FESTIVAL_TICKETS_URL.map((URL, index) => (
+        <a
+          href={URL}
+          aria-label='Comprar ticket para el día sábado 18 de octubre'
+          rel='noopener noreferrer'
+          target='_blank'
+          class='bg-25-white hover:bg-25-accent block rounded px-4 py-1 text-center leading-none transition-colors duration-150'>
+          Tickets
+          <strong class='text-25-primary block text-xl leading-none'>
+            {FESTIVAL_DAYS[index]}
+          </strong>
+        </a>
+      ))
+    }
   </section>
 
   <!-- Mobile Nav -->
@@ -157,22 +159,18 @@ const currentPath = Astro.url.pathname
           class={cn('text-25-white space-y-2', !withLogo && 'invisible')}>
           <p class='text-dk text-center text-xl'>Consigue tus tickets:</p>
           <div class='flex items-center justify-center gap-4'>
-            <a
-              href='https://www.portaldisc.com/evento/festivalarc2025-18oct'
-              aria-label='Comprar ticket para el día sábado 18 de octubre'
-              rel='noopener noreferrer'
-              target='_blank'
-              class='bg-25-primary block w-fit px-4 pt-1 pb-2 text-center text-lg leading-none font-bold'
-              >Viernes 18</a
-            >
-            <a
-              href='https://www.portaldisc.com/evento/festivalarc2025-19oct'
-              aria-label='Comprar ticket para el Sábado 19 de Octubre'
-              target='_blank'
-              target='_blank'
-              class='bg-25-primary block w-fit px-4 pt-1 pb-2 text-center text-lg leading-none font-bold'
-              >Sábado 19</a
-            >
+            {
+              FESTIVAL_TICKETS_URL.map((URL, index) => (
+                <a
+                  href={URL}
+                  aria-label='Comprar ticket para el día sábado 18 de octubre'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  class='bg-25-primary block w-fit px-4 pt-1 pb-2 text-center text-lg leading-none font-bold'>
+                  {FESTIVAL_DAYS[index]}
+                </a>
+              ))
+            }
           </div>
         </section>
       </div>
