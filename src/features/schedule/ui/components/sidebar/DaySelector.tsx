@@ -15,15 +15,12 @@ export function DaySelector({ isExpanded = true }: DaySelectorProps) {
 
   const handlePrevious = () => {
     if (canGoPrevDay) {
-      // TODO: link columnsStore with dayStore
-      // Here we need to trigger a columnStore change setting the new columns
       prevDay()
     }
   }
 
   const handleNext = () => {
     if (canGoNextDay) {
-      // Here we need to trigger a columnStore change setting the new columns
       nextDay()
     }
   }
