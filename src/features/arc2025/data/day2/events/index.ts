@@ -1,24 +1,22 @@
 import teatro from './teatro.json'
-import danza from './danza.json'
+import danzaCirco from './danza-circo.json'
 import musica from './musica.json'
 import titeres from './titeres.json'
 import literatura from './literatura.json'
-import talleres from './talleres.json'
-import charlas from './charlas.json'
-import imrec from './imrec.json'
+import talleresCharlas from './talleres-charlas.json'
+import estelar from './estelar.json'
 import cecrea from './cecrea.json'
 import instalaciones from './instalaciones.json'
 import type { Arc2025Event } from '../../../types'
 
 export const events: Arc2025Event[] = [
   ...teatro,
-  ...danza,
+  ...danzaCirco,
   ...musica,
   ...titeres,
   ...literatura,
-  ...talleres,
-  ...charlas,
-  ...imrec,
+  ...talleresCharlas,
+  ...estelar,
   ...cecrea,
   ...instalaciones,
 ]
