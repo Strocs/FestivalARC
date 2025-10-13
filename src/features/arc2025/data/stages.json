@@ -42,13 +42,6 @@
     "category": "Escenario Modular"
   },
   {
-    "id": "stage-g",
-    "name": "Charlas",
-    "color": "#3c4b5c",
-    "order": 7,
-    "category": "Escenario Modular"
-  },
-  {
     "id": "stage-h",
     "name": "Espacio Estelar",
     "color": "#b3b3b3",
