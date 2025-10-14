@@ -2,34 +2,34 @@
   {
     "id": "camara-oscura-inmersiva",
     "title": "Cámara Oscura Inmersiva",
-    "subTitle": "",
+    "subTitle": "Sol Jiménez y Oskar Huerta",
     "description": "La Cámara Oscura Inmersiva es un dispositivo diseñado para recrear, a escala humana, la experiencia de estar dentro de una cámara fotográfica. Este espacio permite al público adentrarse en los principios ópticos que dieron origen a la fotografía, viviendo en primera persona el proceso de formación de la imagen a través de la luz.",
     "trackId": "stage-j",
     "time": {
       "start": "15:00",
       "end": "20:30"
     },
-    "category": "Instalacion",
+    "category": "Intervencion",
     "galleryUrl": "/FOTOS_ARTISTAS/INTERVENCIONES/CAMARAINMERSIVA.jpg"
   },
   {
     "id": "fondo-marino-instalacion-textil",
     "title": "Fondo Marino, Instalación Textil",
-    "subTitle": "Intervenciones Artísticas con Talleres",
+    "subTitle": "Las Cuenta Puntos",
     "description": "Fondo Marino es una instalación artística textil que recrea flora y fauna marina, incluyendo una medusa gigante tejida a crochet, suspendida en los árboles del parque Pedro de Valdivia. La obra genera un espacio inmersivo donde el público puede interactuar con los elementos, explorando texturas y formas en un entorno que mezcla arte, naturaleza y juego sensorial.",
     "trackId": "stage-j",
     "time": {
       "start": "15:00",
       "end": "20:30"
     },
-    "category": "Instalacion",
+    "category": "Intervencion",
     "duration": "",
     "galleryUrl": "/FOTOS_ARTISTAS/INTERVENCIONES/FONDOMARINO.jpg"
   },
   {
     "id": "taller-fondo-marino-instalacion-textil",
-    "title": "Taller: Fondo Marino, Instalación Textil",
-    "subTitle": "Intervenciones Artísticas con Talleres",
+    "title": "Fondo Marino: Tejiendo la flora y fauna marina",
+    "subTitle": "Las Cuenta Puntos",
     "description": "",
     "trackId": "stage-j",
     "time": {
@@ -38,6 +38,7 @@
     },
     "category": "Taller",
     "duration": "3 Horas",
-    "galleryUrl": ""
+    "galleryUrl": "",
+    "inscriptionUrl": "https://festivalarc.fillout.com/talleres"
   }
 ]

@@ -1,8 +1,8 @@
 [
   {
     "id": "taller-de-alfareria-sonora-construccion-de-aerofonos-de-la-cultura-diaguita",
-    "title": "Taller de Alfarería Sonora: \"Construcción de Aerófonos de la Cultura Diaguita\"",
-    "subTitle": "",
+    "title": "Taller de Alfarería Sonora: Construcción de Aerófonos de la Cultura Diaguita",
+    "subTitle": "Camilo Muñoz",
     "description": "Taller práctico en el que niños, jóvenes y familias crearán silbatos y flautas de greda inspirados en la Cultura Diaguita. Sin necesidad de experiencia previa, los participantes aprenderán técnicas de modelado y esgrafiado, experimentarán con el sonido y fortalecen la creatividad y la valoración del patrimonio cultural local.",
     "trackId": "stage-f",
     "time": {
@@ -11,12 +11,13 @@
     },
     "category": "Taller",
     "duration": "2 Horas",
-    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/ALFARERIAEROFONOS.jpg"
+    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/ALFARERIAEROFONOS.jpg",
+    "inscriptionUrl": "https://festivalarc.fillout.com/talleres"
   },
   {
     "id": "taller-de-alfareria",
     "title": "Taller de Alfarería",
-    "subTitle": "",
+    "subTitle": "Aurora Flores",
     "description": "Este taller invita a la comunidad a descubrir el oficio ancestral de la alfarería a través de una jornada intensiva que combina práctica, creatividad y cultura. Mediante el modelado en arcilla, los participantes podrán crear sus propias piezas y valorar la importancia de este arte en nuestra historia.",
     "trackId": "stage-f",
     "time": {
@@ -25,12 +26,13 @@
     },
     "category": "Taller",
     "duration": "2 Horas",
-    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/TALLERARFALERIA.jpg"
+    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/TALLERARFALERIA.jpg",
+    "inscriptionUrl": "https://festivalarc.fillout.com/talleres"
   },
   {
     "id": "futuro-comics-creando-una-revista-de-comics-desde-cero",
     "title": "Futuro Comics: Creando una Revista de Cómics desde Cero",
-    "subTitle": "",
+    "subTitle": "Diego Maya",
     "description": "Esta charla aborda el proceso creativo detrás de la historieta, desde la gestación de la idea hasta su publicación en formato revista, tanto física como digital. A partir de la experiencia de editores autogestionados de la Región de Coquimbo, se reflexiona sobre las dinámicas de producción, circulación y lectura del cómic regional.",
     "trackId": "stage-f",
     "time": {
