@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets'
+
+import Arc2025Layout from '@/features/arc2025/Arc2025Layout.astro'
+import Header from '../../components/ui/Header.astro'
+import Map from './sections/Map.astro'
+import Hero from './sections/Hero.astro'
+
+import FONDO_WEB from '@/features/arc2025/assets/fondo_arc.webp'
+---
+
+<Arc2025Layout>
+  <Image
+    aria-hidden='true'
+    alt='Fondo del Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
+    src={FONDO_WEB}
+    quality={90}
+    height={FONDO_WEB.height}
+    width={FONDO_WEB.width}
+    class='fixed inset-0 -z-20 h-full min-h-screen w-full object-cover object-left xl:object-center'
+    loading='eager'
+  />
+  <Header withLogo={false} />
+  <main class='mx-auto h-full w-full'>
+    <Hero />
+    <Map />
+  </main>
+</Arc2025Layout>

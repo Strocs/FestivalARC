@@ -1,0 +1,17 @@
+---
+import Title from '@/features/arc2025/components/ui/Title.astro'
+import MAPA from '@/features/arc2025/assets/MAPAFINAL.webp'
+import { Image } from 'astro:assets'
+---
+
+<section class='relative w-full px-4'>
+  <Title subTitle='Distribución de Espacios' class=''>Mapa ARC</Title>
+  <Image
+    id='map-image'
+    src={MAPA}
+    alt='Mapa de Distribución de Espacios del Festival ARC 2025'
+    width={MAPA.width}
+    height={MAPA.height}
+    class='mx-auto aspect-[1887/948] h-fit w-full max-w-7xl rounded-sm md:-mt-10 lg:-mt-16'
+  />
+</section>

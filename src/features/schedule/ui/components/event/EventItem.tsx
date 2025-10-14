@@ -55,7 +55,7 @@ export const EventItem = ({
     <section
       id={id}
       className={cn([
-        'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10 before:rounded-xs after:rounded-b-xs group-hover:after:rounded-xs',
+        'before:bg-25-white after:bg-25-black group-hover:text-25-white text-25-black sticky z-10 before:rounded-sm after:rounded-b-sm group-hover:after:rounded-sm',
         '[--sticky-top-height:4rem] md:[--sticky-top-height:7rem]',
         'pointer-events-none',
         'grid h-fit min-h-[var(--item-height)] w-full min-w-[320px] gap-2 px-4 pt-8 leading-4 shadow-lg duration-300',
@@ -71,7 +71,7 @@ export const EventItem = ({
         {activityType || 'Actividad'}
       </span>
       <span className='bg-25-white text-25-black absolute -top-2 right-4 w-fit px-2 font-sans text-xs uppercase'>
-        {location}
+        {location.includes('Instalación') ? '' : location}
       </span>
       <header>
         <h4 className='text-25-black h-fit font-bold tracking-wide uppercase duration-300 group-hover:text-yellow-200'>
@@ -84,7 +84,7 @@ export const EventItem = ({
             </div>
           ))}
       </header>
-      <section className=''>
+      <section>
         <p className='text-sm'>
           {!eventTime.end ? (
             <time>{eventTime.start}hrs</time>
@@ -106,7 +106,7 @@ export const EventItem = ({
           <ScheduleInfoButton onClick={openModal} label={leftButton} />
         )}
         {!!leftButton && !!inscriptionLink && (
-          <hr className='border-2025-white w-4 rotate-90 border-1' />
+          <hr className='border-25-white mt-1 w-6 rotate-90 border-1 leading-none' />
         )}
         {!!inscriptionLink && (
           <a

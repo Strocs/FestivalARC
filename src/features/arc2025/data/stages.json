@@ -29,7 +29,7 @@
   },
   {
     "id": "stage-e",
-    "name": "Bulevar Literario",
+    "name": "Espacio Literario",
     "color": "#00a4e6",
     "order": 5,
     "category": "Escenario Modular"
@@ -39,13 +39,6 @@
     "name": "Talleres/Charlas",
     "color": "#e62020",
     "order": 6,
-    "category": "Escenario Modular"
-  },
-  {
-    "id": "stage-g",
-    "name": "Charlas",
-    "color": "#3c4b5c",
-    "order": 7,
     "category": "Escenario Modular"
   },
   {
@@ -64,9 +57,9 @@
   },
   {
     "id": "stage-j",
-    "name": "Artes de La Visualidad",
+    "name": "Artes de la Visualidad",
     "color": "#7b38b0",
     "order": 10,
-    "category": "Instalaciones y Talleres"
+    "category": "Intervenciones y Talleres"
   }
 ]

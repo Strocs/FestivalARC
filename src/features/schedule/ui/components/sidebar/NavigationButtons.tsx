@@ -1,32 +1,29 @@
 import { cn } from '@/features/shared/utils'
-
+import { useColumnsStore } from '../../stores/schedule-columns-store'
 interface ScheduleNavigationButtonsProps {
-  onNext: () => void
-  onPrev: () => void
-  canGoNext: boolean
-  canGoPrev: boolean
   className?: string
 }
 
 export function NavigationButtons({
-  onNext,
-  onPrev,
-  canGoNext,
-  canGoPrev,
   className,
 }: ScheduleNavigationButtonsProps) {
+  const canGoNext = useColumnsStore((state) => state.canGoNext)
+  const canGoPrev = useColumnsStore((state) => state.canGoPrev)
+  const goToNext = useColumnsStore((state) => state.goToNext)
+  const goToPrev = useColumnsStore((state) => state.goToPrev)
+
   return (
     <nav
       className={cn(
-        'bg-25-black -mr-24 flex h-[var(--header-height)] items-center justify-between gap-4',
+        '-mr-23 flex h-[var(--header-height)] items-center justify-between gap-4',
         className,
       )}>
       <button
-        onClick={onPrev}
+        onClick={goToPrev}
         disabled={!canGoPrev}
         className={cn(
-          'bg-25-white/50 hover:bg-25-accent text-25-white flex h-9 w-full cursor-pointer items-center justify-center rounded-xs transition-colors duration-200',
-          !canGoPrev && 'cursor-not-allowed opacity-30',
+          'bg-25-black hover:bg-25-primary text-25-white flex h-full w-full cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
+          !canGoPrev && 'cursor-not-allowed opacity-50',
         )}
         type='button'
         aria-label='Anterior'>
@@ -44,11 +41,11 @@ export function NavigationButtons({
         </svg>
       </button>
       <button
-        onClick={onNext}
+        onClick={goToNext}
         disabled={!canGoNext}
         className={cn(
-          'bg-25-white/50 hover:bg-25-accent text-25-white flex h-9 w-full cursor-pointer items-center justify-center rounded-xs transition-colors duration-200',
-          !canGoNext && 'cursor-not-allowed opacity-30',
+          'bg-25-black hover:bg-25-primary text-25-white flex h-full w-full cursor-pointer items-center justify-center rounded-sm transition-colors duration-200',
+          !canGoNext && 'cursor-not-allowed opacity-50',
         )}
         type='button'
         aria-label='Siguiente'>

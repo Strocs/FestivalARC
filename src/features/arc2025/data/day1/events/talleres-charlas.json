@@ -1,0 +1,45 @@
+[
+  {
+    "id": "disena-tu-propio-azulejo-ceramico",
+    "title": "Diseña tu Propio Azulejo Cerámico",
+    "subTitle": "Javiera Castillo",
+    "description": "En este taller se aprenderá la técnica bajo cubierta, a través de placas previamente bizcochadas de cerámica. El taller permitirá a la comunidad acceder a materiales y conocimientos propios de la disciplina cerámica, la cual es\nde vital importancia en la región por nuestro legado alfarero.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "15:30",
+      "end": "17:30"
+    },
+    "category": "Taller",
+    "duration": "1 Hora 30 Minutos",
+    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/AZULEJOS4.jpg",
+    "inscriptionUrl": "https://festivalarc.fillout.com/talleres"
+  },
+  {
+    "id": "bestiario-del-parque-pedro-de-valdivia-de-la-biodiversidad-a-la-biofantasia",
+    "title": "Bestiario del Parque Pedro de Valdivia: De la Biodiversidad a la Biofantasía",
+    "subTitle": "Paola Hernández",
+    "description": "Se trata de una experiencia dirigida a familias, con un enfoque en infancias, jóvenes y adultos. Su objetivo es fusionar la observación de la biodiversidad local con la expresión artística para que las familias, trabajando juntas, transformen la flora y fauna del parque en criaturas de fantasía a través de la ilustración.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "17:30",
+      "end": "19:30"
+    },
+    "category": "Taller",
+    "duration": "2 Horas",
+    "galleryUrl": "/FOTOS_ARTISTAS/TALLERES/BESTIARIO.jpg",
+    "inscriptionUrl": "https://festivalarc.fillout.com/talleres"
+  },
+  {
+    "id": "charla-cortometraje-memorias-de-un-desconocido",
+    "title": "Charla Cortometraje Memorias de un Desconocido",
+    "subTitle": "Mijael Milies",
+    "description": "Este cortometraje-ensayo explora el exilio y la memoria desde una mirada íntima y reflexiva. A través del relato documental, se reconstruye una historia familiar marcada por la dictadura en Chile. La obra propone un viaje emocional hacia los fragmentos de un pasado silenciado, poniendo en diálogo la historia personal y la memoria colectiva del país.",
+    "trackId": "stage-f",
+    "time": {
+      "start": "19:30",
+      "end": "21:00"
+    },
+    "category": "Charla",
+    "galleryUrl": ""
+  }
+]

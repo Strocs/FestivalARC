@@ -1,0 +1,181 @@
+---
+import { FESTIVAL_DAYS } from '../../constants'
+import {
+  FESTIVAL_CITY,
+  FESTIVAL_DAYS_SHORT,
+  FESTIVAL_PLACE,
+  FESTIVAL_TICKETS_URL,
+} from '../../constants'
+import Logo from '../ui/Logo.astro'
+import { cn } from '@/features/shared/utils'
+
+interface Props {
+  withLogo?: boolean
+}
+
+const { withLogo = true } = Astro.props
+
+const navItems = [
+  { id: 'hero', label: 'Inicio', path: '/' },
+  { id: 'programacion', label: 'Programación', path: '/programacion' },
+]
+
+const currentPath = Astro.url.pathname
+---
+
+<header
+  class={cn(
+    'w-full min-h-20 relative flex items-center justify-between gap-4 px-4',
+    withLogo && 'bg-25-black',
+  )}>
+  <!-- Logo and Date -->
+  <section
+    class={cn(
+      'flex gap-4 items-center justify-center relative z-50',
+      currentPath === '/' && 'hidden',
+    )}>
+    <a href='/' class='block'>
+      <Logo transitionName='main-logo' />
+    </a>
+    <div
+      class='text-25-white font-neris md:font-base text-sm leading-none md:leading-normal'>
+      <strong>{FESTIVAL_DAYS_SHORT}</strong>
+      <p>{FESTIVAL_PLACE}, {FESTIVAL_CITY}</p>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <nav
+    class={cn(
+      'absolute z-10 w-fit mx-auto left-0 right-0 items-center justify-center ',
+      currentPath === '/' ? 'flex' : 'hidden lg:flex',
+    )}>
+    <ul class='font-neris flex items-center gap-4 text-lg'>
+      {
+        navItems.map(({ id, label, path }) => (
+          <li
+            id={'nav-' + id}
+            class={cn(
+              'text-25-white cursor-pointer rounded-xs pb-1 text-xl font-bold transition-transform duration-150 hover:-skew-y-4',
+              withLogo ? 'bg-25-primary' : 'bg-25-black',
+            )}>
+            <a href={path} class='block size-full px-4'>
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <!-- Tickets -->
+  <section
+    class={cn(
+      'text-25-black z-20 hidden gap-4 lg:flex',
+      !withLogo && 'invisible',
+    )}>
+    {
+      FESTIVAL_TICKETS_URL.map((URL, index) => (
+        <a
+          href={URL}
+          aria-label='Comprar ticket para el día sábado 18 de octubre'
+          rel='noopener noreferrer'
+          target='_blank'
+          class='bg-25-white hover:bg-25-accent block rounded px-4 py-1 text-center leading-none transition-colors duration-150'>
+          Tickets
+          <strong class='text-25-primary block text-xl leading-none'>
+            {FESTIVAL_DAYS[index]}
+          </strong>
+        </a>
+      ))
+    }
+  </section>
+
+  <!-- Mobile Nav -->
+  <section
+    id='toggle-nav-background'
+    class={cn('', currentPath === '/' ? 'hidden' : 'flex lg:hidden')}>
+    <!-- HamburgerButton -->
+    <input type='checkbox' id='hamburger-btn' hidden class='peer' />
+    <label
+      aria-label='Abrir el panel de navegación'
+      for='hamburger-btn'
+      class:list={[
+        'text-25-white z-50 rotate-0 cursor-pointer transition duration-300 outline-none peer-checked:-rotate-90 peer-checked:[&>.first]:hidden peer-checked:[&>.last]:block',
+      ]}>
+      <p class='sr-only'>Abrir el panel de navegación</p>
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        fill='none'
+        stroke='currentColor'
+        stroke-width='2'
+        class='first h-7 w-7'
+        viewBox='0 0 24 24'
+        ><path
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          d='M4 6h16M4 12h8m-8 6h16'></path></svg
+      >
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        fill='none'
+        stroke='currentColor'
+        stroke-width='2'
+        class='last hidden h-7 w-7'
+        viewBox='0 0 24 24'
+        ><path
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          d='M6 18 18 6M6 6l12 12'></path></svg
+      >
+    </label>
+
+    <!-- Mobile Nav Panel -->
+    <section
+      class='bg-25-black fixed inset-0 z-40 flex size-full -translate-x-full transform-gpu gap-10 overflow-hidden transition-transform duration-500 peer-checked:translate-x-0'>
+      <div class='flex size-full flex-col items-center justify-center gap-20'>
+        <!-- Mobile Navigation -->
+        <nav class={cn('w-fit mx-auto')}>
+          <ul class='font-neris flex flex-col items-center gap-6 text-lg'>
+            {
+              navItems.map(({ id, label, path }) => (
+                <li
+                  id={'nav-' + id}
+                  class={cn(
+                    'text-25-white font-dk cursor-pointer rounded-xs text-5xl font-medium transition-transform duration-150 hover:-skew-y-4',
+                    currentPath === path && 'text-25-accent',
+                  )}>
+                  <a href={path} class='block size-full px-4'>
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <!-- Mobile Tickets -->
+        <section
+          class={cn('text-25-white space-y-2', !withLogo && 'invisible')}>
+          <p class='text-dk text-center text-xl'>Consigue tus tickets:</p>
+          <div class='flex items-center justify-center gap-4'>
+            {
+              FESTIVAL_TICKETS_URL.map((URL, index) => (
+                <a
+                  href={URL}
+                  aria-label='Comprar ticket para el día sábado 18 de octubre'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  class='bg-25-primary block w-fit px-4 pt-1 pb-2 text-center text-lg leading-none font-bold'>
+                  {FESTIVAL_DAYS[index]}
+                </a>
+              ))
+            }
+          </div>
+        </section>
+      </div>
+    </section>
+  </section>
+</header>
+
+<script></script>

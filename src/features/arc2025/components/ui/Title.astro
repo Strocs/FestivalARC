@@ -4,9 +4,10 @@ import { cn } from '@/features/shared/utils'
 interface Props {
   subTitle?: string
   size?: 'md' | 'lg' | 'xl'
+  class?: string
 }
 
-const { subTitle, size = 'xl' } = Astro.props
+const { subTitle, size = 'xl', class: customClass } = Astro.props
 
 const sizeClasses: Record<'md' | 'lg' | 'xl', string> = {
   md: 'text-[2.8rem] leading-[2.8rem] md:text-7xl md:leading-none',
@@ -15,11 +16,12 @@ const sizeClasses: Record<'md' | 'lg' | 'xl', string> = {
 }
 ---
 
-<h2 class='mx-auto w-fit py-12 md:space-y-2'>
+<h2 class='relative z-10 mx-auto w-fit pt-20 pb-4 md:space-y-2 md:py-12'>
   <span
     class={cn(
-      'font-dk bg-25-accent text-25-primary mx-auto block w-fit -skew-y-3 rounded-xs px-6 text-center shadow-xl',
+      'font-dk bg-25-accent text-25-primary mx-auto block w-fit -skew-y-3 rounded-sm px-6 text-center shadow-xl',
       sizeClasses[size],
+      customClass,
     )}>
     <slot />
   </span>

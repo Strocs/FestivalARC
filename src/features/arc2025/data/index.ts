@@ -1,6 +1,6 @@
 // Repository like to parse data from data-source to schedule input (Just an example, data can actually pass directly if came well )
 
-import stagesData from './stages.json' with { type: 'json' }
+import stages from './stages.json' with { type: 'json' }
 import day1Config from './day1/config.json' with { type: 'json' }
 import day2Config from './day2/config.json' with { type: 'json' }
 
@@ -61,19 +61,11 @@ export function mapArc2025DataToScheduleInput({
         category: event.category,
         duration: event.duration,
         galleryUrl: event.galleryUrl,
+        inscriptionUrl: event.inscriptionUrl,
       },
     })),
   }
 }
-
-// Remove specific Stage
-function disableStage(stageId: string | string[], stages: Arc2025Stage[]) {
-  return stages.filter((stage) =>
-    Array.isArray(stageId) ? !stageId.includes(stage.id) : stage.id !== stageId,
-  )
-}
-
-const stages = disableStage(['stage-g'], stagesData)
 
 const arc2025Day1InputData = mapArc2025DataToScheduleInput({
   time: {

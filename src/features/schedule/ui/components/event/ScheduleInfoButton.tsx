@@ -23,7 +23,7 @@ export function ScheduleInfoButton({
   const buttonLabel = label || 'Más info'
   const buttonStyle = cn(
     ' w-full py-1.5 whitespace-nowrap transition duration-300',
-    !!className ? className : 'text-25-white hover:text-25-accent',
+    !!className ? className : 'text-25-white  hover:text-yellow-200 ',
   )
 
   if (props.hasOwnProperty('onClick')) {

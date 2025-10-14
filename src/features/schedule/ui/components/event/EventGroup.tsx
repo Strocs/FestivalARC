@@ -24,7 +24,7 @@ export function EventGroup({ group, header }: EventGroupProps) {
           return (
             <li
               key={item.columnData.id}
-              className='pointer-events-none relative rounded-xs'
+              className='pointer-events-none relative rounded-sm'
               style={{
                 gridRow: `${item.position.start} / span ${item.position.span}`,
                 gridColumn: 1,

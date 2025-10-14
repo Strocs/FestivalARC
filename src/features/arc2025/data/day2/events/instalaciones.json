@@ -2,28 +2,28 @@
   {
     "id": "camara-oscura-inmersiva",
     "title": "Cámara Oscura Inmersiva",
-    "subTitle": "",
-    "description": "",
+    "subTitle": "Sol Jiménez y Oskar Huerta",
+    "description": "La Cámara Oscura Inmersiva es un dispositivo diseñado para recrear, a escala humana, la experiencia de estar dentro de una cámara fotográfica. Este espacio permite al público adentrarse en los principios ópticos que dieron origen a la fotografía, viviendo en primera persona el proceso de formación de la imagen a través de la luz.",
     "trackId": "stage-j",
     "time": {
       "start": "15:00",
       "end": "20:30"
     },
-    "category": "Instalacion",
+    "category": "Intervencion",
     "duration": "",
     "galleryUrl": ""
   },
   {
     "id": "ananucas-colores-semiarido",
     "title": "Añañucas: Los Colores del Semiárido",
-    "subTitle": "",
+    "subTitle": "Colectiva Biodiversas",
     "description": "La obra propone una experiencia inmersiva que busca generar un impacto sensible y didáctico, invitando a reflexionar sobre la relación entre arte, naturaleza y comunidad. Por medio de técnicas sustentables y el uso de materiales de origen natural, se visibilizan problemáticas medioambientales vinculadas a los ecosistemas semiáridos.",
     "trackId": "stage-j",
     "time": {
       "start": "15:00",
       "end": "20:30"
     },
-    "category": "Instalacion",
+    "category": "Intervencion",
     "duration": "",
     "galleryUrl": "/FOTOS_ARTISTAS/INTERVENCIONES/AÑAÑUCAS.jpg"
   },
@@ -39,6 +39,7 @@
     },
     "category": "Taller",
     "duration": "1 Hora 30 Minutos",
-    "galleryUrl": ""
+    "galleryUrl": "",
+    "inscriptionUrl": "https://festivalarc.fillout.com/talleres"
   }
 ]

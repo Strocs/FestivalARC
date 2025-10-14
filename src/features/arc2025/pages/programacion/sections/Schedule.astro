@@ -1,0 +1,68 @@
+---
+import { ScheduleLayout, adaptScheduleDataToGrid } from '@/features/schedule'
+
+import {
+  arc2025Day1ScheduleData,
+  arc2025Day2ScheduleData,
+} from '@/features/arc2025/data'
+import type { ScheduleTrack } from '@/features/schedule'
+import type { LayoutEvent } from '@/features/schedule'
+import type {
+  Arc2025StagePayload,
+  Arc2025EventPayload,
+} from '@/features/arc2025/types'
+import type {
+  UIHeaderItem,
+  UIColumnItem,
+  UIScheduleDay,
+} from '@/features/schedule'
+import { FESTIVAL_DAYS } from '@/features/arc2025/constants'
+
+const mapTrack = (track: ScheduleTrack<Arc2025StagePayload>): UIHeaderItem => ({
+  id: track.id,
+  name: track.payload?.name ?? '',
+  color: track.payload?.color ?? '',
+  order: track.order,
+  category: track.payload?.category ?? '',
+})
+
+const mapEvent = (event: LayoutEvent<Arc2025EventPayload>): UIColumnItem => ({
+  id: event.event.id,
+  header: {
+    title: event.event.payload?.title ?? '',
+    subTitle: event.event.payload?.subTitle ?? '',
+  },
+  body: {
+    description: event.event.payload?.description ?? '',
+    galleryUrl: event.event.payload?.galleryUrl,
+    duration: event.event.payload?.duration,
+    time: {
+      start: event.event.time.start,
+      end: event.event.time.end,
+    },
+  },
+  footer: {
+    infoButton:
+      event.event.payload?.description || event.event.payload?.galleryUrl
+        ? 'Más Info'
+        : undefined,
+    inscription: event.event.payload?.inscriptionUrl ?? undefined,
+  },
+  labels: {
+    left: event.event.payload?.category ?? '',
+  },
+})
+
+const scheduleDays: UIScheduleDay[] = [
+  {
+    label: FESTIVAL_DAYS[0],
+    data: adaptScheduleDataToGrid(arc2025Day1ScheduleData, mapTrack, mapEvent),
+  },
+  {
+    label: FESTIVAL_DAYS[1],
+    data: adaptScheduleDataToGrid(arc2025Day2ScheduleData, mapTrack, mapEvent),
+  },
+]
+---
+
+<ScheduleLayout client:idle groups={scheduleDays} />
