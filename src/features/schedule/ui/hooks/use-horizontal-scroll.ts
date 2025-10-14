@@ -191,7 +191,6 @@ export function useHorizontalDrag({
         currentOffset,
         dragStateRef.current.startOffset,
       )
-      console.log(snappedOffset)
       const columnIndex = Math.round(-snappedOffset / width)
 
       setOffset(snappedOffset)
