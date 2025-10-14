@@ -51,7 +51,6 @@ export const EventItem = ({
     [stackOffset],
   )
 
-  console.log(inscriptionLink)
   return (
     <section
       id={id}
