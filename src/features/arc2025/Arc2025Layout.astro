@@ -2,10 +2,18 @@
 import '@/styles/global.css'
 import Layout from '@/features/shared/layouts/Layout.astro'
 import Footer from '@/features/arc2025/components/ui/Footer.astro'
+
+interface Props {
+  title?: string
+}
+
+const {
+  title = 'Festival ARC 2025 - Festival de las Artes Región de Coquimbo',
+} = Astro.props
 ---
 
 <Layout
-  title='Festival ARC 2025 - Festival de las Artes Región de Coquimbo'
+  title={title}
   description='Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena.'
   favicon='/ARC25.png'>
   <slot />
