@@ -13,9 +13,9 @@
     "galleryUrl": ""
   },
   {
-    "id": "solido-comix-20",
-    "title": "Sólido Comix N.º 20",
-    "subTitle": "Solid Ediciones\nPresenta: Marcelo Tapia",
+    "id": "aves-migratorias-en-la-region-de-coquimbo",
+    "title": "Aves Migratorias en la Región de Coquimbo",
+    "subTitle": "Bastían Campusano y Camila Guamán\nLa Guillotina Editorial",
     "description": "",
     "trackId": "stage-e",
     "time": {
@@ -23,6 +23,7 @@
       "end": "17:00"
     },
     "category": "Literatura",
+    "duration": "",
     "galleryUrl": ""
   },
   {
