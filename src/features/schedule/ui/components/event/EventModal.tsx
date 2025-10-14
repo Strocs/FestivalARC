@@ -75,9 +75,14 @@ export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
           'relative flex max-h-[95dvh] w-full max-w-prose flex-col md:max-h-[90dvh]',
           'bg-25-white rounded-sm shadow-2xl',
         ])}>
+        <img
+          src='/ARC25.png'
+          alt='logo arc'
+          className='absolute -top-15 -right-2 aspect-auto h-32 md:-top-21 md:-right-12 md:h-42 md:rotate-12'
+        />
         <button
           onClick={onClose}
-          className='bg-25-blue text-25-white hover:bg-25-primary absolute top-auto right-3 bottom-3 z-6 flex size-8 cursor-pointer items-center justify-center rounded-full transition-colors duration-300 md:-top-5 md:-right-5 md:size-10 xl:top-3 xl:bottom-auto'
+          className='bg-25-blue text-25-white hover:bg-25-primary absolute right-2 bottom-2 z-6 flex size-8 cursor-pointer items-center justify-center rounded-full transition-colors duration-300 md:-right-5 md:-bottom-5 md:size-10'
           aria-label='Cerrar modal'>
           {/* Change to svg X shape  */}
           <svg
@@ -102,7 +107,7 @@ export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
         </span>
         {
           /* Placeholder image, replace with actual event image if available */
-          true && (
+          event.imageUrl && (
             <img
               src={event.imageUrl}
               alt={'Imagen de ' + event.title}
