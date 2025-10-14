@@ -51,6 +51,7 @@ export const EventItem = ({
     [stackOffset],
   )
 
+  console.log(inscriptionLink)
   return (
     <section
       id={id}
@@ -71,7 +72,7 @@ export const EventItem = ({
         {activityType || 'Actividad'}
       </span>
       <span className='bg-25-white text-25-black absolute -top-2 right-4 w-fit px-2 font-sans text-xs uppercase'>
-        {location}
+        {location.includes('Instalación') ? '' : location}
       </span>
       <header>
         <h4 className='text-25-black h-fit font-bold tracking-wide uppercase duration-300 group-hover:text-yellow-200'>
@@ -84,7 +85,7 @@ export const EventItem = ({
             </div>
           ))}
       </header>
-      <section className=''>
+      <section>
         <p className='text-sm'>
           {!eventTime.end ? (
             <time>{eventTime.start}hrs</time>
@@ -106,7 +107,7 @@ export const EventItem = ({
           <ScheduleInfoButton onClick={openModal} label={leftButton} />
         )}
         {!!leftButton && !!inscriptionLink && (
-          <hr className='border-2025-white w-4 rotate-90 border-1' />
+          <hr className='border-25-white mt-1 w-6 rotate-90 border-1 leading-none' />
         )}
         {!!inscriptionLink && (
           <a

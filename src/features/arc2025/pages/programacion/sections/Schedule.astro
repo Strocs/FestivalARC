@@ -46,6 +46,7 @@ const mapEvent = (event: LayoutEvent<Arc2025EventPayload>): UIColumnItem => ({
       event.event.payload?.description || event.event.payload?.galleryUrl
         ? 'Más Info'
         : undefined,
+    inscription: event.event.payload?.inscriptionUrl ?? undefined,
   },
   labels: {
     left: event.event.payload?.category ?? '',
