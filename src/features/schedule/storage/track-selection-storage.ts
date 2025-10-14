@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'arc2025:selectedStageIds'
+const STORAGE_KEY = 'arc2025:stages:selection'
 
 const isClient = typeof window !== 'undefined'
 

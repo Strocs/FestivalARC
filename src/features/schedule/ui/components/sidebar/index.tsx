@@ -11,7 +11,7 @@ interface SidebarProps {
   stages: ReadonlyArray<UIHeaderItem>
 }
 
-const STORAGE_KEY = 'festivalarc-sidebar-expanded'
+const STORAGE_KEY = 'arc2025:sidebar:expanded'
 
 export function Sidebar({ stages }: SidebarProps) {
   // Expanded State
