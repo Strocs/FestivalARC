@@ -15,8 +15,8 @@
   },
   {
     "id": "lollapayasa",
-    "title": "Lollapayasa",
-    "subTitle": "Un Concierto de Payasas",
+    "title": "Lollapayasa, Un Concierto de Payasas",
+    "subTitle": "Compañía Noche de Payasas",
     "description": "Cinco payasas multidisciplinarias vienen a deslumbrar con su talento musical y\nentregar una experiencia llena de risas y colores. El público viajará por diferentes estilos musicales y disfrutará de canciones grupales, teatro y comedia.",
     "trackId": "stage-b",
     "time": {
@@ -44,7 +44,7 @@
   {
     "id": "sin-pies-ni-cabeza",
     "title": "Sin Pies ni Cabeza",
-    "subTitle": "Espectáculo de Circo Contemporáneo\nVendaval Compañía",
+    "subTitle": "Compañía Vendaval",
     "description": "\"Sin pies ni cabeza\" es un espectáculo de circo contemporáneo destinada a niños y niñas que combina humor, teatro y técnicas circenses para narrar la historia de dos personajes cómicos.La obra destaca por su irreverencia y capacidad de generar momentos mágicos que conectan con el público de manera divertida y participativa.",
     "trackId": "stage-b",
     "time": {
@@ -58,7 +58,7 @@
   {
     "id": "latidos-de-fuego",
     "title": "Latidos de Fuego",
-    "subTitle": "Espectáculo Circense",
+    "subTitle": "Espectáculo Circense\nCompañía Vendaval",
     "description": "Latidos de Fuego es un espectáculo circense que fusiona malabarismo y danza del fuego en un lenguaje que combina riesgo y belleza. La obra invita al público a sumergirse en un universo hipnótico, donde el fuego revela su misterio cautivador.",
     "trackId": "stage-b",
     "time": {

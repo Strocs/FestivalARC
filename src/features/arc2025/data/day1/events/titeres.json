@@ -1,8 +1,8 @@
 [
   {
     "id": "cuentos-al-andar",
-    "title": "Cuentos al Andar",
-    "subTitle": "",
+    "title": "Cuentacuentos: Cuentos al Andar",
+    "subTitle": "Compañía de Teatro Itinerante Ascetas",
     "description": "Cuentos al Andar es un espectáculo de narración oral que incluye cuentos de la tradición oral latinoamericana y de autores connotados como Eduardo Galeano, Mario Benedetti, Javier Milanka, entre otros.",
     "trackId": "stage-d",
     "time": {
@@ -16,7 +16,7 @@
   {
     "id": "historia-de-la-bateria-para-ninos",
     "title": "Historia de la Batería para Niños",
-    "subTitle": "",
+    "subTitle": "Claudio Astudillo",
     "description": "Esta propuesta combina educación y entretenimiento en una experiencia única que invita a descubrir la evolución de la batería. A través de un montaje en vivo, los niños y niñas podrán conocer de forma dinámica y participativa la historia de este instrumento, desde sus orígenes hasta su forma actual.",
     "trackId": "stage-d",
     "time": {
