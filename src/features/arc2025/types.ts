@@ -6,6 +6,7 @@ export interface Arc2025Event {
   category: string
   duration?: string
   galleryUrl?: string
+  inscriptionUrl?: string
   time: {
     start: string
     end: string

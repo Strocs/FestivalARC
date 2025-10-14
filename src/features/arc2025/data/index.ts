@@ -61,6 +61,7 @@ export function mapArc2025DataToScheduleInput({
         category: event.category,
         duration: event.duration,
         galleryUrl: event.galleryUrl,
+        inscriptionUrl: event.inscriptionUrl,
       },
     })),
   }
