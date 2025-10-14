@@ -342,11 +342,11 @@ export function ColumnsProvider({ children, columns }: ColumnProviderProps) {
   const availableTrackIds = columns.map((col) => col.header.id)
 
   if (!storeRef.current) {
-    const derived = computeDerivedState(columns, [], 0)
+    const derived = computeDerivedState(columns, availableTrackIds, 0)
 
     storeRef.current = createColumnsStore({
       columns,
-      selectedStageIds: [],
+      selectedStageIds: availableTrackIds,
       availableStageIds: availableTrackIds,
       currentIndex: 0,
       shouldAnimate: true,
@@ -356,7 +356,14 @@ export function ColumnsProvider({ children, columns }: ColumnProviderProps) {
 
   useEffect(() => {
     const storedIds = trackSelectionStorage.get()
-    if (!storedIds || storedIds.length <= 0) return
+
+    if (!storedIds) {
+      trackSelectionStorage.set(availableTrackIds)
+      return
+    }
+
+    if (storedIds.length <= 0) return
+
     const validStoredIds = getValidTrackIds(storedIds, availableTrackIds)
 
     const derived = computeDerivedState(columns, validStoredIds, 0)
