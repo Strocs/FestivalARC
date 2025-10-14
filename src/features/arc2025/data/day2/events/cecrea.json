@@ -1,7 +1,7 @@
 [
   {
     "id": "experiencia-escritura-creativa-1",
-    "title": "Experiencia de Escritura Creativa",
+    "title": "Grabado y Patrimonio de La Serena",
     "subTitle": "",
     "description": "",
     "trackId": "stage-i",
@@ -14,26 +14,13 @@
   },
   {
     "id": "espacio-de-bienestar-dia-2",
-    "title": "Espacio de Bienestar",
+    "title": "Grabado y Patrimonio de La Serena",
     "subTitle": "",
     "description": "",
     "trackId": "stage-i",
     "time": {
       "start": "17:00",
       "end": "18:00"
-    },
-    "category": "Cecrea",
-    "galleryUrl": ""
-  },
-  {
-    "id": "experiencia-escritura-creativa-2",
-    "title": "Experiencia de Escritura Creativa",
-    "subTitle": "",
-    "description": "",
-    "trackId": "stage-i",
-    "time": {
-      "start": "18:30",
-      "end": "19:00"
     },
     "category": "Cecrea",
     "galleryUrl": ""
