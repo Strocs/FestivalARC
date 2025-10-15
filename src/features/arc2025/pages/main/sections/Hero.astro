@@ -6,6 +6,7 @@ import {
   FESTIVAL_PLACE,
   FESTIVAL_CITY,
   FESTIVAL_DAYS,
+  FESTIVAL_TICKETS_URL
 } from '@/features/arc2025/constants'
 ---
 
@@ -37,10 +38,10 @@ import {
       </p>
       <div class='mx-auto flex w-fit items-center gap-4 md:gap-8'>
         {
-          FESTIVAL_DAYS.map((DAY) => (
+        FESTIVAL_DAYS.map((DAY, index) => (
             <a
-              href='https://www.portaldisc.com/evento/festivalarc2025-18oct'
-              aria-label='Comprar ticket para el día sábado 18 de octubre'
+              href={FESTIVAL_TICKETS_URL[index]}
+          aria-label=`Comprar ticket para el día ${DAY} de octubre`
               target='_blank'
               rel='noopener noreferrer'
               class='bg-25-black text-25-white hover:bg-25-accent hover:text-25-primary rounded-xs px-4 pt-1 pb-2 text-lg font-bold transition-colors duration-300 md:rounded md:text-3xl'>
