@@ -70,9 +70,11 @@ export const EventItem = ({
         style={{ backgroundColor: color }}>
         {activityType || 'Actividad'}
       </span>
-      <span className='bg-25-white text-25-black absolute -top-2 right-4 w-fit px-2 font-sans text-xs uppercase'>
-        {location.includes('Instalación') ? '' : location}
-      </span>
+
+      {/* <span className='bg-25-white text-25-black absolute -top-2 right-4 w-fit px-2 font-sans text-xs uppercase'> */}
+      {/*   {location.includes('Instalación') ? '' : location} */}
+      {/* </span> */}
+
       <header>
         <h4 className='text-25-black h-fit font-bold tracking-wide uppercase duration-300 group-hover:text-yellow-200'>
           {title}
