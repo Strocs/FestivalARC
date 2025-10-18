@@ -76,7 +76,9 @@ export const EventItem = ({
       {/* </span> */}
 
       <header>
-        <h4 className='text-25-black h-fit font-bold tracking-wide uppercase duration-300 group-hover:text-yellow-200'>
+        <h4
+          aria-label={title}
+          className='text-25-black h-fit font-bold tracking-wide uppercase duration-300 group-hover:text-yellow-200'>
           {title}
         </h4>
         {subTitle &&
