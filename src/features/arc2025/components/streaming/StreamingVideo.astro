@@ -1,0 +1,19 @@
+---
+import { cn } from '@/features/shared/utils'
+import { YouTube } from '@astro-community/astro-embed-youtube'
+const STREAMING_URL = 'https://www.youtube.com/watch?v=XRDiCX8O0Kc'
+
+interface Props {
+  class?: string
+}
+
+const { class: customClass } = Astro.props
+---
+
+<YouTube
+  id={STREAMING_URL}
+  posterQuality='max'
+  class={cn('streaming-video w-full aspect-video', customClass)}
+  transition:name='streaming-video'
+  transition:persist
+/>
