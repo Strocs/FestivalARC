@@ -7,6 +7,7 @@ import Map from './sections/Map.astro'
 import Hero from './sections/Hero.astro'
 
 import FONDO_WEB from '@/features/arc2025/assets/fondo_arc.webp'
+import Streaming from './sections/Streaming.astro'
 ---
 
 <Arc2025Layout>
@@ -21,8 +22,9 @@ import FONDO_WEB from '@/features/arc2025/assets/fondo_arc.webp'
     loading='eager'
   />
   <Header withLogo={false} />
-  <main class='mx-auto h-full w-full'>
+  <main class='mx-auto h-full w-full space-y-8' data-page='main'>
     <Hero />
+    <Streaming />
     <Map />
   </main>
 </Arc2025Layout>
