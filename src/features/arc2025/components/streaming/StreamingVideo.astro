@@ -1,7 +1,8 @@
 ---
 import { cn } from '@/features/shared/utils'
 import { YouTube } from '@astro-community/astro-embed-youtube'
-const STREAMING_URL = 'T7MGnKZfXQE'
+// const STREAM_DAY_1 = 'T7MGnKZfXQE'
+const STREAM_DAY_2 = 'oH3SP24wA84'
 
 interface Props {
   class?: string
@@ -11,7 +12,7 @@ const { class: customClass } = Astro.props
 ---
 
 <YouTube
-  id={STREAMING_URL}
+  id={STREAM_DAY_2}
   posterQuality='max'
   class={cn('streaming-video w-full aspect-video', customClass)}
   transition:name='streaming-video'
