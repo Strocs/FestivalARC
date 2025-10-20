@@ -69,27 +69,27 @@ const currentPath = Astro.url.pathname
   </nav>
 
   <!-- Tickets -->
-  <section
-    class={cn(
-      'text-25-black z-20 hidden gap-4 lg:flex',
-      !withLogo && 'invisible',
-    )}>
-    {
-      FESTIVAL_TICKETS_URL.map((URL, index) => (
-        <a
-          href={URL}
-          aria-label='Comprar ticket para el día sábado 18 de octubre'
-          rel='noopener noreferrer'
-          target='_blank'
-          class='bg-25-white hover:bg-25-accent block rounded px-4 py-1 text-center leading-none transition-colors duration-150'>
-          Tickets
-          <strong class='text-25-primary block text-xl leading-none'>
-            {FESTIVAL_DAYS[index]}
-          </strong>
-        </a>
-      ))
-    }
-  </section>
+  <!-- <section -->
+  <!--   class={cn( -->
+  <!--     'text-25-black z-20 hidden gap-4 lg:flex', -->
+  <!--     !withLogo && 'invisible', -->
+  <!--   )}> -->
+  <!--   { -->
+  <!--     FESTIVAL_TICKETS_URL.map((URL, index) => ( -->
+  <!--       <a -->
+  <!--         href={URL} -->
+  <!--         aria-label='Comprar ticket para el día sábado 18 de octubre' -->
+  <!--         rel='noopener noreferrer' -->
+  <!--         target='_blank' -->
+  <!--         class='bg-25-white hover:bg-25-accent block rounded px-4 py-1 text-center leading-none transition-colors duration-150'> -->
+  <!--         Tickets -->
+  <!--         <strong class='text-25-primary block text-xl leading-none'> -->
+  <!--           {FESTIVAL_DAYS[index]} -->
+  <!--         </strong> -->
+  <!--       </a> -->
+  <!--     )) -->
+  <!--   } -->
+  <!-- </section> -->
 
   <!-- Mobile Nav -->
   <section
@@ -155,24 +155,24 @@ const currentPath = Astro.url.pathname
         </nav>
 
         <!-- Mobile Tickets -->
-        <section
-          class={cn('text-25-white space-y-2', !withLogo && 'invisible')}>
-          <p class='text-dk text-center text-xl'>Consigue tus tickets:</p>
-          <div class='flex items-center justify-center gap-4'>
-            {
-              FESTIVAL_TICKETS_URL.map((URL, index) => (
-                <a
-                  href={URL}
-                  aria-label='Comprar ticket para el día sábado 18 de octubre'
-                  rel='noopener noreferrer'
-                  target='_blank'
-                  class='bg-25-primary block w-fit px-4 pt-1 pb-2 text-center text-lg leading-none font-bold'>
-                  {FESTIVAL_DAYS[index]}
-                </a>
-              ))
-            }
-          </div>
-        </section>
+        <!-- <section -->
+        <!--   class={cn('text-25-white space-y-2', !withLogo && 'invisible')}> -->
+        <!--   <p class='text-dk text-center text-xl'>Consigue tus tickets:</p> -->
+        <!--   <div class='flex items-center justify-center gap-4'> -->
+        <!--     { -->
+        <!--       FESTIVAL_TICKETS_URL.map((URL, index) => ( -->
+        <!--         <a -->
+        <!--           href={URL} -->
+        <!--           aria-label='Comprar ticket para el día sábado 18 de octubre' -->
+        <!--           rel='noopener noreferrer' -->
+        <!--           target='_blank' -->
+        <!--           class='bg-25-primary block w-fit px-4 pt-1 pb-2 text-center text-lg leading-none font-bold'> -->
+        <!--           {FESTIVAL_DAYS[index]} -->
+        <!--         </a> -->
+        <!--       )) -->
+        <!--     } -->
+        <!--   </div> -->
+        <!-- </section> -->
       </div>
     </section>
   </section>
