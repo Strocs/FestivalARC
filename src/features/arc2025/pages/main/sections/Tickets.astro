@@ -1,0 +1,28 @@
+---
+import Title from '@/features/arc2025/components/ui/Title.astro'
+import {
+  FESTIVAL_DAYS,
+  FESTIVAL_TICKETS_URL,
+} from '@/features/arc2025/constants'
+---
+    <section class='w-fit'>
+      <Title size='md'>Tickets Diarios</Title>
+      <p
+        class='font-bestoom text-25-white max-w-xl pb-4 text-center text-xl leading-none md:-mt-4 md:text-3xl'>
+        Adquiere tus tickets diarios en los siguientes enlaces:
+      </p>
+      <div class='mx-auto flex w-fit items-center gap-4 md:gap-8'>
+        {
+        FESTIVAL_DAYS.map((DAY, index) => (
+            <a
+              href={FESTIVAL_TICKETS_URL[index]}
+          aria-label=`Comprar ticket para el día ${DAY} de octubre`
+              target='_blank'
+              rel='noopener noreferrer'
+              class='bg-25-black text-25-white hover:bg-25-accent hover:text-25-primary rounded-xs px-4 pt-1 pb-2 text-lg font-bold transition-colors duration-300 md:rounded md:text-3xl'>
+              {DAY}
+            </a>
+          ))
+        }
+      </div>
+    </section>
