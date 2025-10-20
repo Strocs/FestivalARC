@@ -1,9 +1,26 @@
 ---
 import Title from '@/features/arc2025/components/ui/Title.astro'
 import StreamingVideo from '@/features/arc2025/components/streaming/StreamingVideo.astro'
+
+const STREAM_DAY_1 = 'T7MGnKZfXQE'
+const STREAM_DAY_2 = 'oH3SP24wA84'
 ---
 
-<section class='px-4 xl:pt-0 xl:pb-20 landscape:pt-10'>
-  <Title subTitle='Festival ARC 2025'>Streaming</Title>
-  <StreamingVideo />
+<section class='px-4'>
+  <Title size='md' subTitle='Festival ARC 2025'>Revive</Title>
+  <div
+    class='mx-auto flex max-w-7xl flex-col items-center justify-center gap-4 lg:-mt-24 lg:flex-row'>
+    <div class='size-full'>
+      <p class='font-dk text-25-white relative z-20 block text-center text-5xl'>
+        Día 1
+      </p>
+      <StreamingVideo videoId={STREAM_DAY_1} class='mx-auto -mt-5 rounded-lg' />
+    </div>
+    <div class='size-full'>
+      <p class='font-dk text-25-white relative z-20 block text-center text-5xl'>
+        Día 2
+      </p>
+      <StreamingVideo videoId={STREAM_DAY_2} class='mx-auto -mt-5 rounded-lg' />
+    </div>
+  </div>
 </section>
