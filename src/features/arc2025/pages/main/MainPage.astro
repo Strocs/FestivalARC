@@ -3,7 +3,6 @@ import { Image } from 'astro:assets'
 
 import Arc2025Layout from '@/features/arc2025/Arc2025Layout.astro'
 import Header from '../../components/ui/Header.astro'
-import Map from './sections/Map.astro'
 import Hero from './sections/Hero.astro'
 
 import FONDO_WEB from '@/features/arc2025/assets/fondo_arc.webp'
@@ -22,9 +21,8 @@ import Streaming from './sections/Streaming.astro'
     loading='eager'
   />
   <Header withLogo={false} />
-  <main class='mx-auto h-full w-full space-y-8' data-page='main'>
+  <main class='mx-auto h-full w-full pb-20 md:space-y-8' data-page='main'>
     <Hero />
     <Streaming />
-    <Map />
   </main>
 </Arc2025Layout>
