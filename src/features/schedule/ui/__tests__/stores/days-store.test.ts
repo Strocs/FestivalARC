@@ -146,3 +146,21 @@
 //     })
 //   })
 // })
+
+import { createElement, type ReactNode } from 'react'
+import { renderHook } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
+import { DaysProvider, useDaysStore } from '../../stores/days-store'
+
+describe('Days store', () => {
+  it('keeps an empty store navigable without an invalid index', () => {
+    const wrapper = ({ children }: { children: ReactNode }) =>
+      createElement(DaysProvider, { days: [] }, children)
+    const { result } = renderHook(
+      () => useDaysStore((state) => state.days.length),
+      { wrapper },
+    )
+
+    expect(result.current).toBe(0)
+  })
+})

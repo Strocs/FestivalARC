@@ -486,3 +486,36 @@
 //     })
 //   })
 // })
+
+import { createColumnsStore } from '../../stores/schedule-columns-store'
+import type { UIColumns } from '../../types'
+import { describe, it, expect } from 'vitest'
+
+const columns: UIColumns[] = [
+  { header: { id: 'stage-1', name: 'Stage 1', color: '#000', order: 0 }, column: [] },
+  { header: { id: 'stage-2', name: 'Stage 2', color: '#fff', order: 1 }, column: [] },
+]
+
+describe('Columns store', () => {
+  it('moves to the next selected stage within bounds', () => {
+    const store = createColumnsStore({
+      columns,
+      selectedStageIds: ['stage-1', 'stage-2'],
+      filteredColumns: columns,
+      isAllSelected: true,
+      isNoneSelected: false,
+      selectedCount: 2,
+      canGoNext: true,
+      canGoPrev: false,
+      currentStage: columns[0].header,
+      availableStageIds: ['stage-1', 'stage-2'],
+      currentIndex: 0,
+      shouldAnimate: true,
+    })
+
+    store.getState().goToNext()
+
+    expect(store.getState().currentIndex).toBe(1)
+    expect(store.getState().currentStage?.id).toBe('stage-2')
+  })
+})

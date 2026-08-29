@@ -26,7 +26,7 @@ export function DaySelector({ isExpanded = true }: DaySelectorProps) {
   }
 
   // Techincal Doubt: this information must came from the implementation of the schedule.
-  const currentLabel = days[currentDayIndex]
+  const currentLabel = days[currentDayIndex] ?? ''
   const dayParts = currentLabel.split(' ')
   const dayName = dayParts[0] || ''
   const dayNumber = dayParts[1] || ''

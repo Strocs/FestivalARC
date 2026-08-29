@@ -176,3 +176,35 @@
 //     expect(trackSelectionStorage.set).not.toHaveBeenCalled()
 //   })
 // })
+
+import { createElement } from 'react'
+import { render, screen, fireEvent } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
+import { ColumnsProvider, useColumnsStore } from '../../stores/schedule-columns-store'
+import type { UIColumns } from '../../types'
+
+const columns: UIColumns[] = [
+  { header: { id: 'stage-1', name: 'Stage 1', color: '#000', order: 0 }, column: [] },
+  { header: { id: 'stage-2', name: 'Stage 2', color: '#fff', order: 1 }, column: [] },
+]
+
+function ColumnsProbe() {
+  const selectedCount = useColumnsStore((state) => state.selectedCount)
+  const toggleStage = useColumnsStore((state) => state.toggleStage)
+
+  return createElement(
+    'button',
+    { type: 'button', onClick: () => toggleStage('stage-2') },
+    String(selectedCount),
+  )
+}
+
+describe('Columns selection hook API', () => {
+  it('updates the selected stage count through the store hook', () => {
+    render(createElement(ColumnsProvider, { columns }, createElement(ColumnsProbe)))
+
+    fireEvent.click(screen.getByRole('button'))
+
+    expect(screen.getByRole('button')).toHaveTextContent('1')
+  })
+})

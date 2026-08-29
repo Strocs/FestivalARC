@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const chromiumExecutablePath =
+  process.env.PLAYWRIGHT_CHROMIUM_PATH ?? '/usr/sbin/chromium'
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -21,6 +24,8 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
+  timeout: 30_000,
+  expect: { timeout: 5_000 },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -30,21 +35,16 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
-  /* Configure projects for major browsers */
+  /* Configure the required browser project. */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
-
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        browserName: 'chromium',
+        headless: true,
+        launchOptions: { executablePath: chromiumExecutablePath },
+      },
     },
 
     /* Test against mobile viewports. */
