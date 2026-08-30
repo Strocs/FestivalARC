@@ -16,6 +16,8 @@ Chained PRs recommended: Yes
 Chain strategy: feature-branch-chain
 400-line budget risk: High, contained through per-slice PR boundaries
 
+Maintainer-approved Slice 2 size exception: `size:exception`. File-preserving moves/assets measured 14,908 changed lines; this recovery is authorized within the parent-held 20,000-line runtime bound. The exception applies only to the existing Slice 2 extraction candidate and does not expand scope or authorize Slice 3 work.
+
 The forecast exceeds the review budget because the work includes a compatibility baseline, workspace extraction, three historical/temporary applications, typed distribution tooling, URL adaptation, deployment wiring, tests, and operations documentation. The range is the arithmetic sum of the ten per-slice authored-line estimates; historical file moves and imported assets are excluded from that authored-line total and must be measured separately. Apply must implement only the next dependency-ready slice and follow the selected feature-branch chain.
 
 ## Execution rules
@@ -42,9 +44,9 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slice 1. **Start:** baseline and root workspace shell. **Finish:** 2025 is independently buildable as an app and root commands still use the compatibility path. **Rollback:** restore the pre-move root source tree and proxies. **Estimate:** 150–300 changed lines plus file moves; split if the measured diff approaches 400 lines.
 
-- [ ] Relocate the existing 2025 Astro routes, features, assets, integrations, React islands, Zustand usage, tests, and configuration into `apps/festival-2025/**` with file-preserving ownership and no cross-edition imports. <!-- sdd-owner: implementation -->
-- [ ] Add the 2025 package scripts and approved workspace dependencies, retaining its Astro 5, React, Tailwind, state, and static/Vercel behavior. <!-- sdd-owner: implementation -->
-- [ ] Keep root scripts as explicit proxies and retain legacy wiring until composed parity is proven; verify isolated 2025 build/type/test behavior and root route behavior against Slice 1 evidence. <!-- sdd-owner: implementation -->
+- [x] Relocate the existing 2025 Astro routes, features, assets, integrations, React islands, Zustand usage, tests, and configuration into `apps/festival-2025/**` with file-preserving ownership and no cross-edition imports. <!-- sdd-owner: implementation -->
+- [x] Add the 2025 package scripts and approved workspace dependencies, retaining its Astro 5, React, Tailwind, state, and static/Vercel behavior. <!-- sdd-owner: implementation -->
+- [x] Keep root scripts as explicit proxies and retain legacy wiring until composed parity is proven; verify isolated 2025 build/type/test behavior and root route behavior against Slice 1 evidence. <!-- sdd-owner: implementation -->
 
 ## Slice 3 — Shared contracts and publication configuration
 

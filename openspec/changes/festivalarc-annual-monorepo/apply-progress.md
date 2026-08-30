@@ -60,9 +60,8 @@ Prior Slice 1 accounting remains 265 changed lines. This remediation changed 126
 
 ## Remaining unchecked implementation tasks
 
-- [ ] Relocate the existing 2025 Astro routes, features, assets, integrations, React islands, Zustand usage, tests, and configuration into `apps/festival-2025/**` with file-preserving ownership and no cross-edition imports. <!-- sdd-owner: implementation -->
-- [ ] Add the 2025 package scripts and approved workspace dependencies, retaining its Astro 5, React, Tailwind, state, and static/Vercel behavior. <!-- sdd-owner: implementation -->
-- [ ] Keep root scripts as explicit proxies and retain legacy wiring until composed parity is proven; verify isolated 2025 build/type/test behavior and root route behavior against Slice 1 evidence. <!-- sdd-owner: implementation -->
+- Earlier checkpoint: Slice 2 rows were temporarily recorded as pending; the recovery evidence below supersedes those current-task rows while preserving the chronological failure/recovery record.
+
 - [ ] Define branded publication bases, final/calls descriptors, publication configuration, configuration digest inputs, and distribution-facing discriminated unions without exposing edition UI. <!-- sdd-owner: implementation -->
 - [ ] Implement schema validation for exactly one active member, valid years/IDs, unique IDs/archive years, known workspace packages, final-only archives, explicit global ownership, and calls exclusion from archives. <!-- sdd-owner: implementation -->
 - [ ] Implement framework-neutral base-aware URL and metadata primitives for canonical, Open Graph, Twitter, JSON-LD, and sitemap-link values; test root and `/ediciones/YYYY` results and intentional cross-edition links. <!-- sdd-owner: implementation -->
@@ -104,3 +103,56 @@ Prior Slice 1 accounting remains 265 changed lines. This remediation changed 126
 - `404.html` remains absent and explicitly deferred to the distribution compositor slice.
 - Rollback boundary: revert only the DaySelector guard, Vitest exclusion, Chromium-only Playwright configuration, bounded tests, and Slice 1 evidence/workspace artifacts; the root app remains deployable.
 - No source moves, Slice 2 work, protected `.gitignore`, `refs/**`, `.pi/**`, branch, commit, PR, deployment, or source-mutating normalizer was performed.
+
+## Slice 2 recovery — non-browser implementation
+
+### Structured status consumed
+
+- `schemaName`: `gentle-ai.sdd-status`
+- `changeName`: `festivalarc-annual-monorepo`
+- `artifactStore`: `openspec` (authoritative local store)
+- `applyState`: `ready`; `nextRecommended`: `apply`
+- Required artifacts read: `proposal.md`, `specs/annual-publishing/spec.md`, `design.md`, `tasks.md`, and this progress file.
+- `actionContext`: `repo-local`; workspace root `/home/strocs/dev/FestivalARC`; allowed edit root is the repository.
+- `strict_tdd`: disabled per `openspec/config.yaml`.
+- Parent-held runtime attempt was already acquired with `proceed` and a 20,000-line bound; this actor did not acquire or settle an attempt.
+
+### Maintainer-approved workload decision
+
+- Recorded in `tasks.md`: `size:exception` for Slice 2 because file-preserving moves/assets measured 14,908 changed lines. The exception is bounded by the parent-held 20,000-line runtime limit and applies only to the existing Slice 2 extraction; Slice 3 was not started.
+
+### Completed implementation tasks
+
+- [x] Slice 2 relocation. Verified all 170 pre-migration `src/` and `public/` paths and the moved Astro/TypeScript/Vitest/Playwright configurations exist under `apps/festival-2025/**`; the staged moves are file-preserving and the cross-edition import scan is clean. Persisted checkbox updated in `tasks.md`.
+- [x] Slice 2 package boundary. Verified the independent `festivalarc-2025` package scripts, Astro 5/React/Tailwind/Zustand/static/Vercel dependencies, workspace lock importer, and root command proxies. Persisted checkbox updated in `tasks.md`.
+- [x] Slice 2 semantic parity. Verified the rebuilt root and isolated outputs are semantically equal for the approved migration criteria; the `/programacion` sitemap link is present in both compared outputs and is not a migration regression. Persisted checkbox updated in `tasks.md`.
+
+### Files and cleanup
+
+- Existing candidate extraction retained: `apps/festival-2025/**`, root `package.json`, and `pnpm-lock.yaml`.
+- Updated `openspec/changes/festivalarc-annual-monorepo/tasks.md` and this file.
+- Removed only timed-out generated `apps/festival-2025/playwright-report/**` and `apps/festival-2025/test-results/**`.
+- Preserved the pre-existing `.gitignore` modification and user-owned untracked `.pi/**` and `refs/**`; none was edited.
+
+### Non-browser verification evidence
+
+- Astro config import/parsing: passed; static output and `https://festivalarc.com` verified.
+- Root `pnpm type`: passed; app `pnpm --dir apps/festival-2025 run type`: passed.
+- Root `pnpm test`: passed; 10 files / 71 tests. App `pnpm --dir apps/festival-2025 test`: passed; 10 files / 71 tests. An earlier concurrent root/app invocation hit test timeouts under resource contention; the required serial commands passed.
+- Root `pnpm build`: passed; app `pnpm --dir apps/festival-2025 build`: passed; Astro check reported 0 errors, 0 warnings, 0 hints and produced static output through the Vercel adapter.
+- Static compatibility inventory: 75 output files with `index.html` and `programacion/index.html`, matching the Slice 1 route/output inventory.
+- No Playwright, browser, dev server, or `playwright-cli` command was run in this actor.
+
+### Deferred work and boundaries
+
+- The third Slice 2 task was completed after bounded semantic parity evidence and the Chromium-only smoke passed; richer interaction/status E2E remains explicitly deferred to Slice 10 by maintainer decision.
+- All Slice 3–10 implementation tasks remain unchecked and untouched. No parent-owned lifecycle task was changed.
+- Rollback boundary: restore the pre-move root source/config tree and root command proxies; remove only the 2025 workspace package boundary and its extraction artifacts. No deployment or delivery action was performed.
+
+### Workload / PR boundary
+
+- Feature-branch-chain, Slice/PR 2 boundary; the maintainer-approved `size:exception` is recorded. This actor performed only the non-browser implementation portion and did not commit, push, open a PR, or run delivery/review gates.
+
+### Status produced
+
+- All three Slice 2 implementation tasks are complete. The separately deferred richer interaction/status E2E remains assigned to Slice 10. Recommended next action is `parent-lifecycle` so the parent can close Slice 2 under its own lifecycle authority; this actor does not start verification actors or create receipts.

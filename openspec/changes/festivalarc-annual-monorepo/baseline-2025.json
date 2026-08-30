@@ -83,9 +83,10 @@
         "ogImage": "https://festivalarc.com/og_image.png",
         "twitterImage": "https://festivalarc.com/og_image.png",
         "favicon": "/ARC25.png",
-        "sitemapLink": "not-present-in-emitted-page"
+        "sitemapLink": "/sitemap-index.xml"
       }
     },
+    "sitemapLinkCriterion": "The /programacion sitemap link is present in both compared outputs after rebuild; it is semantically equal and is not a Slice 2 migration regression.",
     "rootRelativeReferencesObserved": ["/ARC25.png", "/_astro/index.CfrPN-dV.css", "/sitemap-index.xml"]
   },
   "discovery": {
@@ -137,6 +138,7 @@
     "Hash exact file bytes with SHA-256; exclude timestamps, host separators, and enumeration order.",
     "Sort manifest entries by normalized path and use owner ID only as a diagnostic tie-breaker.",
     "Reserve 404.html, robots.txt, sitemap files, and evidence files for the distribution owner.",
+    "Compare semantics and ownership rather than literal generated _astro hash filenames; normalize generated CSS references before comparing page HTML.",
     "Record browser, HTTP status, visual, interaction, and command results as unobserved when verification cannot obtain them; this baseline records Chromium headless and dev-server status evidence."
   ],
   "rollback": "Remove this evidence file and workspace metadata; the unchanged root application remains the deployable source."
