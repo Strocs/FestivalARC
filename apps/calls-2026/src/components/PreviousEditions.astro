@@ -1,0 +1,47 @@
+---
+import { publicationConfig } from '../../../../editions.config'
+import { previousEditionTargets } from './previousEditions'
+
+const editions = previousEditionTargets(publicationConfig)
+---
+<header
+  class='previous-editions absolute inset-x-0 top-0 z-10 flex justify-center px-5 pt-2 sm:px-8 lg:px-12'
+>
+  <nav aria-label='Ediciones anteriores'>
+    <details class='relative'>
+      <summary
+        class='group flex cursor-pointer items-center gap-2 bg-background px-3 py-1 text-sm leading-tight text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+      >
+        <span>Ediciones anteriores</span>
+        <span
+          class='h-0 w-0 border-x-4 border-x-transparent border-t-[6px] border-t-current transition-transform'
+          aria-hidden='true'
+        ></span>
+      </summary>
+      <ul
+        class='absolute left-1/2 mt-1 min-w-full -translate-x-1/2 bg-background p-1 text-center text-foreground shadow-lg'
+      >
+        {editions.map((edition) => (
+          <li>
+            <a
+              href={edition.href}
+              class='block whitespace-nowrap px-3 py-1.5 text-sm transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none'
+            >
+              {edition.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  </nav>
+</header>
+
+<style>
+  .previous-editions summary {
+    list-style: none;
+  }
+
+  .previous-editions summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

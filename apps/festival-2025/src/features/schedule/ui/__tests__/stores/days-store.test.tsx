@@ -147,15 +147,18 @@
 //   })
 // })
 
-import { createElement, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { renderHook } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import { DaysProvider, useDaysStore } from '../../stores/days-store'
 
+type TestWrapperProps = { children: ReactNode }
+
 describe('Days store', () => {
   it('keeps an empty store navigable without an invalid index', () => {
-    const wrapper = ({ children }: { children: ReactNode }) =>
-      createElement(DaysProvider, { days: [] }, children)
+    const wrapper = ({ children }: TestWrapperProps) => (
+      <DaysProvider days={[]}>{children}</DaysProvider>
+    )
     const { result } = renderHook(
       () => useDaysStore((state) => state.days.length),
       { wrapper },

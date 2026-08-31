@@ -177,7 +177,6 @@
 //   })
 // })
 
-import { createElement } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import { ColumnsProvider, useColumnsStore } from '../../stores/schedule-columns-store'
@@ -192,16 +191,20 @@ function ColumnsProbe() {
   const selectedCount = useColumnsStore((state) => state.selectedCount)
   const toggleStage = useColumnsStore((state) => state.toggleStage)
 
-  return createElement(
-    'button',
-    { type: 'button', onClick: () => toggleStage('stage-2') },
-    String(selectedCount),
+  return (
+    <button type='button' onClick={() => toggleStage('stage-2')}>
+      {selectedCount}
+    </button>
   )
 }
 
 describe('Columns selection hook API', () => {
   it('updates the selected stage count through the store hook', () => {
-    render(createElement(ColumnsProvider, { columns }, createElement(ColumnsProbe)))
+    render(
+      <ColumnsProvider columns={columns}>
+        <ColumnsProbe />
+      </ColumnsProvider>,
+    )
 
     fireEvent.click(screen.getByRole('button'))
 

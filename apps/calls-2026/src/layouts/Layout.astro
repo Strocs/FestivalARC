@@ -1,5 +1,6 @@
 ---
 import { Font } from 'astro:assets'
+import PreviousEditions from '../components/PreviousEditions.astro'
 import { appBase, publicPath } from '../utils/publication'
 import '../styles/global.css'
 
@@ -26,6 +27,7 @@ const canonical = new URL(publicPath(path), 'https://festivalarc.com').toString(
     <title>{title}</title>
   </head>
   <body>
+    <PreviousEditions />
     <slot />
   </body>
 </html>

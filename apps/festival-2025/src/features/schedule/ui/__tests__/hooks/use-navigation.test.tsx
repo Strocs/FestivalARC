@@ -53,7 +53,6 @@
 //   })
 // })
 
-import { createElement } from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import { DaysProvider, useDaysStore } from '../../stores/days-store'
@@ -62,17 +61,19 @@ function NavigationProbe() {
   const index = useDaysStore((state) => state.currentDayIndex)
   const next = useDaysStore((state) => state.nextDay)
 
-  return createElement('button', { type: 'button', onClick: next }, String(index))
+  return (
+    <button type='button' onClick={next}>
+      {index}
+    </button>
+  )
 }
 
 describe('Days navigation hook API', () => {
   it('moves between initialized days through the store hook', () => {
     render(
-      createElement(
-        DaysProvider,
-        { days: ['Saturday 18', 'Sunday 19'] },
-        createElement(NavigationProbe),
-      ),
+      <DaysProvider days={['Saturday 18', 'Sunday 19']}>
+        <NavigationProbe />
+      </DaysProvider>,
     )
 
     fireEvent.click(screen.getByRole('button'))
