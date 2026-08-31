@@ -1,0 +1,10 @@
+{
+  "name": "@festivalarc/distribution",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "type": "tsc --noEmit", "test": "vitest run", "build": "vite-node src/build.ts" },
+  "dependencies": { "@festivalarc/editions": "workspace:*" },
+  "devDependencies": { "@types/node": "^24.6.2", "typescript": "^5.9.3", "vite-node": "^3.2.4", "vitest": "^3.2.4" }
+}

@@ -1,0 +1,80 @@
+---
+import { withBase, publicationBase } from '../utils/publication.js'
+const { title, description } = Astro.props
+const pathname = Astro.url.pathname.startsWith(publicationBase)
+  ? Astro.url.pathname
+  : withBase(Astro.url.pathname)
+const siteOrigin = 'https://festivalarc.com'
+const canonical = new URL(pathname, siteOrigin).href
+---
+
+<!DOCTYPE html>
+<html lang='es' data-publication-base={publicationBase}>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg' href={withBase('/favicon.svg')} />
+    <link rel='canonical' href={canonical} />
+    <link rel='alternate' type='application/xml' title='Sitemap' href={new URL('/sitemap-index.xml', siteOrigin).href} />
+    <meta name='generator' content={Astro.generator} />
+    <meta name='description' content={description} />
+    <title>{title}</title>
+    <meta name='twitter:card' content='summary' />
+    <meta name='twitter:site' content='@festivalarc' />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:image' content={new URL(withBase('/og-card.png'), siteOrigin).href} />
+    <meta property='og:url' content={canonical} />
+    <meta property='og:site_name' content={title} />
+  </head>
+  <body class='relative h-screen scroll-smooth bg-white text-white bg-paper bg-cover xl:bg-sm'>
+    <slot />
+  </body>
+</html>
+<style is:global define:vars={{
+  fontLight: `url('${withBase('/fonts/Gotham-Light.woff2')}')`,
+  fontBook: `url('${withBase('/fonts/Gotham-Book.woff2')}')`,
+  fontMedium: `url('${withBase('/fonts/Gotham-Medium.woff2')}')`,
+  fontBold: `url('${withBase('/fonts/Gotham-Bold.woff2')}')`,
+  fontUltra: `url('${withBase('/fonts/Gotham-Ultra.woff2')}')`,
+}}>
+  @font-face {
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: var(--fontLight) format('woff2');
+  }
+  @font-face {
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: var(--fontBook) format('woff2');
+  }
+  @font-face {
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: var(--fontMedium) format('woff2');
+  }
+  @font-face {
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: var(--fontBold) format('woff2');
+  }
+  @font-face {
+    font-family: 'Gotham';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: var(--fontUltra) format('woff2');
+  }
+  html {
+    font-family: 'Gotham', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+</style>

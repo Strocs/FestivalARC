@@ -1,0 +1,66 @@
+strict_tdd: false
+context: |
+  festivalarc is an Astro 5 static-site project using Node.js/TypeScript ESM and React islands.
+  Detected markers: package.json, astro.config.mjs, tsconfig.json, playwright.config.ts, pnpm package manager.
+  Frameworks and integrations: Astro 5, React, Tailwind CSS 4, Vercel static adapter, Astro sitemap.
+  Package managers: pnpm.
+  Additional evidence: Test-like files detected (11); examples: src/features/schedule/__tests__/lib/grid.test.ts, src/features/schedule/__tests__/lib/grouping.test.ts, src/features/schedule/__tests__/lib/schedule.test.ts, src/features/schedule/__tests__/lib/validation.test.ts, src/features/schedule/__tests__/utils/index.test.ts.
+  Primary test command: pnpm test.
+  Unit tests: Vitest (pnpm test).
+  Integration tests: Testing Library (pnpm test).
+  E2E tests: Playwright (pnpm run test:e2e), configured by playwright.config.ts with Firefox and WebKit projects and pnpm run dev webServer.
+  Build: pnpm build (astro check && astro build).
+  Type check: pnpm type (tsc --noEmit).
+rules:
+  proposal:
+    require_problem_statement: true
+  spec:
+    require_acceptance_criteria: true
+  design:
+    require_tradeoffs: true
+  tasks:
+    protect_review_workload: true
+  apply:
+    test_command: "pnpm test"
+  verify:
+    test_command: "pnpm test"
+testing:
+  detected: "2026-08-29"
+  runner:
+    command: "pnpm test"
+    framework: "Vitest"
+  layers:
+    unit: "Vitest"
+    integration: "Testing Library"
+    e2e: "Playwright"
+  commands:
+    unit:
+      - scope: "."
+        command: "pnpm test"
+        framework: "Vitest"
+    integration:
+      - scope: "."
+        command: "pnpm test"
+        framework: "Testing Library"
+    e2e:
+      - scope: "."
+        command: "pnpm run test:e2e"
+        framework: "Playwright"
+  coverage:
+    command: "pnpm run test:coverage"
+    commands:
+      - scope: "."
+        command: "pnpm run test:coverage"
+        framework: "coverage"
+quality:
+  lint: ""
+  lint_commands:
+    []
+  typecheck: "pnpm type"
+  typecheck_commands:
+    - scope: "."
+      command: "pnpm type"
+      framework: "TypeScript"
+  format: ""
+  format_commands:
+    []

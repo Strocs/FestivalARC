@@ -28,3 +28,18 @@ pnpm-debug.log*
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+# Local Pi runtime state
+.atl/
+.pi/
+.codegraph/
+
+# Workspace tooling caches
+.turbo/
+
+# Generated distribution artifacts
+/.distribution-manifest.json
+/.output/
+/output/
+
+# Local reference material
+/refs/

@@ -1,0 +1,128 @@
+---
+import Image from "astro/components/Image.astro";
+// import TextTape from "./TextTape.astro";
+import Logo from "@assets/Logo-ARC24.png";
+import MenuButton from "./MenuButton.astro";
+import Nav from "./Nav.astro";
+import MobileNav from "./MobileNav.astro";
+import { isPublicationHome, publicationBase, withBase } from "@utils/publication-path";
+
+interface Props {
+  class?: string;
+}
+
+const { class: customStyle } = Astro.props;
+
+const heroStyles =
+  isPublicationHome(Astro.url.pathname, publicationBase)
+    ? { wrapper: "landscape:bg-transparent", logo: "hidden" }
+    : { wrapper: "bg-hero-image", logo: "grid" };
+---
+
+<header
+  id="header"
+  class:list={[
+    customStyle,
+    heroStyles.wrapper,
+    "w-full fixed left-0 right-0 top-0 z-[99] py-1",
+  ]}
+>
+  <div
+    class="grid grid-cols-[auto_1fr] gap-4 landscape:grid-cols-[1fr_auto_1fr] w-full items-center justify-items-end sm:px-14 px-4 py-2 sm:gap-14 min-h-16 relative z-50"
+  >
+    <section class="grid grid-flow-col gap-14 justify-self-start">
+      <div
+        class:list={[
+          heroStyles.logo,
+          "grid-flow-col items-center gap-3 relative z-[99]",
+        ]}
+      >
+        <a
+          href={withBase("/")}
+          class="w-32 hover:scale-105 transition duration-200"
+          aria-label="Inicio"
+        >
+          <Image
+            loading="eager"
+            height={44}
+            width={128}
+            src={Logo}
+            class="w-32 h-fit aspect-[128/46]"
+            alt="Logo del Festival ARC 2024"
+            transition:name="logo"
+          />
+        </a>
+        <div class="text-xs sm:text-sm text-secondary">
+          <p class="font-bold leading-4">Del 27 al 30 de Junio</p>
+          <p class="font-light leading-4">
+            Coquimbo - La Serena - Ovalle - Illapel
+          </p>
+        </div>
+      </div>
+    </section>
+    <Nav />
+    <!-- <TextTape element="button" size="md" class="hidden landscape:inline-block"
+      >Descarga la Programación</TextTape
+    > -->
+    <section id="toggle-nav-background" class="landscape:hidden flex">
+      <MenuButton id="toggle-nav-button" class="text-secondary relative z-50" />
+      <div
+        class="fixed left-0 top-0 bg-accent-blue w-0 h-full peer-checked:w-full transition-[width] duration-500 overflow-hidden bg-texture bg-cover"
+      >
+        <MobileNav class="pb-4 pt-24" />
+      </div>
+    </section>
+  </div>
+</header>
+
+<script>
+  const setActiveNavLinkStyles = () => {
+    const navLinks: NodeListOf<HTMLAnchorElement> =
+      document.querySelectorAll(".nav_links");
+    const currentPath = window.location.href;
+    navLinks.forEach((link) => {
+      if (link.href === currentPath) {
+        link.classList.add("!bg-accent-blue", "text-accent-yellow");
+      } else {
+        link.classList.remove("bg-accent-blue", "text-accent-yellow");
+      }
+    });
+  };
+
+  const blockScrollOnActiveNav = () => {
+    const body = document.querySelector("body");
+    const toggleNavButton = document.querySelector(
+      "#toggle-nav-button"
+    ) as HTMLInputElement;
+
+    toggleNavButton?.addEventListener("change", () => {
+      if (toggleNavButton.checked) {
+        body?.classList.add("overflow-hidden");
+      } else {
+        body?.classList.remove("overflow-hidden");
+      }
+    });
+  };
+
+  const showBodyHeaderBackgroundOnScroll = () => {
+    window.addEventListener("scroll", () => {
+      const base = document.documentElement.dataset.publicationBase || "/";
+      const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
+      const normalizedBase = base === "/" ? "/" : base.replace(/\/+$/, "");
+      if (normalizedPath !== normalizedBase) return;
+      const header = document.querySelector("#header");
+      const isLandscape = window.innerWidth > window.innerHeight;
+      if (isLandscape && window.scrollY > 0) {
+        header?.classList.add("bg-hero-image");
+      } else {
+        header?.classList.remove("bg-hero-image");
+      }
+    });
+  };
+
+  document.addEventListener("astro:page-load", () => {
+    showBodyHeaderBackgroundOnScroll();
+    blockScrollOnActiveNav();
+    setActiveNavLinkStyles();
+  });
+</script>

@@ -1,0 +1,12 @@
+---
+	import { withBase } from '../utils/publication.js'
+const { url, alt, styles } = Astro.props
+---
+
+<img
+	height={styles.height}
+	width={styles.width}
+	class={`${styles.aspectRatio} my-10 w-full rounded-xl object-contain`}
+	src={withBase(url)}
+	alt={alt}
+/>

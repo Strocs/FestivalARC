@@ -1,0 +1,46 @@
+---
+import { Icon } from 'astro-icon'
+import { ARC_2023 } from '../data/ARC_2023'
+const { links } = ARC_2023
+
+const { hoverTextColor = 'hover:text-main', locationId = '' } = Astro.props
+
+const hoverBg = locationId.includes('estacionamiento') ? 'hover:bg-neutral-700' : 'hover:bg-white'
+---
+
+<div class='grid gap-2'>
+	<div class='mx-auto grid w-fit items-center gap-1 text-center'>
+		Síguenos:
+		<ul class='grid grid-flow-col gap-1'>
+			{
+				links.map((social) => (
+					<li>
+						<a
+							class={`group block rounded-md p-1 text-current transition-all duration-200 ease-in ${hoverBg} ${hoverTextColor}`}
+							href={social.url}
+							aria-label={social.name}
+						>
+							<Icon name={`mdi:${social.name}`} class='h-7 w-7' />
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+	<div class='mx-auto grid w-fit items-center gap-1 text-center'>
+		Escucha nuestra Playlist:
+		<ul class='mx-auto'>
+			{
+				(
+					<a
+						class={`group block w-fit rounded-md p-1 text-current transition-all duration-200 ease-in ${hoverBg} ${hoverTextColor}`}
+						href='https://open.spotify.com/playlist/6uOadrETubppCa82OIt3nQ?si=xI-3gEP-Rhq8zt-unqxV1w'
+						aria-label='spotify-list'
+					>
+						<Icon name='mdi:spotify' class='h-7 w-7' />
+					</a>
+				)
+			}
+		</ul>
+	</div>
+</div>

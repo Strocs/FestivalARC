@@ -1,0 +1,757 @@
+{
+  "schema": "festivalarc.slice-8-import-evidence/v1",
+  "change": "festivalarc-annual-monorepo",
+  "slice": 8,
+  "provenance": {
+    "sourceRef": "origin/2024",
+    "sourceCommit": "d8860472994910f5d563abf2fc6a397093f11489",
+    "importMethod": "git archive exact tree; no reconstruction or other edition source",
+    "sourceFileCount": 167,
+    "preservedFileCount": 153,
+    "adaptedFileCount": 10,
+    "omittedDeploymentBoundaryFiles": [
+      ".gitignore",
+      "pnpm-lock.yaml",
+      "public/robots.txt",
+      "src/pages/404.astro"
+    ],
+    "adaptedFiles": [
+      "astro.config.mjs",
+      "package.json",
+      "src/components/ActivityGallery.jsx",
+      "src/components/Header.astro",
+      "src/components/Nav.astro",
+      "src/components/ScheduleDays.astro",
+      "src/layouts/Layout.astro",
+      "src/pages/[day]/index.astro",
+      "src/pages/prensa.astro",
+      "tailwind.config.mjs"
+    ],
+    "faithfulSourceBytes": 27353414
+  },
+  "publication": {
+    "packageName": "festival-arc-2024",
+    "base": "/ediciones/2024",
+    "siteOrigin": "https://festivalarc.com",
+    "trailingSlash": "always",
+    "routes": [
+      "domingo-30/index.html",
+      "el-festival/index.html",
+      "index.html",
+      "jueves-27/index.html",
+      "prensa/index.html",
+      "sabado-29/index.html",
+      "viernes-28/index.html"
+    ]
+  },
+  "output": {
+    "fileCount": 123,
+    "bytes": 27675321,
+    "manifestSha256": "758c2ba7f3c985306bed5c9d34259a60b492815254d9d239daef15d9cbab5040",
+    "files": [
+      {
+        "path": "_astro/ActivityPanel.BMQB6htw.js",
+        "bytes": 10827,
+        "sha256": "fd71d3b4e5c4c61df5f9a4c9e9cce7d558254610d6a9f78d6cac5a9ba6ff122c"
+      },
+      {
+        "path": "_astro/Logo-ARC24.DgkQnAzk_1wOyFq.webp",
+        "bytes": 8026,
+        "sha256": "a4e679538de41219c5435f777f4a6a8abcdbc45b1591d6438e6dd5b24e27b94d"
+      },
+      {
+        "path": "_astro/Logo-ARC24.DgkQnAzk_2qPsa2.webp",
+        "bytes": 2166,
+        "sha256": "e842ce68bfea10909e3fc291a73105d99d6807c20db56c2ce97940a5976f0c00"
+      },
+      {
+        "path": "_astro/Logo-ARC24.DgkQnAzk_jYoh7.webp",
+        "bytes": 6610,
+        "sha256": "5ba0ddcda6f60afb2086e6ca77ccf3b96f079546a827019a9bd21de847b3a4d5"
+      },
+      {
+        "path": "_astro/OpenActivityPanel.B1jbAXgY.js",
+        "bytes": 280,
+        "sha256": "0292ddd9b8cd730d382efc009fda89013c6249938c4108f6bb17fd055d489465"
+      },
+      {
+        "path": "_astro/ULS-Blanco.BxqRLp10_2jk5Us.webp",
+        "bytes": 11662,
+        "sha256": "7b3b7d1913391446483507675d613c26c8ca57c6d1f877e166b784ef635b117a"
+      },
+      {
+        "path": "_astro/ULS-Blanco.BxqRLp10_Z159Uq2.webp",
+        "bytes": 6102,
+        "sha256": "ce5e1f59f0cee8a0719ff53366e266ee7fd3502ed397701e0d8d65779ee919de"
+      },
+      {
+        "path": "_astro/activityInfoStore.C-3kWR7p.js",
+        "bytes": 1014,
+        "sha256": "8d23cf890adec9c59b407764dd34827f07f51144ec06a57c80315e727cd4b142"
+      },
+      {
+        "path": "_astro/client.DrE9CFQR.js",
+        "bytes": 135601,
+        "sha256": "7748ebe8fc68ab461bd6aa075ec85f924d46f5967451c70f5992c3624ca748a7"
+      },
+      {
+        "path": "_astro/hoisted.CANSLJ4Y.js",
+        "bytes": 15194,
+        "sha256": "6c30723ae7ccd0c403913d565c1aeae1825bb3f391d5b6f100405d73e587c982"
+      },
+      {
+        "path": "_astro/hoisted.CAjsamEL.js",
+        "bytes": 314,
+        "sha256": "229728cebcb7a38b3b0b8107286cf418b0fa49986707ab3c7e88d2a98f77d005"
+      },
+      {
+        "path": "_astro/index.67lQ-lO2.css",
+        "bytes": 32980,
+        "sha256": "185e2ccfbebe1514d74dabf8ddd90aa70261a37bfd1f12ac3b1894bbf29610eb"
+      },
+      {
+        "path": "_astro/index.BlJY1NM8.css",
+        "bytes": 6525,
+        "sha256": "9969166ecf2fd16f5a88dac7129e192a62e823018e2eec1e73fdf54c6e3dd94c"
+      },
+      {
+        "path": "_astro/index.CVf8TyFT.js",
+        "bytes": 6717,
+        "sha256": "f72afc41a089f427d9ab51c4d90043f8d381d0c89981aa877b7e644931d89b6f"
+      },
+      {
+        "path": "_astro/index.DV8PrLMj.css",
+        "bytes": 6356,
+        "sha256": "2efd906f0b8ca976ca9fa43452e1c9b726b4842094ea3d43ca02e7108818eafc"
+      },
+      {
+        "path": "_astro/jsx-runtime.TBa3i5EZ.js",
+        "bytes": 918,
+        "sha256": "5a34bf3085a9f3a2c76ba4510ecc129e2a13b65a5334b7c2fe942e75d273df73"
+      },
+      {
+        "path": "_astro/la-serena-logo.idf9sk_u_1OFCIN.webp",
+        "bytes": 5224,
+        "sha256": "cd93d1ba8d0552ce92773dc311a91fe7dceb80aa0b96162a92d317be723c8d67"
+      },
+      {
+        "path": "_astro/logo-ovalle.GoQo9602_Z1i1nW3.webp",
+        "bytes": 3840,
+        "sha256": "e7affe1a3df9391834205fdb09d017c9524f42a9afa27a94c929883ca725def9"
+      },
+      {
+        "path": "_astro/logo-seremi.D8eMnJhW_Zs284n.webp",
+        "bytes": 1872,
+        "sha256": "e85bf20c9d1824f56f1b7ea07ed1cea570f33c036826776d2b5cee13ccc69833"
+      },
+      {
+        "path": "_astro/logo-seremi.D8eMnJhW_xNvPC.webp",
+        "bytes": 3638,
+        "sha256": "297ab99408b10bc6af6c5e1b7113dd5d19c3a4e4a5620cb4638d60704a8ac481"
+      },
+      {
+        "path": "_astro/logos-COQUIMBO.fWvjV1VR_Zx8aEn.webp",
+        "bytes": 4506,
+        "sha256": "75d0b5cec14eaf9cf3ba594f1ee1ef9cda172cc337f9d08e8b39fc4bbceff686"
+      },
+      {
+        "path": "_astro/muni-illapel.DELrmB8w_Z65Uqi.webp",
+        "bytes": 4522,
+        "sha256": "8979cd534796c07e5662a0c03785721f6aa1946b5287548beae8fa869e94607a"
+      },
+      {
+        "path": "domingo-30/index.html",
+        "bytes": 82483,
+        "sha256": "30eb034cafddcd50a66fd4d8307bfb7308af52861b44a970a4ed85efc72d901b"
+      },
+      {
+        "path": "el-festival/index.html",
+        "bytes": 34912,
+        "sha256": "9d99b27ca28390f0bc8a43d7a4d0a033e89e6204638265fd261165ae53c3a076"
+      },
+      {
+        "path": "favicon.svg",
+        "bytes": 1774,
+        "sha256": "ec9bd5ccc4f50edf064f4a2b4624a17a62b3175367edb0c76d26838407c8c057"
+      },
+      {
+        "path": "gallery/artes-escénicas/caleta-de-canciones/caleta-de-canciones-1.jpg",
+        "bytes": 108201,
+        "sha256": "02e6df98732a07ce19cc0e6ddf6abd5b24cd2a06fceaee94dee81b79b6507231"
+      },
+      {
+        "path": "gallery/artes-escénicas/caleta-de-canciones/caleta-de-canciones-2.jpg",
+        "bytes": 142492,
+        "sha256": "11ee43c9cfce18753f842e718e8ac02852e675ffc7497cf1633e3af5485e7700"
+      },
+      {
+        "path": "gallery/artes-escénicas/caleta-de-canciones/caleta-de-canciones-3.jpg",
+        "bytes": 303588,
+        "sha256": "1008be6c0aee032601742cfee521a318beb9e754bab480150dec276e5f1d1325"
+      },
+      {
+        "path": "gallery/artes-escénicas/el-mensajero-sideral-en-la-region-estrella/el-mensajero-sideral-en-la-region-estrella-1.jpg",
+        "bytes": 80707,
+        "sha256": "5bd6869a003a5f2a3ba9a3c99653ae689119de6f5b7296170a1daa37c0ccb689"
+      },
+      {
+        "path": "gallery/artes-escénicas/el-mensajero-sideral-en-la-region-estrella/el-mensajero-sideral-en-la-region-estrella-2.jpg",
+        "bytes": 84543,
+        "sha256": "75409761d9e272b36c5563aa3f39c45c4b121e67e419dc2e0db5e25b07fee638"
+      },
+      {
+        "path": "gallery/artes-escénicas/el-mensajero-sideral-en-la-region-estrella/el-mensajero-sideral-en-la-region-estrella-3.jpg",
+        "bytes": 67928,
+        "sha256": "f3d6c6227f5a9c500645a8e2da616ed3e08311441a4cf34413d47c0eb0f22302"
+      },
+      {
+        "path": "gallery/artes-escénicas/idilio/idilio-1.jpg",
+        "bytes": 89753,
+        "sha256": "f1435d246fae5105a8bde993ba55204e3d1d13c8badbe45c370c6d962451cbf2"
+      },
+      {
+        "path": "gallery/artes-escénicas/idilio/idilio-3.jpg",
+        "bytes": 627590,
+        "sha256": "a2654b17c25fc6a74135dff4c678c5bdf0c58dedf4940ab710b0a15bea44e891"
+      },
+      {
+        "path": "gallery/artes-escénicas/idilio/idilio-4.jpg",
+        "bytes": 509017,
+        "sha256": "aefd410e5eea8e5a75afb97f996604563c16c15138829e7a096d9fb1a94a3a91"
+      },
+      {
+        "path": "gallery/artes-escénicas/lambert-la-rebelion-de-los-serenos/lambert-la-rebelion-de-los-serenos-2.jpg",
+        "bytes": 48967,
+        "sha256": "e2540439948022b870f4d85a3d712dab6c074a195b0d4a959f5ac79ba3b3af43"
+      },
+      {
+        "path": "gallery/artes-escénicas/lambert-la-rebelion-de-los-serenos/lambert-la-rebelion-de-los-serenos-3.jpg",
+        "bytes": 326782,
+        "sha256": "f9061fe3e23ec8c245f9dcf129b5f9678d2fea5e80eb1e99bc396452cd1074d2"
+      },
+      {
+        "path": "gallery/artes-escénicas/lambert-la-rebelion-de-los-serenos/lambert-la-rebelion-de-los-serenos-4.jpg",
+        "bytes": 465643,
+        "sha256": "27711fa90a23a85505e3955f846fcd70031370e3df5e8165f458d2bf2f1d7302"
+      },
+      {
+        "path": "gallery/artes-escénicas/letargia/letargia-1.jpg",
+        "bytes": 152476,
+        "sha256": "686c67a8dbc05b9ea8dc685b72024d4f27dc3d39aeb9fe655c48332ec5ea43fe"
+      },
+      {
+        "path": "gallery/artes-escénicas/letargia/letargia-2.jpg",
+        "bytes": 119272,
+        "sha256": "71447c1ccd0ff3c0b65702b4948ca41d4e794122e6cfb17b21e7ebbef08e42a7"
+      },
+      {
+        "path": "gallery/artes-escénicas/letargia/letargia-3.jpg",
+        "bytes": 115107,
+        "sha256": "88ae3165fe10481ddd8d0b9baf2260db5b00a636a77f56a1f4536dfe399f6f0c"
+      },
+      {
+        "path": "gallery/artes-escénicas/pino(shit)/pino(shit)-1.jpg",
+        "bytes": 457640,
+        "sha256": "9cec048557ec876784e6cee85faeb010f444c795b5bcb76b906a0c695d95692c"
+      },
+      {
+        "path": "gallery/artes-escénicas/pino(shit)/pino(shit)-2.jpg",
+        "bytes": 381598,
+        "sha256": "3871bc1e36c4a2a815f454d4ff716676aba087805ffd324601df77c1a26e1f8d"
+      },
+      {
+        "path": "gallery/artes-escénicas/pino(shit)/pino(shit)-3.jpg",
+        "bytes": 597239,
+        "sha256": "784a54737c708ba49f9b0a7f25d301f535470cdba21513befddc935c4110ca84"
+      },
+      {
+        "path": "gallery/artes-escénicas/siervas-del-buen-pastor/siervas-del-buen-pastor-2.png",
+        "bytes": 777155,
+        "sha256": "f16bae058a892789b867266df1ad21885995fa3640f92a259185b35ab8feaa04"
+      },
+      {
+        "path": "gallery/artes-escénicas/siervas-del-buen-pastor/siervas-del-buen-pastor-3.jpg",
+        "bytes": 95742,
+        "sha256": "59d370d078b0b01fd20012af5902a5786cd040e596a5cf62481edef3cd01fb23"
+      },
+      {
+        "path": "gallery/artes-escénicas/siervas-del-buen-pastor/siervas-del-buen-pastor-4.jpg",
+        "bytes": 83488,
+        "sha256": "d9117e6fa8609a6e26a59c97716b8b3b71af80344df61f4cc6a56576d98071f1"
+      },
+      {
+        "path": "gallery/artes-escénicas/stella-terral/stella-terral-1.jpg",
+        "bytes": 360045,
+        "sha256": "c8db11bab0a7ade2ab7d82fafa01320d46846343598c96a9f5605586f1daf7e8"
+      },
+      {
+        "path": "gallery/artes-escénicas/stella-terral/stella-terral-2.jpg",
+        "bytes": 413461,
+        "sha256": "9c20936209847c967aafa9a8dacaaea744f53f8250f284ea1390b410fead119f"
+      },
+      {
+        "path": "gallery/artes-escénicas/stella-terral/stella-terral-3.jpg",
+        "bytes": 185765,
+        "sha256": "4eaa5ecd37a05a01b79456917c16d0cb936b540f50aa58ee3c351400b2198acd"
+      },
+      {
+        "path": "gallery/artes-escénicas/tatul/tatul-1.jpeg",
+        "bytes": 60324,
+        "sha256": "2576b981a62e599d75655835aef2c4d18a4952bf74c9845aefcf783740edbd21"
+      },
+      {
+        "path": "gallery/artes-escénicas/tatul/tatul-2.jpeg",
+        "bytes": 84786,
+        "sha256": "a0f06d38ea8acc219b1d7a0eefd8b2fef511a8d7df269f9fde442b069ee59d29"
+      },
+      {
+        "path": "gallery/artes-escénicas/tatul/tatul-3.jpeg",
+        "bytes": 109947,
+        "sha256": "fdec114f9cef47925bbd19c186bc940abe1ae4563cf107363a656a8fca40840c"
+      },
+      {
+        "path": "gallery/artes-escénicas/todo-pal-patron-nada-pal-dolor/todo-pal-patron-nada-pal-dolor-1.jpg",
+        "bytes": 57321,
+        "sha256": "bedabf0876d615bbf6c906bcf81bdef5f5dcfd4ce4e1ebd49df94e461b4478a7"
+      },
+      {
+        "path": "gallery/artes-escénicas/todo-pal-patron-nada-pal-dolor/todo-pal-patron-nada-pal-dolor-2.jpg",
+        "bytes": 65705,
+        "sha256": "f01ba5e3b7da6d283b76108a4725a9e4a27045fce10572cb14b272a34b7638b9"
+      },
+      {
+        "path": "gallery/artes-escénicas/todo-pal-patron-nada-pal-dolor/todo-pal-patron-nada-pal-dolor-3.jpg",
+        "bytes": 46678,
+        "sha256": "f73dc4500e6f6835a9baecdf84ebccc8467821a0dfc85abe0236e6c3d25b22ef"
+      },
+      {
+        "path": "gallery/artes-escénicas/victor-trasciende/victor-trasciende-1.jpg",
+        "bytes": 129132,
+        "sha256": "80974755bd71dd37b7bfa480feb1c74d1e8db7d7645824b1d351e2f2bf1fd7f4"
+      },
+      {
+        "path": "gallery/artes-escénicas/victor-trasciende/victor-trasciende-4.jpg",
+        "bytes": 122551,
+        "sha256": "c615037edd852d298ab5e546f41ef7987df04a6702dfd939a55c0e153b896a38"
+      },
+      {
+        "path": "gallery/artes-escénicas/victor-trasciende/victor-trasciende-6.jpg",
+        "bytes": 138795,
+        "sha256": "f1f18799a3af8f251f273b818a2d92c06371aaae3452552f23d77193ef08044c"
+      },
+      {
+        "path": "gallery/artes-escénicas/vía/vía-1.jpg",
+        "bytes": 683334,
+        "sha256": "94c9e12cbf46bee5adbdbd9a33d3622b2b108342d0333ed06c2ee4debf32a932"
+      },
+      {
+        "path": "gallery/artes-escénicas/vía/vía-2.jpg",
+        "bytes": 678510,
+        "sha256": "f14e9f7d76085061794afe67f0b3f99f0dac0acae530e86c508c56c2ce3436f1"
+      },
+      {
+        "path": "gallery/artes-escénicas/vía/vía-3.jpg",
+        "bytes": 994051,
+        "sha256": "41a20bada05b72b003ebb6dd040b16d466cd0f695a837dc6df3994f6e6d8bfc9"
+      },
+      {
+        "path": "gallery/artes-visuales/andre-álvarez/andre-álvarez-5.jpg",
+        "bytes": 243730,
+        "sha256": "de8f23922cd1ed15f5be4ded287a0cd04922cc9cb22207d4d1650938f45ba8ad"
+      },
+      {
+        "path": "gallery/artes-visuales/carolina-muñoz/carolina-muñoz-6.jpg",
+        "bytes": 169891,
+        "sha256": "77427129dd72f2d9eaf4207ebf45d0e9c151ae479c25ac86462920a648c514f4"
+      },
+      {
+        "path": "gallery/artes-visuales/claudia-campos/claudia-campos-1.jpg",
+        "bytes": 323717,
+        "sha256": "414b8ece6302a22f7d7dfef2210b907c8b1e417cd7f15e72078f6268805b0005"
+      },
+      {
+        "path": "gallery/artes-visuales/claudia-suárez-jansson/claudia-suárez-jansson-7.jpg",
+        "bytes": 866349,
+        "sha256": "38e3679b5eea75d0ac8db5adcd89a62655e46e1329a4931feadff0ac4df80cf1"
+      },
+      {
+        "path": "gallery/artes-visuales/felipe-de-ferrari/felipe-de-ferrari-4.jpg",
+        "bytes": 974690,
+        "sha256": "b623c4d800e0291a72ae024e31cd15a798139cbcfc765ba1f399e84cfd83ff50"
+      },
+      {
+        "path": "gallery/artes-visuales/fernando-pizarro/fernando-pizarro-3.jpg",
+        "bytes": 352531,
+        "sha256": "36f1ee5eb3bfa7cdc8a84fd7098dbf1040684caf59e58ecb51ccd206b598da5f"
+      },
+      {
+        "path": "gallery/artes-visuales/luis-cáceres/luis-cáceres-6.jpg",
+        "bytes": 222487,
+        "sha256": "f1d6e2474017818c254d9b3ebb475c683ac39d64c11f4544976a96d51f6631f1"
+      },
+      {
+        "path": "gallery/artes-visuales/maría-piedad-aguirre/maría-piedad-aguirre-2.jpeg",
+        "bytes": 81740,
+        "sha256": "76db2d8d4288836b4f43d1ff6f25f4263e7c1e8edb1cd35311790e8b01bd08af"
+      },
+      {
+        "path": "gallery/artes-visuales/sandy-baptista/sandy-baptista-7.jpg",
+        "bytes": 486414,
+        "sha256": "3246a6b1dc7aa59d39d1f923666e0522770517219fccb6728ee9b9ebe95c3aef"
+      },
+      {
+        "path": "gallery/artes-visuales/ulises-lópez/ulises-lópez-1.jpg",
+        "bytes": 723820,
+        "sha256": "0a6e29e40ff944f6a0ed5a65584b0d08a452e8523a091910ec150292394599bd"
+      },
+      {
+        "path": "gallery/audiovisual/amadiela/amadiela-1.jpg",
+        "bytes": 123907,
+        "sha256": "db91609f23cbb49ea53899e44b4877203461c59f4cc00a77afc368e61a5e3434"
+      },
+      {
+        "path": "gallery/audiovisual/amadiela/amadiela-2.jpg",
+        "bytes": 105393,
+        "sha256": "aa5ff17262b377989da497e27b59e17060c2d5b53fe75eefe2a9037e77905f1d"
+      },
+      {
+        "path": "gallery/audiovisual/taller-de-introducción-y-apreciación-musical-y-sonora-para-cine/taller-de-introducción-y-apreciación-musical-y-sonora-para-cine-1.jpg",
+        "bytes": 715228,
+        "sha256": "59a9217352108cb7dae31c4c25aa733695c319a2588ec01ceb58675fce8cff9b"
+      },
+      {
+        "path": "gallery/literatura/bajo-el-arco-camaleonico/bajo-el-arco-camaleonico-1.jpg",
+        "bytes": 227491,
+        "sha256": "ee997aea04144a293d0651dca8f83bf0daf6dbb2194c3f3f25f9cabb885ad489"
+      },
+      {
+        "path": "gallery/literatura/bajo-el-arco-camaleonico/bajo-el-arco-camaleonico-2.jpg",
+        "bytes": 272801,
+        "sha256": "96b309cf6583fe4310c25bff9f98e55bf11e5a6edc803d26d0336d0bc914e753"
+      },
+      {
+        "path": "gallery/literatura/bajo-el-arco-camaleonico/bajo-el-arco-camaleonico-3.jpg",
+        "bytes": 270339,
+        "sha256": "b4d1e74c3995bf4be3ac99ac37c13a658de8823fc092308a0b43d65e81a124f4"
+      },
+      {
+        "path": "gallery/literatura/bioma/bioma-1.jpg",
+        "bytes": 196986,
+        "sha256": "1c453ddd4e83994df5775871ab40b54e12309585cde754365b7b9fa4940f71d4"
+      },
+      {
+        "path": "gallery/literatura/bioma/bioma-2.jpg",
+        "bytes": 80204,
+        "sha256": "2a6ffc57a9b02cdc6b0da3f36628ff57ffc81feb35c668cb128ad36ceff9ef75"
+      },
+      {
+        "path": "gallery/literatura/bioma/bioma-3.jpg",
+        "bytes": 208647,
+        "sha256": "1586ce10423e1a44efdff1484f7f91ca65c5963f7f5195a7b1643218749b60c4"
+      },
+      {
+        "path": "gallery/literatura/botanica/botanica-1.jpg",
+        "bytes": 412659,
+        "sha256": "ed446cf3a4b578ab8a2e4617e75cf4d57318a7c32ff571b6d99f51d3feafad96"
+      },
+      {
+        "path": "gallery/literatura/botanica/botanica-2.jpg",
+        "bytes": 216360,
+        "sha256": "25a955d511a9032c7737cc673fc3174b8a601b97f96d32032dce865ec26617a9"
+      },
+      {
+        "path": "gallery/literatura/botanica/botanica-4.jpg",
+        "bytes": 68614,
+        "sha256": "da4bea4c96c55fd6b4641da2370af36ba9e4592dcbc009e30ed4de4315610f64"
+      },
+      {
+        "path": "gallery/literatura/como-contar-cuentos-de-terror/como-contar-cuentos-de-terror-1.jpg",
+        "bytes": 228404,
+        "sha256": "bdec533ad50cc3686f708fd88999c8a38391b87f00f4bedfb36b0a7eb446387a"
+      },
+      {
+        "path": "gallery/literatura/como-contar-cuentos-de-terror/como-contar-cuentos-de-terror-2.jpg",
+        "bytes": 93421,
+        "sha256": "f61a53df199857423720248903cf1c00c6b462ee45e0777f9a5c2e64abdcd6d5"
+      },
+      {
+        "path": "gallery/literatura/como-contar-cuentos-de-terror/como-contar-cuentos-de-terror-3.jpg",
+        "bytes": 228384,
+        "sha256": "c8caa9c5fd41bae393234b52949cb8de2a7faca6f6927501266af040013cf516"
+      },
+      {
+        "path": "gallery/literatura/conversas-en-red/conversas-en-red-2.jpg",
+        "bytes": 753193,
+        "sha256": "faf2e097af56a105cd9256a3b4e8fa3f23b40e821ef0560a022c64442c51d1e8"
+      },
+      {
+        "path": "gallery/literatura/hasta-que-leer-se-haga-costumbre/hasta-que-leer-se-haga-costumbre-1.jpeg",
+        "bytes": 76795,
+        "sha256": "91add99a1340358ae23ed77540f58eed82234a861125c953320e56a75cbacbf9"
+      },
+      {
+        "path": "gallery/literatura/hasta-que-leer-se-haga-costumbre/hasta-que-leer-se-haga-costumbre-3.jpeg",
+        "bytes": 276977,
+        "sha256": "4e27119c2dc3b9a863339a38f697fd9155091ac8dd4ea7ddd70d37f043f1cac4"
+      },
+      {
+        "path": "gallery/literatura/hasta-que-leer-se-haga-costumbre/hasta-que-leer-se-haga-costumbre-4.jpeg",
+        "bytes": 72234,
+        "sha256": "b7e5c4ffbed98baf12b0eae27868d40983eb12ee9e54eb8d2502040fb702b123"
+      },
+      {
+        "path": "gallery/literatura/taller-noche-cerrada-al-descampado/taller-noche-cerrada-al-descampado-1.png",
+        "bytes": 585844,
+        "sha256": "54f7ff15520481a99c9aa7f2aced5e54dd0d340e325dae50cdb7bb55931fe793"
+      },
+      {
+        "path": "gallery/literatura/un-largo-solo/un-largo-solo-1.jpg",
+        "bytes": 39527,
+        "sha256": "71745cc672d965b34a8928f6eacc26dae635df86762ef8e123112b07d13b6159"
+      },
+      {
+        "path": "gallery/literatura/un-largo-solo/un-largo-solo-2.jpg",
+        "bytes": 169425,
+        "sha256": "8d926735dfa523ec07f169ba5f8aadcfc25efd91f169a2b8bc73e5174c81b327"
+      },
+      {
+        "path": "gallery/literatura/un-largo-solo/un-largo-solo-3.jpg",
+        "bytes": 202283,
+        "sha256": "b0afdea3a34490b44407ccecc3a961ad0d5cb2495147ac250bfdfecc1b4cae79"
+      },
+      {
+        "path": "gallery/música/20.98/20.98-1.jpeg",
+        "bytes": 138830,
+        "sha256": "bc815fff70a3c75abb5772f9f4bab08b3db05c931ece4d25ca61bcfa686353d9"
+      },
+      {
+        "path": "gallery/música/animales-de-lumiere/animales-de-lumiere-3.png",
+        "bytes": 289912,
+        "sha256": "822ee730fb2b16551020ba24059627cdfa3c397188876634f93853a219fe21d5"
+      },
+      {
+        "path": "gallery/música/buen-punto/buen-punto-2.jpg",
+        "bytes": 274045,
+        "sha256": "68da6982971d0c0276bb70a641daf8323154b49ac9c55789635a44a6201c2813"
+      },
+      {
+        "path": "gallery/música/cafuzo/cafuzo-1.jpg",
+        "bytes": 145683,
+        "sha256": "533115022e4f12add19b54a801a926a91d7e7d08850ad456d32abc092ce8420a"
+      },
+      {
+        "path": "gallery/música/camiseta-22/camiseta-22-1.jpeg",
+        "bytes": 144651,
+        "sha256": "9538cc343fbd29518b9e39e3fad5e4940a889a86d96ee300102d4e0440b51b06"
+      },
+      {
+        "path": "gallery/música/chicoria-sanchez/chicoria-sanchez-2.jpeg",
+        "bytes": 170499,
+        "sha256": "5f95fe9e2f5e451904c2641baf0d819efc0d4023e50bd2a3742c83be5cf98995"
+      },
+      {
+        "path": "gallery/música/chinoy/chinoy-4.png",
+        "bytes": 900082,
+        "sha256": "659076e42b39a972db8559a4a1e4f8f30bfed23fb598063379cdf02fed58ed41"
+      },
+      {
+        "path": "gallery/música/congreso/congreso-1.jpg",
+        "bytes": 719303,
+        "sha256": "82a9a558df0f9e24bdea13ace10cfb7ac3f6d13c8ab487d297617a303bdfe836"
+      },
+      {
+        "path": "gallery/música/d43/d43-3.jpg",
+        "bytes": 457977,
+        "sha256": "4ee6825753360a4dab21afa5644d9eb862731293908c9d94e36c42c3d7950c93"
+      },
+      {
+        "path": "gallery/música/electrodomesticos/electrodomesticos-1.png",
+        "bytes": 590721,
+        "sha256": "e831116c0a91fa391beaf2ad7a8320cbb8c2b343b48986a1ad45a5d8dd7daa49"
+      },
+      {
+        "path": "gallery/música/franka-miranda/franka-miranda-2.jpg",
+        "bytes": 36735,
+        "sha256": "d253f5c0077789fecac054b86f5fae518a5e5cd8fd4423a56f78204692e0197c"
+      },
+      {
+        "path": "gallery/música/josé-luis-urquieta/josé-luis-urquieta-3.jpg",
+        "bytes": 730240,
+        "sha256": "3ca289f093a8f25122d20c8a17b765d0b3621ca18d419214d360c5d171b7495c"
+      },
+      {
+        "path": "gallery/música/la-cumbia-records/la-cumbia-records-1.jpeg",
+        "bytes": 155683,
+        "sha256": "19b7d321ad7ac47e7a60c38a287c8b89cda17b887501f8d918135621bf00f1d5"
+      },
+      {
+        "path": "gallery/música/lican-antay/lican-antay-3.jpg",
+        "bytes": 243511,
+        "sha256": "f0600fc14bacb32585f9109d1be7d6ff87aa2a229896c197d6c6d36b112f9324"
+      },
+      {
+        "path": "gallery/música/natalia-corvetto/natalia-corvetto-3.jpg",
+        "bytes": 210669,
+        "sha256": "c50e5abcaa545dd8ac96ff16dbca021519a441aab2edaf9a29c24037efbf1e32"
+      },
+      {
+        "path": "gallery/música/natural-esencia/natural-esencia-1.jpg",
+        "bytes": 451446,
+        "sha256": "4549c6bfd9476fa43270dc05c87564a6339f611458e258681a990b85ed092e5c"
+      },
+      {
+        "path": "gallery/música/pau/pau-1.jpg",
+        "bytes": 375642,
+        "sha256": "52aa2c641b3cc5b462cab735a14af51844a0256d1baa4a4c99ad157adc342dd4"
+      },
+      {
+        "path": "gallery/música/sexto-sol/sexto-sol-3.jpg",
+        "bytes": 460344,
+        "sha256": "bcbfd3a74c2e2f69cba6eee0e43f3aed733a4ceebd952667dd6f2deafb62a792"
+      },
+      {
+        "path": "images/OG_image.png",
+        "bytes": 219404,
+        "sha256": "ea901e4bf933f5f5325e01ecf61c81685c052bea8d649b6a3688c998684e86eb"
+      },
+      {
+        "path": "images/fondo-blanco.webp",
+        "bytes": 164028,
+        "sha256": "5308935d6ec155e57defb139415507524e761056d15130158d57f92cee763dd6"
+      },
+      {
+        "path": "images/hero-image.webp",
+        "bytes": 207348,
+        "sha256": "e534d3585999baf804e923a5e0ce5b181b3ec06a47180cc4b183634a5af29260"
+      },
+      {
+        "path": "images/snowflake-1.png",
+        "bytes": 1899,
+        "sha256": "8f4db4eef5cbdbb52bd745e3873d11a346bf44e9d7744932f2583861f0e78645"
+      },
+      {
+        "path": "images/snowflake-2.png",
+        "bytes": 2163,
+        "sha256": "f61f82025b9c0d2a8f81bf856078732abac1c589b7a011565ee4bbb91a9248ff"
+      },
+      {
+        "path": "images/texture.svg",
+        "bytes": 27444,
+        "sha256": "90444853bcca7b6805a61221ec4f4e0833b6e46489c5576e74bee3933fab4daa"
+      },
+      {
+        "path": "index.html",
+        "bytes": 46838,
+        "sha256": "ad62a4b8891f58601e6d17592e95694cd199e8e68806d2d80d292c88961f57ab"
+      },
+      {
+        "path": "jueves-27/index.html",
+        "bytes": 45000,
+        "sha256": "1c31e66bda1fa3b9150ff3410d232d50d5cab45e109f72eac0ef1fff9b872056"
+      },
+      {
+        "path": "prensa/index.html",
+        "bytes": 28958,
+        "sha256": "d284b4a4a24de2e4528d27ab312eb2597499cc50ae1748cbed5c8ccfc42c7a44"
+      },
+      {
+        "path": "sabado-29/index.html",
+        "bytes": 103323,
+        "sha256": "445fc7e66bee3bac1fa27591a36ee4e112d5f7de9e8e49f0b1200c38cdca6fc3"
+      },
+      {
+        "path": "viernes-28/index.html",
+        "bytes": 103062,
+        "sha256": "b34d54414863b410b3ca1397027a961e8fb043ae31b40956d1404710021c8280"
+      }
+    ]
+  },
+  "metadata": [
+    {
+      "path": "domingo-30/index.html",
+      "canonical": "https://festivalarc.com/ediciones/2024/domingo-30/",
+      "sitemap": true,
+      "base_prefix_count": 43
+    },
+    {
+      "path": "el-festival/index.html",
+      "canonical": "https://festivalarc.com/ediciones/2024/el-festival/",
+      "sitemap": true,
+      "base_prefix_count": 28
+    },
+    {
+      "path": "index.html",
+      "canonical": "https://festivalarc.com/ediciones/2024/",
+      "sitemap": true,
+      "base_prefix_count": 26
+    },
+    {
+      "path": "jueves-27/index.html",
+      "canonical": "https://festivalarc.com/ediciones/2024/jueves-27/",
+      "sitemap": true,
+      "base_prefix_count": 29
+    },
+    {
+      "path": "prensa/index.html",
+      "canonical": "https://festivalarc.com/ediciones/2024/prensa/",
+      "sitemap": true,
+      "base_prefix_count": 21
+    },
+    {
+      "path": "sabado-29/index.html",
+      "canonical": "https://festivalarc.com/ediciones/2024/sabado-29/",
+      "sitemap": true,
+      "base_prefix_count": 49
+    },
+    {
+      "path": "viernes-28/index.html",
+      "canonical": "https://festivalarc.com/ediciones/2024/viernes-28/",
+      "sitemap": true,
+      "base_prefix_count": 51
+    }
+  ],
+  "caseSensitiveAssetChecks": {
+    "status": "pass",
+    "checkedExactOutputReferences": 138,
+    "representativeAssets": [
+      "images/hero-image.webp",
+      "images/OG_image.png",
+      "favicon.svg",
+      "gallery/artes-escénicas/el-mensajero-sideral-en-la-region-estrella/el-mensajero-sideral-en-la-region-estrella-1.jpg"
+    ],
+    "cssAssetsBasePrefixed": true,
+    "dynamicGalleryRuntimePathBasePrefixed": true
+  },
+  "verification": {
+    "focusedTests": "pnpm --dir apps/festival-2024 test — PASS, 5 tests",
+    "appType": "pnpm --dir apps/festival-2024 type — PASS, 0 errors / 0 warnings / 1 unused-import hint",
+    "appBuild": "PUBLICATION_BASE=/ediciones/2024 DISTRIBUTION_OUTPUT_DIR=/tmp/festivalarc-2024-build-slice8-remediation pnpm --dir apps/festival-2024 build — PASS, 7 pages / 123 files / 27,675,321 bytes",
+    "rootTest": "CI=1 pnpm test — PASS, 12 files / 76 tests",
+    "rootBuild": "pnpm build — PASS, 2 pages",
+    "distribution": "pnpm --dir packages/editions type/test and pnpm --dir tooling/distribution type/test — PASS",
+    "browser": "Chromium headless static-server smoke — PASS; archive root, nested route, representative HTML/assets returned 200 and DOM loaded",
+    "rootType": "pnpm type — BLOCKED by pre-existing 2025 TypeScript React 18/19 type incompatibilities; no 2025 files changed",
+    "dependencyLinkRemediation": {
+      "failedEvidenceRevision": "sha256:42a3b9e9d6b48eaa15dde3b185cd316147c6ba13f03341db02e9ff7672a3645a",
+      "install": "pnpm install --frozen-lockfile --prefer-offline — PASS; all 7 workspace projects linked, resolution skipped, lockfile unchanged",
+      "workspaceLinks": "apps/festival-2024/node_modules now resolves Astro 4.16.19 and @astrojs/check 0.7.0 from the frozen workspace lockfile",
+      "metadataCorrection": "none; install exposed no Slice 8 package or lock metadata defect",
+      "emittedReferenceScan": "PASS; 7 HTML pages, 123 files, nested viernes-28 route, canonical/Open Graph/Twitter URLs, sitemap links, and 309 emitted HTML/CSS/JS references resolved case-sensitively",
+      "browser": "PASS; named Playwright Chromium session loaded /ediciones/2024/ and /ediciones/2024/viernes-28/ with HTTP 200 and expected ARC2024 titles/content; system Chromium reused, no browser install"
+    }
+  },
+  "cleanup": {
+    "temporaryBuild": "/tmp/festivalarc-2024-build-slice8-remediation removed after evidence capture",
+    "processes": "none after cleanup",
+    "browserSession": "festivalarc-slice8-remediation closed; static server and Playwright artifacts removed",
+    "generatedOutputs": "app/root .astro, dist, .vercel, playwright-report, test-results, and .playwright-cli removed"
+  },
+  "rollbackBoundary": "remove apps/festival-2024/**, the festival-arc-2024 archive entry, its pnpm-lock importer, and Slice 8 evidence; retain 2023/2025 and shared infrastructure",
+  "delivery": {
+    "strategy": "feature-branch-chain",
+    "boundary": "Slice/PR 8",
+    "sizeException": "size:exception",
+    "lineBound": 20000,
+    "slice9Started": false
+  }
+}

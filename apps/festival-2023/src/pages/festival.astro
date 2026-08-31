@@ -1,0 +1,57 @@
+---
+import Paragraph from '@components/Paragraph.astro'
+import { Icon } from 'astro-icon'
+import { ARC_2023 } from 'src/data/ARC_2023'
+import Footer from '../components/Footer.astro'
+import Header from '../components/Header.astro'
+import Layout from '../layouts/Layout.astro'
+	import { withBase } from '../utils/publication.js'
+
+const { email, subTitle, extract, description, sponsors } = ARC_2023
+---
+
+<Layout title='Conoce más de esta nueva versión' description={extract}>
+	<Header />
+	<main
+		class='relative mx-auto flex min-h-screen flex-wrap justify-center gap-6 bg-contain bg-center bg-no-repeat px-5 py-10 xl:bg-icons'
+	>
+		<article class='grid h-fit w-full max-w-3xl gap-4 text-neutral-700 sm:px-14'>
+			<section class='w-full text-slate-900'>
+				<img src={withBase('/ARC23.png')} alt='Logotipo Arc 2023' class='aspect-[5/4]' />
+				<p class='mx-auto mb-10 max-w-md text-center text-sm sm:-mt-10'>
+					<b>{subTitle}</b>
+				</p>
+				<Paragraph description={description} />
+			</section>
+			<section class='flex items-center space-x-4'>
+				<p class='text-xl font-bold'>Contáctanos:</p>
+				<a href={`mailto:${email}`} aria-label='Email de Contacto'>
+					<Icon name='mdi:email' class='h-8 inline hover:text-main transition-all duration-200' />
+				</a>
+			</section>
+			<section class='my-10 flex flex-col flex-wrap justify-center gap-6 space-y-6 font-medium'>
+				{
+					sponsors.map(({ title, logos }) => (
+						<div class='flex flex-shrink-0 flex-col flex-wrap items-center space-y-4 sm:flex-row sm:space-y-4 sm:space-x-10'>
+							<p>{title}</p>
+							{logos.map(({ image, alt, styles, link }) => {
+								const imgElement = (
+									<img
+										class={`${styles.aspectRatio} ${styles.height} w-fit`}
+										src={withBase(image)}
+										alt={alt}
+									/>
+								)
+								return !link ? <Fragment>{imgElement}</Fragment> : <a href={link}>{imgElement}</a>
+							})}
+						</div>
+					))
+				}
+			</section>
+		</article>
+	</main>
+	<section class='-mb-2 h-fit sm:-mb-4 md:-mb-6 lg:-mb-7 xl:hidden'>
+		<img class='mx-auto h-fit w-full' src={withBase('/bg-mobile.svg')} alt='' />
+	</section>
+	<Footer />
+</Layout>
