@@ -1,0 +1,17 @@
+---
+import { ARC_2023 } from '../data/ARC_2023'
+import Logo from './icons/Logo.astro'
+import { withBase } from '../utils/publication.js'
+const { city, days } = ARC_2023
+const { styles } = Astro.props
+---
+
+<div class='grid grid-flow-col items-center gap-3'>
+	<a href={withBase('/')} class='w-32' aria-label='home'>
+		<Logo fillColor={styles.fillColor} />
+	</a>
+	<div class='text-xs sm:text-sm'>
+		<p class='font-bold leading-4'>{days}</p>
+		<p class='font-light leading-4'>{city}</p>
+	</div>
+</div>

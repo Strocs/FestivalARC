@@ -1,0 +1,25 @@
+---
+import ButtonLink from '@components/ButtonLink.astro'
+import Footer from '../components/Footer.astro'
+import Header from '../components/Header.astro'
+import Icon404 from '../components/icons/Icon404.astro'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title='Ups! Página no encontrada'>
+	<Header />
+	<main class='h-full w-full m-auto'>
+		<section class='grid h-full max-w-sm place-content-center mx-auto gap-8'>
+			<div class='w-full max-w-xs mx-auto'>
+				<Icon404 />
+			</div>
+			<h1 class='text-xl text-center font-bold leading-6 text-neutral-700'>
+				Ups! Nuestros robots aún no trabajan en la página que buscabas
+			</h1>
+			<ButtonLink anchor invertedColors href='/' className='w-fit mx-auto h-fit'>
+				Volver
+			</ButtonLink>
+		</section>
+	</main>
+	<Footer fixed />
+</Layout>

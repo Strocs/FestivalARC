@@ -1,0 +1,30 @@
+---
+import { call } from '../data/calls'
+import { appBase, publicPath } from '../utils/publication'
+
+interface Props { title?: string }
+const { title = call.title } = Astro.props
+const path = Astro.url.pathname === appBase ? '/' : Astro.url.pathname.replace(`${appBase}/`, '/')
+const canonical = new URL(publicPath(path), 'https://festivalarc.com').toString().replace(/\/$/, '')
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={call.summary} />
+    <link rel="canonical" href={canonical} />
+    <link rel="stylesheet" href={publicPath('/calls.css')} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main>
+      <img src={publicPath('/calls-mark.svg')} width="160" height="80" alt="Festival ARC" />
+      <nav aria-label="Navegación de convocatoria">
+        <a href={publicPath('/')}>Inicio</a>
+        <a href={publicPath('/convocatoria')}>Bases</a>
+      </nav>
+      <slot />
+    </main>
+  </body>
+</html>

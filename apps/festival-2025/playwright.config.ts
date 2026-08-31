@@ -2,6 +2,10 @@ import { defineConfig, devices } from '@playwright/test'
 
 const chromiumExecutablePath =
   process.env.PLAYWRIGHT_CHROMIUM_PATH ?? '/usr/sbin/chromium'
+const publicationBase = process.env.PUBLICATION_BASE ?? '/'
+const publicationServerUrl = `http://localhost:4321${
+  publicationBase === '/' ? '' : publicationBase.replace(/\/$/, '')
+}`
 
 /**
  * Read environment variables from file.
@@ -71,7 +75,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'pnpm run dev',
-    url: 'http://localhost:4321',
+    url: publicationServerUrl,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },

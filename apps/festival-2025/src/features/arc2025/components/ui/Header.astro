@@ -6,6 +6,12 @@ import {
 } from '../../constants'
 import Logo from '../ui/Logo.astro'
 import { cn } from '@/features/shared/utils'
+import { publicationConfig } from '../../../../../../../editions.config'
+import {
+  publicationTargets,
+  publicPath,
+  routePath,
+} from '@/features/shared/utils/publication'
 
 interface Props {
   withLogo?: boolean
@@ -14,11 +20,16 @@ interface Props {
 const { withLogo = true } = Astro.props
 
 const navItems = [
-  { id: 'hero', label: 'Inicio', path: '/' },
-  { id: 'programacion', label: 'Programación', path: '/programacion' },
+  { id: 'hero', label: 'Inicio', path: publicPath('/') },
+  {
+    id: 'programacion',
+    label: 'Programación',
+    path: publicPath('/programacion'),
+  },
 ]
 
-const currentPath = Astro.url.pathname
+const currentPath = routePath(Astro.url.pathname)
+const editionTargets = publicationTargets(publicationConfig)
 ---
 
 <header
@@ -32,7 +43,7 @@ const currentPath = Astro.url.pathname
       'flex gap-4 items-center justify-center relative z-50',
       currentPath === '/' && 'hidden',
     )}>
-    <a href='/' class='block'>
+    <a href={publicPath('/')} class='block'>
       <Logo transitionName='main-logo' />
     </a>
     <div
@@ -62,6 +73,24 @@ const currentPath = Astro.url.pathname
             </a>
           </li>
         ))
+      }
+      {
+        editionTargets.length > 1 && (
+          <li class='text-25-white rounded-xs bg-25-black px-4 py-1'>
+            <details>
+              <summary class='cursor-pointer'>Ediciones</summary>
+              <ul class='mt-2 space-y-1 text-base'>
+                {editionTargets.map((target) => (
+                  <li>
+                    <a href={target.href} class='block hover:text-25-accent'>
+                      {target.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          </li>
+        )
       }
     </ul>
   </nav>
@@ -175,5 +204,3 @@ const currentPath = Astro.url.pathname
     </section>
   </section>
 </header>
-
-<script></script>

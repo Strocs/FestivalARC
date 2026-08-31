@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { call } from '../data/calls'
+---
+<Layout title={`Bases · ${call.title}`}>
+  <section class="card">
+    <h1>Bases de la convocatoria</h1>
+    <p>Esta información pertenece al periodo temporal de recepción de propuestas.</p>
+    <p><strong>Fecha límite:</strong> {call.deadline}</p>
+  </section>
+</Layout>

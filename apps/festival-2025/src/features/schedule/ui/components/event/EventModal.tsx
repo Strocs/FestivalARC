@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '@/features/shared/utils'
+import { assetPath } from '@/features/shared/utils/publication'
 
 export interface EventModalProps {
   isOpen: boolean
@@ -22,9 +23,7 @@ export interface EventModalProps {
   }
 }
 
-export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
-  const modalRef = useRef<HTMLDivElement>(null)
-
+function useEventModalLifecycle(isOpen: boolean, onClose: () => void) {
   useEffect(() => {
     if (!isOpen) return
 
@@ -56,6 +55,12 @@ export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
       window.removeEventListener('popstate', handlePopState)
     }
   }, [isOpen, onClose])
+}
+
+export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  useEventModalLifecycle(isOpen, onClose)
 
   if (!isOpen) return null
 
@@ -76,7 +81,7 @@ export const EventModal = ({ isOpen, onClose, event }: EventModalProps) => {
           'bg-25-white rounded-sm shadow-2xl',
         ])}>
         <img
-          src='/ARC25.png'
+          src={assetPath('/ARC25.png')}
           alt='logo arc'
           className='absolute -top-15 -right-2 aspect-auto h-32 md:-top-21 md:-right-12 md:h-42 md:rotate-12'
         />

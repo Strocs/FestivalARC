@@ -1,0 +1,117 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "@layouts/Layout.astro";
+import { DAYS } from "@data/DAYS";
+import { normalizePath } from "@utils/normalizePath";
+import ScheduleByTime from "@components/ScheduleByTime.astro";
+import { ActivityPanel } from "@components/ActivityPanel";
+import ArrowUpIcon from "@components/icons/ArrowUpIcon.astro";
+    import { withBase } from "@utils/publication-path";
+
+export const getStaticPaths = (() => {
+  return DAYS.map(({ day, color, schedule }) => {
+    const path = normalizePath(day);
+    const restOfDays = DAYS.map((otherDays) => {
+      if (otherDays.day === day) return;
+
+      return {
+        day: otherDays.day,
+        path: normalizePath(otherDays.day),
+        hover: otherDays.color.backgroundHover,
+      };
+    }).filter((d) => d !== undefined);
+    return {
+      params: { day: path },
+      props: { day, color, schedule, restOfDays, path },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { day, color, schedule, restOfDays, path } = Astro.props;
+
+const times = Object.keys(schedule);
+---
+
+<Layout title=`Programación ${day} de Junio`>
+  <button
+    id="back-to-top"
+    class="fixed h-fit bottom-5 w-fit right-3 p-1 group bg-primary rounded-full z-50 text-secondary"
+  >
+    <ArrowUpIcon />
+  </button>
+  <main
+    class="w-full h-full grid grid-cols-[auto] xl:grid-cols-[auto_480px] py-[calc(var(--footer-height)+2rem)] px-2 md:px-12 gap-14 relative"
+  >
+    <article class="flex flex-col gap-12 pt-4">
+      <header
+        class="flex gap-8 items-center flex-col md:flex-row sticky top-[-1.2rem] xxs:top-[1.2rem] md:top-[--footer-height] z-20"
+      >
+        <h1
+          transition:name=`day-${path}`
+          class:list={[
+            color.background,
+            "text-center text-secondary px-10 h-fit py-2 md:py-3 text-4xl md:text-6xl font-black uppercase md:min-w-[430px] order-last md:order-first",
+          ]}
+        >
+          {day}
+        </h1>
+        <nav
+          class="flex gap-2 2xl:gap-8 justify-center md:items-end flex-wrap md:self-center 2xl:self-start"
+        >
+          {
+            restOfDays.map((day) => (
+              <a
+                class:list={[
+                  "font-bold text-xl duration-100 text-secondary px-2 md:min-w-32 text-center bg-black/50",
+                  day?.hover,
+                ]}
+                href={withBase(`/${day?.path}`)}
+              >
+                {day?.day}
+              </a>
+            ))
+          }
+        </nav>
+      </header>
+      <section class="grid gap-24">
+        {
+          times.map((time) => {
+            const activities = schedule[time];
+            return (
+              <ScheduleByTime
+                day={day}
+                color={color}
+                time={time}
+                schedule={activities}
+              />
+            );
+          })
+        }
+      </section>
+    </article>
+    <article class="w-full h-full relative" id="more-info-panel-wrapper">
+      <ActivityPanel client:load />
+    </article>
+  </main>
+</Layout>
+
+<script>
+  import { closePanel } from "@stores/activityInfoStore";
+
+  const backToTop = () => {
+    const backToTopButton = document.getElementById(
+      "back-to-top"
+    ) as HTMLButtonElement;
+    backToTopButton.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+  };
+  document.addEventListener("astro:page-load", backToTop);
+
+  document.addEventListener("astro:after-swap", () => {
+    closePanel();
+  });
+</script>

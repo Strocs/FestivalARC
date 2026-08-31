@@ -1,0 +1,23 @@
+---
+const { description } = Astro.props
+const descriptionSplited = description.split('\n')
+---
+
+<div class='grid gap-4'>
+	{
+		descriptionSplited.map((description: string) => {
+			const textBoldSplitted = description.split('\b')
+
+			return (
+				<p class='text-justify font-normal'>
+					{textBoldSplitted.map((text, index) => {
+						if (index % 2 === 0) {
+							return text
+						}
+						return <b>{text}</b>
+					})}
+				</p>
+			)
+		})
+	}
+</div>

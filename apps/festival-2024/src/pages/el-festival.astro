@@ -1,0 +1,141 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import TextTape from "@components/TextTape.astro";
+
+import { SITE } from "@data/SITE";
+
+import LogoARC from "../assets/Logo-ARC24.png";
+import LogoSeremi from "../assets/logo-seremi.png";
+import LogoULS from "../assets/ULS-Blanco.png";
+import LogoLS from "../assets/la-serena-logo.png";
+import LogoCoquimbo from "../assets/logos-COQUIMBO.png";
+import LogoOvalle from "../assets/logo-ovalle.png";
+import LogoIllapel from "../assets/muni-illapel.png";
+import Snowflakes from "@components/Snowflakes.astro";
+
+const organizan = [
+  {
+    name: "Seremia",
+    src: LogoSeremi,
+  },
+  {
+    name: "Universidad de La Serena",
+    src: LogoULS,
+  },
+];
+
+const colaboran = [
+  {
+    name: "Municipalidad de La Serena",
+    src: LogoLS,
+  },
+  {
+    name: "Municipalidad de Coquimbo",
+    src: LogoCoquimbo,
+  },
+  {
+    name: "Municipalidad de Ovalle",
+    src: LogoOvalle,
+  },
+  {
+    name: "Municipalidad de Illapel",
+    src: LogoIllapel,
+  },
+];
+---
+
+<Layout title="El Festival">
+  <Snowflakes />
+  <main
+    class="w-full h-full flex flex-col items-center justify-center py-[calc(var(--footer-height)+5rem)] px-2"
+  >
+    <header class="space-y-6 landscape:space-y-10 pb-28 w-full">
+      <Image
+        src={LogoARC}
+        width={540}
+        class="w-full max-w-[540px] mx-auto aspect-[500/180] drop-shadow-[0_20px_16px_rgb(0,0,0,0.5)]"
+        alt="Logo del festival ARC 2024"
+        loading="eager"
+      />
+      <TextTape size="2xl" class="mx-auto md:px-14 text-xl landscape:text-5xl">
+        {"{"}&nbsp; {SITE.date} &nbsp;{"}"}
+      </TextTape>
+    </header>
+    <section class="text-lg max-w-prose space-y-4">
+      <p>
+        <strong>Festival ARC 2024:</strong> Una Vitrina Artística para la Región
+        de Coquimbo
+      </p>
+      <p>
+        El <b>"Festival de las Artes Región de Coquimbo, Festival ARC 2024"</b> tiene
+        como objetivo consolidar y expandir su impacto cultural en la región, posicionándose
+        como la principal vitrina artística de la zona. El evento se llevará a cabo
+        del 27 al 30 de junio de 2024, en plena conurbación de La Serena y Coquimbo,
+        extendiéndose también a las ciudades de Ovalle e Illapel. Una colaboración
+        estratégica con la Universidad de La Serena es fundamental para fortalecer
+        el desarrollo de una programación participativa y enriquecedora para la comunidad.
+        Este festival, realizado durante las vacaciones de invierno, es un evento
+        imperdible para toda la familia.
+      </p>
+      <p>
+        El festival exhibe las más recientes creaciones artísticas regionales,
+        provenientes de las tres provincias de la Región de Coquimbo. El público
+        asistente puede disfrutar de una amplia variedad de disciplinas,
+        incluyendo artes escénicas, música, artesanía, audiovisual, literatura y
+        artes visuales. Además, se cuenta con la participación de destacados
+        artistas nacionales.
+      </p>
+      <p>
+        ARC está diseñado para ser un espacio inclusivo y participativo, donde
+        la comunidad puede disfrutar y celebrar la rica diversidad artística
+        cultural de nuestro territorio.
+      </p>
+      <p>
+        Te invitamos a ser parte del Festival ARC 2024. Marca las fechas en tu
+        calendario y prepárate para sumergirte en el vibrante mundo de las artes
+        y las culturas de la Región de Coquimbo. <b
+          >¡Nos vemos del 27 al 30 junio!</b
+        >
+      </p>
+    </section>
+    <div class="pt-28 space-y-16">
+      <div class="space-y-6">
+        <h2 class="font-medium text-center">Organizan:</h2>
+        <ul class="flex gap-2 flex-wrap items-center justify-center">
+          {
+            organizan.map((logo) => (
+              <li class="h-fit w-fit">
+                <Image
+                  height={128}
+                  loading="lazy"
+                  src={logo.src}
+                  alt={logo.name}
+                  class="max-h-32 h-full w-fit brightness-0"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="space-y-6">
+        <h2 class="font-medium text-center">Colaboran:</h2>
+        <ul class="flex gap-12 flex-wrap items-center justify-center">
+          {
+            colaboran.map((logo) => (
+              <li class="h-fit w-fit">
+                <Image
+                  height={96}
+                  loading="lazy"
+                  src={logo.src}
+                  alt={logo.name}
+                  class="max-h-24 h-full w-fit brightness-0"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </main>
+</Layout>

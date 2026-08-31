@@ -1,14 +1,16 @@
 import { defineConfig } from 'astro/config'
 
-import sitemap from '@astrojs/sitemap'
 import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 
-import vercel from '@astrojs/vercel'
+const publicationBase = process.env.PUBLICATION_BASE || '/'
+const distributionOutput = process.env.DISTRIBUTION_OUTPUT_DIR
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [sitemap(), react()],
+  base: publicationBase,
+  outDir: distributionOutput || './dist',
+  integrations: [react()],
   output: 'static',
   site: 'https://festivalarc.com',
 
@@ -19,9 +21,4 @@ export default defineConfig({
     },
   },
 
-  adapter: vercel({
-    webAnalytics: {
-      enabled: true,
-    },
-  }),
 })

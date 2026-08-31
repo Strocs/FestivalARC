@@ -1,0 +1,13 @@
+---
+interface Props {
+  city: string;
+}
+
+const { city } = Astro.props;
+---
+
+<span
+  class="absolute uppercase bg-secondary text-black px-2 font-medium text-sm -top-2 right-4 w-fit"
+>
+  {city}
+</span>

@@ -1,6 +1,8 @@
 ---
 import '@/styles/global.css'
 import { ClientRouter } from 'astro:transitions'
+import { createPublicationMetadata, publicationUrl } from '@festivalarc/seo'
+import { assetPath, appBase, routePath } from '@/features/shared/utils/publication'
 
 interface Props {
   title: string
@@ -9,34 +11,58 @@ interface Props {
 }
 
 const { title, description, favicon } = Astro.props
+const metadata = createPublicationMetadata({
+  siteOrigin: 'https://festivalarc.com',
+  base: appBase,
+  pathname: routePath(Astro.url.pathname),
+  title,
+  description,
+  image: '/og_image.png',
+})
+const logoUrl = publicationUrl(
+  'https://festivalarc.com',
+  appBase,
+  '/ARC25.png',
+)
+const fontFiles = {
+  dk: assetPath('/fonts/DKAppelstroop.woff2'),
+  bestoom: assetPath('/fonts/BestoomBold.woff2'),
+  nerisSemibold: assetPath('/fonts/NerisSemiBold.woff2'),
+  nerisLight: assetPath('/fonts/NerisLight.woff2'),
+  nerisBlack: assetPath('/fonts/NerisBlack.woff2'),
+}
 ---
 
 <!doctype html>
-<html lang='es'>
+<html
+  lang='es'
+  style={`--arc-font-dk: url('${fontFiles.dk}') format('woff2'); --arc-font-bestoom: url('${fontFiles.bestoom}') format('woff2'); --arc-font-neris-semibold: url('${fontFiles.nerisSemibold}') format('woff2'); --arc-font-neris-light: url('${fontFiles.nerisLight}') format('woff2'); --arc-font-neris-black: url('${fontFiles.nerisBlack}') format('woff2');`}>
   <head>
     <meta charset='UTF-8' />
     <meta name='description' content={description} />
     <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/png' href={favicon} />
+    <link rel='canonical' href={metadata.canonical} />
+    <link rel='icon' type='image/png' href={assetPath(favicon)} />
     <title>{title}</title>
 
     <!-- Facebook Meta Tags -->
-    <meta property='og:url' content='https://festivalarc.com' />
+    <meta property='og:url' content={metadata.openGraph.url} />
     <meta property='og:type' content='website' />
-    <meta property='og:title' content={title} />
-    <meta property='og:description' content={description} />
-    <meta property='og:image' content='https://festivalarc.com/og_image.png' />
+    <meta property='og:title' content={metadata.openGraph.title} />
+    <meta property='og:description' content={metadata.openGraph.description} />
+    <meta property='og:image' content={metadata.openGraph.image} />
     <meta property='og:site_name' content='Festival ARC 2025' />
-    <meta property='og:logo' content='https://festivalarc.com/ARC25.png' />
+    <meta property='og:logo' content={logoUrl} />
 
     <!-- Twitter Meta Tags -->
     <meta name='twitter:card' content='summary_large_image' />
     <meta property='twitter:domain' content='festivalarc.com' />
-    <meta property='twitter:url' content='https://festivalarc.com' />
-    <meta name='twitter:title' content={title} />
-    <meta name='twitter:description' content={description} />
-    <meta name='twitter:image' content='https://festivalarc.com/og_image.png' />
-    <link rel='sitemap' href='/sitemap-index.xml' />
+    <meta property='twitter:url' content={metadata.twitter.url} />
+    <meta name='twitter:title' content={metadata.twitter.title} />
+    <meta name='twitter:description' content={metadata.twitter.description} />
+    <meta name='twitter:image' content={metadata.twitter.image} />
+    <link rel='sitemap' href={metadata.sitemapLink} />
+    <script type='application/ld+json' set:html={JSON.stringify(metadata.jsonLd)} />
   </head>
   <body
     class='font-neris bg-25-primary relative flex h-full min-h-dvh w-full flex-col items-center justify-between overflow-x-hidden'>

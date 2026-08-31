@@ -3,18 +3,25 @@
   "type": "module",
   "version": "3.0.0",
   "private": true,
+  "dependencies": {
+    "@festivalarc/editions": "workspace:*"
+  },
   "scripts": {
     "dev": "pnpm --filter festivalarc-2025 dev",
     "start": "pnpm --filter festivalarc-2025 start",
-    "build": "pnpm --filter festivalarc-2025 build",
-    "preview": "pnpm --filter festivalarc-2025 preview",
+    "build": "pnpm --filter @festivalarc/distribution build",
+    "preview": "python3 -m http.server 4173 --directory .output",
     "astro": "pnpm --filter festivalarc-2025 astro",
-    "type": "pnpm --filter festivalarc-2025 type",
-    "test": "pnpm --filter festivalarc-2025 test",
+    "type": "pnpm -r --if-present run type",
+    "test": "pnpm -r --if-present run test",
     "test:coverage": "pnpm --filter festivalarc-2025 test:coverage",
-    "test:e2e": "pnpm --filter festivalarc-2025 test:e2e",
-    "test:e2e:ui": "pnpm --filter festivalarc-2025 test:e2e:ui",
-    "test:e2e:debug": "pnpm --filter festivalarc-2025 test:e2e:debug"
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "turbo": "^2.5.6"
   },
   "packageManager": "pnpm@10.18.2+sha512.9fb969fa749b3ade6035e0f109f0b8a60b5d08a1a87fdf72e337da90dcc93336e2280ca4e44f2358a649b83c17959e9993e777c2080879f3801e6f0d999ad3dd"
 }

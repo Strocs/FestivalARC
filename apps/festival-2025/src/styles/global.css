@@ -56,7 +56,7 @@
 
 @font-face {
   font-family: 'DK Appelstroop';
-  src: url('/fonts/DKAppelstroop.woff2') format('woff2');
+  src: var(--arc-font-dk);
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -64,7 +64,7 @@
 
 @font-face {
   font-family: 'Bestoom';
-  src: url('/fonts/BestoomBold.woff2') format('woff2');
+  src: var(--arc-font-bestoom);
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -72,7 +72,7 @@
 
 @font-face {
   font-family: 'Neris';
-  src: url('/fonts/NerisSemiBold.woff2') format('woff2');
+  src: var(--arc-font-neris-semibold);
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -80,7 +80,7 @@
 
 @font-face {
   font-family: 'Neris';
-  src: url('/fonts/NerisLight.woff2') format('woff2');
+  src: var(--arc-font-neris-light);
   font-weight: light;
   font-style: normal;
   font-display: swap;
@@ -88,7 +88,7 @@
 
 @font-face {
   font-family: 'Neris';
-  src: url('/fonts/NerisBlack.woff2') format('woff2');
+  src: var(--arc-font-neris-black);
   font-weight: bold;
   font-style: normal;
   font-display: swap;

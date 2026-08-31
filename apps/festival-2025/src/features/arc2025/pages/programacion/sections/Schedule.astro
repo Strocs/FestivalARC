@@ -17,6 +17,7 @@ import type {
   UIScheduleDay,
 } from '@/features/schedule'
 import { FESTIVAL_DAYS } from '@/features/arc2025/constants'
+import { assetPath } from '@/features/shared/utils/publication'
 
 const mapTrack = (track: ScheduleTrack<Arc2025StagePayload>): UIHeaderItem => ({
   id: track.id,
@@ -34,7 +35,9 @@ const mapEvent = (event: LayoutEvent<Arc2025EventPayload>): UIColumnItem => ({
   },
   body: {
     description: event.event.payload?.description ?? '',
-    galleryUrl: event.event.payload?.galleryUrl,
+    galleryUrl: event.event.payload?.galleryUrl
+      ? assetPath(event.event.payload.galleryUrl)
+      : undefined,
     duration: event.event.payload?.duration,
     time: {
       start: event.event.time.start,

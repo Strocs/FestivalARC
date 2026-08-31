@@ -1,0 +1,84 @@
+---
+import { ARC_2023 } from 'src/data/ARC_2023'
+import ButtonLink from './ButtonLink.astro'
+    import { withBase } from '../utils/publication.js'
+import MINCAP from './icons/MINCAP.astro'
+import SocialNetworks from './SocialNetworks.astro'
+
+const { locations } = ARC_2023
+
+const sections = [
+	{ name: 'inicio', href: '/' },
+	{ name: 'festival', href: '/festival' }
+]
+
+const { styles, locationId = '' } = Astro.props
+
+const text = locationId.includes('estacionamiento') ? 'text-neutral-700' : 'text-white'
+---
+
+<nav
+	class={`${styles.backgroundColor} ${text} grid justify-items-center gap-14 py-24 w-full max-w-md items-center md:place-items-start md:px-14 h-screen top-0 bottom-0 overflow-auto fixed z-40 motion-reduce:animate-none`}
+	style={{ opacity: '0', left: '-448px' }}
+>
+	<div class='grid max-w-[18rem] gap-16'>
+		<ul class='grid gap-5'>
+			{
+				sections.map((section) => (
+					<li class='text-4xl transition-all duration-200 ease-in hover:underline'>
+						<a href={withBase(section.href)}>{section.name.toUpperCase()}</a>
+					</li>
+				))
+			}
+		</ul>
+		<ul class='text-md grid gap-2 font-light'>
+			{
+				locations.map((location) => (
+					<li class='leading-5 transition-all duration-200 ease-in hover:underline'>
+						<a href={withBase(`/${location.id}`)}>• {location.title}</a>
+					</li>
+				))
+			}
+		</ul>
+		<div class='grid gap-6'>
+			<ButtonLink
+				id={locationId}
+				anchor
+				href='/PROGRAMA_ARC23.pdf'
+				styles={styles}
+				className='md:hidden'
+			>
+				Descarga la Programación
+			</ButtonLink>
+			<SocialNetworks locationId={locationId} hoverTextColor={styles.hoverTextColor} />
+		</div>
+		<div class="grid gap-2 text-center">
+			<p class=''>Proyecto Financiado por:</p>
+			<MINCAP className='w-1/2 mx-auto' />
+		</div>
+		<div class='flex flex-col pb-6 md:hidden text-center'>
+			<p class='text-lg font-bold'>ARC 2023</p>
+			<p class='font-light'>
+				Desarrollado por <a class='underline' target='_blank' href='https://github.com/Strocs'
+					>Strocs</a
+				>
+			</p>
+		</div>
+	</div>
+</nav>
+
+<style>
+	nav {
+		transition: left 500ms;
+		transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+		overflow-y: scroll;
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+	}
+
+	nav::-webkit-scrollbar {
+		/* WebKit */
+		width: 0;
+		height: 0;
+	}
+</style>

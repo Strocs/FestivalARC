@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { call } from '../data/calls'
+import { publicPath } from '../utils/publication'
+---
+<Layout>
+  <section class="card">
+    <p>Convocatoria temporal · 2026</p>
+    <h1>{call.title}</h1>
+    <p>{call.summary}</p>
+    <p><strong>Plazo:</strong> {call.deadline}</p>
+    <a href={publicPath('/convocatoria')}>Consultar bases de la convocatoria</a>
+  </section>
+</Layout>
