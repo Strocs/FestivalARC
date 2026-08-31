@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets'
+import logo from '../assets/logo.jpg'
+import Layout from '../layouts/Layout.astro'
+
+const disciplines: string[] = [
+  'MÚSICA',
+  'TEATRO',
+  'DANZA',
+  'ARTES CIRCENSES',
+  'LITERATURA',
+  'ARTES VISUALES',
+  'ARTESANÍA',
+  'DISEÑO'
+]
+---
+<Layout>
+  <main
+    class='flex min-h-svh items-start justify-center overflow-x-hidden bg-background px-5 py-8 font-sans text-foreground sm:items-center sm:px-8 sm:py-10 lg:p-12'
+    aria-labelledby='coming-soon-title'
+  >
+    <div
+      class='grid w-full max-w-screen-2xl grid-cols-1 items-center justify-center gap-12 md:gap-16 lg:grid-cols-2 lg:gap-20'
+    >
+      <section
+        class='min-w-0 w-full'
+        aria-labelledby='disciplines-title'
+      >
+        <Image
+          src={logo}
+          alt='Logotipo del Festival ARC 2026'
+          class='mx-auto block h-auto w-full max-w-lg'
+          loading='eager'
+        />
+        <h2 id='disciplines-title' class='sr-only'>Disciplinas de la convocatoria</h2>
+        <ul
+          class='mt-6 flex max-w-full list-none flex-wrap items-center justify-center gap-y-1 p-0 text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.065em] md:gap-y-2 md:text-[clamp(2rem,5vw,3rem)] lg:gap-0 lg:text-[clamp(1.75rem,3.65vw,4rem)] lg:leading-[0.82] lg:tracking-[-0.07em]'
+          aria-label='Disciplinas de la convocatoria'
+        >
+          {disciplines.map((discipline, index) => (
+            <li
+              class:list={[
+                'inline-flex min-w-0 max-w-full items-center break-words',
+                {
+                  'text-primary': index % 2 === 0,
+                  'text-foreground': index % 2 !== 0
+                }
+              ]}
+            >
+              {discipline}
+              {index < disciplines.length - 1 && (
+                <span class='leading-0 text-primary' aria-hidden='true'>/</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class='min-w-0 w-full h-fit'>
+        <h1
+          id='coming-soon-title'
+          class='m-0 max-w-full break-words text-left text-[clamp(3.75rem,18vw,6rem)] font-extrabold uppercase leading-[0.78] tracking-[-0.085em] sm:text-[clamp(4rem,14vw,7rem)] md:text-[clamp(4.5rem,12vw,8rem)] lg:text-[clamp(3.75rem,10.5vw,10.472rem)]'
+        >
+          <span class='sr-only'>PRONTO CONVOCATORIA 2026</span>
+          <span class='flex flex-col items-center' aria-hidden='true'>
+            <span class='block'>PRONTO</span>
+            <span class='block text-primary'>CONVO_</span>
+            <span class='block text-primary'>CATORIA</span>
+            <span class='block'>2026</span>
+          </span>
+        </h1>
+      </section>
+    </div>
+  </main>
+</Layout>

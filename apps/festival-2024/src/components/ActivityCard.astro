@@ -1,0 +1,75 @@
+---
+import CategoryLabel from "./CategoryLabel.astro";
+import CityLabel from "./CityLabel.astro";
+import { OpenActivityPanel } from "./OpenActivityPanel";
+import Time from "./Time.astro";
+import Address from "./Address.astro";
+import type { InfoPanel } from "@stores/activityInfoStore";
+
+type Props = InfoPanel;
+
+const { title, subTitle, category, location, time, color } = Astro.props;
+
+const getTicketURL = () => {
+  const filter = location.tickets?.url.filter((url) => title.includes(url[0]));
+  return !!filter && !!filter[0] ? filter[0][1] : "#";
+};
+
+const ticket = getTicketURL();
+---
+
+<li
+  class:list={[
+    "min-h-44 h-fit w-full max-w-[340px] leading-4 text-black px-4 pt-8 gap-2 grid relative hover:text-secondary duration-300 group shadow-xl",
+    "before:content-[''] before:w-full before:h-full before:bg-secondary before:absolute before:-z-20",
+    "after:content-[''] after:w-full after:h-7 after:absolute after:-z-10 after:bottom-0 group hover:after:h-full after:duration-300",
+    color.afterBackground,
+  ]}
+>
+  <CategoryLabel category={category} />
+  <CityLabel city={location.city} />
+  <header>
+    <h2
+      class="uppercase font-bold text-black group-hover:text-secondary duration-300 tracking-wide"
+    >
+      {title}
+    </h2>
+    <span class="font-light text-sm leading-3">{subTitle}</span>
+  </header>
+  <section class="flex justify-between items-end gap-4 self-end">
+    <div>
+      <Address name={location.name} maps={location.maps} />
+      <Time time={time} />
+    </div>
+  </section>
+  <footer
+    class="flex w-full h-fit items-center justify-center text-center gap-2 self-end
+  text-white"
+  >
+    <OpenActivityPanel
+      client:load
+      data={Astro.props}
+      className="w-full whitespace-nowrap py-1.5 hover:text-accent-yellow transition duration-300"
+    >
+      Más info
+    </OpenActivityPanel>
+    {
+      !!location.tickets ? (
+        <>
+          <hr class="rotate-90 border-1 border-secondary w-4" />
+          <a
+            class="w-full block hover:text-accent-yellow py-1.5 transition duration-300"
+            href={ticket}
+          >
+            {location.tickets.title}
+          </a>
+        </>
+      ) : (
+        <>
+          <hr class="rotate-90 border-1 border-secondary w-4" />
+          <p class="whitespace-nowrap w-full">Entrada liberada</p>
+        </>
+      )
+    }
+  </footer>
+</li>

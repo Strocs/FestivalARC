@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "change": "festivalarc-annual-monorepo",
+  "slice": 6,
+  "evidenceKind": "bounded-parity-remediation",
+  "oracle": {
+    "existingBaseline": "openspec/changes/festivalarc-annual-monorepo/baseline-2025.json",
+    "baselineStatus": "verified",
+    "baselineScreenshotAvailable": false,
+    "boundary": "The checked-in baseline contains structural, metadata, asset-source, and prior command evidence, but no baseline screenshot or baseline HTML byte capture. Candidate screenshots are therefore not claimed as screenshot parity against the baseline.",
+    "baselineRoutePaths": [
+      "/",
+      "/programacion"
+    ],
+    "baselinePublicAssetManifestSha256": "9c3398261eda22de34cb9ebacb0d52e8cb9c6af0113a3cd8bd550f15477085f3"
+  },
+  "maintainerApproval": {
+    "decision": "approve_difference",
+    "approvedBy": "maintainer",
+    "approvedItems": [
+      "The documented absence of a pre-migration screenshot/HTML oracle.",
+      "The mobile navigation active-state difference between root and archive contexts."
+    ],
+    "comparisonIntegrity": "This approval accepts the documented oracle limitation and candidate-context difference; it is not a fabricated baseline comparison. Candidate screenshots remain candidate-context evidence only."
+  },
+  "buildCommands": {
+    "root": "pnpm build",
+    "archive": "PUBLICATION_BASE=/ediciones/2025 DISTRIBUTION_OUTPUT_DIR=/tmp/festivalarc-slice6-archive pnpm --dir apps/festival-2025 build",
+    "rootResult": "passed; Astro check/build; 2 pages",
+    "archiveResult": "passed; Astro check/build; 2 pages",
+    "generatedBuildDirectories": {
+      "root": "apps/festival-2025/dist",
+      "archive": "temporary sibling directory; removed after evidence capture"
+    }
+  },
+  "routes": {
+    "root": [
+      {
+        "publicPath": "/",
+        "emittedPath": "index.html",
+        "status": "emitted; E2E opened successfully"
+      },
+      {
+        "publicPath": "/programacion",
+        "emittedPath": "programacion/index.html",
+        "status": "emitted; E2E opened successfully"
+      }
+    ],
+    "archive": [
+      {
+        "publicPath": "/ediciones/2025/",
+        "emittedPath": "index.html",
+        "status": "emitted; E2E opened successfully"
+      },
+      {
+        "publicPath": "/ediciones/2025/programacion",
+        "emittedPath": "programacion/index.html",
+        "status": "emitted; E2E opened successfully"
+      }
+    ],
+    "normalizedPageSetEqual": true
+  },
+  "normalizedHtml": {
+    "method": "Strip the archive publication prefix, canonicalize generated _astro hash filenames to stable basename/extension tokens, and normalize Astro island uid values. Metadata and links remain separately recorded without discarding their expected publication-context values.",
+    "pages": {
+      "root": {
+        "index.html": {
+          "sha256": "62ebc959a84b89b2e6a8b32bc8cd66bbde23d28cd3aedded0890ef47ab9e692a",
+          "bytes": 19849
+        },
+        "programacion/index.html": {
+          "sha256": "186c256c39404a8f63c617d62c2919c5024a5ff21bdc8fb03e88f8fa0d3b73b1",
+          "bytes": 188126
+        }
+      },
+      "archive": {
+        "index.html": {
+          "sha256": "3a81f6ee2f6ad8e0dd28e86328ce1c708625635f26ed27e705c3409a6365718c",
+          "bytes": 19981
+        },
+        "programacion/index.html": {
+          "sha256": "dbbc64dfe217c46f933bb90159c54effc7e02381e412db8876f6f946d853c71f",
+          "bytes": 189236
+        }
+      }
+    },
+    "fullDocumentHashEqualAfterNormalization": false,
+    "observedDifferences": [
+      "Publication-context URLs intentionally differ: root values use / and archive values use /ediciones/2025.",
+      "Generated asset filenames and Astro island identifiers are build-context-specific and were normalized for comparison."
+    ],
+    "approvedDifferences": [
+      "Base-prefixed canonical, Open Graph, favicon, asset, and nested route URLs required by the Base-aware publication URL specification.",
+      "Generated _astro filename/hash and Astro island identifier nondeterminism covered by the existing baseline normalization rule.",
+      "The mobile navigation active-state class differs between root and archive builds; the maintainer approved this candidate-context difference under approve_difference. No pre-migration screenshot/HTML oracle exists, so this is not a fabricated baseline comparison."
+    ],
+    "unapprovedDifferencesClaimed": false
+  },
+  "stableAssets": {
+    "definition": "All copied public assets and fonts; excludes HTML, generated _astro assets, and Astro adapter support files content-assets.mjs, content-modules.mjs, and data-store.json.",
+    "rootArchivePathSetsEqual": true,
+    "rootArchiveBytesEqual": true,
+    "rootManifestSha256": "6ee9d15e7bf0185e6db95b2bd1b8c310a0dc4adcfaa152b7fd5d1fd5c7b42db8",
+    "archiveManifestSha256": "6ee9d15e7bf0185e6db95b2bd1b8c310a0dc4adcfaa152b7fd5d1fd5c7b42db8",
+    "baselinePublicSourcePathSetAndBytesEqual": "not-verifiable: checked-in baseline has an aggregate hash but no pre-migration public tree; the candidate is not compared by assumption",
+    "baselinePublicSourceManifestSha256": "9c3398261eda22de34cb9ebacb0d52e8cb9c6af0113a3cd8bd550f15477085f3",
+    "baselineApplicationAssetManifestSha256": "not-computable: no pre-migration public tree is present in the checked-in repository",
+    "globalOwnershipBoundary": "robots.txt is present in the historical baseline source but is intentionally no longer app-owned after Slice 5 distribution ownership; it is excluded from application stable-asset parity.",
+    "currentRootStableAssetCount": 58,
+    "currentArchiveStableAssetCount": 58
+  },
+  "metadata": {
+    "root": {
+      "/": {
+        "title": "Festival ARC 2025 - Festival de las Artes Región de Coquimbo",
+        "description": "Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena.",
+        "canonical": "https://festivalarc.com",
+        "favicon": "/ARC25.png",
+        "ogUrl": "https://festivalarc.com",
+        "ogImage": "https://festivalarc.com/og_image.png",
+        "twitterImage": "https://festivalarc.com/og_image.png",
+        "sitemapLink": "https://festivalarc.com/sitemap-index.xml"
+      },
+      "/programacion": {
+        "title": "Festival ARC 2025 | Programación Sábado 18 y Domingo 19",
+        "description": "Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena.",
+        "canonical": "https://festivalarc.com/programacion",
+        "favicon": "/ARC25.png",
+        "ogUrl": "https://festivalarc.com/programacion",
+        "ogImage": "https://festivalarc.com/og_image.png",
+        "twitterImage": "https://festivalarc.com/og_image.png",
+        "sitemapLink": "https://festivalarc.com/sitemap-index.xml"
+      }
+    },
+    "archive": {
+      "/ediciones/2025/": {
+        "title": "Festival ARC 2025 - Festival de las Artes Región de Coquimbo",
+        "description": "Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena.",
+        "canonical": "https://festivalarc.com/ediciones/2025",
+        "favicon": "/ediciones/2025/ARC25.png",
+        "ogUrl": "https://festivalarc.com/ediciones/2025",
+        "ogImage": "https://festivalarc.com/ediciones/2025/og_image.png",
+        "twitterImage": "https://festivalarc.com/ediciones/2025/og_image.png",
+        "sitemapLink": "https://festivalarc.com/sitemap-index.xml"
+      },
+      "/ediciones/2025/programacion": {
+        "title": "Festival ARC 2025 | Programación Sábado 18 y Domingo 19",
+        "description": "Festival de las Artes Región de Coquimbo (Festival ARC 2025) del 18 y 19 de Octubre, Parque Pedro de Valdivia, La Serena.",
+        "canonical": "https://festivalarc.com/ediciones/2025/programacion",
+        "favicon": "/ediciones/2025/ARC25.png",
+        "ogUrl": "https://festivalarc.com/ediciones/2025/programacion",
+        "ogImage": "https://festivalarc.com/ediciones/2025/og_image.png",
+        "twitterImage": "https://festivalarc.com/ediciones/2025/og_image.png",
+        "sitemapLink": "https://festivalarc.com/sitemap-index.xml"
+      }
+    }
+  },
+  "candidateManifests": {
+    "root": {
+      "fileCount": 72,
+      "totalBytes": 20897329,
+      "sha256": "068577887e78bd00ee066981a4b7651ada291031fb4b11e4d8a3d3c08ccfae68"
+    },
+    "archive": {
+      "fileCount": 75,
+      "totalBytes": 20900507,
+      "sha256": "a3fc2fda8f14fd0d9d340d0b98f65fe53e0858b78adeb80281df378e3e2cf306"
+    },
+    "note": "Deterministic candidate manifest summaries are retained here; full per-file entries were generated and hashed during the check but are not duplicated in this bounded evidence artifact. Slice 6 does not cut over Vercel or publish a composed .output.",
+    "composedManifestSha256": "c9ce21ab4091d05d77e5060e327d5311ea791bca0e62964f29ea0ff096745791",
+    "composedManifestInput": {
+      "root": "068577887e78bd00ee066981a4b7651ada291031fb4b11e4d8a3d3c08ccfae68",
+      "archive": "a3fc2fda8f14fd0d9d340d0b98f65fe53e0858b78adeb80281df378e3e2cf306",
+      "rootStable": "6ee9d15e7bf0185e6db95b2bd1b8c310a0dc4adcfaa152b7fd5d1fd5c7b42db8",
+      "archiveStable": "6ee9d15e7bf0185e6db95b2bd1b8c310a0dc4adcfaa152b7fd5d1fd5c7b42db8",
+      "rootHtml": {
+        "index.html": {
+          "sha256": "62ebc959a84b89b2e6a8b32bc8cd66bbde23d28cd3aedded0890ef47ab9e692a",
+          "bytes": 19849
+        },
+        "programacion/index.html": {
+          "sha256": "186c256c39404a8f63c617d62c2919c5024a5ff21bdc8fb03e88f8fa0d3b73b1",
+          "bytes": 188126
+        }
+      },
+      "archiveHtml": {
+        "index.html": {
+          "sha256": "3a81f6ee2f6ad8e0dd28e86328ce1c708625635f26ed27e705c3409a6365718c",
+          "bytes": 19981
+        },
+        "programacion/index.html": {
+          "sha256": "dbbc64dfe217c46f933bb90159c54effc7e02381e412db8876f6f946d853c71f",
+          "bytes": 189236
+        }
+      },
+      "screenshots": {
+        "root": {
+          "path": "output/playwright/slice6-root.png",
+          "sha256": "4760f9b1bb19bb208314ee03d6436753d9436808c7e1e05fb7ae2c033323fa8c",
+          "dimensions": "1280x4316"
+        },
+        "archive": {
+          "path": "output/playwright/slice6-archive.png",
+          "sha256": "4760f9b1bb19bb208314ee03d6436753d9436808c7e1e05fb7ae2c033323fa8c",
+          "dimensions": "1280x4316"
+        },
+        "rootArchiveByteIdentical": true,
+        "baselineComparison": "not available; no baseline screenshot exists"
+      }
+    }
+  },
+  "screenshots": {
+    "root": {
+      "path": "output/playwright/slice6-root.png",
+      "sha256": "4760f9b1bb19bb208314ee03d6436753d9436808c7e1e05fb7ae2c033323fa8c",
+      "dimensions": "1280x4316"
+    },
+    "archive": {
+      "path": "output/playwright/slice6-archive.png",
+      "sha256": "4760f9b1bb19bb208314ee03d6436753d9436808c7e1e05fb7ae2c033323fa8c",
+      "dimensions": "1280x4316"
+    },
+    "rootArchiveByteIdentical": true,
+    "baselineComparison": "not available; no baseline screenshot exists"
+  },
+  "interactions": {
+    "command": "CI=1 PUBLICATION_BASE={/|/ediciones/2025} SLICE6_SCREENSHOT=output/playwright/slice6-{root|archive}.png pnpm --dir apps/festival-2025 run test:e2e",
+    "root": "passed; 2 tests; metadata/base assertions and nested program route/day interaction",
+    "archive": "passed; 2 tests; metadata/base assertions and nested program route/day interaction",
+    "cleanup": "Playwright report/test-results removed after each run; no Astro dev or Playwright processes remain."
+  },
+  "sourceCorrection": {
+    "file": "apps/festival-2025/src/features/schedule/ui/components/event/EventModal.tsx",
+    "change": "EventModal now delegates lifecycle synchronization to the reusable useEventModalLifecycle hook; behavior remains Escape close, popstate close, body overflow lock, and cleanup.",
+    "directUseEffectInComponent": false,
+    "approvalTest": "apps/festival-2025/src/features/schedule/ui/components/event/__tests__/EventModal.test.tsx"
+  }
+}

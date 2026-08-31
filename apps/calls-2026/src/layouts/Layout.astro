@@ -1,0 +1,33 @@
+---
+import { Font } from 'astro:assets'
+import PreviousEditions from '../components/PreviousEditions.astro'
+import { appBase, publicPath } from '../utils/publication'
+import '../styles/global.css'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = 'Pronto convocatoria 2026',
+  description = 'Sitio oficial del Festival ARC. Próximamente, convocatoria 2026.',
+} = Astro.props
+const path = Astro.url.pathname === appBase ? '/' : Astro.url.pathname.replace(`${appBase}/`, '/')
+const canonical = new URL(publicPath(path), 'https://festivalarc.com').toString().replace(/\/$/, '')
+---
+<!doctype html>
+<html lang='es'>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width' />
+    <meta name='description' content={description} />
+    <link rel='canonical' href={canonical} />
+    <Font cssVariable='--font-poppins' />
+    <title>{title}</title>
+  </head>
+  <body>
+    <PreviousEditions />
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,30 @@
+---
+import TextTape from "./TextTape.astro";
+import { withBase } from "@utils/publication-path";
+
+interface Props {
+  size?: "sm" | "md" | "base" | "lg" | "xl" | "2xl";
+  wrapperClass?: string;
+  itemsClass?: string;
+}
+
+const { wrapperClass, itemsClass, size = "md" } = Astro.props;
+---
+
+<nav class:list={[wrapperClass, "hidden landscape:flex gap-4"]}>
+  <TextTape class={`${itemsClass} nav_links`} element="a" href={withBase("/")} size={size}
+    >Inicio</TextTape
+  >
+  <!-- <TextTape
+    class={`${itemsClass} nav_links`}
+    element="a"
+    href={withBase("/prensa")}
+    size={size}>Prensa</TextTape
+  > -->
+  <TextTape
+    class={`${itemsClass} nav_links`}
+    element="a"
+    href={withBase("/el-festival")}
+    size={size}>El Festival</TextTape
+  >
+</nav>

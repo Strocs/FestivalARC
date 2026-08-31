@@ -1,0 +1,43 @@
+---
+	import { withBase } from '../utils/publication.js'
+const {
+	styles = { backgroundColor: 'bg-main', borderColor: 'border-main', textColor: 'text-main' },
+	anchor,
+	href,
+	className,
+	invertedColors,
+	style,
+	id = '',
+	download
+} = Astro.props
+
+const Element = anchor ? 'a' : 'button'
+
+const border = id.includes('plaza') ? 'border-neutral-700' : invertedColors ? styles.borderColor : 'border-white'
+const text = id.includes('plaza') ? 'text-neutral-700' : invertedColors ? styles.textColor : 'text-white'
+const background = invertedColors ? 'bg-white' : styles.backgroundColor
+const shadow = id.includes('plaza') ? 'bg-neutral-700' : invertedColors ? styles.backgroundColor : 'bg-white'
+---
+
+<Element
+	class={`button font-medium rounded-md leading-4 border-none ${shadow} transition-all ease-in duration-200 ${className}`}
+	href={anchor ? withBase(href) : undefined}
+	style={style}
+	id={id}
+	download={download}
+>
+	<span
+		class={`button_top block text-center ${background} ${border} rounded-md ${text} border-2 py-2 px-6 -translate-y-[0.15rem] transition-all ease-in duration-100`}
+		><slot /></span
+	>
+</Element>
+
+<style>
+	.button:hover .button_top {
+		transform: translateY(-0.25em);
+	}
+
+	.button:active .button_top {
+		transform: translateY(0);
+	}
+</style>

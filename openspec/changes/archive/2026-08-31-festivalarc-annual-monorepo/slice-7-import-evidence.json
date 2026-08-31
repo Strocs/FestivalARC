@@ -1,0 +1,88 @@
+{
+  "schemaName": "festivalarc.slice-7-import-evidence",
+  "change": "festivalarc-annual-monorepo",
+  "slice": 7,
+  "source": {
+    "repository": "Strocs/ARC2023",
+    "branch": "main",
+    "commit": "ca2fa7af5785e3a340390647bbdc9e357764510d",
+    "sourceFileCount": 181,
+    "sourceBytes": 34460635,
+    "sourceManifestSha256": "4a482f724919fc9b4dc2b478cb4487f56f4f9f5eec092f42425f68267b622f91"
+  },
+  "import": {
+    "package": "festival-arc-2023",
+    "path": "apps/festival-2023",
+    "importedSourceFileCount": 179,
+    "omittedSourceFile": [
+      ".gitignore",
+      "package-lock.json"
+    ],
+    "adaptationFileCount": 3,
+    "appFileCountAfterAdaptation": 183,
+    "appBytesAfterAdaptation": 33870240,
+    "appManifestSha256": "70b38f037de09e30e42c68f1f2f1c1fdcc647ecf08ff284db4a9a4dc6d69014d",
+    "astroVersionBoundary": "^1.9.0",
+    "framework": "Astro 1 + React 18 + Tailwind 3",
+    "sourceDependenciesPreserved": true,
+    "crossEditionSourceImports": [],
+    "rollbackBoundary": [
+      "apps/festival-2023/**",
+      "editions.config.ts archive entry",
+      "pnpm-lock.yaml festival-arc-2023 importer/package records"
+    ]
+  },
+  "publication": {
+    "base": "/ediciones/2023",
+    "trailingSlash": "always",
+    "site": "https://festivalarc.com",
+    "activeRegistryUnchanged": "festival-2025",
+    "archiveRegistry": "festival-2023",
+    "representativeRoutes": [
+      "/",
+      "/festival/",
+      "/espacio-la-gaviota/",
+      "/espacio-la-gaviota/la-cantina-de-la-negra/"
+    ]
+  },
+  "buildOutput": {
+    "path": "/tmp/festivalarc-2023-build",
+    "fileCount": 219,
+    "htmlFileCount": 98,
+    "bytes": 44227556,
+    "manifestSha256": "32c224f00f4fa91ec4da0e20fcd9cb2097cc30d3e680018f334d3589cc146b0c"
+  },
+  "verification": {
+    "appType": "PASS: astro check; 0 errors, 0 warnings, 2 hints",
+    "appTest": "PASS: node --test; 2 tests",
+    "appBuild": "PASS: PUBLICATION_BASE=/ediciones/2023; 98 pages; 219 output files",
+    "rootType": "PASS: pnpm type",
+    "rootTest": "PASS: CI=1 pnpm test; 12 files / 76 tests",
+    "rootBuild": "PASS: pnpm build; festivalarc-2025 compatibility build",
+    "editionsType": "PASS: pnpm --dir packages/editions type",
+    "editionsTest": "PASS: 1 file / 11 tests",
+    "distributionType": "PASS: pnpm --dir tooling/distribution type",
+    "distributionTest": "PASS: 1 file / 14 tests",
+    "browser": "PASS: Chromium headless via /usr/sbin/chromium; HTTP 200 for root and nested route; base-prefixed links/assets; canonical and asset HTTP 200",
+    "structural": "PASS: generated HTML contained no unprefixed local href/src/action escapes; root stylesheet/link and nested image paths used /ediciones/2023",
+    "diffCheck": "PASS: git diff --check"
+  },
+  "remediation": {
+    "failedEvidenceRevision": "sha256:7772c5e561848b0221b61a919b410662250da59ca2bd442efef3ffc24888442e",
+    "fixedSourceReference": "/arqueologico/CAMPOS.JPG",
+    "sourceAsset": "apps/festival-2023/public/arqueologico/CAMPOS.JPG",
+    "focusedTest": "PASS: node --test src/utils/publication-path.test.js; 3 tests",
+    "emittedAsset": {
+      "normalizedPath": "arqueologico/CAMPOS.JPG",
+      "publicPath": "/ediciones/2023/arqueologico/CAMPOS.JPG",
+      "sha256": "b1bfe810b4a5e460d654be3288354e067ed6bc4f9892162dfce3332c02311ef9",
+      "exists": true
+    },
+    "emittedReference": {
+      "html": "museo-arqueologico-de-la-serena/claudia-campos-mendoza/index.html",
+      "value": "/ediciones/2023/arqueologico/CAMPOS.JPG",
+      "exists": true
+    },
+    "packageLock": "intentionally omitted from the workspace import"
+  }
+}

@@ -1,0 +1,107 @@
+---
+import { Icon } from 'astro-icon'
+import Schedule from '../../components/Schedule.astro'
+import Header from '../../components/Header.astro'
+import Footer from '../../components/Footer.astro'
+import PageContainer from '../../components/PageContainer.astro'
+import Title from '../../components/Title.astro'
+import Layout from '../../layouts/Layout.astro'
+import Paragraph from '../../components/Paragraph.astro'
+import RelevantLinks from '../../components/RelevantLinks.astro'
+import Image from '../../components/Image.astro'
+import { getEventById, getEventsPath, getLocationById } from '../../utils/'
+import ButtonLink from '@components/ButtonLink.astro'
+    import { withBase } from '../../utils/publication.js'
+
+export function getStaticPaths() {
+	const eventsPath = getEventsPath()
+	return eventsPath.map((eventPath) => ({
+		params: { location: eventPath.location, event: eventPath.event },
+		props: { ...eventPath }
+	}))
+}
+
+const { location: locationId, event: eventId } = Astro.props
+
+const eventInfo = getEventById(eventId)
+const locationInfo = getLocationById(locationId)
+
+const { name, image, links, description, subTitle, list, timeTable } = eventInfo
+const { styles, title } = locationInfo
+---
+
+<Layout title={`ARC 2023 | ${name}`} description={description}>
+	<Header id={locationId} styles={styles} />
+	<PageContainer backgroundColor={styles.backgroundColor} borderColor={styles.borderColor}>
+		<Fragment slot='first-section'>
+			<div class='flex flex-col gap-4'>
+				<Title textColor={styles.textColor}>{name}</Title>
+				{
+					!!subTitle.title && !!subTitle.url ? (
+						<a
+							href={subTitle.url}
+							target='_blank'
+							class={`text-base transition-all duration-100 sm:text-xl ${styles.hoverTextColor}`}
+						>
+							<b>{subTitle.title}</b>
+							{subTitle.text}
+							<Icon name='mdi:arrow-top-right-thick' class='inline w-5' />
+						</a>
+					) : !!subTitle.text || !!subTitle.title ? (
+						<p class='text-xl'>
+							<b>{subTitle.title}</b>
+							{subTitle.text}
+						</p>
+					) : null
+				}
+				<p class='text-lg leading-6'>
+					En <b class={styles.textColor}>{title}</b>
+					{timeTable.day}
+					{timeTable.time}
+				</p>
+			</div>
+			{!!image.url && <Image url={image.url} alt={image.alt} styles={image.styles} />}
+			<Paragraph description={description} />
+			{
+				list.length !== 0 && (
+					<ul>
+						{list.map((items) => (
+							<>
+								<li class='py-2 text-lg font-bold leading-5'>{items.title}</li>
+								{items.text.map((item: string) => (
+									<li class='font-normal'>{item}</li>
+								))}
+							</>
+						))}
+					</ul>
+				)
+			}
+			{links.length !== 0 && <RelevantLinks links={links} hoverTextColor={styles.hoverTextColor} />}
+			{
+				!!image.url && (
+					<p class='my-14 text-3xl font-black leading-7 sm:text-4xl'>
+						Disfruta el arte de <span class={styles.textColor}>{name}</span> en{' '}
+						<span class={styles.textColor}>{title}</span>!
+					</p>
+				)
+			}
+		</Fragment>
+		<Fragment slot='second-section'>
+			<ButtonLink
+				id={locationId}
+				anchor
+				href={withBase(`/${locationId}`)}
+				styles={styles}
+				invertedColors
+				className='self-start w-fit'
+			>
+				Volver <Icon class='inline h-5 group-hover:text-white' name='mdi:arrow-top-left-thick' />
+			</ButtonLink>
+			<div class='flex items-center'>
+				<h2 class='text-3xl font-black leading-8 sm:text-4xl'>En {title}</h2>
+			</div>
+			<Schedule locationId={locationId} eventId={eventId} />
+		</Fragment>
+	</PageContainer>
+	<Footer id={locationId} backgroundColor={styles.backgroundColor} />
+</Layout>
