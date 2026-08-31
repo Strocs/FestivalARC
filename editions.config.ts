@@ -26,6 +26,12 @@ const rawPublicationConfig = {
     year: 2024,
     packageName: 'festival-arc-2024',
     base: '/ediciones/2024',
+  }, {
+    kind: 'final',
+    id: 'festival-2025',
+    year: 2025,
+    packageName: 'festivalarc-2025',
+    base: '/ediciones/2025',
   }],
   global: {
     notFound: 'distribution',

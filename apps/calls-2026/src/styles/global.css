@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-background: #000000;
+  --color-foreground: #d5d5d5;
+  --color-primary: #5ce1e6;
+  --font-sans: var(--font-poppins), sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+  }
+}
