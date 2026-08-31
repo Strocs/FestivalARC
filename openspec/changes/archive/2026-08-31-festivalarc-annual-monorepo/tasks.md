@@ -54,10 +54,10 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slice 2. **Start:** workspace can build 2025. **Finish:** typed descriptors and schema validation reject invalid publication selections before output creation. **Rollback:** remove shared packages/config and retain the Slice 2 root app. **Estimate:** 180–300 changed lines.
 
-- [ ] Define branded publication bases, final/calls descriptors, publication configuration, configuration digest inputs, and distribution-facing discriminated unions without exposing edition UI. <!-- sdd-owner: implementation -->
-- [ ] Implement schema validation for exactly one active member, valid years/IDs, unique IDs/archive years, known workspace packages, final-only archives, explicit global ownership, and calls exclusion from archives. <!-- sdd-owner: implementation -->
-- [ ] Implement framework-neutral base-aware URL and metadata primitives for canonical, Open Graph, Twitter, JSON-LD, and sitemap-link values; test root and `/ediciones/YYYY` results and intentional cross-edition links. <!-- sdd-owner: implementation -->
-- [ ] Add contract/configuration tests covering valid active/archive/calls lifecycle configurations and every specified invalid configuration diagnostic. <!-- sdd-owner: implementation -->
+- [x] Define branded publication bases, final/calls descriptors, publication configuration, configuration digest inputs, and distribution-facing discriminated unions without exposing edition UI. <!-- sdd-owner: implementation -->
+- [x] Implement schema validation for exactly one active member, valid years/IDs, unique IDs/archive years, known workspace packages, final-only archives, explicit global ownership, and calls exclusion from archives. <!-- sdd-owner: implementation -->
+- [x] Implement framework-neutral base-aware URL and metadata primitives for canonical, Open Graph, Twitter, JSON-LD, and sitemap-link values; test root and `/ediciones/YYYY` results and intentional cross-edition links. <!-- sdd-owner: implementation -->
+- [x] Add contract/configuration tests covering valid active/archive/calls lifecycle configurations and every specified invalid configuration diagnostic. <!-- sdd-owner: implementation -->
 
 ## Slice 4 — Normalized build boundary and compositor core
 
@@ -65,12 +65,12 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slice 3. **Start:** typed config and contracts. **Finish:** validated normalized inputs can be composed atomically with deterministic manifests. **Rollback:** remove the shadow compositor; no deployed output changes. **Estimate:** 250–400 changed lines; split normalization and composition if needed.
 
-- [ ] Implement app build adapters that pass `PUBLICATION_BASE` and isolated output directories, normalize Astro-version-specific output into base-relative regular files, and reject duplicate prefixes, absolute paths, symlink escapes, and files outside source roots. <!-- sdd-owner: implementation -->
-- [ ] Implement typed input loading that requires exactly one active input and every configured archive, rejects missing/unconfigured inputs, and prevents calls inputs from archive destinations. <!-- sdd-owner: implementation -->
-- [ ] Implement traversal/path validation for POSIX normalization, absolute/drive/NUL/backslash/`..` rejection, approved regular files, and symlink/device/socket/broken-link rejection. <!-- sdd-owner: implementation -->
-- [ ] Implement destination ownership and collision validation, sorted SHA-256 output manifests, config digest recording, and deterministic results independent of input enumeration order. <!-- sdd-owner: implementation -->
-- [ ] Implement sibling staging and atomic replacement so any validation, copy, generation, or manifest failure leaves the prior `.output` untouched; test partial-output prevention and disposable staging cleanup. <!-- sdd-owner: implementation -->
-- [ ] Add unit/integration fixtures for valid root/archive composition, missing builds, traversal, out-of-destination writes, duplicate paths, collisions, nondeterministic input order, and atomic failure behavior. <!-- sdd-owner: implementation -->
+- [x] Implement app build adapters that pass `PUBLICATION_BASE` and isolated output directories, normalize Astro-version-specific output into base-relative regular files, and reject duplicate prefixes, absolute paths, symlink escapes, and files outside source roots. <!-- sdd-owner: implementation -->
+- [x] Implement typed input loading that requires exactly one active input and every configured archive, rejects missing/unconfigured inputs, and prevents calls inputs from archive destinations. <!-- sdd-owner: implementation -->
+- [x] Implement traversal/path validation for POSIX normalization, absolute/drive/NUL/backslash/`..` rejection, approved regular files, and symlink/device/socket/broken-link rejection. <!-- sdd-owner: implementation -->
+- [x] Implement destination ownership and collision validation, sorted SHA-256 output manifests, config digest recording, and deterministic results independent of input enumeration order. <!-- sdd-owner: implementation -->
+- [x] Implement sibling staging and atomic replacement so any validation, copy, generation, or manifest failure leaves the prior `.output` untouched; test partial-output prevention and disposable staging cleanup. <!-- sdd-owner: implementation -->
+- [x] Add unit/integration fixtures for valid root/archive composition, missing builds, traversal, out-of-destination writes, duplicate paths, collisions, nondeterministic input order, and atomic failure behavior. <!-- sdd-owner: implementation -->
 
 ## Slice 5 — Global files, references, and discovery metadata
 
@@ -78,10 +78,10 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slice 4. **Start:** compositor core validates candidate files. **Finish:** globals and emitted references are validated and generated deterministically. **Rollback:** revert the discovery/global stage while retaining normalized app builds. **Estimate:** 220–350 changed lines.
 
-- [ ] Generate exactly one neutral self-contained distribution-owned `404.html` with inline CSS and reject every app-provided 404 or global overwrite. <!-- sdd-owner: implementation -->
-- [ ] Build the public route inventory from validated emitted HTML, exclude 404/evidence/non-page assets, generate sorted de-duplicated `sitemap-0.xml` shards and `sitemap-index.xml` with absolute URLs, and generate distribution-owned `robots.txt` with exactly the composed sitemap URL. <!-- sdd-owner: implementation -->
-- [ ] Implement HTML/CSS reference scanning for archive-base escapes, invalid root-relative/relative references, allowed configured cross-edition bases, explicit global paths, external URLs, and fragments; report owner, source, attribute/property, and value. <!-- sdd-owner: implementation -->
-- [ ] Add tests for global-file uniqueness/ownership, sitemap and robots URL correctness, route inventory validation, reference failures, deterministic manifests, and representative root/archive bases. <!-- sdd-owner: implementation -->
+- [x] Generate exactly one neutral self-contained distribution-owned `404.html` with inline CSS and reject every app-provided 404 or global overwrite. <!-- sdd-owner: implementation -->
+- [x] Build the public route inventory from validated emitted HTML, exclude 404/evidence/non-page assets, generate sorted de-duplicated `sitemap-0.xml` shards and `sitemap-index.xml` with absolute URLs, and generate distribution-owned `robots.txt` with exactly the composed sitemap URL. <!-- sdd-owner: implementation -->
+- [x] Implement HTML/CSS reference scanning for archive-base escapes, invalid root-relative/relative references, allowed configured cross-edition bases, explicit global paths, external URLs, and fragments; report owner, source, attribute/property, and value. <!-- sdd-owner: implementation -->
+- [x] Add tests for global-file uniqueness/ownership, sitemap and robots URL correctness, route inventory validation, reference failures, deterministic manifests, and representative root/archive bases. <!-- sdd-owner: implementation -->
 
 ## Slice 6 — 2025 base adaptation and shadow composition
 
@@ -89,10 +89,10 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slices 4–5. **Start:** 2025 package and shadow compositor. **Finish:** 2025 works at `/` and a temporary archive base with no unapproved compatibility difference. **Rollback:** restore 2025 URL/configuration code and keep legacy root deployment path. **Estimate:** 180–350 changed lines.
 
-- [ ] Replace hard-coded root links/assets, route comparisons, form actions, redirects, generated routes, metadata, social URLs, and sitemap assumptions with the app-local base helper and Astro-version adapter. <!-- sdd-owner: implementation -->
-- [ ] Preserve edition-local navbar and interactions while generating typed cross-edition dropdown targets from the publication registry; verify trailing-slash and nested-route behavior. <!-- sdd-owner: implementation -->
-- [ ] Build 2025 at `/` and a temporary `/ediciones/2025` context, then compare routes, normalized HTML, stable assets, metadata, screenshots, and Playwright interactions against the captured baseline; document only approved differences. <!-- sdd-owner: implementation -->
-- [ ] Run `pnpm type`, `pnpm test`, `pnpm build`, distribution checks, and applicable Playwright evidence for both publication contexts. <!-- sdd-owner: implementation -->
+- [x] Replace hard-coded root links/assets, route comparisons, form actions, redirects, generated routes, metadata, social URLs, and sitemap assumptions with the app-local base helper and Astro-version adapter. <!-- sdd-owner: implementation -->
+- [x] Preserve edition-local navbar and interactions while generating typed cross-edition dropdown targets from the publication registry; verify trailing-slash and nested-route behavior. <!-- sdd-owner: implementation -->
+- [x] Build 2025 at `/` and a temporary `/ediciones/2025` context, then compare routes, normalized HTML, stable assets, metadata, screenshots, and Playwright interactions against the captured baseline; document only approved differences. <!-- sdd-owner: implementation -->
+- [x] Run `pnpm type`, `pnpm test`, `pnpm build`, distribution checks, and applicable Playwright evidence for both publication contexts. <!-- sdd-owner: implementation -->
 
 ## Slice 7 — Independent ARC2023 application
 
@@ -100,9 +100,11 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slice 4 and the normalized base contract. **Start:** confirmed ARC2023 source available. **Finish:** independently buildable final app at `/ediciones/2023`. **Rollback:** remove only the 2023 package and registry entry. **Estimate:** 250–600 changed lines/assets; split source import from base adaptation if over budget.
 
-- [ ] Import ARC2023 as an independently owned Astro application, preserving its Astro/version/dependency/framework boundary, routes, visual identity, navbar, content, and behavior without importing another edition source. <!-- sdd-owner: implementation -->
-- [ ] Add its build adapter and base-aware route, asset, navigation, canonical/social metadata, sitemap-link, and trailing-slash handling for `/ediciones/2023`. <!-- sdd-owner: implementation -->
-- [ ] Register and independently build the app, validate representative nested routes/assets/metadata, and add the normal type/test/build/browser evidence required by the repository. <!-- sdd-owner: implementation -->
+Maintainer-approved Slice 7 size exception: `size:exception`. The faithful ARC2023 source import is bounded by the parent-held 20,000-line runtime limit and applies only to Slice 7. Delivery remains `feature-branch-chain` (Slice/PR 7); Slice 8 is not included.
+
+- [x] Import ARC2023 as an independently owned Astro application, preserving its Astro/version/dependency/framework boundary, routes, visual identity, navbar, content, and behavior without importing another edition source. <!-- sdd-owner: implementation -->
+- [x] Add its build adapter and base-aware route, asset, navigation, canonical/social metadata, sitemap-link, and trailing-slash handling for `/ediciones/2023`. <!-- sdd-owner: implementation -->
+- [x] Register and independently build the app, validate representative nested routes/assets/metadata, and add the normal type/test/build/browser evidence required by the repository. <!-- sdd-owner: implementation -->
 
 ## Slice 8 — Independent ARC2024 application
 
@@ -110,9 +112,11 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slice 4 and the normalized base contract. **Start:** confirmed ARC2024 source at `origin/2024`. **Finish:** independently buildable final app at `/ediciones/2024`. **Rollback:** remove only the 2024 package and registry entry. **Estimate:** 250–600 changed lines/assets; split source import from base adaptation if over budget.
 
-- [ ] Import ARC2024 as an independently owned Astro application, retaining its local Astro/dependency/framework choices, routes, visual identity, navbar, content, and behavior. <!-- sdd-owner: implementation -->
-- [ ] Add its build adapter and base-aware links, assets, generated routes, metadata, social URLs, sitemap-link, and trailing-slash behavior for `/ediciones/2024`. <!-- sdd-owner: implementation -->
-- [ ] Register and independently build the app, validate representative nested routes/assets/metadata, and add normal type/test/build/browser evidence without coupling it to another edition. <!-- sdd-owner: implementation -->
+Maintainer-approved Slice 8 size exception: `size:exception`. This exception covers the faithful historical `origin/2024` source/assets import only, is bounded by the parent-held 20,000-line runtime limit, and does not authorize Slice 9 work.
+
+- [x] Import ARC2024 as an independently owned Astro application, retaining its local Astro/dependency/framework choices, routes, visual identity, navbar, content, and behavior. <!-- sdd-owner: implementation -->
+- [x] Add its build adapter and base-aware links, assets, generated routes, metadata, social URLs, sitemap-link, and trailing-slash behavior for `/ediciones/2024`. <!-- sdd-owner: implementation -->
+- [x] Register and independently build the app, validate representative nested routes/assets/metadata, and add normal type/test/build/browser evidence without coupling it to another edition. <!-- sdd-owner: implementation -->
 
 ## Slice 9 — Temporary 2026 calls lifecycle
 
@@ -120,10 +124,10 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slice 3 and Slice 4. **Start:** validated calls descriptor support. **Finish:** calls can publish at root temporarily, are rejected from archives, and disappear during final replacement. **Rollback:** restore the prior configuration and retain calls only as a temporary active app; never archive it. **Estimate:** 140–280 changed lines.
 
-- [ ] Add `apps/calls-2026` as a separate `kind: calls` application owning only temporary call routes/data and no final-edition archive contract. <!-- sdd-owner: implementation -->
-- [ ] Add lifecycle configuration and validation for calls-root selection, final-edition replacement, calls package/config removal, and rejection of stale calls inputs or calls archive members. <!-- sdd-owner: implementation -->
-- [ ] Add composition tests proving calls routes/data are absent after final replacement, no calls archive path exists, and failed replacement retains the prior valid configuration/artifact without silent conversion. <!-- sdd-owner: implementation -->
-- [ ] Independently verify calls root publication, base-aware links/assets, and normal type/test/build evidence while keeping the final-publication path reversible. <!-- sdd-owner: implementation -->
+- [x] Add `apps/calls-2026` as a separate `kind: calls` application owning only temporary call routes/data and no final-edition archive contract. <!-- sdd-owner: implementation -->
+- [x] Add lifecycle configuration and validation for calls-root selection, final-edition replacement, calls package/config removal, and rejection of stale calls inputs or calls archive members. <!-- sdd-owner: implementation -->
+- [x] Add composition tests proving calls routes/data are absent after final replacement, no calls archive path exists, and failed replacement retains the prior valid configuration/artifact without silent conversion. <!-- sdd-owner: implementation -->
+- [x] Independently verify calls root publication, base-aware links/assets, and normal type/test/build evidence while keeping the final-publication path reversible. <!-- sdd-owner: implementation -->
 
 ## Slice 10 — Single static deployment, cutover, and operations
 
@@ -131,11 +135,11 @@ The forecast exceeds the review budget because the work includes a compatibility
 
 **Depends on:** Slices 5–9 and passing 2025 parity. **Start:** all selected apps build and composition is validated. **Finish:** one Vercel static deployment consumes only validated `.output`, and maintainers have a repeatable annual procedure. **Rollback:** restore prior root Vercel wiring and last known-good 2025 artifact/configuration; leave failed staged composition unpublished. **Estimate:** 180–320 changed lines.
 
-- [ ] Wire the root build to validate configuration, build selected active/archive members, compose atomically, and publish only `.output`; ensure source-app adapters/server settings cannot create additional deployments or enter the distribution contract. <!-- sdd-owner: implementation -->
-- [ ] Configure the single root `vercel.json` entry point and remove legacy single-app deployment wiring only after composed artifact validation and 2025 parity evidence pass. <!-- sdd-owner: implementation -->
-- [ ] Add Playwright coverage for root and archive smoke routes, nested navigation, edition dropdown, representative interactions, assets, 404, canonical/social metadata, sitemap, robots, calls replacement, and failure-prevents-deployment behavior. <!-- sdd-owner: implementation -->
-- [ ] Run final `pnpm type`, `pnpm test`, independent `pnpm turbo run build`, `pnpm build`, distribution tests, and `pnpm run test:e2e`; retain route/output/manifest and compatibility evidence. <!-- sdd-owner: implementation -->
-- [ ] Document the annual workflow for creating calls, selecting active publication, archiving prior finals, adding a future edition, validating bases, replacing/removing calls, required evidence, and rollback after failed composition. <!-- sdd-owner: implementation -->
+- [x] Wire the root build to validate configuration, build selected active/archive members, compose atomically, and publish only `.output`; ensure source-app adapters/server settings cannot create additional deployments or enter the distribution contract. <!-- sdd-owner: implementation -->
+- [x] Configure the single root `vercel.json` entry point and remove legacy single-app deployment wiring only after composed artifact validation and 2025 parity evidence pass. <!-- sdd-owner: implementation -->
+- [x] Add Playwright coverage for root and archive smoke routes, nested navigation, edition dropdown, representative interactions, assets, 404, canonical/social metadata, sitemap, robots, calls replacement, and failure-prevents-deployment behavior. <!-- sdd-owner: implementation -->
+- [x] Run final `pnpm type`, `pnpm test`, independent `pnpm turbo run build`, `pnpm build`, distribution tests, and `pnpm run test:e2e`; retain route/output/manifest and compatibility evidence. <!-- sdd-owner: implementation -->
+- [x] Document the annual workflow for creating calls, selecting active publication, archiving prior finals, adding a future edition, validating bases, replacing/removing calls, required evidence, and rollback after failed composition. <!-- sdd-owner: implementation -->
 
 ## Parent-owned lifecycle gates
 
