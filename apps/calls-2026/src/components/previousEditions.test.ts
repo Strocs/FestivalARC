@@ -9,11 +9,16 @@ describe('previous edition targets', () => {
       .map(({ year }) => year)
       .sort((left, right) => right - left)
 
-    expect(targets).toHaveLength(publicationConfig.archives.length)
+    const expectedTargets = [...publicationConfig.archives]
+      .sort((left, right) => right.year - left.year)
+      .map(({ year, base }) => ({
+        year,
+        label: `ARC ${year}`,
+        href: `${base}/`,
+      }))
+
+    expect(targets).toEqual(expectedTargets)
     expect(targets.map(({ year }) => year)).toEqual(archiveYears)
-    expect(targets.every(({ year, label, href }) => (
-      label === `Festival ${year}` && href === `/ediciones/${year}/`
-    ))).toBe(true)
     expect(targets.some(({ year }) => year === publicationConfig.active.year)).toBe(false)
   })
 })
