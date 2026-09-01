@@ -1,6 +1,10 @@
 ---
 import TextTape from "./TextTape.astro";
-import { withBase } from "@utils/publication-path";
+import { publicationConfig } from "../../../../editions.config";
+import {
+  publicationBase,
+  withBase,
+} from "@utils/publication-path";
 
 interface Props {
   size?: "sm" | "md" | "base" | "lg" | "xl" | "2xl";
@@ -9,6 +13,27 @@ interface Props {
 }
 
 const { wrapperClass, itemsClass, size = "md" } = Astro.props;
+
+const editionTargets = [
+  { publication: publicationConfig.active, base: "/" },
+  ...publicationConfig.archives.map((publication) => ({
+    publication,
+    base: publication.base,
+  })),
+]
+  .sort((left, right) => right.publication.year - left.publication.year)
+  .map(({ publication, base }) => ({
+    label:
+      publication.kind === "calls"
+        ? `Convocatoria ${publication.year}`
+        : `Festival ARC ${publication.year}`,
+    href:
+      base === publicationBase
+        ? withBase("/")
+        : base === "/"
+          ? "/"
+          : `${base}/`,
+  }));
 ---
 
 <nav class:list={[wrapperClass, "hidden landscape:flex gap-4"]}>
@@ -27,4 +52,80 @@ const { wrapperClass, itemsClass, size = "md" } = Astro.props;
     href={withBase("/el-festival")}
     size={size}>El Festival</TextTape
   >
+  <details class="editions-dropdown relative">
+    <TextTape
+      class={`${itemsClass ?? ""} editions-trigger`}
+      element="summary"
+      size={size}>Ediciones</TextTape
+    >
+    <div class="editions-panel absolute left-0 top-full z-20">
+      <ul class="editions-panel-content grid gap-1 bg-black p-2 text-sm">
+      {editionTargets.map((target) => (
+        <li>
+          <a
+            href={target.href}
+            class="block whitespace-nowrap px-2 py-1 text-secondary transition-colors hover:bg-accent-blue hover:text-accent-yellow focus-visible:outline-2 focus-visible:outline-accent-yellow"
+          >
+            {target.label}
+          </a>
+        </li>
+      ))}
+      </ul>
+    </div>
+  </details>
 </nav>
+
+<style>
+  .editions-trigger {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .editions-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .editions-panel {
+    top: 100%;
+    left: 0;
+    padding-top: 0.5rem;
+    pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0s linear 180ms;
+  }
+
+  .editions-panel-content {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+
+  details:hover > .editions-panel,
+  details:focus-within > .editions-panel,
+  details[open] > .editions-panel {
+    pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  details:hover > .editions-panel > .editions-panel-content,
+  details:focus-within > .editions-panel > .editions-panel-content,
+  details[open] > .editions-panel > .editions-panel-content {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .editions-panel {
+      transition: none;
+    }
+
+    .editions-panel-content {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

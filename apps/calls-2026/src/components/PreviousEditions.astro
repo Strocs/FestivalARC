@@ -8,29 +8,79 @@ const editions = previousEditionTargets(publicationConfig)
   class='previous-editions z-10 flex justify-center py-4 [&_summary]:list-none [&_summary::-webkit-details-marker]:hidden'
   aria-label='Ultimas ediciones'
 >
-  <details class='relative'>
+  <details class='editions-dropdown relative'>
     <summary
-      class='group capitalize flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+      class='group flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight capitalize text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
     >
-    <span>últimas ediciones</span>
+      <span>últimas ediciones</span>
       <span
-        class='h-0 w-0 border-x-4 border-x-transparent border-t-[6px] border-t-current transition-transform'
+        class='h-0 w-0 border-x-4 border-x-transparent border-t-[6px] border-t-current transition-transform group-open:rotate-180'
         aria-hidden='true'
       ></span>
     </summary>
-    <ul
-      class='absolute left-1/2 mt-1 min-w-full -translate-x-1/2 rounded bg-background p-1 text-center text-foreground'
-    >
-      {editions.map((edition) => (
-        <li>
-          <a
-            href={edition.href}
-            class='block whitespace-nowrap px-3 py-1.5 text-sm transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none'
-          >
-            {edition.label}
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div class='editions-panel absolute inset-x-0 top-full z-20'>
+      <ul class='editions-panel-content relative rounded bg-background p-1 text-center text-foreground'>
+        {editions.map((edition) => (
+          <li>
+            <a
+              href={edition.href}
+              class='block whitespace-nowrap px-3 py-1.5 text-sm transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none'
+            >
+              {edition.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
   </details>
 </nav>
+
+<style>
+  .editions-panel {
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+    pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0s linear 180ms;
+  }
+
+  .editions-panel-content {
+    width: max-content;
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+
+  details:hover > .editions-panel,
+  details:focus-within > .editions-panel,
+  details[open] > .editions-panel {
+    pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  details:hover > .editions-panel > .editions-panel-content,
+  details:focus-within > .editions-panel > .editions-panel-content,
+  details[open] > .editions-panel > .editions-panel-content {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .editions-panel {
+      transition: none;
+    }
+
+    .editions-panel-content {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

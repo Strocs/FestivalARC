@@ -12,13 +12,26 @@ const layoutSource = readFileSync(
 )
 
 describe('Festival ARC 2025 shared visual contracts', () => {
-  it('keeps the editions control as an accessible native dropdown button', () => {
-    expect(headerSource).toContain('<details>')
+  it('separates the continuous hover hit area from the animated content', () => {
+    expect(headerSource).toContain('<details class=\'editions-dropdown group\'>')
     expect(headerSource).toContain('<summary')
-    expect(headerSource).toContain("class='size-full cursor-pointer px-4'")
-    expect(headerSource).not.toContain("class='cursor-pointer'>Ediciones</summary>")
-    expect(headerSource).toContain('withLogo ?')
+    expect(headerSource).toContain('publicationTargets(publicationConfig)')
+    expect(headerSource).toContain('top-full')
     expect(headerSource).toContain('hover:-skew-y-4')
+    expect(headerSource).toContain('details:hover .editions-panel')
+    expect(headerSource).toContain('details:focus-within .editions-panel')
+    expect(headerSource).toContain('details[open] .editions-panel')
+    expect(headerSource).toContain('pointer-events: none')
+    expect(headerSource).toContain('pointer-events: auto')
+    expect(headerSource).toMatch(/<div\s+class=\{?[^>]*editions-panel[^>]*>/s)
+    expect(headerSource).toContain('editions-panel-content')
+    expect(headerSource).toMatch(/\.editions-panel[^{}]*{[^}]*top: 100%;[^}]*padding-top: 0\.5rem;[^}]*pointer-events: none;/s)
+    expect(headerSource).toMatch(/\.editions-panel-content\s*{[^}]*opacity: 0;[^}]*transform: translateY\(0\.5rem\);/s)
+    expect(headerSource).toContain('prefers-reduced-motion: reduce')
+    expect(headerSource).not.toContain('.editions-panel::before')
+    expect(headerSource).not.toMatch(/\.editions-panel\s*{[^}]*transform:/s)
+    expect(headerSource).not.toContain('<ul\n                    class={cn(\n                      \'editions-panel')
+    expect(headerSource).not.toContain('<script')
   })
 
   it('defines concrete asset-backed font faces in the layout', () => {

@@ -1,8 +1,34 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { publicationConfig } from '../../../../editions.config'
 import { previousEditionTargets } from './previousEditions'
 
+const componentSource = readFileSync(
+  resolve(process.cwd(), 'src/components/PreviousEditions.astro'),
+  'utf8',
+)
+
 describe('previous edition targets', () => {
+  it('separates the continuous hover hit area from the animated content', () => {
+    expect(componentSource).toContain('<details class=\'editions-dropdown relative\'>')
+    expect(componentSource).toContain('<summary')
+    expect(componentSource).toMatch(/<div\s+class=\'[^\']*editions-panel[^\']*\'>/)
+    expect(componentSource).toMatch(/<ul\s+class=\'[^\']*editions-panel-content[^\']*\'>/)
+    expect(componentSource).toContain('details:hover > .editions-panel')
+    expect(componentSource).toContain('details:focus-within > .editions-panel')
+    expect(componentSource).toContain('details[open] > .editions-panel')
+    expect(componentSource).toContain('pointer-events: none')
+    expect(componentSource).toContain('pointer-events: auto')
+    expect(componentSource).toMatch(/\.editions-panel[^{}]*{[^}]*top: 100%;[^}]*padding-top: 0\.5rem;[^}]*pointer-events: none;/s)
+    expect(componentSource).toMatch(/\.editions-panel-content\s*{[^}]*opacity: 0;[^}]*transform: translateY\(0\.5rem\);/s)
+    expect(componentSource).toContain('prefers-reduced-motion: reduce')
+    expect(componentSource).not.toContain('.editions-panel::before')
+    expect(componentSource).not.toMatch(/\.editions-panel\s*{[^}]*transform:/s)
+    expect(componentSource).not.toContain('<ul class=\'editions-panel absolute')
+    expect(componentSource).not.toContain('<script')
+  })
+
   it('derives sorted labels and links from the publication configuration', () => {
     const targets = previousEditionTargets(publicationConfig)
     const archiveYears = [...publicationConfig.archives]
