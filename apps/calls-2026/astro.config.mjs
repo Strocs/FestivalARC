@@ -1,4 +1,5 @@
 import { defineConfig, fontProviders } from 'astro/config'
+import icon from 'astro-icon'
 import tailwindcss from '@tailwindcss/vite'
 
 const publicationBase = process.env.PUBLICATION_BASE || '/'
@@ -9,6 +10,13 @@ export default defineConfig({
   outDir: distributionOutput || './dist',
   output: 'static',
   site: 'https://festivalarc.com',
+  integrations: [
+    icon({
+      include: {
+        lucide: ['arrow-right'],
+      },
+    }),
+  ],
   fonts: [
     {
       provider: fontProviders.fontsource(),

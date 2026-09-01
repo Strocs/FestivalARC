@@ -1,18 +1,9 @@
 ---
-import { Image } from 'astro:assets'
-import logo from '../assets/logo.jpg'
-import Layout from '../layouts/Layout.astro'
 
-const disciplines: string[] = [
-  'MÚSICA',
-  'TEATRO',
-  'DANZA',
-  'ARTES CIRCENSES',
-  'LITERATURA',
-  'ARTES VISUALES',
-  'ARTESANÍA',
-  'DISEÑO'
-]
+import { Icon } from 'astro-icon/components'
+
+import Layout from '../layouts/Layout.astro'
+import { disciplines } from '../data/disciplines'
 ---
 <Layout>
   <main
@@ -23,52 +14,64 @@ const disciplines: string[] = [
       class='grid w-full max-w-screen-2xl grid-cols-1 items-center justify-center gap-12 md:gap-16 lg:grid-cols-2 lg:gap-20'
     >
       <section
-        class='min-w-0 w-full'
-        aria-labelledby='disciplines-title'
+        class='flex min-w-0 w-fit mx-auto flex-col items-start justify-start'
+        aria-labelledby='coming-soon-title'
       >
-        <Image
-          src={logo}
-          alt='Logotipo del Festival ARC 2026'
-          class='mx-auto block h-auto w-full max-w-lg'
-          loading='eager'
-        />
-        <h2 id='disciplines-title' class='sr-only'>Disciplinas de la convocatoria</h2>
+        <div
+              class='group m-0 max-w-full break-words text-left tracking-tighter text-[clamp(3.5rem,16vw,5.5rem)] font-extrabold uppercase leading-[0.78] sm:text-[clamp(4rem,12vw,6.5rem)] md:text-[clamp(4.5rem,10vw,7.5rem)] lg:text-[clamp(3.5rem,8vw,9rem)]'
+            >
+              <h1 id='coming-soon-title' class='sr-only'>CONVOCATORIA REGIONAL 2026</h1>
+              <div class='flex flex-col items-start relative pointer-events-none'>
+                <span class='block origin-center transition-transform duration-300 ease-out group-hover:-rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>CONVO_</span>
+                <span class='block origin-center transition-transform duration-300 ease-out group-hover:rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>CATORIA</span>
+                <span class='block origin-center text-primary transition-transform duration-300 ease-out group-hover:-rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>REGIONAL</span>
+                <div class='flex w-full items-center gap-2 sm:gap-4 lg:gap-6'>
+                  <span class='block origin-center text-[80%] font-bold transition-transform duration-300 ease-out group-hover:rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>2026</span>
+                  <a
+                    href='#'
+                    class='inline-flex flex-1 shrink-0 items-center justify-center pointer-events-auto whitespace-nowrap rounded-2xl border-3 lg:border-4 border-primary bg-background px-[clamp(1rem,2vw,1.5rem)] py-[clamp(0.25rem,0.625vw,0.75rem)] text-[clamp(1.25rem,2vw,1.5rem)] font-bold normal-case leading-normal tracking-normal text-primary transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-foreground focus-visible:border-accent focus-visible:bg-accent focus-visible:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
+                  >
+                    Lee las bases
+                  </a>
+                </div>
+              </div>
+            </div>
+      </section>
+
+      <section class='min-w-0 w-full h-fit' aria-labelledby='disciplines-title'>
+        <h2 class="text-2xl pb-8 text-center">Postúla en tu disciplina:</h2>
+        <h3 id='disciplines-title' class='sr-only'>Disciplinas de la convocatoria</h3>
         <ul
-          class='mt-6 flex max-w-full list-none flex-wrap items-center justify-center gap-y-1 p-0 text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.065em] md:gap-y-2 md:text-[clamp(2rem,5vw,3rem)] lg:gap-0 lg:text-[clamp(1.75rem,3.65vw,4rem)] lg:leading-[0.82] lg:tracking-[-0.07em]'
+          class='flex max-w-full list-none flex-wrap items-center justify-center gap-y-1 p-0 text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.065em] md:gap-y-2 md:text-[clamp(2rem,5vw,3rem)] gap-x-4 lg:gap-x-6 lg:text-[clamp(1.75rem,3.65vw,4rem)] lg:leading-[0.82] lg:tracking-[-0.07em]'
           aria-label='Disciplinas de la convocatoria'
         >
           {disciplines.map((discipline, index) => (
             <li
               class:list={[
-                'inline-flex min-w-0 max-w-full items-center break-words',
+                'inline-flex min-w-0 max-w-full gap-2 items-center break-words',
                 {
                   'text-primary': index % 2 === 0,
                   'text-foreground': index % 2 !== 0
                 }
               ]}
             >
-              {discipline}
+              <a
+                href='#'
+                class='group inline-flex items-center transition-colors duration-200 hover:text-accent focus-visible:text-accent'
+              >
+                {discipline.name}
+                <Icon
+                  name='lucide:arrow-right'
+                  class='ml-[0.15em] size-[0.85em] shrink-0 transition-transform duration-200 ease-in-out group-hover:-rotate-45 group-focus-visible:-rotate-45'
+                  aria-hidden='true'
+                />
+              </a>
               {index < disciplines.length - 1 && (
-                <span class='leading-0 text-primary' aria-hidden='true'>/</span>
+                <span class='leading-0 text-primary text-[80%]' aria-hidden='true'>/</span>
               )}
             </li>
           ))}
         </ul>
-      </section>
-
-      <section class='min-w-0 w-full h-fit'>
-        <h1
-          id='coming-soon-title'
-          class='m-0 max-w-full break-words text-left text-[clamp(3.75rem,18vw,6rem)] font-extrabold uppercase leading-[0.78] tracking-[-0.085em] sm:text-[clamp(4rem,14vw,7rem)] md:text-[clamp(4.5rem,12vw,8rem)] lg:text-[clamp(3.75rem,10.5vw,10.472rem)]'
-        >
-          <span class='sr-only'>PRONTO CONVOCATORIA 2026</span>
-          <span class='flex flex-col items-center' aria-hidden='true'>
-            <span class='block'>PRONTO</span>
-            <span class='block text-primary'>CONVO_</span>
-            <span class='block text-primary'>CATORIA</span>
-            <span class='block'>2026</span>
-          </span>
-        </h1>
       </section>
     </div>
   </main>
