@@ -31,12 +31,47 @@ const fontFiles = {
   nerisLight: assetPath('/fonts/NerisLight.woff2'),
   nerisBlack: assetPath('/fonts/NerisBlack.woff2'),
 }
+const fontFaceStyles = `
+  @font-face {
+    font-family: 'DK Appelstroop';
+    src: url('${fontFiles.dk}') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Bestoom';
+    src: url('${fontFiles.bestoom}') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Neris';
+    src: url('${fontFiles.nerisLight}') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Neris';
+    src: url('${fontFiles.nerisSemibold}') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Neris';
+    src: url('${fontFiles.nerisBlack}') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+  }
+`
 ---
 
 <!doctype html>
-<html
-  lang='es'
-  style={`--arc-font-dk: url('${fontFiles.dk}') format('woff2'); --arc-font-bestoom: url('${fontFiles.bestoom}') format('woff2'); --arc-font-neris-semibold: url('${fontFiles.nerisSemibold}') format('woff2'); --arc-font-neris-light: url('${fontFiles.nerisLight}') format('woff2'); --arc-font-neris-black: url('${fontFiles.nerisBlack}') format('woff2');`}>
+<html lang='es'>
   <head>
     <meta charset='UTF-8' />
     <meta name='description' content={description} />
@@ -62,6 +97,7 @@ const fontFiles = {
     <meta name='twitter:description' content={metadata.twitter.description} />
     <meta name='twitter:image' content={metadata.twitter.image} />
     <link rel='sitemap' href={metadata.sitemapLink} />
+    <style is:global set:html={fontFaceStyles}></style>
     <script type='application/ld+json' set:html={JSON.stringify(metadata.jsonLd)} />
   </head>
   <body

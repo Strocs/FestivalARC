@@ -76,10 +76,14 @@ const editionTargets = publicationTargets(publicationConfig)
       }
       {
         editionTargets.length > 1 && (
-          <li class='text-25-white rounded-xs bg-25-black px-4 py-1'>
+          <li
+            class={cn(
+              'text-25-white cursor-pointer rounded-xs pb-1 text-xl font-bold transition-transform duration-150 hover:-skew-y-4',
+              withLogo ? 'bg-25-primary' : 'bg-25-black',
+            )}>
             <details>
-              <summary class='cursor-pointer'>Ediciones</summary>
-              <ul class='mt-2 space-y-1 text-base'>
+              <summary class='size-full cursor-pointer px-4'>Ediciones</summary>
+              <ul class='mt-2 space-y-1 px-4 text-base'>
                 {editionTargets.map((target) => (
                   <li>
                     <a href={target.href} class='block hover:text-25-accent'>

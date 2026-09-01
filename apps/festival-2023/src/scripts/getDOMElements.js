@@ -1,7 +1,9 @@
 export const header = document.querySelector('header')
 export const logo = header.querySelector('#logo-text')
 export const menu = header.querySelectorAll('input')
-export const downloadScheduleBtn = document.querySelector('span')
+export const downloadScheduleBtn = document.querySelector(
+	'header .download-schedule-button .button_top'
+)
 export const socialMediaLinks = document.querySelectorAll('#social-networks')
 export const navbar = document.querySelector('nav')
 export const footer = document.querySelector('footer')
