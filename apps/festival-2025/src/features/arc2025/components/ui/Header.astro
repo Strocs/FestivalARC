@@ -77,12 +77,13 @@ const editionTargets = publicationTargets(publicationConfig)
       {
         editionTargets.length > 1 && (
           <li class='relative'>
-            <details class='editions-dropdown group'>
-              <summary
+            <div class='editions-dropdown group'>
+              <div
                 class={cn(
-                  'editions-trigger block size-full cursor-pointer list-none rounded-xs pb-1 px-4 text-xl font-bold transition-transform duration-150 hover:-skew-y-4',
+                  'editions-trigger block size-full cursor-pointer rounded-xs pb-1 px-4 text-xl font-bold transition-transform duration-150 hover:-skew-y-4',
                   withLogo ? 'bg-25-primary text-25-white' : 'bg-25-black text-25-white',
-                )}>Ediciones</summary>
+                )}
+                tabindex='0'>Ediciones</div>
               <div class='editions-panel absolute left-0 top-full z-20 min-w-full'>
                 <ul
                   class={cn(
@@ -100,7 +101,7 @@ const editionTargets = publicationTargets(publicationConfig)
                 ))}
               </ul>
               </div>
-            </details>
+            </div>
           </li>
         )
       }
@@ -235,17 +236,15 @@ const editionTargets = publicationTargets(publicationConfig)
       transform 180ms ease;
   }
 
-  details:hover .editions-panel,
-  details:focus-within .editions-panel,
-  details[open] .editions-panel {
+  .editions-dropdown:hover .editions-panel,
+  .editions-dropdown:focus-within .editions-panel {
     pointer-events: auto;
     visibility: visible;
     transition-delay: 0s;
   }
 
-  details:hover .editions-panel > .editions-panel-content,
-  details:focus-within .editions-panel > .editions-panel-content,
-  details[open] .editions-panel > .editions-panel-content {
+  .editions-dropdown:hover .editions-panel > .editions-panel-content,
+  .editions-dropdown:focus-within .editions-panel > .editions-panel-content {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0s;

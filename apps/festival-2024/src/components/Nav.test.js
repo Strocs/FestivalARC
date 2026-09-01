@@ -4,17 +4,16 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 const navSource = readFileSync(resolve(process.cwd(), 'src/components/Nav.astro'), 'utf8')
-const tapeSource = readFileSync(resolve(process.cwd(), 'src/components/TextTape.astro'), 'utf8')
 
-test('renders editions as a TextTape native dropdown for desktop and mobile nav', () => {
-  assert.match(navSource, /<details class=['"]editions-dropdown relative['"]>/)
-  assert.match(navSource, /<TextTape[^>]+element=['"]summary['"]/)
+test('renders editions as a keyboard-focusable CSS dropdown for desktop and mobile nav', () => {
+  assert.match(navSource, /<div class=['"]editions-dropdown relative['"]>/)
+  assert.match(navSource, /<TextTape[^>]+element=['"]div['"][^>]+tabindex=['"]0['"]/)
   assert.match(navSource, /publicationConfig/)
   assert.match(navSource, /publicationConfig\.archives/)
   assert.match(navSource, /editionTargets/)
-  assert.match(navSource, /details:hover > \.editions-panel/)
-  assert.match(navSource, /details:focus-within > \.editions-panel/)
-  assert.match(navSource, /details\[open\] > \.editions-panel/)
+  assert.match(navSource, /\.editions-dropdown:hover > \.editions-panel/)
+  assert.match(navSource, /\.editions-dropdown:focus-within > \.editions-panel/)
+  assert.doesNotMatch(navSource, /<details|<summary|details\[open\]/)
   assert.match(navSource, /pointer-events: none/)
   assert.match(navSource, /pointer-events: auto/)
   assert.match(navSource, /<div[^>]+editions-panel[^>]*>/s)
@@ -25,9 +24,4 @@ test('renders editions as a TextTape native dropdown for desktop and mobile nav'
   assert.doesNotMatch(navSource, /\.editions-panel\s*{[^}]*transform:/s)
   assert.doesNotMatch(navSource, /<ul\s+class="editions-panel absolute/s)
   assert.match(navSource, /prefers-reduced-motion: reduce/)
-})
-
-test('allows TextTape to render an interactive summary without moving the panel', () => {
-  assert.match(tapeSource, /Element === ['"]summary['"])/
-  assert.match(tapeSource, /hover:skew-y-0/)
 })

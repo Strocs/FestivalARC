@@ -13,14 +13,16 @@ const layoutSource = readFileSync(
 
 describe('Festival ARC 2025 shared visual contracts', () => {
   it('separates the continuous hover hit area from the animated content', () => {
-    expect(headerSource).toContain('<details class=\'editions-dropdown group\'>')
-    expect(headerSource).toContain('<summary')
+    expect(headerSource).toContain('<div class=\'editions-dropdown group\'>')
+    expect(headerSource).toMatch(/<div\s+class=\{cn\([\s\S]*editions-trigger[\s\S]*tabindex='0'[^>]*>/)
     expect(headerSource).toContain('publicationTargets(publicationConfig)')
     expect(headerSource).toContain('top-full')
     expect(headerSource).toContain('hover:-skew-y-4')
-    expect(headerSource).toContain('details:hover .editions-panel')
-    expect(headerSource).toContain('details:focus-within .editions-panel')
-    expect(headerSource).toContain('details[open] .editions-panel')
+    expect(headerSource).toContain('.editions-dropdown:hover .editions-panel')
+    expect(headerSource).toContain('.editions-dropdown:focus-within .editions-panel')
+    expect(headerSource).not.toContain('<details')
+    expect(headerSource).not.toContain('<summary')
+    expect(headerSource).not.toContain('details[open]')
     expect(headerSource).toContain('pointer-events: none')
     expect(headerSource).toContain('pointer-events: auto')
     expect(headerSource).toMatch(/<div\s+class=\{?[^>]*editions-panel[^>]*>/s)

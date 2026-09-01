@@ -11,13 +11,16 @@ const componentSource = readFileSync(
 
 describe('previous edition targets', () => {
   it('separates the continuous hover hit area from the animated content', () => {
-    expect(componentSource).toContain('<details class=\'editions-dropdown relative\'>')
-    expect(componentSource).toContain('<summary')
+      expect(componentSource).toContain("<div class='editions-dropdown group relative'>")
+      expect(componentSource).toContain("class='editions-trigger")
+      expect(componentSource).toContain("tabindex='0'")
     expect(componentSource).toMatch(/<div\s+class=\'[^\']*editions-panel[^\']*\'>/)
     expect(componentSource).toMatch(/<ul\s+class=\'[^\']*editions-panel-content[^\']*\'>/)
-    expect(componentSource).toContain('details:hover > .editions-panel')
-    expect(componentSource).toContain('details:focus-within > .editions-panel')
-    expect(componentSource).toContain('details[open] > .editions-panel')
+      expect(componentSource).toContain('.editions-dropdown:hover > .editions-panel')
+      expect(componentSource).toContain('.editions-dropdown:focus-within > .editions-panel')
+      expect(componentSource).not.toContain('<details')
+      expect(componentSource).not.toContain('<summary')
+      expect(componentSource).not.toContain('[open]')
     expect(componentSource).toContain('pointer-events: none')
     expect(componentSource).toContain('pointer-events: auto')
     expect(componentSource).toMatch(/\.editions-panel[^{}]*{[^}]*top: 100%;[^}]*padding-top: 0\.5rem;[^}]*pointer-events: none;/s)

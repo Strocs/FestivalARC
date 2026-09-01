@@ -52,10 +52,11 @@ const editionTargets = [
     href={withBase("/el-festival")}
     size={size}>El Festival</TextTape
   >
-  <details class="editions-dropdown relative">
+  <div class="editions-dropdown relative">
     <TextTape
-      class={`${itemsClass ?? ""} editions-trigger`}
-      element="summary"
+      class={`${itemsClass ?? ""} editions-trigger hover:text-accent-yellow hover:bg-accent-blue hover:skew-y-0 active:translate-y-2`}
+      element="div"
+      tabindex="0"
       size={size}>Ediciones</TextTape
     >
     <div class="editions-panel absolute left-0 top-full z-20">
@@ -72,17 +73,12 @@ const editionTargets = [
       ))}
       </ul>
     </div>
-  </details>
+  </div>
 </nav>
 
 <style>
   .editions-trigger {
     cursor: pointer;
-    list-style: none;
-  }
-
-  .editions-trigger::-webkit-details-marker {
-    display: none;
   }
 
   .editions-panel {
@@ -102,17 +98,15 @@ const editionTargets = [
       transform 180ms ease;
   }
 
-  details:hover > .editions-panel,
-  details:focus-within > .editions-panel,
-  details[open] > .editions-panel {
+  .editions-dropdown:hover > .editions-panel,
+  .editions-dropdown:focus-within > .editions-panel {
     pointer-events: auto;
     visibility: visible;
     transition-delay: 0s;
   }
 
-  details:hover > .editions-panel > .editions-panel-content,
-  details:focus-within > .editions-panel > .editions-panel-content,
-  details[open] > .editions-panel > .editions-panel-content {
+  .editions-dropdown:hover > .editions-panel > .editions-panel-content,
+  .editions-dropdown:focus-within > .editions-panel > .editions-panel-content {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0s;

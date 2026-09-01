@@ -26,10 +26,10 @@ import { disciplines } from '../data/disciplines'
                 <span class='block origin-center transition-transform duration-300 ease-out group-hover:rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>CATORIA</span>
                 <span class='block origin-center text-primary transition-transform duration-300 ease-out group-hover:-rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>REGIONAL</span>
                 <div class='flex w-full items-center gap-2 sm:gap-4 lg:gap-6'>
-                  <span class='block origin-center text-[80%] font-bold transition-transform duration-300 ease-out group-hover:rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>2026</span>
+                  <span class='block origin-center text-[80%] leading-[0.85] font-bold transition-transform duration-300 ease-out group-hover:rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>2026</span>
                   <a
                     href='#'
-                    class='inline-flex flex-1 shrink-0 items-center justify-center pointer-events-auto whitespace-nowrap rounded-2xl border-3 lg:border-4 border-primary bg-background px-[clamp(1rem,2vw,1.5rem)] py-[clamp(0.25rem,0.625vw,0.75rem)] text-[clamp(1.25rem,2vw,1.5rem)] font-bold normal-case leading-normal tracking-normal text-primary transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-foreground focus-visible:border-accent focus-visible:bg-accent focus-visible:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
+                    class='inline-flex flex-1 shrink-0 items-center justify-center pointer-events-auto whitespace-nowrap rounded-2xl border-3 lg:border-4 border-primary bg-background px-[clamp(1rem,2vw,1.5rem)] py-[clamp(0.25rem,0.625vw,0.75rem)] text-[clamp(1.375rem,2.2vw,1.65rem)] font-bold normal-case leading-normal tracking-normal text-primary transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-foreground focus-visible:border-accent focus-visible:bg-accent focus-visible:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
                   >
                     Lee las bases
                   </a>
@@ -42,7 +42,7 @@ import { disciplines } from '../data/disciplines'
         <h2 class="text-2xl pb-8 text-center">Postúla en tu disciplina:</h2>
         <h3 id='disciplines-title' class='sr-only'>Disciplinas de la convocatoria</h3>
         <ul
-          class='flex max-w-full list-none flex-wrap items-center justify-center gap-y-1 p-0 text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.065em] md:gap-y-2 md:text-[clamp(2rem,5vw,3rem)] gap-x-4 lg:gap-x-6 lg:text-[clamp(1.75rem,3.65vw,4rem)] lg:leading-[0.82] lg:tracking-[-0.07em]'
+          class='flex max-w-full list-none flex-wrap items-center justify-center gap-y-4 text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.065em] xl:gap-y-2 md:text-[clamp(2rem,5vw,3rem)] gap-x-4 lg:gap-x-6 lg:text-[clamp(1.75rem,3.65vw,4rem)] lg:leading-[0.82] lg:tracking-[-0.07em]'
           aria-label='Disciplinas de la convocatoria'
         >
           {disciplines.map((discipline, index) => (

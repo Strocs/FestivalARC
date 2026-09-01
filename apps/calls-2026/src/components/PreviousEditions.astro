@@ -5,19 +5,20 @@ import { previousEditionTargets } from './previousEditions'
 const editions = previousEditionTargets(publicationConfig)
 ---
 <nav
-  class='previous-editions z-10 flex justify-center py-4 [&_summary]:list-none [&_summary::-webkit-details-marker]:hidden'
+  class='previous-editions z-10 flex justify-center py-4'
   aria-label='Ultimas ediciones'
 >
-  <details class='editions-dropdown relative'>
-    <summary
-      class='group flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight capitalize text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+  <div class='editions-dropdown group relative'>
+    <div
+      class='editions-trigger flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight capitalize text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+      tabindex='0'
     >
       <span>últimas ediciones</span>
       <span
-        class='h-0 w-0 border-x-4 border-x-transparent border-t-[6px] border-t-current transition-transform group-open:rotate-180'
+        class='h-0 w-0 border-x-4 border-x-transparent border-t-[6px] border-t-current transition-transform group-hover:rotate-180 group-focus-within:rotate-180'
         aria-hidden='true'
       ></span>
-    </summary>
+    </div>
     <div class='editions-panel absolute inset-x-0 top-full z-20'>
       <ul class='editions-panel-content relative rounded bg-background p-1 text-center text-foreground'>
         {editions.map((edition) => (
@@ -32,7 +33,7 @@ const editions = previousEditionTargets(publicationConfig)
         ))}
       </ul>
     </div>
-  </details>
+  </div>
 </nav>
 
 <style>
@@ -57,17 +58,15 @@ const editions = previousEditionTargets(publicationConfig)
       transform 180ms ease;
   }
 
-  details:hover > .editions-panel,
-  details:focus-within > .editions-panel,
-  details[open] > .editions-panel {
+  .editions-dropdown:hover > .editions-panel,
+  .editions-dropdown:focus-within > .editions-panel {
     pointer-events: auto;
     visibility: visible;
     transition-delay: 0s;
   }
 
-  details:hover > .editions-panel > .editions-panel-content,
-  details:focus-within > .editions-panel > .editions-panel-content,
-  details[open] > .editions-panel > .editions-panel-content {
+  .editions-dropdown:hover > .editions-panel > .editions-panel-content,
+  .editions-dropdown:focus-within > .editions-panel > .editions-panel-content {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0s;

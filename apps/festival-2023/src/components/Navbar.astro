@@ -50,21 +50,26 @@ const editionTargets = [
 					</li>
 				))
 			}
+			<li class='editions-dropdown relative'>
+				<div
+					class='editions-trigger text-4xl transition-all duration-200 ease-in hover:underline'
+					tabindex='0'
+				>
+					EDICIONES
+				</div>
+				<div class='editions-panel'>
+					<ul class='editions-panel-content grid gap-2 bg-white p-3 text-2xl font-light text-neutral-700'>
+						{
+							editionTargets.map((target) => (
+								<li class='leading-5 transition-all duration-200 ease-in hover:underline'>
+									<a href={target.href}>{target.label}</a>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+			</li>
 		</ul>
-		<details class='editions-dropdown'>
-			<summary class='editions-trigger text-4xl transition-all duration-200 ease-in hover:underline'>EDICIONES</summary>
-			<div class='editions-panel'>
-				<ul class='editions-panel-content grid gap-2 bg-inherit p-3 text-2xl font-light'>
-					{
-						editionTargets.map((target) => (
-							<li class='leading-5 transition-all duration-200 ease-in hover:underline'>
-								<a href={target.href}>{target.label}</a>
-							</li>
-						))
-					}
-				</ul>
-			</div>
-		</details>
 		<ul class='text-md grid gap-2 font-light'>
 			{
 				locations.map((location) => (
@@ -138,17 +143,15 @@ const editionTargets = [
 			transform 180ms ease;
 	}
 
-	details:hover > .editions-panel,
-	details:focus-within > .editions-panel,
-	details[open] > .editions-panel {
+	.editions-dropdown:hover > .editions-panel,
+	.editions-dropdown:focus-within > .editions-panel {
 	pointer-events: auto;
 	visibility: visible;
 	transition-delay: 0s;
 }
 
-	details:hover > .editions-panel > .editions-panel-content,
-	details:focus-within > .editions-panel > .editions-panel-content,
-	details[open] > .editions-panel > .editions-panel-content {
+	.editions-dropdown:hover > .editions-panel > .editions-panel-content,
+	.editions-dropdown:focus-within > .editions-panel > .editions-panel-content {
 	opacity: 1;
 	transform: translateY(0);
 	transition-delay: 0s;
@@ -156,11 +159,6 @@ const editionTargets = [
 
 	.editions-trigger {
 		cursor: pointer;
-		list-style: none;
-	}
-
-	.editions-trigger::-webkit-details-marker {
-		display: none;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
