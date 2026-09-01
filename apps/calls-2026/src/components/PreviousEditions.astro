@@ -5,21 +5,21 @@ import { previousEditionTargets } from './previousEditions'
 const editions = previousEditionTargets(publicationConfig)
 ---
 <header
-  class='previous-editions absolute inset-x-0 top-0 z-10 flex justify-center px-5 pt-2 sm:px-8 lg:px-12'
+  class='previous-editions z-10 flex justify-center px-5 py-4 sm:px-8 lg:px-12'
 >
   <nav aria-label='Ultimas ediciones'>
     <details class='relative'>
       <summary
-        class='group flex cursor-pointer items-center gap-2 bg-background px-3 py-1 text-sm leading-tight text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+        class='group capitalize flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
       >
-        <span>Ultimas ediciones</span>
+      <span>últimas ediciones</span>
         <span
           class='h-0 w-0 border-x-4 border-x-transparent border-t-[6px] border-t-current transition-transform'
           aria-hidden='true'
         ></span>
       </summary>
       <ul
-        class='absolute left-1/2 mt-1 min-w-full -translate-x-1/2 bg-background p-1 text-center text-foreground shadow-lg'
+        class='absolute left-1/2 mt-1 min-w-full -translate-x-1/2 rounded bg-background p-1 text-center text-foreground'
       >
         {editions.map((edition) => (
           <li>

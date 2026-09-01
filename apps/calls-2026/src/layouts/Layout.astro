@@ -10,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = 'Pronto convocatoria 2026',
-  description = 'Sitio oficial del Festival ARC. Próximamente, convocatoria 2026.',
+  title = 'Festival ARC | Pronto convocatoria 2026',
+  description = 'Sitio oficial del Festival ARC. Próximamente, Convocatoria 2026.',
 } = Astro.props
 const path = Astro.url.pathname === appBase ? '/' : Astro.url.pathname.replace(`${appBase}/`, '/')
 const canonical = new URL(publicPath(path), 'https://festivalarc.com').toString().replace(/\/$/, '')
@@ -26,7 +26,7 @@ const canonical = new URL(publicPath(path), 'https://festivalarc.com').toString(
     <Font cssVariable='--font-poppins' />
     <title>{title}</title>
   </head>
-  <body>
+  <body class="min-h-svh bg-background h-full flex flex-col">
     <PreviousEditions />
     <slot />
   </body>

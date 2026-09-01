@@ -13,7 +13,7 @@ export function previousEditionTargets(
     .sort((left, right) => right.year - left.year)
     .map((edition) => ({
       year: edition.year,
-      label: `Festival ${edition.year}`,
+      label: `ARC ${edition.year}`,
       href: `${edition.base}/`,
     }))
 }
