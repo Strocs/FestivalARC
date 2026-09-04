@@ -1,78 +1,38 @@
 ---
-
-import { Icon } from 'astro-icon/components'
-
+import { Image } from 'astro:assets'
 import Layout from '../layouts/Layout.astro'
-import { disciplines } from '../data/disciplines'
+import { publicPath } from '../utils/publication'
+import logoHero from '../assets/LOGO_HERO.jpg'
+
+const presentations = ['Música', 'Artes escénicas', 'Artes visuales', 'Audiovisual']
+const fair = ['Literatura / Editorial', 'Artesanía', 'Diseño e ilustración']
 ---
 <Layout>
-  <main
-    class='flex h-full items-start justify-center px-5 py-8 font-sans text-foreground sm:items-center sm:px-8 sm:py-10 lg:p-12 flex-1'
-    aria-labelledby='coming-soon-title'
-  >
-    <div
-      class='grid w-full max-w-screen-2xl grid-cols-1 items-center justify-center gap-12 md:gap-16 lg:grid-cols-2 lg:gap-20'
-    >
-      <section
-        class='flex min-w-0 w-fit mx-auto flex-col items-start justify-start'
-        aria-labelledby='coming-soon-title'
-      >
-        <div
-              class='group m-0 max-w-full break-words text-left tracking-tighter text-[clamp(3.5rem,16vw,5.5rem)] font-extrabold uppercase leading-[0.78] sm:text-[clamp(4rem,12vw,6.5rem)] md:text-[clamp(4.5rem,10vw,7.5rem)] lg:text-[clamp(3.5rem,8vw,9rem)]'
-            >
-              <h1 id='coming-soon-title' class='sr-only'>CONVOCATORIA REGIONAL 2026</h1>
-              <div class='flex flex-col items-start relative pointer-events-none'>
-                <span class='block origin-center transition-transform duration-300 ease-out group-hover:-rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>CONVO_</span>
-                <span class='block origin-center transition-transform duration-300 ease-out group-hover:rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>CATORIA</span>
-                <span class='block origin-center text-primary transition-transform duration-300 ease-out group-hover:-rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>REGIONAL</span>
-                <div class='flex w-full items-center gap-2 sm:gap-4 lg:gap-6'>
-                  <span class='block origin-center text-[80%] leading-[0.85] font-bold transition-transform duration-300 ease-out group-hover:rotate-1 motion-reduce:transform-none motion-reduce:transition-none' aria-hidden='true'>2026</span>
-                  <a
-                    href='#'
-                    class='inline-flex flex-1 shrink-0 items-center justify-center pointer-events-auto whitespace-nowrap rounded-2xl border-3 lg:border-4 border-primary bg-background px-[clamp(1rem,2vw,1.5rem)] py-[clamp(0.25rem,0.625vw,0.75rem)] text-[clamp(1.375rem,2.2vw,1.65rem)] font-bold normal-case leading-normal tracking-normal text-primary transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-foreground focus-visible:border-accent focus-visible:bg-accent focus-visible:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
-                  >
-                    Lee las bases
-                  </a>
-                </div>
-              </div>
-            </div>
-      </section>
+  <main class='flex flex-1 flex-col gap-6 px-5 py-6 font-sans text-foreground sm:gap-8 sm:px-8 sm:py-8 lg:px-12 lg:py-10' aria-labelledby='page-title'>
+    <section class='mx-auto flex w-full max-w-screen-2xl flex-col items-center border-2 border-primary px-5 py-8 text-center sm:px-10 sm:py-10' aria-labelledby='page-title'>
+      <h1 id='page-title' class='sr-only'>Convocatoria Festival ARC 2026</h1>
+      <Image src={logoHero} alt='ARC26. El arte de habitar la ciudad' class='block h-auto w-full max-w-3xl' loading='eager' />
+      <p class='mt-6 text-base font-bold uppercase tracking-wide text-foreground sm:text-lg'>Convocatoria regional: 04 al 25 de septiembre</p>
+    </section>
 
-      <section class='min-w-0 w-full h-fit' aria-labelledby='disciplines-title'>
-        <h2 class="text-2xl pb-8 text-center">Postúla en tu disciplina:</h2>
-        <h3 id='disciplines-title' class='sr-only'>Disciplinas de la convocatoria</h3>
-        <ul
-          class='flex max-w-full list-none flex-wrap items-center justify-center gap-y-4 text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.065em] xl:gap-y-2 md:text-[clamp(2rem,5vw,3rem)] gap-x-4 lg:gap-x-6 lg:text-[clamp(1.75rem,3.65vw,4rem)] lg:leading-[0.82] lg:tracking-[-0.07em]'
-          aria-label='Disciplinas de la convocatoria'
-        >
-          {disciplines.map((discipline, index) => (
-            <li
-              class:list={[
-                'inline-flex min-w-0 max-w-full gap-2 items-center break-words',
-                {
-                  'text-primary': index % 2 === 0,
-                  'text-foreground': index % 2 !== 0
-                }
-              ]}
-            >
-              <a
-                href='#'
-                class='group inline-flex items-center transition-colors duration-200 hover:text-accent focus-visible:text-accent'
-              >
-                {discipline.name}
-                <Icon
-                  name='lucide:arrow-right'
-                  class='ml-[0.15em] size-[0.85em] shrink-0 transition-transform duration-200 ease-in-out group-hover:-rotate-45 group-focus-visible:-rotate-45'
-                  aria-hidden='true'
-                />
-              </a>
-              {index < disciplines.length - 1 && (
-                <span class='leading-0 text-primary text-[80%]' aria-hidden='true'>/</span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
+    <section class='mx-auto w-full max-w-screen-2xl border-2 border-primary px-5 py-7 sm:px-8 sm:py-9' aria-labelledby='lines-title'>
+      <h2 id='lines-title' class='mb-8 text-center text-base font-bold uppercase tracking-wide sm:text-lg'>Selecciona tu línea de postulación</h2>
+      <div class='grid gap-6 md:grid-cols-2 md:gap-10'>
+        <article class='border-2 border-foreground p-5 sm:p-7'>
+          <h3 class='mb-5 text-base font-bold uppercase leading-tight sm:text-lg'>Presentaciones y exhibiciones</h3>
+          <ul class='space-y-2 text-base sm:text-lg'>
+            {presentations.map((item) => <li>• {item}</li>)}
+          </ul>
+        </article>
+        <article class='border-2 border-foreground p-5 sm:p-7'>
+          <h3 class='mb-5 text-base font-bold uppercase leading-tight sm:text-lg'>Espacio ferial y mercado creativo</h3>
+          <ul class='space-y-2 text-base sm:text-lg'>
+            {fair.map((item) => <li>• {item}</li>)}
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <a href={publicPath('/bases')} class='mx-auto flex w-full max-w-screen-2xl items-center justify-center border-2 border-primary px-5 py-5 text-center text-base font-bold uppercase tracking-wide transition-colors hover:border-accent hover:bg-accent hover:text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-lg'>Descarga las bases</a>
   </main>
 </Layout>
