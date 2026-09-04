@@ -10,7 +10,15 @@ import logoHero from '../assets/LOGO_HERO.jpg'
     <section class='hero mx-auto flex w-full max-w-screen-2xl flex-col items-center text-center' aria-labelledby='page-title'>
       <h1 id='page-title' class='sr-only'>Convocatoria Festival ARC 2026</h1>
       <div class='hero-art' aria-hidden='true'><Image src={logoHero} alt='' class='hero-image' loading='eager' /></div>
-      <p class='deadline'>Convocatoria regional: <span>{call.deadline}</span></p>
+      <p class='deadline'>
+        <span class='deadline-prefix'>{call.deadline.prefix}</span>
+        <span class='deadline-accent'>{call.deadline.start}</span>
+        <span>{call.deadline.connector}</span>
+        <span class='deadline-accent'>{call.deadline.end}</span>
+        <span>{call.deadline.suffix}</span>
+        <span class='deadline-accent'>{call.deadline.month}</span>
+      </p>
+      <hr class='hero-separator' aria-hidden='true' />
     </section>
 
     <section class='applications mx-auto w-full max-w-screen-2xl' aria-labelledby='lines-title'>
@@ -33,16 +41,20 @@ import logoHero from '../assets/LOGO_HERO.jpg'
 
 <style>
   .calls-body { overflow: hidden; }
-  .hero { border-bottom: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent); padding-bottom: clamp(1.5rem, 4vw, 3rem); }
+  .hero { padding-bottom: clamp(.75rem, 2vw, 1.5rem); }
   .hero-art { width: min(100%, 72rem); aspect-ratio: 10 / 3; overflow: hidden; position: relative; }
   .hero-image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-  .deadline { margin-top: 1rem; font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
-  .deadline span, h3, .category a:hover, .category a:focus-visible { color: var(--color-accent); }
-  .applications { padding: clamp(3rem, 8vw, 7rem) 0; }
-  h2 { color: var(--color-primary); font-size: clamp(1.25rem, 2.5vw, 2.25rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; text-align: center; text-transform: uppercase; }
-  .category-grid { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: clamp(3rem, 7vw, 6rem); }
-  h3 { font-size: clamp(1.25rem, 2.5vw, 2.25rem); font-weight: 900; line-height: .95; max-width: 14ch; text-transform: uppercase; }
-  ul { margin-top: 2rem; }
+  .deadline { display: flex; flex-wrap: wrap; justify-content: center; gap: .2em .35em; margin-top: .5rem; font-size: clamp(1.25rem, 3vw, 2rem); font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+  .deadline-accent { color: var(--color-primary); }
+  h3, .category a:hover, .category a:focus-visible { color: var(--color-accent); }
+  .deadline-prefix { color: var(--color-foreground); }
+  .hero-separator { width: min(12rem, 36vw); margin: clamp(1rem, 2vw, 1.5rem) auto 0; border: 0; border-top: 2px solid var(--color-primary); }
+  .applications { padding: clamp(2.25rem, 5vw, 4.5rem) 0; }
+  h2 { color: var(--color-primary); font-size: clamp(1.05rem, 2vw, 1.5rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.1; text-align: center; }
+  .category-grid { display: grid; gap: clamp(3rem, 7vw, 6rem); grid-template-columns: repeat(2, minmax(0, 1fr)); margin: clamp(2.5rem, 5vw, 4rem) auto 0; max-width: 64rem; }
+  .category { display: flex; flex-direction: column; align-items: center; }
+  h3 { font-size: clamp(1.25rem, 2.5vw, 2.25rem); font-weight: 900; line-height: .95; max-width: 14ch; text-align: center; text-transform: uppercase; }
+  ul { width: fit-content; margin-top: 2rem; }
   li { padding: .45rem 0; }
   li a { align-items: center; color: var(--color-foreground); display: inline-flex; flex-wrap: wrap; font-size: clamp(1.35rem, 3.4vw, 3rem); font-weight: 900; letter-spacing: -.06em; line-height: 1; text-transform: uppercase; }
   .bases { align-self: center; border: 3px solid var(--color-primary); color: var(--color-primary); font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 900; padding: 1rem 1.25rem; text-transform: uppercase; transition: background-color .2s, color .2s; }

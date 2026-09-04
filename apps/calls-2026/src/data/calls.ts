@@ -8,9 +8,25 @@ export interface CallCategory {
   disciplines: CallDiscipline[]
 }
 
+export interface CallDeadline {
+  prefix: string
+  start: string
+  connector: string
+  end: string
+  suffix: string
+  month: string
+}
+
 export const call = {
   title: 'Convocatoria Festival ARC 2026',
-  deadline: '04 al 25 de septiembre',
+  deadline: {
+    prefix: 'Convocatoria regional:',
+    start: '04',
+    connector: 'al',
+    end: '25',
+    suffix: 'de',
+    month: 'septiembre',
+  } satisfies CallDeadline,
   categories: [
     {
       title: 'Presentaciones y exhibiciones',
