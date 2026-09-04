@@ -1,38 +1,57 @@
 ---
 import { Image } from 'astro:assets'
 import Layout from '../layouts/Layout.astro'
-import { publicPath } from '../utils/publication'
+import { call } from '../data/calls'
 import logoHero from '../assets/LOGO_HERO.jpg'
-
-const presentations = ['Música', 'Artes escénicas', 'Artes visuales', 'Audiovisual']
-const fair = ['Literatura / Editorial', 'Artesanía', 'Diseño e ilustración']
 ---
 <Layout>
-  <main class='flex flex-1 flex-col gap-6 px-5 py-6 font-sans text-foreground sm:gap-8 sm:px-8 sm:py-8 lg:px-12 lg:py-10' aria-labelledby='page-title'>
-    <section class='mx-auto flex w-full max-w-screen-2xl flex-col items-center px-5 py-8 text-center sm:px-10 sm:py-10' aria-labelledby='page-title'>
+  <main class='calls-body flex flex-1 flex-col px-5 py-8 font-sans text-foreground sm:px-8 sm:py-12 lg:px-12 lg:py-16' aria-labelledby='page-title'>
+    <section class='hero mx-auto flex w-full max-w-screen-2xl flex-col items-center text-center' aria-labelledby='page-title'>
       <h1 id='page-title' class='sr-only'>Convocatoria Festival ARC 2026</h1>
-      <Image src={logoHero} alt='ARC26. El arte de habitar la ciudad' class='block h-auto w-full max-w-3xl' loading='eager' />
-      <p class='mt-8 text-lg font-extrabold uppercase tracking-wide sm:text-xl'>Convocatoria regional: <span class='text-primary'>04 al 25 de septiembre</span></p>
+      <div class='hero-art' aria-hidden='true'><Image src={logoHero} alt='' class='hero-image' loading='eager' /></div>
+      <p class='deadline'>Convocatoria regional: <span>{call.deadline}</span></p>
     </section>
 
-    <section class='mx-auto w-full max-w-screen-2xl px-5 py-7 sm:px-8 sm:py-9' aria-labelledby='lines-title'>
-      <h2 id='lines-title' class='mb-10 text-center text-xl font-extrabold uppercase tracking-wide sm:text-2xl'>Selecciona tu línea de postulación</h2>
-      <div class='grid gap-8 md:grid-cols-2 md:gap-14'>
-        <article class='p-0 sm:p-2'>
-          <h3 class='mb-6 text-xl font-extrabold uppercase leading-tight text-primary sm:text-2xl'>Presentaciones y exhibiciones</h3>
-          <ul class='space-y-2 text-base sm:text-lg'>
-            {presentations.map((item) => <li>• {item}</li>)}
+    <section class='applications mx-auto w-full max-w-screen-2xl' aria-labelledby='lines-title'>
+      <h2 id='lines-title'>Selecciona tu línea de postulación</h2>
+      <div class='category-grid'>
+        {call.categories.map((category, categoryIndex) => <article class:list={['category', { 'category-offset': categoryIndex === 1 }]}>
+          <h3>{category.title}</h3>
+          <ul>
+            {category.disciplines.map((discipline, index) => <li>
+              <a href={discipline.url} target='_blank' rel='noopener noreferrer'>{discipline.name}<span aria-hidden='true'>↗</span></a>
+              {index < category.disciplines.length - 1 && <i aria-hidden='true'>/</i>}
+            </li>)}
           </ul>
-        </article>
-        <article class='p-0 sm:p-2'>
-          <h3 class='mb-6 text-xl font-extrabold uppercase leading-tight text-primary sm:text-2xl'>Espacio ferial y mercado creativo</h3>
-          <ul class='space-y-2 text-base sm:text-lg'>
-            {fair.map((item) => <li>• {item}</li>)}
-          </ul>
-        </article>
+        </article>)}
       </div>
     </section>
 
-    <a href={publicPath('/bases')} class='mx-auto flex w-full max-w-screen-2xl items-center justify-center rounded-2xl border-3 border-primary bg-background px-5 py-5 text-center text-base font-bold uppercase tracking-wide text-primary transition-colors hover:border-accent hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-lg'>Descarga las bases</a>
+    <button type='button' class='bases' disabled>Descarga las bases</button>
   </main>
 </Layout>
+
+<style>
+  .calls-body { overflow: hidden; }
+  .hero { border-bottom: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent); padding-bottom: clamp(1.5rem, 4vw, 3rem); }
+  .hero-art { width: min(100%, 72rem); aspect-ratio: 10 / 3; overflow: hidden; position: relative; }
+  .hero-image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .deadline { margin-top: 1rem; font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+  .deadline span, h3, .category a:hover, .category a:focus-visible { color: var(--color-accent); }
+  .applications { padding: clamp(3rem, 8vw, 7rem) 0; }
+  h2 { color: var(--color-primary); font-size: clamp(2rem, 6vw, 5rem); font-weight: 900; letter-spacing: -.07em; line-height: .9; text-transform: uppercase; max-width: 12ch; }
+  .category-grid { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: clamp(3rem, 7vw, 6rem); }
+  .category-offset { padding-top: clamp(2rem, 7vw, 7rem); }
+  h3 { font-size: clamp(1.25rem, 2.5vw, 2.25rem); font-weight: 900; line-height: .95; max-width: 14ch; text-transform: uppercase; }
+  ul { margin-top: 2rem; }
+  li { align-items: baseline; display: flex; gap: .7rem; border-top: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent); padding: .8rem 0; }
+  li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent); }
+  li a { color: var(--color-foreground); font-size: clamp(1.2rem, 2.8vw, 2.4rem); font-weight: 900; letter-spacing: -.06em; line-height: .95; text-transform: uppercase; }
+  li span { color: var(--color-primary); font-size: .75em; }
+  li i { color: var(--color-primary); font-style: normal; }
+  .bases { align-self: flex-start; border: 3px solid var(--color-primary); color: var(--color-primary); font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 900; padding: 1rem 1.25rem; text-transform: uppercase; transition: background-color .2s, color .2s; }
+  .bases:disabled { cursor: not-allowed; opacity: .82; }
+  .bases:focus-visible, a:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
+  @media (max-width: 640px) { .category-grid { grid-template-columns: 1fr; gap: 3rem; } .category-offset { padding-top: 0; } }
+  @media (prefers-reduced-motion: reduce) { .bases { transition: none; } }
+</style>
