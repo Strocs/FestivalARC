@@ -5,12 +5,12 @@ import { previousEditionTargets } from './previousEditions'
 const editions = previousEditionTargets(publicationConfig)
 ---
 <nav
-  class='previous-editions z-10 flex justify-center py-4'
+  class='z-10 flex justify-center py-4'
   aria-label='Ultimas ediciones'
 >
-  <div class='editions-dropdown group relative'>
+  <div class='group relative'>
     <div
-      class='editions-trigger flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight capitalize text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+      class='flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight capitalize text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
       tabindex='0'
     >
       <span>últimas ediciones</span>
@@ -19,8 +19,8 @@ const editions = previousEditionTargets(publicationConfig)
         aria-hidden='true'
       ></span>
     </div>
-    <div class='editions-panel absolute inset-x-0 top-full z-20'>
-      <ul class='editions-panel-content relative rounded bg-background p-1 text-center text-foreground'>
+    <div class='absolute inset-x-0 top-full z-20 flex justify-center pointer-events-none invisible pt-2 transition-[visibility] duration-0 ease-linear delay-[180ms] group-hover:pointer-events-auto group-hover:visible group-hover:delay-0 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:delay-0 motion-reduce:transition-none'>
+      <ul class='relative w-max translate-y-2 rounded bg-background p-1 text-center text-foreground opacity-0 transition-[opacity,transform] duration-[180ms] ease-[ease] group-hover:translate-y-0 group-hover:opacity-100 group-hover:delay-0 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-focus-within:delay-0 motion-reduce:transform-none motion-reduce:transition-none'>
         {editions.map((edition) => (
           <li>
             <a
@@ -35,51 +35,3 @@ const editions = previousEditionTargets(publicationConfig)
     </div>
   </div>
 </nav>
-
-<style>
-  .editions-panel {
-    top: 100%;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    padding-top: 0.5rem;
-    pointer-events: none;
-    visibility: hidden;
-    transition: visibility 0s linear 180ms;
-  }
-
-  .editions-panel-content {
-    width: max-content;
-    opacity: 0;
-    transform: translateY(0.5rem);
-    transition:
-      opacity 180ms ease,
-      transform 180ms ease;
-  }
-
-  .editions-dropdown:hover > .editions-panel,
-  .editions-dropdown:focus-within > .editions-panel {
-    pointer-events: auto;
-    visibility: visible;
-    transition-delay: 0s;
-  }
-
-  .editions-dropdown:hover > .editions-panel > .editions-panel-content,
-  .editions-dropdown:focus-within > .editions-panel > .editions-panel-content {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0s;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .editions-panel {
-      transition: none;
-    }
-
-    .editions-panel-content {
-      transform: none;
-      transition: none;
-    }
-  }
-</style>
