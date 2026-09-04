@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
 import Layout from '../layouts/Layout.astro'
 import { call } from '../data/calls'
 import logoHero from '../assets/LOGO_HERO.jpg'
@@ -15,12 +16,11 @@ import logoHero from '../assets/LOGO_HERO.jpg'
     <section class='applications mx-auto w-full max-w-screen-2xl' aria-labelledby='lines-title'>
       <h2 id='lines-title'>Selecciona tu línea de postulación</h2>
       <div class='category-grid'>
-        {call.categories.map((category, categoryIndex) => <article class:list={['category', { 'category-offset': categoryIndex === 1 }]}>
+        {call.categories.map((category) => <article class='category'>
           <h3>{category.title}</h3>
           <ul>
-            {category.disciplines.map((discipline, index) => <li>
-              <a href={discipline.url} target='_blank' rel='noopener noreferrer'>{discipline.name}<span aria-hidden='true'>↗</span></a>
-              {index < category.disciplines.length - 1 && <i aria-hidden='true'>/</i>}
+            {category.disciplines.map((discipline) => <li>
+              <a class='group' href={discipline.url} target='_blank' rel='noopener noreferrer'>{discipline.name}<Icon name='lucide:arrow-right' aria-hidden='true' class='ml-[0.15em] size-[0.85em] shrink-0 transition-transform duration-200 ease-in-out motion-reduce:transform-none motion-reduce:transition-none group-hover:-rotate-45 group-focus-visible:-rotate-45' /></a>
             </li>)}
           </ul>
         </article>)}
@@ -39,19 +39,15 @@ import logoHero from '../assets/LOGO_HERO.jpg'
   .deadline { margin-top: 1rem; font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
   .deadline span, h3, .category a:hover, .category a:focus-visible { color: var(--color-accent); }
   .applications { padding: clamp(3rem, 8vw, 7rem) 0; }
-  h2 { color: var(--color-primary); font-size: clamp(2rem, 6vw, 5rem); font-weight: 900; letter-spacing: -.07em; line-height: .9; text-transform: uppercase; max-width: 12ch; }
+  h2 { color: var(--color-primary); font-size: clamp(1.25rem, 2.5vw, 2.25rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; text-align: center; text-transform: uppercase; }
   .category-grid { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: clamp(3rem, 7vw, 6rem); }
-  .category-offset { padding-top: clamp(2rem, 7vw, 7rem); }
   h3 { font-size: clamp(1.25rem, 2.5vw, 2.25rem); font-weight: 900; line-height: .95; max-width: 14ch; text-transform: uppercase; }
   ul { margin-top: 2rem; }
-  li { align-items: baseline; display: flex; gap: .7rem; border-top: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent); padding: .8rem 0; }
-  li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent); }
-  li a { color: var(--color-foreground); font-size: clamp(1.2rem, 2.8vw, 2.4rem); font-weight: 900; letter-spacing: -.06em; line-height: .95; text-transform: uppercase; }
-  li span { color: var(--color-primary); font-size: .75em; }
-  li i { color: var(--color-primary); font-style: normal; }
-  .bases { align-self: flex-start; border: 3px solid var(--color-primary); color: var(--color-primary); font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 900; padding: 1rem 1.25rem; text-transform: uppercase; transition: background-color .2s, color .2s; }
+  li { padding: .45rem 0; }
+  li a { align-items: center; color: var(--color-foreground); display: inline-flex; flex-wrap: wrap; font-size: clamp(1.35rem, 3.4vw, 3rem); font-weight: 900; letter-spacing: -.06em; line-height: 1; text-transform: uppercase; }
+  .bases { align-self: center; border: 3px solid var(--color-primary); color: var(--color-primary); font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 900; padding: 1rem 1.25rem; text-transform: uppercase; transition: background-color .2s, color .2s; }
   .bases:disabled { cursor: not-allowed; opacity: .82; }
   .bases:focus-visible, a:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
-  @media (max-width: 640px) { .category-grid { grid-template-columns: 1fr; gap: 3rem; } .category-offset { padding-top: 0; } }
+  @media (max-width: 640px) { .category-grid { grid-template-columns: 1fr; gap: 3rem; } }
   @media (prefers-reduced-motion: reduce) { .bases { transition: none; } }
 </style>
