@@ -15,7 +15,7 @@ const config = () => validatePublicationConfig({
   archives: [{ ...archive, base: publicationBase('/ediciones/2024') }],
   global: { notFound: 'distribution', robots: 'distribution', sitemap: 'distribution' },
 })
-const input = (ownerId: string, destination: string, files = [{ relativePath: 'index.html', bytes: Buffer.from(ownerId) }], kind: 'final' | 'calls' = 'final') => ({
+const input = (ownerId: string, destination: string, files = [{ relativePath: 'index.html', bytes: Buffer.from(ownerId === archive.id ? '<html><head></head><body>archive</body></html>' : ownerId) }], kind: 'final' | 'calls' = 'final') => ({
   ownerId, kind, sourceRoot: '/fixture', destination, base: publicationBase(destination), files,
 })
 
@@ -39,16 +39,48 @@ describe('Slice 5 global files, discovery, and references', () => {
     expect(new TextDecoder().decode(files[2].bytes)).toContain('<loc>https://festivalarc.com/z</loc>')
   })
 
-  it('inventories only emitted HTML routes and sorts duplicate absolute URLs', () => {
+  it('inventories only active publication HTML routes and sorts duplicate absolute URLs', () => {
     const files = [
       { path: 'ediciones/2024/programacion/index.html', owner: archive.id, bytes: Buffer.from('<html/>') },
       { path: '404.html', owner: 'distribution', bytes: Buffer.from('<html/>') },
       { path: 'index.html', owner: active.id, bytes: Buffer.from('<html/>') },
+      { path: 'section/index.html', owner: active.id, bytes: Buffer.from('<html/>') },
       { path: 'assets/app.js', owner: active.id, bytes: Buffer.from('x') },
       { path: 'evidence/debug.html', owner: active.id, bytes: Buffer.from('<html/>') },
       { path: 'ediciones/2024/index.html', owner: archive.id, bytes: Buffer.from('<html/>') },
     ]
-    expect(routeInventory(config(), files)).toEqual(['https://festivalarc.com/', 'https://festivalarc.com/ediciones/2024/', 'https://festivalarc.com/ediciones/2024/programacion/'])
+    expect(routeInventory(config(), files)).toEqual(['https://festivalarc.com/', 'https://festivalarc.com/section/'])
+  })
+
+  it('adds exactly one noindex meta to archived HTML while preserving active HTML and robots access', () => {
+    const activeHtml = '<!doctype html><html><head><meta name="description" content="active"></head><body>active</body></html>'
+    const archiveHtml = '<!doctype html><html><HEAD>\n<META content=\'index, follow\' NAME=\'ROBOTS\'><meta name=\'robots\' content=\'noarchive\'><meta name="description" content="archive">\n</HEAD><body>archive</body></html>'
+    const archiveNestedHtml = '<html><head><title>Nested archive</title></head><body>nested</body></html>'
+    const root = mkdtempSync(join(tmpdir(), 'dist-archive-seo-')), output = join(root, '.output')
+    compose({ config: config(), outputRoot: output, inputs: [
+      input(active.id, '/', [{ relativePath: 'index.html', bytes: Buffer.from(activeHtml) }]),
+      input(archive.id, '/ediciones/2024', [
+        { relativePath: 'index.html', bytes: Buffer.from(archiveHtml) },
+        { relativePath: 'nested/page.HTML', bytes: Buffer.from(archiveNestedHtml) },
+      ]),
+    ] })
+
+    expect(readFileSync(join(output, 'index.html'), 'utf8')).toBe(activeHtml)
+    const archived = readFileSync(join(output, 'ediciones/2024/index.html'), 'utf8')
+    expect(archived.match(/<meta\b[^>]*>/gi)?.filter(tag => /\bname\s*=\s*["']robots["']/i.test(tag))).toEqual(['<meta name="robots" content="noindex, follow">'])
+    expect(readFileSync(join(output, 'ediciones/2024/nested/page.HTML'), 'utf8')).toContain('<meta name="robots" content="noindex, follow">')
+    expect(readFileSync(join(output, 'robots.txt'), 'utf8')).toContain('Allow: /')
+    expect(readFileSync(join(output, 'robots.txt'), 'utf8')).not.toContain('Disallow:')
+    expect(readFileSync(join(output, 'sitemap-0.xml'), 'utf8')).toContain('https://festivalarc.com/')
+    expect(readFileSync(join(output, 'sitemap-0.xml'), 'utf8')).not.toContain('/ediciones/2024/')
+    expect(readFileSync(join(output, 'sitemap-index.xml'), 'utf8')).not.toContain('/ediciones/2024/')
+  })
+
+  it('fails clearly when archived HTML has no head', () => {
+    expect(() => compose({ config: config(), outputRoot: join(mkdtempSync(join(tmpdir(), 'dist-archive-no-head-')), '.output'), inputs: [
+      input(active.id, '/', [{ relativePath: 'index.html', bytes: Buffer.from('<html><head></head></html>') }]),
+      input(archive.id, '/ediciones/2024', [{ relativePath: 'index.html', bytes: Buffer.from('<html><body>archive</body></html>') }]),
+    ] })).toThrow('archived HTML missing head')
   })
 
   it('reports archive escapes while allowing cross-edition, global, external, and fragment references', () => {
