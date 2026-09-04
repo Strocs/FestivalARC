@@ -18,7 +18,7 @@ import logoHero from '../assets/LOGO_HERO.jpg'
         <span>{call.deadline.suffix}</span>
         <span class='deadline-accent'>{call.deadline.month}</span>
       </p>
-      <hr class='hero-separator' aria-hidden='true' />
+      <hr class='section-separator' aria-hidden='true' />
     </section>
 
     <section class='applications mx-auto w-full max-w-screen-2xl' aria-labelledby='lines-title'>
@@ -35,6 +35,7 @@ import logoHero from '../assets/LOGO_HERO.jpg'
       </div>
     </section>
 
+    <hr class='section-separator applications-separator' aria-hidden='true' />
     <button type='button' class='bases rounded-2xl border-3 lg:border-4' disabled>Descarga las bases</button>
   </main>
 </Layout>
@@ -49,16 +50,18 @@ import logoHero from '../assets/LOGO_HERO.jpg'
   h3 { color: var(--color-foreground); }
   .category a:hover, .category a:focus-visible { color: var(--color-accent); }
   .deadline-prefix { color: var(--color-foreground); }
-  .hero-separator { width: min(12rem, 36vw); margin: clamp(1rem, 2vw, 1.5rem) auto 0; border: 0; border-top: 2px solid var(--color-primary); }
+  .section-separator { width: min(12rem, 36vw); margin: clamp(1rem, 2vw, 1.5rem) auto 0; border: 0; border-top: 2px solid var(--color-primary); }
   .applications { padding: clamp(2.25rem, 5vw, 4.5rem) 0; }
   h2 { color: var(--color-foreground); font-size: clamp(1.05rem, 2vw, 1.5rem); font-weight: 400; letter-spacing: -.03em; line-height: 1.1; text-align: center; }
   .category-grid { display: grid; gap: clamp(3rem, 7vw, 6rem); grid-template-columns: repeat(2, minmax(0, 1fr)); margin: clamp(2.5rem, 5vw, 4rem) auto 0; max-width: 64rem; }
   .category { display: flex; flex-direction: column; align-items: center; }
-  h3 { font-size: clamp(1.25rem, 2.5vw, 2.25rem); font-weight: 900; line-height: .95; max-width: 14ch; text-align: center; text-transform: uppercase; }
+  h3 { font-size: clamp(1.25rem, 2.5vw, 2.25rem); font-weight: 400; line-height: .95; max-width: 14ch; text-align: center; text-transform: uppercase; }
   ul { width: fit-content; margin-top: 2rem; }
   li { display: flex; justify-content: center; padding: .45rem 0; text-align: center; }
   li a { align-items: center; color: var(--color-foreground); display: inline-flex; flex-wrap: wrap; justify-content: center; font-size: clamp(1.35rem, 3.4vw, 3rem); font-weight: 900; letter-spacing: -.06em; line-height: 1; text-align: center; text-transform: uppercase; }
-  .bases { align-self: center; color: var(--color-primary); font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 900; padding: 1rem 1.25rem; text-transform: uppercase; transition: background-color .2s, color .2s; }
+  .applications-separator { margin-top: 0; margin-bottom: clamp(1rem, 2vw, 1.5rem); }
+  .bases { align-self: center; background-color: transparent; border-color: var(--color-primary); color: var(--color-primary); font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 900; padding: 1rem 1.25rem; text-transform: uppercase; transition: background-color .2s, border-color .2s, color .2s; }
+  .bases:hover { background-color: var(--color-accent); border-color: var(--color-accent); color: var(--color-foreground); }
   .bases:disabled { cursor: not-allowed; opacity: .82; }
   .bases:focus-visible, a:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
   @media (max-width: 640px) { .category-grid { grid-template-columns: 1fr; gap: 3rem; } }
