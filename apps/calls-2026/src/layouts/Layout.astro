@@ -2,6 +2,7 @@
 import { Font } from 'astro:assets'
 import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
+import logo from '../assets/logo.png'
 import { appBase, publicPath } from '../utils/publication'
 import '../styles/global.css'
 
@@ -23,6 +24,7 @@ const canonical = new URL(publicPath(path), 'https://festivalarc.com').toString(
     <meta charset='utf-8' />
     <meta name='viewport' content='width=device-width' />
     <meta name='description' content={description} />
+    <link rel='icon' type='image/png' href={logo.src} />
     <link rel='canonical' href={canonical} />
     <Font cssVariable='--font-poppins' />
     <title>{title}</title>
