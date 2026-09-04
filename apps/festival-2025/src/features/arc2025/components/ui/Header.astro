@@ -56,10 +56,10 @@ const editionTargets = publicationTargets(publicationConfig)
   <!-- Navigation -->
   <nav
     class={cn(
-      'absolute z-10 w-fit mx-auto left-0 right-0 items-center justify-center ',
+      'absolute z-10 left-0 right-0 mx-auto w-full max-w-full items-center justify-center px-4',
       currentPath === '/' ? 'flex' : 'hidden lg:flex',
     )}>
-    <ul class='font-neris flex items-center gap-4 text-lg'>
+    <ul class='font-neris flex flex-wrap items-center justify-center gap-x-4 gap-y-2 py-2 text-lg'>
       {
         navItems.map(({ id, label, path }) => (
           <li
@@ -76,19 +76,32 @@ const editionTargets = publicationTargets(publicationConfig)
       }
       {
         editionTargets.length > 1 && (
-          <li class='text-25-white rounded-xs bg-25-black px-4 py-1'>
-            <details>
-              <summary class='cursor-pointer'>Ediciones</summary>
-              <ul class='mt-2 space-y-1 text-base'>
+          <li class='relative'>
+            <div class='editions-dropdown group'>
+              <div
+                class={cn(
+                  'editions-trigger block size-full cursor-pointer rounded-xs pb-1 px-4 text-xl font-bold transition-transform duration-150 hover:-skew-y-4',
+                  withLogo ? 'bg-25-primary text-25-white' : 'bg-25-black text-25-white',
+                )}
+                tabindex='0'>Ediciones</div>
+              <div class='editions-panel absolute left-0 top-full z-20 min-w-full'>
+                <ul
+                  class={cn(
+                    'editions-panel-content rounded-xs p-2 text-base shadow-lg',
+                    withLogo ? 'bg-25-primary text-25-white' : 'bg-25-black text-25-white',
+                  )}>
                 {editionTargets.map((target) => (
                   <li>
-                    <a href={target.href} class='block hover:text-25-accent'>
+                    <a
+                      href={target.href}
+                      class='block whitespace-nowrap px-2 py-1 hover:text-25-accent focus-visible:outline-2 focus-visible:outline-25-accent'>
                       {target.label}
                     </a>
                   </li>
                 ))}
               </ul>
-            </details>
+              </div>
+            </div>
           </li>
         )
       }
@@ -204,3 +217,47 @@ const editionTargets = publicationTargets(publicationConfig)
     </section>
   </section>
 </header>
+
+<style>
+  .editions-panel {
+    top: 100%;
+    left: 0;
+    padding-top: 0.5rem;
+    pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0s linear 180ms;
+  }
+
+  .editions-panel-content {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease;
+  }
+
+  .editions-dropdown:hover .editions-panel,
+  .editions-dropdown:focus-within .editions-panel {
+    pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .editions-dropdown:hover .editions-panel > .editions-panel-content,
+  .editions-dropdown:focus-within .editions-panel > .editions-panel-content {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .editions-panel {
+      transition: none;
+    }
+
+    .editions-panel-content {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

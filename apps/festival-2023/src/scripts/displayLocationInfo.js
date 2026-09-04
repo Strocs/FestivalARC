@@ -1,4 +1,4 @@
-import { getStylesByColor } from '../utils'
+import { getStylesByColor } from '../utils/getStylesByColor.js'
 import {
 	footer,
 	header,
@@ -9,7 +9,7 @@ import {
 	resetButton,
 	spanResetButton,
 	searchBar
-} from './'
+} from './getDOMElements.js'
 
 const colors = [
 	getStylesByColor('pale-purple'),
@@ -23,10 +23,16 @@ const colors = [
 	getStylesByColor('pale-blue')
 ]
 
+const downloadScheduleShadow = downloadScheduleBtn.parentElement
+const defaultDownloadShadow = downloadScheduleShadow.classList.contains('bg-neutral-700')
+	? 'bg-neutral-700'
+	: 'bg-white'
+
 export function changeElementStyles(index, change) {
 	const changeBackgroundElements = [header, footer, downloadScheduleBtn, resetButton]
 	if (change) {
 		changeBackgroundElements.forEach((element) => {
+			element.classList.remove('bg-main')
 			element.classList.add(colors[index].backgroundColor)
 		})
 		spanResetButton.classList.add(colors[index].borderColor, colors[index].textColor)
@@ -45,11 +51,13 @@ export function changeElementStyles(index, change) {
 			header.classList.add('text-neutral-700')
 			downloadScheduleBtn.classList.remove('text-white', 'border-white')
 			downloadScheduleBtn.classList.add('text-neutral-700', 'border-neutral-700')
-			downloadScheduleBtn.parentElement.classList.add('bg-neutral-700')
+			downloadScheduleShadow.classList.remove('bg-white', 'bg-neutral-700')
+			downloadScheduleShadow.classList.add('bg-neutral-700')
 		}
 	} else {
 		changeBackgroundElements.forEach((element) => {
 			element.classList.remove(colors[index].backgroundColor)
+			element.classList.add('bg-main')
 		})
 		spanResetButton.classList.remove(colors[index].borderColor, colors[index].textColor)
 		spanResetButton.classList.add('border-main', 'text-main')
@@ -66,7 +74,8 @@ export function changeElementStyles(index, change) {
 			header.classList.remove('text-neutral-700')
 			downloadScheduleBtn.classList.add('text-white', 'border-white')
 			downloadScheduleBtn.classList.remove('text-neutral-700', 'border-neutral-700')
-			downloadScheduleBtn.parentElement.classList.remove('bg-neutral-700')
+			downloadScheduleShadow.classList.remove('bg-white', 'bg-neutral-700')
+			downloadScheduleShadow.classList.add(defaultDownloadShadow)
 		}
 	}
 }

@@ -1,7 +1,8 @@
 ---
 import { ARC_2023 } from 'src/data/ARC_2023'
 import ButtonLink from './ButtonLink.astro'
-    import { withBase } from '../utils/publication.js'
+import { publicationConfig } from '../../../../editions.config'
+import { publicationBase, withBase } from '../utils/publication.js'
 import MINCAP from './icons/MINCAP.astro'
 import SocialNetworks from './SocialNetworks.astro'
 
@@ -15,6 +16,25 @@ const sections = [
 const { styles, locationId = '' } = Astro.props
 
 const text = locationId.includes('estacionamiento') ? 'text-neutral-700' : 'text-white'
+
+const editionTargets = [
+	{ publication: publicationConfig.active, base: '/' },
+	...publicationConfig.archives.map((publication) => ({
+		publication,
+		base: publication.base
+	}))
+]
+	.sort((left, right) => right.publication.year - left.publication.year)
+	.map(({ publication, base }) => ({
+		label: publication.kind === 'calls'
+			? `Convocatoria ${publication.year}`
+			: `Festival ARC ${publication.year}`,
+		href: base === publicationBase
+			? withBase('/')
+			: base === '/'
+				? '/'
+				: `${base}/`
+	}))
 ---
 
 <nav
@@ -30,6 +50,25 @@ const text = locationId.includes('estacionamiento') ? 'text-neutral-700' : 'text
 					</li>
 				))
 			}
+			<li class='editions-dropdown relative'>
+				<div
+					class='editions-trigger text-4xl transition-all duration-200 ease-in hover:underline'
+					tabindex='0'
+				>
+					EDICIONES
+				</div>
+				<div class='editions-panel'>
+					<ul class='editions-panel-content grid gap-2 bg-white p-3 text-2xl font-light text-neutral-700'>
+						{
+							editionTargets.map((target) => (
+								<li class='leading-5 transition-all duration-200 ease-in hover:underline'>
+									<a href={target.href}>{target.label}</a>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+			</li>
 		</ul>
 		<ul class='text-md grid gap-2 font-light'>
 			{
@@ -80,5 +119,56 @@ const text = locationId.includes('estacionamiento') ? 'text-neutral-700' : 'text
 		/* WebKit */
 		width: 0;
 		height: 0;
+	}
+
+	.editions-dropdown {
+		position: relative;
+	}
+
+	.editions-panel {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		padding-top: 0.5rem;
+		pointer-events: none;
+		visibility: hidden;
+		transition: visibility 0s linear 180ms;
+	}
+
+	.editions-panel-content {
+		opacity: 0;
+		transform: translateY(0.5rem);
+		transition:
+			opacity 180ms ease,
+			transform 180ms ease;
+	}
+
+	.editions-dropdown:hover > .editions-panel,
+	.editions-dropdown:focus-within > .editions-panel {
+	pointer-events: auto;
+	visibility: visible;
+	transition-delay: 0s;
+}
+
+	.editions-dropdown:hover > .editions-panel > .editions-panel-content,
+	.editions-dropdown:focus-within > .editions-panel > .editions-panel-content {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: 0s;
+}
+
+	.editions-trigger {
+		cursor: pointer;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.editions-panel {
+			transition: none;
+		}
+
+		.editions-panel-content {
+			transform: none;
+			transition: none;
+		}
 	}
 </style>

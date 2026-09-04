@@ -4,23 +4,23 @@ import { previousEditionTargets } from './previousEditions'
 
 const editions = previousEditionTargets(publicationConfig)
 ---
-<header
-  class='previous-editions z-10 flex justify-center px-5 py-4 sm:px-8 lg:px-12'
+<nav
+  class='z-10 flex justify-center py-4'
+  aria-label='Ultimas ediciones'
 >
-  <nav aria-label='Ultimas ediciones'>
-    <details class='relative'>
-      <summary
-        class='group capitalize flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
-      >
+  <div class='group relative'>
+    <div
+      class='flex cursor-pointer items-center gap-2 px-3 py-1 text-sm leading-tight capitalize text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+      tabindex='0'
+    >
       <span>últimas ediciones</span>
-        <span
-          class='h-0 w-0 border-x-4 border-x-transparent border-t-[6px] border-t-current transition-transform'
-          aria-hidden='true'
-        ></span>
-      </summary>
-      <ul
-        class='absolute left-1/2 mt-1 min-w-full -translate-x-1/2 rounded bg-background p-1 text-center text-foreground'
-      >
+      <span
+        class='h-0 w-0 border-x-4 border-x-transparent border-t-[6px] border-t-current transition-transform group-hover:rotate-180 group-focus-within:rotate-180'
+        aria-hidden='true'
+      ></span>
+    </div>
+    <div class='absolute inset-x-0 top-full z-20 flex justify-center pointer-events-none invisible pt-2 transition-[visibility] duration-0 ease-linear delay-[180ms] group-hover:pointer-events-auto group-hover:visible group-hover:delay-0 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:delay-0 motion-reduce:transition-none'>
+      <ul class='relative w-max translate-y-2 rounded bg-background p-1 text-center text-foreground opacity-0 transition-[opacity,transform] duration-[180ms] ease-[ease] group-hover:translate-y-0 group-hover:opacity-100 group-hover:delay-0 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-focus-within:delay-0 motion-reduce:transform-none motion-reduce:transition-none'>
         {editions.map((edition) => (
           <li>
             <a
@@ -32,16 +32,6 @@ const editions = previousEditionTargets(publicationConfig)
           </li>
         ))}
       </ul>
-    </details>
-  </nav>
-</header>
-
-<style>
-  .previous-editions summary {
-    list-style: none;
-  }
-
-  .previous-editions summary::-webkit-details-marker {
-    display: none;
-  }
-</style>
+    </div>
+  </div>
+</nav>

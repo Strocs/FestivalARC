@@ -1,80 +1,41 @@
 ---
 import { Image } from 'astro:assets'
-import logo from '../assets/logo.jpg'
+import { Icon } from 'astro-icon/components'
 import Layout from '../layouts/Layout.astro'
-
-const disciplines: string[] = [
-  'MÚSICA',
-  'TEATRO',
-  'DANZA',
-  'ARTES CIRCENSES',
-  'LITERATURA',
-  'ARTES VISUALES',
-  'ARTESANÍA',
-  'DISEÑO'
-]
+import { call } from '../data/calls'
+import logoHero from '../assets/LOGO_HERO.jpg'
 ---
 <Layout>
-  <main
-    class='flex h-full flex-1 flex-col items-start justify-center gap-10 px-5 py-8 font-sans text-foreground sm:items-center sm:px-8 sm:py-10 lg:px-12 lg:pt-12 lg:pb-4'
-    aria-labelledby='coming-soon-title'
-  >
-    <div
-      class='grid w-full max-w-screen-2xl grid-cols-1 items-center justify-center gap-12 md:gap-16 lg:grid-cols-2 lg:gap-20'
-    >
-      <section
-        class='min-w-0 w-full'
-        aria-labelledby='disciplines-title'
-      >
-        <Image
-          src={logo}
-          alt='Logotipo del Festival ARC 2026'
-          class='mx-auto block h-auto w-full max-w-lg'
-          loading='eager'
-        />
-        <h2 id='disciplines-title' class='sr-only'>Disciplinas de la convocatoria</h2>
-        <ul
-          class='mt-6 flex max-w-full list-none flex-wrap items-center justify-center gap-y-1 p-0 text-[clamp(1.75rem,8vw,2.75rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.065em] md:gap-y-2 md:text-[clamp(2rem,5vw,3rem)] lg:gap-0 lg:text-[clamp(1.75rem,3.65vw,4rem)] lg:leading-[0.82] lg:tracking-[-0.07em]'
-          aria-label='Disciplinas de la convocatoria'
-        >
-          {disciplines.map((discipline, index) => (
-            <li
-              class:list={[
-                'inline-flex min-w-0 max-w-full items-center break-words',
-                {
-                  'text-primary': index % 2 === 0,
-                  'text-foreground': index % 2 !== 0
-                }
-              ]}
-            >
-              {discipline}
-              {index < disciplines.length - 1 && (
-                <span class='leading-0 text-primary' aria-hidden='true'>/</span>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
+  <main class='flex flex-1 flex-col overflow-hidden px-5 py-8 font-sans text-foreground sm:px-8 sm:py-12 lg:px-12 lg:py-16' aria-labelledby='page-title'>
+    <section class='mx-auto flex w-full max-w-screen-2xl flex-col items-center pb-[clamp(.75rem,2vw,1.5rem)] text-center' aria-labelledby='page-title'>
+      <h1 id='page-title' class='sr-only'>Convocatoria Festival ARC 2026</h1>
+      <div class='relative aspect-[10/3] w-full max-w-[72rem] overflow-hidden' aria-hidden='true'><Image src={logoHero} alt='' class='block size-full object-cover object-center' loading='eager' /></div>
+      <p class='flex flex-wrap items-center justify-center gap-x-2 leading-none text-[clamp(1.25rem,3vw,1.8rem)] tracking-tighter'>
+        <span class='uppercase font-bold text-[110%] text-foreground'>{call.deadline.prefix}</span>
+        <span class='text-primary'>{call.deadline.start}</span>
+        <span>{call.deadline.connector}</span>
+        <span class='text-primary'>{call.deadline.end}</span>
+        <span>{call.deadline.suffix}</span>
+        <span class='capitalize text-primary'>{call.deadline.month}</span>
+      </p>
+      <hr class='mx-auto mt-[clamp(1rem,2vw,1.5rem)] w-[min(12rem,36vw)] border-0 border-t-2 border-primary' aria-hidden='true' />
+    </section>
 
-      <section class='min-w-0 w-full h-fit'>
-        <h1
-          id='coming-soon-title'
-          class='m-0 max-w-full break-words text-left text-[clamp(3.75rem,18vw,6rem)] font-extrabold uppercase leading-[0.78] tracking-[-0.085em] sm:text-[clamp(4rem,14vw,7rem)] md:text-[clamp(4.5rem,12vw,8rem)] lg:text-[clamp(3.75rem,10.5vw,10.472rem)]'
-        >
-          <span class='sr-only'>PRONTO CONVOCATORIA 2026</span>
-          <span class='flex flex-col items-center' aria-hidden='true'>
-            <span class='block'>PRONTO</span>
-            <span class='block text-primary'>CONVO_</span>
-            <span class='block text-primary'>CATORIA</span>
-            <span class='block'>2026</span>
-          </span>
-        </h1>
-      </section>
-    </div>
+    <section class='mx-auto w-full container py-[clamp(2.25rem,5vw,4.5rem)]' aria-labelledby='lines-title'>
+      <h2 id='lines-title' class='text-center text-[clamp(1.05rem,2vw,1.5rem)] leading-[1.1] tracking-[-.03em] text-foreground'>Selecciona tu línea de postulación</h2>
+      <div class='mx-auto mt-[clamp(2.5rem,5vw,4rem)] grid max-w-6xl grid-cols-2 gap-[clamp(3rem,7vw,6rem)] max-[640px]:grid-cols-1 max-[640px]:gap-12'>
+        {call.categories.map((category) => <article class='flex flex-col items-center'>
+          <h3 class='text-primary font-extralight text-center text-[clamp(1.25rem,2.25vw,2rem)] leading-[.95]'>{category.title}</h3>
+          <ul class='mt-8 w-fit'>
+            {category.disciplines.map((discipline) => <li class='flex justify-center py-2 text-center'>
+              <a class='group font-extrabold inline-flex items-center justify-center text-center text-[clamp(1.35rem,3.4vw,2.6rem)] leading-none flex-nowrap text-nowrap text-foreground uppercase hover:text-accent focus-visible:text-accent focus-visible:outline-[3px] focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-accent' href={discipline.url} target='_blank' rel='noopener noreferrer'>{discipline.name}<Icon name='lucide:arrow-right' aria-hidden='true' class='ml-[0.15em] size-[0.85em] shrink-0 transition-transform duration-200 ease-in-out motion-reduce:transform-none motion-reduce:transition-none group-hover:-rotate-45 group-focus-visible:-rotate-45' /></a>
+            </li>)}
+          </ul>
+        </article>)}
+      </div>
+    </section>
 
-    <p class='mx-auto max-w-3xl text-center text-xl font-semibold leading-tight sm:text-2xl lg:text-[1.625rem]'>
-      <span class='block'>La convocatoria se abrirá el</span>
-      <span class='block text-primary'>Viernes 04 de Septiembre a las 18:00hrs.</span>
-    </p>
+    <hr class='mx-auto mt-0 mb-[clamp(1rem,2vw,1.5rem)] w-[min(12rem,36vw)] border-0 border-t-2 border-primary' aria-hidden='true' />
+    <a class='self-center rounded-2xl border-3 border-primary bg-transparent px-5 py-4 text-[clamp(1rem,2vw,1.3rem)] font-semibold text-primary uppercase transition-[background-color,border-color,color] duration-200 ease-[ease] hover:border-accent hover:bg-accent hover:text-foreground focus-visible:outline-[3px] focus-visible:outline-solid focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-[.82] lg:border-4' href='https://drive.google.com/file/d/1yrXH3Zgdu2ItJ0KRIWrs0vCnUWelpjGk/view?usp=sharing' target='_blank' rel='noopener noreferrer'>Descarga las bases</a>
   </main>
 </Layout>

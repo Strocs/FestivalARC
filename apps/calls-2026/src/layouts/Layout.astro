@@ -1,7 +1,7 @@
 ---
 import { Font } from 'astro:assets'
 import Footer from '../components/Footer.astro'
-import PreviousEditions from '../components/PreviousEditions.astro'
+import Header from '../components/Header.astro'
 import { appBase, publicPath } from '../utils/publication'
 import '../styles/global.css'
 
@@ -11,11 +11,13 @@ interface Props {
 }
 
 const {
-  title = 'Festival ARC | Pronto convocatoria 2026',
+  title = 'Festival ARC | Convocatoria 2026',
   description = 'Sitio oficial del Festival ARC. Próximamente, Convocatoria 2026.',
 } = Astro.props
 const path = Astro.url.pathname === appBase ? '/' : Astro.url.pathname.replace(`${appBase}/`, '/')
-const canonical = new URL(publicPath(path), 'https://festivalarc.com').toString().replace(/\/$/, '')
+const siteUrl = 'https://festivalarc.com'
+const canonical = new URL(publicPath(path), siteUrl).toString().replace(/\/$/, '')
+const socialImage = new URL(publicPath('/og-image.jpg'), siteUrl).toString()
 ---
 <!doctype html>
 <html lang='es'>
@@ -23,12 +25,27 @@ const canonical = new URL(publicPath(path), 'https://festivalarc.com').toString(
     <meta charset='utf-8' />
     <meta name='viewport' content='width=device-width' />
     <meta name='description' content={description} />
+    <meta property='og:type' content='website' />
+    <meta property='og:locale' content='es_CL' />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:url' content={canonical} />
+    <meta property='og:image' content={socialImage} />
+    <meta property='og:image:width' content='1200' />
+    <meta property='og:image:height' content='630' />
+    <meta property='og:image:alt' content='Festival ARC 2026 — El arte de habitar la ciudad' />
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:title' content={title} />
+    <meta name='twitter:description' content={description} />
+    <meta name='twitter:image' content={socialImage} />
+    <meta name='twitter:image:alt' content='Festival ARC 2026 — El arte de habitar la ciudad' />
+    <link rel='icon' type='image/png' sizes='512x512' href={publicPath('/favicon.png')} />
     <link rel='canonical' href={canonical} />
     <Font cssVariable='--font-poppins' />
     <title>{title}</title>
   </head>
   <body class="min-h-svh bg-background h-full flex flex-col">
-    <PreviousEditions />
+    <Header />
     <slot />
     <Footer />
   </body>
