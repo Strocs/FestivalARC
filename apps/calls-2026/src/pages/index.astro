@@ -9,23 +9,23 @@ const fair = ['Literatura / Editorial', 'Artesanía', 'Diseño e ilustración']
 ---
 <Layout>
   <main class='flex flex-1 flex-col gap-6 px-5 py-6 font-sans text-foreground sm:gap-8 sm:px-8 sm:py-8 lg:px-12 lg:py-10' aria-labelledby='page-title'>
-    <section class='mx-auto flex w-full max-w-screen-2xl flex-col items-center border-2 border-primary px-5 py-8 text-center sm:px-10 sm:py-10' aria-labelledby='page-title'>
+    <section class='mx-auto flex w-full max-w-screen-2xl flex-col items-center px-5 py-8 text-center sm:px-10 sm:py-10' aria-labelledby='page-title'>
       <h1 id='page-title' class='sr-only'>Convocatoria Festival ARC 2026</h1>
       <Image src={logoHero} alt='ARC26. El arte de habitar la ciudad' class='block h-auto w-full max-w-3xl' loading='eager' />
-      <p class='mt-6 text-base font-bold uppercase tracking-wide text-foreground sm:text-lg'>Convocatoria regional: 04 al 25 de septiembre</p>
+      <p class='mt-8 text-lg font-extrabold uppercase tracking-wide sm:text-xl'>Convocatoria regional: <span class='text-primary'>04 al 25 de septiembre</span></p>
     </section>
 
-    <section class='mx-auto w-full max-w-screen-2xl border-2 border-primary px-5 py-7 sm:px-8 sm:py-9' aria-labelledby='lines-title'>
-      <h2 id='lines-title' class='mb-8 text-center text-base font-bold uppercase tracking-wide sm:text-lg'>Selecciona tu línea de postulación</h2>
-      <div class='grid gap-6 md:grid-cols-2 md:gap-10'>
-        <article class='border-2 border-foreground p-5 sm:p-7'>
-          <h3 class='mb-5 text-base font-bold uppercase leading-tight sm:text-lg'>Presentaciones y exhibiciones</h3>
+    <section class='mx-auto w-full max-w-screen-2xl px-5 py-7 sm:px-8 sm:py-9' aria-labelledby='lines-title'>
+      <h2 id='lines-title' class='mb-10 text-center text-xl font-extrabold uppercase tracking-wide sm:text-2xl'>Selecciona tu línea de postulación</h2>
+      <div class='grid gap-8 md:grid-cols-2 md:gap-14'>
+        <article class='p-0 sm:p-2'>
+          <h3 class='mb-6 text-xl font-extrabold uppercase leading-tight text-primary sm:text-2xl'>Presentaciones y exhibiciones</h3>
           <ul class='space-y-2 text-base sm:text-lg'>
             {presentations.map((item) => <li>• {item}</li>)}
           </ul>
         </article>
-        <article class='border-2 border-foreground p-5 sm:p-7'>
-          <h3 class='mb-5 text-base font-bold uppercase leading-tight sm:text-lg'>Espacio ferial y mercado creativo</h3>
+        <article class='p-0 sm:p-2'>
+          <h3 class='mb-6 text-xl font-extrabold uppercase leading-tight text-primary sm:text-2xl'>Espacio ferial y mercado creativo</h3>
           <ul class='space-y-2 text-base sm:text-lg'>
             {fair.map((item) => <li>• {item}</li>)}
           </ul>
@@ -33,6 +33,6 @@ const fair = ['Literatura / Editorial', 'Artesanía', 'Diseño e ilustración']
       </div>
     </section>
 
-    <a href={publicPath('/bases')} class='mx-auto flex w-full max-w-screen-2xl items-center justify-center border-2 border-primary px-5 py-5 text-center text-base font-bold uppercase tracking-wide transition-colors hover:border-accent hover:bg-accent hover:text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-lg'>Descarga las bases</a>
+    <a href={publicPath('/bases')} class='mx-auto flex w-full max-w-screen-2xl items-center justify-center rounded-2xl border-3 border-primary bg-background px-5 py-5 text-center text-base font-bold uppercase tracking-wide text-primary transition-colors hover:border-accent hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:text-lg'>Descarga las bases</a>
   </main>
 </Layout>
