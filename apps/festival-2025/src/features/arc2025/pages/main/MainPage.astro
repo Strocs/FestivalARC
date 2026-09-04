@@ -4,6 +4,7 @@ import { Image } from 'astro:assets'
 import Arc2025Layout from '@/features/arc2025/Arc2025Layout.astro'
 import Header from '../../components/ui/Header.astro'
 import Hero from './sections/Hero.astro'
+import StreamingVideo from '@/features/arc2025/components/streaming/StreamingVideo.astro'
 
 import FONDO_WEB from '@/features/arc2025/assets/fondo_arc.webp'
 import Streaming from './sections/Streaming.astro'
@@ -23,6 +24,9 @@ import Streaming from './sections/Streaming.astro'
   <Header withLogo={false} />
   <main class='mx-auto h-full w-full pb-20 md:space-y-8' data-page='main'>
     <Hero />
+    <section class='px-4'>
+      <StreamingVideo videoId='XGX12agTbr8' class='mx-auto rounded-lg' />
+    </section>
     <Streaming />
   </main>
 </Arc2025Layout>

@@ -56,10 +56,10 @@ const editionTargets = publicationTargets(publicationConfig)
   <!-- Navigation -->
   <nav
     class={cn(
-      'absolute z-10 w-fit mx-auto left-0 right-0 items-center justify-center ',
+      'absolute z-10 left-0 right-0 mx-auto w-full max-w-full items-center justify-center px-4',
       currentPath === '/' ? 'flex' : 'hidden lg:flex',
     )}>
-    <ul class='font-neris flex items-center gap-4 text-lg'>
+    <ul class='font-neris flex flex-wrap items-center justify-center gap-4 text-lg'>
       {
         navItems.map(({ id, label, path }) => (
           <li
