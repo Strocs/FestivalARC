@@ -59,3 +59,16 @@ real behavior.
 - Note: `astro dev --help` intermittently slow to exit while another
   project's `turbo run test` was loading the machine; reproduced without
   our chain (pre-existing, unrelated).
+- Live dev-server run: `pnpm dev` → turbo scope `calls-2026`,
+  `astro dev --host` on :4321, HTTP 200 with `<title>Festival ARC |
+  Convocatoria 2026`, clean SIGINT shutdown (0 processes, 0 listeners).
+- Pre-commit `pnpm build`: exit 0, 435 files composed, Configuration
+  SHA-256 `e7e32dd23bd02b56` unchanged.
+- Native review (gentle-ai): lineage `review-0f801371fc9d317b` created
+  (medium tier, lens review-reliability, 7 files / 123 lines) but the
+  first bound STATUS hit `operation_timeout` under machine load →
+  `retry_safe: false`, `manual_action_required`. Review outcome for this
+  candidate: **unavailable** (user opted to proceed with delivery);
+  authority inspect afterwards showed no active candidates.
+- Work-unit commit: `5831569` `fix(workspace): route root dev scripts to
+  the active publication` on branch `dev`.
