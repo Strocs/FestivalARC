@@ -7,14 +7,14 @@
     "@festivalarc/editions": "workspace:*"
   },
   "scripts": {
-    "dev": "pnpm --filter festivalarc-2025 dev",
-    "start": "pnpm --filter festivalarc-2025 start",
+    "dev": "node scripts/run-active.mjs dev",
+    "start": "node scripts/run-active.mjs start",
     "build": "pnpm --filter @festivalarc/distribution build",
     "preview": "python3 -m http.server 4173 --directory .output",
-    "astro": "pnpm --filter festivalarc-2025 astro",
+    "astro": "node scripts/run-active.mjs astro",
     "type": "pnpm -r --if-present run type",
     "test": "pnpm -r --if-present run test",
-    "test:coverage": "pnpm --filter festivalarc-2025 test:coverage",
+    "test:coverage": "pnpm -r --if-present run test:coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",

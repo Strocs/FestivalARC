@@ -31,7 +31,7 @@ tooling/distribution ── validates, scans, adds global files ──► .outpu
         └────────────────────────────────────────────────────► Vercel
 ```
 
-The current selection is `calls-2026` at the root, with final archives for 2023 and 2024. The root development shortcut still targets `festivalarc-2025`; select the app you actually need with an app filter.
+The active selection is `calls-2026` at the root, with final archives for 2023, 2024 and 2025. Root development shortcuts (`pnpm dev`, `pnpm start`) resolve the active publication from `editions.config.ts` and launch only that app through turbo; use an app filter to run any other app.
 
 ## Prerequisites and install
 
@@ -49,8 +49,8 @@ Run from the repository root:
 
 | Task | Command |
 | --- | --- |
-| Default development app (2025) | `pnpm dev` |
-| Default start command (2025 Astro server) | `pnpm start` |
+| Active publication dev server | `pnpm dev` |
+| Active publication start command | `pnpm start` |
 | 2025 app development | `pnpm --filter festivalarc-2025 dev` |
 | 2026 calls development | `pnpm --filter calls-2026 dev` |
 | 2023 archive development | `pnpm --filter festival-arc-2023 dev` |

@@ -23,18 +23,11 @@ Use the workspace package name, not the app directory name:
 | 2023 archive | `pnpm --filter festival-arc-2023 dev` | 4321 |
 | 2024 archive | `pnpm --filter festival-arc-2024 dev` | 4321 |
 
-No app configuration overrides Astro's default development port. The root shortcuts are equivalent to the 2025 commands:
-
-```bash
-pnpm dev
-pnpm start
-```
-
-Both root commands run `festivalarc-2025`, not the currently selected `calls-2026` publication.
+No app configuration overrides Astro's default port 4321. The root shortcuts (`pnpm dev`, `pnpm start`) resolve the active publication from `editions.config.ts` (currently `calls-2026`) and launch only that app through turbo. To run a different app, use its filter from the table.
 
 ### Work on multiple apps
 
-There is no root concurrent all-app dev command. Open one terminal per app and assign explicit ports:
+Root `pnpm dev` runs only the active publication, not all apps. Open separate terminals for additional apps and assign explicit ports:
 
 ```bash
 # Terminal 1
@@ -153,8 +146,8 @@ During a distribution build, `DISTRIBUTION_OUTPUT_DIR` redirects each selected a
 
 ## Troubleshooting
 
-- **The wrong site starts:** `pnpm dev` and `pnpm start` intentionally target `festivalarc-2025`. Use the exact filter for `calls-2026` or an archive.
-- **A second app cannot start:** all apps default to port 4321. Pass a unique port as shown above.
+- **The wrong site starts:** root shortcuts run whatever publication is marked `active` in `editions.config.ts`; to run another app or an archive, pass its `--filter`.
+- **A second app cannot start:** all apps request port 4321; Astro automatically tries the next free port (4322, 4323, …) when one is taken. Pass `-- --port <n>` to pin a deterministic port.
 - **A filter is not found:** use the package name from the table. For example, the directory `apps/festival-2023` is the package `festival-arc-2023`.
 - **The composed site is stale:** run `pnpm build` again. Do not copy files between app outputs or into `.output`.
 - **The distribution build rejects a package:** confirm its package name is registered in `editions.config.ts`, its package directory exists under `apps/`, and its build honors `PUBLICATION_BASE` and `DISTRIBUTION_OUTPUT_DIR`.

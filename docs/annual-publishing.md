@@ -11,8 +11,9 @@ This is the operating procedure for the yearly publication cycle: keep a tempora
 | Active calls | `calls-2026` | `/` |
 | Final archive | `festival-2023` | `/ediciones/2023` |
 | Final archive | `festival-2024` | `/ediciones/2024` |
+| Final archive | `festival-2025` | `/ediciones/2025` |
 
-The root development shortcut is separate: `pnpm dev` runs `festivalarc-2025`. Use the publication table and app-specific filters when working on the selected site.
+The root development shortcuts follow the active selection: `pnpm dev` and `pnpm start` resolve the active publication from `editions.config.ts` (today `calls-2026`) and launch only that app through turbo. Use the publication table and app-specific filters when working on any other site.
 
 ## Publication states
 
