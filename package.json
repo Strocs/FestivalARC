@@ -17,10 +17,12 @@
     "test:coverage": "pnpm --filter festivalarc-2025 test:coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:debug": "playwright test --debug"
+    "test:e2e:debug": "playwright test --debug",
+    "visual:capture": "pnpm --filter @festivalarc/visual-review run capture",
+    "visual:clean": "pnpm --filter @festivalarc/visual-review run clean"
   },
   "devDependencies": {
-    "@playwright/test": "^1.56.0",
+    "@playwright/test": "1.61.0",
     "turbo": "^2.5.6",
     "typescript": "^5.9.3"
   },

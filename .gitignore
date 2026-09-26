@@ -40,6 +40,7 @@ pnpm-debug.log*
 /.distribution-manifest.json
 /.output/
 /output/
+/output/playwright/
 
 # Local reference material
 /refs/

@@ -98,6 +98,35 @@ pnpm run test:e2e:debug
 
 Do not run the root E2E suite against an unbuilt or stale `.output`.
 
+### Visual capture review
+
+Build and preview one or more apps, then capture every public page in Chromium, Firefox, and WebKit at desktop, tablet, and mobile viewports:
+
+```bash
+pnpm visual:capture
+pnpm visual:capture -- --app festival-2025 --app festival-2024
+pnpm visual:capture -- --app calls-2026 --browser chromium
+pnpm visual:clean
+```
+
+The images are written to `output/playwright/` for human inspection. Use `--browser chromium|firefox|webkit` one or more times to select browsers; without it, all three run. Install the browsers once before the first capture:
+
+```bash
+pnpm exec playwright install chromium firefox webkit
+```
+
+This workflow creates screenshots only; it does not compare baselines or run page assertions.
+
+WebKit needs its browser dependencies present on the host. When they are missing, the WebKit
+capture fails at launch with `Host system is missing dependencies to run browsers` and the run
+exits non-zero after the other browsers finished. `pnpm exec playwright install-deps` only
+supports apt-based distributions, so on other hosts the required libraries must be provided by
+the system package manager. Verify a browser before a full matrix run:
+
+```bash
+pnpm exec playwright install chromium firefox webkit
+```
+
 ## Preview
 
 Preview the composed root artifact with the repository's Python server:
