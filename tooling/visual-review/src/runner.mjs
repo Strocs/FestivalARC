@@ -17,6 +17,7 @@ export async function captureApp(app, {
   capturePages: capture = capturePages,
   getAvailablePort = findAvailablePort,
   stopProcess = stopPreview,
+  removeOutput = rm,
   browsers = { chromium, firefox, webkit },
   browserNames = BROWSER_NAMES,
 } = {}) {
@@ -27,7 +28,6 @@ export async function captureApp(app, {
     PUBLICATION_BASE: app.base,
   }
 
-  await rm(outputDirectory, { recursive: true, force: true })
   await runCommand(app.buildCommand, {
     cwd: rootDirectory,
     env: environment,
@@ -36,6 +36,7 @@ export async function captureApp(app, {
   const pages = await discoverPages(join(appDirectory, app.outputDirectory))
   if (pages.length === 0) throw new Error(`No public HTML pages found for ${app.id}`)
 
+  await removeOutput(outputRoot, { recursive: true, force: true })
   const port = await getAvailablePort()
   const preview = startPreview(
     [...app.previewCommand, '--host', '127.0.0.1', '--port', String(port)],

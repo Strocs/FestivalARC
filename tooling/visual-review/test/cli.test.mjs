@@ -2,14 +2,13 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { main, parseArgs } from '../src/cli.mjs'
 
-test('parses repeatable app and browser options', () => {
+test('parses app and repeatable browser options', () => {
   assert.deepEqual(parseArgs([
     '--app', 'festival-2025',
-    '--app=calls-2026',
     '--browser', 'chromium',
     '--browser=webkit',
   ]), {
-    apps: ['festival-2025', 'calls-2026'],
+    apps: ['festival-2025'],
     browsers: ['chromium', 'webkit'],
     help: false,
   })
@@ -28,6 +27,16 @@ test('rejects missing values and unknown browsers', () => {
   assert.throws(() => parseArgs(['--browser']), /requires a value/)
   assert.throws(() => parseArgs(['--browser', 'safari']), /Unknown browser.*safari/)
   assert.throws(() => parseArgs(['--unknown']), /Unknown option/)
+})
+
+test('defaults to active, replaces the default with one app, and rejects two apps', async () => {
+  const calls = []
+  const capture = async (apps) => calls.push(apps.map(({ id }) => id))
+  await main([], { capture })
+  await main(['--app', 'festival-2024'], { capture })
+  assert.deepEqual(calls, [['calls-2026'], ['festival-2024']])
+  await assert.rejects(main(['--app', 'calls-2026', '--app', 'festival-2024'], { capture }),
+    /Only one --app may be specified at a time/)
 })
 
 test('forwards the selected browsers to capture', async () => {

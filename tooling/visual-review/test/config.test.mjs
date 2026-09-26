@@ -1,14 +1,15 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { publicationConfig } from '../../../editions.config.ts'
 import { APP_CONFIGS, resolveApps } from '../src/config.mjs'
 
-test('declares every real app with its package, build output, preview, and base', () => {
-  assert.deepEqual(Object.keys(APP_CONFIGS), [
-    'festival-2025',
-    'calls-2026',
-    'festival-2023',
-    'festival-2024',
-  ])
+test('derives every publication from the shared configuration', () => {
+  const publications = [publicationConfig.active, ...publicationConfig.archives]
+  assert.deepEqual(Object.keys(APP_CONFIGS).sort(), publications.map(({ id }) => id).sort())
+  for (const publication of publications) {
+    assert.equal(APP_CONFIGS[publication.id].packageName, publication.packageName)
+    assert.equal(APP_CONFIGS[publication.id].base, publication.base ? `${publication.base}/` : '/')
+  }
 
   assert.deepEqual(
     Object.fromEntries(Object.entries(APP_CONFIGS).map(([id, app]) => [id, {
@@ -46,10 +47,8 @@ test('declares every real app with its package, build output, preview, and base'
   )
 })
 
-test('resolves repeated app selections and rejects unknown apps', () => {
-  assert.deepEqual(resolveApps(['festival-2024', 'calls-2026', 'festival-2024']), [
-    APP_CONFIGS['festival-2024'],
-    APP_CONFIGS['calls-2026'],
-  ])
+test('defaults to the active publication and accepts one explicit selection', () => {
+  assert.deepEqual(resolveApps(), [APP_CONFIGS[publicationConfig.active.id]])
+  assert.deepEqual(resolveApps(['festival-2024']), [APP_CONFIGS['festival-2024']])
   assert.throws(() => resolveApps(['missing']), /Unknown app.*missing/)
 })

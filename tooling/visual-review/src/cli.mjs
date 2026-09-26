@@ -74,7 +74,7 @@ export async function main(argv = process.argv.slice(2), {
 }
 
 function usage() {
-  return `Usage: visual-capture [--app <app>]... [--browser <browser>]...\n\nApps default to all configured apps. Browsers default to chromium, firefox, and webkit. Repeat --app or --browser to select multiple values.\nAllowed browsers: ${BROWSER_NAMES.join('|')}.`
+  return `Usage: visual-capture [--app <app>] [--browser <browser>]...\n\nApps default to the active publication. Browsers default to chromium, firefox, and webkit. Repeat --browser to select multiple values.\nAllowed browsers: ${BROWSER_NAMES.join('|')}.`
 }
 
 function addBrowser(browsers, value) {
