@@ -80,7 +80,7 @@ review workflow, and remove its hand-duplicated copy of the publication table.
   (d) a run wipes `output/playwright` in full and leaves every other path untouched.
   Surfaces: `tooling/visual-review/src/**`, `tooling/visual-review/test/**`.
 
-- [ ] **T4 — End-to-end verification of T3.**
+- [x] **T4 — End-to-end verification of T3.**
   Acceptance: real `pnpm visual:capture -- --app calls-2026 --browser chromium` produces 3
   non-empty PNGs under `output/playwright/calls-2026/`, a prior run's images of another
   publication are gone, `git status` shows no tracked file changed besides the intended edits,
@@ -102,4 +102,5 @@ Commit identities are recorded here as each task closes.
 | --- | --- | --- |
 | T1 | `b2ca6c4` | tool commit (16 files, 821 insertions); plan commit `85b436a` precedes it; 12/12 tests green at commit time |
 | T2 | `b2ca6c4` + T2 | parameter property → readonly field; editions 12/12 tests pass; `pnpm build` green; plain node imports editions.config.ts with identical digest e7e32dd2; pre-existing `pnpm type` failure in festival-2024 (JSX namespace) is unrelated |
-| T3 | `T3-commit-hash` | tests first (RED→GREEN 15/15); default=activa desde editions.config.ts; un solo --app con error en múltiples; wipe total de output/playwright tras build+discovery; captura real 3 PNGs; pnpm build verde, digest idéntico e7e32dd2 |
+| T3 | `0d96a77` | tests first (RED→GREEN 15/15); default=activa desde editions.config.ts; un solo --app con error en múltiples; wipe total de output/playwright tras build+discovery; captura real 3 PNGs; pnpm build verde, digest idéntico e7e32dd2 |
+| T4 | (verified inline) | 15/15 tests + captura real calls-2026 3 PNGs + pnpm build verde, digest idéntico; output/playwright limpiado; working tree limpio |
