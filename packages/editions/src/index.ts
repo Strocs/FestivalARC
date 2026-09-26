@@ -14,7 +14,8 @@ export type PublicationConfig = { readonly schemaVersion: 1; readonly siteOrigin
 export type ValidationOptions = { readonly knownWorkspacePackages?: Iterable<string> }
 
 export class PublicationConfigError extends Error {
-  constructor(readonly diagnostics: readonly string[]) { super(`Invalid publication configuration: ${diagnostics.join('; ')}`); this.name = 'PublicationConfigError' }
+  readonly diagnostics: readonly string[]
+  constructor(diagnostics: readonly string[]) { super(`Invalid publication configuration: ${diagnostics.join('; ')}`); this.diagnostics = diagnostics; this.name = 'PublicationConfigError' }
 }
 export type FinalPublicationInput = { id: string; year: number; packageName: string }
 export type CallsLifecycleOptions = ValidationOptions & { readonly callsPackageName?: string }

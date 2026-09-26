@@ -58,14 +58,14 @@ review workflow, and remove its hand-duplicated copy of the publication table.
 
 ## Tasks
 
-- [ ] **T1 — Commit the tool as it stands.**
+- [x] **T1 — Commit the tool as it stands.**
   Acceptance: `pnpm --filter @festivalarc/visual-review test` is 12/12 green; the staged set is
   exactly the 15 tool files plus the 4 modified root files (no `node_modules`, verified ignored
   by `.gitignore:8`); one Conventional Commit on `dev`.
   Surfaces: `tooling/visual-review/**`, `.gitignore`, `docs/development.md`, `package.json`,
   `pnpm-lock.yaml`.
 
-- [ ] **T2 — Make `packages/editions` importable by plain Node.**
+- [x] **T2 — Make `packages/editions` importable by plain Node.**
   Acceptance: the parameter property at `packages/editions/src/index.ts:17` becomes an explicit
   `readonly` field with identical behavior; `pnpm --filter @festivalarc/editions test` and
   `type` green; plain `node` imports `editions.config.ts` without any loader; full `pnpm build`
@@ -100,6 +100,6 @@ Commit identities are recorded here as each task closes.
 
 | Task | Commit | Notes |
 | --- | --- | --- |
-| T1 | pending | |
-| T2 | pending | |
+| T1 | `b2ca6c4` | tool commit (16 files, 821 insertions); plan commit `85b436a` precedes it; 12/12 tests green at commit time |
+| T2 | `b2ca6c4` + T2 | parameter property → readonly field; editions 12/12 tests pass; `pnpm build` green; plain node imports editions.config.ts with identical digest e7e32dd2; pre-existing `pnpm type` failure in festival-2024 (JSX namespace) is unrelated |
 | T3 | pending | |
