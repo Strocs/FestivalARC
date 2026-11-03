@@ -19,29 +19,22 @@ Use the workspace package name, not the app directory name:
 | App | Command | Default local port |
 | --- | --- | ---: |
 | 2025 festival | `pnpm --filter festivalarc-2025 dev` | 4321 |
-| 2026 calls | `pnpm --filter calls-2026 dev` | 4321 |
+| 2026 results | `pnpm --filter festival-2026 dev` | 4321 |
 | 2023 archive | `pnpm --filter festival-arc-2023 dev` | 4321 |
 | 2024 archive | `pnpm --filter festival-arc-2024 dev` | 4321 |
 
-No app configuration overrides Astro's default development port. The root shortcuts are equivalent to the 2025 commands:
-
-```bash
-pnpm dev
-pnpm start
-```
-
-Both root commands run `festivalarc-2025`, not the currently selected `calls-2026` publication.
+No app configuration overrides Astro's default port 4321. The root shortcuts (`pnpm dev`, `pnpm start`) resolve the active publication from `editions.config.ts` (currently `festival-2026`) and launch only that app through turbo. To run a different app, use its filter from the table.
 
 ### Work on multiple apps
 
-There is no root concurrent all-app dev command. Open one terminal per app and assign explicit ports:
+Root `pnpm dev` runs only the active publication, not all apps. Open separate terminals for additional apps and assign explicit ports:
 
 ```bash
 # Terminal 1
 pnpm --filter festivalarc-2025 dev -- --port 4321
 
 # Terminal 2
-pnpm --filter calls-2026 dev -- --port 4322
+pnpm --filter festival-2026 dev -- --port 4322
 
 # Terminal 3
 pnpm --filter festival-arc-2023 dev -- --port 4323
@@ -98,6 +91,35 @@ pnpm run test:e2e:debug
 
 Do not run the root E2E suite against an unbuilt or stale `.output`.
 
+### Visual capture review
+
+Build and preview one or more apps, then capture every public page in Chromium, Firefox, and WebKit at desktop, tablet, and mobile viewports:
+
+```bash
+pnpm visual:capture
+pnpm visual:capture -- --app festival-2025 --app festival-2024
+pnpm visual:capture -- --app festival-2026 --browser chromium
+pnpm visual:clean
+```
+
+The images are written to `output/playwright/` for human inspection. Use `--browser chromium|firefox|webkit` one or more times to select browsers; without it, all three run. Install the browsers once before the first capture:
+
+```bash
+pnpm exec playwright install chromium firefox webkit
+```
+
+This workflow creates screenshots only; it does not compare baselines or run page assertions.
+
+WebKit needs its browser dependencies present on the host. When they are missing, the WebKit
+capture fails at launch with `Host system is missing dependencies to run browsers` and the run
+exits non-zero after the other browsers finished. `pnpm exec playwright install-deps` only
+supports apt-based distributions, so on other hosts the required libraries must be provided by
+the system package manager. Verify a browser before a full matrix run:
+
+```bash
+pnpm exec playwright install chromium firefox webkit
+```
+
 ## Preview
 
 Preview the composed root artifact with the repository's Python server:
@@ -124,8 +146,8 @@ During a distribution build, `DISTRIBUTION_OUTPUT_DIR` redirects each selected a
 
 ## Troubleshooting
 
-- **The wrong site starts:** `pnpm dev` and `pnpm start` intentionally target `festivalarc-2025`. Use the exact filter for `calls-2026` or an archive.
-- **A second app cannot start:** all apps default to port 4321. Pass a unique port as shown above.
+- **The wrong site starts:** root shortcuts run whatever publication is marked `active` in `editions.config.ts`; to run another app or an archive, pass its `--filter`.
+- **A second app cannot start:** all apps request port 4321; Astro automatically tries the next free port (4322, 4323, …) when one is taken. Pass `-- --port <n>` to pin a deterministic port.
 - **A filter is not found:** use the package name from the table. For example, the directory `apps/festival-2023` is the package `festival-arc-2023`.
 - **The composed site is stale:** run `pnpm build` again. Do not copy files between app outputs or into `.output`.
 - **The distribution build rejects a package:** confirm its package name is registered in `editions.config.ts`, its package directory exists under `apps/`, and its build honors `PUBLICATION_BASE` and `DISTRIBUTION_OUTPUT_DIR`.

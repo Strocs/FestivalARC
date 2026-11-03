@@ -1,5 +1,5 @@
 {
-  "name": "calls-2026",
+  "name": "festival-2026",
   "type": "module",
   "version": "1.0.0",
   "private": true,
@@ -28,8 +28,8 @@
     "vitest": "^3.2.4"
   },
   "festivalarc": {
-    "kind": "calls",
-    "id": "calls-2026",
+    "kind": "final",
+    "id": "festival-2026",
     "year": 2026,
     "archive": false
   }

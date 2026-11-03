@@ -39,7 +39,7 @@ The current selection is:
 
 | Publication | Kind | Destination |
 | --- | --- | --- |
-| `calls-2026` | active calls | `/` |
+| `festival-2026` | active results | `/` |
 | `festival-2023` | final archive | `/ediciones/2023` |
 | `festival-2024` | final archive | `/ediciones/2024` |
 

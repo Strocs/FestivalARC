@@ -126,9 +126,38 @@ function publicPath(path: string): string {
   return `/${path}`
 }
 
-export function routeInventory(config: PublicationConfig, files: readonly { path: string; bytes: Uint8Array }[]): string[] {
+export function routeInventory(config: PublicationConfig, files: readonly { path: string; owner: string; bytes: Uint8Array }[]): string[] {
   const origin = config.siteOrigin.replace(/\/$/, '')
-  return [...new Set(files.filter(file => /\.html$/i.test(file.path) && !globalName(file.path) && !/(^|\/)evidence\//.test(file.path)).map(file => `${origin}${publicPath(file.path)}`))].sort()
+  return [...new Set(files.filter(file => file.owner === config.active.id && /\.html$/i.test(file.path) && !globalName(file.path) && !/(^|\/)evidence\//.test(file.path)).map(file => `${origin}${publicPath(file.path)}`))].sort()
+}
+
+const robotsMeta = '<meta name="robots" content="noindex, follow">'
+const metaTag = /<meta\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/gi
+const metaAttribute = (tag: string, name: string): string | undefined => {
+  const attributes = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g
+  for (const match of tag.slice(5, -1).matchAll(attributes)) if (match[1].toLowerCase() === name) return match[2] ?? match[3] ?? match[4]
+  return undefined
+}
+
+function noindexArchivedHtml(html: string, path: string): Uint8Array {
+  const head = /(<head\b[^>]*>)([\s\S]*?)(<\/head\s*>)/i.exec(html)
+  if (!head || head.index === undefined) throw new DistributionError([`archived HTML missing head: ${path}`])
+  let found = false
+  const content = head[2].replace(metaTag, tag => {
+    if (metaAttribute(tag, 'name')?.trim().toLowerCase() !== 'robots') return tag
+    if (found) return ''
+    found = true
+    return robotsMeta
+  })
+  const transformed = `${html.slice(0, head.index)}${head[1]}${found ? content : `${robotsMeta}${content}`}${head[3]}${html.slice(head.index + head[0].length)}`
+  return bytes(transformed)
+}
+
+function transformArchivedHtml(config: PublicationConfig, files: readonly { path: string; owner: string; bytes: Uint8Array }[]): Array<{ path: string; owner: string; bytes: Uint8Array }> {
+  const archives = new Set<string>(config.archives.map(archive => archive.id))
+  return files.map(file => archives.has(file.owner) && /\.html$/i.test(file.path)
+    ? { ...file, bytes: noindexArchivedHtml(Buffer.from(file.bytes).toString('utf8'), file.path) }
+    : file)
 }
 
 const xmlEscape = (value: string) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;')
@@ -183,7 +212,7 @@ export function scanReferences(config: PublicationConfig, inputs: readonly Norma
 }
 
 export function compose(request: ComposeRequest): ComposeResult {
-  const config = validatePublicationConfig(request.config), inputs = loadInputs(config, request.inputs), appFiles = candidates(inputs)
+  const config = validatePublicationConfig(request.config), inputs = loadInputs(config, request.inputs), appFiles = transformArchivedHtml(config, candidates(inputs))
   scanReferences(config, inputs)
   const files = [{ path: '404.html', bytes: bytes(generateNotFoundHtml()), owner: 'distribution' }, ...appFiles, ...generateDiscoveryFiles(config, routeInventory(config, appFiles)).map(file => ({ ...file, owner: 'distribution' }))]
     .sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : a.owner < b.owner ? -1 : a.owner > b.owner ? 1 : 0)

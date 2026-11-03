@@ -1,0 +1,14 @@
+{
+  "name": "@festivalarc/visual-review",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "node src/cli.mjs",
+    "clean": "node src/clean.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.0"
+  }
+}
