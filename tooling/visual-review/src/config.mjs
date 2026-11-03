@@ -5,7 +5,7 @@ import { publicationConfig } from '../../../editions.config.ts'
 export const repositoryRoot = resolve(fileURLToPath(new URL('../../..', import.meta.url)))
 
 const TOOL_MECHANICS = {
-  'calls-2026': { directory: 'apps/calls-2026', outputDirectory: 'dist' },
+  'festival-2026': { directory: 'apps/festival-2026', outputDirectory: 'dist' },
   'festival-2023': { directory: 'apps/festival-2023', outputDirectory: 'dist' },
   'festival-2024': { directory: 'apps/festival-2024', outputDirectory: 'dist' },
   'festival-2025': { directory: 'apps/festival-2025', outputDirectory: 'dist' },

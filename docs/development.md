@@ -19,11 +19,11 @@ Use the workspace package name, not the app directory name:
 | App | Command | Default local port |
 | --- | --- | ---: |
 | 2025 festival | `pnpm --filter festivalarc-2025 dev` | 4321 |
-| 2026 calls | `pnpm --filter calls-2026 dev` | 4321 |
+| 2026 results | `pnpm --filter festival-2026 dev` | 4321 |
 | 2023 archive | `pnpm --filter festival-arc-2023 dev` | 4321 |
 | 2024 archive | `pnpm --filter festival-arc-2024 dev` | 4321 |
 
-No app configuration overrides Astro's default port 4321. The root shortcuts (`pnpm dev`, `pnpm start`) resolve the active publication from `editions.config.ts` (currently `calls-2026`) and launch only that app through turbo. To run a different app, use its filter from the table.
+No app configuration overrides Astro's default port 4321. The root shortcuts (`pnpm dev`, `pnpm start`) resolve the active publication from `editions.config.ts` (currently `festival-2026`) and launch only that app through turbo. To run a different app, use its filter from the table.
 
 ### Work on multiple apps
 
@@ -34,7 +34,7 @@ Root `pnpm dev` runs only the active publication, not all apps. Open separate te
 pnpm --filter festivalarc-2025 dev -- --port 4321
 
 # Terminal 2
-pnpm --filter calls-2026 dev -- --port 4322
+pnpm --filter festival-2026 dev -- --port 4322
 
 # Terminal 3
 pnpm --filter festival-arc-2023 dev -- --port 4323
@@ -98,7 +98,7 @@ Build and preview one or more apps, then capture every public page in Chromium, 
 ```bash
 pnpm visual:capture
 pnpm visual:capture -- --app festival-2025 --app festival-2024
-pnpm visual:capture -- --app calls-2026 --browser chromium
+pnpm visual:capture -- --app festival-2026 --browser chromium
 pnpm visual:clean
 ```
 

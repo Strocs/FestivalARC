@@ -25,9 +25,9 @@ test('derives every publication from the shared configuration', () => {
         base: '/ediciones/2025/',
         outputDirectory: 'dist',
       },
-      'calls-2026': {
-        packageName: 'calls-2026',
-        directory: 'apps/calls-2026',
+      'festival-2026': {
+        packageName: 'festival-2026',
+        directory: 'apps/festival-2026',
         base: '/',
         outputDirectory: 'dist',
       },

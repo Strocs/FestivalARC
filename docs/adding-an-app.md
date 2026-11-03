@@ -23,7 +23,7 @@ Use a package name that is unique in the workspace. Publication IDs have enforce
 - Final edition: `festival-YYYY`
 - Temporary calls: `calls-YYYY`
 
-The package name is a separate field. It must match the `name` in `package.json` and the `packageName` in `editions.config.ts` exactly. Current names are not uniform: `festivalarc-2025`, `festival-arc-2023`, `festival-arc-2024`, and `calls-2026` are all valid examples.
+The package name is a separate field. It must match the `name` in `package.json` and the `packageName` in `editions.config.ts` exactly. Current names are not uniform: `festivalarc-2025`, `festival-arc-2023`, `festival-arc-2024`, and `festival-2026` are all valid examples.
 
 A new app should include:
 
@@ -118,7 +118,7 @@ Publication rules enforced by `@festivalarc/editions`:
 - Calls are temporary active publications and must carry `expiresWhenFinalPublished: true`.
 - Calls cannot be placed in `archives`.
 
-The current configuration selects `calls-2026` at `/` and archives `festival-2023` and `festival-2024` at `/ediciones/2023` and `/ediciones/2024`. When calls become a final edition, build and verify the final app first, then use the calls-to-final workflow in [Annual publishing](annual-publishing.md). Do not turn the calls app into an archive.
+The current configuration selects `festival-2026` at `/` and archives `festival-2023` and `festival-2024` at `/ediciones/2023` and `/ediciones/2024`. For future calls-to-final transitions, build and verify the final app first, then use the calls-to-final workflow in [Annual publishing](annual-publishing.md). Do not turn the calls app into an archive.
 
 ## Validation checklist
 

@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets'
+import Layout from '../layouts/Layout.astro'
+import logoHero from '../assets/LOGO_HERO.jpg'
+import { publicPath } from '../utils/publication'
+---
+<Layout>
+  <main class='flex flex-1 flex-col items-center justify-center overflow-hidden px-5 py-12 text-center font-sans text-foreground sm:px-8 lg:px-12' aria-labelledby='page-title'>
+    <div class='relative aspect-[10/3] w-full max-w-[72rem] overflow-hidden'>
+      <Image src={logoHero} alt='Festival ARC 2026' class='block size-full object-cover object-center' loading='eager' />
+    </div>
+    <h1 id='page-title' class='mt-8 text-[clamp(2rem,5vw,4.5rem)] font-bold leading-tight tracking-tight'>
+      <span class='text-accent'>Selección</span> Convocatoria <span class='text-accent'>Regional</span>
+    </h1>
+    <a class='mt-10 rounded-2xl border-3 border-primary px-5 py-4 text-[clamp(1rem,2vw,1.3rem)] font-semibold text-primary transition-colors hover:border-accent hover:bg-accent hover:text-foreground focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none' href={publicPath('/Rex-637-Formaliza-seleccion-y-no-seleccion-ARC 2026.pdf')} target='_blank' rel='noopener noreferrer'>Revisa la resolución</a>
+  </main>
+</Layout>

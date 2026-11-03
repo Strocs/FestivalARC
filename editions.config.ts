@@ -8,11 +8,10 @@ const rawPublicationConfig = {
   schemaVersion: 1,
   siteOrigin: 'https://festivalarc.com',
   active: {
-    kind: 'calls',
-    id: 'calls-2026',
+    kind: 'final',
+    id: 'festival-2026',
     year: 2026,
-    packageName: 'calls-2026',
-    expiresWhenFinalPublished: true,
+    packageName: 'festival-2026',
   },
   archives: [{
     kind: 'final',
@@ -43,7 +42,7 @@ const rawPublicationConfig = {
 export const publicationConfig = validatePublicationConfig(
   rawPublicationConfig,
   {
-    knownWorkspacePackages: ['festivalarc-2025', 'festival-arc-2023', 'festival-arc-2024', 'calls-2026'],
+    knownWorkspacePackages: ['festivalarc-2025', 'festival-arc-2023', 'festival-arc-2024', 'festival-2026'],
   },
 )
 
