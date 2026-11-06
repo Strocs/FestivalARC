@@ -1,0 +1,22 @@
+[
+  {
+    "id": "presentacion-ejemplo",
+    "order": 1,
+    "demo": true,
+    "name": "Presentación de ejemplo",
+    "artistId": "javiera-mena",
+    "venueId": "espacio-ejemplo",
+    "disciplines": ["Música (ejemplo)"],
+    "startsAt": "2026-10-28T18:00:00-03:00"
+  },
+  {
+    "id": "encuentro-ejemplo",
+    "order": 2,
+    "demo": true,
+    "name": "Encuentro de ejemplo",
+    "artistId": "javiera-mena",
+    "venueId": "espacio-ejemplo",
+    "disciplines": ["Conversación (ejemplo)"],
+    "startsAt": "2026-10-29T12:00:00-03:00"
+  }
+]

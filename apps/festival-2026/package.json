@@ -19,6 +19,8 @@
     "@iconify-json/lucide": "^1.2.128",
     "astro": "^7.2.9",
     "astro-icon": "^1.2.0",
+    "gsap": "^3.15.1",
+    "nanostores": "^0.10.3",
     "sharp": "^0.34.4",
     "typescript": "^5.9.3"
   },
