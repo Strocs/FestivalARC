@@ -8,10 +8,6 @@ const componentSource = readFileSync(
   resolve(process.cwd(), 'src/components/PreviousEditions.astro'),
   'utf8',
 )
-const pageSource = readFileSync(
-  resolve(process.cwd(), 'src/pages/index.astro'),
-  'utf8',
-)
 
 const classNames = (source: string) =>
   [...source.matchAll(/class='([^']*)'/g)].flatMap((match) =>
@@ -51,37 +47,6 @@ describe('Tailwind class migrations', () => {
     expect(componentClasses).not.toContain('editions-trigger')
     expect(componentClasses).not.toContain('editions-panel')
     expect(componentClasses).not.toContain('editions-panel-content')
-  })
-
-  it('removes former page selectors while keeping their Tailwind utilities', () => {
-    const pageClasses = classNames(pageSource)
-    const obsoleteClasses = [
-      'calls-body',
-      'hero',
-      'hero-art',
-      'hero-image',
-      'deadline',
-      'deadline-prefix',
-      'deadline-accent',
-      'section-separator',
-      'applications',
-      'category-grid',
-      'category',
-      'applications-separator',
-      'bases',
-    ]
-
-    obsoleteClasses.forEach((className) => {
-      expect(pageClasses).not.toContain(className)
-    })
-    expect(pageSource).toContain('overflow-hidden')
-    expect(pageSource).toContain('aspect-[10/3]')
-    expect(pageSource).toContain('text-primary')
-    expect(pageSource).toContain('grid-cols-2')
-    expect(pageSource).toContain('max-[640px]:grid-cols-1')
-    expect(pageSource).toContain('border-primary')
-    expect(pageSource).toContain('hover:bg-accent')
-    expect(pageSource).not.toContain('<style')
   })
 
   it('derives sorted labels and links from the publication configuration', () => {

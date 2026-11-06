@@ -56,6 +56,18 @@ pnpm test
 
 These root scripts run each workspace package's `type` or `test` script when present.
 
+### Shared lint
+
+Run ESLint from the repository root:
+
+```bash
+pnpm lint
+```
+
+`pnpm lint` checks the full repository; use `pnpm exec eslint apps/festival-2026/src` to check only the active app. The root `eslint.config.js` owns the shared rules and dependencies. It parses TypeScript and JSX, applies Astro's recommended rules, rejects debugger statements, and checks JSX keys and duplicate props. It does not enable type-aware or formatting rules, run autofix, or replace `pnpm type` and `pnpm build`.
+
+Generated builds, dependency directories, caches, browser reports, output captures, and local references are excluded. Legacy app-local ESLint dependencies/configuration remain untouched; the root command uses the shared flat configuration for every edition.
+
 Run the distribution package tests directly when changing composition behavior:
 
 ```bash
