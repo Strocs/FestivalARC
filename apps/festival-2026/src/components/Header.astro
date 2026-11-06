@@ -1,29 +1,18 @@
 ---
-import { Image } from 'astro:assets'
-import logo from '../assets/logo.png'
+import { arc26Logo } from '../features/arc2026/data/artwork'
 import PreviousEditions from './PreviousEditions.astro'
 import { publicPath } from '../utils/publication'
 ---
-<header class='z-10 border-b border-primary/10 px-5 py-3 sm:px-8 lg:px-12'>
-  <div class='mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-4'>
-    <div class='flex items-center gap-3 sm:gap-4'>
-      <a
-        href={publicPath('/')}
-        aria-label='Ir al inicio'
-        class='block shrink-0 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
-      >
-        <Image
-          src={logo}
-          alt='Logotipo del Festival ARC'
-          class='block h-auto w-24 sm:w-28'
-          loading='eager'
-        />
-      </a>
-      <div class='text-xs leading-tight text-foreground sm:text-sm'>
-        <p class='font-bold'>28 y 29 de Noviembre</p>
-        <p>Plaza de Armas, La Serena</p>
-      </div>
-    </div>
+<header class='site-header sticky top-0 z-10 border-b border-primary/10 bg-background px-4 sm:px-8'>
+  <div class='flex w-full items-center justify-between gap-2'>
+    <a href={publicPath('/')} aria-label='Ir al inicio' class='block shrink-0'>
+      <img src={publicPath(arc26Logo.src)} width={arc26Logo.width} height={arc26Logo.height} alt='Logotipo del Festival ARC 2026' class='block h-auto w-24 sm:w-28' loading='eager' />
+    </a>
     <PreviousEditions />
   </div>
 </header>
+
+<style>
+  /* Preserve existing edition targets/keyboard behavior; defer all motion to T3. */
+  .site-header :global(nav *) { transition: none; transform: none; }
+</style>

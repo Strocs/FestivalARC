@@ -1,11 +1,14 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #000000;
-  --color-foreground: #d5d5d5;
-  --color-primary: #5ce1e6;
-  --color-accent: #e50070;
+  --color-background: #000f16;
+  --color-foreground: #fffffd;
+  --color-primary: #00ffff;
+  --color-accent: #ff008a;
+  --color-arc-rose: #ff64cf;
+  --color-arc-yellow: #f8e701;
   --font-sans: var(--font-poppins), sans-serif;
+  --font-display: var(--font-anton), sans-serif;
 }
 
 @layer base {
@@ -16,5 +19,18 @@
 
   body {
     margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2 {
+    font-weight: 400;
+    font-synthesis: none;
+  }
+
+  a:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
   }
 }

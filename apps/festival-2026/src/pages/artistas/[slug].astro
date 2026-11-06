@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import ArtistDetail from '../../features/arc2026/components/ArtistDetail.astro'
+import { readLocalProgram } from '../../features/arc2026/data/local'
+import { demoLabel } from '../../features/arc2026/data/program'
+import { publicPath } from '../../utils/publication'
+
+export function getStaticPaths() {
+  const program = readLocalProgram()
+  return program.artists.map(artist => ({ params: { slug: artist.id }, props: { artist, program } }))
+}
+const { artist, program } = Astro.props
+---
+<Layout title={`${artist.name} | Festival ARC 2026 — Demostración`} description={demoLabel}>
+  <main class='flex-1' aria-label={`Ficha de ${artist.name}`}>
+    <a class='inline-block px-4 py-4 text-primary underline sm:px-8' href={publicPath('/')}>Volver a la portada</a>
+    <ArtistDetail artist={artist} program={program} />
+  </main>
+</Layout>

@@ -19,7 +19,16 @@ export default defineConfig({
   ],
   fonts: [
     {
-      provider: fontProviders.fontsource(),
+      provider: fontProviders.google(),
+      name: 'Anton',
+      cssVariable: '--font-anton',
+      weights: [400],
+      styles: ['normal'],
+      subsets: ['latin'],
+      display: 'swap',
+    },
+    {
+      provider: fontProviders.google(),
       name: 'Poppins',
       cssVariable: '--font-poppins',
       weights: [200, 300, 400, 600, 700, 800, 900],

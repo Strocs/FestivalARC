@@ -1,7 +1,7 @@
 # ARC 2026 — active-edition contract
 
 Foundation for the Astro prototype, not a standalone HTML mockup. Decision source:
-`odd/tasks/arc2026-prototype.md`, S2–S12 and its Log. T1 prepares documentation,
+`odd/tasks/arc2026-prototype.md`, S2–S25 and its Log. T1 prepares documentation,
 dependencies and data; it neither applies these tokens to CSS nor changes the homepage or indexation.
 
 ## Sampled palette: observed source and authorized use
@@ -10,7 +10,7 @@ Source: `refs/afiche-diseño.jpeg`, 1280 × 1600, sRGB. Pixels read with
 ImageMagick `magick … -format '%[pixel:p{x,y}]' info:`. Coordinates use the
 top-left origin and are zero-based. Approximate JPEG values, **not an official
 vector palette**: edges and other regions may vary because of compression.
-The following names are contract identifiers, not yet CSS variables.
+The following names identify the sampled palette, applied as T2 CSS tokens below.
 
 | Token | sRGB / hex sample | Pixel (x, y) | Observed region → prototype role |
 | --- | --- | --- | --- |
@@ -26,7 +26,7 @@ source artwork; they do not authorize text combinations without contrast measure
 
 ## Observed code baseline — separate from the new direction
 
-Source: `apps/festival-2026/src/styles/global.css` (unchanged).
+Source: `apps/festival-2026/src/styles/global.css` at the T1 baseline (before T2).
 
 | Existing token | Observed value | Declared use |
 | --- | --- | --- |
@@ -41,13 +41,13 @@ Source: `apps/festival-2026/src/styles/global.css` (unchanged).
 The observed CSS also sets the body margin to zero and minimum height to 100%.
 It declares no spacing scale, radii or shadows: no scale is invented here.
 
-## Approved direction for T2/T3 — not yet applied
+## Approved direction for T2/T3
 
 | Area | Contract |
 | --- | --- |
-| Typography | Heavy, condensed sans (S6/S9). Authorized system approximation: `Impact, Haettenschweiler, 'Arial Narrow', sans-serif`. This neither identifies the poster's official typeface nor requires font downloads. Sizes and metrics remain to be checked in the prototype. |
-| Composition | Mosaic as the focal point from the outset; balance between artists and patterns. Continuous grid, without gaps or radii, square modules (`aspect-ratio: 1`); faithful adaptation of the social-media artwork, not a gallery of historical portraits. |
-| Active vs. decorative | Artist: real link/button with image, name, day and time; readable information in bands. Pattern: decorative, no Tab stop or empty announcement, no imitation link. Future SVGs will be reconstructions from raster, not vector originals. |
+| Typography | Heavy, condensed sans (S6/S9). S19/S24 supersede the initial system approximation: Anton normal 400 for display headings, Poppins for reading, both through Astro's integrated Google provider and locally served static assets. This is the selected prototype pairing, not identification of the poster's official typeface. |
+| Composition | Mosaic as the focal point; square artist/pattern modules without gaps or radii. S20–S23: plain title inside the grid, spanning 3/6 desktop, 2/4 tablet, 2/2 mobile columns; title is the non-square exception, one tile-row high on desktop/tablet and natural-height on mobile (S25). Remaining DOM sequence strictly alternates pattern/artist, starting with pattern. At >=1200px content width is min(viewport − 64px, 1440px), centered; below this breakpoint there are no outer grid gutters. No fixed tile-count requirement or filler. |
+| Active vs. decorative | Current pass (S13/S17): image-only artist links with meaningful accessible names, no visible metadata/bands/counters. Complete data remains in detail; readable card metadata is deferred. Patterns are decorative, without Tab stops or announcements; SVGs reconstruct raster geometry, not vector originals. |
 | Navigation | Compact sticky bar, always visible. A single vertical page scroll, without horizontal scrolling at 320 CSS px. No new dimensions are set here. |
 | Detail | Same artwork enlarged, above the homepage and with its own URL. The direct route must work without JS. Escape, visible close control and focus restoration if the trigger is still present. Implementation reserved for T2/T3. |
 | Motion | Expressive but controlled, transforming shapes with GSAP/MorphSVG. Respect `prefers-reduced-motion`: no forced scrolling/rotation; access to content must not depend on animation. Durations and choreography are undecided. |
@@ -110,8 +110,86 @@ and external images are not copied to render this prototype.
   retain the approved visual balance between artists and decorative motifs.
 - Motion (S16): «Entrada y transiciones, sin bucles». No continuous loops or
   added pause control; respect reduced motion and keep content available.
-- Type sizes and new consequential editorial/design choices remain proposals
-  subject to S2. This document does not claim finalized metrics or choreography.
+- New consequential editorial/design choices remain proposals subject to S2.
+  First-prototype applied metrics are recorded below, not finalized brand decisions.
 - No standalone artboard HTML, manifest or canvas. T1 did not change production
   CSS, indexation, homepage or overlays. T2/T3 may implement the approved real
   Astro prototype on dev; deployment and archived-edition changes remain excluded.
+
+## T2 applied first-prototype values — not official brand metrics
+
+- The sampled palette supplies background/foreground/primary/accent and rose/yellow
+  pattern tokens. Initial T2 used the condensed system stack but Chromium rendered
+  Liberation Sans; S19/S24 replace it with loaded Anton, not a renamed fallback.
+- S20–S25 replace the former 30px / 36px title strip. The initial two-row draft
+  was not approved: «Una fila — más compacto» fixes the half-width desktop/tablet
+  title to one normal tile row. It has no row span or forced height; its contents
+  fit beside square tiles without expanding their row. At >=768px, padding is
+  16px, Anton heading clamp(44px, 9cqw, 64px) with line-height 1.05, and the
+  existing 14px demo label has 20px line-height and 8px top spacing.
+  Below 768px the full-width title retains natural height, 32px padding,
+  clamp(48px, 13cqw, 96px) heading with line-height 1.1, and a 14px/24px label
+  with 16px top spacing. Heading wrapping stays balanced; no clipping, truncation
+  or hidden text is used. These are fitting metrics for the approved compact
+  row, not official brand values. Incomplete final rows remain unfilled.
+  Detail heading stays 36px / 60px, section heading 24px, padding 16px / 32px.
+  These applied metrics are first-prototype implementation values, not official
+  brand metrics or a new type/spacing scale.
+- Header reuses the edition navigation and its padding, with a 96px / 112px-wide
+  local logo; sticky at top, no confirmed date or venue copy. Its inherited
+  transition/transform rules are disabled in this shell: T2 adds no motion.
+- The existing demo references and motifs are retained, now strictly interleaved
+  pattern/artist in DOM order. No artists are hidden, no filler is added, and no
+  fixed 12/12 count is asserted by the tests. Six columns at 1200px, four at 768px,
+  two below; desktop content capped at 1440px with >=32px centered margins.
+  Header/footer spacing remains unchanged by this revision.
+- Artist tiles contain only the unchanged imported JPEG and native link. The
+  source's own raster text remains; no HTML metadata, crop generation or fill is
+  added. CSS cover centers the image inside the square. The detail preserves the
+  full original aspect ratio and enlarges it into half the desktop layout/full
+  mobile width; low-resolution source limitations remain visible.
+- Six SVG motifs reconstruct poster arrows, lightning, star, petals, orbits and
+  curved sparks. No interaction, focus targets or announced content. No originals
+  or derived raster assets are changed.
+- `ArtistDetail.astro` takes the validated artist/program, reuses ordered activity
+  and time helpers, and emits no IDs. T3 can reuse it without copying data or
+  introducing duplicate IDs. Only the direct static route exists in T2.
+- Root title/description/canonical defaults and indexing policy remain unchanged.
+  The new artist route supplies its own demonstration title/description and uses
+  the existing layout's base-aware canonical logic. Existing footer is reused.
+## Font delivery and redistribution provenance (S19/S24)
+
+- Official integrated mechanism: `fonts` in `astro.config.mjs`,
+  `fontProviders.google()` for Anton and Poppins, and `Font` from `astro:assets`
+  in the shared layout. Astro resolves/downloads at build time and copies fonts
+  to local static assets. No Google browser stylesheet, import, CDN link or
+  preconnect is added. No npm integration/package changes.
+- Anton is normal 400 only; heading styles explicitly retain 400 and disable
+  font synthesis. Poppins retains the pre-existing normal latin reading weights
+  200/300/400/600/700/800/900. The T1 Fontsource baseline above remains historical.
+- API references: https://v6.docs.astro.build/en/guides/fonts/ and
+  https://v6.docs.astro.build/en/reference/font-provider-reference/ .
+- Official Anton metadata identifies normal 400, designer Vernon Adams and OFL:
+  https://github.com/google/fonts/blob/main/ofl/anton/METADATA.pb .
+- Unchanged upstream copyright notices and complete SIL OFL 1.1 text are shipped
+  in `public/fonts/Anton-OFL.txt` and `public/fonts/Poppins-OFL.txt`, fetched from
+  https://raw.githubusercontent.com/google/fonts/main/ofl/anton/OFL.txt and
+  https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/OFL.txt .
+  Copyright is attributed to the respective 2020 project authors exactly as
+  supplied; these notices accompany the generated static distribution. Repository
+  copies normalize CRLF to LF and remove trailing whitespace only; copyright
+  wording and all license tokens are unchanged.
+- Browser tests inspect actual Chromium platform fonts for homepage/detail h1,
+  not just CSS declarations, and isolate active-edition font requests from archive
+  navigation. Responsive geometry checks cover 1920/1440/1200/1199/768/767/320px.
+- Observed local GREEN: Chromium reports `Anton-Regular`, custom font, 27 heading
+  glyphs on `/` and 12 on `/artistas/javiera-mena/`, with computed weight 400.
+  Both routes request only same-origin `/_astro/fonts/*.woff2` assets; no external
+  browser requests occur in this isolated font check. Root composition copies
+  eight font files; the two complete OFL notices are included in public output.
+
+## Deferred work and verification boundary
+
+- T3 remains responsible for the overlay, history/focus lifecycle, shared store
+  and approved motion. Independent behavioral verification remains unavailable
+  under the accepted S18 disposition; local browser checks are not its replacement.

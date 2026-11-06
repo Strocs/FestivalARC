@@ -1,17 +1,48 @@
 ---
-import { Image } from 'astro:assets'
 import Layout from '../layouts/Layout.astro'
-import logoHero from '../assets/LOGO_HERO.jpg'
+import PatternTile from '../features/arc2026/components/PatternTile.astro'
+import { composition } from '../features/arc2026/data/composition'
+import { artistArtwork } from '../features/arc2026/data/artwork'
+import { readLocalProgram } from '../features/arc2026/data/local'
+import { demoLabel } from '../features/arc2026/data/program'
 import { publicPath } from '../utils/publication'
+
+const program = readLocalProgram()
 ---
 <Layout>
-  <main class='flex flex-1 flex-col items-center justify-center overflow-hidden px-5 py-12 text-center font-sans text-foreground sm:px-8 lg:px-12' aria-labelledby='page-title'>
-    <div class='relative aspect-[10/3] w-full max-w-[72rem] overflow-hidden'>
-      <Image src={logoHero} alt='Festival ARC 2026' class='block size-full object-cover object-center' loading='eager' />
-    </div>
-    <h1 id='page-title' class='mt-8 text-[clamp(2rem,5vw,4.5rem)] font-bold leading-tight tracking-tight'>
-      <span class='text-accent'>Selección</span> Convocatoria <span class='text-accent'>Regional</span>
-    </h1>
-    <a class='mt-10 rounded-2xl border-3 border-primary px-5 py-4 text-[clamp(1rem,2vw,1.3rem)] font-semibold text-primary transition-colors hover:border-accent hover:bg-accent hover:text-foreground focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-accent motion-reduce:transition-none' href={publicPath('/Rex-637-Formaliza-seleccion-y-no-seleccion-ARC 2026.pdf')} target='_blank' rel='noopener noreferrer'>Revisa la resolución</a>
+  <main class='flex-1' aria-labelledby='page-title'>
+    <section class='mosaic' aria-label='Mosaico ARC 2026'>
+      <div class='editorial-title'>
+        <h1 id='page-title' class='font-display uppercase'>El Arte De Habitar La Ciudad</h1>
+        <p class='mt-4 text-sm/6'>{demoLabel}</p>
+      </div>
+      {composition.map(tile => {
+        if (tile.kind === 'pattern') return <PatternTile motif={tile.motif} />
+        const artist = program.artists.find(({ id }) => id === tile.artistId)!
+        const artwork = artistArtwork[tile.artistId]
+        return <a class='artist-tile' href={publicPath(`/artistas/${artist.id}/`)} aria-label={`${artist.name} — ver ficha de demostración`}>
+          <img src={publicPath(artwork.src)} width={artwork.width} height={artwork.height} alt='' loading='eager' />
+        </a>
+      })}
+    </section>
   </main>
 </Layout>
+
+<style>
+  .mosaic { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .editorial-title { grid-column: span 2; min-width: 0; padding: 2rem; container-type: inline-size; }
+  .editorial-title h1 { font-size: clamp(3rem, 13cqw, 6rem); line-height: 1.1; text-wrap: balance; }
+  .artist-tile { display: block; aspect-ratio: 1; min-width: 0; }
+  .artist-tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .artist-tile:focus-visible { outline: 4px solid var(--color-primary); outline-offset: -4px; }
+  @media (min-width: 768px) {
+    .mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .editorial-title { padding: 1rem; }
+    .editorial-title h1 { font-size: clamp(2.75rem, 9cqw, 4rem); line-height: 1.05; }
+    .editorial-title p { margin-top: 0.5rem; line-height: 1.25rem; }
+  }
+  @media (min-width: 1200px) {
+    .mosaic { width: min(calc(100% - 4rem), 1440px); margin-inline: auto; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .editorial-title { grid-column: span 3; }
+  }
+</style>
