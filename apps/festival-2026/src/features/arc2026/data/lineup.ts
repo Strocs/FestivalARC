@@ -1,0 +1,56 @@
+export interface LineupArtist {
+  id: string
+  name: string
+  group: 'national' | 'regional' | 'stage'
+  company?: string
+}
+
+// Confirmed names only. Activities, dates, venues and biographies are not inferred.
+export const lineup: readonly LineupArtist[] = [
+  { id: 'nino-cohete', name: 'Niño Cohete', group: 'national' },
+  { id: 'dulce-y-agraz', name: 'Dulce y Agraz', group: 'national' },
+  { id: 'javiera-mena', name: 'Javiera Mena', group: 'national' },
+  { id: 'gepe', name: 'Gepe', group: 'national' },
+  { id: 'javier-barria', name: 'Javier Barría', group: 'national' },
+  { id: 'fernando-milagros', name: 'Fernando Milagros', group: 'national' },
+  { id: 'rosario-alfonso', name: 'Rosario Alfonso', group: 'national' },
+  { id: 'claudio-valenzuela', name: 'Claudio Valenzuela', group: 'national' },
+  { id: 'fernando-ubiergo', name: 'Fernando Ubiergo', group: 'national' },
+  { id: 'pedro-piedra', name: 'Pedro Piedra', group: 'national' },
+  { id: 'nunez-briceno', name: 'Núñez Briceño', group: 'national' },
+  { id: 'jose-alfredo-fuentes', name: 'José Alfredo Fuentes', group: 'national' },
+  { id: 'innundaremos', name: 'Innundaremos', group: 'national' },
+  { id: 'guaype-club-infantil', name: 'Guaype Club (Infantil)', group: 'national' },
+  { id: 'dejenme-dormir', name: 'Dejenme Dormir', group: 'national' },
+  { id: 'nando-garcia', name: 'Nando García', group: 'national' },
+  { id: 'lero', name: 'Leró', group: 'national' },
+  { id: 'josefa-errazuriz-dj', name: 'Josefa Errazuriz (DJ)', group: 'national' },
+  { id: 'polter-ovalle', name: 'Polter (Ovalle)', group: 'regional' },
+  { id: 'quita-de-bulla-salamanca', name: 'Quitá de Bulla (Salamanca)', group: 'regional' },
+  { id: 'shicris', name: 'Shicris', group: 'regional' },
+  { id: 'esteban-y-los-hurtados', name: 'Esteban y los Hurtados', group: 'regional' },
+  { id: 'freshki', name: 'Freshki', group: 'regional' },
+  { id: 'jazztacuatico', name: 'Jazztacuatico', group: 'regional' },
+  { id: 'duerme-y-cae', name: 'Duerme y Cae!', group: 'regional' },
+  { id: 'kalishe', name: 'Kalishe', group: 'regional' },
+  { id: 'weinkeys-blackbeat', name: 'Weinkeys + blackbeat', group: 'regional' },
+  { id: 'stendhal', name: 'Stendhal', group: 'regional' },
+  { id: 'last-whisper', name: 'Last Whisper', group: 'regional' },
+  { id: 'medinamico', name: 'Medinamico', group: 'regional' },
+  { id: 'lobas', name: 'Lobas', group: 'stage', company: 'Circo Kaleidoscopio' },
+  { id: 'yaru', name: 'Yaru', group: 'stage', company: 'Compañía La Feroz' },
+  { id: 'el-humedal', name: 'El Humedal', group: 'stage', company: 'Compañía Los Mil Nombres' },
+  { id: 'pulsando', name: 'Pulsando', group: 'stage', company: 'Escuela Zapato Rojo y Compañía' },
+  { id: 'removernos-a-cielo-abierto', name: 'Removernos a Cielo Abierto', group: 'stage', company: 'Colectivo Zona de Obras' },
+  { id: 'yatiri', name: 'Yatiri', group: 'stage', company: 'Fundación Sociedad Bach La Serena' },
+  { id: 'red-lambe-norte', name: 'Red Lambe Norte', group: 'stage', company: 'Red Lambe Norte Chile' },
+  { id: 'awicha', name: 'Awicha', group: 'stage', company: 'Laboratorio Creativo Remolino' },
+  { id: 'narrando-mundos-en-bicicleta', name: 'Narrando Mundos en Bicicleta', group: 'stage', company: 'Títeres Ojos de Agua (Ovalle)' },
+  { id: 'bendita-agua', name: 'Bendita Agua', group: 'stage', company: 'Compañía La Boda (Vicuña)' },
+  { id: 'las-luciernagas-y-el-origen-del-fuego', name: 'Las Luciérnagas y el Origen del Fuego', group: 'stage', company: 'Compañía Cuenta Cuentos Tricahue' },
+  { id: 'llamada-de-emergencia', name: 'Llamada de Emergencia', group: 'stage', company: 'Compañía Noche de Payasas' },
+  { id: 'martin-v-s-trampolino-maletines', name: 'Martín V/S Trampolino Maletines', group: 'stage', company: 'Compañía de Teatro Viento Norte' },
+  { id: 'trans-humante', name: 'Trans-Humante', group: 'stage', company: 'Espacio La Isla (Ovalle)' },
+  { id: 'juan-manotas-y-el-origen-del-carnaval', name: 'Juan Manotas y el Origen del Carnaval', group: 'stage', company: 'Compañía de Teatro Pucará' },
+  { id: 'absurdo', name: 'Absurdo', group: 'stage', company: 'Circo Kalendero' },
+]
