@@ -25,8 +25,9 @@ The stepped desktop title uses two adjacent footprints. Phone/tablet information
 ## Rendering and boundaries
 
 - `FestivalGrid.astro` owns responsive geometry; `ArtistName.astro` only renders a name and its decoration. Names remain selectable HTML using the existing local Poppins 900 delivery.
+- `PosterPattern.astro` bleeds decorative SVGs by 0.5 CSS pixels per side to cover subpixel seams. Grid cells keep their original dimensions; curves and diagonals retain normal antialiasing. Do not clip this bleed at each cell or combine it with global `crispEdges`. Regression check: `pnpm exec playwright test tests/e2e/arc2026-pattern-seams.spec.ts` after the root build.
 - The title reuses the unchanged supplied `LOGO_HERO.png` through an SVG viewBox excluding the logo. Its visible dates are reference artwork, not confirmed artist bookings.
-- `poster-motifs.svg` is a verbatim copy of the accepted design export. Do not reopen the closed motif-precision exercise when implementing this page.
+- `poster-motifs.svg` retains the accepted design export, except for `lightning`: its four cyan triangles use straight vector edges rather than the source JPEG's traced pixel steps. Preserve its magenta background, cyan fill and alternating arrangement.
 - Root uses `layouts/Document.astro` for metadata/fonts without navigation/footer. Existing routes keep `layouts/Layout.astro` and its normal chrome.
 - The demo program and direct demonstration artist route remain separate. No filters, expansion, client store, entrance motion or new dependencies are included.
 

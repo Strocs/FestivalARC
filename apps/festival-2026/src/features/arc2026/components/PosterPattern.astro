@@ -7,5 +7,6 @@ const { motif } = Astro.props
   <use href={`#${motif}`} />
 </svg>
 <style>
-  svg { display: block; width: 100%; height: 100%; }
+  /* Bleed across shared edges without changing the grid tracks or disabling antialiasing. */
+  svg { display: block; position: relative; left: -0.5px; top: -0.5px; width: calc(100% + 1px); height: calc(100% + 1px); }
 </style>
