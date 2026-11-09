@@ -1,0 +1,24 @@
+---
+import type { LineupArtist } from '../data/lineup'
+interface Props { artist: LineupArtist }
+const { artist } = Astro.props
+---
+<article class='artist-name' aria-label={artist.name}>
+  <div class='artist-panel'>
+    <svg class='chevron left' viewBox='0 0 36 40' aria-hidden='true' focusable='false'>
+      <path d='M15 2H25L8 20 25 38H15L0 20ZM29 2H36L19 20 36 38H29L12 20Z' />
+    </svg>
+    <span class='artist-label'>{artist.name}</span>
+    <svg class='chevron right' viewBox='0 0 36 40' aria-hidden='true' focusable='false'>
+      <path transform='translate(36 0) scale(-1 1)' d='M15 2H25L8 20 25 38H15L0 20ZM29 2H36L19 20 36 38H29L12 20Z' />
+    </svg>
+  </div>
+</article>
+<style>
+  .artist-name { display: flex; width: 100%; height: 100%; min-width: 0; background: var(--color-background); }
+  .artist-panel { display: grid; place-items: center; position: relative; width: 100%; min-width: 0; margin: calc(21 * var(--unit)) calc(32 * var(--unit)); padding-inline: calc(7 * var(--unit)); background: var(--color-accent); color: var(--color-background); }
+  .artist-label { display: block; width: max-content; max-width: calc(240 * var(--unit)); padding: calc(3 * var(--unit)) calc(5 * var(--unit)); border-radius: calc(10 * var(--unit)); background: var(--color-primary); font-family: var(--font-sans); font-size: calc(26 * var(--unit)); font-weight: 900; line-height: calc(24 * var(--unit)); text-align: center; text-transform: uppercase; overflow-wrap: anywhere; transform: scaleX(.8); }
+  .chevron { position: absolute; top: 50%; width: calc(30 * var(--unit)); height: calc(34 * var(--unit)); transform: translateY(-50%); fill: currentColor; }
+  .left { left: calc(7 * var(--unit)); }
+  .right { right: calc(7 * var(--unit)); }
+</style>

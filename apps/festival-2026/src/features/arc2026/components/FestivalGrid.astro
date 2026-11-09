@@ -1,0 +1,81 @@
+---
+import ArtistName from './ArtistName.astro'
+import PosterDefinitions from './PosterDefinitions.astro'
+import PosterInformation from './PosterInformation.astro'
+import PosterIntro from './PosterIntro.astro'
+import PosterPattern from './PosterPattern.astro'
+import { lineup } from '../data/lineup'
+import { motifSequence, posterPresets, slotSize, type PosterRange } from '../data/poster'
+import { calculatePosterLayout, type SlotRect } from '../lib/poster-grid'
+
+const ranges = ['mobile', 'tablet', 'desktop'] as const
+const layouts = {
+  mobile: calculatePosterLayout(lineup.map(artist => artist.id), 2, posterPresets.mobile.blocks),
+  tablet: calculatePosterLayout(lineup.map(artist => artist.id), 6, posterPresets.tablet.blocks),
+  desktop: calculatePosterLayout(lineup.map(artist => artist.id), 10, posterPresets.desktop.blocks),
+}
+type Positions = Record<PosterRange, SlotRect | undefined>
+const positions = (values: Positions) => ranges.map(range => {
+  const value = values[range]
+  return `--${range}-display:${value ? 'block' : 'none'};--${range}-column:${value?.column ?? 0};--${range}-row:${value?.row ?? 0};--${range}-width:${value?.width ?? 1};--${range}-height:${value?.height ?? 1}`
+}).join(';')
+const artistPositions = (id: string): Positions => ({
+  mobile: layouts.mobile.artists.find(artist => artist.id === id),
+  tablet: layouts.tablet.artists.find(artist => artist.id === id),
+  desktop: layouts.desktop.artists.find(artist => artist.id === id),
+})
+const informationPositions = (id: string): Positions => ({
+  mobile: posterPresets.mobile.blocks.find(block => block.id === id),
+  tablet: posterPresets.tablet.blocks.find(block => block.id === id),
+  desktop: posterPresets.desktop.blocks.find(block => block.id === id),
+})
+const motifCount = Math.max(...ranges.map(range => layouts[range].motifs.length))
+const motifSlots = Array.from({ length: motifCount }, (_, index) => {
+  const reference = layouts.desktop.motifs[index] ?? layouts.tablet.motifs[index] ?? layouts.mobile.motifs[index]!
+  return {
+    motif: motifSequence[(reference.column * 3 + reference.row * 7) % motifSequence.length],
+    style: positions({ mobile: layouts.mobile.motifs[index], tablet: layouts.tablet.motifs[index], desktop: layouts.desktop.motifs[index] }),
+  }
+})
+const gridStyle = `--slot-width:${slotSize.width};--slot-height:${slotSize.height};`
+  + ranges.map(range => `--${range}-rows:${layouts[range].rows}`).join(';')
+---
+<main class='festival-main' aria-labelledby='page-title'>
+  <div class='poster'>
+    <PosterDefinitions />
+    <section class='festival-grid' style={gridStyle} aria-label='Festival ARC: artistas y obras'>
+      {motifSlots.map(tile => (
+        <div class='slot pattern-slot' style={tile.style} aria-hidden='true'><PosterPattern motif={tile.motif} /></div>
+      ))}
+      {posterPresets.desktop.blocks.map(block => (
+        <div class:list={['slot', 'information-slot', { 'hero-slot': block.id === 'hero' }]} style={positions(informationPositions(block.id))} aria-hidden={block.id === 'title-spill' ? 'true' : undefined}>
+          {block.id === 'hero' && <PosterIntro />}
+          {block.id === 'program' && <PosterInformation kind='program' />}
+          {block.id === 'disciplines' && <PosterInformation kind='disciplines' />}
+        </div>
+      ))}
+      {lineup.map(artist => (
+        <div class='slot artist-slot' style={positions(artistPositions(artist.id))}><ArtistName artist={artist} /></div>
+      ))}
+    </section>
+  </div>
+</main>
+<style>
+  .festival-main { flex: 1; padding: 80px 8.333333vw; }
+  .poster { width: 100%; max-width: 1600px; margin-inline: auto; container-type: inline-size; }
+  .festival-grid { --columns: 2; --rows: var(--mobile-rows); --unit: calc(100cqw / (var(--columns) * var(--slot-width))); --poster-text: #d5d5d5; display: grid; grid-template-columns: repeat(var(--columns), minmax(0, 1fr)); grid-template-rows: repeat(var(--rows), calc(var(--slot-height) * var(--unit))); position: relative; isolation: isolate; }
+  .slot { display: var(--mobile-display); grid-column: calc(var(--mobile-column) + 1) / span var(--mobile-width); grid-row: calc(var(--mobile-row) + 1) / span var(--mobile-height); min-width: 0; min-height: 0; }
+  .information-slot { position: relative; z-index: 1; background: var(--color-background); }
+  .hero-slot { z-index: 3; }
+  .artist-slot { position: relative; z-index: 2; }
+  @media (min-width: 768px) {
+    .festival-grid { --columns: 6; --rows: var(--tablet-rows); }
+    .slot { display: var(--tablet-display); grid-column: calc(var(--tablet-column) + 1) / span var(--tablet-width); grid-row: calc(var(--tablet-row) + 1) / span var(--tablet-height); }
+  }
+  @media (min-width: 1200px) {
+    .festival-grid { --columns: 10; --rows: var(--desktop-rows); }
+    .slot { display: var(--desktop-display); grid-column: calc(var(--desktop-column) + 1) / span var(--desktop-width); grid-row: calc(var(--desktop-row) + 1) / span var(--desktop-height); }
+  }
+  @media (min-width: 768px) and (max-width: 1199px) { .festival-main { padding: 48px 32px; } }
+  @media (max-width: 767px) { .festival-main { padding: 32px 16px; } }
+</style>

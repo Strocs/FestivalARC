@@ -18,7 +18,7 @@
       await expect(page.locator('body')).toBeVisible()
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', origin)
       await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.+/)
-      await expect(page.locator('img').first()).toBeVisible()
+      await expect(page.locator('img, svg image').first()).toBeVisible()
     })
     
     test('serves archived roots and nested navigation beneath their bases', async ({ page }) => {
