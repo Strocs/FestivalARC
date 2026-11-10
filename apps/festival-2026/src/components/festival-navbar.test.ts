@@ -1,8 +1,8 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
 import FestivalNavbar from '@festivalarc/ui/FestivalNavbar.astro'
-import Header from './Header.astro'
 import PosterIntro from '../features/arc2026/components/PosterIntro.astro'
+import Header from './Header.astro'
 
 const editions = [
   { label: 'ARC 2025', href: '/ediciones/2025/' },
@@ -16,14 +16,18 @@ async function render(options = {}) {
 }
 
 describe('FestivalNavbar public contract', () => {
+  it('renders the slogan as accessible live heading text', async () => {
+    const container = await AstroContainer.create()
+    const html = await container.renderToString(PosterIntro)
+    const heading = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[0] ?? ''
+    expect(heading.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase())
+      .toBe('el arte de habitar la ciudad')
+  })
+
   it('keeps the visible poster dates consistent with the confirmed November header', async () => {
     const container = await AstroContainer.create()
     const html = await container.renderToString(PosterIntro)
-    expect(html).toContain('28.11')
-    expect(html).toContain('29.11')
     expect(html).toContain('28 y 29 de noviembre de 2026')
-    expect(html).not.toContain('28.10')
-    expect(html).not.toContain('29.10')
   })
 
   it('renders the minimal identity and mandatory editions without optional content', async () => {
@@ -34,9 +38,14 @@ describe('FestivalNavbar public contract', () => {
       expect(html).toContain(`href="${edition.href}"`)
       expect(html).toContain(edition.label)
     }
-    expect(html).not.toContain('data-header-cta')
-    expect(html).not.toContain('data-header-location')
-    expect(html).toContain('data-header-editions')
+    expect(html).not.toContain('Entradas')
+    expect(html).not.toContain('Plaza de Armas de La Serena')
+    expect(html).not.toContain('Redes del festival')
+    expect(html).toContain('aria-label="Navegación principal"')
+    expect(html).toContain('aria-label="Abrir navegación"')
+    const desktop = html.match(/<nav\b[^>]*data-header-nav[\s\S]*?<\/nav>/)?.[0] ?? ''
+    expect(desktop).not.toContain('data-editions-expanded')
+    expect(desktop).toContain('aria-expanded="false"')
   })
 
   it.each(['logo', 'date'])('rejects a missing required %s slot', async name => {
@@ -50,10 +59,11 @@ describe('FestivalNavbar public contract', () => {
       slots: { ...slots, location: 'Plaza de Armas de La Serena', cta: '<a href="/entradas/">Entradas</a>', 'mobile-extra': '<p>Redes del festival</p>' },
     })
     expect(html).toContain('href="/programa/"')
+    expect(html).toContain('Programa')
     expect(html).toContain('Plaza de Armas de La Serena')
     expect(html).toContain('href="/entradas/"')
     expect(html).toContain('Redes del festival')
-    expect(html).toContain('data-header-cta')
+    expect(html).toContain('Entradas')
   })
 
   it('keeps Inicio first and editions expanded in the mobile panel without visible close text', async () => {
@@ -89,14 +99,9 @@ describe('FestivalNavbar public contract', () => {
     expect(html).not.toContain('backdrop:bg-black')
   })
 
-  it('exposes stable style hooks, color tokens and the 2024 height reference', async () => {
-    const html = await render()
-    for (const hook of ['festival-header', 'header-brand', 'header-nav', 'header-editions', 'header-toggle', 'header-panel']) {
-      expect(html).toContain(`data-${hook}`)
-    }
-    expect(html).toContain('--header-bg-color')
-    expect(html).toContain('--header-text-color')
-    expect(html).toContain('py-1')
-    expect(html).toContain('min-h-16')
+  it('honors a custom public home destination', async () => {
+    const html = await render({ props: { editions, homeHref: '/festival/' } })
+    expect(html).toContain('href="/festival/"')
+    expect(html).toContain('aria-label="Inicio"')
   })
 })

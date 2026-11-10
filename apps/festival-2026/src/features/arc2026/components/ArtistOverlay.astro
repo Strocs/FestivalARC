@@ -5,8 +5,8 @@ import { publicPath } from '../../../utils/publication'
 interface Props { program: Program }
 const { program } = Astro.props
 ---
-{program.artists.map(artist => <dialog class='artist-overlay fixed inset-0 m-auto h-dvh max-h-none w-full max-w-none overflow-y-auto overscroll-contain rounded-none border-0 bg-background p-0 text-foreground backdrop:bg-background/80 min-[768px]:h-[calc(100dvh-4rem)] min-[768px]:w-[min(calc(100%_-_4rem),1440px)]' data-artist-url={publicPath(`/artistas/${artist.id}/`)} aria-labelledby={`overlay-${artist.id}`}>
-  <div class='overlay-toolbar sticky top-0 z-[1] flex justify-end bg-background p-4'>
+{program.artists.map(artist => <dialog class='fixed inset-0 m-auto h-dvh max-h-none w-full max-w-none overflow-y-auto overscroll-contain rounded-none border-0 bg-background p-0 text-foreground backdrop:bg-background/80 md:h-[calc(100dvh-4rem)] md:w-[min(calc(100%_-_4rem),1440px)]' data-artist-url={publicPath(`/artistas/${artist.id}/`)} aria-labelledby={`overlay-${artist.id}`}>
+  <div class='sticky top-0 z-[1] flex justify-end bg-background p-4'>
     <button type='button' autofocus data-close-artist class='cursor-pointer border-2 border-foreground bg-background px-4 py-2 text-foreground focus-visible:outline-3 focus-visible:outline-solid focus-visible:outline-foreground focus-visible:outline-offset-3'>Cerrar ficha</button>
   </div>
   <ArtistDetail artist={artist} program={program} headingId={`overlay-${artist.id}`} overlay />

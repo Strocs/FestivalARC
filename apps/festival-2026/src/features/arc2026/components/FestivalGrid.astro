@@ -15,9 +15,9 @@ const layouts = {
   desktop: calculatePosterLayout(lineup.map(artist => artist.id), 10, posterPresets.desktop.blocks),
 }
 type Positions = Record<PosterRange, SlotRect | undefined>
-const positions = (values: Positions) => ranges.map(range => {
+const positions = (values: Positions, display: 'block' | 'grid' = 'block') => ranges.map(range => {
   const value = values[range]
-  return `--${range}-display:${value ? 'block' : 'none'};--${range}-column:${value?.column ?? 0};--${range}-row:${value?.row ?? 0};--${range}-width:${value?.width ?? 1};--${range}-height:${value?.height ?? 1}`
+  return `--${range}-display:${value ? display : 'none'};--${range}-column:${value?.column ?? 0};--${range}-row:${value?.row ?? 0};--${range}-width:${value?.width ?? 1};--${range}-height:${value?.height ?? 1}`
 }).join(';')
 const artistPositions = (id: string): Positions => ({
   mobile: layouts.mobile.artists.find(artist => artist.id === id),
@@ -39,25 +39,25 @@ const motifSlots = Array.from({ length: motifCount }, (_, index) => {
 })
 const gridStyle = `--slot-width:${slotSize.width};--slot-height:${slotSize.height};`
   + ranges.map(range => `--${range}-rows:${layouts[range].rows}`).join(';')
-// Complete static utility strings keep shared slot placement detectable by Tailwind.
-const slotClasses = 'slot min-w-0 min-h-0 [display:var(--mobile-display)] [grid-column:calc(var(--mobile-column)+1)/span_var(--mobile-width)] [grid-row:calc(var(--mobile-row)+1)/span_var(--mobile-height)] min-[768px]:[display:var(--tablet-display)] min-[768px]:[grid-column:calc(var(--tablet-column)+1)/span_var(--tablet-width)] min-[768px]:[grid-row:calc(var(--tablet-row)+1)/span_var(--tablet-height)] min-[1200px]:[display:var(--desktop-display)] min-[1200px]:[grid-column:calc(var(--desktop-column)+1)/span_var(--desktop-width)] min-[1200px]:[grid-row:calc(var(--desktop-row)+1)/span_var(--desktop-height)]'
+// Complete static utility strings keep shared placement detectable by Tailwind.
+const slotClasses = 'min-w-0 [display:var(--mobile-display)] [grid-column:calc(var(--mobile-column)+1)/span_var(--mobile-width)] [grid-row:calc(var(--mobile-row)+1)/span_var(--mobile-height)] md:[display:var(--tablet-display)] md:[grid-column:calc(var(--tablet-column)+1)/span_var(--tablet-width)] md:[grid-row:calc(var(--tablet-row)+1)/span_var(--tablet-height)] xl:[display:var(--desktop-display)] xl:[grid-column:calc(var(--desktop-column)+1)/span_var(--desktop-width)] xl:[grid-row:calc(var(--desktop-row)+1)/span_var(--desktop-height)]'
 ---
-<main class='festival-main flex-1 px-[8.333333vw] py-[80px] [@media(min-width:768px)_and_(max-width:1199px)]:px-[32px] [@media(min-width:768px)_and_(max-width:1199px)]:py-[48px] [@media(max-width:767px)]:px-[16px] [@media(max-width:767px)]:py-[32px]' aria-labelledby='page-title'>
-  <div class='poster @container mx-auto w-full max-w-[1600px]'>
+<main class='flex-1 px-4 py-8 md:px-8 md:py-12 xl:px-[8.333333vw] xl:py-20' aria-labelledby='page-title'>
+  <div class='@container mx-auto w-full max-w-[1600px]'>
     <PosterDefinitions />
-    <section class='festival-grid relative isolate grid [--columns:2] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] [--poster-text:#d5d5d5] grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),calc(var(--slot-height)*var(--unit)))] min-[768px]:[--columns:6] min-[768px]:[--rows:var(--tablet-rows)] min-[1200px]:[--columns:10] min-[1200px]:[--rows:var(--desktop-rows)]' style={gridStyle} aria-label='Festival ARC: artistas y obras'>
+    <section class='relative isolate grid [--columns:2] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] [--poster-text:#d5d5d5] grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]' style={gridStyle} aria-label='Festival ARC: artistas y obras'>
       {motifSlots.map(tile => (
-        <div class:list={[slotClasses, 'pattern-slot']} style={tile.style} aria-hidden='true'><PosterPattern motif={tile.motif} /></div>
+        <div class:list={[slotClasses, 'pattern-slot min-h-0 aspect-[160/152] md:aspect-auto']} style={tile.style} aria-hidden='true'><PosterPattern motif={tile.motif} /></div>
       ))}
       {posterPresets.desktop.blocks.map(block => (
-        <div class:list={[slotClasses, 'information-slot relative bg-background', block.id === 'hero' ? 'hero-slot z-3' : 'z-1']} style={positions(informationPositions(block.id))} aria-hidden={block.id === 'title-spill' ? 'true' : undefined}>
+        <div class:list={[slotClasses, 'information-slot @container relative min-h-0 bg-background', block.id === 'hero' ? 'z-3' : 'z-1']} style={positions(informationPositions(block.id), 'grid')} aria-hidden={block.id === 'title-spill' ? 'true' : undefined}>
           {block.id === 'hero' && <PosterIntro />}
           {block.id === 'program' && <PosterInformation kind='program' />}
           {block.id === 'disciplines' && <PosterInformation kind='disciplines' />}
         </div>
       ))}
       {lineup.map(artist => (
-        <div class:list={[slotClasses, 'artist-slot relative z-2']} style={positions(artistPositions(artist.id))}><ArtistName artist={artist} /></div>
+        <div class:list={[slotClasses, 'relative z-2 min-h-[calc(var(--slot-height)*var(--unit))] md:min-h-0']} style={positions(artistPositions(artist.id), 'grid')}><ArtistName artist={artist} /></div>
       ))}
     </section>
   </div>

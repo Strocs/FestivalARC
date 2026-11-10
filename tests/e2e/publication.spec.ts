@@ -3,10 +3,25 @@
     import { tmpdir } from 'node:os'
     import { join } from 'node:path'
     import { publicationConfig } from '../../editions.config.ts'
-    import { publicationBase, replaceCallsWithFinal } from '@festivalarc/editions'
+    import { publicationBase, replaceCallsWithFinal, validateCallsRootConfig } from '@festivalarc/editions'
     import { compose } from '../../tooling/distribution/src/index.ts'
     
     const origin = 'https://festivalarc.com'
+    const lifecycleOptions = {
+      knownWorkspacePackages: ['festival-2026', 'festival-arc-2023', 'festival-arc-2024', 'festivalarc-2025', 'calls-2026'],
+      callsPackageName: 'calls-2026',
+    }
+    const callsConfig = validateCallsRootConfig({
+      schemaVersion: 1,
+      siteOrigin: origin,
+      active: { kind: 'calls', id: 'calls-2026', year: 2026, packageName: 'calls-2026', expiresWhenFinalPublished: true },
+      archives: [
+        { kind: 'final', id: 'festival-2023', year: 2023, packageName: 'festival-arc-2023', base: '/ediciones/2023' },
+        { kind: 'final', id: 'festival-2024', year: 2024, packageName: 'festival-arc-2024', base: '/ediciones/2024' },
+        { kind: 'final', id: 'festival-2025', year: 2025, packageName: 'festivalarc-2025', base: '/ediciones/2025' },
+      ],
+      global: { notFound: 'distribution', robots: 'distribution', sitemap: 'distribution' },
+    }, lifecycleOptions)
     const fixtureInput = (ownerId: string, kind: 'final' | 'calls', destination: string, content: string) => ({
       ownerId, kind, sourceRoot: 'e2e-fixture', destination, base: publicationBase(destination),
       files: [{ relativePath: 'index.html', bytes: Buffer.from(content) }],
@@ -49,11 +64,11 @@
     })
     
     test('replaces calls without exposing a calls archive at the public boundary', async ({ request }) => {
-      expect((await request.get('/ediciones/2026/')).status()).toBe(404)
+      expect((await request.get(`/ediciones/${publicationConfig.active.year}/`)).status()).toBe(404)
     
-      const finalConfig = replaceCallsWithFinal(publicationConfig, {
-        id: 'festival-2026', year: 2026, packageName: 'festivalarc-2026',
-      }, { knownWorkspacePackages: ['festivalarc-2026', 'festival-arc-2023', 'festival-arc-2024', 'festivalarc-2025', 'calls-2026'], callsPackageName: 'calls-2026' })
+      const finalConfig = replaceCallsWithFinal(callsConfig, {
+        id: 'festival-2026', year: 2026, packageName: 'festival-2026',
+      }, lifecycleOptions)
       const root = mkdtempSync(join(tmpdir(), 'festivalarc-e2e-replace-'))
       try {
         const result = compose({ config: finalConfig, outputRoot: join(root, '.output'), inputs: [
@@ -73,7 +88,8 @@
         mkdirSync(output)
         writeFileSync(join(output, 'index.html'), 'prior')
         const calls = fixtureInput('calls-2026', 'calls', '/', 'calls')
-        expect(() => compose({ config: publicationConfig, outputRoot: output, inputs: [calls, calls] })).toThrow('duplicate input')
+        const archives = callsConfig.archives.map(archive => fixtureInput(archive.id, 'final', archive.base, `<html><head></head><body>${archive.id}</body></html>`))
+        expect(() => compose({ config: callsConfig, outputRoot: output, inputs: [calls, calls, ...archives] })).toThrow('Invalid distribution input: duplicate input: calls-2026')
         expect(readFileSync(join(output, 'index.html'), 'utf8')).toBe('prior')
         expect((await request.get('/index.html')).status()).toBe(200)
       } finally { rmSync(root, { recursive: true, force: true }) }

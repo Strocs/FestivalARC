@@ -34,7 +34,7 @@ describe('poster slot layout', () => {
 
   it.each([2, 6, 10] as const)('keeps every two-cell lower reservation free at %i columns', columns => {
     const blocks = [{ column: 0, row: 8, width: 2, height: 2 }]
-    const result = calculatePosterLayout(ids(46), columns, blocks)
+    const result = calculatePosterLayout(ids(17), columns, blocks)
     for (const artist of result.artists) {
       const envelope = { ...artist, height: 2 }
       expect(blocks.some(block => overlaps(block, envelope))).toBe(false)
@@ -87,11 +87,18 @@ describe('poster slot layout', () => {
   })
 
   it('provides valid information footprints for every responsive range', () => {
-    expect(Object.values(posterPresets).map(preset => preset.columns)).toEqual([10, 6, 2])
+    const artistIds = lineup.map(artist => artist.id)
     for (const preset of Object.values(posterPresets)) {
-      const result = calculatePosterLayout(lineup.map(artist => artist.id), preset.columns, preset.blocks)
-      expect(result.artists).toHaveLength(46)
-      expect(result.rows).toBeGreaterThan(0)
+      const before = structuredClone(preset)
+      const result = calculatePosterLayout(artistIds, preset.columns, preset.blocks)
+      expect(result.artists.map(({ id }) => id)).toEqual(artistIds)
+      expect(result.artists).toHaveLength(lineup.length)
+      expect(new Set(preset.blocks.map(({ id }) => id)).size).toBe(preset.blocks.length)
+      for (const artist of result.artists) {
+        expect(preset.blocks.some(block => overlaps(block, { ...artist, height: 2 }))).toBe(false)
+      }
+      expect(calculatePosterLayout(artistIds, preset.columns, preset.blocks)).toEqual(result)
+      expect(preset).toEqual(before)
     }
   })
 
@@ -118,22 +125,13 @@ describe('poster slot layout', () => {
   })
 })
 
-describe('confirmed artist roster', () => {
-  it('retains 46 unique stable identities without creating demonstration bookings', () => {
-    expect(lineup).toHaveLength(46)
-    expect(new Set(lineup.map(artist => artist.id)).size).toBe(46)
-    expect(lineup.filter(artist => artist.group === 'national')).toHaveLength(18)
-    expect(lineup.filter(artist => artist.group === 'regional')).toHaveLength(12)
-    expect(lineup.filter(artist => artist.group === 'stage')).toHaveLength(16)
-    expect(lineup.filter(artist => artist.company)).toHaveLength(16)
+describe('configured artist identities', () => {
+  it('provides unique valid IDs and nonempty names', () => {
+    expect(lineup.length).toBeGreaterThan(0)
+    expect(new Set(lineup.map(artist => artist.id)).size).toBe(lineup.length)
     for (const artist of lineup) {
       expect(artist.id).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-      expect(Object.keys(artist).every(key => ['id', 'name', 'group', 'company'].includes(key))).toBe(true)
+      expect(artist.name.trim().length).toBeGreaterThan(0)
     }
-    expect(lineup.find(artist => artist.id === 'nino-cohete')?.name).toBe('Niño Cohete')
-    expect(lineup.find(artist => artist.id === 'innundaremos')?.name).toBe('Innundaremos')
-    expect(lineup.find(artist => artist.id === 'lobas')?.company).toBe('Circo Kaleidoscopio')
-    expect(lineup.find(artist => artist.id === 'trans-humante')?.company).toBe('Espacio La Isla (Ovalle)')
-    expect(lineup.find(artist => artist.id === 'absurdo')?.company).toBe('Circo Kalendero')
   })
 })

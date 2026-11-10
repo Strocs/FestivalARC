@@ -1,15 +1,12 @@
----
-import headline from '../../../assets/LOGO_HERO.png'
-import { publicPath } from '../../../utils/publication'
----
-<header class='poster-intro relative h-full'>
-  <p class='reference-dates absolute top-[calc(32*var(--unit))] left-0 m-0 text-(--poster-text) text-[length:calc(48*var(--unit))] font-black leading-[calc(54*var(--unit))] [@media(max-width:767px)]:top-[calc(16*var(--unit))] [@media(max-width:767px)]:text-[length:calc(28*var(--unit))] [@media(max-width:767px)]:leading-[calc(32*var(--unit))]' aria-label='28 y 29 de noviembre de 2026'>
+<header class='space-y-8 py-4 my-auto'>
+  <p class='text-foreground text-[length:clamp(1rem,calc(0.75rem+3cqw),2.5rem)] md:text-[length:clamp(1rem,calc(0.75rem+6cqw),2.5rem)] font-semibold font-mono leading-none' aria-label='28 y 29 de noviembre de 2026'>
     <span aria-hidden='true'>28.11<br />29.11</span>
   </p>
-  <h1 id='page-title' class='absolute top-[calc(168*var(--unit))] left-0 w-[calc(640*var(--unit))] m-0 [@media(max-width:767px)]:top-[calc(88*var(--unit))] [@media(max-width:767px)]:w-[calc(320*var(--unit))]'>
-    <span class='sr-only'>El arte de habitar la ciudad</span>
-    <svg class='block w-full h-auto overflow-hidden' viewBox='1068 28 725 465' aria-hidden='true' focusable='false'>
-      <image href={publicPath(headline.src)} width={headline.width} height={headline.height} />
-    </svg>
+
+  <h1 id='page-title' class='w-full font-sans text-foreground [overflow-wrap:anywhere] text-[length:clamp(2rem,calc(0.35rem+15.8cqw),9rem)] font-bold leading-[0.9] tracking-tighter md:w-[133%] md:text-[length:clamp(2rem,calc(0.5rem+22cqw),7rem)]' aria-label='El arte de habitar la ciudad'>
+    <span class='block md:w-3/4'>EL <span class='text-[#5ce1e6]'>ARTE</span></span>
+    <span class='block'>DE HABITAR</span>
+    <span class='block md:w-3/4'>LA</span>
+    <span class='block text-[#e50070] md:w-3/4'>CIUDAD</span>
   </h1>
 </header>

@@ -11,7 +11,7 @@ const ItemHeading = overlay ? 'h4' : 'h3'
 const artwork = artistArtwork[artist.id as keyof typeof artistArtwork]
 const activities = activitiesForArtist(program, artist.id)
 ---
-<div class='artist-detail grid items-start min-[768px]:grid-cols-[1fr_1fr]'>
+<div class='grid items-start md:grid-cols-[1fr_1fr]'>
   <img src={publicPath(artwork.src)} width={artwork.width} height={artwork.height} alt={`Pieza de referencia de ${artist.name}`} class='block h-auto w-full' />
   <div class='min-w-0 p-4 sm:p-8'>
     <Heading id={headingId} class='font-display text-4xl/none uppercase sm:text-6xl/none'>{artist.name}</Heading>

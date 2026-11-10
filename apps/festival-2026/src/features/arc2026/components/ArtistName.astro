@@ -1,17 +1,34 @@
 ---
 import type { LineupArtist } from '../data/lineup'
+import { getArtistCompositions, getArtistFitRanges } from '../lib/artist-name'
+
 interface Props { artist: LineupArtist }
+
 const { artist } = Astro.props
-const chevronClasses = 'chevron absolute top-1/2 w-[calc(30*var(--unit))] h-[calc(34*var(--unit))] [transform:translateY(-50%)] fill-current'
+const words = artist.name.trim().split(/\s+/)
+const compositions = getArtistCompositions(artist.name)
+const ranges = getArtistFitRanges(compositions)
+// Encode the identifier so generated selectors contain no unescaped input.
+const labelClass = `artist-fit-${Array.from(artist.id, character => character.codePointAt(0)!.toString(16)).join('-')}`
+const selector = `.${labelClass}`
+const rules = ranges.map(({ minRatio, index }, rangeIndex) => {
+  const option = compositions[index]
+  const font = `min(calc(100cqw / ${option.width}), calc(100cqh / ${option.lines.length}))`
+  const cuts = option.breaks.map(cut =>
+    `${selector} [data-gap="${cut}"]{display:none}${selector} [data-break="${cut}"]{display:initial}`,
+  ).join('')
+  const css = `${selector}{font-size:${font}}${selector} [data-gap]{display:inline}${selector} [data-break]{display:none}${cuts}`
+  return rangeIndex === 0 ? css : `@container artist-name (min-aspect-ratio:${minRatio}){${css}}`
+}).join('\n')
 ---
-<article class='artist-name flex w-full h-full min-w-0 bg-background' aria-label={artist.name}>
-  <div class='artist-panel grid place-items-center relative w-full min-w-0 my-[calc(21*var(--unit))] mx-[calc(32*var(--unit))] px-[calc(7*var(--unit))] bg-accent text-background'>
-    <svg class:list={[chevronClasses, 'left left-[calc(7*var(--unit))]']} viewBox='0 0 36 40' aria-hidden='true' focusable='false'>
-      <path d='M15 2H25L8 20 25 38H15L0 20ZM29 2H36L19 20 36 38H29L12 20Z' />
-    </svg>
-    <span class='artist-label block w-max max-w-[calc(240*var(--unit))] py-[calc(3*var(--unit))] px-[calc(5*var(--unit))] rounded-[calc(10*var(--unit))] bg-primary font-sans text-[length:calc(26*var(--unit))] font-black leading-[calc(24*var(--unit))] text-center uppercase [overflow-wrap:anywhere] [transform:scaleX(.8)]'>{artist.name}</span>
-    <svg class:list={[chevronClasses, 'right right-[calc(7*var(--unit))]']} viewBox='0 0 36 40' aria-hidden='true' focusable='false'>
-      <path transform='translate(36 0) scale(-1 1)' d='M15 2H25L8 20 25 38H15L0 20ZM29 2H36L19 20 36 38H29L12 20Z' />
-    </svg>
+<article class='relative flex w-full min-h-0 min-w-0 p-[24px] bg-background' aria-label={artist.name}>
+  <div class='absolute inset-[32px]'>
+    <!-- Exclude every padding before comparing the available width and height.
+         The centered label extends back into its own 12px / 8px allowance.
+         Fixed padding preserves usable space during root text enlargement. -->
+    <div class='absolute inset-x-[12px] inset-y-[8px] flex items-center justify-center [container-type:size] [container-name:artist-name]'>
+      <span class:list={['block shrink-0 whitespace-nowrap py-[8px] px-[12px] bg-accent text-arc-yellow font-sans font-black leading-none text-center uppercase', labelClass]}>{words.map((word, index) => <>{index > 0 && <><span data-gap={index}>{' '}</span><br data-break={index} /></>}{word}</>)}</span>
+    </div>
   </div>
+  <style is:inline set:html={rules} />
 </article>

@@ -1,68 +1,77 @@
+import { createRequire } from 'node:module'
+import { resolve } from 'node:path'
 import { expect, test } from '@playwright/test'
 
-const configurations = [
-  { width: 390, dpr: 1, columns: 2 },
-  { width: 1024, dpr: 1, columns: 6 },
-  { width: 1440, dpr: 1, columns: 10 },
-  { width: 1365, dpr: 1, columns: 10 },
-  { width: 1365, dpr: 2, columns: 10 },
-]
+// Resolve the already installed app dependency without adding a root dependency.
+const requireFromApp = createRequire(resolve('apps/festival-2026/package.json'))
+const sharp: typeof import('../../apps/festival-2026/node_modules/sharp') = requireFromApp('sharp')
 
-for (const { width, dpr, columns } of configurations) {
-  test.describe(`poster patterns at ${width}px and DPR ${dpr}`, () => {
+for (const { width, dpr } of [
+  { width: 390, dpr: 1 },
+  { width: 1024, dpr: 1 },
+  { width: 1440, dpr: 1 },
+  { width: 1365, dpr: 1 },
+  { width: 1365, dpr: 2 },
+]) {
+  test.describe(`decorative tiles at ${width}px and DPR ${dpr}`, () => {
     test.use({ viewport: { width, height: 1000 }, deviceScaleFactor: dpr })
 
-    test('bleeds only the artwork without expanding the grid cells or disabling smoothing', async ({ page }) => {
+    test('remain silent, resolve their symbols and cover adjacent seams in rendered pixels', async ({ page }) => {
       expect((await page.goto('/'))?.status()).toBe(200)
       await page.evaluate(() => document.fonts.ready)
       const grid = page.getByRole('region', { name: 'Festival ARC: artistas y obras' })
       await expect(grid).toBeVisible()
-      const result = await grid.evaluate(element => {
-        const bounds = element.getBoundingClientRect()
-        const css = getComputedStyle(element)
-        const columns = css.gridTemplateColumns.split(' ').length
-        const cellWidth = bounds.width / columns
-        const cellHeight = parseFloat(css.gridTemplateRows)
-        const patterns = [...element.querySelectorAll('.pattern-slot')]
-          .filter(node => node.getBoundingClientRect().width > 0)
-        return {
-          columns,
-          count: patterns.length,
-          patterns: patterns.map(node => {
-            const cell = node.getBoundingClientRect()
-            const svg = node.querySelector('svg')!
-            const artwork = svg.getBoundingClientRect()
-            return {
-              cellWidth: cell.width - cellWidth,
-              cellHeight: cell.height - cellHeight,
-              extraWidth: artwork.width - cell.width,
-              extraHeight: artwork.height - cell.height,
-              left: artwork.left - cell.left,
-              top: artwork.top - cell.top,
-              hidden: svg.getAttribute('aria-hidden'),
-              focusable: svg.getAttribute('focusable'),
-            }
-          }),
-          horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
-        }
-      })
-      expect(result.columns).toBe(columns)
-      expect(result.count).toBeGreaterThan(0)
-      expect(result.horizontalOverflow).toBe(false)
-      for (const pattern of result.patterns) {
-        expect(pattern.extraWidth).toBeCloseTo(1, 2)
-        expect(pattern.extraHeight).toBeCloseTo(1, 2)
-        expect(pattern.left).toBeCloseTo(-0.5, 2)
-        expect(pattern.top).toBeCloseTo(-0.5, 2)
-        expect(Math.abs(pattern.cellWidth)).toBeLessThan(0.02)
-        expect(Math.abs(pattern.cellHeight)).toBeLessThan(0.02)
-        expect(pattern.hidden).toBe('true')
-        expect(pattern.focusable).toBe('false')
+      const tiles = grid.locator('.pattern-slot svg')
+      expect(await tiles.count()).toBeGreaterThan(0)
+      for (const tile of await tiles.all()) {
+        await expect(tile).toHaveAttribute('aria-hidden', 'true')
+        await expect(tile).toHaveAttribute('focusable', 'false')
+        expect(await tile.evaluate(element => element.tabIndex)).toBeLessThan(0)
       }
-      expect(await page.locator('symbol path, symbol circle').evaluateAll(nodes =>
-        nodes.every(node => getComputedStyle(node).shapeRendering === 'auto'),
-      )).toBe(true)
-      await expect(page.locator('[shape-rendering="crispEdges"]')).toHaveCount(0)
+      const unresolved = await tiles.locator('use').evaluateAll(nodes => nodes.flatMap(node => {
+        const href = node.getAttribute('href') ?? ''
+        return href.startsWith('#') && document.getElementById(href.slice(1))?.tagName.toLowerCase() === 'symbol' ? [] : [href]
+      }))
+      expect(await tiles.locator('use').count()).toBeGreaterThan(0)
+      expect(unresolved).toEqual([])
+      expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
+
+      // A controlled page-color marker reveals exposed gaps without freezing the
+      // artwork palette, grid tracks, bleed mechanism or complete composition.
+      const seams = await grid.evaluate(element => {
+        ;(element as HTMLElement).style.backgroundColor = 'rgb(1, 2, 3)'
+        const boxes = [...element.querySelectorAll('.pattern-slot')]
+          .map(node => node.getBoundingClientRect())
+          .filter(box => box.width > 0 && box.height > 0)
+        const result: { x: number, y: number, width: number, height: number, axis: string }[] = []
+        for (const a of boxes) {
+          for (const b of boxes) {
+            const top = Math.max(a.top, b.top)
+            const bottom = Math.min(a.bottom, b.bottom)
+            const left = Math.max(a.left, b.left)
+            const right = Math.min(a.right, b.right)
+            if (Math.abs(a.right - b.left) < 1 && bottom - top > 12) {
+              result.push({ x: a.right + scrollX - 2, y: top + scrollY + 4, width: 4, height: bottom - top - 8, axis: 'vertical' })
+            }
+            if (Math.abs(a.bottom - b.top) < 1 && right - left > 12) {
+              result.push({ x: left + scrollX + 4, y: a.bottom + scrollY - 2, width: right - left - 8, height: 4, axis: 'horizontal' })
+            }
+          }
+        }
+        return result
+      })
+      expect(seams.length, 'at least one adjacent tile edge is exercised').toBeGreaterThan(0)
+      // Sample both orientations when present, without selecting particular motifs.
+      const samples = ['vertical', 'horizontal'].flatMap(axis => seams.filter(seam => seam.axis === axis).slice(0, 3))
+      for (const { axis, ...clip } of samples) {
+        const screenshot = await page.screenshot({ clip, fullPage: true, animations: 'disabled' })
+        const { data, info } = await sharp(screenshot).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+        let exposedPixels = 0
+        for (let index = 0; index < data.length; index += info.channels) {
+          if (Math.abs(data[index] - 1) <= 2 && Math.abs(data[index + 1] - 2) <= 2 && Math.abs(data[index + 2] - 3) <= 2) exposedPixels++
+        }
+        expect(exposedPixels, `${axis} seam at ${clip.x},${clip.y}`).toBe(0)
+      }
     })
   })
 }
