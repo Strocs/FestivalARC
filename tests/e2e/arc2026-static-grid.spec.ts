@@ -17,25 +17,27 @@ test('renders the confirmed names as static content without JavaScript', async (
   }
 })
 
-test('omits root chrome, metadata, filters, overlays and client animation', async ({ page }) => {
+test('adds shared navigation without changing the static grid or loading client animation', async ({ page }) => {
   const scripts: string[] = []
   const errors: string[] = []
   page.on('request', request => { if (request.resourceType() === 'script') scripts.push(request.url()) })
   page.on('pageerror', error => errors.push(error.message))
   await page.goto('/')
   await expect(page.getByRole('article')).toHaveCount(46)
-  await expect(page.getByRole('banner')).toHaveCount(0)
+  await expect(page.getByRole('banner')).toHaveCount(1)
   await expect(page.getByRole('contentinfo')).toHaveCount(0)
-  await expect(page.getByRole('navigation')).toHaveCount(0)
+  await expect(page.getByRole('navigation', { name: 'Navegación principal' })).toBeVisible()
   await expect(page.getByRole('dialog')).toHaveCount(0)
-  await expect(page.getByRole('button')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Ediciones' })).toBeVisible()
   await expect(page.getByRole('combobox')).toHaveCount(0)
   const before = await page.getByRole('article').first().innerText()
   await page.getByRole('article').first().click()
   await expect(page).toHaveURL('/')
   expect(await page.getByRole('article').first().innerText()).toBe(before)
   expect(await page.evaluate(() => document.getAnimations().length)).toBe(0)
-  expect(scripts).toEqual([])
+  expect(scripts.length).toBeLessThanOrEqual(1)
+  await expect(page.locator('script[type="module"]')).toHaveCount(1)
+  await expect(page.locator('astro-island')).toHaveCount(0)
   expect(errors).toEqual([])
 })
 

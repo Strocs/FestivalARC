@@ -36,7 +36,7 @@ test('retains the existing detail route and its normal header/footer without Jav
     await expect(page.getByRole('heading', { level: 1, name: 'Javiera Mena' })).toBeVisible()
     await expect(page.getByRole('banner')).toBeVisible()
     await expect(page.getByRole('contentinfo')).toBeVisible()
-    await expect(page.getByRole('navigation', { name: 'Ultimas ediciones' })).toBeAttached()
+    await expect(page.getByRole('navigation', { name: 'Navegación principal', includeHidden: true })).toBeAttached()
     await expect(page.getByRole('link', { name: 'Volver a la portada' })).toHaveAttribute('href', '/')
     await expect(page.getByText(demoDescription, { exact: true })).toBeVisible()
     await expect(page.getByRole('list', { name: 'Actividades de demostración' }).getByRole('listitem')).toHaveCount(2)

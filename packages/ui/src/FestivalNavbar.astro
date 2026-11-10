@@ -1,0 +1,140 @@
+---
+import EditionMenu from './EditionMenu.astro'
+import type { NavigationLink } from './types'
+
+interface Props {
+  editions: readonly NavigationLink[]
+  links?: readonly NavigationLink[]
+  homeHref?: string
+}
+const { editions, links = [], homeHref = '/' } = Astro.props
+for (const name of ['logo', 'date']) {
+  if (!Astro.slots.has(name)) throw new Error(`FestivalNavbar requires the "${name}" slot`)
+}
+if (!Array.isArray(editions) || editions.length === 0) {
+  throw new Error('FestivalNavbar requires at least one other edition')
+}
+const panelId = `festival-navigation-${crypto.randomUUID()}`
+const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
+---
+<festival-navbar class='contents'>
+  <header data-festival-header class='relative z-30 border-[var(--header-border-color,currentColor)] bg-[var(--header-bg-color,transparent)] py-1 text-[color:var(--header-text-color,inherit)]'>
+    <div class='relative mx-auto flex min-h-16 w-full items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-14'>
+      <div data-header-brand class='flex min-w-0 items-center gap-3'>
+        <a href={homeHref} aria-label='Inicio' class='block w-20 shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-32'>
+          <slot name='logo' />
+        </a>
+        <div class='min-w-0 text-xs leading-4 sm:text-sm'>
+          <div data-header-date class='font-bold'><slot name='date' /></div>
+          {Astro.slots.has('location') && <div data-header-location><slot name='location' /></div>}
+        </div>
+      </div>
+      <nav data-header-nav aria-label='Navegación principal' class='hidden shrink-0 items-center gap-4 lg:flex'>
+        {links.length > 0 && <ul class='flex items-center gap-4'>
+          {links.map(({ label, href }) => <li><a href={href} class='hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'>{label}</a></li>)}
+        </ul>}
+        {cta && <div data-header-cta set:html={cta} />}
+        <EditionMenu editions={editions} />
+      </nav>
+      <button data-header-toggle type='button' aria-label='Abrir navegación' aria-controls={panelId} aria-expanded='false' class='shrink-0 cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-2 lg:hidden'>
+        <svg aria-hidden='true' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M3 6h18M3 12h18M3 18h18' /></svg>
+      </button>
+    </div>
+  </header>
+  <dialog id={panelId} data-header-panel aria-label='Navegación del festival' class='fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto border-0 bg-[var(--header-panel-bg-color,Canvas)] p-6 text-[color:var(--header-panel-text-color,CanvasText)] backdrop:bg-black/50'>
+    <div class='flex min-h-full flex-col gap-8'>
+      <button data-header-close type='button' autofocus class='ml-auto cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-2'>Cerrar navegación</button>
+      <nav aria-label='Navegación móvil' class='flex flex-col items-start gap-6'>
+        {links.length > 0 && <ul class='flex flex-col gap-6 text-2xl'>
+          {links.map(({ label, href }) => <li><a href={href} class='hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'>{label}</a></li>)}
+        </ul>}
+        {cta && <div data-header-cta set:html={cta} />}
+        <EditionMenu editions={editions} />
+      </nav>
+      <slot name='mobile-extra' />
+    </div>
+  </dialog>
+</festival-navbar>
+
+<script>
+  class FestivalNavbar extends HTMLElement {
+    private cleanup?: () => void
+
+    connectedCallback() {
+      if (this.cleanup) return
+      const panel = this.querySelector<HTMLDialogElement>('[data-header-panel]')!
+      const toggle = this.querySelector<HTMLButtonElement>('[data-header-toggle]')!
+      const close = this.querySelector<HTMLButtonElement>('[data-header-close]')!
+      const controller = new AbortController()
+      const { signal } = controller
+      const desktop = window.matchMedia('(min-width: 64rem)')
+      let previousOverflow = ''
+      let locked = false
+      const restoreScroll = () => {
+        if (!locked) return
+        document.documentElement.style.overflow = previousOverflow
+        locked = false
+      }
+      const closePanel = () => panel.close()
+      toggle.addEventListener('click', () => {
+        if (panel.open) return
+        previousOverflow = document.documentElement.style.overflow
+        panel.showModal()
+        document.documentElement.style.overflow = 'hidden'
+        locked = true
+        toggle.setAttribute('aria-expanded', 'true')
+      }, { signal })
+      close.addEventListener('click', closePanel, { signal })
+      panel.addEventListener('close', () => {
+        restoreScroll()
+        toggle.setAttribute('aria-expanded', 'false')
+        if (!desktop.matches && this.isConnected) toggle.focus()
+      }, { signal })
+      panel.addEventListener('click', event => {
+        if ((event.target as Element).closest('a')) closePanel()
+      }, { signal })
+      desktop.addEventListener('change', () => {
+        if (desktop.matches) closePanel()
+      }, { signal })
+
+      this.querySelectorAll<HTMLElement>('[data-header-editions]').forEach(menu => {
+        const button = menu.querySelector<HTMLButtonElement>('button')!
+        const list = menu.querySelector<HTMLUListElement>('ul')!
+        const setOpen = (open: boolean) => {
+          button.setAttribute('aria-expanded', String(open))
+          list.hidden = !open
+        }
+        button.addEventListener('click', () => setOpen(list.hidden), { signal })
+        menu.addEventListener('focusout', event => {
+          if (!menu.contains(event.relatedTarget as Node | null)) setOpen(false)
+        }, { signal })
+        menu.addEventListener('keydown', event => {
+          if (event.key !== 'Escape') return
+          setOpen(false)
+          if (!panel.open) {
+            event.stopPropagation()
+            button.focus()
+          }
+        }, { signal })
+        document.addEventListener('click', event => {
+          if (!menu.contains(event.target as Node)) setOpen(false)
+        }, { signal })
+        panel.addEventListener('close', () => setOpen(false), { signal })
+      })
+
+      this.cleanup = () => {
+        controller.abort()
+        panel.close()
+        restoreScroll()
+      }
+      document.addEventListener('astro:before-swap', () => this.cleanup?.(), { signal, once: true })
+    }
+
+    disconnectedCallback() {
+      this.cleanup?.()
+      this.cleanup = undefined
+    }
+  }
+
+  if (!customElements.get('festival-navbar')) customElements.define('festival-navbar', FestivalNavbar)
+</script>

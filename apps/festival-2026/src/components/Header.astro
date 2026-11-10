@@ -1,13 +1,16 @@
 ---
+import FestivalNavbar from '@festivalarc/ui/FestivalNavbar.astro'
+import { publicationConfig } from '../../../../editions.config'
 import { arc26Logo } from '../features/arc2026/data/artwork'
-import PreviousEditions from './PreviousEditions.astro'
+import { previousEditionTargets } from './previousEditions'
 import { publicPath } from '../utils/publication'
+
+const editions = previousEditionTargets(publicationConfig)
 ---
-<header class='site-header sticky top-0 z-10 border-b border-primary/10 bg-background px-4 sm:px-8 [&_nav_*]:transition-none [&_nav_*]:transform-none'>
-  <div class='flex w-full items-center justify-between gap-2'>
-    <a href={publicPath('/')} aria-label='Ir al inicio' class='block shrink-0'>
-      <img src={publicPath(arc26Logo.src)} width={arc26Logo.width} height={arc26Logo.height} alt='Logotipo del Festival ARC 2026' class='block h-auto w-24 sm:w-28' loading='eager' />
-    </a>
-    <PreviousEditions />
-  </div>
-</header>
+<div class='site-header sticky top-0 z-30 font-sans [--header-bg-color:var(--color-background)] [--header-text-color:var(--color-foreground)] [--header-border-color:var(--color-primary)] [--header-panel-bg-color:var(--color-background)] [--header-panel-text-color:var(--color-foreground)]'>
+  <FestivalNavbar editions={editions} homeHref={publicPath('/')}>
+    <img slot='logo' src={publicPath(arc26Logo.src)} width={arc26Logo.width} height={arc26Logo.height} alt='Logotipo del Festival ARC 2026' class='block h-11 w-full object-contain object-left' loading='eager' />
+    <span slot='date'>28 y 29 de noviembre</span>
+    <span slot='location'>Plaza de Armas de La Serena</span>
+  </FestivalNavbar>
+</div>

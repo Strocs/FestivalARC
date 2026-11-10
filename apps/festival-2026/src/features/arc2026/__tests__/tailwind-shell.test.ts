@@ -17,7 +17,7 @@ describe('Tailwind shell presentation', () => {
   it('keeps the global entrypoint infrastructure-only', () => {
     const css = source('styles/global.css')
     const presentation = css
-      .replace(/@import\s+[^;]+;/g, '')
+      .replace(/@(?:import|source)\s+[^;]+;/g, '')
       .replace(/@theme\s*\{[^}]*\}/g, '')
       .trim()
     expect(presentation).toBe('')
