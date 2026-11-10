@@ -3,15 +3,16 @@ import type { NavigationLink } from './types'
 
 interface Props {
   editions: readonly NavigationLink[]
+  expanded?: boolean
 }
-const { editions } = Astro.props
+const { editions, expanded = false } = Astro.props
 const listId = `editions-${crypto.randomUUID()}`
 ---
-<div data-header-editions class='relative'>
-  <button type='button' aria-expanded='false' aria-controls={listId} class='cursor-pointer px-3 py-2 text-sm font-bold focus-visible:outline-2 focus-visible:outline-offset-2'>
-    Ediciones <span aria-hidden='true'>▾</span>
-  </button>
-  <ul id={listId} data-editions-list hidden class='absolute right-0 top-full z-20 min-w-max rounded border border-[var(--header-border-color,currentColor)] bg-[var(--header-panel-bg-color,Canvas)] p-2 text-[color:var(--header-panel-text-color,CanvasText)] shadow-lg'>
+<div data-header-editions data-editions-expanded={expanded ? '' : undefined} class:list={['relative', expanded && 'text-center']}>
+  {expanded ? <h2 class='px-3 py-2 text-sm font-bold'>Últimas ediciones</h2> : <button type='button' aria-expanded='false' aria-controls={listId} class='cursor-pointer px-3 py-2 text-sm font-bold focus-visible:outline-2 focus-visible:outline-offset-2'>
+    Últimas ediciones <span aria-hidden='true'>▾</span>
+  </button>}
+  <ul id={listId} data-editions-list hidden={!expanded} class:list={['min-w-max p-2', !expanded && 'absolute right-0 top-full z-20 rounded border border-[var(--header-border-color,currentColor)] bg-[var(--header-panel-bg-color,Canvas)] text-[color:var(--header-panel-text-color,CanvasText)] shadow-lg']}>
     {editions.map(({ label, href }) => (
       <li><a href={href} class='block px-3 py-2 text-sm hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'>{label}</a></li>
     ))}

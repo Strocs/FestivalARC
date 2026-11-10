@@ -7,7 +7,7 @@ import { publicPath } from '../utils/publication'
 
 const editions = previousEditionTargets(publicationConfig)
 ---
-<div class='site-header sticky top-0 z-30 font-sans [--header-bg-color:var(--color-background)] [--header-text-color:var(--color-foreground)] [--header-border-color:var(--color-primary)] [--header-panel-bg-color:var(--color-background)] [--header-panel-text-color:var(--color-foreground)]'>
+<div class='site-header sticky top-0 z-30 font-sans [--header-bg-color:var(--color-background)] [--header-text-color:var(--color-foreground)] [&_[data-festival-header]]:border-b [--header-border-color:color-mix(in_oklab,var(--color-primary)_10%,transparent)] [--header-panel-bg-color:var(--color-background)] [--header-panel-text-color:var(--color-foreground)]'>
   <FestivalNavbar editions={editions} homeHref={publicPath('/')}>
     <img slot='logo' src={publicPath(arc26Logo.src)} width={arc26Logo.width} height={arc26Logo.height} alt='Logotipo del Festival ARC 2026' class='block h-11 w-full object-contain object-left' loading='eager' />
     <span slot='date'>28 y 29 de noviembre</span>

@@ -1,6 +1,7 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
 import FestivalNavbar from '@festivalarc/ui/FestivalNavbar.astro'
+import Header from './Header.astro'
 import PosterIntro from '../features/arc2026/components/PosterIntro.astro'
 
 const editions = [
@@ -53,6 +54,39 @@ describe('FestivalNavbar public contract', () => {
     expect(html).toContain('href="/entradas/"')
     expect(html).toContain('Redes del festival')
     expect(html).toContain('data-header-cta')
+  })
+
+  it('keeps Inicio first and editions expanded in the mobile panel without visible close text', async () => {
+    const html = await render({ props: { editions, homeHref: '/festival/', links: [{ label: 'Inicio', href: '/festival/' }, { label: 'Programa', href: '/programa/' }] } })
+    const panel = html.match(/<dialog\b[\s\S]*?<\/dialog>/)?.[0] ?? ''
+    expect(panel.match(/>Inicio<\/a>/g)).toHaveLength(1)
+    expect(panel.indexOf('>Inicio</a>')).toBeLessThan(panel.indexOf('>Programa</a>'))
+    expect(panel).toContain('Últimas ediciones')
+    expect(panel).toContain('data-editions-expanded')
+    expect(panel).not.toMatch(/<ul[^>]*hidden/)
+    expect(panel).not.toContain('>Cerrar navegación</button>')
+  })
+
+  it('uses one header button with both menu and close symbols, not a separate panel close', async () => {
+    const html = await render()
+    const toggle = html.match(/<button\b[^>]*data-header-toggle[\s\S]*?<\/button>/)?.[0] ?? ''
+    expect(toggle).toContain('data-icon-menu')
+    expect(toggle.match(/data-icon-line/g)).toHaveLength(3)
+    expect(toggle).not.toContain('data-icon-close')
+    expect(html).not.toContain('data-header-close')
+  })
+
+  it('matches the footer border weight and color on the 2026 header only', async () => {
+    const container = await AstroContainer.create()
+    const html = await container.renderToString(Header)
+    expect(html).toContain('[&amp;_[data-festival-header]]:border-b')
+    expect(html).toContain('--header-border-color:color-mix(in_oklab,var(--color-primary)_10%,transparent)')
+  })
+
+  it('does not darken the page behind the mobile panel', async () => {
+    const html = await render()
+    expect(html).toContain('backdrop:bg-transparent')
+    expect(html).not.toContain('backdrop:bg-black')
   })
 
   it('exposes stable style hooks, color tokens and the 2024 height reference', async () => {

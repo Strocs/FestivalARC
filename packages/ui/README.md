@@ -25,12 +25,23 @@ Required prop: `editions` (a non-empty list of `{ label, href }`).
 Optional props: `links` (same shape, defaults to empty), `homeHref` (defaults to `/`).
 No style/color/class props. The consumer resolves base-aware URLs and supplies all editions except itself.
 
-CTA appears before Ediciones, both on desktop and in the mobile panel.
+CTA appears before Últimas ediciones, both on desktop and in the mobile panel.
+Mobile navigation always starts with Inicio (`homeHref`), without duplicating a supplied home link.
+Its centered Últimas ediciones section stays expanded.
 CTA markup is rendered twice: avoid IDs inside that slot.
 Below Tailwind's default `lg` breakpoint (64rem), a native modal dialog provides
 focus containment, Escape dismissal and return focus. It closes after navigation
-or switching to desktop. Ediciones uses a button-operated disclosure with Escape
-and outside-click dismissal.
+or switching to desktop. The original header stays above the sliding surface:
+while open it lives inside the modal top layer, then returns to its original position.
+The same header button morphs its three strokes into an X and updates its accessible label;
+the outer strokes converge and rotate with a spring-like easing while the middle retracts.
+The stroke animation reverses on close and respects reduced motion;
+there is no separate close button. The surface slides in from the right over 500 ms
+and the button rotates over 300 ms. The backdrop is transparent (no page dimming).
+Closing reverses the motion: the surface exits right over 500 ms and the button
+rotates back over 300 ms. Escape follows the same animation; reduced motion closes immediately. Desktop Últimas ediciones uses a button-operated disclosure
+with a 180 ms fade/slide, Escape and outside-click dismissal. Animations respect
+reduced-motion preferences.
 
 ## Tailwind and customization
 
