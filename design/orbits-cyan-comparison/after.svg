@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="400" height="400"><rect width="100" height="100" fill="#00ffff"/>
+  <circle cx="50" cy="50" r="48" fill="#ff008a"/>
+  <!-- Four equal quadrants with rounded tips and tighter shoulders; shared by both cyan contours. -->
+  <path id="orbits-cyan-contour" fill="#00ffff" d="M50 6C60 6 66 15 74 23C83 32 94 40 94 50C94 60 85 66 77 74C68 83 60 94 50 94C40 94 34 85 26 77C17 68 6 60 6 50C6 40 15 34 23 26C32 17 40 6 50 6Z"/>
+  <circle cx="50" cy="50" r="33" fill="#ff008a"/>
+  <use href="#orbits-cyan-contour" transform="translate(50 50) scale(0.66) translate(-50 -50) rotate(90 50 50)"/>
+  <circle cx="50" cy="50" r="21" fill="#ff008a"/></svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="400" height="400"><rect width="100" height="100" fill="#ff008a"/>
+  <defs>
+    <!-- One concentric family, reused on both sides with matching radii and strokes. -->
+    <g id="poster-rings-family">
+      <circle cx="0" cy="0" r="35" stroke-width="0.7"/>
+      <circle cx="0" cy="0" r="42" stroke-width="1.3"/>
+      <circle cx="0" cy="0" r="49" stroke-width="1.9"/>
+      <circle cx="0" cy="0" r="56.5" stroke-width="2.5"/>
+      <circle cx="0" cy="0" r="64.5" stroke-width="3.2"/>
+      <circle cx="0" cy="0" r="73" stroke-width="3.8"/>
+      <circle cx="0" cy="0" r="82.5" stroke-width="4.4"/>
+      <circle cx="0" cy="0" r="92" stroke-width="5"/>
+    </g>
+  </defs>
+  <g transform="scale(0.469483568 0.492610837)" fill="none" stroke="#ff64cf" stroke-opacity="0.9">
+    <use href="#poster-rings-family" transform="translate(-1.5 102)"/>
+    <use href="#poster-rings-family" transform="translate(214.5 102)"/>
+  </g></svg>
