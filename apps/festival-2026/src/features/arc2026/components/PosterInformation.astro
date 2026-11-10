@@ -4,29 +4,14 @@ const { kind } = Astro.props
 const disciplines = ['Música', 'Artesanía', 'Diseño', 'Ilustración', 'Literatura', 'Artes escénicas', 'Artes visuales']
 ---
 {kind === 'program' ? (
-  <aside class='program-content' aria-label='Programación'>
-    <p>PROGRA<br />MACIÓN</p>
-    <svg viewBox='0 0 100 100' aria-hidden='true' focusable='false'>
+  <aside class='program-content h-full text-(--poster-text) font-black flex items-center justify-between gap-[calc(12*var(--unit))] p-[calc(20*var(--unit))] [@media(max-width:767px)]:p-[calc(16*var(--unit))]' aria-label='Programación'>
+    <p class='min-w-0 m-0 text-[length:calc(68*var(--unit))] leading-[.94] tracking-[-.04em] [@media(max-width:767px)]:text-[length:calc(44*var(--unit))]'>PROGRA<br />MACIÓN</p>
+    <svg class='flex-none w-[calc(82*var(--unit))] h-[calc(82*var(--unit))] fill-current [@media(max-width:767px)]:w-[calc(56*var(--unit))] [@media(max-width:767px)]:h-[calc(56*var(--unit))]' viewBox='0 0 100 100' aria-hidden='true' focusable='false'>
       <path d='M8 42H65L42 18H64L94 50 64 82H42L65 58H8Z' />
     </svg>
   </aside>
 ) : (
-  <aside class='disciplines-content' aria-label='Disciplinas'>
-    <ul>{disciplines.map(discipline => <li>{discipline}</li>)}</ul>
+  <aside class='disciplines-content h-full text-(--poster-text) font-black flex items-center' aria-label='Disciplinas'>
+    <ul class='m-0 p-0 list-none text-[length:calc(60*var(--unit))] leading-[1] tracking-[-.04em] uppercase [@media(min-width:768px)_and_(max-width:1199px)]:text-[length:calc(45*var(--unit))] [@media(min-width:768px)_and_(max-width:1199px)]:leading-[1.08] [@media(max-width:767px)]:text-[length:calc(30*var(--unit))] [@media(max-width:767px)]:leading-[1.12]'>{disciplines.map(discipline => <li>{discipline}</li>)}</ul>
   </aside>
 )}
-<style>
-  aside { height: 100%; color: var(--poster-text); font-weight: 900; }
-  .program-content { display: flex; align-items: center; justify-content: space-between; gap: calc(12 * var(--unit)); padding: calc(20 * var(--unit)); }
-  .program-content p { min-width: 0; margin: 0; font-size: calc(68 * var(--unit)); line-height: .94; letter-spacing: -.04em; }
-  .program-content svg { flex: none; width: calc(82 * var(--unit)); height: calc(82 * var(--unit)); fill: currentColor; }
-  .disciplines-content { display: flex; align-items: center; }
-  ul { margin: 0; padding: 0; list-style: none; font-size: calc(60 * var(--unit)); line-height: 1; letter-spacing: -.04em; text-transform: uppercase; }
-  @media (min-width: 768px) and (max-width: 1199px) { ul { font-size: calc(45 * var(--unit)); line-height: 1.08; } }
-  @media (max-width: 767px) {
-    .program-content { padding: calc(16 * var(--unit)); }
-    .program-content p { font-size: calc(44 * var(--unit)); }
-    .program-content svg { width: calc(56 * var(--unit)); height: calc(56 * var(--unit)); }
-    ul { font-size: calc(30 * var(--unit)); line-height: 1.12; }
-  }
-</style>

@@ -3,10 +3,7 @@ import type { PosterMotif } from '../data/poster'
 interface Props { motif: PosterMotif }
 const { motif } = Astro.props
 ---
-<svg viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden='true' focusable='false'>
+<!-- Bleed shared edges without changing grid tracks or disabling antialiasing. -->
+<svg class='block relative left-[-0.5px] top-[-0.5px] w-[calc(100%+1px)] h-[calc(100%+1px)]' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden='true' focusable='false'>
   <use href={`#${motif}`} />
 </svg>
-<style>
-  /* Bleed across shared edges without changing the grid tracks or disabling antialiasing. */
-  svg { display: block; position: relative; left: -0.5px; top: -0.5px; width: calc(100% + 1px); height: calc(100% + 1px); }
-</style>

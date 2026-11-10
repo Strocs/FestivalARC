@@ -18,7 +18,7 @@ const canonical = new URL(publicPath(path), siteUrl).toString().replace(/\/$/, '
 const socialImage = new URL(publicPath('/og-image.jpg'), siteUrl).toString()
 ---
 <!doctype html>
-<html lang='es'>
+<html lang='es' class='min-h-full'>
   <head>
     <meta charset='utf-8' />
     <meta name='viewport' content='width=device-width' />
@@ -43,7 +43,8 @@ const socialImage = new URL(publicPath('/og-image.jpg'), siteUrl).toString()
     <Font cssVariable='--font-anton' />
     <title>{title}</title>
   </head>
-  <body class="min-h-svh bg-background h-full flex flex-col">
+  <!-- Low-specificity defaults let existing element utilities retain their overrides. -->
+  <body class='m-0 flex h-full min-h-svh flex-col bg-background font-sans text-foreground [:where(&_h1,&_h2)]:font-normal [:where(&_h1,&_h2)]:[font-synthesis:none] [:where(&_a:focus-visible)]:[outline:3px_solid_var(--color-primary)] [:where(&_a:focus-visible)]:outline-offset-3'>
     <slot />
   </body>
 </html>

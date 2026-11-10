@@ -16,6 +16,7 @@
 - **Naming**: PascalCase for components/types, camelCase for functions/variables, kebab-case for files
 - **React**: Functional components with TypeScript props interfaces
 - **Astro**: `.astro` files for layout/pages, React `.tsx` for interactive components
+- **Styling**: Use Tailwind CSS utilities by default across all festival editions, following each app's installed Tailwind version and existing design tokens
 - **Error Handling**: Validate inputs with dedicated validation functions (see `src/features/schedule/lib/validation.ts`)
 - **File Organization**: Feature-based structure (`features/*/` with types/, lib/, components/, **tests**/`)
 - **Testing**: Vitest for unit tests, Playwright for e2e, place tests in `__tests__/` directories

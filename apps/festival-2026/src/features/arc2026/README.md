@@ -22,6 +22,22 @@ Each name uses two columns and one row. The two cells directly underneath are re
 
 The stepped desktop title uses two adjacent footprints. Phone/tablet information positions are authored separately. `slotSize` starts at 160×152 and defines the base module proportions; actual width follows available space.
 
+## Poster styling
+
+The seven poster components (`FestivalGrid`, `ArtistName`, `PosterIntro`, `PosterInformation`, `PosterPattern`, `PosterDefinitions`, and `PatternTile`) use statically detectable Tailwind 4.1 utilities, with no local style blocks. Shared slot/chevron strings and the motif color map contain complete utility names, not interpolated fragments. Semantic classes remain as styling-free hooks for tests and scripts.
+
+`FestivalGrid` still assigns runtime CSS variables from `calculatePosterLayout` and the existing presets. Utilities consume those values for grid placement and container-relative sizing. Explicit 768px and 1200px variants preserve the poster breakpoints; Tailwind's default `xl` is not the desktop boundary. Arbitrary media variants retain the existing bounded mobile/tablet overrides. Colors and fonts reuse the installed theme tokens. Intrinsic SVG geometry stays in the artwork, not in styling utilities.
+
+The structural regression check is `pnpm --filter festival-2026 test src/features/arc2026/__tests__/tailwind-poster.test.ts`. Existing geometry and raster checks remain in place; browser seam checks are available when server/browser execution is authorized. The shell and infrastructure utility boundary is described below.
+
+## Shell and infrastructure styling
+
+`Header`, `ArtistDetail` and the dormant `ArtistOverlay` now express presentation with complete Tailwind utility strings rather than local style blocks. The detail split and overlay sizing retain their explicit 768px cutoff. Header descendant utilities retain the existing navigation transition/transform suppression without changing `PreviousEditions`. Semantic hooks, dialog identity, close attributes, text and links remain unchanged; this conversion does not integrate the overlay into the static homepage.
+
+`styles/global.css` retains the Tailwind import and existing color/font theme tokens. Astro's `Document` still delivers both local fonts and all metadata. Document utilities now carry page sizing, body typography/color and low-specificity heading/link defaults. The `:where()` variants deliberately allow existing element utilities to override those defaults, including the edition links' outline-style override. Existing layout, footer and poster utilities are not rewritten.
+
+Run the structural check with `pnpm --filter festival-2026 test src/features/arc2026/__tests__/tailwind-shell.test.ts`. The current migration passed 47 unit tests, typechecking, scoped lint, the root build and static inspection of critical generated utilities. Final visual and focus review belongs to the human: no server or automated visual check is authorized for this continuation. The browser regression file `tests/e2e/arc2026-tailwind-shell.spec.ts` remains available but unexecuted for the final candidate; running Playwright normally starts the configured local HTTP server, so test discovery with `--list` is not a browser PASS. Dormant overlay source checks are not runtime modal-lifecycle proof.
+
 ## Rendering and boundaries
 
 - `FestivalGrid.astro` owns responsive geometry; `ArtistName.astro` only renders a name and its decoration. Names remain selectable HTML using the existing local Poppins 900 delivery.

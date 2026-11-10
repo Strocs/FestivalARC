@@ -2,24 +2,14 @@
 import headline from '../../../assets/LOGO_HERO.png'
 import { publicPath } from '../../../utils/publication'
 ---
-<header class='poster-intro'>
-  <p class='reference-dates' aria-label='Fechas del afiche de referencia; no confirman la programación'>
+<header class='poster-intro relative h-full'>
+  <p class='reference-dates absolute top-[calc(32*var(--unit))] left-0 m-0 text-(--poster-text) text-[length:calc(48*var(--unit))] font-black leading-[calc(54*var(--unit))] [@media(max-width:767px)]:top-[calc(16*var(--unit))] [@media(max-width:767px)]:text-[length:calc(28*var(--unit))] [@media(max-width:767px)]:leading-[calc(32*var(--unit))]' aria-label='Fechas del afiche de referencia; no confirman la programación'>
     <span aria-hidden='true'>28.10<br />29.10</span>
   </p>
-  <h1 id='page-title'>
+  <h1 id='page-title' class='absolute top-[calc(168*var(--unit))] left-0 w-[calc(640*var(--unit))] m-0 [@media(max-width:767px)]:top-[calc(88*var(--unit))] [@media(max-width:767px)]:w-[calc(320*var(--unit))]'>
     <span class='sr-only'>El arte de habitar la ciudad</span>
-    <svg viewBox='1068 28 725 465' aria-hidden='true' focusable='false'>
+    <svg class='block w-full h-auto overflow-hidden' viewBox='1068 28 725 465' aria-hidden='true' focusable='false'>
       <image href={publicPath(headline.src)} width={headline.width} height={headline.height} />
     </svg>
   </h1>
 </header>
-<style>
-  .poster-intro { position: relative; height: 100%; }
-  .reference-dates { position: absolute; top: calc(32 * var(--unit)); left: 0; margin: 0; color: var(--poster-text); font-size: calc(48 * var(--unit)); font-weight: 900; line-height: calc(54 * var(--unit)); }
-  h1 { position: absolute; top: calc(168 * var(--unit)); left: 0; width: calc(640 * var(--unit)); margin: 0; }
-  h1 svg { display: block; width: 100%; height: auto; overflow: hidden; }
-  @media (max-width: 767px) {
-    .reference-dates { top: calc(16 * var(--unit)); font-size: calc(28 * var(--unit)); line-height: calc(32 * var(--unit)); }
-    h1 { top: calc(88 * var(--unit)); width: calc(320 * var(--unit)); }
-  }
-</style>

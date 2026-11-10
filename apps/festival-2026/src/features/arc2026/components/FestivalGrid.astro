@@ -39,43 +39,26 @@ const motifSlots = Array.from({ length: motifCount }, (_, index) => {
 })
 const gridStyle = `--slot-width:${slotSize.width};--slot-height:${slotSize.height};`
   + ranges.map(range => `--${range}-rows:${layouts[range].rows}`).join(';')
+// Complete static utility strings keep shared slot placement detectable by Tailwind.
+const slotClasses = 'slot min-w-0 min-h-0 [display:var(--mobile-display)] [grid-column:calc(var(--mobile-column)+1)/span_var(--mobile-width)] [grid-row:calc(var(--mobile-row)+1)/span_var(--mobile-height)] min-[768px]:[display:var(--tablet-display)] min-[768px]:[grid-column:calc(var(--tablet-column)+1)/span_var(--tablet-width)] min-[768px]:[grid-row:calc(var(--tablet-row)+1)/span_var(--tablet-height)] min-[1200px]:[display:var(--desktop-display)] min-[1200px]:[grid-column:calc(var(--desktop-column)+1)/span_var(--desktop-width)] min-[1200px]:[grid-row:calc(var(--desktop-row)+1)/span_var(--desktop-height)]'
 ---
-<main class='festival-main' aria-labelledby='page-title'>
-  <div class='poster'>
+<main class='festival-main flex-1 px-[8.333333vw] py-[80px] [@media(min-width:768px)_and_(max-width:1199px)]:px-[32px] [@media(min-width:768px)_and_(max-width:1199px)]:py-[48px] [@media(max-width:767px)]:px-[16px] [@media(max-width:767px)]:py-[32px]' aria-labelledby='page-title'>
+  <div class='poster @container mx-auto w-full max-w-[1600px]'>
     <PosterDefinitions />
-    <section class='festival-grid' style={gridStyle} aria-label='Festival ARC: artistas y obras'>
+    <section class='festival-grid relative isolate grid [--columns:2] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] [--poster-text:#d5d5d5] grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),calc(var(--slot-height)*var(--unit)))] min-[768px]:[--columns:6] min-[768px]:[--rows:var(--tablet-rows)] min-[1200px]:[--columns:10] min-[1200px]:[--rows:var(--desktop-rows)]' style={gridStyle} aria-label='Festival ARC: artistas y obras'>
       {motifSlots.map(tile => (
-        <div class='slot pattern-slot' style={tile.style} aria-hidden='true'><PosterPattern motif={tile.motif} /></div>
+        <div class:list={[slotClasses, 'pattern-slot']} style={tile.style} aria-hidden='true'><PosterPattern motif={tile.motif} /></div>
       ))}
       {posterPresets.desktop.blocks.map(block => (
-        <div class:list={['slot', 'information-slot', { 'hero-slot': block.id === 'hero' }]} style={positions(informationPositions(block.id))} aria-hidden={block.id === 'title-spill' ? 'true' : undefined}>
+        <div class:list={[slotClasses, 'information-slot relative bg-background', block.id === 'hero' ? 'hero-slot z-3' : 'z-1']} style={positions(informationPositions(block.id))} aria-hidden={block.id === 'title-spill' ? 'true' : undefined}>
           {block.id === 'hero' && <PosterIntro />}
           {block.id === 'program' && <PosterInformation kind='program' />}
           {block.id === 'disciplines' && <PosterInformation kind='disciplines' />}
         </div>
       ))}
       {lineup.map(artist => (
-        <div class='slot artist-slot' style={positions(artistPositions(artist.id))}><ArtistName artist={artist} /></div>
+        <div class:list={[slotClasses, 'artist-slot relative z-2']} style={positions(artistPositions(artist.id))}><ArtistName artist={artist} /></div>
       ))}
     </section>
   </div>
 </main>
-<style>
-  .festival-main { flex: 1; padding: 80px 8.333333vw; }
-  .poster { width: 100%; max-width: 1600px; margin-inline: auto; container-type: inline-size; }
-  .festival-grid { --columns: 2; --rows: var(--mobile-rows); --unit: calc(100cqw / (var(--columns) * var(--slot-width))); --poster-text: #d5d5d5; display: grid; grid-template-columns: repeat(var(--columns), minmax(0, 1fr)); grid-template-rows: repeat(var(--rows), calc(var(--slot-height) * var(--unit))); position: relative; isolation: isolate; }
-  .slot { display: var(--mobile-display); grid-column: calc(var(--mobile-column) + 1) / span var(--mobile-width); grid-row: calc(var(--mobile-row) + 1) / span var(--mobile-height); min-width: 0; min-height: 0; }
-  .information-slot { position: relative; z-index: 1; background: var(--color-background); }
-  .hero-slot { z-index: 3; }
-  .artist-slot { position: relative; z-index: 2; }
-  @media (min-width: 768px) {
-    .festival-grid { --columns: 6; --rows: var(--tablet-rows); }
-    .slot { display: var(--tablet-display); grid-column: calc(var(--tablet-column) + 1) / span var(--tablet-width); grid-row: calc(var(--tablet-row) + 1) / span var(--tablet-height); }
-  }
-  @media (min-width: 1200px) {
-    .festival-grid { --columns: 10; --rows: var(--desktop-rows); }
-    .slot { display: var(--desktop-display); grid-column: calc(var(--desktop-column) + 1) / span var(--desktop-width); grid-row: calc(var(--desktop-row) + 1) / span var(--desktop-height); }
-  }
-  @media (min-width: 768px) and (max-width: 1199px) { .festival-main { padding: 48px 32px; } }
-  @media (max-width: 767px) { .festival-main { padding: 32px 16px; } }
-</style>
