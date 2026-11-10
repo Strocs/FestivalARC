@@ -1,0 +1,46 @@
+# ARC 2026 — content-only poster correction
+
+## Current authority
+**Closed — visually accepted as-is.** Human decision: “Están bien, no te preocupes, podemos cerrar el diseño.” See S14/L34 in the feature record. No further source-file request, motif refinement or quantitative validation remains open. Historical ring-comparison failure stays recorded; acceptance is not a test PASS or native-review approval. Production implementation and publishing are not authorized by this closure.
+
+The human rejected the earlier interactive proposal. Current requirements: odd/tasks/arc2026-slot-grid.md, S12 and L14. Earlier interactive/filter/expansion checks are historical, not evidence for this version. The accepted S12 content-only layout remains intact. The later S13 request changes only six marked SVG symbols consistently in motifs.svg,01-motif-library.html and02-poster-grid.html; all other symbols and all bytes outside those symbol blocks are preserved. No application source, dependencies, archives or prior proposals change.
+
+## Content only
+No navbar, footer, category/day filters, captions, counters, inspector, buttons, hover states, artist links, expandable cards, motion or runtime scripts. Artist components contain only the supplied name, with decorative cyan capsule, magenta field and chevrons from the reference. No company, invented schedule or portrait appears. The46 exact names retain their supplied spellings; long names wrap at a constant type size rather than being reduced or truncated.
+
+## Exact stagger
+Ten columns. Even absolute rows start artist envelopes at0/4/8; odd rows at2/6. Every name occupies2×1 with a2×1 reservation immediately below, filled by decorative forms. Information obstacles are tested against the full2×2 envelope. A blocked position is skipped without moving any remaining start or restarting row parity. A complete unobstructed pair therefore always has3 names, then2.
+
+The title cutout is an L-shaped union, not a uniform rectangle: (0,0,3,4) plus (3,1,1,2). This preserves the top decorative slot and lower rosette while allowing the four-slot headline. Programación occupies(6,5,3,2); disciplines(0,9,4,3). These sample information coordinates follow the supplied composition and are not final editorial positions.
+
+## Reference proportions
+The canvas is1920px wide; the centered grid is1600px at this width, with160×152 modules and no gaps. Page inset is1/12 viewport width. The graphic title is four slots wide, starting168/152 rows from the grid top. Inner artist fields use32px horizontal/21px vertical insets at base scale. Artist type is26px base, with constant26px font size and24px baseline pitch; source-like narrow name strips use a uniform0.8 horizontal outline fit. All dimensions scale together with the ten-column poster rather than inventing a new mobile layout. This artboard is a poster-composition study, not an approved mobile UI.
+
+## Typography: known versus inferred
+- The supplied LOGO_HERO.png actually contains the exact four-line lettering requested in Image#4. The corrected h1 reuses that unchanged transparent1920×520 image inline, with SVG viewBox1068/28/725/465 isolating only the title. The ARC logo never appears. No source image is modified. This retains exact lettering, color and kerning rather than approximating the headline in Anton or system bold.
+- The original raster does not identify its font. Read-only exploration ranked Poppins Black900 as a practical approximation, with existing Gotham Ultra and Neris Black as unverified alternatives. None is asserted as the original.
+- Names, dates and secondary information use outlined Poppins Black900, not synthetic system bold. The official Google Fonts METADATA lists weight900, Poppins-Black.ttf and OFL. Outlined SVG keeps the document self-contained without loading any font or changing production Anton/Poppins. Original text remains in accessible HTML, while SVG glyphs are decorative.
+- Primary source: https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/METADATA.pb . Font source: https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/Poppins-Black.ttf . Copyright2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins); SIL Open Font License1.1. The complete unchanged license already ships at apps/festival-2026/public/fonts/Poppins-OFL.txt. The outlines are document artwork, not a redistributed font family.
+- Poster motifs keep the six sampled colors from design/system.md. Headline/secondary gray#d5d5d5 is also an observed existing token in that document. The exact supplied title additionally retains its existing cyan#5ce1e6 and magenta#e50070, not a new palette.
+- The dates28.10/29.10 are reproduced solely as artwork-reference copy and labeled as unconfirmed in accessible markup. They are not assigned to artists or claimed to be a validated2026 schedule.
+
+## Verification
+Public-browser RED reproduced the reported issues before rewriting:11 groups,6 failures (extra UI, interactive metadata, invalid row starts, arbitrary holes, narrow headline, click expansion). The former generic no-overlap checks were insufficient to establish composition fidelity. Corrected public checks passed11/11. Final containment/cadence checks passed at1920/1440/750px, plus JavaScript-disabled rendering (4/4). Every name uses the same relative type size, all46 remain, and there are no runtime scripts, animations, controls or page overflow. The final check first found Trans-Humante exceeding its strip; wrapping at the existing hyphen fixed it without shrinking text. Desktop/full-sheet/reference-sized screenshots were inspected. For the S12 pass, byte comparison confirmed the inline title source and all11 motif symbols were preserved. S13 below intentionally supersedes only six marked motif symbols; the title/composition remain byte-identical. The previous17/17 remain historical. Native assessment was unassessable for the existing untracked workspace scope; its plan retains writer self-verification and no independent verifier, with no native review/approval claimed. No app build/tests were run because no app source changed. Evidence: output/playwright/arc2026-slot-grid/correction-verification.json.
+
+## Future, not implemented
+Artist expansion, real-day filtering, motion, configurable authoring UI, final information content and mobile reflow stay deferred. This design pass does not authorize their implementation.
+
+## S13 motif-correction history — retained after visual acceptance
+The human marked chevrons-right, chevrons-left, lightning, orbits-rose, orbits-cyan and rings. Five supplied corrected images are visible in the conversation but are not repository-local files. Matching213×203 regions of refs/afiche-diseño.jpeg were used for the current reconstruction; do not claim a numeric comparison with unavailable attachment bytes.
+
+The arrows are two independent half-tile triangles, with the correct distinct palettes. Lightning has four asymmetric source-derived polygon pieces. Orbital contours use68 fitted Bézier segments instead of the previous invented rounded rings or pixel-staircase trace. Both orbital palettes share the same path. The rings are sixteen smooth clipped circle bands (eight per side), with measured centers/radii and progressively thinner strokes, retaining the faint inner lines.
+
+### Historical proof and former blocker — superseded by S14
+The first6/6 binary-mask GREEN was rejected after visual inspection because its intensity cutoff missed faint inner arcs. That result is not completion evidence. A later test calibrated cyan-background antialias coverage to the same foreground fraction as the rose-background variant; it did not lower the0.97 IoU minimum. Current smooth comparison: right0.988424,left0.992149,lightning0.993470,rose-orbits0.982157,cyan-orbits0.978299 PASS; rings0.920696 FAIL. The ring version is provisional, not certified as faithful. Do not suppress that failure or call the motif correction complete.
+
+To close the remaining reconstruction/validation, obtain the supplied correct reference images as actual local PNG/SVG files under refs/ (original SVGs preferred if available), especially the rings. They are visible to the model but not available as raw files for tracing or pixel measurement. Do not substitute another approximation from the lossy poster and declare it exact. This is an external input blocker, not permission to weaken the check.
+
+Scope proof passes: eleven symbol definitions are identical across export/library/main; the five unmarked variants and every byte outside selected symbols are unchanged, including title data, font glyphs, names, coordinates, CSS, static3/2 cadence and absence of extra UI. Public render still shows46 artists, sixteen ring circles, zero scripts and zero extra controls. Canvas was refreshed with the provisional version; the agent-owned browser and temporary static server were closed. No app build/tests/native review/commit/publishing for this incomplete motif unit.
+
+Evidence and failed attempts are preserved under output/playwright/arc2026-slot-grid/pattern-correction/: red.json, green.json (rejected binary result), smooth-calibrated.json (current failure), final-scope.json, smooth-proof.png and current-{library,main}.png. No new design/artboard or UI controls were added.
+

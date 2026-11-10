@@ -1,7 +1,7 @@
 # ARC 2026 — active-edition contract
 
 Foundation for the Astro prototype, not a standalone HTML mockup. Decision source:
-`odd/tasks/arc2026-prototype.md`, S2–S25 and its Log. T1 prepares documentation,
+`odd/tasks/arc2026-prototype.md`, S2–S36 and its Log. T1 prepares documentation,
 dependencies and data; it neither applies these tokens to CSS nor changes the homepage or indexation.
 
 ## Sampled palette: observed source and authorized use
@@ -50,7 +50,7 @@ It declares no spacing scale, radii or shadows: no scale is invented here.
 | Active vs. decorative | Current pass (S13/S17): image-only artist links with meaningful accessible names, no visible metadata/bands/counters. Complete data remains in detail; readable card metadata is deferred. Patterns are decorative, without Tab stops or announcements; SVGs reconstruct raster geometry, not vector originals. |
 | Navigation | Compact sticky bar, always visible. A single vertical page scroll, without horizontal scrolling at 320 CSS px. No new dimensions are set here. |
 | Detail | Same artwork enlarged, above the homepage and with its own URL. The direct route must work without JS. Escape, visible close control and focus restoration if the trigger is still present. Implementation reserved for T2/T3. |
-| Motion | Expressive but controlled, transforming shapes with GSAP/MorphSVG. Respect `prefers-reduced-motion`: no forced scrolling/rotation; access to content must not depend on animation. Durations and choreography are undecided. |
+| Motion | Expressive but controlled, transforming existing reconstructed shapes with GSAP/MorphSVG. S27: one-shot 600ms decorative entry and 250ms detail opening, no loops. Reduced motion omits nonessential animation; content, focus, URL changes and closing never wait for it. |
 | Contrast | Normal text ≥ 4.5:1, large text ≥ 3:1, relevant UI ≥ 3:1 where applicable. Check text/bands, focus and controls in the final render; the palette alone does not certify AA. |
 | Indexation | Preserve current behavior (S11). Do not add noindex. Visibly mark demonstration content in future renders. |
 
@@ -151,9 +151,10 @@ and external images are not copied to render this prototype.
 - Six SVG motifs reconstruct poster arrows, lightning, star, petals, orbits and
   curved sparks. No interaction, focus targets or announced content. No originals
   or derived raster assets are changed.
-- `ArtistDetail.astro` takes the validated artist/program, reuses ordered activity
-  and time helpers, and emits no IDs. T3 can reuse it without copying data or
-  introducing duplicate IDs. Only the direct static route exists in T2.
+- `ArtistDetail.astro` takes the validated artist/program and reuses ordered
+  activity/time helpers. T2 supplies the direct static route; T3 reuses the same
+  component with an optional heading ID and h2/h3/h4 hierarchy inside the dialog.
+  Standalone defaults retain h1/h2/h3 and emit no IDs.
 - Root title/description/canonical defaults and indexing policy remain unchanged.
   The new artist route supplies its own demonstration title/description and uses
   the existing layout's base-aware canonical logic. Existing footer is reused.
@@ -188,8 +189,71 @@ and external images are not copied to render this prototype.
   browser requests occur in this isolated font check. Root composition copies
   eight font files; the two complete OFL notices are included in public output.
 
-## Deferred work and verification boundary
+## T3 progressive enhancement (S5–S8, S26–S29)
 
-- T3 remains responsible for the overlay, history/focus lifecycle, shared store
-  and approved motion. Independent behavioral verification remains unavailable
-  under the accepted S18 disposition; local browser checks are not its replacement.
+Artist anchors retain their canonical static URLs. Unmodified click, Enter and
+touch open a named native `dialog`; modified/middle clicks remain browser-native.
+Reloading or sharing the artist URL serves the standalone, no-JavaScript route.
+The static artwork and validated activities come from `ArtistDetail.astro` in
+both presentations, not a second browser data graph or fetch.
+
+- **Presentation:** desktop/tablet (>=768px) is centered, max 1440px wide, with
+  >=32px margins on all sides. Mobile is full-screen (`100dvh`). The dialog owns
+  scrolling; the underlying page is locked at its original position. A sticky,
+  visible «Cerrar ficha» button and Escape dismiss immediately. Native modality
+  contains focus; closing returns it to the exact connected mosaic trigger.
+- **Navigation:** `enhance.ts` synchronizes the dialog from the pathname on click,
+  Back/Forward and restoration. Pushed entries preserve unrelated history state.
+  The Nanostores selection atom coordinates only native presentation and cosmetic
+  motion; it is not navigation authority or a duplicated content model.
+- **Cleanup:** pagehide/Astro before-swap abort local listeners, disconnect the
+  observer, unsubscribe motion, kill tweens, close the dialog and release locks.
+  BFCache pageshow/Astro page-load reinitialize without duplicating handlers.
+  Locks restore only overflow values/priorities; motion restores only its owned
+  opacity/path values. Unrelated inline properties remain untouched.
+- **Motion:** dynamically loaded GSAP/MorphSVG morphs existing decorative paths
+  from another existing poster reconstruction into their static shapes over
+  600ms when first entering view. Rect/circle-only orbits stay static. Tile and
+  grid geometry never animate. The already-open dialog fades from 0.7 to 1
+  opacity over 250ms, never making information invisible. Download failure leaves
+  fully functional native dialogs and static motifs. Initial reduced motion
+  skips these tweens; changing to reduced motion kills them and restores final
+  shapes/opacity. No loops, scroll manipulation, router or extra plugin.
+- **Focus contrast:** image-only links now have adjacent paper/ink inset outlines,
+  not cyan against pink (only 2.981:1). Paper/ink measures 19.422:1. The close
+  button uses the same paper/ink roles; source raster text remains uncertified.
+
+## S31–S36 proposal-phase override — approved constraints, not applied app metrics
+
+Source: `odd/tasks/arc2026-prototype.md`, S31–S36 and L33–L35. The earlier
+composition, width cap, strict alternation and motion entries above describe the
+existing app, not the requested future revision. Preserve that historical evidence.
+
+- S36 authorizes standalone artboards only for comparison before human selection;
+  it supersedes the earlier no-artboard restriction for this phase alone. No app
+  implementation, indexation, font delivery or interaction-stack change is implied.
+- Approved future frame: fluid width, no max-width, four-sided padding 48px at
+  >=1200px, 32px at 768–1199px, 16px below 768px. These are selected future
+  constraints, not measurements of the current app.
+- Full uncropped `apps/festival-2026/src/assets/LOGO_HERO.png`, 1920 × 520,
+  replaces the text hero and visible description. Preserve an accessible h1/name.
+- Artist squares span 2 × 2 small modules; each decorative square spans 1 × 1.
+  Vary artist starts; mobile has one full-width artist column with small motif
+  groups between cards. No fixed decorative column, card overlays or filler.
+- No entrance, morphing, opening animation, transitions or smooth scrolling.
+- The three layout densities/placements and direction 3 negative space are
+  **proposals**, not approved production tokens or a new spacing scale.
+- Artboards use only the six sampled poster colors above and `sans-serif`, the
+  generic fallback already observed in the app stack. Self-contained canvas files
+  cannot load the app fonts: small UI text is not rendered Poppins. Critical hero
+  and card typography remains in unchanged embedded raster artwork. The approved
+  app pairing remains Anton 400 / Poppins with Astro-local delivery (S24).
+- Accessible proposal UI uses paper/ink (19.422:1, L22); focus uses adjacent ink
+  and paper outlines. Raster text is not certified by this contrast measurement.
+
+## Verification boundary
+
+Independent T1 behavioral verification remains unavailable under the accepted
+S18 disposition; T3 local functional checks do not replace it. S17 still defers
+visible card metadata and counters. T3 does not alter indexation, fonts, source
+assets, header/footer, archives or publishing behavior.
