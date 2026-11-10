@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/react'
 import { closePanel, infoPanel, isPanelOpen } from '@stores/activityInfoStore'
 import { useEffect } from 'react'
+import type { JSX } from 'react'
 import { InstagramIcon } from './icons/InstagramIcon'
 import { FacebookIcon } from './icons/FacebookIcon'
 import { XIcon } from './icons/XIcon'
