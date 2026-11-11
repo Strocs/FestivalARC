@@ -2,32 +2,81 @@
 import type { LineupArtist } from './lineup'
 import { getArtistCompositions, getArtistFitRanges } from './artist-name'
 
-interface Props { artist: LineupArtist }
+interface Props {
+  artist: LineupArtist
+}
 
 const { artist } = Astro.props
 const words = artist.name.trim().split(/\s+/)
 const compositions = getArtistCompositions(artist.name)
 const ranges = getArtistFitRanges(compositions)
 // Encode the identifier so generated selectors contain no unescaped input.
-const labelClass = `artist-fit-${Array.from(artist.id, character => character.codePointAt(0)!.toString(16)).join('-')}`
+const labelClass = `artist-fit-${Array.from(artist.id, (character) => character.codePointAt(0)!.toString(16)).join('-')}`
 const selector = `.${labelClass}`
-const rules = ranges.map(({ minRatio, index }, rangeIndex) => {
-  const option = compositions[index]
-  const font = `min(calc(100cqw / ${option.width}), calc(100cqh / ${option.lines.length}))`
-  const cuts = option.breaks.map(cut =>
-    `${selector} [data-gap="${cut}"]{display:none}${selector} [data-break="${cut}"]{display:initial}`,
-  ).join('')
-  const css = `${selector}{font-size:${font}}${selector} [data-gap]{display:inline}${selector} [data-break]{display:none}${cuts}`
-  return rangeIndex === 0 ? css : `@container artist-name (min-aspect-ratio:${minRatio}){${css}}`
-}).join('\n')
+const rules = ranges
+  .map(({ minRatio, index }, rangeIndex) => {
+    const option = compositions[index]
+    const font = `min(calc(100cqw / ${option.width}), calc(100cqh / ${option.lines.length}))`
+    const cuts = option.breaks
+      .map(
+        (cut) =>
+          `${selector} [data-gap="${cut}"]{display:none}${selector} [data-break="${cut}"]{display:initial}`,
+      )
+      .join('')
+    const css = `${selector}{font-size:${font}}${selector} [data-gap]{display:inline}${selector} [data-break]{display:none}${cuts}`
+    return rangeIndex === 0
+      ? css
+      : `@container artist-name (min-aspect-ratio:${minRatio}){${css}}`
+  })
+  .join('\n')
 ---
-<article class='relative w-full min-h-0 min-w-0 bg-background' aria-label={artist.name}>
-  <div class='absolute inset-x-6 inset-y-4 md:inset-y-6 bg-accent'>
-    <!-- Reserve text breathing room before measuring the available width and height.
-         Insets follow the root font size through Tailwind's rem scale. -->
-    <div class='absolute inset-x-3 inset-y-2 flex items-center justify-center [container-type:size] [container-name:artist-name]'>
-      <span class:list={['block shrink-0 whitespace-nowrap text-arc-yellow font-sans font-black leading-none text-center uppercase', labelClass]}>{words.map((word, index) => <>{index > 0 && <><span data-gap={index}>{' '}</span><br data-break={index} /></>}{word}</>)}</span>
-    </div>
-  </div>
-  <style is:inline set:html={rules} />
+
+<article
+  class='bg-background group relative min-h-0 w-full min-w-0'
+  aria-label={artist.name}>
+  <!-- Interaction shell only: the click destination has not been defined yet. -->
+  <button
+    type='button'
+    aria-label={artist.name}
+    class='focus-visible:outline-primary absolute inset-0 size-full cursor-pointer appearance-none border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-[-2px]'>
+    <span
+      class='absolute inset-x-6 inset-y-[min(1.5rem,15%)] grid grid-cols-1 grid-rows-[minmax(0,1fr)_auto_auto] [container-type:size]'>
+      <!-- Shared auto tracks split the date's height: half overlaps the surface,
+           while the name is measured only in the first, non-overlapping row. -->
+      <span
+        data-artist-surface
+        class='bg-accent motion-reduce:translate-none relative col-start-1 row-start-1 row-end-3 min-h-0 transition-transform duration-200 motion-safe:group-focus-within:-translate-y-0.5 motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'
+      ></span>
+      <span
+        class='motion-reduce:translate-none relative col-start-1 row-start-1 mx-3 mb-1 mt-0.5 flex min-h-0 items-center justify-center transition-transform duration-200 [container-name:artist-name] [container-type:size] motion-safe:group-focus-within:-translate-y-0.5 motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'>
+        <span
+          data-artist-name
+          class:list={[
+            'text-arc-yellow block shrink-0 whitespace-nowrap text-center font-sans font-black uppercase leading-none',
+            labelClass,
+          ]}
+          >{
+            words.map((word, index) => (
+              <>
+                {index > 0 && (
+                  <>
+                    <span data-gap={index}> </span>
+                    <br data-break={index} />
+                  </>
+                )}
+                {word}
+              </>
+            ))
+          }</span
+        >
+      </span>
+      <time
+        datetime='2026-11-28T23:00:00-03:00'
+        title='Horario de ejemplo; por confirmar'
+        class='bg-primary text-background motion-reduce:translate-none relative col-start-1 row-start-2 row-end-4 max-w-full self-start justify-self-center whitespace-nowrap px-3 py-1 text-[min(0.75rem,calc((100cqw_-_1.5rem)/14))] font-bold leading-tight transition-transform duration-200 motion-safe:group-focus-within:translate-y-0.5 motion-safe:group-hover:translate-y-0.5 motion-reduce:transition-none'
+        >Sábado 28.11 | 23:00hrs</time
+      >
+    </span>
+  </button>
+  <style is:inline set:html={rules}></style>
 </article>

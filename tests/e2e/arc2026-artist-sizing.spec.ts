@@ -8,7 +8,7 @@ for (const width of [320, 390, 767, 768, 1279, 1280, 1440, 1920]) {
     await page.evaluate(() => document.fonts.ready)
     const artists = page.getByRole('article')
     const sizes = await artists.evaluateAll(nodes => nodes.map(article => {
-      const label = article.querySelector('span')!
+      const label = article.querySelector('[data-artist-name]')!
       const container = label.parentElement!
       const box = container.getBoundingClientRect()
       const textBox = label.getBoundingClientRect()
@@ -43,7 +43,9 @@ for (const width of [320, 390, 767, 768, 1279, 1280, 1440, 1920]) {
       if (size.name === 'GEPE') expect(size.lines).toBe(1)
     }
     if (width === 1440) expect(sizes.find(size => size.name === 'FERNANDO MILAGROS')!.lines).toBeGreaterThan(1)
+    // Reserving the schedule and black inset can make both names height-limited.
+    // GEPE must never become smaller; the optimal-fit assertions above still apply.
     expect(sizes.find(size => size.name === 'GEPE')!.fontSize)
-      .toBeGreaterThan(sizes.find(size => size.name === 'NIÑO COHETE')!.fontSize)
+      .toBeGreaterThanOrEqual(sizes.find(size => size.name === 'NIÑO COHETE')!.fontSize)
   })
 }

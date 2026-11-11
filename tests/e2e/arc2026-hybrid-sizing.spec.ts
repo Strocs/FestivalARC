@@ -116,7 +116,7 @@ for (const width of [320, 390, 767]) {
     expect(Math.abs(after!.height - after!.width * 152 / 640)).toBeLessThanOrEqual(1)
     const contained = await artist.evaluate(root => {
       const range = document.createRange()
-      range.selectNodeContents(root.querySelector('span')!)
+      range.selectNodeContents(root.querySelector('[data-artist-name]')!)
       const box = root.getBoundingClientRect()
       return [...range.getClientRects()].every(rect => rect.left >= box.left - 1 && rect.right <= box.right + 1 && rect.top >= box.top - 1 && rect.bottom <= box.bottom + 1)
     })
@@ -129,7 +129,7 @@ for (const width of [320, 390, 768, 1280, 1440]) {
   test(`poster tolerates 200% root text at ${width}px`, async ({ page }) => {
     await openPoster(page, width)
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%' })
-    const after = await page.getByRole('article').first().locator('span').first().evaluate(node => parseFloat(getComputedStyle(node).fontSize))
+    const after = await page.getByRole('article').first().locator('[data-artist-name]').evaluate(node => parseFloat(getComputedStyle(node).fontSize))
     expect(after).toBeGreaterThan(0)
     await expectReadablePoster(page)
   })
