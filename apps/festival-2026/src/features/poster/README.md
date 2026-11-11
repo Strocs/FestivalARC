@@ -46,6 +46,12 @@ import PosterInformation from './PosterInformation.astro'
 
 For new homepage content, create a wrapper using the base slot, define its responsive props in `index.astro`, include that same geometry in `informationBlocks(range)`, and render the wrapper with those props. Do not add content branches to the base component. Standalone base blocks do not automatically register themselves with an ancestor grid.
 
+## Social links
+
+`PosterSocials.astro` renders three separate information footprints for Instagram, Facebook and Twitter, without a grouping wrapper that would merge their grid positions. Its `instagram`, `facebook` and `twitter` props each accept independent `mobile`, `tablet` and `desktop` rectangles. The homepage defines them in `posterSocialsPlacement` and includes all three in `informationBlocks(range)` so artists and motifs respect their reservations. Their alternating columns and separated rows leave decorative/artist space between links.
+
+All three links currently use `href='#'`, `target='_blank'` and `rel='noopener noreferrer'`. Replace the placeholders when official destinations are available. `PosterArrow.astro` owns the decorative arrow shared with `PosterProgram`; hover rotation remains controlled by each link.
+
 ## Decorative distribution
 
 `selectPosterMotifs` chooses one shared sequence at Astro build time, considering desktop, tablet and mobile placements together. CSS only changes positions: each tile keeps the same SVG/use, without extra markup or client JavaScript. Geometry and roster ordering remain owned by `calculatePosterLayout`.

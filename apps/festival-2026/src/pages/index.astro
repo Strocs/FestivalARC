@@ -7,6 +7,7 @@ import PosterDisciplines from '../features/poster/PosterDisciplines.astro'
 import PosterIntro from '../features/poster/PosterIntro.astro'
 import PosterPattern from '../features/poster/PosterPattern.astro'
 import PosterPlace from '../features/poster/PosterPlace.astro'
+import PosterSocials from '../features/poster/PosterSocials.astro'
 import { lineup } from '../features/poster/lineup'
 import {
   posterPresets,
@@ -48,6 +49,24 @@ const posterPlacePlacement = {
   mobile: { column: 0, row: 23, width: 3, height: 1 },
 } as const
 
+const posterSocialsPlacement = {
+  instagram: {
+    desktop: { column: 0, row: 17, width: 3, height: 1 },
+    tablet: { column: 3, row: 17, width: 3, height: 1 },
+    mobile: { column: 0, row: 28, width: 3, height: 1 },
+  },
+  facebook: {
+    desktop: { column: 6, row: 21, width: 3, height: 1 },
+    tablet: { column: 0, row: 21, width: 3, height: 1 },
+    mobile: { column: 0, row: 34, width: 3, height: 1 },
+  },
+  twitter: {
+    desktop: { column: 0, row: 25, width: 3, height: 1 },
+    tablet: { column: 3, row: 25, width: 3, height: 1 },
+    mobile: { column: 0, row: 40, width: 3, height: 1 },
+  },
+} as const
+
 // These same page-authored props also reserve the cells before artist placement.
 const informationBlocks = (range: PosterRange) =>
   [
@@ -56,6 +75,9 @@ const informationBlocks = (range: PosterRange) =>
     posterProgramPlacement[range],
     posterDisciplinesPlacement[range],
     posterPlacePlacement[range],
+    posterSocialsPlacement.instagram[range],
+    posterSocialsPlacement.facebook[range],
+    posterSocialsPlacement.twitter[range],
   ].filter((rect): rect is NonNullable<typeof rect> => rect !== undefined)
 
 const ranges = ['mobile', 'tablet', 'desktop'] as const
@@ -159,6 +181,7 @@ const slotClasses =
         }
         <PosterProgram {...posterProgramPlacement} />
         <PosterPlace {...posterPlacePlacement} />
+        <PosterSocials {...posterSocialsPlacement} />
       </section>
     </div>
   </main>

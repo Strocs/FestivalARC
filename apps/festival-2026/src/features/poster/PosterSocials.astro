@@ -1,0 +1,35 @@
+---
+import PosterInformation from './PosterInformation.astro'
+import PosterArrow from './PosterArrow.astro'
+import type { SlotRect } from './poster-grid'
+import type { PosterRange } from './poster'
+
+type Placement = Partial<Record<PosterRange, SlotRect>>
+interface Props {
+  instagram: Placement
+  facebook: Placement
+  twitter: Placement
+}
+const { instagram, facebook, twitter } = Astro.props
+---
+<PosterInformation {...instagram}>
+  <a href='#' target='_blank' rel='noopener noreferrer' aria-label='Instagram'
+    class='group/social flex min-h-0 items-center justify-between gap-3 px-6 py-3 font-black text-foreground transition-colors duration-300 hover:text-arc-rose'>
+    <span class='min-w-0 wrap-anywhere text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] leading-[.94] tracking-[-.04em] uppercase'>Instagram</span>
+    <PosterArrow class='group-hover/social:-rotate-45' />
+  </a>
+</PosterInformation>
+<PosterInformation {...facebook}>
+  <a href='#' target='_blank' rel='noopener noreferrer' aria-label='Facebook'
+    class='group/social flex min-h-0 items-center justify-between gap-3 px-6 py-3 font-black text-foreground transition-colors duration-300 hover:text-arc-rose'>
+    <span class='min-w-0 wrap-anywhere text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] leading-[.94] tracking-[-.04em] uppercase'>Facebook</span>
+    <PosterArrow class='group-hover/social:-rotate-45' />
+  </a>
+</PosterInformation>
+<PosterInformation {...twitter}>
+  <a href='#' target='_blank' rel='noopener noreferrer' aria-label='Twitter'
+    class='group/social flex min-h-0 items-center justify-between gap-3 px-6 py-3 font-black text-foreground transition-colors duration-300 hover:text-arc-rose'>
+    <span class='min-w-0 wrap-anywhere text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] leading-[.94] tracking-[-.04em] uppercase'>Twitter</span>
+    <PosterArrow class='group-hover/social:-rotate-45' />
+  </a>
+</PosterInformation>
