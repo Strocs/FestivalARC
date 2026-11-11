@@ -9,7 +9,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "type": "tsc --noEmit",
+    "type": "astro check",
     "test": "vitest run",
     "test:e2e": "playwright test"
   },

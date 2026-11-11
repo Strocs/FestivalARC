@@ -56,6 +56,8 @@ pnpm test
 
 These root scripts run each workspace package's `type` or `test` script when present.
 
+For ARC2026 alone, run `pnpm --filter festival-2026 type`. It uses `astro check` to check TypeScript and Astro modules, including `.astro` imports that standalone `tsc` cannot resolve.
+
 ### Shared lint
 
 Run ESLint from the repository root:
