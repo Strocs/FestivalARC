@@ -1,0 +1,19 @@
+---
+import PosterInformation from './PosterInformation.astro'
+import type { SlotRect } from './poster-grid'
+import type { PosterRange } from './poster'
+
+type Props = Partial<Record<PosterRange, SlotRect>>
+const { mobile, tablet, desktop } = Astro.props
+---
+
+<PosterInformation {mobile} {tablet} {desktop}>
+  <div
+    class='flex min-h-0 items-center justify-end px-8 py-3 font-bold'
+    aria-label='Lugar'>
+    <p
+      class='min-w-0 text-right text-[length:clamp(1.5rem,calc(0.5rem+12cqw),6rem)] uppercase leading-[.94] tracking-[-.04em]'>
+      Plaza de <br />Armas <br /><span class='text-arc-yellow'>La Serena</span>
+    </p>
+  </div>
+</PosterInformation>

@@ -2,66 +2,163 @@
 import Layout from '../layouts/Layout.astro'
 import ArtistName from '../features/poster/ArtistName.astro'
 import PosterDefinitions from '../features/poster/PosterDefinitions.astro'
-import PosterInformation from '../features/poster/PosterInformation.astro'
+import PosterProgram from '../features/poster/PosterProgram.astro'
+import PosterDisciplines from '../features/poster/PosterDisciplines.astro'
 import PosterIntro from '../features/poster/PosterIntro.astro'
 import PosterPattern from '../features/poster/PosterPattern.astro'
+import PosterPlace from '../features/poster/PosterPlace.astro'
 import { lineup } from '../features/poster/lineup'
-import { posterPresets, slotSize, type PosterRange } from '../features/poster/poster'
+import {
+  posterPresets,
+  slotSize,
+  type PosterRange,
+} from '../features/poster/poster'
 import { selectPosterMotifs } from '../features/poster/poster-motif-distribution'
-import { calculatePosterLayout, type SlotRect } from '../features/poster/poster-grid'
+import {
+  calculatePosterLayout,
+  type SlotRect,
+} from '../features/poster/poster-grid'
+
+const posterIntroPlacement = {
+  desktop: { column: 0, row: 0, width: 3, height: 4 },
+  tablet: { column: 0, row: 0, width: 3, height: 4 },
+  mobile: { column: 0, row: 0, width: 3, height: 2 },
+} as const
+
+const posterTitleExtensionPlacement = {
+  desktop: { column: 3, row: 1, width: 1, height: 2 },
+  tablet: { column: 3, row: 1, width: 1, height: 2 },
+} as const
+
+const posterDisciplinesPlacement = {
+  desktop: { column: 6, row: 5, width: 4, height: 3 },
+  tablet: { column: 3, row: 7, width: 3, height: 3 },
+  mobile: { column: 0, row: 12, width: 3, height: 2 },
+} as const
+
+const posterProgramPlacement = {
+  desktop: { column: 0, row: 9, width: 3, height: 1 },
+  tablet: { column: 0, row: 11, width: 3, height: 1 },
+  mobile: { column: 0, row: 22, width: 3, height: 1 },
+} as const
+
+const posterPlacePlacement = {
+  desktop: { column: 6, row: 13, width: 3, height: 2 },
+  tablet: { column: 0, row: 12, width: 3, height: 2 },
+  mobile: { column: 0, row: 23, width: 3, height: 1 },
+} as const
+
+// These same page-authored props also reserve the cells before artist placement.
+const informationBlocks = (range: PosterRange) =>
+  [
+    posterIntroPlacement[range],
+    range === 'mobile' ? undefined : posterTitleExtensionPlacement[range],
+    posterProgramPlacement[range],
+    posterDisciplinesPlacement[range],
+    posterPlacePlacement[range],
+  ].filter((rect): rect is NonNullable<typeof rect> => rect !== undefined)
 
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const layouts = {
-  mobile: calculatePosterLayout(lineup.map(artist => artist.id), posterPresets.mobile.columns, posterPresets.mobile.blocks, [], posterPresets.mobile.artistStartRow),
-  tablet: calculatePosterLayout(lineup.map(artist => artist.id), 6, posterPresets.tablet.blocks),
-  desktop: calculatePosterLayout(lineup.map(artist => artist.id), 10, posterPresets.desktop.blocks),
+  mobile: calculatePosterLayout(
+    lineup.map((artist) => artist.id),
+    posterPresets.mobile.columns,
+    informationBlocks('mobile'),
+    [],
+    posterPresets.mobile.artistStartRow,
+  ),
+  tablet: calculatePosterLayout(
+    lineup.map((artist) => artist.id),
+    6,
+    informationBlocks('tablet'),
+  ),
+  desktop: calculatePosterLayout(
+    lineup.map((artist) => artist.id),
+    10,
+    informationBlocks('desktop'),
+  ),
 }
 type Positions = Record<PosterRange, SlotRect | undefined>
-const positions = (values: Positions, display: 'block' | 'grid' = 'block') => ranges.map(range => {
-  const value = values[range]
-  return `--${range}-display:${value ? display : 'none'};--${range}-column:${value?.column ?? 0};--${range}-row:${value?.row ?? 0};--${range}-width:${value?.width ?? 1};--${range}-height:${value?.height ?? 1}`
-}).join(';')
+const positions = (values: Positions, display: 'block' | 'grid' = 'block') =>
+  ranges
+    .map((range) => {
+      const value = values[range]
+      return `--${range}-display:${value ? display : 'none'};--${range}-column:${value?.column ?? 0};--${range}-row:${value?.row ?? 0};--${range}-width:${value?.width ?? 1};--${range}-height:${value?.height ?? 1}`
+    })
+    .join(';')
 const artistPositions = (id: string): Positions => ({
-  mobile: layouts.mobile.artists.find(artist => artist.id === id),
-  tablet: layouts.tablet.artists.find(artist => artist.id === id),
-  desktop: layouts.desktop.artists.find(artist => artist.id === id),
+  mobile: layouts.mobile.artists.find((artist) => artist.id === id),
+  tablet: layouts.tablet.artists.find((artist) => artist.id === id),
+  desktop: layouts.desktop.artists.find((artist) => artist.id === id),
 })
-const informationPositions = (id: string): Positions => ({
-  mobile: posterPresets.mobile.blocks.find(block => block.id === id),
-  tablet: posterPresets.tablet.blocks.find(block => block.id === id),
-  desktop: posterPresets.desktop.blocks.find(block => block.id === id),
-})
-const motifCount = Math.max(...ranges.map(range => layouts[range].motifs.length))
-const motifs = selectPosterMotifs([layouts.desktop, layouts.tablet, layouts.mobile])
+const motifCount = Math.max(
+  ...ranges.map((range) => layouts[range].motifs.length),
+)
+const motifs = selectPosterMotifs([
+  layouts.desktop,
+  layouts.tablet,
+  layouts.mobile,
+])
 const motifSlots = Array.from({ length: motifCount }, (_, index) => {
   return {
     motif: motifs[index],
-    style: positions({ mobile: layouts.mobile.motifs[index], tablet: layouts.tablet.motifs[index], desktop: layouts.desktop.motifs[index] }),
+    style: positions({
+      mobile: layouts.mobile.motifs[index],
+      tablet: layouts.tablet.motifs[index],
+      desktop: layouts.desktop.motifs[index],
+    }),
   }
 })
-const gridStyle = `--slot-width:${slotSize.width};--slot-height:${slotSize.height};`
-  + ranges.map(range => `--${range}-rows:${layouts[range].rows}`).join(';')
+const gridStyle =
+  `--slot-width:${slotSize.width};--slot-height:${slotSize.height};` +
+  ranges.map((range) => `--${range}-rows:${layouts[range].rows}`).join(';')
 // Complete static utility strings keep shared placement detectable by Tailwind.
-const slotClasses = 'min-w-0 [display:var(--mobile-display)] [grid-column:calc(var(--mobile-column)+1)/span_var(--mobile-width)] [grid-row:calc(var(--mobile-row)+1)/span_var(--mobile-height)] md:[display:var(--tablet-display)] md:[grid-column:calc(var(--tablet-column)+1)/span_var(--tablet-width)] md:[grid-row:calc(var(--tablet-row)+1)/span_var(--tablet-height)] xl:[display:var(--desktop-display)] xl:[grid-column:calc(var(--desktop-column)+1)/span_var(--desktop-width)] xl:[grid-row:calc(var(--desktop-row)+1)/span_var(--desktop-height)]'
+const slotClasses =
+  'min-w-0 [display:var(--mobile-display)] [grid-column:calc(var(--mobile-column)+1)/span_var(--mobile-width)] [grid-row:calc(var(--mobile-row)+1)/span_var(--mobile-height)] md:[display:var(--tablet-display)] md:[grid-column:calc(var(--tablet-column)+1)/span_var(--tablet-width)] md:[grid-row:calc(var(--tablet-row)+1)/span_var(--tablet-height)] xl:[display:var(--desktop-display)] xl:[grid-column:calc(var(--desktop-column)+1)/span_var(--desktop-width)] xl:[grid-row:calc(var(--desktop-row)+1)/span_var(--desktop-height)]'
 ---
+
 <Layout>
-  <main class='flex-1 px-4 py-8 md:px-8 md:py-12 xl:px-[8.333333vw] xl:py-20' aria-labelledby='page-title'>
+  <main
+    class='flex-1 px-4 py-8 md:px-8 md:py-12 xl:px-[8.333333vw] xl:py-20'
+    aria-labelledby='page-title'>
     <div class='@container mx-auto w-full max-w-[1600px]'>
       <PosterDefinitions />
-      <section class='relative isolate grid [--columns:3] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] [--poster-text:#d5d5d5] grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]' style={gridStyle} aria-label='Festival ARC: artistas y obras'>
-        {motifSlots.map(tile => (
-          <div class:list={[slotClasses, 'pattern-slot min-h-0 aspect-[160/152] md:aspect-auto']} style={tile.style} aria-hidden='true'><PosterPattern motif={tile.motif} /></div>
-        ))}
-        {posterPresets.desktop.blocks.map(block => (
-          <div class:list={[slotClasses, 'information-slot @container relative min-h-0 bg-background', block.id === 'hero' ? 'z-3' : 'z-1']} style={positions(informationPositions(block.id), 'grid')} aria-hidden={block.id === 'title-spill' ? 'true' : undefined}>
-            {block.id === 'hero' && <PosterIntro />}
-            {block.id === 'program' && <PosterInformation kind='program' />}
-            {block.id === 'disciplines' && <PosterInformation kind='disciplines' />}
-          </div>
-        ))}
-        {lineup.map(artist => (
-          <div class:list={[slotClasses, 'relative z-2 min-h-[calc(var(--slot-height)*var(--unit))] md:min-h-0']} style={positions(artistPositions(artist.id), 'grid')}><ArtistName artist={artist} /></div>
-        ))}
+      <section
+        class='relative isolate grid grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] [--columns:3] [--poster-text:#d5d5d5] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]'
+        style={gridStyle}
+        aria-label='Festival ARC: artistas y obras'>
+        {
+          motifSlots.map((tile) => (
+            <div
+              class:list={[
+                slotClasses,
+                'pattern-slot aspect-[160/152] min-h-0 md:aspect-auto',
+              ]}
+              style={tile.style}
+              aria-hidden='true'>
+              <PosterPattern motif={tile.motif} />
+            </div>
+          ))
+        }
+        <PosterIntro
+          {...posterIntroPlacement}
+          titleExtension={posterTitleExtensionPlacement}
+        />
+        <PosterDisciplines {...posterDisciplinesPlacement} />
+        {
+          lineup.map((artist) => (
+            <div
+              class:list={[
+                slotClasses,
+                'z-2 relative min-h-[calc(var(--slot-height)*var(--unit))] md:min-h-0',
+              ]}
+              style={positions(artistPositions(artist.id), 'grid')}>
+              <ArtistName artist={artist} />
+            </div>
+          ))
+        }
+        <PosterProgram {...posterProgramPlacement} />
+        <PosterPlace {...posterPlacePlacement} />
       </section>
     </div>
   </main>

@@ -5,7 +5,7 @@ The homepage is built as Astro HTML with one copy of each artist name. TypeScrip
 ## Quick path
 
 1. Edit `lineup.ts` for names, stable IDs and company associations. Do not invent activities, dates or venues.
-2. Edit `poster.ts` for the module proportions, information footprints and decorative sequence. Coordinates start at zero.
+2. Edit `pages/index.astro` for homepage information positions and dimensions; edit `poster.ts` for module proportions and the decorative sequence. Coordinates start at zero.
 3. Run `pnpm --filter festival-2026 test`, then `pnpm build`. Browser checks use `pnpm exec playwright test tests/e2e/arc2026-document.spec.ts tests/e2e/arc2026-static-grid.spec.ts tests/e2e/arc2026-pattern-seams.spec.ts tests/e2e/festival-navbar.spec.ts` after the root build.
 
 ## Layout rules
@@ -21,6 +21,30 @@ Each name uses one row and two columns on tablet/desktop or all three columns on
 `calculatePosterLayout` is a pure function. An optional fourth argument supplies explicit artist anchors such as `{ id: 'nino-cohete', column: 0, row: 6 }`; invalid cadence, collisions, duplicate or unknown identities are rejected before rendering. The optional fifth argument, `artistStartRow`, sets the earliest artist row (zero by default). Mobile sets it to 4, leaving two complete decorative rows below its two-row hero. Do not modify positions with browser measurements.
 
 The stepped desktop title uses two adjacent footprints. Phone/tablet information positions are authored separately. `slotSize` starts at 160×152 and defines the base module proportions; actual width follows available space.
+
+## Information blocks and independent content
+
+`PosterInformation.astro` is a content-agnostic grid footprint with a default Astro slot. It accepts `mobile`, `tablet` and `desktop` props, each containing zero-based `{ column, row, width, height }` values in modules. An omitted range hides the block in that range. It does not select content through a `kind` prop.
+
+`PosterProgram.astro` and `PosterDisciplines.astro` independently own their markup and text. `PosterIntro.astro` composes the heading/date footprint and the adjacent empty title extension internally. The homepage only composes these three content components; it does not render internal intro reservations.
+
+Control homepage positions in `pages/index.astro`: `posterIntroPlacement`, `posterTitleExtensionPlacement`, `posterProgramPlacement` and `posterDisciplinesPlacement` are passed as props to the content wrappers. `PosterIntro` receives its auxiliary footprint through `titleExtension`. The same values feed `informationBlocks(range)` before artist/motif placement, so changing page props changes both rendering and reservations. No ID lookup or `information-placement.ts` utility is needed. The presets in `poster.ts` remain layout-test data, not implicit component defaults. Content wrappers read geometry directly from `Astro.props`; omitted ranges stay hidden, and the intro only renders its auxiliary reservation when `titleExtension` is supplied.
+
+For example, inside a custom wrapper:
+
+```astro
+---
+import PosterInformation from './PosterInformation.astro'
+---
+<PosterInformation
+  mobile={{ column: 0, row: 12, width: 3, height: 1 }}
+  tablet={{ column: 3, row: 7, width: 3, height: 2 }}
+  desktop={{ column: 6, row: 5, width: 3, height: 2 }}>
+  <aside aria-label='Custom information'><p>Your independent content</p></aside>
+</PosterInformation>
+```
+
+For new homepage content, create a wrapper using the base slot, define its responsive props in `index.astro`, include that same geometry in `informationBlocks(range)`, and render the wrapper with those props. Do not add content branches to the base component. Standalone base blocks do not automatically register themselves with an ancestor grid.
 
 ## Decorative distribution
 
@@ -44,7 +68,7 @@ After a fresh root build, run `pnpm exec playwright test tests/e2e/arc2026-hybri
 
 ## Poster styling
 
-The homepage composition in `pages/index.astro` and the five poster components (`ArtistName`, `PosterIntro`, `PosterInformation`, `PosterPattern`, and `PosterDefinitions`) use statically detectable Tailwind 4.1 utilities, with no authored static style blocks. `ArtistName` additionally emits server-generated font-fit container-query rules for its measured word compositions; presentation utilities remain Tailwind. Shared slot strings and the motif color map contain complete utility names, not interpolated fragments. Unused legacy styling classes are removed; `information-slot` and `pattern-slot` remain because browser tests consume them. Functional data attributes and shared navbar hooks are preserved.
+The homepage composition in `pages/index.astro` and the poster components (including the content-independent `PosterInformation` base and its `PosterProgram` / `PosterDisciplines` wrappers) use statically detectable Tailwind 4.1 utilities, with no authored static style blocks. `ArtistName` additionally emits server-generated font-fit container-query rules for its measured word compositions; presentation utilities remain Tailwind. Shared slot strings and the motif color map contain complete utility names, not interpolated fragments. Unused legacy styling classes are removed; `information-slot` and `pattern-slot` remain because browser tests consume them. Functional data attributes and shared navbar hooks are preserved.
 
 `pages/index.astro` assigns runtime CSS variables from `calculatePosterLayout` and the existing presets. Utilities consume those values for grid placement and container-relative sizing. Responsive utilities are mobile-first: unprefixed styles define the phone layout, `md:` selects tablet from 48rem (768px), and `xl:` selects desktop from 80rem (1280px). The 1200–1279px range now intentionally uses the tablet layout, with no custom breakpoint overrides. Colors and fonts reuse the installed theme tokens. Intrinsic SVG geometry stays in the artwork, not in styling utilities.
 

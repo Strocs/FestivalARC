@@ -1,3 +1,15 @@
+---
+import PosterInformation from './PosterInformation.astro'
+import type { PosterRange } from './poster'
+import type { SlotRect } from './poster-grid'
+
+type Placement = Partial<Record<PosterRange, SlotRect>>
+interface Props extends Placement {
+  titleExtension?: Placement
+}
+const { mobile, tablet, desktop, titleExtension } = Astro.props
+---
+<PosterInformation {mobile} {tablet} {desktop} class='z-3'>
 <header class='space-y-8 py-4 my-auto'>
   <p class='text-foreground text-[length:clamp(1rem,calc(0.75rem+3cqw),2.5rem)] md:text-[length:clamp(1rem,calc(0.75rem+6cqw),2.5rem)] font-semibold font-mono leading-none' aria-label='28 y 29 de noviembre de 2026'>
     <span aria-hidden='true'>28.11<br />29.11</span>
@@ -10,3 +22,5 @@
     <span class='block text-[#e50070] md:w-3/4'>CIUDAD</span>
   </h1>
 </header>
+</PosterInformation>
+{titleExtension && <PosterInformation {...titleExtension} aria-hidden='true' />}

@@ -1,17 +1,19 @@
 ---
-interface Props { kind: 'program' | 'disciplines' }
-const { kind } = Astro.props
-const disciplines = ['Música', 'Artesanía', 'Diseño', 'Ilustración', 'Literatura', 'Artes escénicas', 'Artes visuales']
+import type { SlotRect } from './poster-grid'
+
+interface Props {
+  mobile?: SlotRect
+  tablet?: SlotRect
+  desktop?: SlotRect
+  class?: string
+  'aria-hidden'?: 'true' | 'false'
+}
+const { class: className, 'aria-hidden': ariaHidden } = Astro.props
+const style = (['mobile', 'tablet', 'desktop'] as const).map(range => {
+  const rect = Astro.props[range]
+  return `--${range}-display:${rect ? 'grid' : 'none'};--${range}-column:${rect?.column ?? 0};--${range}-row:${rect?.row ?? 0};--${range}-width:${rect?.width ?? 1};--${range}-height:${rect?.height ?? 1}`
+}).join(';')
 ---
-{kind === 'program' ? (
-  <aside class='min-h-0 text-(--poster-text) font-black flex items-center justify-between gap-3 p-3' aria-label='Programación'>
-    <p class='min-w-0 m-0 wrap-anywhere text-[length:clamp(1.5rem,calc(0.5rem+9cqw),4.25rem)] leading-[.94] tracking-[-.04em]'>PROGRA<br />MACIÓN</p>
-    <svg class='flex-none w-[clamp(2rem,12cqw,5rem)] h-auto fill-current' viewBox='0 0 100 100' aria-hidden='true' focusable='false'>
-      <path d='M8 42H65L42 18H64L94 50 64 82H42L65 58H8Z' />
-    </svg>
-  </aside>
-) : (
-  <aside class='min-h-0 text-(--poster-text) font-black flex items-center py-3' aria-label='Disciplinas'>
-    <ul class='m-0 p-0 min-w-0 list-none wrap-anywhere text-[length:clamp(1rem,calc(0.5rem+5cqw),3.75rem)] leading-[1.12] tracking-[-.04em] uppercase'>{disciplines.map(discipline => <li>{discipline}</li>)}</ul>
-  </aside>
-)}
+<div class:list={['min-w-0 [display:var(--mobile-display)] [grid-column:calc(var(--mobile-column)+1)/span_var(--mobile-width)] [grid-row:calc(var(--mobile-row)+1)/span_var(--mobile-height)] md:[display:var(--tablet-display)] md:[grid-column:calc(var(--tablet-column)+1)/span_var(--tablet-width)] md:[grid-row:calc(var(--tablet-row)+1)/span_var(--tablet-height)] xl:[display:var(--desktop-display)] xl:[grid-column:calc(var(--desktop-column)+1)/span_var(--desktop-width)] xl:[grid-row:calc(var(--desktop-row)+1)/span_var(--desktop-height)]', 'information-slot @container relative min-h-0 bg-background', className ?? 'z-1']} style={style} aria-hidden={ariaHidden}>
+  <slot />
+</div>

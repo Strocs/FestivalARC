@@ -1,0 +1,22 @@
+---
+import PosterInformation from './PosterInformation.astro'
+import PosterArrow from './PosterArrow.astro'
+import type { SlotRect } from './poster-grid'
+import type { PosterRange } from './poster'
+
+type Props = Partial<Record<PosterRange, SlotRect>>
+const { mobile, tablet, desktop } = Astro.props
+---
+
+<PosterInformation {mobile} {tablet} {desktop}>
+  <a
+    href='/programacion'
+    class='text-foreground group/program hover:text-arc-rose flex min-h-0 items-center justify-end gap-3 px-6 py-3 font-black transition-colors duration-300'
+    aria-label='Programación'>
+    <p
+      class='wrap-anywhere m-0 min-w-0 text-[length:clamp(1.5rem,calc(0.5rem+9cqw),4.25rem)] leading-[.94] tracking-[-.04em]'>
+      PROGRA<br />MACIÓN
+    </p>
+    <PosterArrow class='group-hover/program:-rotate-45' />
+  </a>
+</PosterInformation>

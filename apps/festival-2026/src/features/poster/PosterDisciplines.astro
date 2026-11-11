@@ -1,0 +1,38 @@
+---
+import PosterInformation from './PosterInformation.astro'
+import type { SlotRect } from './poster-grid'
+import type { PosterRange } from './poster'
+
+type Props = Partial<Record<PosterRange, SlotRect>>
+const { mobile, tablet, desktop } = Astro.props
+const disciplines = [
+  'Música',
+  'Artesanía',
+  'Diseño',
+  'Ilustración',
+  'Literatura',
+  'Artes escénicas',
+  'Artes visuales',
+]
+---
+
+<PosterInformation {mobile} {tablet} {desktop}>
+  <aside
+    class='flex min-h-0 items-center py-3 font-black'
+    aria-label='Disciplinas'>
+    <ul
+      class='min-w-0 list-none p-4 text-[length:clamp(1rem,calc(0.5rem+8cqw),4rem)] uppercase leading-[1.12] tracking-[-.04em]'>
+      {
+        disciplines.map((discipline, index) => {
+          const isEven = index % 2 === 0
+
+          return (
+            <li class:list={[isEven ? 'text-primary' : 'text-foreground']}>
+              {discipline}
+            </li>
+          )
+        })
+      }
+    </ul>
+  </aside>
+</PosterInformation>
