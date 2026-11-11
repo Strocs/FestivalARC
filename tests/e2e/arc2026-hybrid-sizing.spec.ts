@@ -63,7 +63,7 @@ for (const width of [320, 390, 767, 768, 1279, 1280, 1440]) {
 }
 
 for (const width of [320, 390, 767]) {
-  test(`mobile uses three proportional tiles and two decorative rows before artists at ${width}px`, async ({ page }) => {
+  test(`mobile uses four proportional tiles and two decorative rows before artists at ${width}px`, async ({ page }) => {
     await openPoster(page, width)
     const grid = page.getByRole('region', { name: 'Festival ARC: artistas y obras' })
     // Compare the full article with live adjacent tiles, not its interior label
@@ -73,10 +73,11 @@ for (const width of [320, 390, 767]) {
       return { x: box.x, y: box.y, width: box.width, height: box.height }
     }).filter(box => box.width > 0 && box.height > 0))
     const firstRow = tiles.filter(tile => Math.abs(tile.y - tiles[0].y) < 1).sort((a, b) => a.x - b.x)
-    expect(firstRow, 'three visible horizontal decorative slots are exercised').toHaveLength(3)
-    const [left, middle, right] = firstRow
+    expect(firstRow, 'four visible horizontal decorative slots are exercised').toHaveLength(4)
+    const [left, middle, third, right] = firstRow
     expect(Math.abs(left.x + left.width - middle.x)).toBeLessThanOrEqual(1)
-    expect(Math.abs(middle.x + middle.width - right.x)).toBeLessThanOrEqual(1)
+    expect(Math.abs(middle.x + middle.width - third.x)).toBeLessThanOrEqual(1)
+    expect(Math.abs(third.x + third.width - right.x)).toBeLessThanOrEqual(1)
     for (const tile of tiles) {
       expect(Math.abs(tile.height - tile.width * 152 / 160)).toBeLessThanOrEqual(1)
     }
@@ -86,10 +87,10 @@ for (const width of [320, 390, 767]) {
     expect(hero).not.toBeNull()
     expect(firstArtist).not.toBeNull()
     const opening = tiles.filter(tile => tile.y >= hero!.y + hero!.height - 1 && tile.y < firstArtist!.y - 1)
-    expect(opening).toHaveLength(6)
+    expect(opening).toHaveLength(8)
     for (const row of [0, 1]) {
       const rowTop = hero!.y + hero!.height + row * moduleHeight
-      expect(opening.filter(tile => Math.abs(tile.y - rowTop) < 1)).toHaveLength(3)
+      expect(opening.filter(tile => Math.abs(tile.y - rowTop) < 1)).toHaveLength(4)
     }
     expect(Math.abs(firstArtist!.y - (hero!.y + hero!.height + 2 * moduleHeight))).toBeLessThanOrEqual(1)
     const artists = grid.getByRole('article')
@@ -111,8 +112,8 @@ for (const width of [320, 390, 767]) {
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%' })
     const after = await artist.boundingBox()
     // Root enlargement also changes the page's rem-based margins. Compare
-    // against the live three-slot geometry, not the previous viewport measure.
-    expect(Math.abs(after!.height - after!.width * 152 / 480)).toBeLessThanOrEqual(1)
+    // against the live four-slot geometry, not the previous viewport measure.
+    expect(Math.abs(after!.height - after!.width * 152 / 640)).toBeLessThanOrEqual(1)
     const contained = await artist.evaluate(root => {
       const range = document.createRange()
       range.selectNodeContents(root.querySelector('span')!)

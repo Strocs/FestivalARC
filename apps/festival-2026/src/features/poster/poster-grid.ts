@@ -1,4 +1,4 @@
-export type GridColumns = 2 | 3 | 6 | 10
+export type GridColumns = 2 | 3 | 4 | 6 | 10
 
 export interface SlotRect {
   column: number
@@ -29,7 +29,7 @@ const intersects = (a: SlotRect, b: SlotRect) =>
   && a.row < b.row + b.height && a.row + a.height > b.row
 
 function startsForRow(columns: GridColumns, row: number): readonly number[] {
-  if (columns === 2 || columns === 3) return row % 2 ? [] : [0]
+  if (columns === 2 || columns === 3 || columns === 4) return row % 2 ? [] : [0]
   if (row % 2) return columns === 10 ? [2, 6] : [2]
   return columns === 10 ? [0, 4, 8] : [0, 4]
 }
@@ -42,11 +42,11 @@ export function calculatePosterLayout(
   anchors: readonly ArtistAnchor[] = [],
   artistStartRow = 0,
 ): PosterLayout {
-  if (![2, 3, 6, 10].includes(columns)) throw new Error('Grid columns must be 2, 3, 6 or 10')
+  if (![2, 3, 4, 6, 10].includes(columns)) throw new Error('Grid columns must be 2, 3, 4, 6 or 10')
   if (!Number.isSafeInteger(artistStartRow) || artistStartRow < 0) {
     throw new Error('Invalid artist start row')
   }
-  const artistWidth = columns === 3 ? 3 : 2
+  const artistWidth = columns === 3 || columns === 4 ? columns : 2
   if (artistIds.some(id => typeof id !== 'string' || !id.trim())
     || new Set(artistIds).size !== artistIds.length) {
     throw new Error('Artist IDs must be non-empty and unique')

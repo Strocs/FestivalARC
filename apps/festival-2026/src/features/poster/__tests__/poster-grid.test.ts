@@ -12,6 +12,13 @@ const desktopTitle: SlotRect[] = [
 ]
 
 describe('poster slot layout', () => {
+  it('uses four mobile columns with full-width artists and decorative rows', () => {
+    const preset = posterPresets.mobile
+    expect(preset.columns).toBe(4)
+    const result = calculatePosterLayout(ids(4), 4, [], [], 4)
+    expect(result.artists).toEqual(ids(4).map((id, index) => ({ id, column: 0, row: 4 + index * 2, width: 4, height: 1 })))
+    expect(result.motifs.filter(tile => tile.row === 5)).toEqual([0, 1, 2, 3].map(column => ({ column, row: 5, width: 1, height: 1 })))
+  })
   it('uses three proportional mobile slots with full-width artists', () => {
     const result = calculatePosterLayout(ids(4), 3)
     expect(result.columns).toBe(3)
@@ -27,12 +34,12 @@ describe('poster slot layout', () => {
     const preset = posterPresets.mobile
     const result = calculatePosterLayout(lineup.map(artist => artist.id), preset.columns, preset.blocks, [], preset.artistStartRow)
     const hero = preset.blocks.find(block => block.id === 'hero')!
-    expect(preset.columns).toBe(3)
-    expect(hero).toMatchObject({ column: 0, row: 0, width: 3, height: 2 })
+    expect(preset.columns).toBe(4)
+    expect(hero).toMatchObject({ column: 0, row: 0, width: 4, height: 2 })
     expect(result.artists[0].row).toBe(hero.row + hero.height + 2)
     for (const row of [hero.row + hero.height, hero.row + hero.height + 1]) {
       expect(result.motifs.filter(tile => tile.row === row))
-        .toEqual([0, 1, 2].map(column => ({ column, row, width: 1, height: 1 })))
+        .toEqual([0, 1, 2, 3].map(column => ({ column, row, width: 1, height: 1 })))
     }
     expect(result.artists.map(artist => artist.id)).toEqual(lineup.map(artist => artist.id))
   })
@@ -57,7 +64,7 @@ describe('poster slot layout', () => {
     ])
   })
 
-  it.each([2, 3, 6, 10] as const)('keeps every lower reservation free at %i columns', columns => {
+  it.each([2, 3, 4, 6, 10] as const)('keeps every lower reservation free at %i columns', columns => {
     const blocks = [{ column: 0, row: 8, width: 2, height: 2 }]
     const result = calculatePosterLayout(ids(17), columns, blocks)
     for (const artist of result.artists) {
@@ -145,7 +152,7 @@ describe('poster slot layout', () => {
   it.each([
     ['duplicate IDs', ['a', 'a'], 10, [], 'Artist IDs must be non-empty and unique'],
     ['blank ID', [' '], 10, [], 'Artist IDs must be non-empty and unique'],
-    ['unsupported columns', ['a'], 4, [], 'Grid columns must be 2, 3, 6 or 10'],
+    ['unsupported columns', ['a'], 5, [], 'Grid columns must be 2, 3, 4, 6 or 10'],
     ['outside columns', ['a'], 6, [{ column: 5, row: 0, width: 2, height: 1 }], 'Invalid information footprint'],
     ['negative row', ['a'], 6, [{ column: 0, row: -1, width: 2, height: 1 }], 'Invalid information footprint'],
     ['fractional size', ['a'], 6, [{ column: 0, row: 0, width: 2, height: 1.5 }], 'Invalid information footprint'],

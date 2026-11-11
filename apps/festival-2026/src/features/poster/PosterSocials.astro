@@ -12,24 +12,46 @@ interface Props {
 }
 const { instagram, facebook, twitter } = Astro.props
 ---
+
 <PosterInformation {...instagram}>
-  <a href='#' target='_blank' rel='noopener noreferrer' aria-label='Instagram'
-    class='group/social flex min-h-0 items-center justify-between gap-3 px-6 py-3 font-black text-foreground transition-colors duration-300 hover:text-arc-rose'>
-    <span class='min-w-0 wrap-anywhere text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] leading-[.94] tracking-[-.04em] uppercase'>Instagram</span>
+  <a
+    href='#'
+    target='_blank'
+    rel='noopener noreferrer'
+    aria-label='Instagram'
+    class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-end gap-3 px-6 py-3 font-black transition-colors duration-300'>
+    <span
+      class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'
+      >Instagram</span
+    >
     <PosterArrow class='group-hover/social:-rotate-45' />
   </a>
 </PosterInformation>
 <PosterInformation {...facebook}>
-  <a href='#' target='_blank' rel='noopener noreferrer' aria-label='Facebook'
-    class='group/social flex min-h-0 items-center justify-between gap-3 px-6 py-3 font-black text-foreground transition-colors duration-300 hover:text-arc-rose'>
-    <span class='min-w-0 wrap-anywhere text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] leading-[.94] tracking-[-.04em] uppercase'>Facebook</span>
+  <a
+    href='#'
+    target='_blank'
+    rel='noopener noreferrer'
+    aria-label='Facebook'
+    class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-start gap-3 px-6 py-3 font-black transition-colors duration-300'>
+    <span
+      class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'
+      >Facebook</span
+    >
     <PosterArrow class='group-hover/social:-rotate-45' />
   </a>
 </PosterInformation>
 <PosterInformation {...twitter}>
-  <a href='#' target='_blank' rel='noopener noreferrer' aria-label='Twitter'
-    class='group/social flex min-h-0 items-center justify-between gap-3 px-6 py-3 font-black text-foreground transition-colors duration-300 hover:text-arc-rose'>
-    <span class='min-w-0 wrap-anywhere text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] leading-[.94] tracking-[-.04em] uppercase'>Twitter</span>
+  <a
+    href='#'
+    target='_blank'
+    rel='noopener noreferrer'
+    aria-label='Twitter'
+    class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-end gap-3 px-6 py-3 font-black transition-colors duration-300'>
+    <span
+      class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'
+      >X</span
+    >
     <PosterArrow class='group-hover/social:-rotate-45' />
   </a>
 </PosterInformation>
