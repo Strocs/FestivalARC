@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { getArtistCompositions } from '../../apps/festival-2026/src/features/arc2026/lib/artist-name'
+import { getArtistCompositions } from '../../apps/festival-2026/src/features/poster/artist-name'
 
 for (const width of [320, 390, 767, 768, 1279, 1280, 1440, 1920]) {
   test(`artist labels maximize their padded area at ${width}px`, async ({ page }) => {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { getArtistCompositions, getArtistFitRanges, measureArtistName } from '../lib/artist-name'
-import { lineup } from '../data/lineup'
+import { getArtistCompositions, getArtistFitRanges, measureArtistName } from '../artist-name'
+import { lineup } from '../lineup'
 
 describe('artist typography metrics', () => {
   it('keeps GEPE on one line and compares word-boundary wraps for composed names', () => {

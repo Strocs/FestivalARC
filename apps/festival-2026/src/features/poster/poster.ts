@@ -1,4 +1,4 @@
-import type { GridColumns, SlotRect } from '../lib/poster-grid'
+import type { GridColumns, SlotRect } from './poster-grid'
 
 export type PosterRange = 'desktop' | 'tablet' | 'mobile'
 export type InformationId = 'hero' | 'title-spill' | 'program' | 'disciplines'

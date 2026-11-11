@@ -1,27 +1,24 @@
 ---
-import type { Artist, Program } from '../data/program'
-import { activitiesForArtist, demoLabel, formatActivityTime } from '../data/program'
-import { artistArtwork } from '../data/artwork'
-import { publicPath } from '../../../utils/publication'
-interface Props { artist: Artist, program: Program, overlay?: boolean, headingId?: string }
-const { artist, program, overlay = false, headingId } = Astro.props
-const Heading = overlay ? 'h2' : 'h1'
-const ActivityHeading = overlay ? 'h3' : 'h2'
-const ItemHeading = overlay ? 'h4' : 'h3'
+import type { Artist, Program } from './program'
+import { activitiesForArtist, demoLabel, formatActivityTime } from './program'
+import { artistArtwork } from './artwork'
+import { publicPath } from '../../utils/publication'
+interface Props { artist: Artist, program: Program }
+const { artist, program } = Astro.props
 const artwork = artistArtwork[artist.id as keyof typeof artistArtwork]
 const activities = activitiesForArtist(program, artist.id)
 ---
 <div class='grid items-start md:grid-cols-[1fr_1fr]'>
   <img src={publicPath(artwork.src)} width={artwork.width} height={artwork.height} alt={`Pieza de referencia de ${artist.name}`} class='block h-auto w-full' />
   <div class='min-w-0 p-4 sm:p-8'>
-    <Heading id={headingId} class='font-display text-4xl/none uppercase sm:text-6xl/none'>{artist.name}</Heading>
+    <h1 class='font-display text-4xl/none uppercase sm:text-6xl/none'>{artist.name}</h1>
     <p class='mt-4 text-sm/6'>{demoLabel}</p>
-    <ActivityHeading class='mt-8 font-display text-2xl/none uppercase'>Actividades de demostración</ActivityHeading>
+    <h2 class='mt-8 font-display text-2xl/none uppercase'>Actividades de demostración</h2>
     <ol aria-label='Actividades de demostración' class='mt-4'>
       {activities.map(activity => {
         const venue = program.venues.find(({ id }) => id === activity.venueId)!
         return <li class='border-t border-primary py-4'>
-          <ItemHeading class='text-lg/7 font-bold'>{activity.name}</ItemHeading>
+          <h3 class='text-lg/7 font-bold'>{activity.name}</h3>
           <p class='mt-2'><time datetime={activity.startsAt}>{formatActivityTime(activity.startsAt)}</time></p>
           <p class='mt-2'>{venue.name} · {venue.city}</p>
           <p class='mt-2 text-sm/6'>{activity.disciplines.join(' · ')}</p>

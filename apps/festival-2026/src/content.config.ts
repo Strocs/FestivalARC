@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content'
-import { readLocalProgram } from './features/arc2026/data/local'
-import { activitySchema, artistSchema, venueSchema } from './features/arc2026/data/program'
+import { readLocalProgram } from './features/program/local'
+import { activitySchema, artistSchema, venueSchema } from './features/program/program'
 
 // Each build-time loader validates the whole local graph before storing entries.
 export const collections = {

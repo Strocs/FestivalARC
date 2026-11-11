@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import sharp from 'sharp'
 import { describe, expect, it } from 'vitest'
 
-const sprite = readFileSync(new URL('../../../assets/arc2026/poster-motifs.svg', import.meta.url), 'utf8')
+const sprite = readFileSync(new URL('../poster-motifs.svg', import.meta.url), 'utf8')
 const lightning = sprite.match(/<symbol id="lightning"[^>]*>([\s\S]*?)<\/symbol>/)?.[1]
 
 const render = (content: string, width: number, height: number) => sharp(Buffer.from(

@@ -1,4 +1,4 @@
-import metrics from '../data/poppins-black-metrics.json' with { type: 'json' }
+import metrics from './poppins-black-metrics.json' with { type: 'json' }
 
 export interface ArtistComposition {
   lines: string[]

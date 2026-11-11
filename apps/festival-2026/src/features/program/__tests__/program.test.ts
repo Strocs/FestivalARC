@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { readLocalProgram } from './local'
-import { activitiesForArtist, demoLabel, formatActivityTime, validateProgram } from './program'
-import type { Program } from './program'
+import { readLocalProgram } from '../local'
+import { activitiesForArtist, demoLabel, formatActivityTime, validateProgram } from '../program'
+import type { Program } from '../program'
 
 function fixture(): Program {
   return {

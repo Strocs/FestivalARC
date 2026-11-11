@@ -1,4 +1,4 @@
-import { motifMetadata, motifSequence, type MotifAccent, type PosterMotif } from '../data/poster'
+import { motifMetadata, motifSequence, type MotifAccent, type PosterMotif } from './poster'
 import type { PosterLayout } from './poster-grid'
 
 /** One build-time selection per DOM index, constrained by all responsive placements. */

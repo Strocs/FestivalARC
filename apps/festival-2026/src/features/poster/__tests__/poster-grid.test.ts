@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { calculatePosterLayout, type GridColumns, type SlotRect } from '../lib/poster-grid'
-import { lineup } from '../data/lineup'
-import { posterPresets } from '../data/poster'
+import { calculatePosterLayout, type GridColumns, type SlotRect } from '../poster-grid'
+import { lineup } from '../lineup'
+import { posterPresets } from '../poster'
 
 const ids = (count: number) => Array.from({ length: count }, (_, index) => `artist-${index}`)
 const overlaps = (a: SlotRect, b: SlotRect) => a.column < b.column + b.width

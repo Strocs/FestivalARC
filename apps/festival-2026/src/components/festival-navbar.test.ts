@@ -1,7 +1,7 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
 import FestivalNavbar from '@festivalarc/ui/FestivalNavbar.astro'
-import PosterIntro from '../features/arc2026/components/PosterIntro.astro'
+import PosterIntro from '../features/poster/PosterIntro.astro'
 import Header from './Header.astro'
 
 const editions = [

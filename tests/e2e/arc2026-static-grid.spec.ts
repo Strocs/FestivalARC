@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { lineup } from '../../apps/festival-2026/src/features/arc2026/data/lineup'
+import { lineup } from '../../apps/festival-2026/src/features/poster/lineup'
 
 test('publishes every configured artist once and a live accessible heading without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 900 } })

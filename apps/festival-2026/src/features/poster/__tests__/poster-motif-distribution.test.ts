@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { lineup } from '../data/lineup'
-import { motifSequence, posterPresets, type PosterMotif } from '../data/poster'
-import { calculatePosterLayout } from '../lib/poster-grid'
-import { selectPosterMotifs } from '../lib/poster-motif-distribution'
+import { lineup } from '../lineup'
+import { motifSequence, posterPresets, type PosterMotif } from '../poster'
+import { calculatePosterLayout } from '../poster-grid'
+import { selectPosterMotifs } from '../poster-motif-distribution'
 
 // Independent artwork groupings: directions and color variants are not new shapes.
 const family = (motif: PosterMotif) => motif.split('-')[0]

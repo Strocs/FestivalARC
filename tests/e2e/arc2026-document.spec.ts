@@ -2,7 +2,7 @@ import { createRequire } from 'node:module'
 import { resolve } from 'node:path'
 import { expect, test } from '@playwright/test'
 import { publicationConfig } from '../../editions.config'
-import { activitiesForArtist, demoLabel, formatActivityTime, validateProgram } from '../../apps/festival-2026/src/features/arc2026/data/program'
+import { activitiesForArtist, demoLabel, formatActivityTime, validateProgram } from '../../apps/festival-2026/src/features/program/program'
 
 // Node's test loader needs explicit JSON loading; validation and ordering still
 // use the same public entry point as the app's build-time local data loader.
