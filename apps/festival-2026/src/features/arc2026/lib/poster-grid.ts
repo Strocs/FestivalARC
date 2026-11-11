@@ -1,4 +1,4 @@
-export type GridColumns = 2 | 6 | 10
+export type GridColumns = 2 | 3 | 6 | 10
 
 export interface SlotRect {
   column: number
@@ -29,7 +29,7 @@ const intersects = (a: SlotRect, b: SlotRect) =>
   && a.row < b.row + b.height && a.row + a.height > b.row
 
 function startsForRow(columns: GridColumns, row: number): readonly number[] {
-  if (columns === 2) return row % 2 ? [] : [0]
+  if (columns === 2 || columns === 3) return row % 2 ? [] : [0]
   if (row % 2) return columns === 10 ? [2, 6] : [2]
   return columns === 10 ? [0, 4, 8] : [0, 4]
 }
@@ -40,8 +40,13 @@ export function calculatePosterLayout(
   columns: GridColumns,
   information: readonly SlotRect[] = [],
   anchors: readonly ArtistAnchor[] = [],
+  artistStartRow = 0,
 ): PosterLayout {
-  if (![2, 6, 10].includes(columns)) throw new Error('Grid columns must be 2, 6 or 10')
+  if (![2, 3, 6, 10].includes(columns)) throw new Error('Grid columns must be 2, 3, 6 or 10')
+  if (!Number.isSafeInteger(artistStartRow) || artistStartRow < 0) {
+    throw new Error('Invalid artist start row')
+  }
+  const artistWidth = columns === 3 ? 3 : 2
   if (artistIds.some(id => typeof id !== 'string' || !id.trim())
     || new Set(artistIds).size !== artistIds.length) {
     throw new Error('Artist IDs must be non-empty and unique')
@@ -61,9 +66,9 @@ export function calculatePosterLayout(
 
   const artists: ArtistPlacement[] = []
   for (const anchor of anchors) {
-    const envelope = { ...anchor, width: 2, height: 2 }
+    const envelope = { ...anchor, width: artistWidth, height: 2 }
     if (!artistIds.includes(anchor.id) || !Number.isSafeInteger(anchor.column)
-      || !Number.isSafeInteger(anchor.row) || anchor.row < 0
+      || !Number.isSafeInteger(anchor.row) || anchor.row < artistStartRow
       || !startsForRow(columns, anchor.row).includes(anchor.column)
       || artists.some(artist => artist.id === anchor.id || intersects({ ...artist, height: 2 }, envelope))
       || information.some(block => intersects(block, envelope))) {
@@ -74,9 +79,9 @@ export function calculatePosterLayout(
   const positioned = new Set(anchors.map(anchor => anchor.id))
   const remaining = artistIds.filter(id => !positioned.has(id))
   let nextArtist = 0
-  for (let row = 0; nextArtist < remaining.length; row++) {
+  for (let row = artistStartRow; nextArtist < remaining.length; row++) {
     for (const column of startsForRow(columns, row)) {
-      const envelope = { column, row, width: 2, height: 2 }
+      const envelope = { column, row, width: artistWidth, height: 2 }
       if (information.some(block => intersects(block, envelope))
         || artists.some(artist => intersects({ ...artist, height: 2 }, envelope))) continue
       artists.push({ ...envelope, height: 1, id: remaining[nextArtist++] })

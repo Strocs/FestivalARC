@@ -5,12 +5,13 @@ import PosterInformation from './PosterInformation.astro'
 import PosterIntro from './PosterIntro.astro'
 import PosterPattern from './PosterPattern.astro'
 import { lineup } from '../data/lineup'
-import { motifSequence, posterPresets, slotSize, type PosterRange } from '../data/poster'
+import { posterPresets, slotSize, type PosterRange } from '../data/poster'
+import { selectPosterMotifs } from '../lib/poster-motif-distribution'
 import { calculatePosterLayout, type SlotRect } from '../lib/poster-grid'
 
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const layouts = {
-  mobile: calculatePosterLayout(lineup.map(artist => artist.id), 2, posterPresets.mobile.blocks),
+  mobile: calculatePosterLayout(lineup.map(artist => artist.id), posterPresets.mobile.columns, posterPresets.mobile.blocks, [], posterPresets.mobile.artistStartRow),
   tablet: calculatePosterLayout(lineup.map(artist => artist.id), 6, posterPresets.tablet.blocks),
   desktop: calculatePosterLayout(lineup.map(artist => artist.id), 10, posterPresets.desktop.blocks),
 }
@@ -30,10 +31,10 @@ const informationPositions = (id: string): Positions => ({
   desktop: posterPresets.desktop.blocks.find(block => block.id === id),
 })
 const motifCount = Math.max(...ranges.map(range => layouts[range].motifs.length))
+const motifs = selectPosterMotifs([layouts.desktop, layouts.tablet, layouts.mobile])
 const motifSlots = Array.from({ length: motifCount }, (_, index) => {
-  const reference = layouts.desktop.motifs[index] ?? layouts.tablet.motifs[index] ?? layouts.mobile.motifs[index]!
   return {
-    motif: motifSequence[(reference.column * 3 + reference.row * 7) % motifSequence.length],
+    motif: motifs[index],
     style: positions({ mobile: layouts.mobile.motifs[index], tablet: layouts.tablet.motifs[index], desktop: layouts.desktop.motifs[index] }),
   }
 })
@@ -45,7 +46,7 @@ const slotClasses = 'min-w-0 [display:var(--mobile-display)] [grid-column:calc(v
 <main class='flex-1 px-4 py-8 md:px-8 md:py-12 xl:px-[8.333333vw] xl:py-20' aria-labelledby='page-title'>
   <div class='@container mx-auto w-full max-w-[1600px]'>
     <PosterDefinitions />
-    <section class='relative isolate grid [--columns:2] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] [--poster-text:#d5d5d5] grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]' style={gridStyle} aria-label='Festival ARC: artistas y obras'>
+    <section class='relative isolate grid [--columns:3] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] [--poster-text:#d5d5d5] grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]' style={gridStyle} aria-label='Festival ARC: artistas y obras'>
       {motifSlots.map(tile => (
         <div class:list={[slotClasses, 'pattern-slot min-h-0 aspect-[160/152] md:aspect-auto']} style={tile.style} aria-hidden='true'><PosterPattern motif={tile.motif} /></div>
       ))}

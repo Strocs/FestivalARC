@@ -12,6 +12,31 @@ const desktopTitle: SlotRect[] = [
 ]
 
 describe('poster slot layout', () => {
+  it('uses three proportional mobile slots with full-width artists', () => {
+    const result = calculatePosterLayout(ids(4), 3)
+    expect(result.columns).toBe(3)
+    expect(result.artists.map(({ column, row, width, height }) => ({ column, row, width, height })))
+      .toEqual([0, 2, 4, 6].map(row => ({ column: 0, row, width: 3, height: 1 })))
+    for (const row of [1, 3, 5, 7]) {
+      expect(result.motifs.filter(tile => tile.row === row))
+        .toEqual([0, 1, 2].map(column => ({ column, row, width: 1, height: 1 })))
+    }
+  })
+
+  it('starts the mobile artist sequence after two complete decorative rows below the hero', () => {
+    const preset = posterPresets.mobile
+    const result = calculatePosterLayout(lineup.map(artist => artist.id), preset.columns, preset.blocks, [], preset.artistStartRow)
+    const hero = preset.blocks.find(block => block.id === 'hero')!
+    expect(preset.columns).toBe(3)
+    expect(hero).toMatchObject({ column: 0, row: 0, width: 3, height: 2 })
+    expect(result.artists[0].row).toBe(hero.row + hero.height + 2)
+    for (const row of [hero.row + hero.height, hero.row + hero.height + 1]) {
+      expect(result.motifs.filter(tile => tile.row === row))
+        .toEqual([0, 1, 2].map(column => ({ column, row, width: 1, height: 1 })))
+    }
+    expect(result.artists.map(artist => artist.id)).toEqual(lineup.map(artist => artist.id))
+  })
+
   it.each([
     [10, [[0, 0], [4, 0], [8, 0], [2, 1], [6, 1], [0, 2], [4, 2], [8, 2]]],
     [6, [[0, 0], [4, 0], [2, 1], [0, 2], [4, 2], [2, 3], [0, 4], [4, 4]]],
@@ -32,17 +57,24 @@ describe('poster slot layout', () => {
     ])
   })
 
-  it.each([2, 6, 10] as const)('keeps every two-cell lower reservation free at %i columns', columns => {
+  it.each([2, 3, 6, 10] as const)('keeps every lower reservation free at %i columns', columns => {
     const blocks = [{ column: 0, row: 8, width: 2, height: 2 }]
     const result = calculatePosterLayout(ids(17), columns, blocks)
     for (const artist of result.artists) {
       const envelope = { ...artist, height: 2 }
       expect(blocks.some(block => overlaps(block, envelope))).toBe(false)
       expect(result.artists.some(other => other !== artist && overlaps(other, envelope))).toBe(false)
-      for (const column of [artist.column, artist.column + 1]) {
+      for (let column = artist.column; column < artist.column + artist.width; column++) {
         expect(result.motifs).toContainEqual({ column, row: artist.row + 1, width: 1, height: 1 })
       }
     }
+  })
+
+  it.each([-1, 0.5, Number.NaN])('rejects invalid artist start row %s without changing inputs', artistStartRow => {
+    const artists = ids(2)
+    const before = [...artists]
+    expect(() => calculatePosterLayout(artists, 3, [], [], artistStartRow)).toThrow('Invalid artist start row')
+    expect(artists).toEqual(before)
   })
 
   it('grows only to contain information and reserved artist envelopes', () => {
@@ -90,14 +122,14 @@ describe('poster slot layout', () => {
     const artistIds = lineup.map(artist => artist.id)
     for (const preset of Object.values(posterPresets)) {
       const before = structuredClone(preset)
-      const result = calculatePosterLayout(artistIds, preset.columns, preset.blocks)
+      const result = calculatePosterLayout(artistIds, preset.columns, preset.blocks, [], preset.artistStartRow)
       expect(result.artists.map(({ id }) => id)).toEqual(artistIds)
       expect(result.artists).toHaveLength(lineup.length)
       expect(new Set(preset.blocks.map(({ id }) => id)).size).toBe(preset.blocks.length)
       for (const artist of result.artists) {
         expect(preset.blocks.some(block => overlaps(block, { ...artist, height: 2 }))).toBe(false)
       }
-      expect(calculatePosterLayout(artistIds, preset.columns, preset.blocks)).toEqual(result)
+      expect(calculatePosterLayout(artistIds, preset.columns, preset.blocks, [], preset.artistStartRow)).toEqual(result)
       expect(preset).toEqual(before)
     }
   })
@@ -113,7 +145,7 @@ describe('poster slot layout', () => {
   it.each([
     ['duplicate IDs', ['a', 'a'], 10, [], 'Artist IDs must be non-empty and unique'],
     ['blank ID', [' '], 10, [], 'Artist IDs must be non-empty and unique'],
-    ['unsupported columns', ['a'], 4, [], 'Grid columns must be 2, 6 or 10'],
+    ['unsupported columns', ['a'], 4, [], 'Grid columns must be 2, 3, 6 or 10'],
     ['outside columns', ['a'], 6, [{ column: 5, row: 0, width: 2, height: 1 }], 'Invalid information footprint'],
     ['negative row', ['a'], 6, [{ column: 0, row: -1, width: 2, height: 1 }], 'Invalid information footprint'],
     ['fractional size', ['a'], 6, [{ column: 0, row: 0, width: 2, height: 1.5 }], 'Invalid information footprint'],

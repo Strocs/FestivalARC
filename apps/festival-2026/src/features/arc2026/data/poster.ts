@@ -3,7 +3,7 @@ import type { GridColumns, SlotRect } from '../lib/poster-grid'
 export type PosterRange = 'desktop' | 'tablet' | 'mobile'
 export type InformationId = 'hero' | 'title-spill' | 'program' | 'disciplines'
 export interface InformationFootprint extends SlotRect { id: InformationId }
-export interface PosterPreset { columns: GridColumns, blocks: readonly InformationFootprint[] }
+export interface PosterPreset { columns: GridColumns, blocks: readonly InformationFootprint[], artistStartRow?: number }
 
 export const slotSize = { width: 160, height: 152 } as const
 
@@ -28,11 +28,12 @@ export const posterPresets: Record<PosterRange, PosterPreset> = {
     ],
   },
   mobile: {
-    columns: 2,
+    columns: 3,
+    artistStartRow: 4,
     blocks: [
-      { id: 'hero', column: 0, row: 0, width: 2, height: 2 },
-      { id: 'program', column: 0, row: 10, width: 2, height: 1 },
-      { id: 'disciplines', column: 0, row: 20, width: 2, height: 2 },
+      { id: 'hero', column: 0, row: 0, width: 3, height: 2 },
+      { id: 'program', column: 0, row: 12, width: 3, height: 1 },
+      { id: 'disciplines', column: 0, row: 22, width: 3, height: 2 },
     ],
   },
 }
@@ -42,3 +43,19 @@ export const motifSequence = [
   'star', 'sparks', 'rosette-pink', 'orbits-cyan', 'chevrons-left', 'rosette-cyan',
 ] as const
 export type PosterMotif = typeof motifSequence[number]
+export type MotifFamily = 'lightning' | 'rosette' | 'chevrons' | 'rings' | 'orbits' | 'star' | 'sparks'
+export type MotifAccent = 'magenta' | 'cyan' | 'yellow'
+
+export const motifMetadata: Record<PosterMotif, { family: MotifFamily, accent: MotifAccent }> = {
+  'lightning': { family: 'lightning', accent: 'cyan' },
+  'rosette-yellow': { family: 'rosette', accent: 'yellow' },
+  'chevrons-right': { family: 'chevrons', accent: 'magenta' },
+  'rings': { family: 'rings', accent: 'magenta' },
+  'orbits-rose': { family: 'orbits', accent: 'magenta' },
+  'star': { family: 'star', accent: 'magenta' },
+  'sparks': { family: 'sparks', accent: 'yellow' },
+  'rosette-pink': { family: 'rosette', accent: 'magenta' },
+  'orbits-cyan': { family: 'orbits', accent: 'cyan' },
+  'chevrons-left': { family: 'chevrons', accent: 'magenta' },
+  'rosette-cyan': { family: 'rosette', accent: 'cyan' },
+}

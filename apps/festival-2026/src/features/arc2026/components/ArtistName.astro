@@ -21,8 +21,8 @@ const rules = ranges.map(({ minRatio, index }, rangeIndex) => {
   return rangeIndex === 0 ? css : `@container artist-name (min-aspect-ratio:${minRatio}){${css}}`
 }).join('\n')
 ---
-<article class='relative flex w-full min-h-0 min-w-0 p-[24px] bg-background' aria-label={artist.name}>
-  <div class='absolute inset-[32px]'>
+<article class='relative flex w-full min-h-0 min-w-0 px-[24px] py-[8px] md:py-[24px] bg-background' aria-label={artist.name}>
+  <div class='absolute inset-x-[32px] inset-y-[16px] md:inset-y-[32px]'>
     <!-- Exclude every padding before comparing the available width and height.
          The centered label extends back into its own 12px / 8px allowance.
          Fixed padding preserves usable space during root text enlargement. -->
