@@ -45,10 +45,10 @@ const rules = ranges
            while the name is measured only in the first, non-overlapping row. -->
       <span
         data-artist-surface
-        class='bg-accent motion-reduce:translate-none relative col-start-1 row-start-1 row-end-3 min-h-0 transition-transform duration-200 motion-safe:group-focus-within:-translate-y-0.5 motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'
+        class='to-accent from-arc-rose motion-reduce:translate-none relative col-start-1 row-start-1 row-end-3 min-h-0 rounded-lg bg-gradient-to-b transition-transform duration-300 motion-safe:group-focus-within:-translate-y-0.5 motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'
       ></span>
       <span
-        class='motion-reduce:translate-none relative col-start-1 row-start-1 mx-3 mb-1 mt-0.5 flex min-h-0 items-center justify-center transition-transform duration-200 [container-name:artist-name] [container-type:size] motion-safe:group-focus-within:-translate-y-0.5 motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'>
+        class='motion-reduce:translate-none relative col-start-1 row-start-1 mx-3 mb-1 mt-0.5 flex min-h-0 items-center justify-center transition-transform duration-300 [container-name:artist-name] [container-type:size] motion-safe:group-focus-within:-translate-y-0.5 motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'>
         <span
           data-artist-name
           class:list={[
@@ -70,12 +70,23 @@ const rules = ranges
           }</span
         >
       </span>
-      <time
-        datetime='2026-11-28T23:00:00-03:00'
-        title='Horario de ejemplo; por confirmar'
-        class='bg-primary text-background motion-reduce:translate-none relative col-start-1 row-start-2 row-end-4 max-w-full self-start justify-self-center whitespace-nowrap px-3 py-1 text-[min(0.75rem,calc((100cqw_-_1.5rem)/14))] font-bold leading-tight transition-transform duration-200 motion-safe:group-focus-within:translate-y-0.5 motion-safe:group-hover:translate-y-0.5 motion-reduce:transition-none'
-        >Sábado 28.11 | 23:00hrs</time
-      >
+      <span
+        data-artist-meta
+        class='relative col-start-1 row-start-2 row-end-4 -mx-4 flex max-w-[calc(100%+2rem)] items-start gap-2 justify-self-center whitespace-nowrap text-[min(0.75rem,calc((100cqw-1.5rem)/14))]'>
+        <time
+          datetime='2026-11-28T23:00:00-03:00'
+          title='Horario de ejemplo; por confirmar'
+          class='bg-primary text-background motion-reduce:translate-none rounded-full px-4 py-1 transition-transform duration-300 motion-safe:group-focus-within:translate-y-0.5 motion-safe:group-hover:translate-y-0.5 motion-reduce:transition-none'
+          >Sábado 28 - <strong>23:00hrs</strong></time
+        >
+        <!-- Visual cue for the whole-tile button, not a nested control. -->
+        <span
+          data-artist-view
+          aria-hidden='true'
+          class='bg-arc-rose text-foreground motion-reduce:translate-none rounded-full px-3 py-1 transition-transform duration-300 motion-safe:group-focus-within:translate-x-1 motion-safe:group-hover:translate-x-1 motion-reduce:transition-none'
+          >Ver <strong>más</strong></span
+        >
+      </span>
     </span>
   </button>
   <style is:inline set:html={rules}></style>
