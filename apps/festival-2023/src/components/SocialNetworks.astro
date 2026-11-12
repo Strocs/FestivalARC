@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 import { ARC_2023 } from '../data/ARC_2023'
 const { links } = ARC_2023
 
@@ -20,7 +20,7 @@ const hoverBg = locationId.includes('estacionamiento') ? 'hover:bg-neutral-700' 
 							href={social.url}
 							aria-label={social.name}
 						>
-							<Icon name={`mdi:${social.name}`} class='h-7 w-7' />
+							<Icon width={undefined} height={undefined} name={`mdi:${social.name}`} class='h-7 w-7' />
 						</a>
 					</li>
 				))
@@ -37,7 +37,7 @@ const hoverBg = locationId.includes('estacionamiento') ? 'hover:bg-neutral-700' 
 						href='https://open.spotify.com/playlist/6uOadrETubppCa82OIt3nQ?si=xI-3gEP-Rhq8zt-unqxV1w'
 						aria-label='spotify-list'
 					>
-						<Icon name='mdi:spotify' class='h-7 w-7' />
+						<Icon width={undefined} height={undefined} name='mdi:spotify' class='h-7 w-7' />
 					</a>
 				)
 			}

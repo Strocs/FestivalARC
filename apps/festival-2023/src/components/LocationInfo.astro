@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 import { getLocationById } from '../utils/getLocationById'
 import ButtonLink from './ButtonLink.astro'
 const { query } = Astro.props
@@ -28,10 +28,10 @@ if (title.includes('Estacionamiento')) {
 		<h2 class='py-2 text-5xl font-black leading-10 sm:text-6xl sm:leading-[3rem]'>{newTitle}</h2>
 		<p class='text-justify font-normal leading-5 sm:leading-normal'>{extract}</p>
 		<ButtonLink id={id} styles={styles} anchor href={id} className='h-min place-self-center'>
-			Más información y Programación<Icon name='mdi:arrow-top-right-thick' class='h-5 inline' />
+			Más información y Programación<Icon width={undefined} height={undefined} name='mdi:arrow-top-right-thick' class='h-5 inline' />
 		</ButtonLink>
 		<ButtonLink id={id} styles={styles} className='h-min place-self-center'>
-			Cerrar <Icon class='inline h-5 ml-1' name='mdi:arrow-right-bold' />
+			Cerrar <Icon width={undefined} height={undefined} class='inline h-5 ml-1' name='mdi:arrow-right-bold' />
 		</ButtonLink>
 	</article>
 </section>
