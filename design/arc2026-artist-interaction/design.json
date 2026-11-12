@@ -1,0 +1,27 @@
+{
+  "title": "ARC 2026 \u2014 Artist interaction",
+  "brief": "Corrected fidelity study: unscaled 1440px and 390px screenshots of current app with only interaction cues overlaid. Original comparison toggle. Static background does not reproduce original hover.",
+  "artboards": [
+    {
+      "file": "01-explicit-label.html",
+      "title": "Explicit label",
+      "tradeoff": "Visible action label outside the original surface; slightly denser.",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "02-integrated-arrow.html",
+      "title": "Edge arrow",
+      "tradeoff": "Compact navigation cue outside the name; less explicit.",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "03-pressable-piece.html",
+      "title": "Pressable piece",
+      "tradeoff": "Hard offset edge without added text; weaker discovery cue.",
+      "width": 1440,
+      "height": 1000
+    }
+  ]
+}
