@@ -38,7 +38,7 @@ describe('PosterInformation', () => {
     expect(html.match(/class="[^"]*information-slot/g)).toHaveLength(2)
     expect(html).toContain('aria-hidden="true"')
     expect(html).toContain('--desktop-column:3;--desktop-row:1;--desktop-width:1;--desktop-height:2')
-    expect(html).toContain('--mobile-column:0;--mobile-row:0;--mobile-width:3;--mobile-height:2')
+    expect(html).toContain('--mobile-column:0;--mobile-row:0;--mobile-width:4;--mobile-height:2')
     expect(html.match(/<h1\b/g)).toHaveLength(1)
     expect(html).toContain('28 y 29 de noviembre de 2026')
   })
