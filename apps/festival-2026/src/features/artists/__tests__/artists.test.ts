@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { artistSchema, artists, disciplines, validateArtists } from '../artists'
 
 const entry = {
-  id: 'artist', name: 'Artist', group: 'national', order: 1,
+  id: 'artist', name: 'Artist', category: 'music', featured: true, order: 1,
   disciplines: 'musica', description: '', ticketUrl: null,
   date: { day: 'Sábado 28', time: '23:00' }, image: null,
 }
@@ -66,11 +66,11 @@ describe('general artist contract', () => {
     for (const order of [-1, 1.5, '1']) rejectsUnchanged([{ ...entry, order }])
   })
 
-  it('preserves all real artists, requested defaults and group discipline assignments', () => {
+  it('preserves all real artists, requested defaults and category discipline assignments', () => {
     expect(artists).toHaveLength(46)
     expect(artists.map(({ order }) => order)).toEqual(Array.from({ length: 46 }, (_, index) => index + 1))
     for (const artist of artists) {
-      expect(artist.disciplines).toBe(artist.group === 'stage' ? 'artes-escenicas' : 'musica')
+      expect(artist.disciplines).toBe(artist.category === 'stage' ? 'artes-escenicas' : 'musica')
       expect(artist.description).toBe('')
       expect(artist.ticketUrl).toBeNull()
       expect(artist.image).toBeNull()

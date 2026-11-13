@@ -12,10 +12,9 @@ export const disciplines = z.array(z.strictObject({
   'Discipline IDs must be unique.',
 ).parse(disciplineData)
 
-export const artistSchema = z.strictObject({
+const performerSchema = z.strictObject({
   id: slug,
   name: z.string().min(1),
-  group: z.enum(['national', 'regional', 'stage']),
   company: z.string().min(1).optional(),
   order: z.number().int().nonnegative(),
   disciplines: z.string().refine(
@@ -28,6 +27,11 @@ export const artistSchema = z.strictObject({
   image: z.strictObject({ url: z.string().min(1), alt: z.string() }).nullable(),
 })
 
+const musicSchema = performerSchema.extend({ featured: z.boolean() })
+export const artistSchema = z.discriminatedUnion('category', [
+  musicSchema.extend({ category: z.literal('music') }),
+  performerSchema.extend({ category: z.literal('stage') }),
+])
 export type Artist = z.infer<typeof artistSchema>
 
 const artistsSchema = z.array(artistSchema).min(1).superRefine((entries, context) => {
@@ -47,4 +51,36 @@ export function validateArtists(input: unknown): Artist[] {
   return artistsSchema.parse(input).sort((left, right) => left.order - right.order)
 }
 
-export const artists: readonly Artist[] = validateArtists(artistData)
+const participantSchema = z.strictObject({ id: slug, name: z.string().min(1) })
+const catalogSchema = z.strictObject({
+  music: z.strictObject({ name: z.literal('Música'), participants: z.array(musicSchema).min(1) }),
+  stage: z.strictObject({ name: z.literal('Artes Escénicas'), participants: z.array(performerSchema).min(1) }),
+  expo: z.strictObject({ name: z.literal('Expo Arte.Co'), participants: z.array(participantSchema).min(1) }),
+  market: z.strictObject({ name: z.literal('Mercado Creativo y DAZ'), participants: z.array(participantSchema).min(1) }),
+}).superRefine((catalog, context) => {
+  const ids = new Set<string>()
+  for (const [category, { participants }] of Object.entries(catalog)) {
+    participants.forEach(({ id }, index) => {
+      if (ids.has(id)) context.addIssue({ code: 'custom', path: [category, 'participants', index, 'id'], message: 'Participant IDs must be unique.' })
+      ids.add(id)
+    })
+  }
+})
+
+/** Categories are editorial groupings, not inferred disciplines. */
+export function validateParticipantCatalog(input: unknown) {
+  const catalog = catalogSchema.parse(input)
+  validateArtists([
+    ...catalog.music.participants.map(artist => ({ ...artist, category: 'music' })),
+    ...catalog.stage.participants.map(artist => ({ ...artist, category: 'stage' })),
+  ])
+  return catalog
+}
+
+export const participantCatalog = validateParticipantCatalog(artistData)
+
+/** Only scheduled music and stage works belong to the hero and artist routes. */
+export const artists: readonly Artist[] = validateArtists([
+  ...participantCatalog.music.participants.map(artist => ({ ...artist, category: 'music' })),
+  ...participantCatalog.stage.participants.map(artist => ({ ...artist, category: 'stage' })),
+])

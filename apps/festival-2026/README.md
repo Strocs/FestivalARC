@@ -44,11 +44,24 @@ For editing rules, sizing details and focused checks, see the [poster guide](src
 
 ## Edit artist data
 
-Edit `src/content/artists.json`, the single source used by the grid, detail pages and Astro collection. `order` controls ascending editorial order independently of array position; IDs and orders must be unique. Preserve stable IDs when updating names.
+Edit `src/content/artists.json`, the single participant source. It contains four category objects, each with a display `name` and a `participants` array:
 
-Each entry has `id`, `name`, `group`, optional `company`, `order`, `disciplines` (one catalog ID), `description` (string), `ticketUrl` (string or null), `date: { day, time }` (editable strings), and `image: { url, alt } | null`. All current dates are `Sábado 28` / `23:00`; tickets and images are null, and descriptions are empty pending supplied content.
+| Key | Category | Entries |
+| --- | --- | --- |
+| `music` | Música | 30 |
+| `stage` | Artes Escénicas | 16 |
+| `expo` | Expo Arte.Co | 8 |
+| `market` | Mercado Creativo y DAZ | 39 |
 
-The discipline catalog is `src/content/disciplines.json`: national/regional entries reference `musica`, stage entries reference `artes-escenicas`. The poster's discipline list uses this same catalog.
+Categories are independent of disciplines. `participantCatalog` exports all four validated categories. The `artists` export, artist routes and Astro collection retain only music and stage works; the hero keeps their mixed editorial order. Expo and market entries have only `id` and `name` until further information is supplied; they do not receive invented schedules or disciplines, or new detail routes.
+
+Music and stage entries have `id`, `name`, optional `company`, `order`, `disciplines` (one catalog ID), `description` (string), `ticketUrl` (string or null), `date: { day, time }` (editable strings), and `image: { url, alt } | null`. Music alone requires boolean `featured`: former national entries are `true`, former regional entries are `false`. There is no `group` field. Category is derived from the containing object when exporting performers.
+
+`order` controls ascending editorial order independently of array position; performer orders and all participant IDs must be unique. Preserve stable IDs when updating names. Stage `name` remains the work title shown in the hero; `company` holds the participant's name. Store names in mixed case; uppercase presentation belongs in CSS.
+
+All current dates are `Sábado 28` / `23:00`; tickets and images are null, and descriptions are empty pending supplied content.
+
+The discipline catalog is `src/content/disciplines.json`: current music entries reference `musica`, stage entries reference `artes-escenicas`. The poster's discipline list uses this same catalog, not the participant categories.
 
 ### Local optimized images
 

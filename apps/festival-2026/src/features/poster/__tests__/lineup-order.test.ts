@@ -20,9 +20,7 @@ const fixedOrder = [
 describe('fixed editorial lineup order', () => {
   it('uses a fixed mixed order rather than category blocks', () => {
     expect(lineup.map(artist => artist.id)).toEqual(fixedOrder)
-    for (let index = 1; index < lineup.length; index++) {
-      expect(lineup[index].group).not.toBe(lineup[index - 1].group)
-    }
+    expect(lineup.slice(0, 4).map(artist => artist.category)).toEqual(['music', 'stage', 'music', 'stage'])
   })
 
   it('places Javiera Mena and Gepe in the upper third but not in the opening positions', () => {
@@ -36,9 +34,9 @@ describe('fixed editorial lineup order', () => {
   it('preserves all 46 unique confirmed artists and category/company associations', () => {
     expect(lineup).toHaveLength(46)
     expect(new Set(lineup.map(artist => artist.id)).size).toBe(46)
-    expect(lineup.filter(artist => artist.group === 'national')).toHaveLength(18)
-    expect(lineup.filter(artist => artist.group === 'regional')).toHaveLength(12)
-    expect(lineup.filter(artist => artist.group === 'stage')).toHaveLength(16)
+    expect(lineup.filter(artist => artist.category === 'music' && artist.featured)).toHaveLength(18)
+    expect(lineup.filter(artist => artist.category === 'music' && !artist.featured)).toHaveLength(12)
+    expect(lineup.filter(artist => artist.category === 'stage')).toHaveLength(16)
     expect(lineup.filter(artist => artist.company)).toHaveLength(16)
   })
 })
