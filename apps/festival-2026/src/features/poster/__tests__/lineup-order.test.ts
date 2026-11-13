@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { lineup } from '../lineup'
+import { artists as lineup } from '../../artists/artists'
 
 const fixedOrder = [
   'polter-ovalle', 'lobas', 'nino-cohete', 'yaru', 'shicris',

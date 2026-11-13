@@ -1,10 +1,7 @@
 import { defineCollection } from 'astro:content'
-import { readLocalProgram } from './features/program/local'
-import { activitySchema, artistSchema, venueSchema } from './features/program/program'
+import { artists, artistSchema } from './features/artists/artists'
 
-// Each build-time loader validates the whole local graph before storing entries.
+// Collections and static pages consume the same validated, explicitly ordered data.
 export const collections = {
-  artists: defineCollection({ loader: () => readLocalProgram().artists, schema: artistSchema }),
-  activities: defineCollection({ loader: () => readLocalProgram().activities, schema: activitySchema }),
-  venues: defineCollection({ loader: () => readLocalProgram().venues, schema: venueSchema }),
+  artists: defineCollection({ loader: () => [...artists], schema: artistSchema }),
 }

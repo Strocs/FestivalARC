@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { lineup } from '../lineup'
+import { artists as lineup } from '../../artists/artists'
 import { motifSequence, posterPresets, type PosterMotif } from '../poster'
 import { calculatePosterLayout } from '../poster-grid'
 import { selectPosterMotifs } from '../poster-motif-distribution'

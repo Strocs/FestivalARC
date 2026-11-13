@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+import { disciplines } from './artists'
+import type { Artist } from './artists'
+
+interface Props { artist: Artist }
+const { artist } = Astro.props
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,webp,avif,gif}')
+const image = artist.image
+const loadImage = image ? images[image.url] : undefined
+if (image && !loadImage) {
+  throw new Error(`Artist image does not exist in src/assets: ${image.url}`)
+}
+const discipline = disciplines.find(({ id }) => id === artist.disciplines)!
+---
+<div class='grid items-start md:grid-cols-[1fr_1fr]'>
+  {image && loadImage && <Image src={loadImage()} alt={image.alt} class='block h-auto w-full' />}
+  <div class='min-w-0 p-4 sm:p-8'>
+    <h1 class='font-display text-4xl/none uppercase sm:text-6xl/none'>{artist.name}</h1>
+    {artist.company && <p class='mt-4'>{artist.company}</p>}
+    <p class='mt-4'>{discipline.name}</p>
+    <p class='mt-4'>{artist.date.day} · {artist.date.time}</p>
+    {artist.description && <p class='mt-4 whitespace-pre-line text-sm/6'>{artist.description}</p>}
+  </div>
+</div>

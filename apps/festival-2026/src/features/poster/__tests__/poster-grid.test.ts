@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { calculatePosterLayout, type GridColumns, type SlotRect } from '../poster-grid'
-import { lineup } from '../lineup'
+import { artists as lineup } from '../../artists/artists'
 import { posterPresets } from '../poster'
 
 const ids = (count: number) => Array.from({ length: count }, (_, index) => `artist-${index}`)

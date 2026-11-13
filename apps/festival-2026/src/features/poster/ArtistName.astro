@@ -1,9 +1,9 @@
 ---
-import type { LineupArtist } from './lineup'
+import type { Artist } from '../artists/artists'
 import { getArtistCompositions, getArtistFitRanges } from './artist-name'
 
 interface Props {
-  artist: LineupArtist
+  artist: Artist
 }
 
 const { artist } = Astro.props
@@ -74,10 +74,8 @@ const rules = ranges
         data-artist-meta
         class='relative col-start-1 row-start-2 row-end-4 -mx-4 flex max-w-[calc(100%+2rem)] items-start gap-2 justify-self-center whitespace-nowrap text-[min(0.75rem,calc((100cqw-1.5rem)/14))]'>
         <time
-          datetime='2026-11-28T23:00:00-03:00'
-          title='Horario de ejemplo; por confirmar'
           class='bg-primary text-background motion-reduce:translate-none rounded-full px-4 py-1 transition-transform duration-300 motion-safe:group-focus-within:translate-y-0.5 motion-safe:group-hover:translate-y-0.5 motion-reduce:transition-none'
-          >Sábado 28 - <strong>23:00hrs</strong></time
+          >{artist.date.day} - <strong>{artist.date.time}hrs</strong></time
         >
         <!-- Visual cue for the whole-tile button, not a nested control. -->
         <span

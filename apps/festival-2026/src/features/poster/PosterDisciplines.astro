@@ -1,19 +1,11 @@
 ---
 import PosterInformation from './PosterInformation.astro'
+import { disciplines } from '../artists/artists'
 import type { SlotRect } from './poster-grid'
 import type { PosterRange } from './poster'
 
 type Props = Partial<Record<PosterRange, SlotRect>>
 const { mobile, tablet, desktop } = Astro.props
-const disciplines = [
-  'Música',
-  'Artesanía',
-  'Diseño',
-  'Ilustración',
-  'Literatura',
-  'Artes escénicas',
-  'Artes visuales',
-]
 ---
 
 <PosterInformation {mobile} {tablet} {desktop}>
@@ -28,7 +20,7 @@ const disciplines = [
 
           return (
             <li class:list={[isEven ? 'text-primary' : 'text-foreground']}>
-              {discipline}
+              {discipline.name}
             </li>
           )
         })

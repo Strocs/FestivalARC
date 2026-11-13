@@ -1,7 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { lineup } from '../../apps/festival-2026/src/features/poster/lineup'
-
-const schedule = 'Sábado 28.11 | 23:00hrs'
+import { artists as lineup } from '../../apps/festival-2026/src/features/artists/artists'
 
 for (const width of [320, 390, 768, 1280, 1440, 1920]) {
   test(`artist schedules overlap the name surface and stay centered without touching letters at ${width}px`, async ({
@@ -13,7 +11,7 @@ for (const width of [320, 390, 768, 1280, 1440, 1920]) {
     const cards = page.getByRole('article')
     await expect(cards).toHaveCount(lineup.length)
     const labels = cards.locator('time')
-    await expect(labels).toHaveText(lineup.map(() => schedule))
+    await expect(labels).toHaveText(lineup.map(artist => `${artist.date.day} - ${artist.date.time}hrs`))
     const geometry = await cards.evaluateAll((nodes) =>
       nodes.map((card) => {
         const name = card

@@ -1,11 +1,12 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
 import ArtistName from '../ArtistName.astro'
+import { artists } from '../../artists/artists'
 
 async function renderArtist() {
   const container = await AstroContainer.create()
   return container.renderToString(ArtistName, {
-    props: { artist: { id: 'gepe', name: 'Gepe', group: 'national' } },
+    props: { artist: { ...artists.find(artist => artist.id === 'gepe')!, date: { day: 'Domingo 29', time: '20:30' } } },
   })
 }
 
@@ -22,16 +23,16 @@ describe('ArtistName interaction', () => {
     expect(html.match(/<button\b/g)).toHaveLength(1)
   })
 
-  it('preserves the artist, rounded example schedule, name lift and schedule drop', async () => {
+  it('preserves the artist and styling while rendering its editable schedule', async () => {
     const html = await renderArtist()
     expect(html).toContain('aria-label="Gepe"')
     expect(html).toContain('text-arc-yellow')
     expect(html).toContain('to-accent')
     expect(html).toContain('from-arc-rose')
-    expect(html).toContain('Sábado 28 -')
-    expect(html).toContain('<strong>23:00hrs</strong>')
-    expect(html).toContain('datetime="2026-11-28T23:00:00-03:00"')
-    expect(html).toContain('Horario de ejemplo; por confirmar')
+    expect(html).toContain('Domingo 29 -')
+    expect(html).toContain('<strong>20:30hrs</strong>')
+    expect(html).not.toContain('datetime=')
+    expect(html).not.toContain('ejemplo')
     const time = html.match(/<time\b[\s\S]*?<\/time>/)?.[0] ?? ''
     expect(time).toContain('rounded-full')
     expect(time).toContain('motion-safe:group-hover:translate-y-0.5')

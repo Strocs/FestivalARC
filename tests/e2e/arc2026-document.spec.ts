@@ -1,18 +1,8 @@
-import { createRequire } from 'node:module'
-import { resolve } from 'node:path'
 import { expect, test } from '@playwright/test'
 import { publicationConfig } from '../../editions.config'
-import { activitiesForArtist, demoLabel, formatActivityTime, validateProgram } from '../../apps/festival-2026/src/features/program/program'
+import { artists, disciplines } from '../../apps/festival-2026/src/features/artists/artists'
 
-// Node's test loader needs explicit JSON loading; validation and ordering still
-// use the same public entry point as the app's build-time local data loader.
-const requireFromApp = createRequire(resolve('apps/festival-2026/package.json'))
-const program = validateProgram({
-  artists: requireFromApp('./src/content/artists/demo.json'),
-  activities: requireFromApp('./src/content/activities/demo.json'),
-  venues: requireFromApp('./src/content/venues/demo.json'),
-})
-const detailPaths = program.artists.map(artist => `/artistas/${artist.id}/`)
+const detailPaths = artists.map(artist => `/artistas/${artist.id}/`)
 
 function isSuccessfulResourceStatus(status: number) {
   return (status >= 200 && status < 300) || status === 304
@@ -54,29 +44,21 @@ test('publishes useful indexable metadata and successfully delivers local resour
   expect(failed).toEqual([])
 })
 
-for (const artist of program.artists) {
-  test(`direct detail for ${artist.id} exposes configured demo activities without JavaScript`, async ({ browser, request }) => {
+for (const artist of artists) {
+  test(`direct detail for ${artist.id} exposes the source-of-truth artist data without JavaScript`, async ({ browser, request }) => {
     const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 900 } })
     try {
       const page = await context.newPage()
       expect((await page.goto(`/artistas/${artist.id}/`))?.status()).toBe(200)
       await expect(page.getByRole('heading', { level: 1, name: artist.name, exact: true })).toBeVisible()
       await expect(page.getByRole('banner')).toBeVisible()
-      await expect(page.getByText(demoLabel, { exact: true })).toBeVisible()
-      await expect(page.getByRole('img', { name: `Pieza de referencia de ${artist.name}` })).toBeVisible()
-      const activities = page.getByRole('list', { name: 'Actividades de demostración' }).getByRole('listitem')
-      const expected = activitiesForArtist(program, artist.id)
-      await expect(activities).toHaveCount(expected.length)
-      for (const [index, activity] of expected.entries()) {
-        const item = activities.nth(index)
-        const venue = program.venues.find(entry => entry.id === activity.venueId)!
-        await expect(item.getByRole('heading')).toHaveText(activity.name)
-        await expect(item.locator('time')).toHaveAttribute('datetime', activity.startsAt)
-        await expect(item.locator('time')).toHaveText(formatActivityTime(activity.startsAt))
-        await expect(item).toContainText(`${venue.name} · ${venue.city}`)
-        await expect(item).toContainText(activity.disciplines.join(' · '))
-        await expect(item).toBeVisible()
-      }
+      const detail = page.getByRole('main', { name: `Ficha de ${artist.name}` })
+      const discipline = disciplines.find(({ id }) => id === artist.disciplines)!
+      await expect(detail.getByText(discipline.name, { exact: true })).toBeVisible()
+      await expect(detail.getByText(`${artist.date.day} · ${artist.date.time}`, { exact: true })).toBeVisible()
+      await expect(detail.getByRole('img')).toHaveCount(0)
+      await expect(detail).not.toContainText(/demostración|ejemplo/i)
+      await expect(detail.getByRole('list')).toHaveCount(0)
       expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false)
       for (const src of await page.locator('img').evaluateAll(images => images.map(image => image.src))) {
         expect((await request.get(src)).status()).toBe(200)

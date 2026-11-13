@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { lineup } from '../../apps/festival-2026/src/features/poster/lineup'
+import { artists as lineup } from '../../apps/festival-2026/src/features/artists/artists'
 
 async function openPoster(page: Page, width: number) {
   await page.setViewportSize({ width, height: 1000 })
