@@ -45,7 +45,7 @@ describe('PosterInformation', () => {
 
   it.each([
     [PosterProgram, 'program', 'Programación', 'MACIÓN'],
-    [PosterDisciplines, 'disciplines', 'Disciplinas', 'Artes visuales'],
+    [PosterDisciplines, 'disciplines', 'Categorías', 'Expo Arte.Co'],
   ] as const)('preserves %s content and reserved responsive geometry', async (component, id, label, content) => {
     const container = await AstroContainer.create()
     const html = await container.renderToString(component, {

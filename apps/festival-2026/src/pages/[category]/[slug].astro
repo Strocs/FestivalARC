@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import ArtistDetail from '../../features/artists/ArtistDetail.astro'
+import { categories, type ParticipantView, type CategoryView } from '../../features/artists/categories'
+import { publicPath } from '../../utils/publication'
+
+export function getStaticPaths() {
+  return categories.flatMap(category => category.participants.map(artist => ({
+    params: { category: category.slug, slug: artist.id },
+    props: { artist, category },
+  })))
+}
+interface Props { artist: ParticipantView, category: CategoryView }
+const { artist, category } = Astro.props
+---
+<Layout title={`${artist.name} | ${category.name} | Festival ARC 2026`}>
+  <main class='mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-8 sm:py-16' aria-label={`Ficha de ${artist.name}`}>
+    <a href={publicPath(category.path)} class='mb-8 inline-block underline focus-visible:outline-2 focus-visible:outline-offset-2'>Volver a {category.name}</a>
+    <ArtistDetail {artist} />
+  </main>
+</Layout>

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { artistSchema, artists, disciplines, validateArtists } from '../artists'
 
 const entry = {
-  id: 'artist', name: 'Artist', category: 'music', featured: true, order: 1,
+  id: 'artist', name: 'Artist', category: 'music', national: true, order: 1,
   disciplines: 'musica', description: '', ticketUrl: null,
   date: { day: 'Sábado 28', time: '23:00' }, image: null,
 }
@@ -74,9 +74,11 @@ describe('general artist contract', () => {
       expect(artist.description).toBe('')
       expect(artist.ticketUrl).toBeNull()
       expect(artist.image).toBeNull()
-      expect(artist.date).toEqual({ day: 'Sábado 28', time: '23:00' })
+      expect(artist.date).toEqual({ day: artist.order <= 23 ? 'Sábado 28' : 'Domingo 29', time: '23:00' })
       expect(artist).not.toHaveProperty('demo')
     }
+    expect(artists.filter(({ date }) => date.day === 'Sábado 28')).toHaveLength(23)
+    expect(artists.filter(({ date }) => date.day === 'Domingo 29')).toHaveLength(23)
     expect(JSON.stringify(disciplines)).not.toContain('(ejemplo)')
   })
 })

@@ -99,6 +99,33 @@ describe('FestivalNavbar public contract', () => {
     expect(html).not.toContain('backdrop:bg-black')
   })
 
+  it('renders the same five category destinations in the 2026 desktop group and mobile panel', async () => {
+    const container = await AstroContainer.create()
+    const html = await container.renderToString(Header)
+    const desktop = html.match(/<nav\b[^>]*data-header-nav[\s\S]*?<\/nav>/)?.[0] ?? ''
+    const panel = html.match(/<dialog\b[\s\S]*?<\/dialog>/)?.[0] ?? ''
+    const expected = [['Inicio', '/'], ['Música', '/musica/'], ['Artes Escénicas', '/artes-escenicas/'], ['Expo Arte.Co', '/expo-arte-co/'], ['Mercado Creativo y DAZ', '/mercado-creativo-y-daz/']]
+    for (const section of [desktop, panel]) {
+      const group = section.match(/<ul\b[\s\S]*?<\/ul>/)?.[0] ?? ''
+      expect(group.match(/<a\b/g)).toHaveLength(5)
+      for (const [label, href] of expected) expect(group).toContain(`href="${href}"`)
+      for (const [label] of expected) expect(group).toContain(`>${label}</a>`)
+    }
+    expect(desktop).toContain('data-header-links="centered"')
+    expect(desktop).toContain('justify-center')
+  })
+
+  it('keeps default consumers uncentered and opts into a centered desktop group only explicitly', async () => {
+    const options = { props: { editions, links: [{ label: 'Programa', href: '/programa/' }] } }
+    const html = await render(options)
+    expect(html).not.toContain('data-header-links="centered"')
+    expect(html).toContain('hidden shrink-0 items-center gap-4 lg:flex')
+    const centered = await render({ props: { ...options.props, centeredLinks: true } })
+    expect(centered).toContain('data-header-links="centered"')
+    expect(centered).toContain('lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]')
+    expect(centered).toContain('href="/programa/"')
+  })
+
   it('honors a custom public home destination', async () => {
     const html = await render({ props: { editions, homeHref: '/festival/' } })
     expect(html).toContain('href="/festival/"')

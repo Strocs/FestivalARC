@@ -27,7 +27,8 @@ const performerSchema = z.strictObject({
   image: z.strictObject({ url: z.string().min(1), alt: z.string() }).nullable(),
 })
 
-const musicSchema = performerSchema.extend({ featured: z.boolean() })
+/** Music's national flag records national status, not hero eligibility. */
+const musicSchema = performerSchema.extend({ national: z.boolean() })
 export const artistSchema = z.discriminatedUnion('category', [
   musicSchema.extend({ category: z.literal('music') }),
   performerSchema.extend({ category: z.literal('stage') }),
@@ -51,7 +52,9 @@ export function validateArtists(input: unknown): Artist[] {
   return artistsSchema.parse(input).sort((left, right) => left.order - right.order)
 }
 
-const participantSchema = z.strictObject({ id: slug, name: z.string().min(1) })
+const participantSchema = performerSchema.pick({
+  id: true, name: true, description: true, date: true, image: true,
+})
 const catalogSchema = z.strictObject({
   music: z.strictObject({ name: z.literal('Música'), participants: z.array(musicSchema).min(1) }),
   stage: z.strictObject({ name: z.literal('Artes Escénicas'), participants: z.array(performerSchema).min(1) }),
@@ -79,7 +82,9 @@ export function validateParticipantCatalog(input: unknown) {
 
 export const participantCatalog = validateParticipantCatalog(artistData)
 
-/** Only scheduled music and stage works belong to the hero and artist routes. */
+/** Business rule: all music and stage works, regardless of national, belong to the hero.
+ * Existing artist routes retain that same set until the separately scoped route migration.
+ */
 export const artists: readonly Artist[] = validateArtists([
   ...participantCatalog.music.participants.map(artist => ({ ...artist, category: 'music' })),
   ...participantCatalog.stage.participants.map(artist => ({ ...artist, category: 'stage' })),

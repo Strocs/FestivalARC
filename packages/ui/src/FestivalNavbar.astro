@@ -6,8 +6,9 @@ interface Props {
   editions: readonly NavigationLink[]
   links?: readonly NavigationLink[]
   homeHref?: string
+  centeredLinks?: boolean
 }
-const { editions, links = [], homeHref = '/' } = Astro.props
+const { editions, links = [], homeHref = '/', centeredLinks = false } = Astro.props
 for (const name of ['logo', 'date']) {
   if (!Astro.slots.has(name)) throw new Error(`FestivalNavbar requires the "${name}" slot`)
 }
@@ -20,7 +21,7 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
 ---
 <festival-navbar class='contents'>
   <header data-festival-header class='relative z-30 border-[var(--header-border-color,currentColor)] bg-[var(--header-bg-color,transparent)] py-1 text-[color:var(--header-text-color,inherit)]'>
-    <div class='relative mx-auto flex min-h-16 w-full items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-14'>
+    <div class:list={['relative mx-auto flex min-h-16 w-full items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-14', centeredLinks && 'lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]']}>
       <div data-header-brand class='flex min-w-0 items-center gap-3'>
         <a href={homeHref} aria-label='Inicio' class='block w-20 shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-32'>
           <slot name='logo' />
@@ -30,12 +31,17 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
           {Astro.slots.has('location') && <div data-header-location><slot name='location' /></div>}
         </div>
       </div>
-      <nav data-header-nav aria-label='Navegación principal' class='hidden shrink-0 items-center gap-4 lg:flex'>
-        {links.length > 0 && <ul class='flex items-center gap-4'>
+      <nav data-header-nav aria-label='Navegación principal' class={centeredLinks ? 'hidden shrink-0 items-center gap-4 lg:contents' : 'hidden shrink-0 items-center gap-4 lg:flex'}>
+        {links.length > 0 && <ul data-header-links={centeredLinks ? 'centered' : undefined} class:list={['flex items-center gap-4', centeredLinks && 'col-start-2 row-start-1 min-w-0 flex-wrap justify-center text-center']}>
           {links.map(({ label, href }) => <li><a href={href} class='hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'>{label}</a></li>)}
         </ul>}
-        {cta && <div data-header-cta set:html={cta} />}
-        <EditionMenu editions={editions} />
+        {centeredLinks ? <div class='col-start-3 row-start-1 flex min-w-0 flex-wrap items-center justify-end gap-4'>
+          {cta && <div data-header-cta set:html={cta} />}
+          <EditionMenu editions={editions} />
+        </div> : <>
+          {cta && <div data-header-cta set:html={cta} />}
+          <EditionMenu editions={editions} />
+        </>}
       </nav>
       <button data-header-toggle type='button' aria-label='Abrir navegación' aria-controls={panelId} aria-expanded='false' class='group shrink-0 cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-2 lg:hidden'>
         <svg data-icon-menu aria-hidden='true' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'>

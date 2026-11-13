@@ -1,6 +1,6 @@
 # Festival ARC 2026
 
-The active edition serves a static festival poster at `/` and 46 artist detail pages at `/artistas/[id]/`. Astro builds the HTML; responsive CSS changes poster placement without duplicating artist labels or packing the grid in the browser.
+The active edition serves the 46-work music/stage poster at `/`, four category posters, and 93 static participant detail fallbacks. Canonical details use `/<public-category-slug>/<participant-id>/`; the old `/artistas/` family is removed without redirects. Astro builds the HTML; responsive CSS changes poster placement without duplicating artist labels or packing the grid in the browser. Cards are normal fallback anchors with hooks for the next modal stage; no modal or day filters are implemented yet.
 
 ## Run and verify
 
@@ -22,8 +22,9 @@ All paths below are relative to this app's `src/` directory.
 
 | Location | Responsibility |
 | --- | --- |
-| `pages/index.astro` | Compose the homepage and assign responsive slots using the pure poster helpers |
-| `pages/artistas/[slug].astro` | Generate artist routes from the same data as the grid |
+| `pages/index.astro` and `features/poster/PosterGrid.astro` | Compose the shared poster; retain the original homepage slots using the pure poster helpers |
+| `pages/[category]/index.astro` | Generate the four category posters |
+| `pages/[category]/[slug].astro` | Generate all 93 canonical static detail fallbacks |
 | `layouts/Layout.astro` | Own the document, metadata, local fonts, shared Header and Footer |
 | `features/poster/` | Own poster components, presets, pure layout/motif/font-fit helpers, SVG artwork, font metrics and colocated `__tests__/` |
 | `features/artists/` | Own the general artist contract, ordering, validation and detail rendering |
@@ -34,9 +35,9 @@ All paths below are relative to this app's `src/` directory.
 
 ## Keep the boundaries
 
-- Routes orchestrate their own page structure. Do not add a homepage wrapper component or a second document shell.
+- Routes orchestrate page scope and metadata. Homepage/category routes reuse `PosterGrid.astro`; keep one document shell.
 - Keep each feature flat and colocate its components, helpers, tests and dedicated assets. Import modules directly; no architecture barrels or extra layers are needed.
-- Poster consumes the general artists feature; artists never imports poster. Shared chrome must not depend on either feature; genuinely shared concerns belong at the app's top level or in a shared workspace package.
+- Poster consumes the general artists feature; artists never imports poster. The edition Header consumes the authoritative category navigation, while the shared navbar receives only generic links.
 - Preserve logical grid geometry, stable lineup identities, selectable HTML labels, route URLs, metadata and local fonts. Keep `calculatePosterLayout`, `selectPosterMotifs`, `getArtistCompositions`, `getArtistFitRanges` and `validateArtists` independently testable and pure.
 - The artist JSON is real, progressively completed content, not demo data. Keep unknown descriptions empty and images/tickets null; do not invent activities or venues.
 
@@ -53,15 +54,28 @@ Edit `src/content/artists.json`, the single participant source. It contains four
 | `expo` | Expo Arte.Co | 8 |
 | `market` | Mercado Creativo y DAZ | 39 |
 
-Categories are independent of disciplines. `participantCatalog` exports all four validated categories. The `artists` export, artist routes and Astro collection retain only music and stage works; the hero keeps their mixed editorial order. Expo and market entries have only `id` and `name` until further information is supplied; they do not receive invented schedules or disciplines, or new detail routes.
+These four names are already stored, not proposed labels. Categories are independent of the seven-entry discipline catalog. `participantCatalog` exports all four validated categories. Business rule: only music and stage works appear in the hero, all 46 in their existing mixed editorial order, regardless of national status. The `artists` export and Astro collection retain that same set. `categories.ts` projects all 93 validated participants into the shared rendering view; it does not add fields to stored data.
 
-Music and stage entries have `id`, `name`, optional `company`, `order`, `disciplines` (one catalog ID), `description` (string), `ticketUrl` (string or null), `date: { day, time }` (editable strings), and `image: { url, alt } | null`. Music alone requires boolean `featured`: former national entries are `true`, former regional entries are `false`. There is no `group` field. Category is derived from the containing object when exporting performers.
+Expo and market entries require exactly `id`, `name`, `description` (string), `date: { day, time }` (nonempty editable strings, not a parsed datetime), and `image: { url, alt } | null` (nonempty URL and string alt). Descriptions start empty and images null. They have no invented disciplines, performer orders, ticket URLs or embedded category fields. Category grids and canonical detail fallbacks now render these common fields without fabricated performer metadata. Modal enhancement remains the next stage.
+
+Music and stage entries have `id`, `name`, optional `company`, `order`, `disciplines` (one catalog ID), `description` (string), `ticketUrl` (string or null), `date: { day, time }` (editable strings), and `image: { url, alt } | null`. Music alone requires boolean `national`: national entries are `true` (18), regional entries are `false` (12). The explicitly approved rename from `featured` preserves every value; neither flag controls hero inclusion. The old `featured` and `group` fields are rejected. Category is derived from the containing object when exporting performers.
 
 `order` controls ascending editorial order independently of array position; performer orders and all participant IDs must be unique. Preserve stable IDs when updating names. Stage `name` remains the work title shown in the hero; `company` holds the participant's name. Store names in mixed case; uppercase presentation belongs in CSS.
 
-All current dates are `Sábado 28` / `23:00`; tickets and images are null, and descriptions are empty pending supplied content.
+For filter development, orders 1–23 currently use `Sábado 28` and orders 24–46 use `Domingo 29`, all at `23:00`. Expo uses its first four entries on Saturday and remaining four on Sunday; market uses its first 20 on Saturday and remaining 19 on Sunday, preserving array order, all at `23:00`. All these splits are provisional testing assignments, not a confirmed schedule; update them when actual assignments are available. Images are null and descriptions empty across the catalog; music/stage tickets remain null.
 
-The discipline catalog is `src/content/disciplines.json`: current music entries reference `musica`, stage entries reference `artes-escenicas`. The poster's discipline list uses this same catalog, not the participant categories.
+The discipline catalog is `src/content/disciplines.json`: current music entries reference `musica`, stage entries reference `artes-escenicas`. Disciplines are optional detail metadata, not category navigation. The homepage category box and desktop/mobile navbar share these routes:
+
+| Category key | Listing |
+| --- | --- |
+| `music` | `/musica/` |
+| `stage` | `/artes-escenicas/` |
+| `expo` | `/expo-arte-co/` |
+| `market` | `/mercado-creativo-y-daz/` |
+
+Category posters use their stored category name as the large heading and only their own members in stored relative order, with normal motifs/envelopes but no homepage-only information blocks or their empty reservations. Direct details link back to that category. Ticket actions render only absolute HTTP(S) URLs; absent or unsafe strings produce no link.
+
+`features/artists/categories.ts` is build-only: it exports `categories`, flattened `participants`, and editorially ordered `heroParticipants`. Each `ParticipantView` contains common detail fields, category/canonical path, optional `company`/`disciplineName`, and a safe nullable `ticketUrl`; it contains no invented performer order. Browser code may import the type only, never these catalog/schema-backed values. `safeTicketUrl` is the shared build/render ticket policy. The next modal stage can consume these views and `[data-event-scope]`, `[data-event-trigger]`, `[data-event-id]` hooks without importing Astro/Zod into the client. Modal/day filtering remain separately scoped in the [interaction specification](../../docs/specs/arc2026-artist-interactions.md).
 
 ### Local optimized images
 

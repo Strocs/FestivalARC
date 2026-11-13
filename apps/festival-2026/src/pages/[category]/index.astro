@@ -1,0 +1,14 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import PosterGrid from '../../features/poster/PosterGrid.astro'
+import { categories, type CategoryView } from '../../features/artists/categories'
+
+export function getStaticPaths() {
+  return categories.map(category => ({ params: { category: category.slug }, props: { category } }))
+}
+interface Props { category: CategoryView }
+const { category } = Astro.props
+---
+<Layout title={`${category.name} | Festival ARC 2026`}>
+  <PosterGrid {category} />
+</Layout>

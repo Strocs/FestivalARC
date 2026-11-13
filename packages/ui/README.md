@@ -22,7 +22,8 @@ const editions = [{ label: 'ARC 2025', href: '/ediciones/2025/' }]
 
 Required slots: `logo`, `date`. Optional slots: `location`, `cta`, `mobile-extra`.
 Required prop: `editions` (a non-empty list of `{ label, href }`).
-Optional props: `links` (same shape, defaults to empty), `homeHref` (defaults to `/`).
+Optional props: `links` (same shape, defaults to empty), `homeHref` (defaults to `/`), and `centeredLinks` (boolean, defaults to `false`).
+`centeredLinks` opts into a three-column desktop layout: brand left, wrapping route-link group centered, CTA/editions right. It does not change mobile destinations or panel behavior. ARC 2026 uses it for Inicio plus its four categories; existing consumers keep the default right-aligned navigation.
 No style/color/class props. The consumer resolves base-aware URLs and supplies all editions except itself.
 
 CTA appears before Últimas ediciones, both on desktop and in the mobile panel.

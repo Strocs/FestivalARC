@@ -1,0 +1,13 @@
+---
+import PosterInformation from './PosterInformation.astro'
+import type { PosterRange } from './poster'
+import type { SlotRect } from './poster-grid'
+
+interface Props extends Partial<Record<PosterRange, SlotRect>> { name: string }
+const { name, mobile, tablet, desktop } = Astro.props
+---
+<PosterInformation {mobile} {tablet} {desktop} class='z-3'>
+  <header class='my-auto py-4'>
+    <h1 id='page-title' class='text-foreground w-full font-sans text-[length:clamp(2rem,calc(0.35rem+15.8cqw),9rem)] font-bold uppercase leading-[0.9] tracking-tighter [overflow-wrap:anywhere]'>{name}</h1>
+  </header>
+</PosterInformation>

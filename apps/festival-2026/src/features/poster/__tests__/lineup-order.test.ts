@@ -34,8 +34,8 @@ describe('fixed editorial lineup order', () => {
   it('preserves all 46 unique confirmed artists and category/company associations', () => {
     expect(lineup).toHaveLength(46)
     expect(new Set(lineup.map(artist => artist.id)).size).toBe(46)
-    expect(lineup.filter(artist => artist.category === 'music' && artist.featured)).toHaveLength(18)
-    expect(lineup.filter(artist => artist.category === 'music' && !artist.featured)).toHaveLength(12)
+    expect(lineup.filter(artist => artist.category === 'music' && artist.national)).toHaveLength(18)
+    expect(lineup.filter(artist => artist.category === 'music' && !artist.national)).toHaveLength(12)
     expect(lineup.filter(artist => artist.category === 'stage')).toHaveLength(16)
     expect(lineup.filter(artist => artist.company)).toHaveLength(16)
   })

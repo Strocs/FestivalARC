@@ -1,7 +1,7 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
 import ArtistName from '../ArtistName.astro'
-import { artists } from '../../artists/artists'
+import { heroParticipants as artists } from '../../artists/categories'
 
 async function renderArtist() {
   const container = await AstroContainer.create()
@@ -20,7 +20,11 @@ describe('ArtistName interaction', () => {
     for (const token of ['bg-arc-rose', 'text-foreground', 'rounded-full', 'motion-safe:group-hover:translate-x-1', 'motion-safe:group-focus-within:translate-x-1', 'motion-reduce:translate-none']) {
       expect(cue).toContain(token)
     }
-    expect(html.match(/<button\b/g)).toHaveLength(1)
+    expect(html.match(/<a\b/g)).toHaveLength(1)
+    expect(html).toContain('href="/musica/gepe/"')
+    expect(html).toContain('data-event-trigger')
+    expect(html).toContain('data-event-id="gepe"')
+    expect(html).not.toContain('<button')
   })
 
   it('preserves the artist and styling while rendering its editable schedule', async () => {

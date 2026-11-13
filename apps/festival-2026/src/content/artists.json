@@ -14,7 +14,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "nino-cohete",
@@ -28,7 +28,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "shicris",
@@ -42,7 +42,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "javiera-mena",
@@ -56,7 +56,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "dulce-y-agraz",
@@ -70,7 +70,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "freshki",
@@ -84,7 +84,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "gepe",
@@ -98,7 +98,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "javier-barria",
@@ -112,7 +112,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "quita-de-bulla-salamanca",
@@ -126,7 +126,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "fernando-milagros",
@@ -140,7 +140,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "jazztacuatico",
@@ -154,7 +154,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "rosario-alfonso",
@@ -168,7 +168,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "duerme-y-cae",
@@ -182,7 +182,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "claudio-valenzuela",
@@ -196,7 +196,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "fernando-ubiergo",
@@ -210,7 +210,7 @@
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "kalishe",
@@ -220,11 +220,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "pedro-piedra",
@@ -234,11 +234,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "weinkeys-blackbeat",
@@ -248,11 +248,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "nunez-briceno",
@@ -262,11 +262,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "stendhal",
@@ -276,11 +276,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "jose-alfredo-fuentes",
@@ -290,11 +290,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "last-whisper",
@@ -304,11 +304,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "innundaremos",
@@ -318,11 +318,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "guaype-club-infantil",
@@ -332,11 +332,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "medinamico",
@@ -346,11 +346,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "dejenme-dormir",
@@ -360,11 +360,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "nando-garcia",
@@ -374,11 +374,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "lero",
@@ -388,11 +388,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       },
       {
         "id": "esteban-y-los-hurtados",
@@ -402,11 +402,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": false
+        "national": false
       },
       {
         "id": "josefa-errazuriz-dj",
@@ -416,11 +416,11 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null,
-        "featured": true
+        "national": true
       }
     ]
   },
@@ -548,7 +548,7 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null
@@ -562,7 +562,7 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null
@@ -576,7 +576,7 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null
@@ -590,7 +590,7 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null
@@ -604,7 +604,7 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null
@@ -618,7 +618,7 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null
@@ -632,7 +632,7 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null
@@ -646,7 +646,7 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "23:00"
         },
         "image": null
@@ -658,35 +658,83 @@
     "participants": [
       {
         "id": "la-velocidad-de-la-luz",
-        "name": "La Velocidad de la Luz"
+        "name": "La Velocidad de la Luz",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "maria-piedad-aguirre",
-        "name": "María Piedad Aguirre"
+        "name": "María Piedad Aguirre",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "ivan-jorquera",
-        "name": "Iván Jorquera"
+        "name": "Iván Jorquera",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "camila-montoya",
-        "name": "Camila Montoya"
+        "name": "Camila Montoya",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "oskar-huerta",
-        "name": "Oskar Huerta"
+        "name": "Oskar Huerta",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "andrea-cantillanes",
-        "name": "Andrea Cantillanes"
+        "name": "Andrea Cantillanes",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "sandy-barrera",
-        "name": "Sandy Barrera"
+        "name": "Sandy Barrera",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "daniela-pizarro",
-        "name": "Daniela Pizarro"
+        "name": "Daniela Pizarro",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       }
     ]
   },
@@ -695,159 +743,393 @@
     "participants": [
       {
         "id": "forjadas",
-        "name": "Forjadas"
+        "name": "Forjadas",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "reproduccion-arqueologica-de-la-ceramica-diaguita",
-        "name": "Reproducción Arqueológica de la Cerámica Diaguita"
+        "name": "Reproducción Arqueológica de la Cerámica Diaguita",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "pilpintuvellon",
-        "name": "Pilpintuvellon"
+        "name": "Pilpintuvellon",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "scarlett-christiansen-joyas-de-autora",
-        "name": "Scarlett Christiansen Joyas de Autora"
+        "name": "Scarlett Christiansen Joyas de Autora",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "taller-artesanal-jacaranda",
-        "name": "Taller Artesanal Jacarandá"
+        "name": "Taller Artesanal Jacarandá",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "artesana-neurotica",
-        "name": "Artesana Neurótica"
+        "name": "Artesana Neurótica",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "alicate-veloz",
-        "name": "Alicate Veloz"
+        "name": "Alicate Veloz",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "anima-rojas",
-        "name": "Ánima Rojas"
+        "name": "Ánima Rojas",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "catana",
-        "name": "Catana"
+        "name": "Catana",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "creavida",
-        "name": "Creavida"
+        "name": "Creavida",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "alpacosas",
-        "name": "Alpacosas"
+        "name": "Alpacosas",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "javiiilustrations",
-        "name": "Javiiilustrations"
+        "name": "Javiiilustrations",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "ilustravel",
-        "name": "Ilustravel"
+        "name": "Ilustravel",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "futuro-comics",
-        "name": "Futuro Comics"
+        "name": "Futuro Comics",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "rotten-monkey-inc",
-        "name": "Rotten Monkey Inc"
+        "name": "Rotten Monkey Inc",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "daniela-trigo",
-        "name": "Daniela Trigo"
+        "name": "Daniela Trigo",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "colectivo-fugaz",
-        "name": "Colectivo Fugaz"
+        "name": "Colectivo Fugaz",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "seba-endless",
-        "name": "Seba Endless"
+        "name": "Seba Endless",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "dimension-d",
-        "name": "Dimensión D"
+        "name": "Dimensión D",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "colectivo-voyeartistas",
-        "name": "Colectivo Voyeartistas"
+        "name": "Colectivo Voyeartistas",
+        "description": "",
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "alesol",
-        "name": "Alesol"
+        "name": "Alesol",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "infini-art",
-        "name": "Infini Art"
+        "name": "Infini Art",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "bosque-marino",
-        "name": "Bosque Marino"
+        "name": "Bosque Marino",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "intercultural-arte-elementa",
-        "name": "Intercultural Arte Elementa"
+        "name": "Intercultural Arte Elementa",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "ulises-lopez-grabador",
-        "name": "Ulises López Grabador"
+        "name": "Ulises López Grabador",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "la-cartoleria-taller",
-        "name": "La Cartolería Taller"
+        "name": "La Cartolería Taller",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "koko",
-        "name": "Kokó"
+        "name": "Kokó",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "bordelibre-ediciones",
-        "name": "Bordelibre Ediciones"
+        "name": "Bordelibre Ediciones",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "yatiediciones",
-        "name": "Yatiediciones"
+        "name": "Yatiediciones",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "taller-editorial-me-pego-un-tiro",
-        "name": "Taller Editorial Me Pego un Tiro"
+        "name": "Taller Editorial Me Pego un Tiro",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "draco-herrera",
-        "name": "Draco Herrera"
+        "name": "Draco Herrera",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "mauricio-ramos",
-        "name": "Mauricio Ramos"
+        "name": "Mauricio Ramos",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "astro-glitter",
-        "name": "Astro Glitter"
+        "name": "Astro Glitter",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "colectivo-crisol",
-        "name": "Colectivo Crisol"
+        "name": "Colectivo Crisol",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "pierina-basilio",
-        "name": "Pierina Basilio"
+        "name": "Pierina Basilio",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "estudiantes-de-diseno-digital-inacap",
-        "name": "Estudiantes de Diseño Digital Inacap"
+        "name": "Estudiantes de Diseño Digital Inacap",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "club-audiovisual-area-diseno-inacap",
-        "name": "Club Audiovisual Área Diseño Inacap"
+        "name": "Club Audiovisual Área Diseño Inacap",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "christel-horn",
-        "name": "Christel Horn"
+        "name": "Christel Horn",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       },
       {
         "id": "sofia-rodriguez",
-        "name": "Sofía Rodríguez"
+        "name": "Sofía Rodríguez",
+        "description": "",
+        "date": {
+          "day": "Domingo 29",
+          "time": "23:00"
+        },
+        "image": null
       }
     ]
   }

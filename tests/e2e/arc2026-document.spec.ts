@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test'
 import { publicationConfig } from '../../editions.config'
-import { artists, disciplines } from '../../apps/festival-2026/src/features/artists/artists'
+import { categories, participants } from '../../apps/festival-2026/src/features/artists/categories'
 
-const detailPaths = artists.map(artist => `/artistas/${artist.id}/`)
+// Future browser acceptance coverage. T1 verifies static rendering with Vitest/build only.
+const detailPaths = participants.map(artist => artist.canonicalPath)
 
 function isSuccessfulResourceStatus(status: number) {
   return (status >= 200 && status < 300) || status === 304
@@ -24,7 +25,7 @@ test('publishes useful indexable metadata and successfully delivers local resour
     }
   })
   page.on('requestfailed', request => failed.push(`${request.url()}: ${request.failure()?.errorText}`))
-  for (const path of ['/', ...detailPaths]) {
+  for (const path of ['/', ...categories.map(category => category.path), ...detailPaths]) {
     expect((await page.goto(path))?.status()).toBe(200)
     await page.evaluate(() => document.fonts.ready)
     await expect(page).toHaveTitle(/\S/)
@@ -44,17 +45,16 @@ test('publishes useful indexable metadata and successfully delivers local resour
   expect(failed).toEqual([])
 })
 
-for (const artist of artists) {
+for (const artist of participants) {
   test(`direct detail for ${artist.id} exposes the source-of-truth artist data without JavaScript`, async ({ browser, request }) => {
     const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 900 } })
     try {
       const page = await context.newPage()
-      expect((await page.goto(`/artistas/${artist.id}/`))?.status()).toBe(200)
+      expect((await page.goto(artist.canonicalPath))?.status()).toBe(200)
       await expect(page.getByRole('heading', { level: 1, name: artist.name, exact: true })).toBeVisible()
       await expect(page.getByRole('banner')).toBeVisible()
       const detail = page.getByRole('main', { name: `Ficha de ${artist.name}` })
-      const discipline = disciplines.find(({ id }) => id === artist.disciplines)!
-      await expect(detail.getByText(discipline.name, { exact: true })).toBeVisible()
+      if (artist.disciplineName) await expect(detail.getByText(artist.disciplineName, { exact: true })).toBeVisible()
       await expect(detail.getByText(`${artist.date.day} · ${artist.date.time}`, { exact: true })).toBeVisible()
       await expect(detail.getByRole('img')).toHaveCount(0)
       await expect(detail).not.toContainText(/demostración|ejemplo/i)
@@ -63,16 +63,36 @@ for (const artist of artists) {
       for (const src of await page.locator('img').evaluateAll(images => images.map(image => image.src))) {
         expect((await request.get(src)).status()).toBe(200)
       }
-      const back = page.getByRole('link', { name: 'Volver a la portada' })
-      await expect(back).toHaveAttribute('href', '/')
+      const category = categories.find(({ key }) => key === artist.category)!
+      const back = page.getByRole('link', { name: `Volver a ${category.name}` })
+      await expect(back).toHaveAttribute('href', category.path)
       await back.focus()
       await page.keyboard.press('Enter')
-      await expect(page).toHaveURL('/')
+      await expect(page).toHaveURL(category.path)
     } finally {
       await context.close()
     }
   })
 }
+
+for (const category of categories) {
+  test(`${category.slug} publishes only its category members in the shared poster`, async ({ page }) => {
+    await page.goto(category.path)
+    await expect(page.getByRole('heading', { level: 1, name: category.name, exact: true })).toBeVisible()
+    const triggers = page.locator('[data-event-trigger]')
+    expect(await triggers.evaluateAll(nodes => nodes.map(node => node.getAttribute('data-event-id'))))
+      .toEqual(category.participants.map(({ id }) => id))
+    for (const participant of category.participants) {
+      await expect(page.locator(`[data-event-id="${participant.id}"]`)).toHaveAttribute('href', participant.canonicalPath)
+    }
+    await expect(page.getByRole('main').locator('.information-slot')).toHaveCount(1)
+    await expect(page.getByRole('main').getByText('Instagram', { exact: true })).toHaveCount(0)
+  })
+}
+
+test('removed legacy details do not remain as aliases', async ({ request }) => {
+  expect((await request.get('/artistas/gepe/')).status()).toBe(404)
+})
 
 test('detail header home link returns to the active edition', async ({ page }) => {
   await page.goto(detailPaths[0])

@@ -1,9 +1,10 @@
 ---
-import type { Artist } from '../artists/artists'
+import type { ParticipantView } from '../artists/categories'
+import { publicPath } from '../../utils/publication'
 import { getArtistCompositions, getArtistFitRanges } from './artist-name'
 
 interface Props {
-  artist: Artist
+  artist: ParticipantView
 }
 
 const { artist } = Astro.props
@@ -34,9 +35,10 @@ const rules = ranges
 <article
   class='bg-background group relative min-h-0 w-full min-w-0'
   aria-label={artist.name}>
-  <!-- Interaction shell only: the click destination has not been defined yet. -->
-  <button
-    type='button'
+  <a
+    href={publicPath(artist.canonicalPath)}
+    data-event-trigger
+    data-event-id={artist.id}
     aria-label={artist.name}
     class='focus-visible:outline-primary absolute inset-0 size-full cursor-pointer appearance-none border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-[-2px]'>
     <span
@@ -77,7 +79,7 @@ const rules = ranges
           class='bg-primary text-background motion-reduce:translate-none rounded-full px-4 py-1 transition-transform duration-300 motion-safe:group-focus-within:translate-y-0.5 motion-safe:group-hover:translate-y-0.5 motion-reduce:transition-none'
           >{artist.date.day} - <strong>{artist.date.time}hrs</strong></time
         >
-        <!-- Visual cue for the whole-tile button, not a nested control. -->
+        <!-- Visual cue for the whole-tile link, not a nested control. -->
         <span
           data-artist-view
           aria-hidden='true'
@@ -86,6 +88,6 @@ const rules = ranges
         >
       </span>
     </span>
-  </button>
+  </a>
   <style is:inline set:html={rules}></style>
 </article>
