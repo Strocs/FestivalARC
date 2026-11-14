@@ -27,11 +27,22 @@ describe('shared poster scopes', () => {
     expect(html).not.toContain('Instagram')
     expect(html).not.toContain('Disciplinas')
     const ids = category.participants.map(({ id }) => id)
-    const layouts = [calculatePosterLayout(ids, 10, [{ column: 0, row: 0, width: 10, height: 2 }]), calculatePosterLayout(ids, 6, [{ column: 0, row: 0, width: 6, height: 2 }]), calculatePosterLayout(ids, 4, [{ column: 0, row: 0, width: 4, height: 2 }])]
+    const layouts = [calculatePosterLayout(ids, 10, [{ column: 0, row: 0, width: 4, height: 4 }]), calculatePosterLayout(ids, 6, [{ column: 0, row: 0, width: 3, height: 4 }]), calculatePosterLayout(ids, 4, [{ column: 0, row: 0, width: 4, height: 2 }])]
     for (const [index, range] of ['desktop', 'tablet', 'mobile'].entries()) {
       expect(html).toContain(`--${range}-rows:${layouts[index].rows}`)
-      // First member starts immediately after the title; no copied home info holes.
-      expect(html).toContain(`--${range}-column:0;--${range}-row:2;--${range}-width:${range === 'mobile' ? 4 : 2};--${range}-height:1`)
+      // Tablet/desktop start beside the real title, not below a full-width band.
+      const first = layouts[index].artists[0]
+      expect(first).toMatchObject(range === 'mobile' ? { column: 0, row: 2 } : { column: 4, row: 0 })
+      for (const artist of layouts[index].artists) {
+        expect(html).toContain(`--${range}-column:${artist.column};--${range}-row:${artist.row};--${range}-width:${artist.width};--${range}-height:1`)
+        const title = { column: 0, row: 0, width: range === 'desktop' ? 4 : range === 'tablet' ? 3 : 4, height: range === 'mobile' ? 2 : 4 }
+        expect(artist.column >= title.width || artist.row >= title.height).toBe(true)
+        expect(layouts[index].rows).toBeGreaterThanOrEqual(artist.row + 2)
+        for (let column = artist.column; column < artist.column + artist.width; column++) {
+          expect(layouts[index].motifs).toContainEqual({ column, row: artist.row + 1, width: 1, height: 1 })
+        }
+      }
+      expect(layouts[index].motifs.some(cell => cell.row === 0 && cell.column >= (range === 'desktop' ? 4 : 3))).toBe(range !== 'mobile')
     }
     const motifs = selectPosterMotifs(layouts)
     expect(html.match(/class="[^"]*pattern-slot/g)).toHaveLength(motifs.length)
@@ -43,8 +54,11 @@ describe('shared poster scopes', () => {
     const html = await render({ ...categories[2], participants: [] })
     expect(triggerIds(html)).toEqual([])
     expect(html.match(/information-slot/g)).toHaveLength(1)
-    for (const range of ['mobile', 'tablet', 'desktop']) expect(html).toContain(`--${range}-rows:2`)
-    expect(html).not.toContain('pattern-slot')
+    expect(html).toContain('--mobile-rows:2')
+    for (const range of ['tablet', 'desktop']) expect(html).toContain(`--${range}-rows:4`)
+    expect(html).toContain('pattern-slot') // real adjacent cells still receive motifs
+    expect(html).toContain('--desktop-width:4;--desktop-height:4')
+    expect(html).toContain('--tablet-width:3;--tablet-height:4')
   })
 
   it('preserves the homepage mixed roster, title, information and original static footprints', async () => {
@@ -62,7 +76,7 @@ describe('shared poster scopes', () => {
     expect(categoryBox.match(/<a\b/g)).toHaveLength(4)
     for (const category of categories) {
       expect(categoryBox).toContain(`href="${category.path}"`)
-      expect(categoryBox).toContain(`>${category.name}</a>`)
+      expect(categoryBox).toContain(`>${category.name}</span>`)
     }
     // Every original home information footprint remains represented in all ranges.
     const originalInformation = {

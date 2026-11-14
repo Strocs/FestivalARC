@@ -7,8 +7,10 @@ interface Props {
   links?: readonly NavigationLink[]
   homeHref?: string
   centeredLinks?: boolean
+  currentPath?: string
+  underlineLinks?: boolean
 }
-const { editions, links = [], homeHref = '/', centeredLinks = false } = Astro.props
+const { editions, links = [], homeHref = '/', centeredLinks = false, currentPath, underlineLinks = true } = Astro.props
 for (const name of ['logo', 'date']) {
   if (!Astro.slots.has(name)) throw new Error(`FestivalNavbar requires the "${name}" slot`)
 }
@@ -16,6 +18,23 @@ if (!Array.isArray(editions) || editions.length === 0) {
   throw new Error('FestivalNavbar requires at least one other edition')
 }
 const mobileLinks = [{ label: 'Inicio', href: homeHref }, ...links.filter(link => link.href !== homeHref && link.label !== 'Inicio')]
+// Match complete path segments, with home exact-only. Longest match wins so
+// overlapping destinations cannot expose two active links in the same group.
+const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/'
+const pathname = currentPath === undefined ? undefined : normalizePath(currentPath)
+const destinations = [homeHref, ...links.map(link => link.href)]
+const activeHref = pathname === undefined ? undefined : destinations
+  .filter(href => pathname === normalizePath(href)
+    || (normalizePath(href) !== normalizePath(homeHref) && pathname.startsWith(`${normalizePath(href)}/`)))
+  .sort((a, b) => b.length - a.length)[0]
+const current = (href: string) => href === activeHref
+  ? pathname === normalizePath(href) ? 'page' as const : 'true' as const
+  : undefined
+const linkClass = [underlineLinks && 'hover:underline', 'focus-visible:outline-2 focus-visible:outline-offset-2']
+const separators = await Promise.all(links.map((_, index) => {
+  const slot = `separator-${index}`
+  return index > 0 && Astro.slots.has(slot) ? Astro.slots.render(slot) : ''
+}))
 const panelId = `festival-navigation-${crypto.randomUUID()}`
 const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
 ---
@@ -33,7 +52,10 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
       </div>
       <nav data-header-nav aria-label='Navegación principal' class={centeredLinks ? 'hidden shrink-0 items-center gap-4 lg:contents' : 'hidden shrink-0 items-center gap-4 lg:flex'}>
         {links.length > 0 && <ul data-header-links={centeredLinks ? 'centered' : undefined} class:list={['flex items-center gap-4', centeredLinks && 'col-start-2 row-start-1 min-w-0 flex-wrap justify-center text-center']}>
-          {links.map(({ label, href }) => <li><a href={href} class='hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'>{label}</a></li>)}
+          {links.map(({ label, href }, index) => <>
+            {separators[index] && <li data-link-separator aria-hidden='true' class='shrink-0' set:html={separators[index]} />}
+            <li><a href={href} aria-current={current(href)} class:list={linkClass}>{label}</a></li>
+          </>)}
         </ul>}
         {centeredLinks ? <div class='col-start-3 row-start-1 flex min-w-0 flex-wrap items-center justify-end gap-4'>
           {cta && <div data-header-cta set:html={cta} />}
@@ -56,7 +78,7 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
     <div data-header-surface class='absolute inset-0 flex flex-col gap-8 overflow-y-auto bg-[var(--header-panel-bg-color,Canvas)] px-6 pb-6 pt-[var(--navigation-header-height)]'>
       <nav aria-label='Navegación móvil' class='my-auto flex flex-col items-center gap-6 text-center'>
         {<ul class='flex flex-col items-center gap-6 text-2xl'>
-          {mobileLinks.map(({ label, href }) => <li><a href={href} class='hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'>{label}</a></li>)}
+          {mobileLinks.map(({ label, href }) => <li><a href={href} aria-current={current(href)} class:list={linkClass}>{label}</a></li>)}
         </ul>}
         {cta && <div data-header-cta set:html={cta} />}
         <EditionMenu editions={editions} expanded />

@@ -1,6 +1,8 @@
 ---
 import PosterInformation from './PosterInformation.astro'
+import PosterArrow from './PosterArrow.astro'
 import { categories } from '../artists/categories'
+import { measureArtistName } from './artist-name'
 import { publicPath } from '../../utils/publication'
 import type { SlotRect } from './poster-grid'
 import type { PosterRange } from './poster'
@@ -10,22 +12,20 @@ const { mobile, tablet, desktop } = Astro.props
 ---
 
 <PosterInformation {mobile} {tablet} {desktop}>
-  <aside
-    class='flex min-h-0 items-center py-3 font-black'
-    aria-label='Categorías'>
-    <ul
-      class='min-w-0 list-none p-4 text-[length:clamp(1rem,calc(0.5rem+8cqw),4rem)] uppercase leading-[1.12] tracking-[-.04em]'>
-      {
-        categories.map((category, index) => {
-          const isEven = index % 2 === 0
-
-          return (
-            <li class:list={[isEven ? 'text-primary' : 'text-foreground']}>
-              <a href={publicPath(category.path)} class='hover:underline focus-visible:outline-2 focus-visible:outline-offset-2'>{category.name}</a>
-            </li>
-          )
-        })
-      }
+  <aside class='flex min-h-0 items-center py-3 font-black' aria-label='Categorías'>
+    <!-- This container's content box excludes padding. Its cqw is shared by
+         the label fit and PosterArrow, not the outer poster's --unit. -->
+    <ul class='@container m-0 w-full min-w-0 list-none space-y-2 p-4 uppercase leading-[1.12]'>
+      {categories.map((category, index) => (
+        <li class:list={[index % 2 === 0 ? 'text-primary' : 'text-foreground']}>
+          <a href={publicPath(category.path)}
+            style={`--category-fit:${0.96 / measureArtistName(category.name)}`}
+            class='group/category flex items-center gap-3 focus-visible:outline-2 focus-visible:outline-offset-2'>
+            <span class='min-w-0 flex-1 wrap-break-word text-[length:min(3rem,calc((100cqw-clamp(2rem,12cqw,5rem)-0.75rem)*var(--category-fit)))] md:whitespace-nowrap md:wrap-normal md:text-[length:calc((100cqw-clamp(2rem,12cqw,5rem)-0.75rem)*var(--category-fit))]'>{category.name}</span>
+            <PosterArrow class='group-hover/category:-rotate-45 group-focus-visible/category:-rotate-45 motion-reduce:transition-none' />
+          </a>
+        </li>
+      ))}
     </ul>
   </aside>
 </PosterInformation>

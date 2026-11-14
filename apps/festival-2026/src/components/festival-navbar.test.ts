@@ -1,5 +1,12 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
+import { createPublicationUrlTools } from '../utils/publication'
+
+const publicationBase = vi.hoisted(() => ({ value: '/' }))
+vi.mock('../utils/publication', async importOriginal => {
+  const original = await importOriginal<typeof import('../utils/publication')>()
+  return { ...original, publicPath: (path: string) => original.createPublicationUrlTools(publicationBase.value).publicPath(path) }
+})
 import FestivalNavbar from '@festivalarc/ui/FestivalNavbar.astro'
 import PosterIntro from '../features/poster/PosterIntro.astro'
 import Header from './Header.astro'
@@ -16,6 +23,64 @@ async function render(options = {}) {
 }
 
 describe('FestivalNavbar public contract', () => {
+  it.each(['/', '/festival/2026/'])('marks only the exact home or parent category under base %s, with four distinct external motifs', async base => {
+    publicationBase.value = base
+    const { publicPath } = createPublicationUrlTools(base)
+    try {
+      for (const [path, active, current] of [
+        ['/', '/', 'page'], ['/musica/', '/musica/', 'page'],
+        ['/musica/javiera-mena/', '/musica/', 'true'],
+        ['/artes-escenicas/lobas/', '/artes-escenicas/', 'true'],
+        ['/expo-arte-co/', '/expo-arte-co/', 'page'],
+        ['/mercado-creativo-y-daz/ejemplo/', '/mercado-creativo-y-daz/', 'true'],
+        ['/musica-extra/', '', ''],
+      ]) {
+        const container = await AstroContainer.create()
+        const html = await container.renderToString(Header, { request: new Request(`https://arc.test${publicPath(path)}`) })
+        const desktop = html.match(/<nav\b[^>]*data-header-nav[\s\S]*?<\/nav>/)?.[0] ?? ''
+        const panel = html.match(/<dialog\b[\s\S]*?<\/dialog>/)?.[0] ?? ''
+        for (const section of [desktop, panel]) {
+          const group = section.match(/<ul\b[\s\S]*?<\/ul>/)?.[0] ?? ''
+          const anchors = [...group.matchAll(/<a\b[^>]*>/g)].map(match => match[0])
+          expect(anchors).toHaveLength(5)
+          expect(new Set(anchors.map(anchor => anchor.match(/href="([^"]+)"/)?.[1])).size).toBe(5)
+          const selected = anchors.filter(anchor => anchor.includes('aria-current='))
+          expect(selected).toHaveLength(active ? 1 : 0)
+          if (active) {
+            expect(selected[0]).toContain(`href="${publicPath(active)}"`)
+            expect(selected[0]).toContain(`aria-current="${current}"`)
+            expect(html).toContain('[&amp;_a[aria-current]]:text-arc-yellow')
+          }
+          expect(group).not.toContain('underline')
+        }
+        const tiles = [...desktop.matchAll(/<li\b[^>]*data-link-separator[\s\S]*?<\/li>/g)].map(match => match[0])
+        expect(tiles).toHaveLength(4)
+        const fragments = tiles.map(tile => {
+          expect(tile).toContain('aria-hidden="true"')
+          expect(tile).toContain('width="16"')
+          expect(tile).toContain('height="16"')
+          expect(tile).toContain('focusable="false"')
+          expect(tile).not.toMatch(/<a\b|tabindex|<defs|\bid=/)
+          return tile.match(/<use href="([^"]+)"/)?.[1]
+        })
+        expect(new Set(fragments).size).toBe(4)
+        expect(fragments.every(href => href?.includes('poster-motifs.svg#'))).toBe(true)
+        expect(desktop.match(/<ul\b[\s\S]*?<\/ul>/)?.[0].match(/<li\b[\s\S]*?<\/li>/g)?.map(li => li.includes('data-link-separator'))).toEqual([false, true, false, true, false, true, false, true, false])
+      }
+    } finally { publicationBase.value = '/' }
+  })
+
+  it('keeps opt-ins absent, legacy underlines/colors and input arrays unchanged by default', async () => {
+    const links = [{ label: 'Inicio', href: '/' }, { label: 'Programa', href: '/programa/' }]
+    const before = structuredClone({ editions, links })
+    const html = await render({ props: { editions, links } })
+    expect(html).toContain('hover:underline')
+    expect(html).not.toContain('aria-current=')
+    expect(html).not.toContain('data-link-separator')
+    expect(html).not.toContain('text-arc-yellow')
+    expect({ editions, links }).toEqual(before)
+  })
+
   it('renders the slogan as accessible live heading text', async () => {
     const container = await AstroContainer.create()
     const html = await container.renderToString(PosterIntro)

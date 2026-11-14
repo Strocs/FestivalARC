@@ -107,6 +107,14 @@ describe('scoped modal enhancement', () => {
     pointer('pointerdown', dialog, 20, 110); pointer('pointerup', dialog, 20, 110)
     expect(motions[0].reverse).not.toHaveBeenCalled()
   })
+  it('does not dismiss after backdrop pointer intent is cancelled', () => {
+    click()
+    pointer('pointerdown', dialog, 0, 0)
+    dialog.dispatchEvent(new Event('pointercancel'))
+    pointer('pointerup', dialog, 0, 0)
+    expect(motions[0].reverse).not.toHaveBeenCalled()
+    expect(dialog.open).toBe(true)
+  })
   it('reverses during opening once, measures current origin, and rejects stale completion after a new open', () => {
     click()
     source.querySelector('[data-artist-surface]')!.getBoundingClientRect = () => rect(40, 400)
@@ -192,6 +200,29 @@ describe('scoped modal enhancement', () => {
     expect(click().defaultPrevented).toBe(true)
     expect(navigate).toHaveBeenCalledWith(source.href)
     expect(dialog.open).toBe(false); expect(document.body.style.overflow).toBe(''); expect(source.style.visibility).toBe('')
+  })
+  it.each(['native', 'motion'])('cleans partial %s opening before canonical fallback navigation', failure => {
+    destroy()
+    if (failure === 'native') dialog.showModal = vi.fn(() => {
+      dialog.open = true
+      throw new Error('Partial native open')
+    })
+    const observed: Array<{ href: string, open: boolean, overflow: string, visibility: string, contentChildren: number }> = []
+    navigate = vi.fn((href: string) => {
+      observed.push({
+        href,
+        open: dialog.open,
+        overflow: document.body.style.overflow,
+        visibility: source.style.visibility,
+        contentChildren: dialog.querySelector('[data-modal-content]')!.childNodes.length,
+      })
+    })
+    destroy = mountEventModal(root, {
+      navigate,
+      createMotion: () => { throw new Error('Partial motion open') },
+    })
+    expect(click().defaultPrevented).toBe(true)
+    expect(observed).toEqual([{ href: source.href, open: false, overflow: '', visibility: '', contentChildren: 0 }])
   })
   it('falls back after motion initialization failure and leaves anchors ordinary after failed setup', () => {
     destroy()

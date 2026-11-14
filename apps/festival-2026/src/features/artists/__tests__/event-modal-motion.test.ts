@@ -87,6 +87,24 @@ describe('GSAP modal score', () => {
     expect(mock.timelines[0].fromTo.mock.calls.filter(call => call[0] === title).every(call => !('fontSize' in call[1]))).toBe(true)
     motion.dispose(); expect(panel.querySelector('[data-modal-title-proxy]')).toBe(null)
   })
+  it('preserves a smaller source title size and reverses the exact interrupted playhead with full paint cleanup', () => {
+    document.body.innerHTML = '<dialog><div data-modal-panel><div data-modal-surface></div><h2 id="event-modal-title">Name</h2></div></dialog>'
+    const dialog = document.querySelector('dialog')!
+    const panel = dialog.querySelector<HTMLElement>('[data-modal-panel]')!
+    panel.getBoundingClientRect = () => rect(200, 100, 600, 500)
+    const motion = createModalMotion({ dialog, panel, sourceRect: rect(20, 300, 100, 50), titleRect: rect(30, 305, 80, 30), titleSize: 14, onOpened: vi.fn(), onClosed: vi.fn() })
+    const timeline = mock.timelines[0]
+    const title = timeline.fromTo.mock.calls.find(call => call[0] === panel.querySelector('[data-modal-title-proxy]'))!
+    expect(title[1].fontSize).toBe(14)
+    timeline.progress(0.23, true)
+    timeline.progress.mockClear()
+    motion.reverse({ sourceRect: rect(40, 400, 100, 50), titleRect: null })
+    expect(timeline.progress.mock.calls).toEqual([[], [0.23, true]])
+    expect(timeline.reverse).toHaveBeenCalledOnce()
+    motion.dispose()
+    expect(panel.querySelector('[data-modal-title-proxy]')).toBe(null)
+    expect(panel.querySelector('[data-modal-surface]')!.getAttribute('style')).toBe(null)
+  })
   it('reverses the current playhead without seeking the endpoint, remeasures and uses a fade for missing origin', () => {
     document.body.innerHTML = '<dialog><div data-modal-panel><div data-modal-surface></div><h2 id="event-modal-title">Name</h2></div></dialog>'
     const dialog = document.querySelector('dialog')!

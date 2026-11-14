@@ -1,0 +1,12 @@
+---
+import motifAsset from '../features/poster/poster-motifs.svg?url'
+import type { PosterMotif } from '../features/poster/poster'
+
+interface Props { motif: PosterMotif }
+const { motif } = Astro.props
+---
+<!-- Vite's asset URL already includes the publication base. External symbols
+     work without PosterDefinitions and duplicate no global IDs in the header. -->
+<svg width='16' height='16' viewBox='0 0 100 100' aria-hidden='true' focusable='false' class='block size-4 shrink-0'>
+  <use href={`${motifAsset}#${motif}`} />
+</svg>

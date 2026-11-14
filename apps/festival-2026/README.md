@@ -2,6 +2,8 @@
 
 The active edition serves the 46-work music/stage poster at `/`, four category posters, and 93 static participant detail fallbacks. Canonical details use `/<public-category-slug>/<participant-id>/`; the old `/artistas/` family is removed without redirects. Astro builds the HTML; responsive CSS changes poster placement without duplicating artist labels or packing the grid in the browser. Cards remain normal canonical fallback anchors. Successful enhancement opens one shared native dialog with reversible source-to-center GSAP motion; unavailable or failed enhancement follows the same anchor. T2 is implemented but not visually verified. Stage 2 (day filters and recomposition) remains planned.
 
+S11–S13 source adjustments are implemented: homepage category links reuse the rotating poster arrow without underlines and fit whole labels from tablet upward; the navbar highlights the current page/parent category in `arc-yellow` and adds four distinct 16px canonical motif separators on desktop; category titles occupy a partial-width grid piece with artists/motifs alongside. Homepage placements, data, routes and the T2 modal are unchanged. Deterministic render/metric checks are not visual proof; no browser/server/visual checks are authorized for this unit. See the [poster guide](src/features/poster/README.md) and [shared navbar API](../../packages/ui/README.md).
+
 ## Run and verify
 
 Run these commands from the repository root:

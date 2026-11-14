@@ -20,11 +20,11 @@ const editions = [{ label: 'ARC 2025', href: '/ediciones/2025/' }]
 </div>
 ```
 
-Required slots: `logo`, `date`. Optional slots: `location`, `cta`, `mobile-extra`.
+Required slots: `logo`, `date`. Optional slots: `location`, `cta`, `mobile-extra`, and `separator-N` (1-based index of the link following the separator). Separators render only between desktop route links as decorative, `aria-hidden` list items. Supply noninteractive, ID-free artwork; omitted slots produce no extra markup. Mobile may omit decorations.
 Required prop: `editions` (a non-empty list of `{ label, href }`).
 Optional props: `links` (same shape, defaults to empty), `homeHref` (defaults to `/`), and `centeredLinks` (boolean, defaults to `false`).
 `centeredLinks` opts into a three-column desktop layout: brand left, wrapping route-link group centered, CTA/editions right. It does not change mobile destinations or panel behavior. ARC 2026 uses it for Inicio plus its four categories; existing consumers keep the default right-aligned navigation.
-No style/color/class props. The consumer resolves base-aware URLs and supplies all editions except itself.
+Additional opt-ins: `underlineLinks={false}` removes link hover underlines (default `true` preserves existing output). `currentPath` accepts the publication-base-aware pathname; omitted means no active links. Home matches exactly; other destinations match exactly or at a slash-delimited descendant, with longest destination winning. Exact matches receive `aria-current='page'`; parent destinations receive `aria-current='true'`. The mobile group follows the same rule. Color remains consumer-owned: ARC 2026 scopes `[&_a[aria-current]]:text-arc-yellow` to its wrapper, leaving shared/archive colors unchanged. No festival asset is imported here. The consumer resolves base-aware URLs and supplies all editions except itself.
 
 CTA appears before Últimas ediciones, both on desktop and in the mobile panel.
 Mobile navigation always starts with Inicio (`homeHref`), without duplicating a supplied home link.

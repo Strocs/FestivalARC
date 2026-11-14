@@ -18,8 +18,8 @@ interface Props { category?: CategoryView }
 const { category } = Astro.props
 const lineup = category?.participants ?? heroParticipants
 const categoryTitlePlacement = {
-  desktop: { column: 0, row: 0, width: 10, height: 2 },
-  tablet: { column: 0, row: 0, width: 6, height: 2 },
+  desktop: { column: 0, row: 0, width: 4, height: 4 },
+  tablet: { column: 0, row: 0, width: 3, height: 4 },
   mobile: { column: 0, row: 0, width: 4, height: 2 },
 } as const
 
