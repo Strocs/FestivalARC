@@ -4,6 +4,7 @@ import PosterGrid from '../PosterGrid.astro'
 import { categories, heroParticipants } from '../../artists/categories'
 import { calculatePosterLayout } from '../poster-grid'
 import { selectPosterMotifs } from '../poster-motif-distribution'
+import type { PosterFilterPlans } from '../poster-filter-layout'
 
 async function render(category?: (typeof categories)[number]) {
   const container = await AstroContainer.create()
@@ -13,6 +14,40 @@ async function render(category?: (typeof categories)[number]) {
 const triggerIds = (html: string) => [...html.matchAll(/data-event-id="([^"]+)"/g)].map(match => match[1])
 
 describe('shared poster scopes', () => {
+  it('exposes stable actual-grid hooks and narrow escaped inert plans without changing modal triggers', async () => {
+    const html = await render()
+    expect(html.includes('data-poster-grid')).toBe(true)
+    expect([...html.matchAll(/data-poster-artist="([^"]+)"/g)].map(m => m[1])).toEqual(heroParticipants.map(p => p.id))
+    const ids = [...html.matchAll(/data-poster-information="([^"]+)"/g)].map(m => m[1])
+    expect(ids.sort()).toEqual(['intro', 'title-extension', 'disciplines', 'program', 'place', 'instagram', 'facebook', 'twitter'].sort())
+    expect(new Set(ids).size).toBe(ids.length)
+    const json = html.match(/<script type="application\/json" data-poster-plans>([\s\S]*?)<\/script>/)?.[1]
+    expect(json).toBeDefined()
+    const plans: PosterFilterPlans = JSON.parse(json!)
+    expect(plans.available).toBe(true)
+    expect(plans.plans.all.ids).toEqual(triggerIds(html))
+    expect([...html.matchAll(/data-poster-motif="([^"]+)"/g)].map(m => m[1])).toEqual(plans.plans.all.motifs.map(m => m.variant))
+    expect(json).not.toMatch(/description|ticketUrl|company|national|astro\/zod/)
+    // Unknown day strings survive Todos but cannot terminate the inert JSON node.
+    const unsafe = await render({ ...categories[2], participants: [{ ...categories[2].participants[0], date: { day: '</script><script>bad()</script>', time: '23:00' } }] })
+    const unsafeJson = unsafe.match(/<script type="application\/json" data-poster-plans>([\s\S]*?)<\/script>/)?.[1]
+    expect(unsafeJson).not.toContain('<')
+    expect(JSON.parse(unsafeJson!).available).toBe(false)
+    expect(JSON.parse(unsafeJson!).participants[0].day).toBe('</script><script>bad()</script>')
+    for (const markup of [html, await render(categories[0]), unsafe]) {
+      const metadata = JSON.parse(markup.match(/<script type="application\/json" data-poster-plans>([\s\S]*?)<\/script>/)![1])
+      const boxes = [...markup.matchAll(/<div\b[^>]*data-poster-information="([^"]+)"[^>]*>/g)]
+      for (const [range, rectangles] of Object.entries(metadata.plans.all.information) as [string, Record<string, { column: number; row: number; width: number; height: number }> ][]) {
+        for (const box of boxes) {
+          const rect = rectangles[box[1]]
+          expect(box[0]).toContain(`--${range}-display:${rect ? 'grid' : 'none'}`)
+          if (rect) expect(box[0]).toContain(`--${range}-column:${rect.column};--${range}-row:${rect.row};--${range}-width:${rect.width};--${range}-height:${rect.height}`)
+        }
+        expect(Object.keys(rectangles).sort()).toEqual(boxes.map(box => box[1]).filter(id => id !== 'title-extension' || range !== 'mobile').sort())
+      }
+    }
+    expect(html).toContain('Filtrar artistas por día')
+  })
   it.each([0, 1, 2, 3])('renders category %i with only its members and actual title, without absent information reservations', async index => {
     const category = categories[index]
     const html = await render(category)

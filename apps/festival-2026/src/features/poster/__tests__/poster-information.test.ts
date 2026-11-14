@@ -122,5 +122,11 @@ describe('PosterInformation', () => {
     expect(html).toContain('--mobile-height:1')
     expect(html).toContain('--tablet-display:none')
     expect(html).toContain('--desktop-display:none')
+    expect(html).not.toContain('data-poster-information')
+    const identified = await container.renderToString(PosterInformation, {
+      props: { informationId: 'custom', mobile: { column: 0, row: 2, width: 3, height: 1 } },
+      slots: { default: '<p>Contenido independiente</p>' },
+    })
+    expect(identified.replace(' data-poster-information="custom"', '')).toBe(html)
   })
 })

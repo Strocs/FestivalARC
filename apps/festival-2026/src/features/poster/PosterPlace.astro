@@ -3,11 +3,11 @@ import PosterInformation from './PosterInformation.astro'
 import type { SlotRect } from './poster-grid'
 import type { PosterRange } from './poster'
 
-type Props = Partial<Record<PosterRange, SlotRect>>
-const { mobile, tablet, desktop } = Astro.props
+type Props = Partial<Record<PosterRange, SlotRect>> & { informationId?: string }
+const { mobile, tablet, desktop, informationId } = Astro.props
 ---
 
-<PosterInformation {mobile} {tablet} {desktop}>
+<PosterInformation {mobile} {tablet} {desktop} {informationId}>
   <div
     class='flex min-h-0 items-center justify-end px-8 py-3 font-bold'
     aria-label='Lugar'>

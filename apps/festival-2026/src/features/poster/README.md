@@ -1,11 +1,11 @@
 # Edit the static ARC 2026 poster
 
-Homepage and category posters share `PosterGrid.astro`, built as Astro HTML with one copy of each participant name. TypeScript computes logical slots at build time; CSS selects the desktop, tablet or mobile placement without client JavaScript. Cards retain canonical static-detail anchors, enhanced by a shared native dialog. T2 is implemented but not visually verified; day filters/recomposition remain planned stage 2.
+Homepage and category posters share `PosterGrid.astro`, built as Astro HTML with one copy of each participant name. TypeScript computes logical slots at build time; CSS selects the desktop, tablet or mobile placement without client JavaScript. Cards retain canonical static-detail anchors, enhanced by a shared native dialog. The modal is implemented but not visually verified. Stage 2 precomputes finite day endpoints and enhances both-day scopes with native radios and GSAP recomposition beneath the existing modal lifecycle. These changes have no visual/browser verification.
 
 ## Quick path
 
 1. Edit `src/content/artists.json` (relative to the app) for artist data. Explicit `order` controls the grid sequence; `src/content/disciplines.json` owns discipline IDs and labels. Do not invent missing content.
-2. Edit `PosterGrid.astro` for shared rendering and the preserved homepage information positions/dimensions; edit `poster.ts` for module proportions and the decorative sequence. Coordinates start at zero.
+2. Edit `PosterGrid.astro` for shared rendering and `poster-layout.ts` for the preserved homepage information positions/dimensions; edit `poster.ts` for module proportions and the decorative sequence. Coordinates start at zero.
 3. Run `pnpm --filter festival-2026 test`, then `pnpm build`. Browser checks use `pnpm exec playwright test tests/e2e/arc2026-document.spec.ts tests/e2e/arc2026-static-grid.spec.ts tests/e2e/arc2026-pattern-seams.spec.ts tests/e2e/festival-navbar.spec.ts` after the root build.
 
 ## Layout rules
@@ -28,7 +28,7 @@ The stepped desktop title uses two adjacent footprints. Phone/tablet information
 
 `PosterProgram.astro` and `PosterDisciplines.astro` independently own their markup and text. `PosterIntro.astro` composes the heading/date footprint and the adjacent empty title extension internally. The shared grid composes these components only for the homepage; `PosterDisciplines` now renders four category anchors from the authoritative category map, not seven discipline labels. Category scopes use only `CategoryTitle` and their members, without internal intro reservations.
 
-Control homepage positions in `PosterGrid.astro`: `posterIntroPlacement`, `posterTitleExtensionPlacement`, `posterProgramPlacement` and `posterDisciplinesPlacement` are passed as props to the content wrappers. `PosterIntro` receives its auxiliary footprint through `titleExtension`. The same values feed `informationBlocks(range)` before artist/motif placement, so changing page props changes both rendering and reservations. No ID lookup or `information-placement.ts` utility is needed. The presets in `poster.ts` remain layout-test data, not implicit component defaults. Content wrappers read geometry directly from `Astro.props`; omitted ranges stay hidden, and the intro only renders its auxiliary reservation when `titleExtension` is supplied.
+Control homepage positions in `poster-layout.ts`: `posterIntroPlacement`, `posterTitleExtensionPlacement`, `posterProgramPlacement` and `posterDisciplinesPlacement` are passed as props to the content wrappers. `PosterIntro` receives its auxiliary footprint through `titleExtension`. The same values feed `homeInformation` before artist/motif placement, so changing the shared baseline changes both rendering and reservations. No ID lookup or `information-placement.ts` utility is needed. The presets in `poster.ts` remain layout-test data, not implicit component defaults. Content wrappers read geometry directly from `Astro.props`; omitted ranges stay hidden, and the intro only renders its auxiliary reservation when `titleExtension` is supplied.
 
 For example, inside a custom wrapper:
 
@@ -44,7 +44,42 @@ import PosterInformation from './PosterInformation.astro'
 </PosterInformation>
 ```
 
-For new homepage content, create a wrapper using the base slot, define its responsive props in `PosterGrid.astro`, include that same geometry in `informationBlocks(range)`, and render the wrapper with those props. Do not add content branches to the base component. Standalone base blocks do not automatically register themselves with an ancestor grid.
+For new homepage content, create a wrapper using the base slot, define its responsive props in `poster-layout.ts`, register that same geometry and a unique ID in `homeInformation`, and render the wrapper with those props. Do not add content branches to the base component. Standalone base blocks do not automatically register themselves with an ancestor grid.
+
+## Finite day plans and client filtering
+
+`createPosterFilterPlans(input): PosterFilterPlans` in `poster-filter-layout.ts` takes only `scope: 'home' | 'category'`, ordered `participants: { id, day }[]`, and `information: PosterInformationBlock[]`. Each information entry has a unique `id`, responsive `positions`, and optional `fixed`. `poster-layout.ts` is the authoritative original baseline; the similarly named presets in `poster.ts` are unchanged. Callers select authoritative `heroParticipants` or `category.participants` before projecting IDs/day strings. Neither the adapter nor a browser consumer imports the build-only catalog/schema.
+
+The client may **type-import** `DayKey`, `PosterFilterPlans` and `PosterFilterPlan`; no runtime packing is needed. `getPosterFilterPlan(plans, key)` rejects anything except `all`, `saturday`, `sunday`. The DTO has:
+
+| Field | Meaning |
+| --- | --- |
+| `version: 1`, `available` | Availability from the full scope containing both exact known day strings, never from the selected endpoint. |
+| `participants` | Ordered `{ id, day }` projection only. |
+| `plans[key].ids` | Canonical scoped subset; unknown day strings remain only in Todos. |
+| `plans[key].layouts[range]` | Existing engine output: columns, full-envelope rows, artists, motif cells. |
+| `plans[key].information[range][id]` | Actual box rectangles; absent range means hidden (including mobile title extension). |
+| `plans[key].motifs` | Shared `index`, canonical `variant`, and optional `positions[range]`; index is an endpoint slot, **not permanent moving identity**. |
+
+Exact mapping is `Sábado 28` / `Domingo 29`; no localized date parsing. Todos reproduces original packing and shared motif selection exactly, including original home gaps. Filtered home plans keep intro/title extension fixed. Other boxes follow their baseline row-major order: count retained predecessor IDs at each baseline boundary, commit that artist prefix through the existing engine's validated anchors, then scan forward for the preferred lane (other in-bounds lanes break ties). Previously committed prefixes never move backward. The engine validates each candidate against full two-row artist envelopes and prior information. Dimensions/content stay unchanged. All three layouts finish before one shared motif selection. Category endpoints reserve only the actual existing title footprint.
+
+Inputs are not mutated. Duplicate/empty artist IDs, invalid day keys, invalid scope, duplicate information IDs, invalid range/geometry and overlapping footprints reject atomically. Resource bounds are 512 participants, 32 information boxes, 128-row box heights and a 4096-row endpoint/search ceiling; impossible compaction rejects instead of looping. These are engineering safety limits, not catalog business rules.
+
+### SSR handoff to the controller
+
+Scope queries to the existing `[data-event-scope]` root:
+
+- `[data-poster-grid]`: real grid; existing `--mobile-rows`, `--tablet-rows`, `--desktop-rows` define its heights.
+- `[data-poster-artist="id"]`: actual artist grid wrapper, separate from untouched modal trigger/link attributes.
+- `[data-poster-information="id"]`: actual information grid box. Optional `informationId` props forward through wrappers without changing defaults. Intro has separate `informationId` / `titleExtensionId`; socials accept `informationIds: { instagram, facebook, twitter }` for their three separate boxes.
+- `[data-poster-motif]`: actual decorative wrapper, attribute value is the canonical SVG variant; `data-poster-motif-index` identifies the shared endpoint slot. Match by same variant, never morph artwork by index.
+- `script[data-poster-plans]`: inert `application/json`; read `textContent` and parse. Every `<` is escaped as `\\u003c`. Payload contains geometry, availability and ordered IDs/day only, not descriptions/tickets/raw catalog.
+
+The initial SSR endpoint is always Todos, with unchanged placement variables, markup content, motifs and styling. `DayFilter.astro` emits a hidden native radio fieldset only for a full both-day scope. `mountEventModal` is the sole connection owner; its `mountDayFilter` adapter validates the complete finite handoff and actual DOM before revealing controls. Broken setup keeps static Todos and fallback anchors. Day state never changes URLs/history/storage and controls remain available during motion.
+
+`poster-day-filter.ts` writes all three endpoint ranges once, including each actual information box, and disables excluded source links immediately. It captures the current painted rectangles/alpha before interrupting a score, compensates a retained reading anchor (otherwise nearest canonical survivor), then batches Last rectangles. `poster-filter-motion.ts` uses labelled, overlapping ~0.44s transform/autoAlpha tweens; outgoing nodes remain noninteractive absolute paint during row shrink. Reduced motion, resize and modal opening settle the latest endpoint immediately. Tokens reject stale removal/count callbacks. One polite settled count (or `No hay artistas para este filtro.`) is emitted; focus stays on native radios.
+
+`poster-motif-match.ts` reserves exact same-cell/variant nodes, then stable nearest same-variant matches within four module cells. Artwork never morphs by index. The controller reuses/pools SVG wrappers with canonical `use` references, updates shared per-range endpoints and retains original artist nodes/templates. Todos restores exact plan geometry/variants. Teardown kills timelines, removes owned pooled nodes/listeners/observers, restores server Todos and only owned styles/tab indices. Live toolbar height plus safe-area clearance adds to existing body bottom padding without touching modal overflow/right padding. `createFilterMotion` in the public `mountEventModal` options injects motion for deterministic integration tests; `ownStyles` is reused from the owner. No browser/visual checks are authorized for this unit.
 
 ## Social links
 
@@ -99,7 +134,7 @@ Run `pnpm --filter festival-2026 test` and `pnpm build`, then the browser checks
 Title-specific browser coverage: after the root build, run `pnpm exec playwright test tests/e2e/arc2026-poster-title.spec.ts`. It checks accessible copy, loaded Poppins 900, normal four-line grouping, relative date hierarchy, near-full mobile text measure, reserved spill containment, clipping and artist-text separation at 320, 390, 767, 768, 1024, 1279, 1280, 1440 and 1920px, both normally and with 200% root text. This is text enlargement, not native browser zoom. Title tuning must not change artist-card geometry or the existing functional test policy. `tests/e2e/arc2026-artist-cards.spec.ts` checks schedule copy, colors, square corners, spacing, containment, horizontal centering, overlap and balanced outer black spacing at mobile/tablet/desktop widths, city-free names with descriptors preserved, and the full-card surface's hover, focus and reduced-motion response. Its old button selectors require migration before that separately authorized browser suite runs; no browser evidence is claimed for this routing stage.
 - `poster-motifs.svg` retains the accepted design export, except for `lightning`: its four cyan triangles use straight vector edges rather than the source JPEG's traced pixel steps. Preserve its magenta background, cyan fill and alternating arrangement.
 - The homepage and artist-detail routes use `layouts/Layout.astro` for the document shell, metadata, fonts, shared Header and Footer.
-- Homepage/category grids and canonical details derive from one validated catalog; the Astro artist collection retains only the 46 music/stage works. No filters, client store, poster entrance motion or day recomposition are included. The modal has a separate surface and semantics-hidden text-only title proxy, so its paint can grow/travel without scaling readable body text or changing grid geometry. It supports reduced-motion endpoints and safe settlement on resize/font/image changes; long content scrolls internally with close/actions outside the body scroller. Focused modal Vitest tests mock native dialog and GSAP; they do not establish visual quality, device performance or native-browser accessibility. No server/browser/visual checks were run for T2. The navbar uses the existing workspace UI dependency and navigation script.
+- Homepage/category grids and canonical details derive from one validated catalog; the Astro artist collection retains only the 46 music/stage works. Finite day plans, stable hooks and one scoped filter adapter implement day recomposition without a client catalog/store or poster entrance animation. The modal has a separate surface and semantics-hidden text-only title proxy, so its paint can grow/travel without scaling readable body text or changing grid geometry. It supports reduced-motion endpoints and safe settlement on resize/font/image changes; long content scrolls internally with close/actions outside the body scroller. Focused modal Vitest tests mock native dialog and GSAP; they do not establish visual quality, device performance or native-browser accessibility. No server/browser/visual checks were run for T2. The navbar uses the existing workspace UI dependency and navigation script.
 
 Known sizing limitation: at a 320px viewport with 200% root text, the existing rem-based insets can leave no height for artist lettering. This predates the architecture refactor and is not a passing accessibility check.
 

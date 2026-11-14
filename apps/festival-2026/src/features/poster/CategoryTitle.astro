@@ -4,13 +4,13 @@ import { measureArtistName } from './artist-name'
 import type { PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
 
-interface Props extends Partial<Record<PosterRange, SlotRect>> { name: string }
-const { name, mobile, tablet, desktop } = Astro.props
+interface Props extends Partial<Record<PosterRange, SlotRect>> { name: string; informationId?: string }
+const { name, mobile, tablet, desktop, informationId } = Astro.props
 // Fit the longest whole word using the same uppercase Poppins 900 metrics as
 // artist labels. Normal word-boundary wrapping keeps the piece within its lane.
 const wordWidth = Math.max(...name.trim().split(/\s+/).map(measureArtistName))
 ---
-<PosterInformation {mobile} {tablet} {desktop} class='z-3'>
+<PosterInformation {mobile} {tablet} {desktop} {informationId} class='z-3'>
   <header class='my-auto py-4'>
     <h1 id='page-title' style={`--title-fit:${0.94 / wordWidth}`} class='text-foreground w-full font-sans text-[length:min(7rem,calc(100cqw*var(--title-fit)))] font-black uppercase leading-[0.95] tracking-tighter'>{name}</h1>
   </header>

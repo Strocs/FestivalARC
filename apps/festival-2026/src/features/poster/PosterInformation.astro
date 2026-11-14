@@ -6,6 +6,7 @@ interface Props {
   tablet?: SlotRect
   desktop?: SlotRect
   class?: string
+  informationId?: string
   'aria-hidden'?: 'true' | 'false'
 }
 const { class: className, 'aria-hidden': ariaHidden } = Astro.props
@@ -14,6 +15,6 @@ const style = (['mobile', 'tablet', 'desktop'] as const).map(range => {
   return `--${range}-display:${rect ? 'grid' : 'none'};--${range}-column:${rect?.column ?? 0};--${range}-row:${rect?.row ?? 0};--${range}-width:${rect?.width ?? 1};--${range}-height:${rect?.height ?? 1}`
 }).join(';')
 ---
-<div class:list={['min-w-0 [display:var(--mobile-display)] [grid-column:calc(var(--mobile-column)+1)/span_var(--mobile-width)] [grid-row:calc(var(--mobile-row)+1)/span_var(--mobile-height)] md:[display:var(--tablet-display)] md:[grid-column:calc(var(--tablet-column)+1)/span_var(--tablet-width)] md:[grid-row:calc(var(--tablet-row)+1)/span_var(--tablet-height)] xl:[display:var(--desktop-display)] xl:[grid-column:calc(var(--desktop-column)+1)/span_var(--desktop-width)] xl:[grid-row:calc(var(--desktop-row)+1)/span_var(--desktop-height)]', 'information-slot @container relative min-h-0 bg-background', className ?? 'z-1']} style={style} aria-hidden={ariaHidden}>
+<div class:list={['min-w-0 [display:var(--mobile-display)] [grid-column:calc(var(--mobile-column)+1)/span_var(--mobile-width)] [grid-row:calc(var(--mobile-row)+1)/span_var(--mobile-height)] md:[display:var(--tablet-display)] md:[grid-column:calc(var(--tablet-column)+1)/span_var(--tablet-width)] md:[grid-row:calc(var(--tablet-row)+1)/span_var(--tablet-height)] xl:[display:var(--desktop-display)] xl:[grid-column:calc(var(--desktop-column)+1)/span_var(--desktop-width)] xl:[grid-row:calc(var(--desktop-row)+1)/span_var(--desktop-height)]', 'information-slot @container relative min-h-0 bg-background', className ?? 'z-1']} style={style} aria-hidden={ariaHidden} data-poster-information={Astro.props.informationId}>
   <slot />
 </div>

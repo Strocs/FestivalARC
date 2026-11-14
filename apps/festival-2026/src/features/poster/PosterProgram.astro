@@ -4,11 +4,11 @@ import PosterArrow from './PosterArrow.astro'
 import type { SlotRect } from './poster-grid'
 import type { PosterRange } from './poster'
 
-type Props = Partial<Record<PosterRange, SlotRect>>
-const { mobile, tablet, desktop } = Astro.props
+type Props = Partial<Record<PosterRange, SlotRect>> & { informationId?: string }
+const { mobile, tablet, desktop, informationId } = Astro.props
 ---
 
-<PosterInformation {mobile} {tablet} {desktop}>
+<PosterInformation {mobile} {tablet} {desktop} {informationId}>
   <a
     href='/programacion'
     class='text-foreground group/program hover:text-arc-rose flex min-h-0 items-center justify-end gap-3 px-6 py-3 font-black transition-colors duration-300'

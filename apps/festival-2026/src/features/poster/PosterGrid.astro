@@ -1,5 +1,6 @@
 ---
 import ArtistName from './ArtistName.astro'
+import DayFilter from './DayFilter.astro'
 import EventModal from '../artists/EventModal.astro'
 import CategoryTitle from './CategoryTitle.astro'
 import PosterDefinitions from './PosterDefinitions.astro'
@@ -10,97 +11,26 @@ import PosterPattern from './PosterPattern.astro'
 import PosterPlace from './PosterPlace.astro'
 import PosterSocials from './PosterSocials.astro'
 import { heroParticipants, type CategoryView } from '../artists/categories'
-import { posterPresets, slotSize, type PosterRange } from './poster'
-import { selectPosterMotifs } from './poster-motif-distribution'
-import { calculatePosterLayout, type SlotRect } from './poster-grid'
+import { slotSize, type PosterRange } from './poster'
+import type { SlotRect } from './poster-grid'
+import { createPosterFilterPlans } from './poster-filter-layout'
+import {
+  categoryTitlePlacement, posterIntroPlacement, posterTitleExtensionPlacement,
+  posterDisciplinesPlacement, posterProgramPlacement, posterPlacePlacement,
+  posterSocialsPlacement, homeInformation, categoryInformation,
+} from './poster-layout'
 
 interface Props { category?: CategoryView }
 const { category } = Astro.props
 const lineup = category?.participants ?? heroParticipants
-const categoryTitlePlacement = {
-  desktop: { column: 0, row: 0, width: 4, height: 4 },
-  tablet: { column: 0, row: 0, width: 3, height: 4 },
-  mobile: { column: 0, row: 0, width: 4, height: 2 },
-} as const
-
-// Homepage placements are the original page-authored baseline, not preset defaults.
-const posterIntroPlacement = {
-  desktop: { column: 0, row: 0, width: 3, height: 4 },
-  tablet: { column: 0, row: 0, width: 3, height: 4 },
-  mobile: { column: 0, row: 0, width: 4, height: 2 },
-} as const
-const posterTitleExtensionPlacement = {
-  desktop: { column: 3, row: 1, width: 1, height: 2 },
-  tablet: { column: 3, row: 1, width: 1, height: 2 },
-} as const
-const posterDisciplinesPlacement = {
-  desktop: { column: 6, row: 5, width: 4, height: 3 },
-  tablet: { column: 3, row: 7, width: 3, height: 3 },
-  mobile: { column: 0, row: 12, width: 4, height: 2 },
-} as const
-const posterProgramPlacement = {
-  desktop: { column: 0, row: 9, width: 3, height: 1 },
-  tablet: { column: 0, row: 11, width: 3, height: 1 },
-  mobile: { column: 0, row: 22, width: 4, height: 1 },
-} as const
-const posterPlacePlacement = {
-  desktop: { column: 6, row: 13, width: 3, height: 2 },
-  tablet: { column: 3, row: 18, width: 3, height: 2 },
-  mobile: { column: 0, row: 36, width: 4, height: 1 },
-} as const
-const posterSocialsPlacement = {
-  instagram: {
-    desktop: { column: 1, row: 18, width: 3, height: 1 },
-    tablet: { column: 3, row: 28, width: 3, height: 1 },
-    mobile: { column: 0, row: 56, width: 4, height: 1 },
-  },
-  facebook: {
-    desktop: { column: 6, row: 20, width: 3, height: 1 },
-    tablet: { column: 0, row: 32, width: 3, height: 1 },
-    mobile: { column: 0, row: 70, width: 4, height: 2 },
-  },
-  twitter: {
-    desktop: { column: 1, row: 22, width: 3, height: 1 },
-    tablet: { column: 3, row: 36, width: 3, height: 1 },
-    mobile: { column: 0, row: 84, width: 4, height: 1 },
-  },
-} as const
-
-// The same props reserve actual content before artist placement. Category scopes
-// reserve only their heading, never absent homepage information or its holes.
-const informationBlocks = (range: PosterRange) => category
-  ? [categoryTitlePlacement[range]]
-  : [
-    posterIntroPlacement[range],
-    range === 'mobile' ? undefined : posterTitleExtensionPlacement[range],
-    posterProgramPlacement[range],
-    posterDisciplinesPlacement[range],
-    posterPlacePlacement[range],
-    posterSocialsPlacement.instagram[range],
-    posterSocialsPlacement.facebook[range],
-    posterSocialsPlacement.twitter[range],
-  ].filter((rect): rect is NonNullable<typeof rect> => rect !== undefined)
-
+const filterPlans = createPosterFilterPlans({
+  scope: category ? 'category' : 'home',
+  participants: lineup.map(({ id, date }) => ({ id, day: date.day })),
+  information: category ? categoryInformation : homeInformation,
+})
+const serializedPlans = JSON.stringify(filterPlans).replace(/</g, '\\u003c')
 const ranges = ['mobile', 'tablet', 'desktop'] as const
-const layouts = {
-  mobile: calculatePosterLayout(
-    lineup.map((artist) => artist.id),
-    posterPresets.mobile.columns,
-    informationBlocks('mobile'),
-    [],
-    category ? 0 : posterPresets.mobile.artistStartRow,
-  ),
-  tablet: calculatePosterLayout(
-    lineup.map((artist) => artist.id),
-    6,
-    informationBlocks('tablet'),
-  ),
-  desktop: calculatePosterLayout(
-    lineup.map((artist) => artist.id),
-    10,
-    informationBlocks('desktop'),
-  ),
-}
+const { layouts } = filterPlans.plans.all
 type Positions = Record<PosterRange, SlotRect | undefined>
 const positions = (values: Positions, display: 'block' | 'grid' = 'block') =>
   ranges
@@ -114,15 +44,10 @@ const artistPositions = (id: string): Positions => ({
   tablet: layouts.tablet.artists.find((artist) => artist.id === id),
   desktop: layouts.desktop.artists.find((artist) => artist.id === id),
 })
-const motifCount = Math.max(...ranges.map((range) => layouts[range].motifs.length))
-const motifs = selectPosterMotifs([layouts.desktop, layouts.tablet, layouts.mobile])
-const motifSlots = Array.from({ length: motifCount }, (_, index) => ({
-  motif: motifs[index],
-  style: positions({
-    mobile: layouts.mobile.motifs[index],
-    tablet: layouts.tablet.motifs[index],
-    desktop: layouts.desktop.motifs[index],
-  }),
+const motifSlots = filterPlans.plans.all.motifs.map(({ index, variant, positions: endpoints }) => ({
+  index,
+  motif: variant,
+  style: positions({ mobile: endpoints.mobile, tablet: endpoints.tablet, desktop: endpoints.desktop }),
 }))
 const gridStyle =
   `--slot-width:${slotSize.width};--slot-height:${slotSize.height};` +
@@ -138,6 +63,7 @@ const slotClasses =
   <div class='@container mx-auto w-full max-w-[1600px]'>
     <PosterDefinitions />
     <section
+      data-poster-grid
       class='relative isolate grid grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] [--columns:4] [--poster-text:#d5d5d5] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]'
       style={gridStyle}
       aria-label={category ? `${category.name}: artistas y obras` : 'Festival ARC: artistas y obras'}>
@@ -146,30 +72,35 @@ const slotClasses =
           <div
             class:list={[slotClasses, 'pattern-slot aspect-[160/152] min-h-0 md:aspect-auto']}
             style={tile.style}
+            data-poster-motif={tile.motif}
+            data-poster-motif-index={tile.index}
             aria-hidden='true'>
             <PosterPattern motif={tile.motif} />
           </div>
         ))
       }
-      {category ? <CategoryTitle name={category.name} {...categoryTitlePlacement} /> : <>
-        <PosterIntro {...posterIntroPlacement} titleExtension={posterTitleExtensionPlacement} />
-        <PosterDisciplines {...posterDisciplinesPlacement} />
+      {category ? <CategoryTitle name={category.name} {...categoryTitlePlacement} informationId='category-title' /> : <>
+        <PosterIntro {...posterIntroPlacement} titleExtension={posterTitleExtensionPlacement} informationId='intro' titleExtensionId='title-extension' />
+        <PosterDisciplines {...posterDisciplinesPlacement} informationId='disciplines' />
       </>}
       {
         lineup.map((artist) => (
           <div
             class:list={[slotClasses, 'z-2 relative min-h-[calc(var(--slot-height)*var(--unit))] md:min-h-0']}
-            style={positions(artistPositions(artist.id), 'grid')}>
+            style={positions(artistPositions(artist.id), 'grid')}
+            data-poster-artist={artist.id}>
             <ArtistName artist={artist} />
           </div>
         ))
       }
       {!category && <>
-        <PosterProgram {...posterProgramPlacement} />
-        <PosterPlace {...posterPlacePlacement} />
-        <PosterSocials {...posterSocialsPlacement} />
+        <PosterProgram {...posterProgramPlacement} informationId='program' />
+        <PosterPlace {...posterPlacePlacement} informationId='place' />
+        <PosterSocials {...posterSocialsPlacement} informationIds={{ instagram: 'instagram', facebook: 'facebook', twitter: 'twitter' }} />
       </>}
     </section>
   </div>
+  <script is:inline type='application/json' data-poster-plans set:html={serializedPlans} />
+  {filterPlans.available && <DayFilter />}
   <EventModal participants={lineup} />
 </main>

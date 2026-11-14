@@ -9,11 +9,12 @@ interface Props {
   instagram: Placement
   facebook: Placement
   twitter: Placement
+  informationIds?: Partial<Record<'instagram' | 'facebook' | 'twitter', string>>
 }
-const { instagram, facebook, twitter } = Astro.props
+const { instagram, facebook, twitter, informationIds } = Astro.props
 ---
 
-<PosterInformation {...instagram}>
+<PosterInformation {...instagram} informationId={informationIds?.instagram}>
   <a
     href='#'
     target='_blank'
@@ -27,7 +28,7 @@ const { instagram, facebook, twitter } = Astro.props
     <PosterArrow class='group-hover/social:-rotate-45' />
   </a>
 </PosterInformation>
-<PosterInformation {...facebook}>
+<PosterInformation {...facebook} informationId={informationIds?.facebook}>
   <a
     href='#'
     target='_blank'
@@ -41,7 +42,7 @@ const { instagram, facebook, twitter } = Astro.props
     <PosterArrow class='group-hover/social:-rotate-45' />
   </a>
 </PosterInformation>
-<PosterInformation {...twitter}>
+<PosterInformation {...twitter} informationId={informationIds?.twitter}>
   <a
     href='#'
     target='_blank'

@@ -6,11 +6,13 @@ import type { SlotRect } from './poster-grid'
 type Placement = Partial<Record<PosterRange, SlotRect>>
 interface Props extends Placement {
   titleExtension?: Placement
+  informationId?: string
+  titleExtensionId?: string
 }
-const { mobile, tablet, desktop, titleExtension } = Astro.props
+const { mobile, tablet, desktop, titleExtension, informationId, titleExtensionId } = Astro.props
 ---
 
-<PosterInformation {mobile} {tablet} {desktop} class='z-3'>
+<PosterInformation {mobile} {tablet} {desktop} {informationId} class='z-3'>
   <header class='my-auto space-y-8 py-4'>
     <div
       role='group'
@@ -33,4 +35,4 @@ const { mobile, tablet, desktop, titleExtension } = Astro.props
     </h1>
   </header>
 </PosterInformation>
-{titleExtension && <PosterInformation {...titleExtension} aria-hidden='true' />}
+{titleExtension && <PosterInformation {...titleExtension} informationId={titleExtensionId} aria-hidden='true' />}
