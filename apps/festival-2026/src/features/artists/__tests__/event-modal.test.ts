@@ -86,6 +86,74 @@ describe('scoped modal enhancement', () => {
     expect(source.getAttribute('href')).toBe('/musica/a/')
     expect(source.getAttribute('style')).toBe(null)
   })
+  it('freezes the card composition before modal focus and refreshes it after a settled resize', () => {
+    const name = source.querySelector<HTMLElement>('[data-artist-name]')!
+    name.id = 'source-title'
+    name.style.cssText = 'font-family: sans-serif; font-size: 20px; line-height: 20px; text-align: center; white-space: nowrap'
+    name.innerHTML = 'Juan<span data-gap="1" style="display:none"> </span><br data-break="1" style="display:block">Manotas'
+    const createRange = document.createRange.bind(document)
+    vi.spyOn(document, 'createRange').mockImplementation(() => {
+      const range = createRange()
+      range.getBoundingClientRect = () => rect(range.toString().trim() === 'Manotas' ? 30 : 10, 100)
+      return range
+    })
+    dialog.showModal = vi.fn(() => {
+      dialog.open = true
+      name.style.fontSize = '30px'
+      name.querySelector<HTMLElement>('[data-gap]')!.style.display = 'inline'
+      name.querySelector<HTMLElement>('br')!.style.display = 'none'
+    })
+    click()
+    const snapshot = inputs[0].sourceTitle
+    expect(snapshot).toBeDefined()
+    expect(snapshot!.element.isConnected).toBe(false)
+    expect(snapshot!.element.id).toBe('')
+    expect(snapshot!.element.hasAttribute('data-artist-name')).toBe(false)
+    expect(snapshot!.fontSize).toBe(20)
+    expect(snapshot!.element.style.fontSize).toBe('20px')
+    expect(snapshot!.element.style.lineHeight).toBe('1')
+    expect(snapshot!.element.style.textAlign).toBe('center')
+    expect(snapshot!.lineOffsets).toEqual([0, 20])
+    expect(snapshot!.element.querySelectorAll('[data-modal-title-line]')).toHaveLength(2)
+    expect(snapshot!.element.querySelector<HTMLElement>('br')!.style.display).toBe('block')
+    expect(snapshot!.element.querySelector<HTMLElement>('[data-gap]')!.style.display).toBe('none')
+    const heading = dialog.querySelector<HTMLElement>('h2')!
+    expect(heading.style.textAlign).toBe('left')
+    expect(heading.style.width).toBe('fit-content')
+    expect(heading.style.maxWidth).toBe('100%')
+    expect(heading.style.whiteSpace).toBe('nowrap')
+    expect(heading.querySelector<HTMLElement>('br')?.style.display).toBe('block')
+    expect(heading.querySelector<HTMLElement>('[data-gap]')?.style.display).toBe('none')
+    window.dispatchEvent(new Event('resize'))
+    expect(heading.querySelector<HTMLElement>('br')?.style.display).toBe('none')
+    root.querySelector<HTMLElement>('[data-modal-close]')!.click()
+    const refreshed = inputs.at(-1)!
+    expect(refreshed.initiallyOpen).toBe(true)
+    expect(refreshed.sourceTitle?.fontSize).toBe(30)
+    expect(refreshed.sourceTitle?.element.querySelectorAll('[data-modal-title-line]')).toHaveLength(1)
+    expect(refreshed.sourceTitle?.element.querySelector<HTMLElement>('br')!.style.display).toBe('none')
+    expect(refreshed.sourceTitle?.element.querySelector<HTMLElement>('[data-gap]')!.style.display).toBe('inline')
+    expect(heading.querySelector<HTMLElement>('br')?.style.display).toBe('none')
+    expect(snapshot!.element.querySelector<HTMLElement>('br')!.style.display).toBe('block')
+  })
+  it('fits the intrinsic modal title before the close control without changing the source card', () => {
+    root.insertAdjacentHTML('beforeend', '<style>#event-modal-title { font-size: 24px }</style>')
+    const name = source.querySelector<HTMLElement>('[data-artist-name]')!
+    name.style.cssText = 'font-size: 20px; line-height: 20px; text-align: center'
+    const original = name.outerHTML
+    root.querySelector<HTMLElement>('[data-modal-close]')!.getBoundingClientRect = () => rect(80, 100)
+    dialog.showModal = vi.fn(() => {
+      dialog.open = true
+      // The heading is cloned from template content after the shared fixture reads.
+      dialog.querySelector<HTMLElement>('h2')!.getBoundingClientRect = () => rect(10, 100)
+    })
+    click()
+    const title = dialog.querySelector<HTMLElement>('h2')!
+    expect(title.style.maxWidth).toBe('58px')
+    expect(title.style.fontSize).toBe('11.6px')
+    expect(title.style.textAlign).toBe('left')
+    expect(name.outerHTML).toBe(original)
+  })
   it.each(['button', 'cancel', 'backdrop'])('keeps modality through controlled %s close and restores focus only after reverse', method => {
     click()
     if (method === 'button') root.querySelector<HTMLElement>('[data-modal-close]')!.click()

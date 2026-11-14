@@ -1,4 +1,5 @@
 import { createModalMotion, type ModalMotion, type MotionGeometry, type MotionInput } from './event-modal-motion'
+import { applySourceTitle, captureSourceTitle, type SourceTitleSnapshot } from './event-modal-title'
 
 interface ModalOptions {
   createMotion?: (input: MotionInput) => ModalMotion
@@ -43,6 +44,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   let restoreSource: (() => void) | undefined
   let unlock: (() => void) | undefined
   let motion: ModalMotion | undefined
+  let sourceTitle: SourceTitleSnapshot | undefined
   let backdropDown = false
   let resize: ResizeObserver | undefined
   let disconnect: MutationObserver | undefined
@@ -59,6 +61,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     phase = 'closed'
     const oldMotion = motion; motion = undefined
     oldMotion?.dispose()
+    sourceTitle = undefined
     restoreSource?.(); restoreSource = undefined
     restoreDialog?.(); restoreDialog = undefined
     unlock?.(); unlock = undefined
@@ -92,10 +95,21 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     if (gap) body.style.setProperty('padding-right', `${padding + gap}px`)
     html.style.setProperty('overflow', 'hidden')
   }
+  const prepareTitle = (first?: MotionGeometry) => {
+    if (first) {
+      const name = origin?.querySelector<HTMLElement>('[data-artist-name]')
+      sourceTitle = name && first.titleRect ? captureSourceTitle(name, first.titleRect) : undefined
+    }
+    const title = content.querySelector<HTMLElement>('#event-modal-title')
+    if (title && sourceTitle) {
+      const closeLeft = dialog.querySelector<HTMLElement>('[data-modal-close]')?.getBoundingClientRect().left
+      applySourceTitle(title, sourceTitle, closeLeft)
+    }
+  }
   const makeMotion = (first: MotionGeometry, titleSize: number, initiallyOpen = false) => {
     const current = ++token
     motion = createMotion({
-      dialog, panel, ...first, titleSize, initiallyOpen,
+      dialog, panel, ...first, titleSize, initiallyOpen, sourceTitle,
       onOpened: () => {
         if (!destroyed && root.isConnected && token === current && phase === 'opening') phase = 'open'
       },
@@ -111,7 +125,10 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     try {
       if (media.matches) cleanup()
       else {
-        if (!motion) makeMotion(currentGeometry, 24, true)
+        if (!motion) {
+          prepareTitle(currentGeometry)
+          makeMotion(currentGeometry, sourceTitle?.fontSize ?? 24, true)
+        }
         motion?.reverse(currentGeometry)
       }
     } catch { cleanup() }
@@ -122,6 +139,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     if (phase === 'closing') { cleanup(); return }
     ++token
     motion?.dispose(); motion = undefined
+    prepareTitle(geometry())
     phase = 'open'
   }
   const onClick = (event: MouseEvent) => {
@@ -144,12 +162,14 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
       const first = geometry()
       const name = link.querySelector<HTMLElement>('[data-artist-name]')
       const titleSize = name ? Number.parseFloat(getComputedStyle(name).fontSize) || 24 : 24
+      sourceTitle = name && first.titleRect ? captureSourceTitle(name, first.titleRect) : undefined
       content.replaceChildren(template.content.cloneNode(true))
       phase = 'opening'
       restoreDialog = ownStyles(dialog, ['--event-backdrop'])
       dialog.style.setProperty('--event-backdrop', '1')
       lockScroll()
       dialog.showModal()
+      prepareTitle()
       dialog.querySelector<HTMLElement>('#event-modal-title')?.focus({ preventScroll: true })
       restoreSource = ownStyles(link, ['visibility'])
       link.style.setProperty('visibility', 'hidden')

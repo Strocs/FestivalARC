@@ -7,6 +7,7 @@ const mock = vi.hoisted(() => ({
 vi.mock('gsap', () => ({ gsap: { timeline: vi.fn((callbacks: { onComplete?: () => void, onReverseComplete?: () => void }) => {
   const timeline: Record<string, ReturnType<typeof vi.fn>> = {}
   for (const key of ['addLabel', 'fromTo', 'to', 'play', 'pause', 'reverse', 'invalidate', 'kill', 'revert', 'eventCallback']) timeline[key] = vi.fn(() => timeline)
+  timeline.recent = vi.fn(() => ({ invalidate: vi.fn() }))
   let progress = 0.37
   timeline.progress = vi.fn((value?: number, suppressEvents = false) => {
     if (value === undefined) return progress
@@ -61,7 +62,7 @@ describe('GSAP modal score', () => {
     expect(onOpened).toHaveBeenCalledOnce()
     expect(dialog.style.getPropertyValue('--event-backdrop')).toBe('1')
     expect(dialog.querySelector<HTMLElement>('[data-modal-details]')!.style.opacity).toBe('1')
-    expect(dialog.querySelector('h2')!.style.opacity).toBe('1')
+    expect(dialog.querySelector('h2')!.style.opacity).toBe('0')
     motion.reverse({ sourceRect: rect(20, 300, 100, 50), titleRect: rect(30, 305, 80, 30) })
     timeline.progress(0)
     expect(onClosed).toHaveBeenCalledOnce()
