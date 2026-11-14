@@ -1,0 +1,23 @@
+---
+import ArtistDetail from './ArtistDetail.astro'
+import type { ParticipantView } from './categories'
+interface Props { participants: readonly ParticipantView[] }
+const { participants } = Astro.props
+---
+<arc-event-modal>
+  <dialog
+    aria-labelledby='event-modal-title'
+    class='m-auto max-h-none w-[calc(100%-2rem)] max-w-3xl overflow-visible border-0 bg-transparent p-0 text-foreground [--event-backdrop:0] backdrop:bg-background/80 backdrop:opacity-[var(--event-backdrop)]'>
+    <div data-modal-panel class='relative isolate flex max-h-[calc(100dvh-2rem-env(safe-area-inset-top)-env(safe-area-inset-bottom))] min-h-0 flex-col'>
+      <!-- Only this nonsemantic paint layer scales; readable content has separate owners. -->
+      <div data-modal-surface aria-hidden='true' class='pointer-events-none absolute inset-0 -z-1 rounded-lg bg-gradient-to-b from-arc-rose to-accent'></div>
+      <button data-modal-close type='button' class='bg-background text-foreground absolute top-3 right-3 z-10 rounded-full px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2'>Cerrar detalle</button>
+      <div data-modal-content class='flex min-h-0 flex-1 flex-col'></div>
+    </div>
+  </dialog>
+  {participants.map(artist => <template data-event-template={artist.id}><ArtistDetail artist={artist} modal /></template>)}
+</arc-event-modal>
+<script>
+  import { registerEventModal } from './event-modal'
+  registerEventModal()
+</script>

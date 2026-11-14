@@ -17,6 +17,8 @@ describe('shared poster scopes', () => {
     const category = categories[index]
     const html = await render(category)
     expect(triggerIds(html)).toEqual(category.participants.map(({ id }) => id))
+    expect(html.match(/<dialog\b/g)).toHaveLength(1)
+    expect([...html.matchAll(/data-event-template="([^"]+)"/g)].map(match => match[1])).toEqual(category.participants.map(({ id }) => id))
     expect(html.match(/<h1\b/g)).toHaveLength(1)
     expect(html).toContain(`>${category.name}</h1>`)
     expect(html.match(/information-slot/g)).toHaveLength(1)
@@ -48,6 +50,8 @@ describe('shared poster scopes', () => {
   it('preserves the homepage mixed roster, title, information and original static footprints', async () => {
     const html = await render()
     expect(triggerIds(html)).toEqual(heroParticipants.map(({ id }) => id))
+    expect(html.match(/<dialog\b/g)).toHaveLength(1)
+    expect(html.match(/data-event-template=/g)).toHaveLength(heroParticipants.length)
     expect(html).toContain('aria-label="El arte de habitar la ciudad"')
     expect(html).toContain('--desktop-column:6;--desktop-row:5;--desktop-width:4;--desktop-height:3')
     expect(html).toContain('--mobile-column:0;--mobile-row:84;--mobile-width:4;--mobile-height:1')

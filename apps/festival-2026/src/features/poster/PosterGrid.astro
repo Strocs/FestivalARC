@@ -1,5 +1,6 @@
 ---
 import ArtistName from './ArtistName.astro'
+import EventModal from '../artists/EventModal.astro'
 import CategoryTitle from './CategoryTitle.astro'
 import PosterDefinitions from './PosterDefinitions.astro'
 import PosterProgram from './PosterProgram.astro'
@@ -170,4 +171,5 @@ const slotClasses =
       </>}
     </section>
   </div>
+  <EventModal participants={lineup} />
 </main>
