@@ -141,19 +141,26 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const endpoint = (): PosterFilterPlan => plans.plans[selected]
   const finish = () => {
     motion?.dispose(); motion = undefined
+    const artistIDs = new Set(endpoint().ids)
+    const activeMotifs = new Set(motifNodes)
     for (const node of artists) {
-      node.hidden = !endpoint().ids.includes(node.dataset.posterArtist!)
+      node.hidden = !artistIDs.has(node.dataset.posterArtist!)
       if (node.hidden) node.style.display = 'none'; else node.style.removeProperty('display')
     }
     for (const node of pool) {
-      node.hidden = !motifNodes.includes(node)
+      node.hidden = !activeMotifs.has(node)
       if (node.hidden) node.style.display = 'none'; else node.style.removeProperty('display')
     }
     releaseScroll?.(); releaseScroll = undefined
     if (pending) status.textContent = endpoint().ids.length ? `${endpoint().ids.length} artistas` : 'No hay artistas para este filtro.'
     pending = false
   }
-  const settle = () => { if (destroyed) return; ++generation; finish() }
+  const settle = () => {
+    if (destroyed) return
+    ++generation
+    if (!pending && !motion && !releaseScroll) return
+    finish()
+  }
   const clearance = () => {
     if (destroyed) return
     // A live height includes wrapping/text growth. Safe-area is also reserved below.

@@ -180,6 +180,32 @@ describe('day filtering through the sole modal owner', () => {
     expect(root.querySelector<HTMLInputElement>('input[value="saturday"]')!.checked).toBe(true)
     expect(visible()).toEqual(['a']); expect(inputs).toHaveLength(1)
   })
+  it.each(['cold idle', 'completed filter'])('does not rewrite grid visibility on idle resize or valid modal opening: %s', state => {
+    if (state === 'completed filter') {
+      choose('saturday')
+      inputs[0].onComplete()
+      expect(visible()).toEqual(['a'])
+      expect(root.querySelector('[data-day-count]')!.textContent).toBe('1 artistas')
+    }
+    const wrappers = [...root.querySelectorAll<HTMLElement>('[data-poster-artist], [data-poster-motif]')]
+    const writes = wrappers.flatMap(node => [
+      vi.spyOn(node, 'hidden', 'set'),
+      vi.spyOn(node.style, 'display', 'set'),
+      vi.spyOn(node.style, 'removeProperty'),
+    ])
+    const expectedArtists = state === 'cold idle' ? ['a', 'b'] : ['a']
+    const expectedCount = state === 'cold idle' ? '' : '1 artistas'
+    window.dispatchEvent(new Event('resize'))
+    expect(visible()).toEqual(expectedArtists)
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe(expectedCount)
+    for (const write of writes) expect(write).not.toHaveBeenCalled()
+    root.querySelector<HTMLAnchorElement>('[data-event-id="a"]')!.click()
+    expect(root.querySelector('dialog')!.open).toBe(true)
+    expect(root.querySelector('[data-modal-content] h2')!.textContent).toBe('a')
+    expect(visible()).toEqual(expectedArtists)
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe(expectedCount)
+    for (const write of writes) expect(write).not.toHaveBeenCalled()
+  })
   it('focuses a surviving filtered member after its modal origin disappears', () => {
     dispose()
     const expanded = createPosterFilterPlans({
