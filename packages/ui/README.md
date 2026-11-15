@@ -34,6 +34,14 @@ Below Tailwind's default `lg` breakpoint (64rem), a native modal dialog provides
 focus containment, Escape dismissal and return focus. It closes after navigation
 or switching to desktop. The original header stays above the sliding surface:
 while open it lives inside the modal top layer, then returns to its original position.
+`mobilePanelMode='layered'` opts into a normal-layer, non-modal native dialog beneath
+an unmoved header (ARC 2026); the default is `'modal'`, preserving the behavior above.
+The layered mode keeps the header interactive, marks the open panel `aria-modal`,
+contains keyboard focus across header and panel, and reversibly makes siblings along
+the component's ancestor path inert to block background interaction and readout.
+Escape closes it, focus returns to the toggle, and scroll/background state is restored
+after the exit animation, on desktop resize, or during teardown. The header is never
+reparented or replaced with a placeholder in this mode.
 The same header button morphs its three strokes into an X and updates its accessible label;
 the outer strokes converge and rotate with a spring-like easing while the middle retracts.
 The stroke animation reverses on close and respects reduced motion;

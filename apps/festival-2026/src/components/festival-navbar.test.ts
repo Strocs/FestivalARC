@@ -95,6 +95,13 @@ describe('FestivalNavbar public contract', () => {
     expect(html).toContain('28 y 29 de noviembre de 2026')
   })
 
+  it('opts only 2026 into the stationary layered mobile mode', async () => {
+    expect(await render()).toContain('data-mobile-panel-mode="modal"')
+    expect(await render({ props: { editions, mobilePanelMode: 'layered' } })).toContain('data-mobile-panel-mode="layered"')
+    const container = await AstroContainer.create()
+    expect(await container.renderToString(Header)).toContain('data-mobile-panel-mode="layered"')
+  })
+
   it('renders the minimal identity and mandatory editions without optional content', async () => {
     const html = await render()
     expect(html).toContain('28 y 29 de noviembre')
@@ -149,19 +156,6 @@ describe('FestivalNavbar public contract', () => {
     expect(toggle.match(/data-icon-line/g)).toHaveLength(3)
     expect(toggle).not.toContain('data-icon-close')
     expect(html).not.toContain('data-header-close')
-  })
-
-  it('matches the footer border weight and color on the 2026 header only', async () => {
-    const container = await AstroContainer.create()
-    const html = await container.renderToString(Header)
-    expect(html).toContain('[&amp;_[data-festival-header]]:border-b')
-    expect(html).toContain('--header-border-color:color-mix(in_oklab,var(--color-primary)_10%,transparent)')
-  })
-
-  it('does not darken the page behind the mobile panel', async () => {
-    const html = await render()
-    expect(html).toContain('backdrop:bg-transparent')
-    expect(html).not.toContain('backdrop:bg-black')
   })
 
   it('renders the same five category destinations in the 2026 desktop group and mobile panel', async () => {

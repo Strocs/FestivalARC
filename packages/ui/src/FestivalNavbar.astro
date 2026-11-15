@@ -9,8 +9,9 @@ interface Props {
   centeredLinks?: boolean
   currentPath?: string
   underlineLinks?: boolean
+  mobilePanelMode?: 'modal' | 'layered'
 }
-const { editions, links = [], homeHref = '/', centeredLinks = false, currentPath, underlineLinks = true } = Astro.props
+const { editions, links = [], homeHref = '/', centeredLinks = false, currentPath, underlineLinks = true, mobilePanelMode = 'modal' } = Astro.props
 for (const name of ['logo', 'date']) {
   if (!Astro.slots.has(name)) throw new Error(`FestivalNavbar requires the "${name}" slot`)
 }
@@ -38,7 +39,7 @@ const separators = await Promise.all(links.map((_, index) => {
 const panelId = `festival-navigation-${crypto.randomUUID()}`
 const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
 ---
-<festival-navbar class='contents'>
+<festival-navbar class='contents' data-mobile-panel-mode={mobilePanelMode}>
   <header data-festival-header class='relative z-30 border-[var(--header-border-color,currentColor)] bg-[var(--header-bg-color,transparent)] py-1 text-[color:var(--header-text-color,inherit)]'>
     <div class:list={['relative mx-auto flex min-h-16 w-full items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-14', centeredLinks && 'lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]']}>
       <div data-header-brand class='flex min-w-0 items-center gap-3'>
@@ -74,7 +75,7 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
       </button>
     </div>
   </header>
-  <dialog id={panelId} data-header-panel aria-label='Navegación del festival' class='fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overflow-hidden border-0 bg-transparent p-0 text-[color:var(--header-panel-text-color,CanvasText)] backdrop:bg-transparent'>
+  <dialog id={panelId} data-header-panel aria-label='Navegación del festival' class='fixed inset-0 z-20 m-0 h-dvh max-h-none w-full max-w-none overflow-hidden border-0 bg-transparent p-0 text-[color:var(--header-panel-text-color,CanvasText)] backdrop:bg-transparent'>
     <div data-header-surface class='absolute inset-0 flex flex-col gap-8 overflow-y-auto bg-[var(--header-panel-bg-color,Canvas)] px-6 pb-6 pt-[var(--navigation-header-height)]'>
       <nav aria-label='Navegación móvil' class='my-auto flex flex-col items-center gap-6 text-center'>
         {<ul class='flex flex-col items-center gap-6 text-2xl'>
@@ -98,6 +99,7 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
       const toggle = this.querySelector<HTMLButtonElement>('[data-header-toggle]')!
       const header = this.querySelector<HTMLElement>('[data-festival-header]')!
       const surface = this.querySelector<HTMLElement>('[data-header-surface]')!
+      const layered = this.dataset.mobilePanelMode === 'layered'
       let placeholder: HTMLDivElement | undefined
       const setExpanded = (open: boolean) => {
         toggle.setAttribute('aria-expanded', String(open))
@@ -113,13 +115,45 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
       const { signal } = controller
       const desktop = window.matchMedia('(min-width: 64rem)')
       let previousOverflow = ''
+      let previousOverflowPriority = ''
       let locked = false
+      const inertSiblings = new Map<Element, string | null>()
+      let previousAriaModal: string | null = null
+      const isolateBackground = () => {
+        previousAriaModal = panel.getAttribute('aria-modal')
+        panel.setAttribute('aria-modal', 'true')
+        // Protect the component's branch at each ancestor, never the header or panel.
+        let branch: Element = this
+        while (branch.parentElement) {
+          for (const sibling of branch.parentElement.children) {
+            if (sibling === branch) continue
+            inertSiblings.set(sibling, sibling.getAttribute('inert'))
+            sibling.setAttribute('inert', '')
+          }
+          branch = branch.parentElement
+        }
+      }
+      const restoreBackground = () => {
+        if (!layered) return
+        for (const [element, value] of inertSiblings) {
+          if (value === null) element.removeAttribute('inert')
+          else element.setAttribute('inert', value)
+        }
+        inertSiblings.clear()
+        if (previousAriaModal === null) panel.removeAttribute('aria-modal')
+        else panel.setAttribute('aria-modal', previousAriaModal)
+      }
+      const containsFocus = (target: EventTarget | null) => target instanceof Node
+        && (header.contains(target) || panel.contains(target))
       const restoreScroll = () => {
         if (!locked) return
-        document.documentElement.style.overflow = previousOverflow
+        if (previousOverflow) document.documentElement.style.setProperty('overflow', previousOverflow, previousOverflowPriority)
+        else document.documentElement.style.removeProperty('overflow')
         locked = false
       }
+      let motionGeneration = 0
       const cancelMotion = () => {
+        motionGeneration++
         surface.getAnimations().forEach(animation => animation.cancel())
         toggle.getAnimations().forEach(animation => animation.cancel())
       }
@@ -138,7 +172,10 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
         cancelMotion()
         toggle.animate([{ transform: toggleTransform }, { transform: 'rotate(0deg)' }], { duration: 300, easing: 'ease', fill: 'forwards' })
         const exit = surface.animate([{ transform: surfaceTransform }, { transform: 'translateX(100%)' }], { duration: 500, easing: 'ease', fill: 'forwards' })
-        exit.onfinish = () => panel.close()
+        const generation = motionGeneration
+        exit.onfinish = () => {
+          if (generation === motionGeneration && closing) panel.close()
+        }
       }
       panel.addEventListener('cancel', event => {
         event.preventDefault()
@@ -150,14 +187,20 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
           return
         }
         previousOverflow = document.documentElement.style.overflow
+        previousOverflowPriority = document.documentElement.style.getPropertyPriority('overflow')
         const height = header.getBoundingClientRect().height
-        placeholder = document.createElement('div')
-        placeholder.style.height = `${height}px`
-        header.before(placeholder)
-        // Keep the original header and control above the surface, inside the modal top layer.
-        panel.prepend(header)
+        if (!layered) {
+          placeholder = document.createElement('div')
+          placeholder.style.height = `${height}px`
+          header.before(placeholder)
+          // Default consumers retain the native modal top-layer header.
+          panel.prepend(header)
+        }
         panel.style.setProperty('--navigation-header-height', `${height}px`)
-        panel.showModal()
+        if (layered) {
+          panel.show()
+          isolateBackground()
+        } else panel.showModal()
         setExpanded(true)
         toggle.focus()
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -171,10 +214,35 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
         closing = false
         cancelMotion()
         restoreScroll()
+        restoreBackground()
         restoreHeader()
         setExpanded(false)
         if (!desktop.matches && this.isConnected) toggle.focus()
       }, { signal })
+      if (layered) {
+        document.addEventListener('focusin', event => {
+          if (panel.open && !containsFocus(event.target)) toggle.focus({ preventScroll: true })
+        }, { signal })
+        document.addEventListener('keydown', event => {
+          if (!panel.open || event.defaultPrevented) return
+          if (event.key === 'Escape') {
+            event.preventDefault()
+            closePanel()
+          } else if (event.key === 'Tab') {
+            const controls = [...header.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, [tabindex]'),
+              ...panel.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, [tabindex]')]
+              .filter(element => element.tabIndex >= 0 && !element.matches(':disabled')
+                && !element.closest('[hidden], [inert]') && element.getClientRects().length > 0
+                && getComputedStyle(element).visibility !== 'hidden')
+            const first = controls[0] ?? toggle
+            const last = controls.at(-1) ?? toggle
+            if (!containsFocus(document.activeElement) || (event.shiftKey ? document.activeElement === first : document.activeElement === last)) {
+              event.preventDefault()
+              ;(event.shiftKey ? last : first).focus({ preventScroll: true })
+            }
+          }
+        }, { signal })
+      }
       panel.addEventListener('click', event => {
         if ((event.target as Element).closest('a')) closePanel()
       }, { signal })
@@ -213,10 +281,13 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
 
       this.cleanup = () => {
         controller.abort()
+        cancelMotion()
+        closing = false
         panel.close()
         restoreHeader()
         setExpanded(false)
         restoreScroll()
+        restoreBackground()
       }
       document.addEventListener('astro:before-swap', () => this.cleanup?.(), { signal, once: true })
     }

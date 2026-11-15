@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets'
 import FestivalNavbar from '@festivalarc/ui/FestivalNavbar.astro'
 import NavigationTile from './NavigationTile.astro'
 import { publicationConfig } from '../../../../editions.config'
@@ -13,13 +14,13 @@ const links = [
   ...categories.map(({ name, path }) => ({ label: name, href: publicPath(path) })),
 ]
 ---
-<div class='sticky top-0 z-30 font-sans [&_[data-header-brand]]:flex-wrap [&_a[aria-current]]:text-arc-yellow [--header-bg-color:var(--color-background)] [--header-text-color:var(--color-foreground)] [&_[data-festival-header]]:border-b [--header-border-color:color-mix(in_oklab,var(--color-primary)_10%,transparent)] [--header-panel-bg-color:var(--color-background)] [--header-panel-text-color:var(--color-foreground)]'>
-  <FestivalNavbar editions={editions} {links} centeredLinks homeHref={publicPath('/')} currentPath={Astro.url.pathname} underlineLinks={false}>
+<div class='sticky top-0 z-30 font-sans [&_[data-header-brand]]:flex-wrap [&_a[aria-current]]:text-arc-yellow [&_nav_a:hover]:text-arc-yellow [&_nav_a:focus-visible]:text-arc-yellow [--header-bg-color:var(--color-background)] [--header-text-color:var(--color-foreground)] [&_[data-festival-header]]:border-b [--header-border-color:color-mix(in_oklab,var(--color-primary)_10%,transparent)] [--header-panel-bg-color:var(--color-background)] [--header-panel-text-color:var(--color-foreground)]'>
+  <FestivalNavbar editions={editions} {links} mobilePanelMode='layered' centeredLinks homeHref={publicPath('/')} currentPath={Astro.url.pathname} underlineLinks={false}>
     <NavigationTile slot='separator-1' motif='chevrons-right' />
     <NavigationTile slot='separator-2' motif='rosette-yellow' />
     <NavigationTile slot='separator-3' motif='lightning' />
     <NavigationTile slot='separator-4' motif='sparks' />
-    <img slot='logo' src={publicPath(arc26Logo.src)} width={arc26Logo.width} height={arc26Logo.height} alt='Logotipo del Festival ARC 2026' class='block h-11 w-full object-contain object-left' loading='eager' />
+    <Image slot='logo' src={arc26Logo} width={arc26Logo.width} height={arc26Logo.height} alt='Logotipo del Festival ARC 2026' class='block h-11 w-full object-contain object-left' loading='eager' />
     <span slot='date'>28 y 29 de noviembre</span>
     <span slot='location'>Plaza de Armas de La Serena</span>
   </FestivalNavbar>
