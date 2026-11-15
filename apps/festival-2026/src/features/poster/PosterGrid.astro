@@ -86,7 +86,7 @@ const slotClasses =
       {
         lineup.map((artist) => (
           <div
-            class:list={[slotClasses, 'z-2 relative min-h-[calc(2*var(--slot-height)*var(--unit))] md:min-h-0']}
+            class:list={[slotClasses, 'z-2 relative min-h-[calc(3*var(--slot-height)*var(--unit))] md:min-h-0']}
             style={positions(artistPositions(artist.id), 'grid')}
             data-poster-artist={artist.id}>
             <ArtistName artist={artist} />
