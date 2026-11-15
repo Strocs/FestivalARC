@@ -41,6 +41,20 @@ describe('shared build-time motif distribution', () => {
     }
   })
 
+  it('respects actual shared edges between mixed unit and double-size tiles', () => {
+    const motifs = [
+      ...[0, 2].flatMap(row => [0, 2, 4, 6].map(column => ({ column, row, width: 2, height: 2 }))),
+      ...Array.from({ length: 8 }, (_, column) => ({ column, row: 4, width: 1, height: 1 })),
+    ]
+    const result = selectPosterMotifs([{ columns: 8, rows: 5, artists: [], motifs }])
+    motifs.forEach((a, index) => motifs.slice(0, index).forEach((b, previous) => {
+      const horizontal = (a.column === b.column + b.width || b.column === a.column + a.width) && a.row < b.row + b.height && b.row < a.row + a.height
+      const vertical = (a.row === b.row + b.height || b.row === a.row + a.height) && a.column < b.column + b.width && b.column < a.column + a.width
+      if (horizontal || vertical) expect(family(result[index])).not.toBe(family(result[previous]))
+    }))
+    expect(selectPosterMotifs([{ columns: 8, rows: 5, artists: [], motifs }])).toEqual(result)
+  })
+
   it('mixes cyan and yellow throughout each visible prefix while retaining the 6:3:2 catalog weights', () => {
     const motifs = selectPosterMotifs(layouts)
     for (const layout of layouts) {

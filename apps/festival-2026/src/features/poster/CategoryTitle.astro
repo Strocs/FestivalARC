@@ -1,17 +1,18 @@
 ---
 import PosterInformation from './PosterInformation.astro'
-import { measureArtistName } from './artist-name'
-import type { PosterRange } from './poster'
-import type { SlotRect } from './poster-grid'
+import { createCategoryTitle } from './category-title'
 
-interface Props extends Partial<Record<PosterRange, SlotRect>> { name: string; informationId?: string }
-const { name, mobile, tablet, desktop, informationId } = Astro.props
-// Fit the longest whole word using the same uppercase Poppins 900 metrics as
-// artist labels. Normal word-boundary wrapping keeps the piece within its lane.
-const wordWidth = Math.max(...name.trim().split(/\s+/).map(measureArtistName))
+interface Props { name: string }
+const { name } = Astro.props
+const title = createCategoryTitle(name)
 ---
-<PosterInformation {mobile} {tablet} {desktop} {informationId} class='z-3'>
-  <header class='my-auto py-4'>
-    <h1 id='page-title' style={`--title-fit:${0.94 / wordWidth}`} class='text-foreground w-full font-sans text-[length:min(7rem,calc(100cqw*var(--title-fit)))] font-black uppercase leading-[0.95] tracking-tighter'>{name}</h1>
-  </header>
-</PosterInformation>
+<h1 id='page-title' class='sr-only'>{name}</h1>
+{title.lines.map((line, index) => {
+  const block = title.information[index]
+  const fontStyle = (['mobile', 'tablet', 'desktop'] as const).map(range =>
+    `--${range}-title-size:${100 * line.fontUnits[range] / (block.positions[range]!.width * 160)}cqw;--${range}-title-height:${100 * 152 * block.positions[range]!.height / (block.positions[range]!.width * 160)}cqw`,
+  ).join(';')
+  return <PosterInformation {...block.positions} informationId={block.id} class='z-3' aria-hidden='true'>
+    <span style={fontStyle} class='text-foreground flex min-h-[var(--mobile-title-height)] md:min-h-[var(--tablet-title-height)] xl:min-h-[var(--desktop-title-height)] items-center whitespace-nowrap font-sans text-[length:var(--mobile-title-size)] font-black uppercase leading-none tracking-tighter md:text-[length:var(--tablet-title-size)] xl:text-[length:var(--desktop-title-size)]'>{line.text}</span>
+  </PosterInformation>
+})}

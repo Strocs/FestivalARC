@@ -13,7 +13,8 @@ const { mobile, tablet, desktop, titleExtension, informationId, titleExtensionId
 ---
 
 <PosterInformation {mobile} {tablet} {desktop} {informationId} class='z-3'>
-  <header class='my-auto space-y-8 py-4'>
+  <header class='my-auto px-4 py-4 md:px-0'>
+    <div class='@container space-y-8'>
     <div
       role='group'
       class='text-foreground font-mono text-[length:clamp(1rem,calc(0.75rem+3cqw),2.5rem)] font-semibold leading-none md:text-[length:clamp(1rem,calc(0.75rem+6cqw),2.5rem)]'
@@ -33,6 +34,7 @@ const { mobile, tablet, desktop, titleExtension, informationId, titleExtensionId
       <span class='block md:w-3/4'>LA</span>
       <span class='block text-[#e50070] md:w-3/4'>CIUDAD</span>
     </h1>
+    </div>
   </header>
 </PosterInformation>
 {titleExtension && <PosterInformation {...titleExtension} informationId={titleExtensionId} aria-hidden='true' />}

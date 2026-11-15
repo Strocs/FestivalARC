@@ -1,4 +1,4 @@
-export interface MotifCell { variant: string; column?: number; row?: number }
+export interface MotifCell { variant: string; column?: number; row?: number; width?: number; height?: number }
 export interface MotifMatch { from: number; to: number }
 
 /** Endpoint indices are not identities. Exact matches have first refusal. */
@@ -7,6 +7,7 @@ export function matchPosterMotifs(previous: readonly MotifCell[], next: readonly
   const used = new Set<number>()
   const taken = new Set<number>()
   const distance = (a: MotifCell, b: MotifCell) => a.variant === b.variant
+    && (a.width ?? 1) === (b.width ?? 1) && (a.height ?? 1) === (b.height ?? 1)
     && a.column !== undefined && a.row !== undefined && b.column !== undefined && b.row !== undefined
     ? Math.hypot(a.column - b.column, a.row - b.row) : Infinity
   const reserve = (from: number, to: number) => { matches.push({ from, to }); used.add(from); taken.add(to) }

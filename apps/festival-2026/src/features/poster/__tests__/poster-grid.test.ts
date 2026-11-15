@@ -24,7 +24,7 @@ describe('poster slot layout', () => {
     expect(result.columns).toBe(3)
     expect(result.artists.map(({ column, row, width, height }) => ({ column, row, width, height })))
       .toEqual([0, 2, 4, 6].map(row => ({ column: 0, row, width: 3, height: 1 })))
-    for (const row of [1, 3, 5, 7]) {
+    for (const row of [1, 3, 5]) {
       expect(result.motifs.filter(tile => tile.row === row))
         .toEqual([0, 1, 2].map(column => ({ column, row, width: 1, height: 1 })))
     }
@@ -71,7 +71,7 @@ describe('poster slot layout', () => {
       const envelope = { ...artist, height: 2 }
       expect(blocks.some(block => overlaps(block, envelope))).toBe(false)
       expect(result.artists.some(other => other !== artist && overlaps(other, envelope))).toBe(false)
-      for (let column = artist.column; column < artist.column + artist.width; column++) {
+      for (let column = artist.column; artist.row + artist.height < result.rows && column < artist.column + artist.width; column++) {
         expect(result.motifs).toContainEqual({ column, row: artist.row + 1, width: 1, height: 1 })
       }
     }
@@ -84,14 +84,32 @@ describe('poster slot layout', () => {
     expect(artists).toEqual(before)
   })
 
-  it('grows only to contain information and reserved artist envelopes', () => {
+  it('grows only to contain actual information and artists, not trailing reserves', () => {
     expect(calculatePosterLayout([], 10)).toEqual({ columns: 10, rows: 0, artists: [], motifs: [] })
-    expect(calculatePosterLayout(ids(1), 10).rows).toBe(2)
-    expect(calculatePosterLayout(ids(6), 10).rows).toBe(4)
+    expect(calculatePosterLayout(ids(1), 10).rows).toBe(1)
+    expect(calculatePosterLayout(ids(6), 10).rows).toBe(3)
     expect(calculatePosterLayout([], 10, [{ column: 0, row: 3, width: 2, height: 2 }]).rows).toBe(5)
   })
 
-  it('fills every other cell exactly once, including lower reserves', () => {
+  it.each([2, 3, 4, 6, 8, 10] as const)('trims only trailing decoration at %i columns without moving artists or clipping information', columns => {
+    const width = [3, 4, 8].includes(columns) ? columns : 2
+    const height = columns === 8 ? 2 : 1
+    const result = calculatePosterLayout(ids(2), columns)
+    const second = columns === 10 || columns === 6 ? { column: 4, row: 0 } : { column: 0, row: height + 1 }
+    expect(result.artists).toEqual([
+      { id: 'artist-0', column: 0, row: 0, width, height },
+      { id: 'artist-1', ...second, width, height },
+    ])
+    expect(result.rows).toBe(second.row + height)
+    expect(result.motifs.every(tile => tile.row < result.rows)).toBe(true)
+    const information = [{ column: 0, row: 20, width: 1, height: 2 }]
+    const extended = calculatePosterLayout(ids(2), columns, information)
+    expect(extended.artists).toEqual(result.artists)
+    expect(extended.rows).toBe(22)
+    expect(extended.motifs).toContainEqual({ column: 0, row: height, width: 1, height: 1 })
+  })
+
+  it('fills every other cell exactly once, including visible lower reserves', () => {
     const blocks = desktopTitle
     const result = calculatePosterLayout(ids(12), 10, blocks)
     for (let row = 0; row < result.rows; row++) {
@@ -152,7 +170,7 @@ describe('poster slot layout', () => {
   it.each([
     ['duplicate IDs', ['a', 'a'], 10, [], 'Artist IDs must be non-empty and unique'],
     ['blank ID', [' '], 10, [], 'Artist IDs must be non-empty and unique'],
-    ['unsupported columns', ['a'], 5, [], 'Grid columns must be 2, 3, 4, 6 or 10'],
+    ['unsupported columns', ['a'], 5, [], 'Grid columns must be 2, 3, 4, 6, 8 or 10'],
     ['outside columns', ['a'], 6, [{ column: 5, row: 0, width: 2, height: 1 }], 'Invalid information footprint'],
     ['negative row', ['a'], 6, [{ column: 0, row: -1, width: 2, height: 1 }], 'Invalid information footprint'],
     ['fractional size', ['a'], 6, [{ column: 0, row: 0, width: 2, height: 1.5 }], 'Invalid information footprint'],

@@ -4,6 +4,11 @@ import PosterSocials from '../PosterSocials.astro'
 import PosterProgram from '../PosterProgram.astro'
 
 const networks = ['instagram', 'facebook', 'twitter'] as const
+const destinations = [
+  'https://www.instagram.com/festival_arc',
+  'https://www.facebook.com/FestivalARC',
+  'https://x.com/FestivalARC',
+]
 const props = {
   instagram: { mobile: { column: 0, row: 28, width: 3, height: 1 } },
   facebook: { mobile: { column: 0, row: 34, width: 3, height: 1 } },
@@ -11,7 +16,7 @@ const props = {
 }
 
 describe('PosterSocials', () => {
-  it('renders three independent footprints with page-authored placement and placeholder links', async () => {
+  it('renders three independent footprints with page-authored placement and official social links', async () => {
     const container = await AstroContainer.create()
     const html = await container.renderToString(PosterSocials, { props })
     expect(html.match(/information-slot/g)).toHaveLength(3)
@@ -19,7 +24,7 @@ describe('PosterSocials', () => {
     expect(links).toHaveLength(3)
     for (const [index, network] of networks.entries()) {
       expect(links[index]).toContain(`aria-label="${network[0].toUpperCase() + network.slice(1)}"`)
-      expect(links[index]).toContain('href="#"')
+      expect(links[index]).toContain(`href="${destinations[index]}"`)
       expect(links[index]).toContain('target="_blank"')
       expect(links[index]).toContain('rel="noopener noreferrer"')
       expect(links[index]).toContain("M8 42H65L42 18H64L94 50 64 82H42L65 58H8Z")

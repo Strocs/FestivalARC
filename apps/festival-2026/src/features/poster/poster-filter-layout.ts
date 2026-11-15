@@ -18,6 +18,7 @@ export interface PosterFilterPlan {
 }
 export interface PosterFilterPlans {
   version: 1
+  scope: 'home' | 'category'
   available: boolean
   participants: FilterParticipant[]
   plans: Record<DayKey, PosterFilterPlan>
@@ -25,7 +26,7 @@ export interface PosterFilterPlans {
 
 const ranges = ['desktop', 'tablet', 'mobile'] as const
 const days = { saturday: 'Sábado 28', sunday: 'Domingo 29' } as const
-const columns: Record<PosterRange, GridColumns> = { desktop: 10, tablet: 6, mobile: 4 }
+const columns: Record<PosterRange, GridColumns> = { desktop: 10, tablet: 6, mobile: 8 }
 const limit = 4096
 const before = (a: SlotRect, b: SlotRect) => a.row < b.row || (a.row === b.row && a.column < b.column)
 
@@ -63,7 +64,8 @@ function compact(
     const established = calculatePosterLayout(prefix, columns[range], Object.values(information), anchors, startRow)
     anchors = established.artists.map(({ id, column, row }) => ({ id, column, row }))
     const lastArtist = established.artists.at(-1)
-    const firstRow = Math.max(lastArtist?.row ?? 0, lastBlock?.row ?? 0)
+    // Movable information must not consume the homepage's reserved opening band.
+    const firstRow = Math.max(startRow, lastArtist?.row ?? 0, lastBlock?.row ?? 0)
     let placed = false
     // Bounded forward scan. Ask the engine to validate candidate footprints AND
     // committed full-height artist anchors, retaining its cadence/collision rules.
@@ -116,7 +118,7 @@ export function createPosterFilterPlans(input: PosterFilterInput): PosterFilterP
   }
   const participants = input.participants.map(({ id, day }) => ({ id, day }))
   const ids = participants.map(participant => participant.id)
-  const startRow = (range: PosterRange) => input.scope === 'home' && range === 'mobile' ? 4 : 0
+  const startRow = (range: PosterRange) => input.scope === 'home' && range === 'mobile' ? 8 : 0
   const baseline = {} as Record<PosterRange, PosterLayout>
   for (const range of ranges) {
     baseline[range] = calculatePosterLayout(ids, columns[range], Object.values(rangeInformation(input.information, range)), [], startRow(range))
@@ -136,6 +138,25 @@ export function createPosterFilterPlans(input: PosterFilterInput): PosterFilterP
         information[range] = result.information
       }
     }
+    if (input.scope === 'home') {
+      const layout = layouts.mobile
+      const intro = input.information.find(block => block.id === 'intro' && block.fixed)?.positions.mobile
+      const bandStart = intro ? intro.row + intro.height : startRow('mobile')
+      const bandEnd = startRow('mobile')
+      // Coalesce only the complete opening reserve; packing and visible trim stay owned by the engine.
+      if (intro?.column === 0 && intro.width === layout.columns && bandEnd - bandStart === 4) {
+        const band = layout.motifs.filter(cell => cell.row >= bandStart && cell.row < bandEnd)
+        if (band.length === layout.columns * (bandEnd - bandStart)) {
+          layout.motifs = [
+            ...layout.motifs.filter(cell => cell.row < bandStart),
+            ...Array.from({ length: 2 }, (_, y) => Array.from({ length: layout.columns / 2 }, (_, x) => ({
+              column: x * 2, row: bandStart + y * 2, width: 2, height: 2,
+            }))).flat(),
+            ...layout.motifs.filter(cell => cell.row >= bandEnd),
+          ]
+        }
+      }
+    }
     const variants = selectPosterMotifs(ranges.map(range => layouts[range]))
     return {
       ids: selected, layouts, information,
@@ -147,6 +168,7 @@ export function createPosterFilterPlans(input: PosterFilterInput): PosterFilterP
   }
   return {
     version: 1,
+    scope: input.scope,
     available: participants.some(participant => participant.day === days.saturday) && participants.some(participant => participant.day === days.sunday),
     participants,
     plans: { all: build('all'), saturday: build('saturday'), sunday: build('sunday') },

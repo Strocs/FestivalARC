@@ -23,7 +23,7 @@ const isKey = (value: unknown): value is DayKey => keys.includes(value as DayKey
 
 /** Validate the entire finite handoff before changing any live endpoint. No packing. */
 function validate(value: PosterFilterPlans, artists: HTMLElement[], information: HTMLElement[], motifs: HTMLElement[]): boolean {
-  if (!value || value.version !== 1 || value.available !== true || !Array.isArray(value.participants) || value.participants.length > 512) return false
+  if (!value || value.version !== 1 || (value.scope !== 'home' && value.scope !== 'category') || value.available !== true || !Array.isArray(value.participants) || value.participants.length > 512) return false
   const ids = value.participants.map(p => p.id)
   if (value.participants.some(p => typeof p.id !== 'string' || !p.id || typeof p.day !== 'string') || new Set(ids).size !== ids.length
     || ids.join('\0') !== artists.map(n => n.dataset.posterArtist).join('\0')) return false
@@ -36,7 +36,7 @@ function validate(value: PosterFilterPlans, artists: HTMLElement[], information:
     if (!Array.isArray(plan.ids) || plan.ids.join('\0') !== expected.join('\0') || !Array.isArray(plan.motifs) || plan.motifs.length > 40960) return false
     for (const range of ranges) {
       const layout = plan.layouts[range]
-      const columns = range === 'mobile' ? 4 : range === 'tablet' ? 6 : 10
+      const columns = range === 'mobile' ? 8 : range === 'tablet' ? 6 : 10
       if (layout.columns !== columns || !Number.isSafeInteger(layout.rows) || layout.rows < 0 || layout.rows > 4096) return false
       const validRect = (rect: SlotRect) => rect && [rect.column, rect.row, rect.width, rect.height].every(Number.isSafeInteger)
         && rect.column >= 0 && rect.row >= 0 && rect.width > 0 && rect.height > 0 && rect.column + rect.width <= columns && rect.row + rect.height <= layout.rows
@@ -58,10 +58,18 @@ function validate(value: PosterFilterPlans, artists: HTMLElement[], information:
       }
       for (const rect of Object.values(plan.information[range])) if (!occupy(rect, protectedCells) || !occupy(rect, paint)) return false
       for (const artist of layout.artists) {
-        if (artist.height !== 1 || artist.width !== (range === 'mobile' ? 4 : 2) || artist.row + 2 > layout.rows
-          || !occupy({ ...artist, height: 2 }, protectedCells) || !occupy(artist, paint)) return false
+        // Visible paint is bounded above; the logical reserve may cross only the bottom edge.
+        if (artist.height !== (range === 'mobile' ? 2 : 1) || artist.width !== (range === 'mobile' ? 8 : 2)
+          || !occupy({ ...artist, height: artist.height + 1 }, protectedCells) || !occupy(artist, paint)) return false
       }
-      for (const rect of layout.motifs) if (rect.width !== 1 || rect.height !== 1 || !occupy(rect, paint)) return false
+      for (const rect of layout.motifs) {
+        const intro = plan.information.mobile.intro
+        const openingTile = value.scope === 'home' && range === 'mobile'
+          && intro?.column === 0 && intro.row === 0 && intro.width === 8 && intro.height === 4
+          && rect.width === 2 && rect.height === 2 && rect.column % 2 === 0
+          && (rect.row === 4 || rect.row === 6)
+        if ((!openingTile && (rect.width !== 1 || rect.height !== 1)) || !occupy(rect, paint)) return false
+      }
       if (paint.size !== columns * layout.rows) return false
       if (plan.motifs.some((m, index) => m.index !== index || !variants.has(m.variant)
         || Object.keys(m.positions).some(r => !ranges.includes(r as PosterRange))

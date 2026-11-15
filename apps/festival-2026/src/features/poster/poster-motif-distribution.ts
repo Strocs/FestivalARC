@@ -9,12 +9,21 @@ export function selectPosterMotifs(layouts: readonly PosterLayout[]): PosterMoti
   for (const layout of layouts) {
     const previous = new Map<string, number>()
     layout.motifs.forEach((cell, index) => {
-      // Generated cells are row-major: only left/up edges can already be selected.
-      for (const [dx, dy] of [[-1, 0], [0, -1], [-1, -1], [1, -1]]) {
-        const neighbor = previous.get(`${cell.column + dx},${cell.row + dy}`)
-        if (neighbor !== undefined) (dx === 0 || dy === 0 ? edges : diagonals)[index].add(neighbor)
+      // Index occupied logical cells so mixed-size rectangles use their actual borders.
+      const left = cell.column; const right = left + cell.width
+      const top = cell.row; const bottom = top + cell.height
+      const localEdges = new Set<number>()
+      const edge = (column: number, row: number) => {
+        const neighbor = previous.get(`${column},${row}`)
+        if (neighbor !== undefined) { edges[index].add(neighbor); localEdges.add(neighbor) }
       }
-      previous.set(`${cell.column},${cell.row}`, index)
+      for (let row = top; row < bottom; row++) { edge(left - 1, row); edge(right, row) }
+      for (let column = left; column < right; column++) { edge(column, top - 1); edge(column, bottom) }
+      for (const [column, row] of [[left - 1, top - 1], [right, top - 1], [left - 1, bottom], [right, bottom]]) {
+        const neighbor = previous.get(`${column},${row}`)
+        if (neighbor !== undefined && !localEdges.has(neighbor)) diagonals[index].add(neighbor)
+      }
+      for (let row = top; row < bottom; row++) for (let column = left; column < right; column++) previous.set(`${column},${row}`, index)
     })
   }
 
@@ -43,7 +52,7 @@ export function selectPosterMotifs(layouts: readonly PosterLayout[]): PosterMoti
         bestScore = score
       }
     }
-    // Seven families exceed the six prior edges of three generated layouts.
+    // Selection remains deterministic across all responsive border constraints.
     if (!best) throw new Error('No motif family satisfies the responsive edge constraints')
     selected.push(best)
     accents[motifMetadata[best].accent]++
