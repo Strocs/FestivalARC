@@ -63,11 +63,23 @@ describe('2026 participant catalog', () => {
     expect(Object.values(catalog).map(category => category.participants.length)).toEqual([30, 16, 8, 39])
   })
 
+  it('matches authoritative catalog IDs to current participant names in every category', () => {
+    for (const category of Object.values(data)) {
+      const expectedIds = category.participants.map(participant => participant.name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, ''))
+      expect(category.participants.map(participant => participant.id)).toEqual(expectedIds)
+    }
+  })
+
   it('removes group and limits national to music, preserving former national assignments', () => {
     const national = ['nino-cohete', 'javiera-mena', 'dulce-y-agraz', 'gepe', 'javier-barria',
       'fernando-milagros', 'rosario-alfonso', 'claudio-valenzuela', 'fernando-ubiergo',
-      'pedro-piedra', 'nunez-briceno', 'jose-alfredo-fuentes', 'innundaremos',
-      'guaype-club-infantil', 'dejenme-dormir', 'nando-garcia', 'lero', 'josefa-errazuriz-dj']
+      'pedropiedra', 'nunez-briceno', 'jose-alfredo-fuentes', 'innundaremos',
+      'guaypes-club', 'dejenme-dormir', 'nando-garcia', 'laro', 'dj-sepha']
     for (const [key, category] of Object.entries(catalog)) {
       for (const participant of category.participants) {
         expect(participant).not.toHaveProperty('group')
@@ -140,11 +152,11 @@ describe('2026 participant catalog', () => {
     expect(disciplines).toHaveLength(7)
   })
 
-  it('corrects music names without changing route IDs', () => {
+  it('keeps corrected music names paired with their current route IDs', () => {
     const names = Object.fromEntries(artists.map(artist => [artist.id, artist.name]))
     expect(names).toMatchObject({
-      'pedro-piedra': 'Pedropiedra', 'guaype-club-infantil': 'Guaypes Club',
-      lero: 'Laró', 'josefa-errazuriz-dj': 'DJ Sepha', 'weinkeys-blackbeat': 'Weinkeys + Blackbeat',
+      pedropiedra: 'Pedropiedra', 'guaypes-club': 'Guaypes Club',
+      laro: 'Laró', 'dj-sepha': 'DJ Sepha', 'weinkeys-blackbeat': 'Weinkeys + Blackbeat',
       'dejenme-dormir': 'Déjenme Dormir', 'javier-barria': 'Javier Barría',
       'nunez-briceno': 'Núñez Briceño', 'jose-alfredo-fuentes': 'José Alfredo Fuentes',
       'nando-garcia': 'Nando García',

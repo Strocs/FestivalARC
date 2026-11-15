@@ -2,19 +2,19 @@ import { describe, expect, it } from 'vitest'
 import { artists as lineup } from '../../artists/artists'
 
 const fixedOrder = [
-  'polter-ovalle', 'lobas', 'nino-cohete', 'yaru', 'shicris',
+  'polter', 'lobas', 'nino-cohete', 'yaru', 'shicris',
   'javiera-mena', 'el-humedal', 'dulce-y-agraz', 'freshki', 'gepe',
-  'pulsando', 'javier-barria', 'quita-de-bulla-salamanca',
+  'pulsando', 'javier-barria', 'quita-de-bulla',
   'removernos-a-cielo-abierto', 'fernando-milagros', 'yatiri',
   'jazztacuatico', 'rosario-alfonso', 'red-lambe-norte', 'duerme-y-cae',
   'claudio-valenzuela', 'awicha', 'fernando-ubiergo', 'kalishe',
-  'narrando-mundos-en-bicicleta', 'pedro-piedra', 'weinkeys-blackbeat',
+  'narrando-mundos-en-bicicleta', 'pedropiedra', 'weinkeys-blackbeat',
   'bendita-agua', 'nunez-briceno', 'las-luciernagas-y-el-origen-del-fuego',
   'stendhal', 'jose-alfredo-fuentes', 'llamada-de-emergencia',
   'last-whisper', 'innundaremos', 'martin-v-s-trampolino-maletines',
-  'guaype-club-infantil', 'medinamico', 'trans-humante', 'dejenme-dormir',
+  'guaypes-club', 'medinamico', 'trans-humante', 'dejenme-dormir',
   'juan-manotas-y-el-origen-del-carnaval', 'nando-garcia', 'absurdo',
-  'lero', 'esteban-y-los-hurtados', 'josefa-errazuriz-dj',
+  'laro', 'esteban-y-los-hurtados', 'dj-sepha',
 ]
 
 describe('fixed editorial lineup order', () => {

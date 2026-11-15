@@ -3,7 +3,7 @@
     "name": "Música",
     "participants": [
       {
-        "id": "polter-ovalle",
+        "id": "polter",
         "name": "Polter",
         "order": 1,
         "disciplines": "musica",
@@ -115,7 +115,7 @@
         "national": true
       },
       {
-        "id": "quita-de-bulla-salamanca",
+        "id": "quita-de-bulla",
         "name": "Quitá de Bulla",
         "order": 13,
         "disciplines": "musica",
@@ -227,7 +227,7 @@
         "national": false
       },
       {
-        "id": "pedro-piedra",
+        "id": "pedropiedra",
         "name": "Pedropiedra",
         "order": 26,
         "disciplines": "musica",
@@ -325,7 +325,7 @@
         "national": true
       },
       {
-        "id": "guaype-club-infantil",
+        "id": "guaypes-club",
         "name": "Guaypes Club",
         "order": 37,
         "disciplines": "musica",
@@ -381,7 +381,7 @@
         "national": true
       },
       {
-        "id": "lero",
+        "id": "laro",
         "name": "Laró",
         "order": 44,
         "disciplines": "musica",
@@ -409,7 +409,7 @@
         "national": false
       },
       {
-        "id": "josefa-errazuriz-dj",
+        "id": "dj-sepha",
         "name": "DJ Sepha",
         "order": 46,
         "disciplines": "musica",

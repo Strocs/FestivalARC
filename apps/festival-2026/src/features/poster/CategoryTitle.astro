@@ -13,6 +13,11 @@ const title = createCategoryTitle(name)
     `--${range}-title-size:${100 * line.fontUnits[range] / (block.positions[range]!.width * 160)}cqw;--${range}-title-height:${100 * 152 * block.positions[range]!.height / (block.positions[range]!.width * 160)}cqw`,
   ).join(';')
   return <PosterInformation {...block.positions} informationId={block.id} class='z-3' aria-hidden='true'>
-    <span style={fontStyle} class='text-foreground flex min-h-[var(--mobile-title-height)] md:min-h-[var(--tablet-title-height)] xl:min-h-[var(--desktop-title-height)] items-center whitespace-nowrap font-sans text-[length:var(--mobile-title-size)] font-black uppercase leading-none tracking-tighter md:text-[length:var(--tablet-title-size)] xl:text-[length:var(--desktop-title-size)]'>{line.text}</span>
+    <div style={fontStyle} class:list={[
+      '@container flex min-h-[var(--mobile-title-height)] items-center px-4 md:min-h-[var(--tablet-title-height)] md:px-0 xl:min-h-[var(--desktop-title-height)]',
+      { 'pt-4': index === 0, 'pb-4': index === title.lines.length - 1 },
+    ]}>
+      <span class='text-foreground whitespace-nowrap font-sans text-[length:var(--mobile-title-size)] font-black uppercase leading-none tracking-tighter md:text-[length:var(--tablet-title-size)] xl:text-[length:var(--desktop-title-size)]'>{line.text}</span>
+    </div>
   </PosterInformation>
 })}
