@@ -11,6 +11,7 @@ let inputs: MotionInput[]
 let motions: ModalMotion[]
 let navigate: ReturnType<typeof vi.fn>
 let destroy: () => void
+const originalFonts = Object.getOwnPropertyDescriptor(document, 'fonts')
 const rect = (x = 10, y = 100) => ({ x, y, left: x, top: y, right: x + 100, bottom: y + 50, width: 100, height: 50, toJSON() {} })
 const click = (target: Element = source, init: MouseEventInit = {}) => {
   const event = new MouseEvent('click', { bubbles: true, cancelable: true, button: 0, ...init })
@@ -37,13 +38,14 @@ beforeEach(() => {
   dialog.showModal = vi.fn(() => { dialog.open = true })
   dialog.close = vi.fn(() => { dialog.open = false; dialog.dispatchEvent(new Event('close')) })
   for (const node of root.querySelectorAll('*')) node.getBoundingClientRect = vi.fn(() => rect())
+  Object.defineProperty(document, 'fonts', { configurable: true, get: () => undefined })
   media = Object.assign(new EventTarget(), { matches: false })
   vi.stubGlobal('matchMedia', vi.fn(() => media))
   vi.stubGlobal('scrollTo', vi.fn())
   inputs = []; motions = []; navigate = vi.fn(); destroy = () => {}
   mount()
 })
-afterEach(() => { destroy(); document.body.innerHTML = ''; document.body.removeAttribute('style'); document.documentElement.removeAttribute('style'); vi.unstubAllGlobals(); vi.restoreAllMocks() })
+afterEach(() => { destroy(); document.body.innerHTML = ''; document.body.removeAttribute('style'); document.documentElement.removeAttribute('style'); vi.unstubAllGlobals(); vi.restoreAllMocks(); if (originalFonts) Object.defineProperty(document, 'fonts', originalFonts); else Reflect.deleteProperty(document, 'fonts') })
 
 describe('scoped modal enhancement', () => {
   it.each([{ ctrlKey: true }, { metaKey: true }, { altKey: true }, { shiftKey: true }, { button: 1 }])('preserves ordinary modified link intent %o', init => {
@@ -125,11 +127,16 @@ describe('scoped modal enhancement', () => {
     expect(heading.querySelector<HTMLElement>('br')?.style.display).toBe('block')
     expect(heading.querySelector<HTMLElement>('[data-gap]')?.style.display).toBe('none')
     window.dispatchEvent(new Event('resize'))
+    expect(motions[0].dispose).not.toHaveBeenCalled()
+    expect(heading.querySelector<HTMLElement>('br')?.style.display).toBe('block')
+    name.style.fontSize = '32px'
+    inputs[0].onOpened()
+    expect(motions[0].dispose).toHaveBeenCalledOnce()
     expect(heading.querySelector<HTMLElement>('br')?.style.display).toBe('none')
     root.querySelector<HTMLElement>('[data-modal-close]')!.click()
     const refreshed = inputs.at(-1)!
     expect(refreshed.initiallyOpen).toBe(true)
-    expect(refreshed.sourceTitle?.fontSize).toBe(30)
+    expect(refreshed.sourceTitle?.fontSize).toBe(32)
     expect(refreshed.sourceTitle?.element.querySelectorAll('[data-modal-title-line]')).toHaveLength(1)
     expect(refreshed.sourceTitle?.element.querySelector<HTMLElement>('br')!.style.display).toBe('none')
     expect(refreshed.sourceTitle?.element.querySelector<HTMLElement>('[data-gap]')!.style.display).toBe('inline')
@@ -197,16 +204,21 @@ describe('scoped modal enhancement', () => {
     expect(dialog.querySelector('h2')?.textContent).toBe('B')
   })
   it('preserves existing scroll styles and offsets, and focuses without scrolling', () => {
-    document.body.style.cssText = 'overflow:clip;padding-right:7px;color:red'
-    document.documentElement.style.overflow = 'scroll'
+    document.body.style.color = 'red'
+    document.body.style.setProperty('overflow', 'auto', 'important')
+    document.body.style.setProperty('padding-right', '7px', 'important')
+    document.documentElement.style.setProperty('overflow', 'scroll', 'important')
+    document.documentElement.style.setProperty('scroll-behavior', 'smooth', 'important')
     vi.spyOn(document.documentElement, 'clientWidth', 'get').mockReturnValue(1000)
     vi.stubGlobal('scrollX', 5); vi.stubGlobal('scrollY', 730)
     const focus = vi.spyOn(source, 'focus')
-    click(); expect(document.body.style.overflow).toBe('hidden')
+    click(); expect(document.body.style.overflow).toBe('clip')
+    expect(document.documentElement.style.overflow).toBe('hidden')
     expect(document.body.style.paddingRight).toBe('31px')
     root.querySelector<HTMLElement>('[data-modal-close]')!.click(); inputs[0].onClosed()
-    expect(document.body.style.overflow).toBe('clip'); expect(document.body.style.paddingRight).toBe('7px')
+    expect(document.body.style.overflow).toBe('auto'); expect(document.body.style.paddingRight).toBe('7px')
     expect(document.body.style.color).toBe('red'); expect(document.documentElement.style.overflow).toBe('scroll')
+    expect(document.documentElement.style.scrollBehavior).toBe('smooth')
     expect(scrollTo).toHaveBeenCalledWith(5, 730)
     expect(focus).toHaveBeenCalledWith({ preventScroll: true })
   })
@@ -221,8 +233,83 @@ describe('scoped modal enhancement', () => {
     expect(dialog.open).toBe(false); expect(motions[0].dispose).toHaveBeenCalled()
     inputs[0].onOpened(); expect(dialog.open).toBe(false)
   })
-  it('settles geometry changes, fades missing origins and focuses the nearest remaining link', () => {
+  it.each(['window', 'visualViewport', 'observer', 'load', 'fonts'])('defers and coalesces %s settlement until opening completes, then still settles while open', notification => {
+    destroy()
+    const viewport = new EventTarget()
+    const fonts = Object.assign(new EventTarget(), { ready: Promise.resolve() })
+    let observeResize: () => void = () => {}
+    vi.stubGlobal('visualViewport', viewport)
+    vi.stubGlobal('ResizeObserver', class {
+      constructor(callback: () => void) { observeResize = callback }
+      observe() {}
+      disconnect() {}
+    })
+    // The controller consumes only EventTarget and ready from this font-set stub.
+    vi.spyOn(document, 'fonts', 'get').mockReturnValue(fonts as unknown as FontFaceSet)
+    mount()
+    const notify = () => {
+      if (notification === 'window') window.dispatchEvent(new Event('resize'))
+      if (notification === 'visualViewport') viewport.dispatchEvent(new Event('resize'))
+      if (notification === 'observer') observeResize()
+      if (notification === 'load') dialog.querySelector('[data-modal-content]')!.dispatchEvent(new Event('load'))
+      if (notification === 'fonts') fonts.dispatchEvent(new Event('loadingdone'))
+    }
+    click()
+    notify(); notify()
+    expect(motions[0].dispose).not.toHaveBeenCalled()
+    expect(dialog.open).toBe(true)
+    expect(source.style.visibility).toBe('hidden')
+    expect(inputs).toHaveLength(1)
+    inputs[0].onOpened()
+    expect(motions[0].dispose).toHaveBeenCalledOnce()
+    const name = source.querySelector<HTMLElement>('[data-artist-name]')!
+    name.style.fontSize = '35px'
+    notify()
+    root.querySelector<HTMLElement>('[data-modal-close]')!.click()
+    expect(inputs.at(-1)?.initiallyOpen).toBe(true)
+    expect(inputs.at(-1)?.sourceTitle?.fontSize).toBe(35)
+    inputs.at(-1)!.onClosed()
+    expect(dialog.open).toBe(false)
+    expect(source.style.visibility).toBe('')
+  })
+  it('discards deferred settlement when close reverses opening and does not leak into another opening or reduced motion', () => {
     click(); window.dispatchEvent(new Event('resize'))
+    const close = root.querySelector<HTMLElement>('[data-modal-close]')!
+    close.click()
+    expect(inputs).toHaveLength(1)
+    expect(motions[0].reverse).toHaveBeenCalledOnce()
+    expect(motions[0].dispose).not.toHaveBeenCalled()
+    inputs[0].onOpened()
+    expect(motions[0].dispose).not.toHaveBeenCalled()
+    expect(dialog.open).toBe(true)
+    inputs[0].onClosed()
+    expect(dialog.open).toBe(false)
+    expect(source.style.visibility).toBe('')
+    expect(document.body.style.overflow).toBe('')
+    expect(document.activeElement).toBe(source)
+    click(); inputs[0].onOpened(); inputs[1].onOpened()
+    expect(motions[1].dispose).not.toHaveBeenCalled()
+    close.click(); inputs[1].onClosed()
+    media.matches = true; click()
+    window.dispatchEvent(new Event('resize'))
+    expect(inputs).toHaveLength(2)
+    close.click()
+    expect(dialog.open).toBe(false)
+  })
+  it('settles immediately when reduced motion is enabled during a deferred opening', () => {
+    click(); window.dispatchEvent(new Event('resize'))
+    expect(motions[0].dispose).not.toHaveBeenCalled()
+    media.matches = true; media.dispatchEvent(new Event('change'))
+    expect(motions[0].dispose).toHaveBeenCalledOnce()
+    expect(dialog.open).toBe(true)
+    inputs[0].onOpened()
+    root.querySelector<HTMLElement>('[data-modal-close]')!.click()
+    expect(dialog.open).toBe(false)
+    expect(source.style.visibility).toBe('')
+    expect(document.body.style.overflow).toBe('')
+  })
+  it('settles geometry changes, fades missing origins and focuses the nearest remaining link', () => {
+    click(); inputs[0].onOpened(); window.dispatchEvent(new Event('resize'))
     expect(motions[0].dispose).toHaveBeenCalled()
     source.remove()
     root.querySelector<HTMLElement>('[data-modal-close]')!.click()
@@ -247,7 +334,7 @@ describe('scoped modal enhancement', () => {
     expect(dialog.style.getPropertyValue('--event-backdrop')).toBe('1')
     root.querySelector<HTMLElement>('[data-modal-close]')!.click()
     expect(dialog.style.getPropertyValue('--event-backdrop')).toBe('0.25')
-    media.matches = false; click(); window.dispatchEvent(new Event('resize'))
+    media.matches = false; click(); inputs[0].onOpened(); window.dispatchEvent(new Event('resize'))
     expect(dialog.style.getPropertyValue('--event-backdrop')).toBe('1')
     root.querySelector<HTMLElement>('[data-modal-close]')!.click()
     expect(inputs.at(-1)?.initiallyOpen).toBe(true)

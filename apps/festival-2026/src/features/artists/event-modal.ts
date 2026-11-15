@@ -54,6 +54,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   let motion: ModalMotion | undefined
   let sourceTitle: SourceTitleSnapshot | undefined
   let backdropDown = false
+  let settlementPending = false
   let resize: ResizeObserver | undefined
   let disconnect: MutationObserver | undefined
   const links = () => [...root.querySelectorAll<HTMLAnchorElement>('a[data-event-trigger][href]')]
@@ -67,6 +68,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   const cleanup = (restoreFocus = true) => {
     ++token
     phase = 'closed'
+    settlementPending = false
     const oldMotion = motion; motion = undefined
     oldMotion?.dispose()
     sourceTitle = undefined
@@ -100,7 +102,8 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
       window.scrollTo(x, y)
       restoreHtml()
     }
-    body.style.setProperty('overflow', 'hidden')
+    // Clip without creating a scroll ancestor that displaces the sticky header.
+    body.style.setProperty('overflow', 'clip')
     if (gap) body.style.setProperty('padding-right', `${padding + gap}px`)
     html.style.setProperty('overflow', 'hidden')
   }
@@ -120,7 +123,10 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     motion = createMotion({
       dialog, panel, ...first, titleSize, initiallyOpen, sourceTitle,
       onOpened: () => {
-        if (!destroyed && root.isConnected && token === current && phase === 'opening') phase = 'open'
+        if (!destroyed && root.isConnected && token === current && phase === 'opening') {
+          phase = 'open'
+          if (settlementPending) settle()
+        }
       },
       onClosed: () => {
         if (!destroyed && root.isConnected && token === current && phase === 'closing') cleanup()
@@ -130,6 +136,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   const requestClose = () => {
     if (phase === 'closed' || phase === 'closing') return
     phase = 'closing'
+    settlementPending = false
     const currentGeometry = geometry()
     try {
       if (media.matches) cleanup()
@@ -146,6 +153,9 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     if (destroyed || phase === 'closed') return
     if (!root.isConnected) { destroy(); return }
     if (phase === 'closing') { cleanup(); return }
+    // Mobile viewport/layout notifications must not cut short the entrance.
+    if (phase === 'opening' && !media.matches) { settlementPending = true; return }
+    settlementPending = false
     ++token
     motion?.dispose(); motion = undefined
     prepareTitle(geometry())
@@ -175,6 +185,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
       sourceTitle = name && first.titleRect ? captureSourceTitle(name, first.titleRect) : undefined
       content.replaceChildren(template.content.cloneNode(true))
       phase = 'opening'
+      settlementPending = false
       restoreDialog = ownStyles(dialog, ['--event-backdrop'])
       dialog.style.setProperty('--event-backdrop', '1')
       lockScroll()
