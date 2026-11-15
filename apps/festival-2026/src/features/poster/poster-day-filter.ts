@@ -163,18 +163,16 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (destroyed || !options.canInteract()) { syncRadios(); return }
     if (key === selected) { syncRadios(); return }
     const activeRange = range()
-    const nodes = [...artists, ...information, ...pool]
-    // Capture PAINT before killing any old inversion/exit presentation.
-    const painted = nodes.map(node => ({ node, style: getComputedStyle(node) })).filter(({ node, style }) => !node.hidden && style.display !== 'none' && style.visibility !== 'hidden')
-    const first = new Map(painted.map(({ node }) => [node, node.getBoundingClientRect()]))
-    const firstAlpha = new Map(painted.map(({ node, style }) => [node, Number.parseFloat(style.opacity) || (style.opacity === '0' ? 0 : 1)]))
-    const canonical = artists.filter(n => first.has(n) && !n.inert)
-    const reading = window.innerHeight * 0.3
-    const viewed = canonical.slice().sort((a, b) => Math.abs(first.get(a)!.top - reading) - Math.abs(first.get(b)!.top - reading))[0]
+    const scroll = { x: window.scrollX, y: window.scrollY }
+    const animate = !media.matches
+    const displayed = (node: HTMLElement) => !node.hidden && node.style.display !== 'none'
+      && node.style.getPropertyValue(`--${activeRange}-display`) !== 'none'
+    // Capture current paint in one read batch, including interrupted exits.
+    // Endpoint visibility and opacity are controller-owned; no CSS cascade walk.
+    const painted = animate ? [...artists, ...information, ...pool].filter(node => displayed(node) && node.style.visibility !== 'hidden') : []
+    const first = new Map(painted.map(node => [node, node.getBoundingClientRect()]))
+    const firstAlpha = new Map(painted.map(node => [node, Number.parseFloat(node.style.opacity || '1')]))
     const target = plans.plans[key]
-    const survivors = artists.filter(n => target.ids.includes(n.dataset.posterArtist!))
-    const anchor = viewed && survivors.includes(viewed) ? viewed : survivors.slice().sort((a, b) => Math.abs(artists.indexOf(a) - artists.indexOf(viewed!)) - Math.abs(artists.indexOf(b) - artists.indexOf(viewed!)))[0]
-    const offset = viewed ? first.get(viewed)!.top : undefined
     ++generation
     motion?.dispose(); motion = undefined
     releaseScroll?.()
@@ -218,18 +216,25 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     }
     for (const node of information) position(node, Object.fromEntries(ranges.map(r => [r, target.information[r][node.dataset.posterInformation!]])), 'grid')
     for (const node of pool) if (!motifNodes.includes(node)) { node.hidden = true; node.style.display = 'none' }
-    // Compensate once, then batch Last in actual compensated viewport coordinates.
-    if (anchor && offset !== undefined) {
-      const top = anchor.getBoundingClientRect().top
-      const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
-      const y = Math.max(0, Math.min(max, window.scrollY + top - offset))
-      if (y !== window.scrollY) window.scrollTo(window.scrollX, y)
-    }
-    const live = [...artists.filter(n => !n.hidden), ...information, ...motifNodes].filter(n => getComputedStyle(n).display !== 'none')
-    const last = new Map(live.map(n => [n, n.getBoundingClientRect()]))
+    // Keep the document coordinate, not an artist reference. Shrinking content
+    // may clamp it naturally; restore only within the new document bounds.
+    const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+    const y = Math.max(0, Math.min(max, scroll.y))
+    if (y !== window.scrollY) window.scrollTo(scroll.x, y)
+    if (!animate) { finish(); return }
+    // A necessary bottom clamp changes viewport coordinates, not tile positions.
+    const shift = scroll.y - y
+    if (shift) for (const [node, rect] of first) first.set(node, new DOMRect(rect.left, rect.top + shift, rect.width, rect.height))
+    const live = [...artists, ...information, ...motifNodes].filter(displayed)
+    const last = new Map(live.map(node => [node, node.getBoundingClientRect()]))
     const gridRect = grid.getBoundingClientRect()
-    const items = [...new Set([...first.keys(), ...last.keys()])].map(node => ({ node, first: first.get(node), firstAlpha: firstAlpha.get(node), last: last.get(node) }))
-    if (media.matches) { finish(); return }
+    const inView = (rect?: DOMRect) => rect && rect.width > 0 && rect.height > 0
+      && rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth
+    const items = [...new Set([...first.keys(), ...last.keys()])]
+      .map(node => ({ node, first: first.get(node), firstAlpha: firstAlpha.get(node), last: last.get(node) }))
+      .filter(({ first, last, firstAlpha }) => (inView(first) || inView(last))
+        && (!first || !last || first.left !== last.left || first.top !== last.top || firstAlpha !== 1))
+    if (!items.length) { finish(); return }
     // Outgoing nodes are noninteractive paint, not hidden until finite completion.
     for (const item of items) if (!item.last) item.node.hidden = false
     const token = generation

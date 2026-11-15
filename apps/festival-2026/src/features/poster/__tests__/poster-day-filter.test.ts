@@ -24,7 +24,7 @@ beforeEach(() => {
   root = document.querySelector('main')!
   const dialog = root.querySelector('dialog')!
   dialog.showModal = vi.fn(() => { dialog.open = true }); dialog.close = vi.fn(() => { dialog.open = false })
-  for (const node of root.querySelectorAll('*')) node.getBoundingClientRect = () => rect(100)
+  vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => rect(100))
   media = Object.assign(new EventTarget(), { matches: false })
   vi.stubGlobal('matchMedia', () => media); vi.stubGlobal('scrollTo', vi.fn())
   // No stylesheet in this fixture: model mobile visibility without jsdom's
@@ -303,18 +303,46 @@ describe('day filtering through the sole modal owner', () => {
       })))
     }
   })
-  it('preserves a retained reading offset with clamped scroll compensation and restores anchoring', () => {
-    vi.stubGlobal('scrollY', 400)
-    vi.spyOn(document.documentElement, 'scrollHeight', 'get').mockReturnValue(3000)
+  it.each([
+    { y: 400, height: 3000, destination: undefined },
+    { y: 2400, height: 1500, destination: 900 },
+  ])('preserves viewport position and only clamps beyond the new bottom: $y', ({ y, height, destination }) => {
+    vi.stubGlobal('scrollY', y)
+    vi.stubGlobal('innerHeight', 600)
+    vi.spyOn(document.documentElement, 'scrollHeight', 'get').mockReturnValue(height)
     const artist = root.querySelector<HTMLElement>('[data-poster-artist="a"]')!
     artist.getBoundingClientRect = () => rect(artist.style.getPropertyValue('--mobile-row') ? 200 : 100)
     choose('saturday')
-    expect(scrollTo).toHaveBeenCalledWith(0, 500)
-    expect(document.documentElement.style.getPropertyValue('overflow-anchor')).toBe('none')
-    inputs[0].onComplete()
-    expect(document.documentElement.style.getPropertyValue('overflow-anchor')).toBe('')
-    expect(document.documentElement.style.scrollBehavior).toBe('')
+    if (destination === undefined) expect(scrollTo).not.toHaveBeenCalled()
+    else {
+      expect(scrollTo).toHaveBeenCalledExactlyOnceWith(0, destination)
+    }
+    window.dispatchEvent(new Event('resize'))
+    expect(visible()).toEqual(['a'])
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe('1 artistas')
     expect(document.activeElement).toBe(root.querySelector('input[value="saturday"]'))
+  })
+  it('offers motion only changed viewport tiles while applying the complete day selection', () => {
+    vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockImplementation(() => rect(10000))
+    const artist = root.querySelector<HTMLElement>('[data-poster-artist="a"]')!
+    artist.getBoundingClientRect = () => rect(artist.style.getPropertyValue('--mobile-row') ? 200 : 100)
+    choose('saturday')
+    expect(inputs).toHaveLength(1)
+    expect(inputs[0].items.map(item => item.node)).toEqual([artist])
+    inputs[0].onComplete()
+    expect(visible()).toEqual(['a'])
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe('1 artistas')
+  })
+  it('skips animation geometry for reduced motion and repeated selections', () => {
+    media.matches = true
+    const geometry = vi.mocked(HTMLElement.prototype.getBoundingClientRect)
+    geometry.mockClear()
+    choose('saturday')
+    choose('saturday')
+    expect(geometry).not.toHaveBeenCalled()
+    expect(inputs).toHaveLength(0)
+    expect(visible()).toEqual(['a'])
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe('1 artistas')
   })
   it('filters independently when native dialog is unavailable and retains ordinary fallback links', () => {
     dispose(); root.querySelector('dialog')!.showModal = undefined as never
