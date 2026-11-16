@@ -10,6 +10,7 @@ export interface MotionInput extends MotionGeometry {
   panel: HTMLElement
   titleSize: number
   sourceTitle?: SourceTitleSnapshot
+  sourceMetadata?: { element: HTMLElement, opacity: number, visibility: string }
   initiallyOpen?: boolean
   onOpened: () => void
   onClosed: () => void
@@ -69,6 +70,12 @@ export function createModalMotion(input: MotionInput): ModalMotion {
     disposed = true
     fade?.revert()
     timeline.revert()
+    // Disposal also occurs while still modal (resize/fonts/reduced motion).
+    // Never return source paint to its visible endpoint until owner cleanup.
+    if (input.sourceMetadata) {
+      input.sourceMetadata.element.style.setProperty('opacity', '0')
+      input.sourceMetadata.element.style.setProperty('visibility', 'hidden')
+    }
     proxy?.remove()
     for (const [node, style] of styles) {
       if (style === null) node.removeAttribute('style')
@@ -84,6 +91,12 @@ export function createModalMotion(input: MotionInput): ModalMotion {
     }
     for (const node of [close, meta, ...details]) {
       if (node) Object.assign(node.style, { opacity: '0', visibility: 'hidden' })
+    }
+    if (input.sourceMetadata) {
+      const { element, opacity, visibility } = input.sourceMetadata
+      timeline.fromTo(element, { autoAlpha: visibility === 'visible' ? opacity : 0 }, {
+        autoAlpha: 0, duration: revealDuration,
+      }, 0)
     }
     timeline.addLabel('surface', 0)
     timeline.fromTo(surface, {

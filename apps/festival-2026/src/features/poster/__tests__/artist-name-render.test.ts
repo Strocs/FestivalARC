@@ -11,13 +11,22 @@ async function renderArtist() {
 }
 
 describe('ArtistName interaction', () => {
-  it('adds a separate view pill in the schedule row with outward hover and focus motion', async () => {
+  it('keeps keyboard focus visible without translating the surface, title or schedule on focus return', async () => {
+    const html = await renderArtist()
+    expect(html).toContain('focus-visible:outline-2')
+    expect(html).toContain('focus-visible:outline-primary')
+    expect(html).not.toMatch(/group-focus-within:[^\s"']*translate/)
+    expect(html).toContain('motion-safe:group-hover:-translate-y-0.5')
+    expect(html).toContain('motion-safe:group-hover:translate-y-0.5')
+    expect(html).toContain('motion-safe:group-hover:translate-x-1')
+  })
+  it('adds a separate view pill in the schedule row with preserved outward hover motion', async () => {
     const html = await renderArtist()
     expect(html).toContain('data-artist-meta')
     expect(html).toContain('gap-2')
     const cue = html.match(/<span\b[^>]*data-artist-view[\s\S]*?<\/span>/)?.[0] ?? ''
     expect(cue).toContain('Ver <strong>más</strong>')
-    for (const token of ['bg-arc-rose', 'text-foreground', 'rounded-full', 'motion-safe:group-hover:translate-x-1', 'motion-safe:group-focus-within:translate-x-1', 'motion-reduce:translate-none']) {
+    for (const token of ['bg-arc-rose', 'text-foreground', 'rounded-full', 'motion-safe:group-hover:translate-x-1', 'motion-reduce:translate-none']) {
       expect(cue).toContain(token)
     }
     expect(html.match(/<a\b/g)).toHaveLength(1)

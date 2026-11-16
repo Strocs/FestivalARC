@@ -48,6 +48,43 @@ beforeEach(() => {
 afterEach(() => { destroy(); document.body.innerHTML = ''; document.body.removeAttribute('style'); document.documentElement.removeAttribute('style'); vi.unstubAllGlobals(); vi.restoreAllMocks(); if (originalFonts) Object.defineProperty(document, 'fonts', originalFonts); else Reflect.deleteProperty(document, 'fonts') })
 
 describe('scoped modal enhancement', () => {
+  it.each(['settled', 'reduced', 'native-close', 'destroy', 'motion-failure'])('owns hidden source metadata through %s and restores exact declarations without extending scroll lock', mode => {
+    source.insertAdjacentHTML('beforeend', '<span data-artist-meta style="opacity:0.6!important;visibility:visible!important;color:red"><time>Domingo 29</time><span data-artist-view>Ver más</span></span>')
+    const meta = source.querySelector<HTMLElement>('[data-artist-meta]')!
+    meta.style.setProperty('opacity', '0.6', 'important')
+    meta.style.setProperty('visibility', 'visible', 'important')
+    const original = ['opacity', 'visibility', 'color'].map(property => [property, meta.style.getPropertyValue(property), meta.style.getPropertyPriority(property)])
+    if (mode === 'reduced') media.matches = true
+    if (mode === 'motion-failure') {
+      destroy()
+      destroy = mountEventModal(root, { navigate, createMotion: () => { throw new Error('Motion failed') } })
+    }
+    click()
+    if (mode !== 'motion-failure') {
+      expect(meta.style.opacity).toBe('0')
+      expect(meta.style.visibility).toBe('hidden')
+      expect(source.style.visibility).toBe('')
+      expect(document.documentElement.style.overflow).toBe('hidden')
+      if (mode === 'settled') {
+        expect(inputs[0].sourceMetadata).toEqual({ element: meta, opacity: 0.6, visibility: 'visible' })
+        inputs[0].onOpened(); window.dispatchEvent(new Event('resize'))
+        expect(motions[0].dispose).toHaveBeenCalledOnce()
+        expect(meta.style.visibility).toBe('hidden')
+        root.querySelector<HTMLElement>('[data-modal-close]')!.click()
+        expect(inputs[1].initiallyOpen).toBe(true)
+        expect(inputs[1].sourceMetadata?.opacity).toBe(0.6)
+        expect(document.documentElement.style.overflow).toBe('hidden')
+        inputs[1].onClosed()
+      } else if (mode === 'native-close') dialog.close()
+      else if (mode === 'destroy') destroy()
+      else root.querySelector<HTMLElement>('[data-modal-close]')!.click()
+    }
+    expect(['opacity', 'visibility', 'color'].map(property => [property, meta.style.getPropertyValue(property), meta.style.getPropertyPriority(property)])).toEqual(original)
+    expect(dialog.open).toBe(false)
+    expect(document.documentElement.style.overflow).toBe('')
+    if (mode === 'motion-failure') expect(navigate).toHaveBeenCalledWith(source.href)
+    else expect(document.activeElement).toBe(source)
+  })
   it.each([{ ctrlKey: true }, { metaKey: true }, { altKey: true }, { shiftKey: true }, { button: 1 }])('preserves ordinary modified link intent %o', init => {
     expect(click(source, init).defaultPrevented).toBe(false)
     expect(dialog.showModal).not.toHaveBeenCalled()
@@ -67,7 +104,8 @@ describe('scoped modal enhancement', () => {
     expect(dialog.showModal).toHaveBeenCalledOnce()
     expect(dialog.querySelector('h2')?.textContent).toBe('A')
     expect(document.activeElement).toBe(dialog.querySelector('h2'))
-    expect(source.style.visibility).toBe('hidden')
+    expect(source.querySelector<HTMLElement>('[data-artist-surface]')!.style.visibility).toBe('hidden')
+    expect(source.style.visibility).toBe('')
     expect(click(root.querySelectorAll('a')[1]).defaultPrevented).toBe(true)
     expect(inputs).toHaveLength(1)
     expect(navigate).not.toHaveBeenCalled()
@@ -159,6 +197,7 @@ describe('scoped modal enhancement', () => {
     expect(title.style.maxWidth).toBe('58px')
     expect(title.style.fontSize).toBe('11.6px')
     expect(title.style.textAlign).toBe('left')
+    root.querySelector<HTMLElement>('[data-modal-close]')!.click(); inputs[0].onClosed()
     expect(name.outerHTML).toBe(original)
   })
   it.each(['button', 'cancel', 'backdrop'])('keeps modality through controlled %s close and restores focus only after reverse', method => {
@@ -170,7 +209,7 @@ describe('scoped modal enhancement', () => {
     if (method === 'backdrop') { pointer('pointerdown', dialog, 0, 0); pointer('pointerup', dialog, 0, 0) }
     expect(motions[0].reverse).toHaveBeenCalledOnce()
     expect(dialog.open).toBe(true)
-    expect(source.style.visibility).toBe('hidden')
+    expect(source.querySelector<HTMLElement>('[data-artist-surface]')!.style.visibility).toBe('hidden')
     inputs[0].onClosed()
     expect(dialog.open).toBe(false)
     expect(document.activeElement).toBe(source)
@@ -258,7 +297,7 @@ describe('scoped modal enhancement', () => {
     notify(); notify()
     expect(motions[0].dispose).not.toHaveBeenCalled()
     expect(dialog.open).toBe(true)
-    expect(source.style.visibility).toBe('hidden')
+    expect(source.querySelector<HTMLElement>('[data-artist-surface]')!.style.visibility).toBe('hidden')
     expect(inputs).toHaveLength(1)
     inputs[0].onOpened()
     expect(motions[0].dispose).toHaveBeenCalledOnce()

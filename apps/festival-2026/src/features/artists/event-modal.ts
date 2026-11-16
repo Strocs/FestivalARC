@@ -53,6 +53,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   let unlock: (() => void) | undefined
   let motion: ModalMotion | undefined
   let sourceTitle: SourceTitleSnapshot | undefined
+  let sourceMetadata: MotionInput['sourceMetadata']
   let backdropDown = false
   let settlementPending = false
   let resize: ResizeObserver | undefined
@@ -72,6 +73,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     const oldMotion = motion; motion = undefined
     oldMotion?.dispose()
     sourceTitle = undefined
+    sourceMetadata = undefined
     restoreSource?.(); restoreSource = undefined
     restoreDialog?.(); restoreDialog = undefined
     unlock?.(); unlock = undefined
@@ -121,7 +123,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   const makeMotion = (first: MotionGeometry, titleSize: number, initiallyOpen = false) => {
     const current = ++token
     motion = createMotion({
-      dialog, panel, ...first, titleSize, initiallyOpen, sourceTitle,
+      dialog, panel, ...first, titleSize, initiallyOpen, sourceTitle, sourceMetadata,
       onOpened: () => {
         if (!destroyed && root.isConnected && token === current && phase === 'opening') {
           phase = 'open'
@@ -183,6 +185,12 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
       const name = link.querySelector<HTMLElement>('[data-artist-name]')
       const titleSize = name ? Number.parseFloat(getComputedStyle(name).fontSize) || 24 : 24
       sourceTitle = name && first.titleRect ? captureSourceTitle(name, first.titleRect) : undefined
+      const metadata = link.querySelector<HTMLElement>('[data-artist-meta]')
+      const metadataStyle = metadata ? getComputedStyle(metadata) : undefined
+      sourceMetadata = metadata && metadataStyle ? {
+        element: metadata, opacity: Number.parseFloat(metadataStyle.opacity || '1'),
+        visibility: metadataStyle.visibility,
+      } : undefined
       content.replaceChildren(template.content.cloneNode(true))
       phase = 'opening'
       settlementPending = false
@@ -192,8 +200,17 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
       dialog.showModal()
       prepareTitle()
       dialog.querySelector<HTMLElement>('#event-modal-title')?.focus({ preventScroll: true })
-      restoreSource = ownStyles(link, ['visibility'])
-      link.style.setProperty('visibility', 'hidden')
+      // Controller owns restoration and the hidden open/settled endpoint.
+      // Motion borrows metadata paint only for the existing flight score.
+      const shared = [...link.querySelectorAll<HTMLElement>('[data-artist-surface], [data-artist-name]')]
+      const restorers = shared.map(node => ownStyles(node, ['visibility']))
+      if (metadata) restorers.push(ownStyles(metadata, ['opacity', 'visibility']))
+      restoreSource = () => { for (const restore of restorers) restore() }
+      for (const node of shared) node.style.setProperty('visibility', 'hidden')
+      if (metadata) {
+        metadata.style.setProperty('opacity', '0')
+        metadata.style.setProperty('visibility', 'hidden')
+      }
       if (media.matches) phase = 'open'
       else makeMotion(first, titleSize)
     } catch {

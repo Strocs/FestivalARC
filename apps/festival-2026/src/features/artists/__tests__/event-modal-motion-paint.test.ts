@@ -35,13 +35,18 @@ function setup(initiallyOpen = false, composed = false) {
     title.replaceChildren(...element.cloneNode(true).childNodes)
     Object.assign(title.style, { textAlign: 'left', whiteSpace: 'nowrap', lineHeight: '1' })
   }
+  const metadata = document.createElement('span')
+  metadata.innerHTML = '<time>Domingo 29</time><span>Ver más</span>'
+  metadata.style.cssText = 'opacity:0;visibility:hidden;color:red'
+  document.body.append(metadata)
+  const sourceMetadata = { element: metadata, opacity: 0.6, visibility: 'visible' }
   const onClosed = vi.fn()
   const timelineSpy = vi.spyOn(gsap, 'timeline')
-  motion = createModalMotion({ dialog, panel, ...source, sourceTitle, titleSize: 20, initiallyOpen, onOpened: vi.fn(), onClosed })
+  motion = createModalMotion({ dialog, panel, ...source, sourceTitle, ...{ sourceMetadata }, titleSize: 20, initiallyOpen, onOpened: vi.fn(), onClosed })
   const timeline = timelineSpy.mock.results[0].value as gsap.core.Timeline
   timeline.pause()
   const proxy = panel.querySelector<HTMLElement>('[data-modal-title-proxy]')!
-  return { dialog, panel, title, close, source, sourceTitle, proxy, timeline, onClosed }
+  return { dialog, panel, title, close, source, sourceTitle, proxy, timeline, onClosed, metadata }
 }
 
 // GSAP owns these inline paint declarations. Avoid a jsdom cascade walk at
@@ -49,6 +54,58 @@ function setup(initiallyOpen = false, composed = false) {
 const opacity = (node: HTMLElement) => Number(node.style.opacity || getComputedStyle(node).opacity || '1')
 
 describe('modal title and close-button paint with real GSAP', () => {
+  it.each([false, true])('fades source metadata within the existing score and retains its hidden controller endpoint on disposal (initiallyOpen=%s)', initiallyOpen => {
+    const { timeline, source, metadata, onClosed } = setup(initiallyOpen)
+    expect(timeline.duration()).toBe(0.45)
+    if (initiallyOpen) {
+      expect(opacity(metadata)).toBe(0)
+      expect(metadata.style.visibility).toBe('hidden')
+    } else {
+      expect(opacity(metadata)).toBe(0.6)
+      timeline.time(0.075)
+      expect(opacity(metadata)).toBeGreaterThan(0)
+      expect(opacity(metadata)).toBeLessThan(0.6)
+      expect(onClosed).not.toHaveBeenCalled()
+    }
+    timeline.time(0.15)
+    expect(opacity(metadata)).toBe(0)
+    expect(metadata.style.visibility).toBe('hidden')
+    timeline.progress(1)
+    motion!.reverse(source)
+    timeline.pause().time(0.2)
+    expect(opacity(metadata)).toBe(0)
+    timeline.time(0.075)
+    expect(opacity(metadata)).toBeGreaterThan(0)
+    expect(opacity(metadata)).toBeLessThan(0.6)
+    expect(getComputedStyle(metadata).visibility).toBe('visible')
+    expect(onClosed).not.toHaveBeenCalled()
+    timeline.time(0, false)
+    expect(opacity(metadata)).toBe(0.6)
+    expect(onClosed).toHaveBeenCalledOnce()
+    metadata.style.color = 'blue'
+    motion!.dispose()
+    expect(opacity(metadata)).toBe(0)
+    expect(metadata.style.visibility).toBe('hidden')
+    expect(metadata.style.color).toBe('blue')
+  })
+
+  it('reverses partial source fade from its current opacity and keeps metadata hidden if opening is settled', () => {
+    const { timeline, source, metadata, onClosed } = setup()
+    timeline.time(0.06)
+    const partial = opacity(metadata)
+    expect(partial).toBeGreaterThan(0)
+    expect(partial).toBeLessThan(0.6)
+    motion!.reverse(source)
+    timeline.pause()
+    expect(opacity(metadata)).toBe(partial)
+    timeline.time(0.03)
+    expect(opacity(metadata)).toBeGreaterThan(partial)
+    expect(onClosed).not.toHaveBeenCalled()
+    timeline.progress(1, true)
+    motion!.dispose()
+    expect(opacity(metadata)).toBe(0)
+    expect(metadata.style.visibility).toBe('hidden')
+  })
   it('fades modal metadata, body and footer with the close button in both directions', () => {
     const { panel, close, timeline, source } = setup()
     const content = [...panel.querySelectorAll<HTMLElement>('[data-modal-meta], [data-modal-details], footer')]
