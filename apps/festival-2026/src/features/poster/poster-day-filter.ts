@@ -23,6 +23,14 @@ export interface DayFilter {
 }
 const inactive: DayFilter = { settle() {}, includes: () => true, destroy() {} }
 const isKey = (value: unknown): value is DayKey => keys.includes(value as DayKey)
+const patternPaint = (node: HTMLElement) => node.querySelector<SVGSVGElement>('svg[data-pattern-base]')
+const validPatternPaint = (node: HTMLElement, variant: string) => {
+  const paint = patternPaint(node)
+  const base = paint?.dataset.patternBase
+  return !!paint && !!base && base.startsWith('/') && !base.startsWith('//') && base.endsWith('/')
+    && !/["\\\\?#]/.test(base) && paint.childElementCount === 0
+    && paint.style.backgroundImage === `url("${base}${variant}.svg")`
+}
 
 /** Validate the entire finite handoff before changing any live endpoint. No packing. */
 function validate(value: PosterFilterPlans, artists: HTMLElement[], information: HTMLElement[], motifs: HTMLElement[]): boolean {
@@ -80,7 +88,8 @@ function validate(value: PosterFilterPlans, artists: HTMLElement[], information:
     }
   }
   if (motifs.length !== value.plans.all.motifs.length || motifs.some((node, index) => node.dataset.posterMotif !== value.plans.all.motifs[index].variant
-    || node.dataset.posterMotifIndex !== String(index) || !node.querySelector('svg use') || node.querySelector('[id]'))) return false
+    || node.dataset.posterMotifIndex !== String(index)
+    || (!validPatternPaint(node, value.plans.all.motifs[index].variant) && !node.querySelector('svg use')) || node.querySelector('[id]'))) return false
   return infoIDs.every(id => ranges.some(range => value.plans.all.information[range][id]))
 }
 
@@ -249,7 +258,9 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
         const template = originalMotifs[0]
         node = template.cloneNode(true) as HTMLElement
         node.removeAttribute('style'); node.dataset.posterMotif = m.variant
-        node.querySelector('use')!.setAttribute('href', `#${m.variant}`)
+        const paint = patternPaint(node)
+        if (paint) paint.style.backgroundImage = `url("${paint.dataset.patternBase}${m.variant}.svg")`
+        else node.querySelector('use')!.setAttribute('href', `#${m.variant}`)
         grid.append(node); pool.add(node)
       }
       assigned.add(node); node.hidden = false; node.style.removeProperty('display'); node.dataset.posterMotifIndex = String(index)

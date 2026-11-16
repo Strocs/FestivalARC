@@ -1,9 +1,10 @@
 ---
 import type { PosterMotif } from './poster'
+import { publicPath } from '../../utils/publication'
 interface Props { motif: PosterMotif }
 const { motif } = Astro.props
+const patternBase = publicPath('/patterns/')
 ---
-<!-- Bleed shared edges without changing grid tracks or disabling antialiasing. -->
-<svg class='block relative left-[-0.5px] top-[-0.5px] w-[calc(100%+1px)] h-[calc(100%+1px)]' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden='true' focusable='false'>
-  <use href={`#${motif}`} />
-</svg>
+<!-- The natural SVG box owns sizing; the background isolates decoration paint
+     without document use shadow trees, size containment or DOM load events. -->
+<svg class='block relative left-[-0.5px] top-[-0.5px] w-[calc(100%+1px)] h-[calc(100%+1px)]' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden='true' focusable='false' data-pattern-base={patternBase} style={`background-image:url("${patternBase}${motif}.svg");background-size:100% 100%;background-repeat:no-repeat`}></svg>

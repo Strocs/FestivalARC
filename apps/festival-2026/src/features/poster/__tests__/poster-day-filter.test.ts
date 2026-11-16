@@ -41,6 +41,39 @@ beforeEach(() => {
 afterEach(() => { dispose(); document.body.innerHTML = ''; document.body.removeAttribute('style'); document.documentElement.removeAttribute('style'); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 
 describe('day filtering through the sole modal owner', () => {
+  it('preserves isolated background paint and publication base through clones, interruption and teardown', () => {
+    dispose()
+    for (const node of root.querySelectorAll<HTMLElement>('[data-poster-motif]')) {
+      const svg = node.querySelector('svg')!
+      svg.replaceChildren()
+      svg.dataset.patternBase = '/preview/patterns/'
+      svg.style.backgroundImage = `url("/preview/patterns/${node.dataset.posterMotif}.svg")`
+      svg.style.backgroundSize = '100% 100%'; svg.style.backgroundRepeat = 'no-repeat'
+    }
+    const originals = [...root.querySelectorAll('[data-poster-motif]')]
+    const artwork = originals.map(node => node.innerHTML)
+    mount()
+    expect(root.querySelector('fieldset')!.hidden).toBe(false)
+    for (const day of ['saturday', 'sunday', 'all'] as const) {
+      choose(day)
+      window.dispatchEvent(new Event('resize'))
+      inputs[0]?.onComplete()
+      const live = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')].filter(node => !node.hidden)
+      expect(live).toHaveLength(plans.plans[day].motifs.length)
+      for (const node of live) {
+        const svg = node.querySelector('svg')!
+        expect(svg.childElementCount).toBe(0)
+        expect(svg.style.backgroundImage).toBe(`url("/preview/patterns/${node.dataset.posterMotif}.svg")`)
+        expect(svg.style.backgroundSize).toBe('100% 100%')
+        expect(svg.style.backgroundRepeat).toBe('no-repeat')
+      }
+      expect(visible()).toEqual(plans.plans[day].ids)
+    }
+    expect(root.querySelectorAll('[data-poster-motif]').length).toBeGreaterThan(originals.length)
+    dispose()
+    expect([...root.querySelectorAll('[data-poster-motif]')]).toEqual(originals)
+    expect(originals.map(node => node.innerHTML)).toEqual(artwork)
+  })
   it.each(['canonical', 'partial', 'missing'] as const)('reduces prepared endpoint work with exact legacy parity from %s inline state', initial => {
     dispose()
     // Exercise fixed, missing-range and movable information without the remote
