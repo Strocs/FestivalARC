@@ -125,18 +125,18 @@ describe('2026 participant catalog', () => {
     }
   })
 
-  it('supplies empty descriptions, null images and the exact provisional day split in array order', () => {
-    for (const [category, saturdayCount] of [['expo', 4], ['market', 20]] as const) {
-      const participants = participantCatalog[category].participants
-      participants.forEach((participant, index) => {
-        expect(participant).toMatchObject({
-          description: '', image: null,
-          date: { day: index < saturdayCount ? 'Sábado 28' : 'Domingo 29', time: '23:00' },
-        })
+  it.each([
+    ['music', 15], ['stage', 8], ['expo', 4], ['market', 20],
+  ] as const)('supplies empty descriptions, null images and alternating provisional days for %s in array order', (category, saturdayCount) => {
+    const participants = participantCatalog[category].participants
+    participants.forEach((participant, index) => {
+      expect(participant).toMatchObject({
+        description: '', image: null,
+        date: { day: index % 2 === 0 ? 'Sábado 28' : 'Domingo 29', time: '23:00' },
       })
-      expect(participants.filter(entry => entry.date.day === 'Sábado 28')).toHaveLength(saturdayCount)
-      expect(participants.filter(entry => entry.date.day === 'Domingo 29')).toHaveLength(participants.length - saturdayCount)
-    }
+    })
+    expect(participants.filter(entry => entry.date.day === 'Sábado 28')).toHaveLength(saturdayCount)
+    expect(participants.filter(entry => entry.date.day === 'Domingo 29')).toHaveLength(participants.length - saturdayCount)
   })
 
   it('keeps every music and stage work in hero order regardless of national status', () => {

@@ -74,7 +74,8 @@ describe('general artist contract', () => {
       expect(artist.description).toBe('')
       expect(artist.ticketUrl).toBeNull()
       expect(artist.image).toBeNull()
-      expect(artist.date).toEqual({ day: artist.order <= 23 ? 'Sábado 28' : 'Domingo 29', time: '23:00' })
+      const categoryIndex = artists.filter(entry => entry.category === artist.category).findIndex(entry => entry.id === artist.id)
+      expect(artist.date).toEqual({ day: categoryIndex % 2 === 0 ? 'Sábado 28' : 'Domingo 29', time: '23:00' })
       expect(artist).not.toHaveProperty('demo')
     }
     expect(artists.filter(({ date }) => date.day === 'Sábado 28')).toHaveLength(23)
