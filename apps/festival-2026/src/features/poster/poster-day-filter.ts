@@ -3,6 +3,7 @@ import type { PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
 import { createFilterMotion, type FilterMotion, type FilterMotionInput } from './poster-filter-motion'
 import { matchPosterMotifs } from './poster-motif-match'
+import { validatePosterFilterTransitions, type PosterFilterIndex } from './poster-filter-transition-validation'
 
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const keys = ['all', 'saturday', 'sunday'] as const
@@ -91,10 +92,13 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const information = [...root.querySelectorAll<HTMLElement>('[data-poster-information]')]
   const originalMotifs = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')]
   let plans: PosterFilterPlans
+  let index: PosterFilterIndex | undefined
   let media: MediaQueryList
   try {
     plans = JSON.parse(root.querySelector('script[data-poster-plans]')?.textContent ?? '')
     if (!grid || !controls || !status || radios.length !== 3 || radios.some((r, i) => r.value !== keys[i]) || !validate(plans, artists, information, originalMotifs)) return inactive
+    index = validatePosterFilterTransitions(plans)
+    if (!index) return inactive
     media = window.matchMedia('(prefers-reduced-motion: reduce)')
   } catch { return inactive }
   const abort = new AbortController()
@@ -107,6 +111,9 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let motifNodes = [...originalMotifs]
   let motifEndpoints = plans.plans.all.motifs
   const pool = new Set(originalMotifs)
+  const originalMotifSet = new Set(originalMotifs)
+  const indexedPlans = index.plans
+  const transitions = index.transitions
   const saved = [grid, ...artists, ...information, ...originalMotifs].map(node => ({
     node,
     restore: options.ownStyles(node, node === grid ? ranges.map(r => `--${r}-rows`) : ['display', ...ranges.flatMap(r => ['display', 'column', 'row', 'width', 'height'].map(p => `--${r}-${p}`))]),
@@ -141,7 +148,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const endpoint = (): PosterFilterPlan => plans.plans[selected]
   const finish = () => {
     motion?.dispose(); motion = undefined
-    const artistIDs = new Set(endpoint().ids)
+    const artistIDs = indexedPlans.get(selected)!.ids
     const activeMotifs = new Set(motifNodes)
     for (const node of artists) {
       node.hidden = !artistIDs.has(node.dataset.posterArtist!)
@@ -180,6 +187,8 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const first = new Map(painted.map(node => [node, node.getBoundingClientRect()]))
     const firstAlpha = new Map(painted.map(node => [node, Number.parseFloat(node.style.opacity || '1')]))
     const target = plans.plans[key]
+    const targetIndex = indexedPlans.get(key)!
+    const transition = transitions?.get(selected)!.get(key)!
     ++generation
     motion?.dispose(); motion = undefined
     releaseScroll?.()
@@ -191,12 +200,26 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     releaseScroll = () => { restoreHtml(); restoreGrid() }
     const previousNodes = motifNodes
     const cells = (endpoints: typeof motifEndpoints) => endpoints.map(m => ({ variant: m.variant, ...m.positions[activeRange] }))
-    const matches = matchPosterMotifs(cells(motifEndpoints), cells(target.motifs))
+    const matches = transition ? transition.motifs[activeRange] : matchPosterMotifs(cells(motifEndpoints), cells(target.motifs))
     const matched = new Map(matches.map(m => [m.to, previousNodes[m.from]]))
     const assigned = new Set(matched.values())
+    const previousSet = new Set(previousNodes)
+    // Reserve every previous endpoint, even offscreen/outgoing paint. Preserve
+    // Set insertion order within each variant without rescanning the pool.
+    const available = new Map<string, { nodes: HTMLElement[]; cursor: number }>()
+    for (const node of pool) {
+      if (previousSet.has(node) || assigned.has(node)) continue
+      const variant = node.dataset.posterMotif!
+      let queue = available.get(variant)
+      if (!queue) { queue = { nodes: [], cursor: 0 }; available.set(variant, queue) }
+      queue.nodes.push(node)
+    }
     motifNodes = target.motifs.map((m, index) => {
       let node = matched.get(index)
-      if (!node) node = [...pool].find(n => !assigned.has(n) && !previousNodes.includes(n) && n.dataset.posterMotif === m.variant)
+      if (!node) {
+        const queue = available.get(m.variant)
+        if (queue && queue.cursor < queue.nodes.length) node = queue.nodes[queue.cursor++]
+      }
       if (!node) {
         // Clone only the safe structural SVG wrapper, never participant markup/IDs.
         const template = originalMotifs[0]
@@ -215,14 +238,14 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     for (const r of ranges) grid.style.setProperty(`--${r}-rows`, String(target.layouts[r].rows))
     for (const node of artists) {
       const id = node.dataset.posterArtist!
-      const included = target.ids.includes(id)
+      const included = targetIndex.ids.has(id)
       accessible(node, included)
       node.hidden = !included
       if (included) node.style.removeProperty('display'); else node.style.display = 'none'
-      position(node, Object.fromEntries(ranges.map(r => [r, target.layouts[r].artists.find(a => a.id === id)])), 'grid')
+      position(node, targetIndex.artists.get(id) ?? {}, 'grid')
     }
-    for (const node of information) position(node, Object.fromEntries(ranges.map(r => [r, target.information[r][node.dataset.posterInformation!]])), 'grid')
-    for (const node of pool) if (!motifNodes.includes(node)) { node.hidden = true; node.style.display = 'none' }
+    for (const node of information) position(node, targetIndex.information.get(node.dataset.posterInformation!) ?? {}, 'grid')
+    for (const node of pool) if (!assigned.has(node)) { node.hidden = true; node.style.display = 'none' }
     // Keep the document coordinate, not an artist reference. Shrinking content
     // may clamp it naturally; restore only within the new document bounds.
     const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
@@ -261,7 +284,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (destroyed) return
     destroyed = true; ++generation; abort.abort(); motion?.dispose(); releaseScroll?.()
     observer?.disconnect(); disconnect?.disconnect(); media.removeEventListener?.('change', settle)
-    for (const node of pool) if (!originalMotifs.includes(node)) node.remove()
+    for (const node of pool) if (!originalMotifSet.has(node)) node.remove()
     for (const { node, restore, hidden, inert, index } of saved) {
       restore()
       node.hidden = hidden; node.inert = inert
@@ -274,7 +297,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     controls.addEventListener('change', change, { signal: abort.signal })
     root.addEventListener('click', event => {
       const link = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-event-trigger]') : null
-      if (link && !endpoint().ids.includes(link.dataset.eventId!)) event.preventDefault()
+      if (link && !indexedPlans.get(selected)!.ids.has(link.dataset.eventId!)) event.preventDefault()
     }, { signal: abort.signal, capture: true })
     window.addEventListener('resize', settle, { signal: abort.signal })
     media.addEventListener('change', settle)
@@ -284,5 +307,5 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     disconnect.observe(document.documentElement, { childList: true, subtree: true })
     controls.hidden = false; syncRadios(); clearance()
   } catch { destroy(); return inactive }
-  return { settle, includes: id => !!id && endpoint().ids.includes(id), destroy }
+  return { settle, includes: id => !!id && indexedPlans.get(selected)!.ids.has(id), destroy }
 }

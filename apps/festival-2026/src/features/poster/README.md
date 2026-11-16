@@ -61,6 +61,62 @@ The client may **type-import** `DayKey`, `PosterFilterPlans` and `PosterFilterPl
 | `plans[key].layouts[range]` | Existing engine output: columns, visible-content rows, artists, visible motif cells. |
 | `plans[key].information[range][id]` | Actual box rectangles; absent range means hidden (including mobile title extension). |
 | `plans[key].motifs` | Shared `index`, canonical `variant`, and optional `positions[range]`; index is an endpoint slot, **not permanent moving identity**. |
+| `transitions?` | Additive prepared data: six directed day-pair tables, each with three active-range motif correspondences (18 total). Legacy v1 without this field remains legal. |
+
+### Prepared transitions and client admission (T1–T2)
+
+Current builds always emit `transitions`, without changing version 1, availability,
+participants or endpoint values. The client validates and indexes these tables once
+at mount, then looks up the selected-to-target pair and uses `motifs[activeRange]`
+directly, without invoking the compiler or matcher. Legacy v1 payloads **without**
+`transitions` retain the existing runtime matcher path. Present but malformed tables
+fail closed before controls, counts, endpoints or owned styles change.
+
+Admission is linear in the bounded endpoints and supplied pairs: six unique directed
+pairs, exact sparse stable-ID masks (including required entries), changed row ranges,
+and three one-to-one motif correspondences with valid indices, present positions,
+same variant/dimensions, at most four modules of travel and exact all-range masks.
+It validates references and consistency, not optimal greedy matching; producer tests
+protect exact matcher order. `poster-filter-transition-validation.ts` exports
+`validatePosterFilterTransitions`, `PosterFilterIndex` and `PosterPlanIndex`. A valid
+index contains per-day ID Sets and artist/information position Maps, plus optional
+nested `transitions.get(from).get(to)` Maps; `undefined` means invalid metadata.
+Call it only after the existing complete endpoint/DOM validation.
+
+Reconciliation reserves all previous endpoint nodes and matched assignments, then
+consumes per-variant FIFO queues in pool insertion order. Clones are created only
+when a queue is exhausted, using the existing safe SVG wrapper strategy; original
+artist nodes are retained. Full endpoint writes and transient visibility/accessibility
+normalization remain unchanged. **Sparse mask-driven writes are pending T3**; this
+unit removes runtime matching and repeated pool/ID searches, not endpoint writes.
+
+`poster-filter-transitions.ts` exports `PosterFilterTransition`, `PosterStablePatch`,
+`PosterMotifPatch` and `PosterPositionMasks`. Each table identifies `from`/`to` day
+keys. `artists` and `information` contain only changed `{ id, masks }` entries,
+independent of the active range; resolve their IDs in the destination endpoint
+(absent artists/information ranges use the canonical absent defaults). `rows` lists
+only ranges with changed row counts; read their values from destination layouts.
+No rectangles or CSS strings are copied into patches.
+
+`motifs[activeRange]` retains **all matched pairs in exact matcher output order**,
+including zero-mask pairs. Each `{ from, to, masks }` references source/destination
+motif array indices, not DOM identities. Build invokes `matchPosterMotifs` for each
+of the 18 correspondences independently, never reversing a mapping. Each matched
+pair's masks compare its source and destination slots across **all three ranges**,
+not just the active matching range. Unmatched slots have no patch: new/recycled
+nodes must later receive full initialization because build cannot know pool history.
+
+The client-safe helpers `canonicalPosterPosition`, `diffPosterPosition` and
+`diffPosterPositions` share the comparison rules used by linear client validation.
+`posterPositionFields` and `posterPositionMask` name the five numeric bits:
+`present=1`, `column=2`, `row=4`, `width=8`, `height=16` (all fields: 31; no-op: 0).
+`present` selects the node's normal display (`grid`/`block`) versus `none`.
+Canonical absent coordinates are column/row 0 and width/height 1, matching the
+existing `position()` writer. A mask permits skipping only unchanged endpoint
+variables, not transient visibility/accessibility cleanup. `compilePosterFilterTransitions`
+accepts validated finite endpoints; it is invoked only at build. The module's
+layout contracts are type imports, with no catalog, Astro or packing runtime imports.
+Existing 512-artist, 32-information, 4096-row and 40960-motif envelopes remain intact.
 
 Exact mapping is `Sábado 28` / `Domingo 29`; no localized date parsing. Todos reproduces original packing and shared motif selection exactly, including original home gaps. Filtered home plans keep intro/title extension fixed. Other boxes follow their baseline row-major order: count retained predecessor IDs at each baseline boundary, commit that artist prefix through the existing engine's validated anchors, then scan forward for the preferred lane (other in-bounds lanes break ties). Previously committed prefixes never move backward. The engine validates each candidate against full artist envelopes (three rows on mobile, two elsewhere) and prior information. Dimensions/content stay unchanged. All three layouts finish before one shared motif selection. Category endpoints reserve only the actual existing title footprint.
 

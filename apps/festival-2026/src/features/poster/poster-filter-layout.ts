@@ -2,6 +2,7 @@ import type { PosterRange, PosterMotif } from './poster'
 import { calculatePosterLayout, type PosterLayout, type SlotRect, type ArtistAnchor, type GridColumns } from './poster-grid'
 import { selectPosterMotifs } from './poster-motif-distribution'
 import type { PosterInformationBlock, PosterPositions } from './poster-layout'
+import { compilePosterFilterTransitions, type PosterFilterTransition } from './poster-filter-transitions'
 
 export type DayKey = 'all' | 'saturday' | 'sunday'
 export interface FilterParticipant { id: string; day: string }
@@ -22,6 +23,7 @@ export interface PosterFilterPlans {
   available: boolean
   participants: FilterParticipant[]
   plans: Record<DayKey, PosterFilterPlan>
+  transitions?: PosterFilterTransition[]
 }
 
 const ranges = ['desktop', 'tablet', 'mobile'] as const
@@ -166,11 +168,13 @@ export function createPosterFilterPlans(input: PosterFilterInput): PosterFilterP
       })),
     }
   }
+  const plans = { all: build('all'), saturday: build('saturday'), sunday: build('sunday') }
   return {
     version: 1,
     scope: input.scope,
     available: participants.some(participant => participant.day === days.saturday) && participants.some(participant => participant.day === days.sunday),
     participants,
-    plans: { all: build('all'), saturday: build('saturday'), sunday: build('sunday') },
+    plans,
+    transitions: compilePosterFilterTransitions(plans),
   }
 }

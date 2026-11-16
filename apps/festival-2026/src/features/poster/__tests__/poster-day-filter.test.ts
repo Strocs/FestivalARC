@@ -4,6 +4,9 @@ import { mountEventModal } from '../../artists/event-modal'
 import { createPosterFilterPlans } from '../poster-filter-layout'
 import { homeInformation } from '../poster-layout'
 import type { FilterMotionInput } from '../poster-filter-motion'
+import { compilePosterFilterTransitions, diffPosterPositions } from '../poster-filter-transitions'
+import type { DayKey } from '../poster-filter-layout'
+import * as motifMatcher from '../poster-motif-match'
 
 let root: HTMLElement
 let dispose: () => void
@@ -38,6 +41,212 @@ beforeEach(() => {
 afterEach(() => { dispose(); document.body.innerHTML = ''; document.body.removeAttribute('style'); document.documentElement.removeAttribute('style'); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 
 describe('day filtering through the sole modal owner', () => {
+  it('admits prepared tables without matcher work and preserves legacy matcher behavior', () => {
+    dispose()
+    const matcher = vi.spyOn(motifMatcher, 'matchPosterMotifs')
+    mount()
+    expect(matcher).not.toHaveBeenCalled()
+    for (const key of ['saturday', 'sunday', 'all']) choose(key)
+    expect(matcher).not.toHaveBeenCalled()
+    dispose()
+    const legacy = structuredClone(plans)
+    delete legacy.transitions
+    root.querySelector('script')!.textContent = JSON.stringify(legacy)
+    mount()
+    for (const key of ['saturday', 'sunday', 'all']) choose(key)
+    expect(matcher).toHaveBeenCalledTimes(3)
+    expect(visible()).toEqual(['a', 'b'])
+  })
+  it.each([
+    { reduced: false, width: 390, range: 'mobile' }, { reduced: true, width: 390, range: 'mobile' },
+    { reduced: false, width: 900, range: 'tablet' }, { reduced: true, width: 900, range: 'tablet' },
+    { reduced: false, width: 1400, range: 'desktop' }, { reduced: true, width: 1400, range: 'desktop' },
+  ] as const)('preserves exact FIFO node choices and endpoints through cycles/interruption ($range, reduced=$reduced)', ({ reduced, width, range }) => {
+    dispose()
+    vi.stubGlobal('innerWidth', width)
+    media.matches = reduced
+    const original = root.innerHTML
+    const run = (prepared: boolean) => {
+      root.innerHTML = original
+      const config = structuredClone(plans)
+      if (!prepared) delete config.transitions
+      root.querySelector('script')!.textContent = JSON.stringify(config)
+      const identities = new Map<HTMLElement, number>()
+      const remember = () => {
+        for (const node of root.querySelectorAll<HTMLElement>('[data-poster-motif]')) if (!identities.has(node)) identities.set(node, identities.size)
+      }
+      remember(); inputs = []; mount()
+      const artistNodes = [...root.querySelectorAll('[data-poster-artist]')]
+      // Reference the previous first-eligible pool algorithm, independently of
+      // both client paths. These are logical identities, not timing/paint rules.
+      const pool = plans.plans.all.motifs.map(m => ({ variant: m.variant }))
+      let previous = [...pool]
+      let selected: DayKey = 'all'
+      const states = []
+      for (const [step, key] of (['saturday', 'sunday', 'all', 'sunday', 'saturday', 'all'] as const).entries()) {
+        const cells = (day: DayKey) => plans.plans[day].motifs.map(m => ({ variant: m.variant, ...m.positions[range] }))
+        const matches = motifMatcher.matchPosterMotifs(cells(selected), cells(key))
+        const matched = new Map(matches.map(pair => [pair.to, previous[pair.from]]))
+        const assigned = new Set(matched.values())
+        previous = plans.plans[key].motifs.map((m, index) => {
+          let node = matched.get(index) ?? pool.find(n => !assigned.has(n) && !previous.includes(n) && n.variant === m.variant)
+          if (!node) { node = { variant: m.variant }; pool.push(node) }
+          assigned.add(node)
+          return node
+        })
+        selected = key
+        choose(key)
+        // Alternate interruption and completed endpoints, including stale callbacks.
+        if (!reduced && step % 2) {
+          inputs.at(-1)?.onComplete()
+          inputs[0]?.onComplete()
+        }
+        remember()
+        const live = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')].filter(node => node.style.display !== 'none')
+          .sort((a, b) => Number(a.dataset.posterMotifIndex) - Number(b.dataset.posterMotifIndex))
+        expect(live.map(node => identities.get(node))).toEqual(previous.map(node => pool.indexOf(node)))
+        expect([...root.querySelectorAll('[data-poster-artist]')]).toEqual(artistNodes)
+        states.push({
+          artists: visible(), count: root.querySelector('[data-day-count]')!.textContent,
+          nodes: [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')].map(node => ({
+            identity: identities.get(node), index: node.dataset.posterMotifIndex,
+            variant: node.dataset.posterMotif, href: node.querySelector('use')!.getAttribute('href'),
+            hidden: node.hidden,
+            endpoints: ['mobile', 'tablet', 'desktop'].map(range => ['display', 'column', 'row', 'width', 'height'].map(field => node.style.getPropertyValue(`--${range}-${field}`))),
+          })),
+        })
+      }
+      dispose()
+      return states
+    }
+    expect(run(true)).toEqual(run(false))
+  })
+  it('does no motif-node array includes/find scans during FIFO reconciliation', () => {
+    media.matches = true
+    const includes = Array.prototype.includes
+    const find = Array.prototype.find
+    let scans = 0
+    const motifArray = (array: unknown[]) => array.some(value => value instanceof HTMLElement && value.hasAttribute('data-poster-motif'))
+    const includesSpy = vi.spyOn(Array.prototype, 'includes').mockImplementation(function (this: unknown[], ...args) {
+      if (motifArray(this)) scans++
+      return includes.apply(this, args)
+    })
+    const findSpy = vi.spyOn(Array.prototype, 'find').mockImplementation(function (this: unknown[], ...args) {
+      if (motifArray(this)) scans++
+      return find.apply(this, args)
+    })
+    for (const key of ['saturday', 'sunday', 'all', 'saturday']) choose(key)
+    includesSpy.mockRestore(); findSpy.mockRestore()
+    expect(scans).toBe(0)
+    expect(visible()).toEqual(['a'])
+  })
+  it.each([
+    'null', 'missing-pair', 'duplicate-pair', 'unknown-key', 'same-key',
+    'missing-patch', 'extra-patch', 'no-op-patch', 'duplicate-patch', 'unknown-id', 'wrong-mask',
+    'fractional-mask', 'high-mask', 'negative-mask', 'extra-mask-range', 'missing-mask-range', 'row-omission', 'row-duplicate', 'wrong-row',
+    'missing-motif-range', 'extra-motif-range', 'duplicate-from', 'duplicate-to', 'index-bounds', 'fractional-index',
+    'absent-position', 'variant', 'motif-mask',
+  ])('fails closed atomically for prepared table %s', failure => {
+    dispose()
+    const config = structuredClone(plans)
+    const table = config.transitions![0]
+    const pair = table.motifs.desktop[0]
+    if (failure === 'null') config.transitions = null as never
+    if (failure === 'missing-pair') config.transitions!.pop()
+    if (failure === 'duplicate-pair') config.transitions![1] = structuredClone(table)
+    if (failure === 'unknown-key') table.from = 'other' as never
+    if (failure === 'same-key') table.to = table.from
+    if (failure === 'missing-patch') table.artists.pop()
+    if (failure === 'extra-patch') table.information.push({ id: 'foreign', masks: { desktop: 0, tablet: 0, mobile: 0 } })
+    if (failure === 'no-op-patch') table.artists.push({ id: 'a', masks: { desktop: 0, tablet: 0, mobile: 0 } })
+    if (failure === 'duplicate-patch') table.artists.push(structuredClone(table.artists[0]))
+    if (failure === 'unknown-id') table.artists[0].id = 'foreign'
+    if (failure === 'wrong-mask') table.artists[0].masks.mobile ^= 1
+    if (failure === 'fractional-mask') table.artists[0].masks.mobile = 0.5
+    if (failure === 'high-mask') table.artists[0].masks.mobile += 2 ** 32
+    if (failure === 'negative-mask') table.artists[0].masks.mobile = -1
+    if (failure === 'extra-mask-range') Object.assign(table.artists[0].masks, { other: 1 })
+    if (failure === 'missing-mask-range') delete (table.artists[0].masks as Partial<typeof pair.masks>).mobile
+    if (failure === 'row-omission') table.rows = []
+    if (failure === 'row-duplicate') table.rows.push(table.rows[0])
+    if (failure === 'wrong-row') table.rows = ['desktop']
+    if (failure === 'extra-motif-range') Object.assign(table.motifs, { other: [] })
+    if (failure === 'missing-motif-range') delete (table.motifs as Partial<typeof table.motifs>).mobile
+    if (failure === 'duplicate-from') table.motifs.desktop.push({ ...pair, to: table.motifs.desktop[1].to })
+    if (failure === 'duplicate-to') table.motifs.desktop.push({ ...pair, from: table.motifs.desktop[1].from })
+    if (failure === 'index-bounds') pair.from = config.plans[table.from].motifs.length
+    if (failure === 'fractional-index') pair.to = 0.5
+    if (['absent-position', 'variant'].includes(failure)) {
+      const source = config.plans[table.from].motifs
+      const target = config.plans[table.to].motifs[pair.to]
+      const index = source.findIndex(m => failure === 'absent-position' ? !m.positions.desktop : m.variant !== target.variant)
+      expect(index).toBeGreaterThanOrEqual(0)
+      pair.from = index
+    }
+    if (failure === 'motif-mask') pair.masks.desktop ^= 1
+    root.querySelector('script')!.textContent = JSON.stringify(config)
+    const before = root.innerHTML
+    const bodyStyle = document.body.getAttribute('style')
+    const htmlStyle = document.documentElement.getAttribute('style')
+    const url = location.href
+    mount()
+    expect(root.innerHTML).toBe(before)
+    expect(document.body.getAttribute('style')).toBe(bodyStyle)
+    expect(document.documentElement.getAttribute('style')).toBe(htmlStyle)
+    expect(location.href).toBe(url)
+    expect(root.querySelector('fieldset')!.hidden).toBe(true)
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe('')
+    choose('saturday')
+    expect(root.querySelector('[data-poster-grid]')!.outerHTML).toBe(new DOMParser().parseFromString(before, 'text/html').querySelector('[data-poster-grid]')!.outerHTML)
+    expect(inputs).toHaveLength(0)
+  })
+  it.each(['travel', 'dimensions', 'information-omission'])('rejects inconsistent home references: %s', failure => {
+    dispose()
+    const config = createPosterFilterPlans({ scope: 'home', participants: plans.participants, information: homeInformation })
+    const grid = root.querySelector('[data-poster-grid]')!
+    for (const node of grid.querySelectorAll('[data-poster-motif]')) node.remove()
+    grid.insertAdjacentHTML('beforeend', config.plans.all.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join('') + homeInformation.map(block => `<div data-poster-information="${block.id}"></div>`).join(''))
+    // Prove this endpoint/DOM fixture is valid before corrupting metadata only.
+    root.querySelector('script')!.textContent = JSON.stringify(config)
+    mount(); expect(root.querySelector('fieldset')!.hidden).toBe(false); dispose()
+    if (failure === 'information-omission') {
+      const table = config.transitions!.find(table => table.information.length > 0)!
+      expect(table).toBeDefined()
+      table.information.pop()
+    } else {
+      const table = config.transitions![0]
+      const source = config.plans[table.from].motifs
+      const target = config.plans[table.to].motifs
+      const from = source.findIndex(a => target.some(b => {
+        const x = a.positions.mobile; const y = b.positions.mobile
+        return x && y && a.variant === b.variant && (failure === 'dimensions'
+          ? x.width !== y.width || x.height !== y.height
+          : x.width === y.width && x.height === y.height && Math.hypot(x.column - y.column, x.row - y.row) > 4)
+      }))
+      expect(from).toBeGreaterThanOrEqual(0)
+      const a = source[from]
+      const to = target.findIndex(b => {
+        const x = a.positions.mobile!; const y = b.positions.mobile
+        return y && a.variant === b.variant && (failure === 'dimensions'
+          ? x.width !== y.width || x.height !== y.height
+          : x.width === y.width && x.height === y.height && Math.hypot(x.column - y.column, x.row - y.row) > 4)
+      })
+      table.motifs.mobile = [{ from, to, masks: diffPosterPositions(a.positions, target[to].positions) }]
+    }
+    root.querySelector('script')!.textContent = JSON.stringify(config)
+    const before = root.innerHTML
+    const body = document.body.getAttribute('style'); const html = document.documentElement.getAttribute('style'); const url = location.href
+    mount()
+    expect(root.innerHTML).toBe(before)
+    expect(document.body.getAttribute('style')).toBe(body)
+    expect(document.documentElement.getAttribute('style')).toBe(html)
+    expect(location.href).toBe(url)
+    expect(root.querySelector('fieldset')!.hidden).toBe(true)
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe('')
+    choose('saturday')
+    expect(grid.outerHTML).toBe(new DOMParser().parseFromString(before, 'text/html').querySelector('[data-poster-grid]')!.outerHTML)
+    expect(inputs).toHaveLength(0)
+  })
   it('keeps controls available, intersects scope, disables outgoing anchors and restores exact Todos endpoints without navigation', () => {
     const push = vi.spyOn(history, 'pushState'); const replace = vi.spyOn(history, 'replaceState'); const url = location.href
     const original = root.querySelector('script')!.textContent
@@ -72,6 +281,7 @@ describe('day filtering through the sole modal owner', () => {
         else delete motif.positions[range]
       }
     }
+    config.transitions = compilePosterFilterTransitions(config.plans)
     root.querySelector('script')!.textContent = JSON.stringify(config)
     mount()
     expect(root.querySelector('fieldset')!.hidden).toBe(false)
@@ -99,6 +309,7 @@ describe('day filtering through the sole modal owner', () => {
         else delete motif.positions[range]
       }
     }
+    config.transitions = compilePosterFilterTransitions(config.plans)
     root.querySelector('script')!.textContent = JSON.stringify(config)
     const grid = root.querySelector<HTMLElement>('[data-poster-grid]')!
     for (const node of grid.querySelectorAll('[data-poster-motif]')) node.remove()
