@@ -41,6 +41,120 @@ beforeEach(() => {
 afterEach(() => { dispose(); document.body.innerHTML = ''; document.body.removeAttribute('style'); document.documentElement.removeAttribute('style'); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 
 describe('day filtering through the sole modal owner', () => {
+  it.each(['canonical', 'partial', 'missing'] as const)('reduces prepared endpoint work with exact legacy parity from %s inline state', initial => {
+    dispose()
+    // Exercise fixed, missing-range and movable information without the remote
+    // social footprints that make a two-participant baseline mostly decoration.
+    // The separate full-home regression below retains the production footprint.
+    const information = [
+      ...homeInformation.slice(0, 2),
+      { id: 'movable', positions: {
+        mobile: { column: 0, row: 14, width: 8, height: 1 },
+        tablet: { column: 3, row: 5, width: 2, height: 1 },
+        desktop: { column: 6, row: 5, width: 2, height: 1 },
+      } },
+    ]
+    const config = createPosterFilterPlans({ scope: 'home', participants: plans.participants, information })
+    const grid = root.querySelector<HTMLElement>('[data-poster-grid]')!
+    for (const node of grid.querySelectorAll('[data-poster-motif]')) node.remove()
+    grid.insertAdjacentHTML('beforeend', config.plans.all.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join('') + information.map(block => `<div data-poster-information="${block.id}"></div>`).join(''))
+    const ranges = ['mobile', 'tablet', 'desktop'] as const
+    const fields = ['display', 'column', 'row', 'width', 'height'] as const
+    const positions = (day: DayKey, node: HTMLElement) => {
+      const plan = config.plans[day]
+      if (node.hasAttribute('data-poster-motif')) return plan.motifs[Number(node.dataset.posterMotifIndex)].positions
+      return Object.fromEntries(ranges.map(range => [range, node.hasAttribute('data-poster-artist')
+        ? plan.layouts[range].artists.find(a => a.id === node.dataset.posterArtist)
+        : plan.information[range][node.dataset.posterInformation!]]))
+    }
+    const values = (day: DayKey, node: HTMLElement) => {
+      const destination = positions(day, node)
+      return ranges.flatMap(range => fields.map(field => {
+        const rect = destination[range]
+        return field === 'display' ? rect ? node.hasAttribute('data-poster-motif') ? 'block' : 'grid' : 'none'
+          : String(rect?.[field] ?? (field === 'width' || field === 'height' ? 1 : 0))
+      }))
+    }
+    if (initial !== 'missing') {
+      for (const node of grid.querySelectorAll<HTMLElement>('[data-poster-artist], [data-poster-information], [data-poster-motif]')) {
+        const expected = values('all', node)
+        ranges.flatMap(range => fields.map(field => `--${range}-${field}`)).forEach((property, i) => node.style.setProperty(property, expected[i]))
+      }
+      for (const range of ranges) grid.style.setProperty(`--${range}-rows`, String(config.plans.all.layouts[range].rows))
+    }
+    if (initial === 'partial') {
+      // Include wrong values and priorities as well as missing declarations.
+      grid.style.removeProperty('--tablet-rows')
+      grid.style.setProperty('--mobile-rows', '999', 'important')
+      for (const node of grid.querySelectorAll<HTMLElement>('[data-poster-artist], [data-poster-information], [data-poster-motif]')) {
+        node.style.removeProperty('--desktop-height')
+        node.style.setProperty('--tablet-column', '999')
+        node.style.setProperty('--mobile-width', node.style.getPropertyValue('--mobile-width'), 'important')
+      }
+    }
+    const original = root.innerHTML
+    const run = (prepared: boolean) => {
+      root.innerHTML = original
+      const payload = structuredClone(config)
+      if (!prepared) delete payload.transitions
+      root.querySelector('script')!.textContent = JSON.stringify(payload)
+      inputs = []; media.matches = false; vi.stubGlobal('innerWidth', 390)
+      let writes = 0
+      const set = CSSStyleDeclaration.prototype.setProperty
+      const endpoint = /^--(mobile|tablet|desktop)-(display|column|row|width|height|rows)$/
+      const writeSpy = vi.spyOn(CSSStyleDeclaration.prototype, 'setProperty').mockImplementation(function (this: CSSStyleDeclaration, property, value, priority) {
+        if (endpoint.test(property)) writes++
+        return set.call(this, property, value, priority)
+      })
+      mount()
+      const mountWrites = writes
+      const artistNodes = [...root.querySelectorAll('[data-poster-artist]')]
+      const identities = new Map<HTMLElement, number>()
+      const states = []; const work = []
+      for (const [step, day] of (['saturday', 'sunday', 'all', 'saturday', 'all'] as const).entries()) {
+        const before = writes
+        choose(day)
+        work.push(writes - before)
+        if (step === 1) {
+          // Settle the latest endpoint at a new range, then invoke stale completion.
+          vi.stubGlobal('innerWidth', 1400); window.dispatchEvent(new Event('resize'))
+          inputs[0]?.onComplete()
+        } else if (step === 2) {
+          media.matches = true; media.dispatchEvent(new Event('change'))
+          inputs[0]?.onComplete()
+        }
+        expect([...root.querySelectorAll('[data-poster-artist]')]).toEqual(artistNodes)
+        const live = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')].filter(node => node.style.display !== 'none')
+        expect(live).toHaveLength(config.plans[day].motifs.length)
+        for (const node of root.querySelectorAll<HTMLElement>('[data-poster-artist], [data-poster-information], [data-poster-motif]')) {
+          if (!identities.has(node)) identities.set(node, identities.size)
+          if (node.hasAttribute('data-poster-motif') && !live.includes(node)) continue
+          const expected = values(day, node)
+          expect(ranges.flatMap(range => fields.map(field => node.style.getPropertyValue(`--${range}-${field}`)))).toEqual(expected)
+          for (const range of ranges) for (const field of fields) expect(node.style.getPropertyPriority(`--${range}-${field}`)).toBe('')
+        }
+        const currentGrid = root.querySelector<HTMLElement>('[data-poster-grid]')!
+        for (const range of ranges) {
+          expect(currentGrid.style.getPropertyValue(`--${range}-rows`)).toBe(String(config.plans[day].layouts[range].rows))
+          expect(currentGrid.style.getPropertyPriority(`--${range}-rows`)).toBe('')
+        }
+        states.push({ artists: visible(), count: root.querySelector('[data-day-count]')!.textContent,
+          nodes: [...identities].map(([node, identity]) => ({ identity, hidden: node.hidden, inert: node.inert,
+            index: node.dataset.posterMotifIndex, href: node.querySelector('use')?.getAttribute('href'),
+            values: ranges.flatMap(range => fields.map(field => node.style.getPropertyValue(`--${range}-${field}`))),
+            tab: node.querySelector('a')?.getAttribute('tabindex') })) })
+      }
+      writeSpy.mockRestore(); dispose()
+      return { states, work, mountWrites }
+    }
+    const prepared = run(true); const legacy = run(false)
+    expect(prepared.states).toEqual(legacy.states)
+    expect(prepared.mountWrites).toBe(0); expect(legacy.mountWrites).toBe(0)
+    if (initial === 'canonical') expect(prepared.work[0]).toBeLessThan(legacy.work[0])
+    else expect(prepared.work[0]).toBe(legacy.work[0])
+    expect(prepared.work.reduce((a, b) => a + b)).toBeLessThan(legacy.work.reduce((a, b) => a + b))
+    console.info('endpoint work (includes jsdom clone style copies)', initial, { prepared: prepared.work, legacy: legacy.work })
+  })
   it('admits prepared tables without matcher work and preserves legacy matcher behavior', () => {
     dispose()
     const matcher = vi.spyOn(motifMatcher, 'matchPosterMotifs')

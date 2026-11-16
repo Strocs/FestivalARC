@@ -3,6 +3,8 @@ import type { PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
 import { createFilterMotion, type FilterMotion, type FilterMotionInput } from './poster-filter-motion'
 import { matchPosterMotifs } from './poster-motif-match'
+import type { PosterPositions } from './poster-layout'
+import { canonicalPosterPosition, posterPositionFields, posterPositionMask, type PosterPositionMasks } from './poster-filter-transitions'
 import { validatePosterFilterTransitions, type PosterFilterIndex } from './poster-filter-transition-validation'
 
 const ranges = ['mobile', 'tablet', 'desktop'] as const
@@ -127,13 +129,31 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let disconnect: MutationObserver | undefined
   const range = (): PosterRange => window.innerWidth >= 1280 ? 'desktop' : window.innerWidth >= 768 ? 'tablet' : 'mobile'
   const syncRadios = () => { for (const radio of radios) radio.checked = radio.value === selected }
-  const position = (node: HTMLElement, endpoints: Partial<Record<PosterRange, SlotRect>>, display: 'grid' | 'block') => {
-    for (const range of ranges) {
-      const rect = endpoints[range]
-      node.style.setProperty(`--${range}-display`, rect ? display : 'none')
-      for (const property of ['column', 'row', 'width', 'height'] as const) node.style.setProperty(`--${range}-${property}`, String(rect?.[property] ?? (property === 'width' || property === 'height' ? 1 : 0)))
+  // Only canonical endpoint metadata is remembered, never painted geometry.
+  // Check initial inline declarations lazily once, so valid SSR benefits on click 1.
+  const initialized = new WeakSet<HTMLElement>()
+  const fullMask = posterPositionFields.reduce((mask, field) => mask | posterPositionMask[field], 0)
+  const noChange: PosterPositionMasks = { mobile: 0, tablet: 0, desktop: 0 }
+  const declarations = (endpoints: PosterPositions, display: 'grid' | 'block') => ranges.flatMap(range => {
+    const value = canonicalPosterPosition(endpoints[range])
+    return posterPositionFields.map(field => ({
+      range, bit: posterPositionMask[field], property: `--${range}-${field === 'present' ? 'display' : field}`,
+      value: field === 'present' ? value.present ? display : 'none' : String(value[field]),
+    }))
+  })
+  const position = (node: HTMLElement, endpoints: PosterPositions, display: 'grid' | 'block', masks?: PosterPositionMasks, previous?: PosterPositions) => {
+    let sparse = masks !== undefined && initialized.has(node)
+    if (masks && !initialized.has(node) && previous) {
+      // Inline only: missing/wrong/important values must be fully normalized.
+      sparse = declarations(previous, display).every(({ property, value }) =>
+        node.style.getPropertyValue(property) === value && node.style.getPropertyPriority(property) === '')
     }
+    for (const { range, bit, property, value } of declarations(endpoints, display)) {
+      if ((sparse ? masks![range] : fullMask) & bit) node.style.setProperty(property, value)
+    }
+    initialized.add(node)
   }
+  let rowsInitialized = false
   const accessible = (node: HTMLElement, included: boolean) => {
     node.inert = !included
     for (const link of node.querySelectorAll<HTMLElement>('a,button,input,select,textarea,[tabindex]')) {
@@ -189,6 +209,9 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const target = plans.plans[key]
     const targetIndex = indexedPlans.get(key)!
     const transition = transitions?.get(selected)!.get(key)!
+    const previousIndex = indexedPlans.get(selected)!
+    const artistPatches = transition && new Map(transition.artists.map(patch => [patch.id, patch.masks]))
+    const informationPatches = transition && new Map(transition.information.map(patch => [patch.id, patch.masks]))
     ++generation
     motion?.dispose(); motion = undefined
     releaseScroll?.()
@@ -201,6 +224,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const previousNodes = motifNodes
     const cells = (endpoints: typeof motifEndpoints) => endpoints.map(m => ({ variant: m.variant, ...m.positions[activeRange] }))
     const matches = transition ? transition.motifs[activeRange] : matchPosterMotifs(cells(motifEndpoints), cells(target.motifs))
+    const motifPatches = transition && new Map(transition.motifs[activeRange].map(patch => [patch.to, patch]))
     const matched = new Map(matches.map(m => [m.to, previousNodes[m.from]]))
     const assigned = new Set(matched.values())
     const previousSet = new Set(previousNodes)
@@ -229,22 +253,33 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
         grid.append(node); pool.add(node)
       }
       assigned.add(node); node.hidden = false; node.style.removeProperty('display'); node.dataset.posterMotifIndex = String(index)
-      position(node, m.positions, 'block')
+      const patch = motifPatches?.get(index)
+      // Unmatched recycled nodes are deliberately full writes, regardless of history.
+      position(node, m.positions, 'block', patch?.masks, patch && motifEndpoints[patch.from].positions)
       return node
     })
     motifEndpoints = target.motifs
     selected = key; pending = true; syncRadios()
     // One final-flow write batch, including actual information and all ranges.
-    for (const r of ranges) grid.style.setProperty(`--${r}-rows`, String(target.layouts[r].rows))
+    if (transition && !rowsInitialized) rowsInitialized = ranges.every(r =>
+      grid.style.getPropertyValue(`--${r}-rows`) === String(plans.plans[transition.from].layouts[r].rows)
+      && grid.style.getPropertyPriority(`--${r}-rows`) === '')
+    for (const r of ranges) {
+      if (!transition || !rowsInitialized || transition.rows.includes(r)) grid.style.setProperty(`--${r}-rows`, String(target.layouts[r].rows))
+    }
+    rowsInitialized = true
     for (const node of artists) {
       const id = node.dataset.posterArtist!
       const included = targetIndex.ids.has(id)
       accessible(node, included)
       node.hidden = !included
       if (included) node.style.removeProperty('display'); else node.style.display = 'none'
-      position(node, targetIndex.artists.get(id) ?? {}, 'grid')
+      position(node, targetIndex.artists.get(id) ?? {}, 'grid', artistPatches && (artistPatches.get(id) ?? noChange), previousIndex.artists.get(id) ?? {})
     }
-    for (const node of information) position(node, targetIndex.information.get(node.dataset.posterInformation!) ?? {}, 'grid')
+    for (const node of information) {
+      const id = node.dataset.posterInformation!
+      position(node, targetIndex.information.get(id) ?? {}, 'grid', informationPatches && (informationPatches.get(id) ?? noChange), previousIndex.information.get(id) ?? {})
+    }
     for (const node of pool) if (!assigned.has(node)) { node.hidden = true; node.style.display = 'none' }
     // Keep the document coordinate, not an artist reference. Shrinking content
     // may clamp it naturally; restore only within the new document bounds.

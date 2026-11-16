@@ -63,7 +63,7 @@ The client may **type-import** `DayKey`, `PosterFilterPlans` and `PosterFilterPl
 | `plans[key].motifs` | Shared `index`, canonical `variant`, and optional `positions[range]`; index is an endpoint slot, **not permanent moving identity**. |
 | `transitions?` | Additive prepared data: six directed day-pair tables, each with three active-range motif correspondences (18 total). Legacy v1 without this field remains legal. |
 
-### Prepared transitions and client admission (T1–T2)
+### Prepared transitions, client admission and sparse writes (T1–T3)
 
 Current builds always emit `transitions`, without changing version 1, availability,
 participants or endpoint values. The client validates and indexes these tables once
@@ -86,9 +86,24 @@ Call it only after the existing complete endpoint/DOM validation.
 Reconciliation reserves all previous endpoint nodes and matched assignments, then
 consumes per-variant FIFO queues in pool insertion order. Clones are created only
 when a queue is exhausted, using the existing safe SVG wrapper strategy; original
-artist nodes are retained. Full endpoint writes and transient visibility/accessibility
-normalization remain unchanged. **Sparse mask-driven writes are pending T3**; this
-unit removes runtime matching and repeated pool/ID searches, not endpoint writes.
+artist nodes are retained. Stable artist/information patches are indexed by ID once
+per selection; matched motif patches are indexed by destination slot. Prepared
+transitions write only changed endpoint variables across all three ranges and changed
+grid row variables. Transient visibility/accessibility normalization still runs,
+including interrupted exits; masks never suppress hidden/display or motion cleanup.
+
+Sparse writes require a known initialized canonical source. On first use, the controller
+checks only inline variable values and priorities against the source endpoint: at most
+15 value reads and 15 priority reads per first-used stable/matched node, plus three of
+each for the grid (checks short-circuit on mismatch). No computed-style or rectangle
+reads are added. There are no unconditional mount endpoint writes. Valid SSR therefore
+benefits on its first optimized click; missing, partial, different or important inline
+values trigger full destination normalization before subsequent sparse use. Unmatched
+new/recycled motifs always receive all 15 destination variables, regardless of pool
+history. Legacy payloads keep full writes. Bookkeeping stores only controller-owned
+endpoint initialization, never pixels. Functional fixtures compare exact all-range
+endpoints and node choices against legacy while counting declaration work, including
+JSDOM clone style-copy overhead; these counts are not browser latency measurements.
 
 `poster-filter-transitions.ts` exports `PosterFilterTransition`, `PosterStablePatch`,
 `PosterMotifPatch` and `PosterPositionMasks`. Each table identifies `from`/`to` day
@@ -104,7 +119,7 @@ motif array indices, not DOM identities. Build invokes `matchPosterMotifs` for e
 of the 18 correspondences independently, never reversing a mapping. Each matched
 pair's masks compare its source and destination slots across **all three ranges**,
 not just the active matching range. Unmatched slots have no patch: new/recycled
-nodes must later receive full initialization because build cannot know pool history.
+nodes receive full initialization because build cannot know pool history.
 
 The client-safe helpers `canonicalPosterPosition`, `diffPosterPosition` and
 `diffPosterPositions` share the comparison rules used by linear client validation.
@@ -134,7 +149,7 @@ Scope queries to the existing `[data-event-scope]` root:
 
 The initial SSR endpoint is always Todos, with unchanged placement variables, markup content, motifs and styling. `DayFilter.astro` emits a hidden native radio fieldset only for a full both-day scope. `mountEventModal` is the sole connection owner; its `mountDayFilter` adapter validates the complete finite handoff and actual DOM before revealing controls. Broken setup keeps static Todos and fallback anchors. Day state never changes URLs/history/storage and controls remain available during motion.
 
-`poster-day-filter.ts` writes all three endpoint ranges once, including each actual information box, and disables excluded source links immediately. Scroll stays independent of artists: preserve the document position, clamping only to the new bottom when content shrinks. For motion, capture current paint before interruption, commit the full endpoint, then batch final rectangles. Animate only changed tiles intersecting the viewport at either endpoint; offscreen and unchanged tiles take their final positions immediately. Reduced motion skips animation geometry entirely.
+`poster-day-filter.ts` applies all three endpoint ranges, including each actual information box, using initialization-aware sparse writes when prepared data is available, and disables excluded source links immediately. Scroll stays independent of artists: preserve the document position, clamping only to the new bottom when content shrinks. For motion, capture current paint before interruption, commit the full endpoint, then batch final rectangles. Animate only changed tiles intersecting the viewport at either endpoint; offscreen and unchanged tiles take their final positions immediately. Reduced motion skips animation geometry entirely.
 
 `poster-filter-motion.ts` coordinates at most three labelled numeric GSAP tracks (exit, move, enter), writing transform/opacity without per-node CSSPlugin transform reads or cleanup. Outgoing nodes remain noninteractive absolute paint during row shrink. Resize and modal opening settle the latest endpoint immediately. Idle settlement still invalidates completion tokens but skips grid visibility writes when no transition, motion or scroll cleanup remains. Actual completion uses Sets for artist and motif membership lookups. Tokens reject stale removal/count callbacks. One polite settled count (or `No hay artistas para este filtro.`) is emitted; focus stays on native radios.
 
