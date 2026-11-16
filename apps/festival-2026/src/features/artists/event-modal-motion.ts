@@ -1,15 +1,15 @@
 import { gsap } from 'gsap'
-import type { SourceTitleSnapshot } from './event-modal-title'
 
 export interface MotionGeometry {
   sourceRect: DOMRect | null
   titleRect: DOMRect | null
+  titleLineRects?: (DOMRect | null)[]
 }
 export interface MotionInput extends MotionGeometry {
   dialog: HTMLDialogElement
   panel: HTMLElement
   titleSize: number
-  sourceTitle?: SourceTitleSnapshot
+  titleLines?: HTMLElement[]
   sourceMetadata?: { element: HTMLElement, opacity: number, visibility: string }
   initiallyOpen?: boolean
   onOpened: () => void
@@ -23,8 +23,8 @@ export interface ModalMotion {
 /** One read batch per transition; surface transforms never scale readable content. */
 export function createModalMotion(input: MotionInput): ModalMotion {
   const { dialog, panel } = input
-  const surface = panel.querySelector<HTMLElement>('[data-modal-surface]')!
-  const title = panel.querySelector<HTMLElement>('#event-modal-title')
+  const surface = panel.querySelector<HTMLElement>('[data-artist-surface]')!
+  const title = panel.querySelector<HTMLElement>('[data-artist-name]')
   const close = panel.querySelector<HTMLElement>('[data-modal-close]')
   const meta = panel.querySelector<HTMLElement>('[data-modal-meta]')
   const details = [...panel.querySelectorAll<HTMLElement>('[data-modal-details], footer')]
@@ -32,28 +32,15 @@ export function createModalMotion(input: MotionInput): ModalMotion {
   const revealDuration = 0.15
   const finalRect = panel.getBoundingClientRect()
   const finalTitle = title?.getBoundingClientRect()
-  const finalSize = title ? getComputedStyle(title).fontSize || '24px' : '24px'
-  const elements = [dialog, panel, surface, title, close, meta, ...details].filter((node): node is HTMLElement => !!node)
+  const finalSize = title ? Number.parseFloat(getComputedStyle(title).fontSize) || 24 : 24
+  const lines = input.titleLines ?? []
+  const finalLines = lines.map(line => line.getBoundingClientRect())
+  // The viewport width ratio includes fractional font sizing AND ancestor scale.
+  const titleScale = () => lines.length && geometry.titleRect && finalTitle?.width
+    ? geometry.titleRect.width / finalTitle.width
+    : geometry.titleRect ? input.titleSize / finalSize : 1
+  const elements = [dialog, panel, surface, title, close, meta, ...details, ...lines].filter((node): node is HTMLElement => !!node)
   const styles = elements.map(node => [node, node.getAttribute('style')] as const)
-  // Retain the card's lines while position, size and line offsets travel together.
-  const snapshot = input.sourceTitle
-  const proxy = title && finalTitle
-    ? snapshot ? snapshot.element.cloneNode(true) as HTMLElement : document.createElement('span')
-    : null
-  if (proxy && title && finalTitle) {
-    proxy.dataset.modalTitleProxy = ''
-    proxy.setAttribute('aria-hidden', 'true')
-    proxy.inert = true
-    if (!snapshot) {
-      proxy.textContent = title.textContent
-      proxy.className = title.className
-    }
-    Object.assign(proxy.style, {
-      position: 'absolute', pointerEvents: 'none', margin: '0',
-      left: `${finalTitle.left - finalRect.left}px`, top: `${finalTitle.top - finalRect.top}px`,
-      width: `${finalTitle.width}px`, fontSize: finalSize, opacity: '1', textAlign: 'left',
-    })
-  }
   let geometry: MotionGeometry = input
   let disposed = false
   let closing = false
@@ -76,19 +63,12 @@ export function createModalMotion(input: MotionInput): ModalMotion {
       input.sourceMetadata.element.style.setProperty('opacity', '0')
       input.sourceMetadata.element.style.setProperty('visibility', 'hidden')
     }
-    proxy?.remove()
     for (const [node, style] of styles) {
       if (style === null) node.removeAttribute('style')
       else node.setAttribute('style', style)
     }
   }
   try {
-    if (proxy && title) {
-      // Keep one visual title for the entire round trip. Opacity preserves the
-      // real heading's layout, accessible name and focus target.
-      title.style.opacity = '0'
-      panel.append(proxy)
-    }
     for (const node of [close, meta, ...details]) {
       if (node) Object.assign(node.style, { opacity: '0', visibility: 'hidden' })
     }
@@ -110,23 +90,26 @@ export function createModalMotion(input: MotionInput): ModalMotion {
     flights.push(timeline.recent() as gsap.core.Tween)
     timeline.fromTo(dialog, { '--event-backdrop': 0 }, { '--event-backdrop': 1 }, 'surface')
     timeline.addLabel('header', 0)
-    if (proxy) {
-      timeline.fromTo(proxy, {
+    if (title) {
+      timeline.fromTo(title, {
         x: () => geometry.titleRect && finalTitle
           ? geometry.titleRect.left - finalTitle.left
           : 0,
         y: () => geometry.titleRect && finalTitle ? geometry.titleRect.top - finalTitle.top : 0,
-        fontSize: geometry.titleRect ? snapshot?.fontSize ?? input.titleSize : finalSize,
-        autoRound: false,
-      }, { x: 0, y: 0, fontSize: finalSize, autoRound: false }, 'header')
+        transformOrigin: '0 0',
+        scale: lines.length ? titleScale : geometry.titleRect ? input.titleSize / finalSize : 1,
+      }, { x: 0, y: 0, scale: 1 }, 'header')
       flights.push(timeline.recent() as gsap.core.Tween)
-      const lines = [...proxy.querySelectorAll<HTMLElement>('[data-modal-title-line]')]
-      if (lines.length) {
-        timeline.fromTo(lines, {
-          x: (index: number) => geometry.titleRect ? snapshot?.lineOffsets[index] ?? 0 : 0,
-        }, { x: 0 }, 'header')
-        flights.push(timeline.recent() as gsap.core.Tween)
-      }
+      lines.forEach((line, index) => {
+        const source = input.titleLineRects?.[index]
+        // Child translation is in final-layout pixels, before the parent scale.
+        // Freeze these explicit endpoints so an interrupted reverse retains its
+        // exact alignment progress when the spatial flight is invalidated.
+        const offset = source && input.titleRect && finalTitle
+          ? (source.left - input.titleRect.left) / titleScale() - (finalLines[index].left - finalTitle.left)
+          : 0
+        timeline.fromTo(line, { x: offset }, { x: 0 }, 'header')
+      })
     }
     timeline.addLabel('reveal', flightDuration)
     if (meta) timeline.fromTo(meta, { y: 12, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: revealDuration }, 'reveal')

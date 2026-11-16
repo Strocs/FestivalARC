@@ -58,7 +58,7 @@ const socialImage = new URL(publicPath('/og-image.jpg'), siteUrl).toString()
   </head>
   <!-- Low-specificity defaults let existing element utilities retain their overrides. -->
   <body
-    class='bg-background text-foreground [:where(&_a:focus-visible)]:outline-offset-3 m-0 flex h-full min-h-svh flex-col font-sans [:where(&_a:focus-visible)]:[outline:3px_solid_var(--color-primary)] [:where(&_h1,&_h2)]:font-normal [:where(&_h1,&_h2)]:[font-synthesis:none]'>
+    class='bg-background text-foreground [:where(&_a:focus-visible)]:outline-offset-3 m-0 flex h-full min-h-svh w-screen flex-col font-sans [:where(&_a:focus-visible)]:[outline:3px_solid_var(--color-primary)] [:where(&_h1,&_h2)]:font-normal [:where(&_h1,&_h2)]:[font-synthesis:none]'>
     <Header />
     <slot />
     <Footer />

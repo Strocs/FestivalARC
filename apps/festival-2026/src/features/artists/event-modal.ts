@@ -1,5 +1,5 @@
 import { createModalMotion, type ModalMotion, type MotionGeometry, type MotionInput } from './event-modal-motion'
-import { applySourceTitle, captureSourceTitle, type SourceTitleSnapshot } from './event-modal-title'
+import { borrowCardElements } from './event-modal-title'
 import { mountDayFilter } from '../poster/poster-day-filter'
 import type { FilterMotion, FilterMotionInput } from '../poster/poster-filter-motion'
 
@@ -52,7 +52,8 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   let restoreSource: (() => void) | undefined
   let unlock: (() => void) | undefined
   let motion: ModalMotion | undefined
-  let sourceTitle: SourceTitleSnapshot | undefined
+  let shared: ReturnType<typeof borrowCardElements>
+  let titleSize = 24
   let sourceMetadata: MotionInput['sourceMetadata']
   let backdropDown = false
   let settlementPending = false
@@ -61,6 +62,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   const links = () => [...root.querySelectorAll<HTMLAnchorElement>('a[data-event-trigger][href]')]
   const geometry = (): MotionGeometry => {
     if (!origin?.isConnected || !root.contains(origin)) return { sourceRect: null, titleRect: null }
+    if (shared) return shared.measure()
     return {
       sourceRect: (origin.querySelector<HTMLElement>('[data-artist-surface]') ?? origin).getBoundingClientRect(),
       titleRect: origin.querySelector<HTMLElement>('[data-artist-name]')?.getBoundingClientRect() ?? null,
@@ -72,7 +74,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     settlementPending = false
     const oldMotion = motion; motion = undefined
     oldMotion?.dispose()
-    sourceTitle = undefined
+    shared?.restore(); shared = undefined
     sourceMetadata = undefined
     restoreSource?.(); restoreSource = undefined
     restoreDialog?.(); restoreDialog = undefined
@@ -92,9 +94,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     const body = document.body
     const html = document.documentElement
     const x = window.scrollX; const y = window.scrollY
-    const gap = Math.max(0, window.innerWidth - html.clientWidth)
-    const padding = Number.parseFloat(getComputedStyle(body).paddingRight) || 0
-    const restoreBody = ownStyles(body, ['overflow', 'padding-right'])
+    const restoreBody = ownStyles(body, ['overflow'])
     const restoreHtml = ownStyles(html, ['overflow', 'scroll-behavior'])
     unlock = () => {
       restoreBody()
@@ -106,24 +106,12 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     }
     // Clip without creating a scroll ancestor that displaces the sticky header.
     body.style.setProperty('overflow', 'clip')
-    if (gap) body.style.setProperty('padding-right', `${padding + gap}px`)
     html.style.setProperty('overflow', 'hidden')
   }
-  const prepareTitle = (first?: MotionGeometry) => {
-    if (first) {
-      const name = origin?.querySelector<HTMLElement>('[data-artist-name]')
-      sourceTitle = name && first.titleRect ? captureSourceTitle(name, first.titleRect) : undefined
-    }
-    const title = content.querySelector<HTMLElement>('#event-modal-title')
-    if (title && sourceTitle) {
-      const closeLeft = dialog.querySelector<HTMLElement>('[data-modal-close]')?.getBoundingClientRect().left
-      applySourceTitle(title, sourceTitle, closeLeft)
-    }
-  }
-  const makeMotion = (first: MotionGeometry, titleSize: number, initiallyOpen = false) => {
+  const makeMotion = (first: MotionGeometry, initiallyOpen = false) => {
     const current = ++token
     motion = createMotion({
-      dialog, panel, ...first, titleSize, initiallyOpen, sourceTitle, sourceMetadata,
+      dialog, panel, ...first, titleSize, titleLines: shared?.lines, initiallyOpen, sourceMetadata,
       onOpened: () => {
         if (!destroyed && root.isConnected && token === current && phase === 'opening') {
           phase = 'open'
@@ -144,8 +132,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
       if (media.matches) cleanup()
       else {
         if (!motion) {
-          prepareTitle(currentGeometry)
-          makeMotion(currentGeometry, sourceTitle?.fontSize ?? 24, true)
+          makeMotion(currentGeometry, true)
         }
         motion?.reverse(currentGeometry)
       }
@@ -160,7 +147,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     settlementPending = false
     ++token
     motion?.dispose(); motion = undefined
-    prepareTitle(geometry())
+    shared?.fit()
     phase = 'open'
   }
   const onClick = (event: MouseEvent) => {
@@ -183,36 +170,32 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
       // First viewport reads precede showModal and scroll locking.
       const first = geometry()
       const name = link.querySelector<HTMLElement>('[data-artist-name]')
-      const titleSize = name ? Number.parseFloat(getComputedStyle(name).fontSize) || 24 : 24
-      sourceTitle = name && first.titleRect ? captureSourceTitle(name, first.titleRect) : undefined
+      titleSize = name ? Number.parseFloat(getComputedStyle(name).fontSize) || 24 : 24
       const metadata = link.querySelector<HTMLElement>('[data-artist-meta]')
       const metadataStyle = metadata ? getComputedStyle(metadata) : undefined
       sourceMetadata = metadata && metadataStyle ? {
         element: metadata, opacity: Number.parseFloat(metadataStyle.opacity || '1'),
         visibility: metadataStyle.visibility,
       } : undefined
+      if (metadata) restoreSource = ownStyles(metadata, ['opacity', 'visibility'])
       content.replaceChildren(template.content.cloneNode(true))
+      const heading = content.querySelector<HTMLElement>('#event-modal-title')!
+      shared = borrowCardElements(link, panel, heading, ownStyles)
+      if (!shared) throw new Error('Missing card elements')
       phase = 'opening'
       settlementPending = false
       restoreDialog = ownStyles(dialog, ['--event-backdrop'])
       dialog.style.setProperty('--event-backdrop', '1')
       lockScroll()
       dialog.showModal()
-      prepareTitle()
-      dialog.querySelector<HTMLElement>('#event-modal-title')?.focus({ preventScroll: true })
-      // Controller owns restoration and the hidden open/settled endpoint.
-      // Motion borrows metadata paint only for the existing flight score.
-      const shared = [...link.querySelectorAll<HTMLElement>('[data-artist-surface], [data-artist-name]')]
-      const restorers = shared.map(node => ownStyles(node, ['visibility']))
-      if (metadata) restorers.push(ownStyles(metadata, ['opacity', 'visibility']))
-      restoreSource = () => { for (const restore of restorers) restore() }
-      for (const node of shared) node.style.setProperty('visibility', 'hidden')
+      shared.fit()
+      heading.focus({ preventScroll: true })
       if (metadata) {
         metadata.style.setProperty('opacity', '0')
         metadata.style.setProperty('visibility', 'hidden')
       }
       if (media.matches) phase = 'open'
-      else makeMotion(first, titleSize)
+      else makeMotion({ ...first, titleLineRects: shared.sourceLineRects })
     } catch {
       cleanup(false)
       navigate(fallback)
@@ -266,16 +249,3 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   return destroy
 }
 
-/** Browser-owned connection lifecycle; repeated script execution is harmless. */
-export function registerEventModal(): void {
-  if (customElements.get('arc-event-modal')) return
-  customElements.define('arc-event-modal', class extends HTMLElement {
-    private teardown?: () => void
-    connectedCallback() {
-      const root = this.closest<HTMLElement>('[data-event-scope]')
-      if (!root || this.teardown) return
-      try { this.teardown = mountEventModal(root) } catch { /* Ordinary anchors remain the fallback. */ }
-    }
-    disconnectedCallback() { this.teardown?.(); this.teardown = undefined }
-  })
-}

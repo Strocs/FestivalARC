@@ -23,7 +23,7 @@ function mount() {
   dispose = mountEventModal(root, { createFilterMotion: input => { inputs.push(input); return { dispose: vi.fn() } }, createMotion: () => ({ dispose() {}, reverse() {} }) })
 }
 beforeEach(() => {
-  document.body.innerHTML = `<main data-event-scope><section data-poster-grid>${plans.plans.all.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join('')}${['a', 'b'].map(id => `<div data-poster-artist="${id}"><a href="/musica/${id}/" data-event-trigger data-event-id="${id}"><span data-artist-surface>${id}</span></a></div>`).join('')}</section><fieldset hidden data-day-filter><legend>Filtrar artistas por día</legend>${['all', 'saturday', 'sunday'].map(key => `<label><input name="day" type="radio" value="${key}" ${key === 'all' ? 'checked' : ''}>${key}</label>`).join('')}<span role="status" data-day-count></span></fieldset><script type="application/json" data-poster-plans>${JSON.stringify(plans)}</script><dialog><div data-modal-panel><button data-modal-close>Close</button><div data-modal-content></div></div></dialog>${['a', 'b'].map(id => `<template data-event-template="${id}"><h2 id="event-modal-title" tabindex="-1">${id}</h2></template>`).join('')}</main>`
+  document.body.innerHTML = `<main data-event-scope><section data-poster-grid>${plans.plans.all.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join('')}${['a', 'b'].map(id => `<div data-poster-artist="${id}"><a href="/musica/${id}/" data-event-trigger data-event-id="${id}"><span data-artist-surface></span><span data-artist-name>${id}</span></a></div>`).join('')}</section><fieldset hidden data-day-filter><legend>Filtrar artistas por día</legend>${['all', 'saturday', 'sunday'].map(key => `<label><input name="day" type="radio" value="${key}" ${key === 'all' ? 'checked' : ''}>${key}</label>`).join('')}<span role="status" data-day-count></span></fieldset><script type="application/json" data-poster-plans>${JSON.stringify(plans)}</script><dialog><div data-modal-panel><button data-modal-close>Close</button><div data-modal-content></div></div></dialog>${['a', 'b'].map(id => `<template data-event-template="${id}"><h2 id="event-modal-title" tabindex="-1">${id}</h2></template>`).join('')}</main>`
   root = document.querySelector('main')!
   const dialog = root.querySelector('dialog')!
   dialog.showModal = vi.fn(() => { dialog.open = true }); dialog.close = vi.fn(() => { dialog.open = false })
@@ -580,7 +580,7 @@ describe('day filtering through the sole modal owner', () => {
     grid.innerHTML = expanded.plans.all.motifs.map(m =>
       `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`,
     ).join('') + ['a', 'b', 'c'].map(id =>
-      `<div data-poster-artist="${id}"><a href="/musica/${id}/" data-event-trigger data-event-id="${id}"><span data-artist-surface>${id}</span></a></div>`,
+      `<div data-poster-artist="${id}"><a href="/musica/${id}/" data-event-trigger data-event-id="${id}"><span data-artist-surface></span><span data-artist-name>${id}</span></a></div>`,
     ).join('')
     inputs = []
     mount()

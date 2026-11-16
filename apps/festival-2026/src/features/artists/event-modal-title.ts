@@ -1,91 +1,147 @@
-export interface SourceTitleSnapshot {
-  element: HTMLElement
-  width: number
-  height: number
-  fontSize: number
-  lineOffsets: number[]
-}
+import type { MotionGeometry } from './event-modal-motion'
 
-const typography = [
-  'font-family', 'font-weight', 'font-style', 'font-stretch', 'font-kerning',
-  'font-feature-settings', 'font-variation-settings', 'letter-spacing',
-  'word-spacing', 'text-transform', 'text-align', 'color', 'direction',
-]
-
-/** Freeze the rendered card composition before dialog focus changes its context. */
-export function captureSourceTitle(source: HTMLElement, rect = source.getBoundingClientRect()): SourceTitleSnapshot {
-  const computed = getComputedStyle(source)
-  const element = source.cloneNode(true) as HTMLElement
-  const originals = [source, ...source.querySelectorAll<HTMLElement>('*')]
-  const copies = [element, ...element.querySelectorAll<HTMLElement>('*')]
-  for (const [index, copy] of copies.entries()) {
-    const display = getComputedStyle(originals[index]).display
-    copy.removeAttribute('id')
-    copy.removeAttribute('class')
-    copy.removeAttribute('style')
-    // Container-query break/gap decisions must not be recomputed in the modal.
-    copy.style.display = display
+/** Borrow the real card nodes; preserve only styles, never duplicate their DOM. */
+export function borrowCardElements(
+  origin: HTMLElement, panel: HTMLElement, heading: HTMLElement,
+  ownStyles: (node: HTMLElement, properties: string[]) => () => void,
+) {
+  const surface = origin.querySelector<HTMLElement>('[data-artist-surface]')
+  const name = origin.querySelector<HTMLElement>('[data-artist-name]')
+  if (!surface || !name) return undefined
+  const metadata = origin.querySelector<HTMLElement>('[data-artist-meta]')
+  const nodes = [surface, name, ...(metadata ? [metadata] : [])]
+  const positions = nodes.map(node => ({ node, parent: node.parentNode!, next: node.nextSibling }))
+  const breaks = [...name.querySelectorAll<HTMLElement>('[data-gap], [data-break]')]
+  const displays = breaks.map(node => getComputedStyle(node).display)
+  const children = [...name.childNodes]
+  // Split only at the card's already-visible BRs, never at individual words.
+  const groups: Node[][] = [[]]
+  for (const child of children) {
+    if (child instanceof HTMLElement && child.tagName === 'BR' && getComputedStyle(child).display !== 'none') {
+      groups.push([child], [])
+    } else groups[groups.length - 1].push(child)
   }
-  for (const property of typography) element.style.setProperty(property, computed.getPropertyValue(property))
-  const fontSize = Number.parseFloat(computed.fontSize) || 24
-  const lineHeight = Number.parseFloat(computed.lineHeight)
-  Object.assign(element.style, {
-    display: 'block', width: 'max-content', margin: '0', padding: '0',
-    fontSize: `${fontSize}px`, lineHeight: Number.isFinite(lineHeight) ? String(lineHeight / fontSize) : 'normal',
-    whiteSpace: 'nowrap', visibility: 'visible', opacity: '1',
+  const lines = groups.filter(group => group.length && !(group[0] instanceof HTMLBRElement)).map(group => {
+    const element = document.createElement('span')
+    Object.assign(element.style, { display: 'inline-block', verticalAlign: 'baseline' })
+    return { element, children: group }
   })
-  const sourceNodes = [...source.childNodes]
-  const nodes = [...element.childNodes]
-  const lineOffsets: number[] = []
-  element.replaceChildren()
-  const makeLine = () => {
-    const line = document.createElement('span')
-    line.dataset.modalTitleLine = ''
-    Object.assign(line.style, { display: 'inline-block', verticalAlign: 'baseline', textAlign: 'left' })
-    return line
-  }
-  let line = makeLine()
-  let first = 0
-  const finishLine = (last: number) => {
-    if (!line.hasChildNodes()) return
+  const lineRects = () => lines.map(line => {
     const range = document.createRange()
-    range.setStartBefore(sourceNodes[first])
-    range.setEndAfter(sourceNodes[last])
-    const bounds = range.getBoundingClientRect?.()
-    lineOffsets.push(bounds ? Math.max(0, bounds.left - rect.left) : 0)
-    element.append(line)
-    line = makeLine()
+    range.setStartBefore(line.children[0])
+    range.setEndAfter(line.children[line.children.length - 1])
+    return typeof range.getBoundingClientRect === 'function' ? range.getBoundingClientRect() : null
+  })
+  const sourceLineRects = lineRects()
+  const wrap = () => {
+    for (const line of lines) {
+      name.insertBefore(line.element, line.children[0])
+      line.element.append(...line.children)
+    }
   }
-  for (const [index, node] of nodes.entries()) {
-    if (node instanceof HTMLElement && node.tagName === 'BR' && node.style.display !== 'none') {
-      finishLine(index - 1)
-      element.append(node)
-      first = index + 1
-    } else line.append(node)
+  const styled = [surface, name, ...breaks]
+  // Keep geometry ownership separate from the controller's opacity/visibility.
+  const metadataChildren = metadata ? [...metadata.children].filter((node): node is HTMLElement => node instanceof HTMLElement) : []
+  const metadataProperties = ['position', 'top', 'right', 'bottom', 'left', 'width', 'height', 'max-width', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'box-sizing', 'z-index', 'pointer-events', 'font-size', 'font-family', 'font-weight', 'font-style', 'line-height', 'letter-spacing', 'transition-property', 'transform', 'translate']
+  const childProperties = ['transition-property', 'transform', 'translate']
+  const metadataStyles = [metadata, ...metadataChildren].filter((node): node is HTMLElement => !!node)
+    .map(node => ownStyles(node, node === metadata ? metadataProperties : childProperties))
+  const measureMetadata = () => {
+    if (!metadata) return undefined
+    const rect = metadata.getBoundingClientRect()
+    const style = getComputedStyle(metadata)
+    return {
+      rect,
+      font: {
+        fontSize: style.fontSize, fontFamily: style.fontFamily, fontWeight: style.fontWeight,
+        fontStyle: style.fontStyle, lineHeight: style.lineHeight, letterSpacing: style.letterSpacing,
+      },
+      children: metadataChildren.map(node => {
+        const childStyle = getComputedStyle(node)
+        return { transform: childStyle.transform, translate: childStyle.translate }
+      }),
+    }
   }
-  finishLine(nodes.length - 1)
-  element.removeAttribute('data-artist-name')
-  element.setAttribute('aria-hidden', 'true')
-  element.inert = true
-  return { element, width: rect.width, height: rect.height, fontSize, lineOffsets }
-}
-
-/** Keep the semantic heading identical to the travelling card composition. */
-export function applySourceTitle(title: HTMLElement, snapshot: SourceTitleSnapshot, closeLeft?: number): void {
-  title.replaceChildren(...snapshot.element.cloneNode(true).childNodes)
-  for (const property of [...typography, 'line-height', 'white-space']) {
-    title.style.setProperty(property, snapshot.element.style.getPropertyValue(property))
+  const freezeMetadata = (layout: ReturnType<typeof measureMetadata>) => {
+    if (!metadata || !layout) return
+    Object.assign(metadata.style, layout.font, {
+      // Fixed coordinates keep badges source-anchored, outside the surface flight.
+      position: 'fixed', top: `${layout.rect.top}px`, right: 'auto', bottom: 'auto', left: `${layout.rect.left}px`,
+      width: `${layout.rect.width}px`, height: `${layout.rect.height}px`, maxWidth: 'none',
+      marginTop: '0', marginRight: '0', marginBottom: '0', marginLeft: '0',
+      boxSizing: 'border-box', zIndex: '1', pointerEvents: 'none',
+      transitionProperty: 'none', transform: 'none', translate: 'none',
+    })
+    metadataChildren.forEach((node, index) => {
+      Object.assign(node.style, layout.children[index], { transitionProperty: 'none' })
+    })
   }
-  // Anchor the intrinsic text block at the header start, not its horizontal center.
-  Object.assign(title.style, { width: 'fit-content', maxWidth: '100%', textAlign: 'left' })
-  // Re-read the responsive CSS size when rebuilding after a resize.
-  title.style.removeProperty('font-size')
-  const fontSize = Number.parseFloat(getComputedStyle(title).fontSize) || 24
-  const rect = title.getBoundingClientRect()
-  const roomBeforeClose = closeLeft === undefined ? rect.width : closeLeft - rect.left - 12
-  const width = roomBeforeClose > 0 ? Math.min(rect.width, roomBeforeClose) : rect.width
-  if (width < rect.width) title.style.maxWidth = `${width}px`
-  if (width > 0 && snapshot.width > 0) {
-    title.style.fontSize = `${Math.min(fontSize, snapshot.fontSize * width / snapshot.width)}px`
+  const sourceMetadataLayout = measureMetadata()
+  const originalStyles = styled.map(node => node.getAttribute('style'))
+  const fontSize = Number.parseFloat(getComputedStyle(name).fontSize) || 24
+  const width = name.getBoundingClientRect().width
+  const restoreStyles = (styles: (string | null)[]) => {
+    styled.forEach((node, index) => {
+      const style = styles[index]
+      if (style === null) node.removeAttribute('style')
+      else node.setAttribute('style', style)
+    })
+  }
+  const restore = () => {
+    name.replaceChildren(...children)
+    for (const { node, parent, next } of positions) {
+      parent.insertBefore(node, next?.parentNode === parent ? next : null)
+    }
+    restoreStyles(originalStyles)
+    metadataStyles.forEach(restoreStyle => restoreStyle())
+  }
+  const fit = () => {
+    const size = Number.parseFloat(getComputedStyle(heading).fontSize) || 24
+    const room = heading.getBoundingClientRect().width
+    name.style.fontSize = `${room > 0 && width > 0 ? Math.min(size, fontSize * room / width) : size}px`
+  }
+  try {
+    // Freeze only responsive breaks before leaving the card's query container.
+    breaks.forEach((node, index) => { node.style.display = displays[index] })
+    Object.assign(surface.style, {
+      position: 'absolute', inset: '0', margin: '0', zIndex: '-1',
+      translate: 'none', transition: 'none',
+    })
+    wrap()
+    Object.assign(name.style, { width: 'max-content', margin: '0', fontSize: `${fontSize}px`, textAlign: 'left' })
+    panel.prepend(surface)
+    heading.replaceChildren(name)
+    if (metadata) {
+      freezeMetadata(sourceMetadataLayout)
+      panel.append(metadata)
+    }
+  } catch (error) {
+    restore()
+    throw error
+  }
+  return {
+    restore,
+    fit,
+    lines: lines.map(line => line.element),
+    sourceLineRects,
+    measure(): MotionGeometry {
+      // Temporarily return the same nodes for a fresh close destination. Restore
+      // current animation styles before paint; no placeholder or clone is needed.
+      const destinations = nodes.map(node => ({ node, parent: node.parentNode!, next: node.nextSibling }))
+      const styles = styled.map(node => node.getAttribute('style'))
+      let metadataLayout = sourceMetadataLayout
+      try {
+        restore()
+        metadataLayout = measureMetadata()
+        return { sourceRect: surface.getBoundingClientRect(), titleRect: name.getBoundingClientRect(), titleLineRects: lineRects() }
+      } finally {
+        for (const { node, parent, next } of destinations) {
+          parent.insertBefore(node, next?.parentNode === parent ? next : null)
+        }
+        wrap()
+        restoreStyles(styles)
+        freezeMetadata(metadataLayout)
+      }
+    },
   }
 }
