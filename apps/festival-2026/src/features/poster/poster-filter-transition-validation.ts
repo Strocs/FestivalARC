@@ -2,6 +2,7 @@ import type { DayKey, PosterFilterPlan, PosterFilterPlans } from './poster-filte
 import type { PosterPositions } from './poster-layout'
 import type { PosterFilterTransition, PosterPositionMasks, PosterStablePatch } from './poster-filter-transitions'
 import { diffPosterPositions } from './poster-filter-transitions'
+import { posterMotifTravelEligibility } from './poster-motif-match'
 
 const ranges = ['desktop', 'tablet', 'mobile'] as const
 const days = ['all', 'saturday', 'sunday'] as const
@@ -81,6 +82,8 @@ export function validatePosterFilterTransitions(value: PosterFilterPlans): Poste
     for (const range of ranges) {
       const pairs = table.motifs[range]
       if (!Array.isArray(pairs) || pairs.length > Math.min(source.motifs.length, target.motifs.length)) return undefined
+      const cells = (plan: PosterFilterPlan) => plan.motifs.map(motif => ({ variant: motif.variant, ...motif.positions[range] }))
+      const { outgoing, incoming } = posterMotifTravelEligibility(cells(source), cells(target))
       const used = new Set<number>()
       const taken = new Set<number>()
       for (const pair of pairs) {
@@ -92,7 +95,8 @@ export function validatePosterFilterTransitions(value: PosterFilterPlans): Poste
         const a = from.positions[range]
         const b = to.positions[range]
         if (!a || !b || from.variant !== to.variant || a.width !== b.width || a.height !== b.height
-          || Math.hypot(a.column - b.column, a.row - b.row) > 4
+          || Math.hypot(a.column - b.column, a.row - b.row) > (range === 'mobile' ? 0 : 4)
+          || ((a.column !== b.column || a.row !== b.row) && (!outgoing[pair.from] || !incoming[pair.to]))
           || !validMasks(pair.masks, diffPosterPositions(from.positions, to.positions))) return undefined
         used.add(pair.from); taken.add(pair.to)
       }

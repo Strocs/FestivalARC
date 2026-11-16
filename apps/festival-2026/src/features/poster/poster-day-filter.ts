@@ -82,9 +82,15 @@ function validate(value: PosterFilterPlans, artists: HTMLElement[], information:
         if ((!openingTile && (rect.width !== 1 || rect.height !== 1)) || !occupy(rect, paint)) return false
       }
       if (paint.size !== columns * layout.rows) return false
+      // Entries group same-variant placements across ranges, not geometry indices.
+      // Require a bijection with the engine's complete footprints in each range.
+      const footprint = (rect: SlotRect) => `${rect.column}:${rect.row}:${rect.width}:${rect.height}`
+      const remaining = new Set(layout.motifs.map(footprint))
       if (plan.motifs.some((m, index) => m.index !== index || !variants.has(m.variant)
+        || !m.positions
         || Object.keys(m.positions).some(r => !ranges.includes(r as PosterRange))
-        || (m.positions[range] ? !validRect(m.positions[range]!) || JSON.stringify(m.positions[range]) !== JSON.stringify(layout.motifs[index]) : !!layout.motifs[index]))) return false
+        || (m.positions[range] ? !validRect(m.positions[range]!) || !remaining.delete(footprint(m.positions[range]!)) : false))
+        || remaining.size !== 0) return false
     }
   }
   if (motifs.length !== value.plans.all.motifs.length || motifs.some((node, index) => node.dataset.posterMotif !== value.plans.all.motifs[index].variant
@@ -232,7 +238,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     releaseScroll = () => { restoreHtml(); restoreGrid() }
     const previousNodes = motifNodes
     const cells = (endpoints: typeof motifEndpoints) => endpoints.map(m => ({ variant: m.variant, ...m.positions[activeRange] }))
-    const matches = transition ? transition.motifs[activeRange] : matchPosterMotifs(cells(motifEndpoints), cells(target.motifs))
+    const matches = transition ? transition.motifs[activeRange] : matchPosterMotifs(cells(motifEndpoints), cells(target.motifs), activeRange === 'mobile' ? 0 : 4)
+    const travellingMotifs = new Set(matches.flatMap(({ from, to }) => {
+      const source = motifEndpoints[from].positions[activeRange]!
+      const destination = target.motifs[to].positions[activeRange]!
+      return source.column !== destination.column || source.row !== destination.row ? [previousNodes[from]] : []
+    }))
     const motifPatches = transition && new Map(transition.motifs[activeRange].map(patch => [patch.to, patch]))
     const matched = new Map(matches.map(m => [m.to, previousNodes[m.from]]))
     const assigned = new Set(matched.values())
@@ -307,9 +318,16 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const inView = (rect?: DOMRect) => rect && rect.width > 0 && rect.height > 0
       && rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth
     const items = [...new Set([...first.keys(), ...last.keys()])]
-      .map(node => ({ node, first: first.get(node), firstAlpha: firstAlpha.get(node), last: last.get(node) }))
-      .filter(({ first, last, firstAlpha }) => (inView(first) || inView(last))
-        && (!first || !last || first.left !== last.left || first.top !== last.top || firstAlpha !== 1))
+      .map(node => ({ node,
+        // Same logical cells can shift in pixels as content tracks grow/shrink.
+        // Only prepared travel pairs may translate decorative paint; stationary
+        // and interrupted recycled motifs settle geometry directly, retaining alpha.
+        first: first.has(node) && last.has(node) && pool.has(node) && !travellingMotifs.has(node)
+          ? last.get(node) : first.get(node),
+        firstAlpha: firstAlpha.get(node), last: last.get(node),
+      }))
+      .filter(({ node, first: origin, last, firstAlpha }) => (inView(first.get(node)) || inView(last))
+        && (!origin || !last || origin.left !== last.left || origin.top !== last.top || firstAlpha !== 1))
     if (!items.length) { finish(); return }
     // Outgoing nodes are noninteractive paint, not hidden until finite completion.
     for (const item of items) if (!item.last) item.node.hidden = false

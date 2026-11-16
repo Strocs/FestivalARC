@@ -1,6 +1,7 @@
 import type { PosterRange, PosterMotif } from './poster'
 import { calculatePosterLayout, type PosterLayout, type SlotRect, type ArtistAnchor, type GridColumns } from './poster-grid'
 import { selectPosterMotifs } from './poster-motif-distribution'
+import { stabilizePosterFilterArtwork } from './poster-filter-artwork'
 import type { PosterInformationBlock, PosterPositions } from './poster-layout'
 import { compilePosterFilterTransitions, type PosterFilterTransition } from './poster-filter-transitions'
 
@@ -159,7 +160,7 @@ export function createPosterFilterPlans(input: PosterFilterInput): PosterFilterP
         }
       }
     }
-    const variants = selectPosterMotifs(ranges.map(range => layouts[range]))
+    const variants = key === 'all' ? selectPosterMotifs(ranges.map(range => layouts[range])) : []
     return {
       ids: selected, layouts, information,
       motifs: variants.map((variant, index) => ({
@@ -169,6 +170,7 @@ export function createPosterFilterPlans(input: PosterFilterInput): PosterFilterP
     }
   }
   const plans = { all: build('all'), saturday: build('saturday'), sunday: build('sunday') }
+  stabilizePosterFilterArtwork(plans)
   return {
     version: 1,
     scope: input.scope,

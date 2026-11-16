@@ -79,7 +79,7 @@ export function compilePosterFilterTransitions(plans: Record<DayKey, PosterFilte
         variant: motif.variant, ...motif.positions[range],
       }))
       // Each direction/range is independently matched. Never reverse pairs or reorder them.
-      return matchPosterMotifs(cells(source), cells(target)).map(({ from, to }) => ({
+      return matchPosterMotifs(cells(source), cells(target), range === 'mobile' ? 0 : 4).map(({ from, to }) => ({
         from, to, masks: diffPosterPositions(source.motifs[from].positions, target.motifs[to].positions),
       }))
     }

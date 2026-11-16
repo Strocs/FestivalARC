@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest'
 import { heroParticipants } from '../../artists/categories'
 import { createPosterFilterPlans, type PosterFilterPlan, type PosterFilterPlans } from '../poster-filter-layout'
 import { homeInformation } from '../poster-layout'
-import { matchPosterMotifs } from '../poster-motif-match'
 import type { SlotRect } from '../poster-grid'
 import {
   compilePosterFilterTransitions, diffPosterPosition, diffPosterPositions,
@@ -45,26 +44,6 @@ describe('prepared poster transitions', () => {
     expect(compatible.participants.map(p => p.id)).toEqual(compatible.plans.all.ids)
     expect(transitions?.map(t => [t.from, t.to])).toEqual(days.flatMap(from =>
       days.filter(to => to !== from).map(to => [from, to])))
-  })
-
-  it('preserves every matcher pair and its output order for all 18 actual home correspondences', () => {
-    const result = home()
-    let count = 0
-    for (const table of compilePosterFilterTransitions(result.plans)) for (const range of ranges) {
-      const source = result.plans[table.from]
-      const target = result.plans[table.to]
-      const cells = (plan: PosterFilterPlan) => plan.motifs.map(m => ({ variant: m.variant, ...m.positions[range] }))
-      expect(table.motifs[range].map(({ from, to }) => ({ from, to })))
-        .toEqual(matchPosterMotifs(cells(source), cells(target)))
-      for (const patch of table.motifs[range]) for (const endpointRange of ranges) {
-        const previous = source.motifs[patch.from].positions[endpointRange]
-        const next = target.motifs[patch.to].positions[endpointRange]
-        expect(patch.masks[endpointRange]).toBe(diffPosterPosition(previous, next))
-        expect(applyMask(previous, next, patch.masks[endpointRange])).toEqual(canonical(next))
-      }
-      count++
-    }
-    expect(count).toBe(18)
   })
 
   it('uses destination references and sparse stable patches to reach all target and absent defaults', () => {

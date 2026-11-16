@@ -2,7 +2,9 @@ import { motifMetadata, motifSequence, type MotifAccent, type PosterMotif } from
 import type { PosterLayout } from './poster-grid'
 
 /** One build-time selection per DOM index, constrained by all responsive placements. */
-export function selectPosterMotifs(layouts: readonly PosterLayout[]): PosterMotif[] {
+export function selectPosterMotifs(
+  layouts: readonly PosterLayout[], anchored?: ReadonlyMap<number, PosterMotif>,
+): PosterMotif[] {
   const count = Math.max(0, ...layouts.map(layout => layout.motifs.length))
   const edges = Array.from({ length: count }, () => new Set<number>())
   const diagonals = Array.from({ length: count }, () => new Set<number>())
@@ -27,6 +29,10 @@ export function selectPosterMotifs(layouts: readonly PosterLayout[]): PosterMoti
     })
   }
 
+  // Anchored artwork also constrains earlier new cells, not just later ones.
+  if (anchored) for (let index = 0; index < count; index++) {
+    for (const neighbor of edges[index]) edges[neighbor].add(index)
+  }
   const weights: Record<MotifAccent, number> = { magenta: 0, cyan: 0, yellow: 0 }
   const accents: Record<MotifAccent, number> = { magenta: 0, cyan: 0, yellow: 0 }
   const uses = new Map<PosterMotif, number>(motifSequence.map(motif => [motif, 0]))
@@ -35,15 +41,23 @@ export function selectPosterMotifs(layouts: readonly PosterLayout[]): PosterMoti
   for (let index = 0; index < count; index++) {
     let best: PosterMotif | undefined
     let bestScore = -Infinity
-    for (const motif of motifSequence) {
+    const fixed = anchored?.get(index)
+    const neighborMotif = (neighbor: number) => selected[neighbor] ?? anchored?.get(neighbor)
+    for (const motif of fixed ? [fixed] : motifSequence) {
       const { family, accent } = motifMetadata[motif]
-      if ([...edges[index]].some(neighbor => motifMetadata[selected[neighbor]].family === family)) continue
+      if ([...edges[index]].some(neighbor => {
+        const value = neighborMotif(neighbor)
+        return value !== undefined && motifMetadata[value].family === family
+      })) continue
       const deficit = (index + 1) * weights[accent] / motifSequence.length - accents[accent]
       const variantDeficit = (index + 1) / motifSequence.length - uses.get(motif)!
       const diagonalRepeats = [...diagonals[index]]
         .filter(neighbor => motifMetadata[selected[neighbor]].family === family).length
       const localRepeats = [...edges[index]]
-        .filter(neighbor => motifMetadata[selected[neighbor]].accent === accent).length
+        .filter(neighbor => {
+          const value = neighborMotif(neighbor)
+          return value !== undefined && motifMetadata[value].accent === accent
+        }).length
       const recentRepeats = selected.slice(-2).filter(value => motifMetadata[value].accent === accent).length
       const score = deficit * 4 + variantDeficit - diagonalRepeats * 1.5 - localRepeats * 0.5 - recentRepeats
       // Stable catalog order breaks ties; no random seed or browser state is needed.

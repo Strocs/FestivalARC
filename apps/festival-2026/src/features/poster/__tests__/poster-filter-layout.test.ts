@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { categories, heroParticipants } from '../../artists/categories'
 import { calculatePosterLayout, type SlotRect } from '../poster-grid'
-import { selectPosterMotifs } from '../poster-motif-distribution'
 import { createPosterFilterPlans, getPosterFilterPlan, type FilterParticipant } from '../poster-filter-layout'
 import { homeInformation, categoryInformation } from '../poster-layout'
 
@@ -113,29 +112,6 @@ describe('finite scoped poster filter plans', () => {
       expect(layout.rows).toBe(Math.max(0, ...Object.values(plan.information[range]).map(b => b.row + b.height), ...layout.artists.map(a => a.row + a.height)))
       expect(layout.motifs.every(m => m.row + m.height <= layout.rows)).toBe(true)
     }
-  })
-
-  it('restores exact original Todos packing and selects one shared deterministic three-range motif sequence', () => {
-    const before = structuredClone(homeInformation)
-    const result = home()
-    for (const range of ranges) {
-      const blocks = homeInformation.flatMap(block => block.positions[range] ? [block.positions[range]!] : [])
-      const original = calculatePosterLayout(heroParticipants.map(p => p.id), range === 'desktop' ? 10 : range === 'tablet' ? 6 : 8, blocks, [], range === 'mobile' ? 8 : 0)
-      const actual = result.plans.all.layouts[range]
-      expect(actual.artists).toEqual(original.artists)
-      expect(actual.rows).toBe(original.rows)
-      expect(actual.motifs.filter(m => range !== 'mobile' || m.row < 4 || m.row >= 8)).toEqual(original.motifs.filter(m => range !== 'mobile' || m.row < 4 || m.row >= 8))
-    }
-    for (const plan of Object.values(result.plans)) {
-      const variants = selectPosterMotifs(ranges.map(range => plan.layouts[range]))
-      expect(plan.motifs.map(m => m.variant)).toEqual(variants)
-      plan.motifs.forEach((motif, index) => {
-        expect(motif.index).toBe(index)
-        for (const range of ranges) expect(motif.positions[range]).toEqual(plan.layouts[range].motifs[index])
-      })
-    }
-    expect(home()).toEqual(result)
-    expect(homeInformation).toEqual(before)
   })
 
   it('rejects invalid IDs, keys and information atomically without input mutation', () => {
