@@ -1,5 +1,12 @@
 {
   "buildCommand": "pnpm build",
   "outputDirectory": ".output",
-  "framework": null
+  "framework": null,
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://www.instagram.com/festival_arc",
+      "statusCode": 302
+    }
+  ]
 }
