@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 import { getLocationById } from '../utils'
 import ScheduleItem from './ScheduleItem.astro'
 const { locationId, eventId } = Astro.props
@@ -13,7 +13,7 @@ const { styles, schedule } = getLocationById(locationId)
 				<div class='leading-3'>
 					<p class='text-base font-bold leading-3 sm:text-lg'>
 						{!!day && (
-							<Icon name='mdi:calendar-multiselect' class={`inline w-6 ${styles.textColor}`} />
+							<Icon width={undefined} height={undefined} name='mdi:calendar-multiselect' class={`inline w-6 ${styles.textColor}`} />
 						)}
 						{day.split('\n')[0]}
 					</p>

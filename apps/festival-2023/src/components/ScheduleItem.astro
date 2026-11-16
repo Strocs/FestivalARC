@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
     import { withBase } from '../utils/publication.js'
 
 const { styles, locationId, event, eventId } = Astro.props
@@ -28,6 +28,8 @@ const textDark =
 		<div class='flex w-full items-center gap-1'>
 			<div class='flex w-full items-center gap-1'>
 				<Icon
+					width={undefined}
+					height={undefined}
 					name='mdi:arrow-top-right-thick'
 					class={`w-5 inline flex-shrink-0 self-start ${textLight}  ${hoverText}`}
 				/>

@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 
 const { links, hoverTextColor } = Astro.props
 ---
@@ -12,6 +12,8 @@ const { links, hoverTextColor } = Astro.props
 				<li class='border-r-2 px-2'>
 					<a href={url} aria-label='medias'>
 						<Icon
+							width={undefined}
+							height={undefined}
 							class={`${hoverTextColor} h-6 w-6 transition-all duration-200`}
 							name={name === 'tiktok' ? 'ic:baseline-tiktok' : `mdi:${name}`}
 						/>

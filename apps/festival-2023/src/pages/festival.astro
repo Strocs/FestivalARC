@@ -1,6 +1,6 @@
 ---
 import Paragraph from '@components/Paragraph.astro'
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 import { ARC_2023 } from 'src/data/ARC_2023'
 import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
@@ -26,7 +26,7 @@ const { email, subTitle, extract, description, sponsors } = ARC_2023
 			<section class='flex items-center space-x-4'>
 				<p class='text-xl font-bold'>Contáctanos:</p>
 				<a href={`mailto:${email}`} aria-label='Email de Contacto'>
-					<Icon name='mdi:email' class='h-8 inline hover:text-main transition-all duration-200' />
+					<Icon width={undefined} height={undefined} name='mdi:email' class='h-8 inline hover:text-main transition-all duration-200' />
 				</a>
 			</section>
 			<section class='my-10 flex flex-col flex-wrap justify-center gap-6 space-y-6 font-medium'>
