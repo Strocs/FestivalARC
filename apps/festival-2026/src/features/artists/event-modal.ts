@@ -1,4 +1,5 @@
-import { createModalMotion, type ModalMotion, type MotionGeometry, type MotionInput } from './event-modal-motion'
+import type { ModalMotion, MotionGeometry, MotionInput } from './event-modal-motion'
+import { createLazyModalMotion, preloadMotion } from './lazy-motion'
 import { borrowCardElements } from './event-modal-title'
 import { mountDayFilter } from '../poster/poster-day-filter'
 import type { FilterMotion, FilterMotionInput } from '../poster/poster-filter-motion'
@@ -40,7 +41,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   if (!dialog || !panel || !content || typeof dialog.showModal !== 'function') { mounted.set(root, filterOnly); return filterOnly }
   let media: MediaQueryList
   try { media = window.matchMedia('(prefers-reduced-motion: reduce)') } catch { mounted.set(root, filterOnly); return filterOnly }
-  const createMotion = options.createMotion ?? createModalMotion
+  const createMotion = options.createMotion ?? createLazyModalMotion
   const navigate = options.navigate ?? (href => window.location.assign(href))
   const abort = new AbortController()
   const { signal } = abort
@@ -207,6 +208,10 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     return event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom
   }
   try {
+    const warmMotion = () => { if (!media.matches) preloadMotion() }
+    root.addEventListener('pointerover', warmMotion, { signal, once: true })
+    root.addEventListener('focusin', warmMotion, { signal, once: true })
+    root.addEventListener('touchstart', warmMotion, { signal, once: true, passive: true })
     root.addEventListener('click', onClick, { signal })
     dialog.addEventListener('cancel', event => { event.preventDefault(); requestClose() }, { signal })
     dialog.addEventListener('close', () => { if (!dialog.open && phase !== 'closed') cleanup() }, { signal })

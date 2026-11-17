@@ -1,7 +1,8 @@
 import type { DayKey, PosterFilterPlan, PosterFilterPlans } from './poster-filter-layout'
 import type { PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
-import { createFilterMotion, type FilterMotion, type FilterMotionInput } from './poster-filter-motion'
+import type { FilterMotion, FilterMotionInput } from './poster-filter-motion'
+import { createLazyFilterMotion, isMotionReady, preloadMotion } from '../artists/lazy-motion'
 import { matchPosterMotifs } from './poster-motif-match'
 import type { PosterPositions } from './poster-layout'
 import { canonicalPosterPosition, posterPositionFields, posterPositionMask, type PosterPositionMasks } from './poster-filter-transitions'
@@ -203,17 +204,18 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (!pending && !motion && !releaseScroll) return
     finish()
   }
-  const clearance = () => {
+  const clearance = (height: number) => {
     if (destroyed) return
-    // A live height includes wrapping/text growth. Safe-area is also reserved below.
-    document.body.style.paddingBottom = `calc(${basePadding} + ${Math.ceil(controls.getBoundingClientRect().height)}px + 2rem + env(safe-area-inset-bottom))`
+    // ResizeObserver supplies laid-out border-box geometry without a forced read.
+    document.body.style.paddingBottom = `calc(${basePadding} + ${Math.ceil(height)}px + 2rem + env(safe-area-inset-bottom))`
   }
   const select = (key: DayKey) => {
     if (destroyed || !options.canInteract()) { syncRadios(); return }
     if (key === selected) { syncRadios(); return }
     const activeRange = range()
     const scroll = { x: window.scrollX, y: window.scrollY }
-    const animate = !media.matches
+    const animate = !media.matches && (!!options.createMotion || isMotionReady())
+    if (!media.matches && !options.createMotion) preloadMotion()
     const displayed = (node: HTMLElement) => !node.hidden && node.style.display !== 'none'
       && node.style.getPropertyValue(`--${activeRange}-display`) !== 'none'
     // Capture current paint in one read batch, including interrupted exits.
@@ -333,7 +335,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     for (const item of items) if (!item.last) item.node.hidden = false
     const token = generation
     try {
-      const created = (options.createMotion ?? createFilterMotion)({ items, gridRect, onComplete: () => { if (!destroyed && root.isConnected && token === generation) finish() } })
+      const created = (options.createMotion ?? createLazyFilterMotion)({ items, gridRect, onComplete: () => { if (!destroyed && root.isConnected && token === generation) finish() } })
       if (pending) motion = created
       else created.dispose()
     } catch { finish() }
@@ -365,11 +367,15 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     }, { signal: abort.signal, capture: true })
     window.addEventListener('resize', settle, { signal: abort.signal })
     media.addEventListener('change', settle)
-    observer = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(clearance)
+    observer = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(entries => {
+      const entry = entries[0]
+      if (entry) clearance(entry.borderBoxSize?.[0]?.blockSize ?? controls.getBoundingClientRect().height)
+    })
     observer?.observe(controls)
     disconnect = new MutationObserver(() => { if (!root.isConnected) { destroy(); options.onDisconnect() } })
     disconnect.observe(document.documentElement, { childList: true, subtree: true })
-    controls.hidden = false; syncRadios(); clearance()
+    controls.hidden = false; syncRadios()
+    if (!observer) requestAnimationFrame(() => { if (!destroyed) clearance(controls.getBoundingClientRect().height) })
   } catch { destroy(); return inactive }
   return { settle, includes: id => !!id && indexedPlans.get(selected)!.ids.has(id), destroy }
 }
