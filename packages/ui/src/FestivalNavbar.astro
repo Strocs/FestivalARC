@@ -76,15 +76,16 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
     </div>
   </header>
   <dialog id={panelId} data-header-panel aria-label='Navegación del festival' class='fixed inset-0 z-20 m-0 h-dvh max-h-none w-full max-w-none overflow-hidden border-0 bg-transparent p-0 text-[color:var(--header-panel-text-color,CanvasText)] backdrop:bg-transparent'>
-    <div data-header-surface class='absolute inset-0 flex flex-col gap-8 overflow-y-auto bg-[var(--header-panel-bg-color,Canvas)] px-6 pb-6 pt-[var(--navigation-header-height)]'>
-      <nav aria-label='Navegación móvil' class='my-auto flex flex-col items-center gap-6 text-center'>
+    <div data-header-surface class:list={['absolute inset-0 flex flex-col gap-8 overflow-y-auto bg-[var(--header-panel-bg-color,Canvas)] px-6 pb-6 pt-[var(--navigation-header-height)]', mobilePanelMode === 'layered' && 'min-h-dvh pb-[max(1.5rem,env(safe-area-inset-bottom))]']}>
+      <nav aria-label='Navegación móvil' class:list={['flex flex-col items-center gap-6 text-center', mobilePanelMode === 'layered' ? 'flex-1 shrink-0 justify-center' : 'my-auto']}>
         {<ul class='flex flex-col items-center gap-6 text-2xl'>
           {mobileLinks.map(({ label, href }) => <li><a href={href} aria-current={current(href)} class:list={linkClass}>{label}</a></li>)}
         </ul>}
         {cta && <div data-header-cta set:html={cta} />}
-        <EditionMenu editions={editions} expanded />
+        {mobilePanelMode !== 'layered' && <EditionMenu editions={editions} expanded />}
       </nav>
       <slot name='mobile-extra' />
+      {mobilePanelMode === 'layered' && <div class='mt-auto shrink-0'><EditionMenu editions={editions} expanded /></div>}
     </div>
   </dialog>
 </festival-navbar>

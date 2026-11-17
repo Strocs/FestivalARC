@@ -102,6 +102,15 @@ describe('FestivalNavbar public contract', () => {
     expect(await container.renderToString(Header)).toContain('data-mobile-panel-mode="layered"')
   })
 
+  it('anchors layered editions outside the centered links and keeps the legacy group intact', async () => {
+    const layered = await render({ props: { editions, mobilePanelMode: 'layered' } })
+    const panel = layered.match(/<dialog\b[\s\S]*?<\/dialog>/)?.[0] ?? ''
+    expect(panel).toContain('min-h-dvh')
+    expect(panel.indexOf('</nav>')).toBeLessThan(panel.indexOf('data-editions-expanded'))
+    const legacy = (await render()).match(/<dialog\b[\s\S]*?<\/dialog>/)?.[0] ?? ''
+    expect(legacy.indexOf('data-editions-expanded')).toBeLessThan(legacy.indexOf('</nav>'))
+  })
+
   it('renders the minimal identity and mandatory editions without optional content', async () => {
     const html = await render()
     expect(html).toContain('28 y 29 de noviembre')
