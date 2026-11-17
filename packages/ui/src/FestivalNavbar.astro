@@ -75,7 +75,7 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
       </button>
     </div>
   </header>
-  <dialog id={panelId} data-header-panel aria-label='Navegación del festival' class='fixed inset-0 z-20 m-0 h-dvh max-h-none w-full max-w-none overflow-hidden border-0 bg-transparent p-0 text-[color:var(--header-panel-text-color,CanvasText)] backdrop:bg-transparent'>
+  <dialog id={panelId} data-header-panel aria-label='Navegación del festival' class='fixed inset-0 z-20 m-0 h-auto max-h-none w-full max-w-none overflow-hidden border-0 bg-transparent p-0 text-[color:var(--header-panel-text-color,CanvasText)] backdrop:bg-transparent'>
     <div data-header-surface class:list={['absolute inset-0 flex flex-col gap-8 overflow-y-auto bg-[var(--header-panel-bg-color,Canvas)] px-6 pb-6 pt-[var(--navigation-header-height)]', mobilePanelMode === 'layered' && 'min-h-dvh pb-[max(1.5rem,env(safe-area-inset-bottom))]']}>
       <nav aria-label='Navegación móvil' class:list={['flex flex-col items-center gap-6 text-center', mobilePanelMode === 'layered' ? 'flex-1 shrink-0 justify-center' : 'my-auto']}>
         {<ul class='flex flex-col items-center gap-6 text-2xl'>
