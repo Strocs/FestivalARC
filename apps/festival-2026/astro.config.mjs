@@ -8,7 +8,7 @@ const distributionOutput = process.env.DISTRIBUTION_OUTPUT_DIR
 export default defineConfig({
   base: publicationBase,
   server: {
-    allowedHosts: ['seminars-bacterial-moves-financial.trycloudflare.com'],
+    allowedHosts: ['ongoing-emacs-digest-improving.trycloudflare.com'],
   },
   outDir: distributionOutput || './dist',
   output: 'static',
