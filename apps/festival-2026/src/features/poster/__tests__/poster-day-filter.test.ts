@@ -25,16 +25,38 @@ function mount() {
 beforeEach(() => {
   document.body.innerHTML = `<main data-event-scope><section data-poster-grid>${plans.plans.all.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join('')}${['a', 'b'].map(id => `<div data-poster-artist="${id}"><a href="/musica/${id}/" data-event-trigger data-event-id="${id}"><span data-artist-surface></span><span data-artist-name>${id}</span></a></div>`).join('')}</section><fieldset hidden data-day-filter><legend>Filtrar artistas por día</legend>${['all', 'saturday', 'sunday'].map(key => `<label><input name="day" type="radio" value="${key}" ${key === 'all' ? 'checked' : ''}>${key}</label>`).join('')}<span role="status" data-day-count></span></fieldset><script type="application/json" data-poster-plans>${JSON.stringify(plans)}</script><dialog><div data-modal-panel><button data-modal-close>Close</button><div data-modal-content></div></div></dialog>${['a', 'b'].map(id => `<template data-event-template="${id}"><h2 id="event-modal-title" tabindex="-1">${id}</h2></template>`).join('')}</main>`
   root = document.querySelector('main')!
+  const grid = root.querySelector<HTMLElement>('[data-poster-grid]')!
+  for (const range of ['mobile', 'tablet', 'desktop'] as const) {
+    grid.style.setProperty(`--${range}-rows`, String(plans.plans.all.layouts[range].rows))
+  }
   const dialog = root.querySelector('dialog')!
   dialog.showModal = vi.fn(() => { dialog.open = true }); dialog.close = vi.fn(() => { dialog.open = false })
-  vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => rect(100))
+  const gridTracks = (node: HTMLElement) => {
+    const range = window.innerWidth >= 1280 ? 'desktop' : window.innerWidth >= 768 ? 'tablet' : 'mobile'
+    const columns = range === 'desktop' ? 10 : range === 'tablet' ? 6 : 8
+    const rows = Number(node.style.getPropertyValue(`--${range}-rows`))
+    const trackHeight = 100 / columns * 152 / 160
+    return { rows, trackHeight }
+  }
+  vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+    if (!this.matches('[data-poster-grid]')) return rect(100)
+    const { rows, trackHeight } = gridTracks(this)
+    return new DOMRect(0, 100, 100, rows * trackHeight)
+  })
   media = Object.assign(new EventTarget(), { matches: false })
   vi.stubGlobal('matchMedia', () => media); vi.stubGlobal('scrollTo', vi.fn())
   // No stylesheet in this fixture: model mobile visibility without jsdom's
   // quadratic cascade walk across the shared multi-range motif pool.
   vi.spyOn(window, 'getComputedStyle').mockImplementation(element => {
     const node = element as HTMLElement
-    return { display: node.hidden ? 'none' : node.style.display || node.style.getPropertyValue('--mobile-display') || 'block', visibility: node.style.visibility || 'visible', opacity: node.style.opacity || '1', paddingBottom: node.style.paddingBottom || '0px' } as CSSStyleDeclaration
+    const { rows, trackHeight } = gridTracks(node)
+    const gridTemplateRows = node.matches('[data-poster-grid]') && Number.isSafeInteger(rows) && rows > 0
+      ? Array.from({ length: rows }, () => `${trackHeight}px`).join(' ')
+      : 'none'
+    return { display: node.hidden ? 'none' : node.style.display || node.style.getPropertyValue('--mobile-display') || 'block', visibility: node.style.visibility || 'visible', opacity: node.style.opacity || '1', paddingBottom: node.style.paddingBottom || '0px', gridTemplateRows: node.style.gridTemplateRows || gridTemplateRows,
+      borderLeftWidth: '0px', borderRightWidth: '0px', borderTopWidth: '0px', borderBottomWidth: '0px',
+      paddingLeft: '0px', paddingRight: '0px', paddingTop: '0px', columnGap: '0px', rowGap: '0px',
+    } as CSSStyleDeclaration
   })
   inputs = []; dispose = () => {}; mount()
 })
@@ -576,7 +598,10 @@ describe('day filtering through the sole modal owner', () => {
       information: [],
     })
     root.querySelector('script')!.textContent = JSON.stringify(expanded)
-    const grid = root.querySelector('[data-poster-grid]')!
+    const grid = root.querySelector<HTMLElement>('[data-poster-grid]')!
+    for (const range of ['mobile', 'tablet', 'desktop'] as const) {
+      grid.style.setProperty(`--${range}-rows`, String(expanded.plans.all.layouts[range].rows))
+    }
     grid.innerHTML = expanded.plans.all.motifs.map(m =>
       `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`,
     ).join('') + ['a', 'b', 'c'].map(id =>
@@ -653,6 +678,9 @@ describe('day filtering through the sole modal owner', () => {
     const home = createPosterFilterPlans({ scope: 'home', participants: plans.participants, information: homeInformation })
     root.querySelector('script')!.textContent = JSON.stringify(home)
     const grid = root.querySelector<HTMLElement>('[data-poster-grid]')!
+    for (const range of ['mobile', 'tablet', 'desktop'] as const) {
+      grid.style.setProperty(`--${range}-rows`, String(home.plans.all.layouts[range].rows))
+    }
     for (const node of grid.querySelectorAll('[data-poster-motif]')) node.remove()
     grid.insertAdjacentHTML('beforeend', home.plans.all.motifs.map(m =>
       `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`,
@@ -707,9 +735,24 @@ describe('day filtering through the sole modal owner', () => {
     expect(document.activeElement).toBe(root.querySelector('input[value="saturday"]'))
   })
   it('offers motion only changed viewport tiles while applying the complete day selection', () => {
-    vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockImplementation(() => rect(10000))
+    vi.stubGlobal('innerWidth', 390)
+    vi.stubGlobal('innerHeight', 200)
+    const computedStyle = vi.mocked(window.getComputedStyle)
+    const originalStyle = computedStyle.getMockImplementation()!
+    computedStyle.mockImplementation((element, pseudo) => {
+      const style = originalStyle(element, pseudo)
+      if (!element.matches('[data-poster-grid]')) return style
+      const rows = Number((element as HTMLElement).style.getPropertyValue('--mobile-rows'))
+      return { ...style, gridTemplateRows: Array.from({ length: rows }, () => '100px').join(' ') } as CSSStyleDeclaration
+    })
+    vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockImplementation(function (this: HTMLElement) {
+      if (!this.matches('[data-poster-grid]')) return rect(10000)
+      const rows = Number(this.style.getPropertyValue('--mobile-rows'))
+      // Model a content-track reflow that moves the surviving visible tile.
+      const top = rows === plans.plans.all.layouts.mobile.rows ? 0 : 100
+      return new DOMRect(0, top, 100, rows * 100)
+    })
     const artist = root.querySelector<HTMLElement>('[data-poster-artist="a"]')!
-    artist.getBoundingClientRect = () => rect(artist.style.getPropertyValue('--mobile-row') ? 200 : 100)
     choose('saturday')
     expect(inputs).toHaveLength(1)
     expect(inputs[0].items.map(item => item.node)).toEqual([artist])
