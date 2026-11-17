@@ -2,6 +2,7 @@ import type { DayKey, PosterFilterPlan, PosterFilterPlans } from './poster-filte
 import type { PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
 import type { FilterMotion, FilterMotionInput } from './poster-filter-motion'
+import { filterCellRect, filterPaintRect, readFilterGridGeometry, type FilterGridGeometry } from './poster-filter-geometry'
 import { createLazyFilterMotion, isMotionReady, preloadMotion } from '../artists/lazy-motion'
 import { matchPosterMotifs } from './poster-motif-match'
 import type { PosterPositions } from './poster-layout'
@@ -124,6 +125,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let selected: DayKey = 'all'
   let generation = 0
   let motion: FilterMotion | undefined
+  let motionPaint: { gridRect: DOMRect; bases: Map<HTMLElement, DOMRect> } | undefined
   let pending = false
   let releaseScroll: (() => void) | undefined
   let motifNodes = [...originalMotifs]
@@ -183,7 +185,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   }
   const endpoint = (): PosterFilterPlan => plans.plans[selected]
   const finish = () => {
-    motion?.dispose(); motion = undefined
+    motion?.dispose(); motion = undefined; motionPaint = undefined
     const artistIDs = indexedPlans.get(selected)!.ids
     const activeMotifs = new Set(motifNodes)
     for (const node of artists) {
@@ -214,15 +216,36 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (key === selected) { syncRadios(); return }
     const activeRange = range()
     const scroll = { x: window.scrollX, y: window.scrollY }
-    const animate = !media.matches && (!!options.createMotion || isMotionReady())
+    let animate = !media.matches && (!!options.createMotion || isMotionReady())
     if (!media.matches && !options.createMotion) preloadMotion()
     const displayed = (node: HTMLElement) => !node.hidden && node.style.display !== 'none'
       && node.style.getPropertyValue(`--${activeRange}-display`) !== 'none'
-    // Capture current paint in one read batch, including interrupted exits.
-    // Endpoint visibility and opacity are controller-owned; no CSS cascade walk.
-    const painted = animate ? [...artists, ...information, ...pool].filter(node => displayed(node) && node.style.visibility !== 'hidden') : []
-    const first = new Map(painted.map(node => [node, node.getBoundingClientRect()]))
-    const firstAlpha = new Map(painted.map(node => [node, Number.parseFloat(node.style.opacity || '1')]))
+    const endpointRects = (geometry: FilterGridGeometry) => {
+      const rects = new Map<HTMLElement, DOMRect>()
+      const current = indexedPlans.get(selected)!
+      const add = (node: HTMLElement, cell?: SlotRect) => {
+        const rect = filterCellRect(geometry, cell)
+        if (rect) rects.set(node, rect)
+      }
+      for (const node of artists) add(node, current.artists.get(node.dataset.posterArtist!)?.[activeRange])
+      for (const node of information) add(node, current.information.get(node.dataset.posterInformation!)?.[activeRange])
+      motifNodes.forEach((node, index) => add(node, motifEndpoints[index].positions[activeRange]))
+      return rects
+    }
+    const sourceLayout = endpoint().layouts[activeRange]
+    const sourceGeometry = animate ? readFilterGridGeometry(grid, sourceLayout.columns, sourceLayout.rows) : undefined
+    // If resolved tracks are unavailable, settle rather than measuring tiles.
+    if (!sourceGeometry) animate = false
+    const first = sourceGeometry ? endpointRects(sourceGeometry) : new Map<HTMLElement, DOMRect>()
+    if (sourceGeometry && motionPaint) for (const [node, base] of motionPaint.bases) {
+      first.set(node, filterPaintRect(node, base, motionPaint.gridRect, sourceGeometry.rect))
+    }
+    // Include interrupted outgoing paint, even when absent from the endpoint.
+    const firstAlpha = new Map<HTMLElement, number>()
+    for (const node of first.keys()) {
+      if (!displayed(node) || node.style.visibility === 'hidden') first.delete(node)
+      else firstAlpha.set(node, Number.parseFloat(node.style.opacity || '1'))
+    }
     const target = plans.plans[key]
     const targetIndex = indexedPlans.get(key)!
     const transition = transitions?.get(selected)!.get(key)!
@@ -230,7 +253,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const artistPatches = transition && new Map(transition.artists.map(patch => [patch.id, patch.masks]))
     const informationPatches = transition && new Map(transition.information.map(patch => [patch.id, patch.masks]))
     ++generation
-    motion?.dispose(); motion = undefined
+    motion?.dispose(); motion = undefined; motionPaint = undefined
     releaseScroll?.()
     const restoreHtml = options.ownStyles(document.documentElement, ['overflow-anchor', 'scroll-behavior'])
     const restoreGrid = options.ownStyles(grid, ['overflow-anchor'])
@@ -314,9 +337,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     // A necessary bottom clamp changes viewport coordinates, not tile positions.
     const shift = scroll.y - y
     if (shift) for (const [node, rect] of first) first.set(node, new DOMRect(rect.left, rect.top + shift, rect.width, rect.height))
-    const live = [...artists, ...information, ...motifNodes].filter(displayed)
-    const last = new Map(live.map(node => [node, node.getBoundingClientRect()]))
-    const gridRect = grid.getBoundingClientRect()
+    const layout = target.layouts[activeRange]
+    const targetGeometry = readFilterGridGeometry(grid, layout.columns, layout.rows)
+    if (!targetGeometry) { finish(); return }
+    const last = endpointRects(targetGeometry)
+    for (const node of last.keys()) if (!displayed(node)) last.delete(node)
+    const gridRect = targetGeometry.rect
     const inView = (rect?: DOMRect) => rect && rect.width > 0 && rect.height > 0
       && rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth
     const items = [...new Set([...first.keys(), ...last.keys()])]
@@ -334,6 +360,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     // Outgoing nodes are noninteractive paint, not hidden until finite completion.
     for (const item of items) if (!item.last) item.node.hidden = false
     const token = generation
+    motionPaint = { gridRect, bases: new Map(items.map(item => [item.node, (item.last ?? item.first)!])) }
     try {
       const created = (options.createMotion ?? createLazyFilterMotion)({ items, gridRect, onComplete: () => { if (!destroyed && root.isConnected && token === generation) finish() } })
       if (pending) motion = created
