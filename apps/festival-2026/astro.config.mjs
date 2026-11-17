@@ -38,6 +38,7 @@ export default defineConfig({
       weights: [200, 300, 400, 600, 700, 800, 900],
       styles: ['normal'],
       subsets: ['latin'],
+      display: 'swap',
     },
   ],
   vite: {

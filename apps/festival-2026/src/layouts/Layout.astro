@@ -52,8 +52,8 @@ const socialImage = new URL(publicPath('/og-image.jpg'), siteUrl).toString()
       href={publicPath('/favicon.png')}
     />
     <link rel='canonical' href={canonical} />
-    <Font cssVariable='--font-poppins' />
-    <Font cssVariable='--font-anton' />
+    <Font cssVariable='--font-poppins' preload={[{ weight: 400, subset: 'latin' }, { weight: 700, subset: 'latin' }, { weight: 900, subset: 'latin' }]} />
+    <Font cssVariable='--font-anton' preload />
     <title>{title}</title>
   </head>
   <!-- Low-specificity defaults let existing element utilities retain their overrides. -->

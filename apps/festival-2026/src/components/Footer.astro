@@ -5,6 +5,9 @@ import footerLogos from '../assets/logos-footer.png'
 <footer class='relative border-t border-primary/10 px-4 py-3 sm:px-8 sm:py-4 lg:px-12'>
   <Image
     src={footerLogos}
+    width={576}
+    widths={[320, 576, 1152]}
+    sizes='(min-width: 608px) 576px, calc(100vw - 2rem)'
     loading='lazy'
     alt='Logotipos de organizadores y colaboradores del Festival ARC 2026'
     class='mx-auto block h-auto w-full max-w-xl'
