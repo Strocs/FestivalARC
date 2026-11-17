@@ -1,5 +1,3 @@
-import { gsap } from 'gsap'
-
 export interface FilterPaint {
   node: HTMLElement
   first?: DOMRect
@@ -11,10 +9,18 @@ export interface FilterMotionInput {
   gridRect: DOMRect
   onComplete: () => void
 }
-export interface FilterMotion { dispose: () => void }
+export interface FilterMotionSample { x: number; y: number; opacity: number }
+export interface FilterMotion {
+  dispose: () => void
+  sample?: (node: HTMLElement) => FilterMotionSample | undefined
+}
 
-/** Manual FLIP over already measured paint; GSAP never reads element transforms. */
+/** Manual FLIP over already measured paint; only the browser advances frames. */
 export function createFilterMotion(input: FilterMotionInput): FilterMotion {
+  if (input.items.some(({ node }) => typeof node.animate !== 'function')) {
+    input.onComplete()
+    return { dispose() {} }
+  }
   const properties = ['transform', 'opacity', 'visibility', 'position', 'left', 'top', 'width', 'height', 'display', 'grid-area', 'will-change']
   const restores = input.items.map(({ node }) => {
     const absent = !node.hasAttribute('style')
@@ -27,42 +33,66 @@ export function createFilterMotion(input: FilterMotionInput): FilterMotion {
       if (absent && !node.style.cssText) node.removeAttribute('style')
     }
   })
-  const progress = { exit: 0, move: 0, enter: 0 }
-  const groups: Record<keyof typeof progress, FilterPaint[]> = { exit: [], move: [], enter: [] }
-  for (const item of input.items) groups[item.last ? item.first ? 'move' : 'enter' : 'exit'].push(item)
-  const render = (kind: keyof typeof progress) => {
-    const remaining = 1 - progress[kind]
-    for (const { node, first, firstAlpha = 1, last } of groups[kind]) {
-      const x = first && last ? (first.left - last.left) * remaining : 0
-      const y = first && last ? (first.top - last.top) * remaining : 0
-      const opacity = kind === 'exit' ? firstAlpha * remaining
-        : kind === 'enter' ? progress[kind] : firstAlpha + (1 - firstAlpha) * progress[kind]
-      node.style.transform = `translate3d(${x}px, ${y}px, 0)`
-      node.style.opacity = String(opacity)
-      node.style.visibility = opacity === 0 ? 'hidden' : 'inherit'
-    }
-  }
+  const tracks = new Map<HTMLElement, { animation: Animation; x: number; y: number; fromAlpha: number; toAlpha: number }>()
   let disposed = false
-  const timeline = gsap.timeline({ paused: true, defaults: { duration: 0.44, ease: 'power2.out' }, onComplete: input.onComplete })
+  let completed = false
+  let settingUp = true
+  let remaining = 0
+  const complete = () => {
+    if (disposed || completed || settingUp || remaining !== 0) return
+    completed = true
+    input.onComplete()
+  }
+  const dispose = () => {
+    if (disposed) return
+    disposed = true
+    for (const { animation } of tracks.values()) animation.cancel()
+    restores.forEach(restore => restore())
+  }
   try {
-    timeline.addLabel('exit', 0).addLabel('move', 0.04).addLabel('enter', 0.1)
-    // Commit outgoing geometry together before any animation frames. No layout
-    // reads or CSSPlugin initialization are needed to prepare or restore paint.
-    for (const { node, first } of groups.exit) if (first) {
+    // Commit outgoing geometry together before starting any animations.
+    for (const { node, first, last } of input.items) if (first && !last) {
       Object.assign(node.style, { position: 'absolute', gridArea: 'auto', left: `${first.left - input.gridRect.left}px`, top: `${first.top - input.gridRect.top}px`, width: `${first.width}px`, height: `${first.height}px`, display: 'block' })
     }
-    for (const { node } of input.items) node.style.willChange = 'transform, opacity'
-    for (const kind of ['exit', 'move', 'enter'] as const) if (groups[kind].length) {
-      render(kind)
-      // Three numeric tracks at most, independent of the number of tiles.
-      timeline.to(progress, { [kind]: 1, duration: kind === 'exit' ? 0.18 : 0.44, onUpdate: () => render(kind) }, kind)
+    for (const { node, first, firstAlpha = 1, last } of input.items) {
+      const kind = last ? first ? 'move' : 'enter' : 'exit'
+      const x = first && last ? first.left - last.left : 0
+      const y = first && last ? first.top - last.top : 0
+      const fromAlpha = kind === 'enter' ? 0 : firstAlpha
+      const toAlpha = kind === 'exit' ? 0 : 1
+      node.style.willChange = 'transform, opacity'
+      node.style.visibility = 'inherit'
+      const animation = node.animate([
+        { transform: `translate3d(${x}px, ${y}px, 0)`, opacity: fromAlpha },
+        { transform: 'translate3d(0px, 0px, 0)', opacity: toAlpha },
+      ], {
+        duration: kind === 'exit' ? 180 : 440,
+        delay: kind === 'exit' ? 0 : kind === 'move' ? 40 : 100,
+        easing: 'cubic-bezier(0.333333, 1, 0.666667, 1)',
+        fill: 'both',
+      })
+      tracks.set(node, { animation, x, y, fromAlpha, toAlpha })
+      remaining++
+      // Attach rejection handlers immediately, including during partial setup.
+      void animation.finished.then(() => { remaining--; complete() }, () => {})
     }
-    timeline.play()
+    settingUp = false
+    complete()
   } catch (error) {
-    timeline.kill(); restores.forEach(restore => restore()); throw error
+    dispose()
+    throw error
   }
-  return { dispose() {
-    if (disposed) return
-    disposed = true; timeline.kill(); restores.forEach(restore => restore())
-  } }
+  return {
+    dispose,
+    sample(node) {
+      if (disposed) return undefined
+      const track = tracks.get(node)
+      if (!track) return undefined
+      // Computed timing includes easing and backwards/forwards fill. No layout
+      // or computed-style read is needed, and this runs only on interruption.
+      const progress = track.animation.effect?.getComputedTiming().progress ?? 0
+      return { x: track.x * (1 - progress), y: track.y * (1 - progress),
+        opacity: track.fromAlpha + (track.toAlpha - track.fromAlpha) * progress }
+    },
+  }
 }

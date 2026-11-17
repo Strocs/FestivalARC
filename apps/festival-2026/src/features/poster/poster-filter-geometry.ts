@@ -55,13 +55,13 @@ export function filterCellRect(geometry: FilterGridGeometry, cell?: SlotRect): D
     bottom - top + (cell.height - 1) * geometry.rowGap)
 }
 
-/** Motion owns these inline translations. Sampling them requires no layout or
+/** Use motion's sampled translation, or legacy inline paint, without layout or
  * computed-style reads, including outgoing paint absent from the current plan.
  */
-export function filterPaintRect(node: HTMLElement, base: DOMRect, previousGrid: DOMRect, grid: DOMRect): DOMRect {
-  const translation = /^translate3d\(([-\d.e+]+)px,\s*([-\d.e+]+)px,\s*0(?:px)?\)$/.exec(node.style.transform)
-  const x = translation ? Number(translation[1]) : 0
-  const y = translation ? Number(translation[2]) : 0
+export function filterPaintRect(node: HTMLElement, base: DOMRect, previousGrid: DOMRect, grid: DOMRect, sample?: { x: number; y: number }): DOMRect {
+  const translation = sample ? null : /^translate3d\(([-\d.e+]+)px,\s*([-\d.e+]+)px,\s*0(?:px)?\)$/.exec(node.style.transform)
+  const x = sample?.x ?? (translation ? Number(translation[1]) : 0)
+  const y = sample?.y ?? (translation ? Number(translation[2]) : 0)
   return new DOMRect(base.left + grid.left - previousGrid.left + x,
     base.top + grid.top - previousGrid.top + y, base.width, base.height)
 }

@@ -1,7 +1,7 @@
 import type { DayKey, PosterFilterPlan, PosterFilterPlans } from './poster-filter-layout'
 import type { PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
-import type { FilterMotion, FilterMotionInput } from './poster-filter-motion'
+import type { FilterMotion, FilterMotionInput, FilterMotionSample } from './poster-filter-motion'
 import { filterCellRect, filterPaintRect, readFilterGridGeometry, type FilterGridGeometry } from './poster-filter-geometry'
 import { createLazyFilterMotion, isMotionReady, preloadMotion } from '../artists/lazy-motion'
 import { matchPosterMotifs } from './poster-motif-match'
@@ -237,14 +237,19 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     // If resolved tracks are unavailable, settle rather than measuring tiles.
     if (!sourceGeometry) animate = false
     const first = sourceGeometry ? endpointRects(sourceGeometry) : new Map<HTMLElement, DOMRect>()
+    const samples = new Map<HTMLElement, FilterMotionSample>()
     if (sourceGeometry && motionPaint) for (const [node, base] of motionPaint.bases) {
-      first.set(node, filterPaintRect(node, base, motionPaint.gridRect, sourceGeometry.rect))
+      const sample = motion?.sample?.(node)
+      if (sample) samples.set(node, sample)
+      first.set(node, filterPaintRect(node, base, motionPaint.gridRect, sourceGeometry.rect, sample))
     }
     // Include interrupted outgoing paint, even when absent from the endpoint.
     const firstAlpha = new Map<HTMLElement, number>()
     for (const node of first.keys()) {
-      if (!displayed(node) || node.style.visibility === 'hidden') first.delete(node)
-      else firstAlpha.set(node, Number.parseFloat(node.style.opacity || '1'))
+      const inlineAlpha = Number.parseFloat(node.style.opacity || '1')
+      const alpha = samples.get(node)?.opacity ?? (Number.isFinite(inlineAlpha) ? inlineAlpha : 1)
+      if (!displayed(node) || node.style.visibility === 'hidden' || alpha === 0) first.delete(node)
+      else firstAlpha.set(node, alpha)
     }
     const target = plans.plans[key]
     const targetIndex = indexedPlans.get(key)!
