@@ -22,8 +22,13 @@ const performerSchema = z.strictObject({
     'Unknown discipline ID.',
   ),
   description: z.string(),
+  location: z.string().min(1).optional(),
+  socialLinks: z.strictObject({
+    instagram: z.string().url().startsWith('https://www.instagram.com/').optional(),
+    spotify: z.string().url().startsWith('https://open.spotify.com/').optional(),
+  }).optional(),
   ticketUrl: z.string().nullable(),
-  date: z.strictObject({ day: z.string().min(1), time: z.string().min(1) }),
+  date: z.strictObject({ day: z.string().min(1), time: z.string().min(1), month: z.string().min(1).optional() }),
   image: z.strictObject({ url: z.string().min(1), alt: z.string() }).nullable(),
 })
 

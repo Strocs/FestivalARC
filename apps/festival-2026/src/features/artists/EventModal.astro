@@ -9,7 +9,7 @@ const { participants } = Astro.props
     aria-labelledby='event-modal-title'
     class='m-auto max-h-none w-[calc(100%-2rem)] max-w-3xl overflow-visible border-0 bg-transparent p-0 text-foreground [--event-backdrop:0] backdrop:bg-background/80 backdrop:opacity-[var(--event-backdrop)]'>
     <div data-modal-panel class='relative isolate flex max-h-[calc(100dvh-2rem-env(safe-area-inset-top)-env(safe-area-inset-bottom))] min-h-0 flex-col'>
-      <button data-modal-close type='button' class='bg-background text-foreground absolute top-3 right-3 z-10 rounded-full px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2'>Cerrar detalle</button>
+      <button data-modal-close type='button' class='bg-background text-foreground absolute top-5 right-5 z-10 rounded-full px-3 py-2 text-sm transition-colors duration-200 hover:bg-accent hover:text-foreground motion-reduce:transition-none sm:top-8 sm:right-8 focus-visible:outline-2 focus-visible:outline-offset-2'>Cerrar detalle</button>
       <div data-modal-content class='flex min-h-0 flex-1 flex-col'></div>
     </div>
   </dialog>

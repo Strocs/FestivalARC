@@ -126,10 +126,16 @@ describe('2026 participant catalog', () => {
   })
 
   it.each([
-    ['music', 15], ['stage', 8], ['expo', 4], ['market', 20],
-  ] as const)('supplies empty descriptions, null images and alternating provisional days for %s in array order', (category, saturdayCount) => {
+    ['music', 16], ['stage', 8], ['expo', 4], ['market', 20],
+  ] as const)('preserves provisional defaults for %s except supplied Niño Cohete details', (category, saturdayCount) => {
     const participants = participantCatalog[category].participants
     participants.forEach((participant, index) => {
+      if (participant.id === 'nino-cohete') {
+        expect(participant.description).toContain('«pop silvestre»')
+        expect(participant.image?.url).toBe('/src/assets/artists/nino-cohete.webp')
+        expect(participant.date).toEqual({ day: 'Sábado 28', time: '17:00', month: 'noviembre' })
+        return
+      }
       expect(participant).toMatchObject({
         description: '', image: null,
         date: { day: index % 2 === 0 ? 'Sábado 28' : 'Domingo 29', time: '23:00' },

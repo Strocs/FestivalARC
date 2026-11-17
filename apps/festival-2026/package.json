@@ -18,6 +18,7 @@
     "@festivalarc/editions": "workspace:*",
     "@festivalarc/ui": "workspace:*",
     "@iconify-json/lucide": "^1.2.128",
+    "@iconify-json/simple-icons": "^1.2.102",
     "astro": "^7.2.9",
     "astro-icon": "^1.2.0",
     "gsap": "^3.15.1",

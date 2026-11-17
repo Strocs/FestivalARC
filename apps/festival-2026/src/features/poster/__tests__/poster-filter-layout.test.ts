@@ -46,12 +46,12 @@ describe('finite scoped poster filter plans', () => {
     expect(result.plans.sunday.ids).toEqual(['b'])
     for (const fixture of [[], participants.slice(0, 1), participants.slice(2)]) expect(home(fixture).available).toBe(false)
     expect(home().plans.all.ids).toHaveLength(46)
-    expect(home().plans.saturday.ids).toHaveLength(23)
-    expect(home().plans.sunday.ids).toHaveLength(23)
+    expect(home().plans.saturday.ids).toHaveLength(24)
+    expect(home().plans.sunday.ids).toHaveLength(22)
   })
 
   it('intersects each authoritative category without changing its order or borrowing home information', () => {
-    const expected = [[30, 15, 15], [16, 8, 8], [8, 4, 4], [39, 20, 19]]
+    const expected = [[30, 16, 14], [16, 8, 8], [8, 4, 4], [39, 20, 19]]
     categories.forEach((category, index) => {
       const participants = narrow(category.participants)
       const result = createPosterFilterPlans({ scope: 'category', participants, information: categoryInformation })

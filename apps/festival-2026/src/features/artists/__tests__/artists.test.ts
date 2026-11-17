@@ -71,6 +71,12 @@ describe('general artist contract', () => {
     expect(artists.map(({ order }) => order)).toEqual(Array.from({ length: 46 }, (_, index) => index + 1))
     for (const artist of artists) {
       expect(artist.disciplines).toBe(artist.category === 'stage' ? 'artes-escenicas' : 'musica')
+      if (artist.id === 'nino-cohete') {
+        expect(artist.description).toContain('«pop silvestre»')
+        expect(artist.image?.url).toBe('/src/assets/artists/nino-cohete.webp')
+        expect(artist.date).toEqual({ day: 'Sábado 28', time: '17:00', month: 'noviembre' })
+        continue
+      }
       expect(artist.description).toBe('')
       expect(artist.ticketUrl).toBeNull()
       expect(artist.image).toBeNull()
@@ -78,8 +84,8 @@ describe('general artist contract', () => {
       expect(artist.date).toEqual({ day: categoryIndex % 2 === 0 ? 'Sábado 28' : 'Domingo 29', time: '23:00' })
       expect(artist).not.toHaveProperty('demo')
     }
-    expect(artists.filter(({ date }) => date.day === 'Sábado 28')).toHaveLength(23)
-    expect(artists.filter(({ date }) => date.day === 'Domingo 29')).toHaveLength(23)
+    expect(artists.filter(({ date }) => date.day === 'Sábado 28')).toHaveLength(24)
+    expect(artists.filter(({ date }) => date.day === 'Domingo 29')).toHaveLength(22)
     expect(JSON.stringify(disciplines)).not.toContain('(ejemplo)')
   })
 })

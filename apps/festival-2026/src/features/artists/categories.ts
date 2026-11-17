@@ -9,8 +9,10 @@ export interface ParticipantView {
   category: CategoryKey
   canonicalPath: string
   description: string
-  date: { day: string, time: string }
+  date: { day: string, time: string, month?: string }
   image: { url: string, alt: string } | null
+  location?: string
+  socialLinks?: { instagram?: string, spotify?: string }
   company?: string
   disciplineName?: string
   ticketUrl: string | null
@@ -56,6 +58,8 @@ export const categories: readonly CategoryView[] = (Object.keys(publicSlugs) as 
       description: participant.description,
       date: participant.date,
       image: participant.image,
+      ...('location' in participant ? { location: participant.location } : {}),
+      ...('socialLinks' in participant ? { socialLinks: participant.socialLinks } : {}),
       ...('company' in participant ? { company: participant.company } : {}),
       ...('disciplines' in participant ? { disciplineName: disciplines.find(({ id }) => id === participant.disciplines)!.name } : {}),
       ticketUrl: safeTicketUrl('ticketUrl' in participant ? participant.ticketUrl : null),
