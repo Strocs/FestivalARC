@@ -17,7 +17,14 @@ const title = createCategoryTitle(name)
       '@container flex min-h-[var(--mobile-title-height)] items-center px-4 md:min-h-[var(--tablet-title-height)] md:px-0 xl:min-h-[var(--desktop-title-height)]',
       { 'pt-4': index === 0, 'pb-4': index === title.lines.length - 1 },
     ]}>
-      <span class='text-foreground whitespace-nowrap font-sans text-[length:var(--mobile-title-size)] font-black uppercase leading-none tracking-tighter md:text-[length:var(--tablet-title-size)] xl:text-[length:var(--desktop-title-size)]'>{line.text}</span>
+      <span class='text-foreground whitespace-nowrap font-sans text-[length:var(--mobile-title-size)] font-black uppercase leading-none tracking-tighter md:text-[length:var(--tablet-title-size)] xl:text-[length:var(--desktop-title-size)]'>
+        {line.text.split(/(creativo|DAZ|Arte(?=\.)|CO|escénicas)/gi).map(part => (
+          <span class:list={{
+            'text-primary': /^(creativo|Arte|escénicas)$/i.test(part),
+            'text-accent': /^(DAZ|CO)$/i.test(part),
+          }}>{part}</span>
+        ))}
+      </span>
     </div>
   </PosterInformation>
 })}

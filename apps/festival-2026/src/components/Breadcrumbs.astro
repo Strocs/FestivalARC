@@ -1,0 +1,24 @@
+---
+import { publicPath } from '../utils/publication'
+import NavigationTile from './NavigationTile.astro'
+
+interface Props {
+  category: { name: string, path: string }
+  participant?: string
+}
+const { category, participant } = Astro.props
+const linkClass = 'hover:text-arc-yellow focus-visible:outline-2 focus-visible:outline-offset-2'
+---
+<nav aria-label='Ruta de navegación' class='mb-8'>
+  <ol class='flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center'>
+    <li><a href={publicPath('/')} class={linkClass}>Inicio</a></li>
+    <li aria-hidden='true'><NavigationTile motif='chevrons-right' /></li>
+    <li>
+      {participant ? <a href={publicPath(category.path)} class={linkClass}>{category.name}</a> : <span aria-current='page' class='font-bold'>{category.name}</span>}
+    </li>
+    {participant && <>
+      <li aria-hidden='true'><NavigationTile motif='rosette-yellow' /></li>
+      <li><span aria-current='page' class='font-bold'>{participant}</span></li>
+    </>}
+  </ol>
+</nav>

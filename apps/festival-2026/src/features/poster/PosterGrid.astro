@@ -1,5 +1,6 @@
 ---
 import ArtistName from './ArtistName.astro'
+import Breadcrumbs from '../../components/Breadcrumbs.astro'
 import DayFilter from './DayFilter.astro'
 import EventModal from '../artists/EventModal.astro'
 import CategoryTitle from './CategoryTitle.astro'
@@ -61,6 +62,7 @@ const slotClasses =
   aria-labelledby='page-title'
   data-event-scope={category?.key ?? 'home'}>
   <div class='@container mx-auto w-full max-w-[1600px]'>
+    {category && <div class='px-4 md:px-0'><Breadcrumbs {category} /></div>}
     <PosterDefinitions />
     <section
       data-poster-grid
