@@ -9,7 +9,7 @@ export interface ParticipantView {
   category: CategoryKey
   canonicalPath: string
   description: string
-  date: { day: string, time: string, month?: string }
+  date?: { day: string, time: string, month?: string }
   image: { url: string, alt: string } | null
   location?: string
   socialLinks?: { instagram?: string, spotify?: string }
@@ -23,6 +23,8 @@ export interface CategoryView {
   slug: string
   name: string
   path: string
+  location?: string
+  description?: string
   participants: readonly ParticipantView[]
 }
 
@@ -50,13 +52,15 @@ export const categories: readonly CategoryView[] = (Object.keys(publicSlugs) as 
   const category = participantCatalog[key]
   return {
     key, slug, path, name: category.name,
+    ...('location' in category ? { location: category.location } : {}),
+    ...('description' in category ? { description: category.description } : {}),
     participants: category.participants.map(participant => ({
       id: participant.id,
       name: participant.name,
       category: key,
       canonicalPath: `${path}${participant.id}/`,
       description: participant.description,
-      date: participant.date,
+      ...(participant.date ? { date: participant.date } : {}),
       image: participant.image,
       ...('location' in participant ? { location: participant.location } : {}),
       ...('socialLinks' in participant ? { socialLinks: participant.socialLinks } : {}),
@@ -70,4 +74,6 @@ export const categories: readonly CategoryView[] = (Object.keys(publicSlugs) as 
 export const participants: readonly ParticipantView[] = categories.flatMap(category => category.participants)
 const byId = new Map(participants.map(participant => [participant.id, participant]))
 /** Reuse the validated, sorted business-rule selection; national never filters it. */
-export const heroParticipants: readonly ParticipantView[] = artists.map(({ id }) => byId.get(id)!)
+export const heroParticipants = artists.map(({ id }) => byId.get(id)!).filter(
+  (participant): participant is ParticipantView & { date: NonNullable<ParticipantView['date']> } => Boolean(participant?.date),
+)

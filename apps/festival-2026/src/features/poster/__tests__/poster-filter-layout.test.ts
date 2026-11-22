@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { categories, heroParticipants } from '../../artists/categories'
+import { categories, heroParticipants, type ParticipantView } from '../../artists/categories'
 import { calculatePosterLayout, type SlotRect } from '../poster-grid'
 import { createPosterFilterPlans, getPosterFilterPlan, type FilterParticipant } from '../poster-filter-layout'
 import { homeInformation, categoryInformation } from '../poster-layout'
 
 const ranges = ['desktop', 'tablet', 'mobile'] as const
-const narrow = (participants: typeof heroParticipants): FilterParticipant[] => participants.map(({ id, date }) => ({ id, day: date.day }))
+const narrow = (participants: readonly ParticipantView[]): FilterParticipant[] => participants.map(({ id, date }) => ({ id, day: date?.day ?? '' }))
 const overlaps = (a: SlotRect, b: SlotRect) => a.column < b.column + b.width && a.column + a.width > b.column && a.row < b.row + b.height && a.row + a.height > b.row
 const home = (participants = narrow(heroParticipants)) => createPosterFilterPlans({ scope: 'home', participants, information: homeInformation })
 
@@ -51,14 +51,18 @@ describe('finite scoped poster filter plans', () => {
   })
 
   it('intersects each authoritative category without changing its order or borrowing home information', () => {
-    const expected = [[30, 16, 14], [16, 8, 8], [8, 4, 4], [39, 20, 19]]
+    const expected = [[30, 16, 14], [16, 8, 8], [8, 0, 0], [39, 20, 19]]
     categories.forEach((category, index) => {
       const participants = narrow(category.participants)
-      const result = createPosterFilterPlans({ scope: 'category', participants, information: categoryInformation })
+      const information = category.key === 'expo' ? [] : categoryInformation
+      const result = createPosterFilterPlans({ scope: 'category', participants, information })
       expect(['all', 'saturday', 'sunday'].map(key => result.plans[key as 'all'].ids.length)).toEqual(expected[index])
       for (const key of ['all', 'saturday', 'sunday'] as const) {
         expect(result.plans[key].ids).toEqual(participants.filter(p => key === 'all' || p.day === (key === 'saturday' ? 'Sábado 28' : 'Domingo 29')).map(p => p.id))
-        for (const range of ranges) expect(result.plans[key].information[range]).toEqual({ 'category-title': categoryInformation[0].positions[range] })
+        for (const range of ranges) {
+          const expectedInformation = category.key === 'expo' ? {} : { 'category-title': categoryInformation[0].positions[range] }
+          expect(result.plans[key].information[range]).toEqual(expectedInformation)
+        }
       }
     })
   })

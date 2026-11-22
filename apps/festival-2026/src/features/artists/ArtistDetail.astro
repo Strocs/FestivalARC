@@ -14,9 +14,9 @@ if (image && !loadImage) {
   throw new Error(`Artist image does not exist in src/assets: ${image.url}`)
 }
 const ticketUrl = safeTicketUrl(artist.ticketUrl)
-const dateLabel = artist.date.month
+const dateLabel = artist.date && (artist.date.month
   ? `${artist.date.day} de ${artist.date.month} · ${artist.date.time} hrs.`
-  : `${artist.date.day} · ${artist.date.time}`
+  : `${artist.date.day} · ${artist.date.time}`)
 ---
 {modal ? <div class='relative flex min-h-0 flex-1 flex-col'>
   <header data-modal-header class='shrink-0 px-5 pt-5 pb-2 pr-20 sm:px-8 sm:pt-8 sm:pb-2 sm:pr-40'>
@@ -36,7 +36,7 @@ const dateLabel = artist.date.month
             {artist.company && <p>{artist.company}</p>}
           </div>
           <div class='mt-5 space-y-0.5'>
-            <p><strong>{dateLabel}</strong></p>
+            {dateLabel && <p><strong>{dateLabel}</strong></p>}
             {artist.location && <p class='text-base/6 font-black text-white'>{artist.location}</p>}
           </div>
         </div>

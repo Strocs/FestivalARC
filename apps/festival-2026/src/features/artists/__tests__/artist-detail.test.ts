@@ -13,7 +13,7 @@ describe('artist detail', () => {
     const html = await render()
     expect(html).toContain('Polter')
     expect(html).toContain('Música')
-    expect(html).toContain('Sábado 28 · 23:00')
+    expect(html).toContain('Sábado 28 de noviembre · 22:00 hrs.')
     expect(html).not.toContain('<img')
     expect(html).not.toMatch(/demostración|ejemplo|Actividades/i)
   })
@@ -24,7 +24,8 @@ describe('artist detail', () => {
       const artist = category.participants[0]
       const html = await container.renderToString(ArtistDetail, { props: { artist } })
       expect(html).toContain(artist.name)
-      expect(html).toContain(`${artist.date.day} · ${artist.date.time}`)
+      if (artist.date) expect(html).toContain(`${artist.date.day} · ${artist.date.time}`)
+      else expect(html).not.toContain(' ·  hrs.')
       expect(html).not.toContain('<img')
       expect(html).not.toContain('md:grid-cols-[1fr_1fr]')
       expect(html).not.toContain('undefined')

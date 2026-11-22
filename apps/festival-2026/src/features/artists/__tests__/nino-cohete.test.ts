@@ -15,7 +15,7 @@ it('keeps existing performer records valid and rejects unsafe social URLs', () =
 
 it('publishes Niño Cohete biography, schedule, venue, image and social links in both details', async () => {
   const artist = participants.find(({ id }) => id === 'nino-cohete')!
-  expect(artist.date).toEqual({ day: 'Sábado 28', time: '17:00', month: 'noviembre' })
+  expect(artist.date).toEqual({ day: 'Domingo 29', time: '17:00', month: 'noviembre' })
   expect(artist.description).toContain('«pop silvestre»')
   const container = await AstroContainer.create()
   for (const modal of [false, true]) {
@@ -25,7 +25,7 @@ it('publishes Niño Cohete biography, schedule, venue, image and social links in
     expect(html).toContain('https://open.spotify.com/intl-es/artist/00kBFCMv8iB3aMpHy043LO')
     expect(html).toContain('aria-label="Instagram de Niño Cohete"')
     expect(html).toContain('aria-label="Spotify de Niño Cohete"')
-    expect(html).toContain('<strong>Sábado 28 de noviembre · 17:00 hrs.</strong>')
+    expect(html).toContain('<strong>Domingo 29 de noviembre · 17:00 hrs.</strong>')
     expect(html).toContain('alt="Niño Cohete"')
     expect(html).toContain('inline-flex size-8')
     expect(html).toContain('width="16" height="16"')
@@ -43,8 +43,8 @@ it('publishes Niño Cohete biography, schedule, venue, image and social links in
       const textColumn = html.match(/<div data-participant-copy[\s\S]*?<\/div>\s*<img/)![0]
       expect(textColumn).toContain('Música')
       expect(textColumn).toContain('data-modal-meta')
-      expect(textColumn.indexOf('Música')).toBeLessThan(textColumn.indexOf('Sábado 28'))
-      expect(textColumn.indexOf('Sábado 28')).toBeLessThan(textColumn.indexOf('Escenario Gobierno Regional'))
+      expect(textColumn.indexOf('Música')).toBeLessThan(textColumn.indexOf('Domingo 29'))
+      expect(textColumn.indexOf('Domingo 29')).toBeLessThan(textColumn.indexOf('Escenario Gobierno Regional'))
       expect(textColumn).toContain('text-base/6 font-black text-white')
       expect(textColumn).not.toContain('bg-primary')
     }

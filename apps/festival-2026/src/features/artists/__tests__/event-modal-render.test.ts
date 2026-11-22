@@ -1,9 +1,9 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
 import EventModal from '../EventModal.astro'
-import { categories, heroParticipants } from '../categories'
+import { categories, heroParticipants, type ParticipantView } from '../categories'
 
-async function render(participants = heroParticipants) {
+async function render(participants: readonly ParticipantView[] = heroParticipants) {
   const container = await AstroContainer.create()
   return container.renderToString(EventModal, { props: { participants } })
 }

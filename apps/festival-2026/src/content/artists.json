@@ -11,10 +11,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "22:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Gabriel González Videla"
       },
       {
         "id": "nino-cohete",
@@ -24,7 +26,7 @@
         "description": "Agrupación surgida en Concepción en 2010, conocida por una propuesta que sus integrantes han denominado «pop silvestre». Su música combina melodías pop, recursos electrónicos y referencias al folclor, con letras e imágenes vinculadas a la naturaleza. Tras una primera etapa que concluyó en 2017, el grupo retomó su actividad en 2023, reafirmando su lugar en la escena independiente penquista.",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
+          "day": "Domingo 29",
           "time": "17:00",
           "month": "noviembre"
         },
@@ -48,10 +50,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "21:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
       {
         "id": "javiera-mena",
@@ -61,11 +65,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "23:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Escenario Gobierno Regional"
       },
       {
         "id": "dulce-y-agraz",
@@ -76,10 +82,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "17:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Escenario Gobierno Regional"
       },
       {
         "id": "freshki",
@@ -89,11 +97,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "17:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
       {
         "id": "gepe",
@@ -103,11 +113,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "22:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Escenario Gobierno Regional"
       },
       {
         "id": "javier-barria",
@@ -118,10 +130,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "20:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Terraza Cordovez"
       },
       {
         "id": "quita-de-bulla",
@@ -132,10 +146,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "16:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Gabriel González Videla"
       },
       {
         "id": "fernando-milagros",
@@ -145,11 +161,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "22:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Balcones del Arzobispado"
       },
       {
         "id": "jazztacuatico",
@@ -159,11 +177,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "21:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
       {
         "id": "rosario-alfonso",
@@ -174,10 +194,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "16:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Odeón Plaza de Armas"
       },
       {
         "id": "duerme-y-cae",
@@ -188,10 +210,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "18:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Odeón Plaza de Armas"
       },
       {
         "id": "claudio-valenzuela",
@@ -202,10 +226,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "21:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Balcones del Arzobispado"
       },
       {
         "id": "fernando-ubiergo",
@@ -216,10 +242,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "16:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Odeón Plaza de Armas"
       },
       {
         "id": "kalishe",
@@ -230,10 +258,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "16:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Gabriel González Videla"
       },
       {
         "id": "pedropiedra",
@@ -243,11 +273,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "19:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Escenario Gobierno Regional"
       },
       {
         "id": "weinkeys-blackbeat",
@@ -257,11 +289,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "20:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Gabriel González Videla"
       },
       {
         "id": "nunez-briceno",
@@ -271,11 +305,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "20:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Plaza Gabriel González Videla"
       },
       {
         "id": "stendhal",
@@ -286,10 +322,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "17:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
       {
         "id": "jose-alfredo-fuentes",
@@ -299,11 +337,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "18:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Odeón Plaza de Armas"
       },
       {
         "id": "last-whisper",
@@ -314,10 +354,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "19:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
       {
         "id": "innundaremos",
@@ -327,11 +369,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "15:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Escenario Gobierno Regional"
       },
       {
         "id": "guaypes-club",
@@ -341,11 +385,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "15:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Escenario Gobierno Regional"
       },
       {
         "id": "medinamico",
@@ -356,10 +402,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "18:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Gabriel González Videla"
       },
       {
         "id": "dejenme-dormir",
@@ -369,11 +417,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "19:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Escenario Gobierno Regional"
       },
       {
         "id": "nando-garcia",
@@ -384,10 +434,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "21:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Terraza Cordovez"
       },
       {
         "id": "laro",
@@ -397,11 +449,13 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "20:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Odeón Plaza de Armas"
       },
       {
         "id": "esteban-y-los-hurtados",
@@ -412,10 +466,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "19:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": false
+        "national": false,
+        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
       {
         "id": "dj-sepha",
@@ -426,10 +482,12 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "18:00",
+          "month": "noviembre"
         },
         "image": null,
-        "national": true
+        "national": true,
+        "location": "Plaza Gabriel González Videla"
       }
     ]
   },
@@ -445,10 +503,12 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "21:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
         "id": "yaru",
@@ -460,13 +520,15 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "19:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Teatro Vive Centenario"
       },
       {
         "id": "el-humedal",
-        "name": "El Humedal",
+        "name": "Humedal, un viaje en el tiempo",
         "company": "Compañía Los Mil Nombres",
         "order": 7,
         "disciplines": "artes-escenicas",
@@ -474,9 +536,11 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "16:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Teatro Vive Centenario"
       },
       {
         "id": "pulsando",
@@ -488,9 +552,11 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "19:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez"
       },
       {
         "id": "removernos-a-cielo-abierto",
@@ -502,9 +568,11 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "20:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
         "id": "yatiri",
@@ -516,9 +584,11 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "16:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Teatro Vive Centenario"
       },
       {
         "id": "red-lambe-norte",
@@ -543,10 +613,12 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "18:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
         "id": "narrando-mundos-en-bicicleta",
@@ -557,10 +629,12 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "18:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
         "id": "bendita-agua",
@@ -572,9 +646,11 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "23:00"
+          "time": "16:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
         "id": "las-luciernagas-y-el-origen-del-fuego",
@@ -586,9 +662,11 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "16:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
         "id": "llamada-de-emergencia",
@@ -599,10 +677,12 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "21:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez"
       },
       {
         "id": "martin-v-s-trampolino-maletines",
@@ -614,9 +694,11 @@
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
-          "time": "23:00"
+          "time": "19:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez"
       },
       {
         "id": "trans-humante",
@@ -627,10 +709,12 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+          "day": "Sábado 28",
+          "time": "19:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Teatro Vive Centenario"
       },
       {
         "id": "juan-manotas-y-el-origen-del-carnaval",
@@ -641,10 +725,12 @@
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "17:00",
+          "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez"
       },
       {
         "id": "absurdo",
@@ -669,83 +755,53 @@
         "id": "la-velocidad-de-la-luz",
         "name": "La Velocidad de la Luz",
         "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
-        },
         "image": null
       },
       {
         "id": "maria-piedad-aguirre",
         "name": "María Piedad Aguirre",
         "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
-        },
         "image": null
       },
       {
         "id": "ivan-jorquera",
         "name": "Iván Jorquera",
         "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
-        },
         "image": null
       },
       {
         "id": "camila-montoya",
         "name": "Camila Montoya",
         "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
-        },
         "image": null
       },
       {
         "id": "oskar-huerta",
         "name": "Oskar Huerta",
         "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
-        },
         "image": null
       },
       {
         "id": "andrea-cantillanes",
         "name": "Andrea Cantillanes",
         "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
-        },
         "image": null
       },
       {
         "id": "sandy-barrera",
         "name": "Sandy Barrera",
         "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
-        },
         "image": null
       },
       {
         "id": "daniela-pizarro",
         "name": "Daniela Pizarro",
         "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
-        },
         "image": null
       }
-    ]
+    ],
+    "location": "Estacionamiento subterráneo",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus, nulla gravida orci a odio, vitae facilisis turpis urna sed justo."
   },
   "market": {
     "name": "Mercado Creativo y DAZ",

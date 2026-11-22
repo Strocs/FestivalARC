@@ -3,6 +3,7 @@ import artistData from '../../content/artists.json'
 import disciplineData from '../../content/disciplines.json'
 
 const slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+const scheduleSchema = z.strictObject({ day: z.string().min(1), time: z.string().min(1), month: z.string().min(1).optional() })
 
 export const disciplines = z.array(z.strictObject({
   id: slug,
@@ -28,7 +29,7 @@ const performerSchema = z.strictObject({
     spotify: z.string().url().startsWith('https://open.spotify.com/').optional(),
   }).optional(),
   ticketUrl: z.string().nullable(),
-  date: z.strictObject({ day: z.string().min(1), time: z.string().min(1), month: z.string().min(1).optional() }),
+  date: scheduleSchema,
   image: z.strictObject({ url: z.string().min(1), alt: z.string() }).nullable(),
 })
 
@@ -60,10 +61,13 @@ export function validateArtists(input: unknown): Artist[] {
 const participantSchema = performerSchema.pick({
   id: true, name: true, description: true, date: true, image: true,
 })
+const expoParticipantSchema = performerSchema.pick({
+  id: true, name: true, description: true, image: true,
+}).extend({ date: z.undefined().optional() })
 const catalogSchema = z.strictObject({
   music: z.strictObject({ name: z.literal('Música'), participants: z.array(musicSchema).min(1) }),
   stage: z.strictObject({ name: z.literal('Artes Escénicas'), participants: z.array(performerSchema).min(1) }),
-  expo: z.strictObject({ name: z.literal('Expo Arte.Co'), participants: z.array(participantSchema).min(1) }),
+  expo: z.strictObject({ name: z.literal('Expo Arte.Co'), description: z.string().min(1), location: z.string().min(1), participants: z.array(expoParticipantSchema).min(1) }),
   market: z.strictObject({ name: z.literal('Mercado Creativo y DAZ'), description: z.string().min(1).optional(), participants: z.array(participantSchema).min(1) }),
 }).superRefine((catalog, context) => {
   const ids = new Set<string>()

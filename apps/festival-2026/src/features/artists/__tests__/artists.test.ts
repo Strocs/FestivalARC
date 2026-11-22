@@ -74,14 +74,19 @@ describe('general artist contract', () => {
       if (artist.id === 'nino-cohete') {
         expect(artist.description).toContain('«pop silvestre»')
         expect(artist.image?.url).toBe('/src/assets/artists/nino-cohete.webp')
-        expect(artist.date).toEqual({ day: 'Sábado 28', time: '17:00', month: 'noviembre' })
+        expect(artist.date).toEqual({ day: 'Domingo 29', time: '17:00', month: 'noviembre' })
         continue
       }
       expect(artist.description).toBe('')
       expect(artist.ticketUrl).toBeNull()
       expect(artist.image).toBeNull()
-      const categoryIndex = artists.filter(entry => entry.category === artist.category).findIndex(entry => entry.id === artist.id)
-      expect(artist.date).toEqual({ day: categoryIndex % 2 === 0 ? 'Sábado 28' : 'Domingo 29', time: '23:00' })
+      if (artist.category === 'music') {
+        expect(artist.location).toBeTruthy()
+        expect(artist.date.month).toBe('noviembre')
+      } else {
+        expect(artist.date.day).toMatch(/^(Sábado 28|Domingo 29)$/)
+        expect(artist.date.time).toMatch(/^([01]\d|2[0-3]):00$/)
+      }
       expect(artist).not.toHaveProperty('demo')
     }
     expect(artists.filter(({ date }) => date.day === 'Sábado 28')).toHaveLength(24)

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import data from '../../../content/artists.json'
 import { artists, disciplines, participantCatalog, validateParticipantCatalog } from '../artists'
 
-const catalog = data as unknown as Record<string, { name: string, participants: Record<string, unknown>[] }>
+const catalog = data as unknown as Record<string, { name: string, location?: string, participants: Record<string, unknown>[] }>
 
 describe('2026 participant catalog', () => {
   it('validates the grouped catalog without mutation and rejects invalid category fields', () => {
@@ -65,12 +65,14 @@ describe('2026 participant catalog', () => {
 
   it('matches authoritative catalog IDs to current participant names in every category', () => {
     for (const category of Object.values(data)) {
-      const expectedIds = category.participants.map(participant => participant.name
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, ''))
+      const expectedIds = category.participants.map(participant => participant.id === 'el-humedal'
+        ? 'el-humedal'
+        : participant.name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, ''))
       expect(category.participants.map(participant => participant.id)).toEqual(expectedIds)
     }
   })
@@ -91,8 +93,22 @@ describe('2026 participant catalog', () => {
     }
   })
 
+  it('stores visual arts location at category level without participant schedules', () => {
+    const input = structuredClone(data)
+    input.expo.location = 'Estacionamiento subterráneo'
+    for (const participant of input.expo.participants) delete (participant as { date?: unknown }).date
+    expect(validateParticipantCatalog(input).expo).toMatchObject({ location: 'Estacionamiento subterráneo' })
+    expect(validateParticipantCatalog(input).expo.participants.every(participant => !('date' in participant))).toBe(true)
+    const invalid = structuredClone(input)
+    delete (invalid.expo as { location?: string }).location
+    expect(() => validateParticipantCatalog(invalid)).toThrow()
+    const timed = structuredClone(input) as unknown as { expo: { participants: Record<string, unknown>[] } }
+    timed.expo.participants[0].date = { day: 'Sábado 28', time: '12:00' }
+    expect(() => validateParticipantCatalog(timed)).toThrow()
+  })
+
   it('requires editable details for expo and market without mutating accepted or rejected input', () => {
-    for (const category of ['expo', 'market'] as const) {
+    for (const category of ['market'] as const) {
       const input = structuredClone(data)
       const participant = input[category].participants[0] as Record<string, unknown>
       Object.assign(participant, {
@@ -133,16 +149,48 @@ describe('2026 participant catalog', () => {
       if (participant.id === 'nino-cohete') {
         expect(participant.description).toContain('«pop silvestre»')
         expect(participant.image?.url).toBe('/src/assets/artists/nino-cohete.webp')
-        expect(participant.date).toEqual({ day: 'Sábado 28', time: '17:00', month: 'noviembre' })
+        expect(participant.date).toEqual({ day: 'Domingo 29', time: '17:00', month: 'noviembre' })
         return
       }
-      expect(participant).toMatchObject({
-        description: '', image: null,
-        date: { day: index % 2 === 0 ? 'Sábado 28' : 'Domingo 29', time: '23:00' },
-      })
+      expect(participant).toMatchObject({ description: '', image: null })
+      if (category === 'music') {
+        expect((participant as { location?: string }).location).toBeTypeOf('string')
+      } else if (category !== 'stage' && category !== 'expo') {
+        expect(participant.date).toEqual({
+          day: index % 2 === 0 ? 'Sábado 28' : 'Domingo 29', time: '23:00',
+        })
+      }
     })
-    expect(participants.filter(entry => entry.date.day === 'Sábado 28')).toHaveLength(saturdayCount)
-    expect(participants.filter(entry => entry.date.day === 'Domingo 29')).toHaveLength(participants.length - saturdayCount)
+    if (category === 'expo') {
+      expect(participants.every(entry => !('date' in entry))).toBe(true)
+    } else {
+      expect(participants.filter(entry => entry.date?.day === 'Sábado 28')).toHaveLength(saturdayCount)
+      expect(participants.filter(entry => entry.date?.day === 'Domingo 29')).toHaveLength(participants.length - saturdayCount)
+    }
+  })
+
+  it('uses CSV schedule assignments for matched stage works and the confirmed Humedal name', () => {
+    const byId = Object.fromEntries(participantCatalog.stage.participants.map(entry => [entry.id, entry]))
+    const assignments = {
+      lobas: ['Domingo 29', '21:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
+      yaru: ['Domingo 29', '19:00', 'Teatro Vive Centenario'],
+      'el-humedal': ['Sábado 28', '16:00', 'Teatro Vive Centenario'],
+      pulsando: ['Domingo 29', '19:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
+      'removernos-a-cielo-abierto': ['Sábado 28', '20:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
+      yatiri: ['Domingo 29', '16:00', 'Teatro Vive Centenario'],
+      awicha: ['Sábado 28', '18:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
+      'narrando-mundos-en-bicicleta': ['Domingo 29', '18:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
+      'bendita-agua': ['Domingo 29', '16:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
+      'las-luciernagas-y-el-origen-del-fuego': ['Sábado 28', '16:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
+      'llamada-de-emergencia': ['Sábado 28', '21:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
+      'martin-v-s-trampolino-maletines': ['Sábado 28', '19:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
+      'trans-humante': ['Sábado 28', '19:00', 'Teatro Vive Centenario'],
+      'juan-manotas-y-el-origen-del-carnaval': ['Domingo 29', '17:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
+    }
+    for (const [id, [day, time, location]] of Object.entries(assignments)) {
+      expect(byId[id]).toMatchObject({ date: { day, time, month: 'noviembre' }, location })
+    }
+    expect(byId['el-humedal'].name).toBe('Humedal, un viaje en el tiempo')
   })
 
   it('keeps every music and stage work in hero order regardless of national status', () => {
@@ -199,7 +247,12 @@ describe('2026 participant catalog', () => {
       'Colectivo Crisol', 'Pierina Basilio', 'Estudiantes de Diseño Digital Inacap',
       'Club Audiovisual Área Diseño Inacap', 'Christel Horn', 'Sofía Rodríguez',
     ])
-    for (const entry of [...catalog.expo.participants, ...catalog.market.participants]) {
+    expect(catalog.expo.location).toBe('Estacionamiento subterráneo')
+    for (const entry of catalog.expo.participants) {
+      expect(Object.keys(entry).sort()).toEqual(['description', 'id', 'image', 'name'])
+      expect(artists.some(artist => artist.id === entry.id)).toBe(false)
+    }
+    for (const entry of catalog.market.participants) {
       expect(Object.keys(entry).sort()).toEqual(['date', 'description', 'id', 'image', 'name'])
       expect(artists.some(artist => artist.id === entry.id)).toBe(false)
     }
