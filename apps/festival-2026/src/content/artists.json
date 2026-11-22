@@ -556,7 +556,7 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
       {
         "id": "removernos-a-cielo-abierto",
@@ -603,7 +603,8 @@
           "time": "18:00",
           "month": "noviembre"
         },
-        "image": null
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
       {
         "id": "awicha-la-tejedora-de-memorias",
@@ -683,7 +684,7 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
       {
         "id": "martin-v-s-trampolino-maletines",
@@ -699,7 +700,7 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
       {
         "id": "trans-humante",
@@ -731,7 +732,7 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
       {
         "id": "de-papel",
@@ -743,7 +744,7 @@
         "ticketUrl": null,
         "date": { "day": "Sábado 28", "time": "17:00", "month": "noviembre" },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
       {
         "id": "carpe-diem",
@@ -755,7 +756,7 @@
         "ticketUrl": null,
         "date": { "day": "Domingo 29", "time": "21:00", "month": "noviembre" },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
       {
         "id": "la-gran-troupe-circo",
