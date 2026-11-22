@@ -12,6 +12,7 @@ export interface ParticipantView {
   date?: { day: string, time: string, month?: string }
   image: { url: string, alt: string } | null
   location?: string
+  youtubeVideoId?: string
   socialLinks?: { instagram?: string, spotify?: string }
   company?: string
   disciplineName?: string
@@ -63,6 +64,7 @@ export const categories: readonly CategoryView[] = (Object.keys(publicSlugs) as 
       ...(participant.date ? { date: participant.date } : {}),
       image: participant.image,
       ...('location' in participant ? { location: participant.location } : {}),
+      ...('youtubeVideoId' in participant ? { youtubeVideoId: participant.youtubeVideoId } : {}),
       ...('socialLinks' in participant ? { socialLinks: participant.socialLinks } : {}),
       ...('company' in participant ? { company: participant.company } : {}),
       ...('disciplines' in participant ? { disciplineName: disciplines.find(({ id }) => id === participant.disciplines)!.name } : {}),

@@ -77,9 +77,10 @@ describe('general artist contract', () => {
         expect(artist.date).toEqual({ day: 'Domingo 29', time: '17:00', month: 'noviembre' })
         continue
       }
-      expect(artist.description).toBe('')
+      if (artist.id === 'dejenme-dormir') expect(artist.description).toContain('primer semestre de 2027.')
+      else expect(artist.description).toBe('')
       expect(artist.ticketUrl).toBeNull()
-      expect(artist.image).toBeNull()
+      if (artist.image) expect(artist.image.url).toBe(`/src/assets/artists/${artist.id}.webp`)
       if (artist.category === 'music') {
         expect(artist.location).toBeTruthy()
         expect(artist.date.month).toBe('noviembre')

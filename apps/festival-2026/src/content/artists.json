@@ -39,6 +39,7 @@
         },
         "national": true,
         "location": "Escenario Gobierno Regional",
+        "youtubeVideoId": "yYA2XkelDw0",
         "socialLinks": {
           "instagram": "https://www.instagram.com/ncohete",
           "spotify": "https://open.spotify.com/intl-es/artist/00kBFCMv8iB3aMpHy043LO"
@@ -474,7 +475,8 @@
         "name": "Déjenme Dormir",
         "order": 40,
         "disciplines": "musica",
-        "description": "",
+        "description": "Déjenme Dormir es una banda de indie rock formada en Santiago de Chile en 2019, consolidada como uno de los nombres relevantes del nuevo rock chileno. A través de presentaciones en vivo intensas y frenéticas, la agrupación ha madurado un sonido potente y melancólico que rescata elementos del indie rock y el rock alternativo de los años noventa.\n\nActualmente atraviesan una nueva etapa creativa marcada por el estreno de los sencillos \"El Día de Mi Santo\", \"Ramón Ramón\" y \"A Propósito de los Incendios\", canciones que funcionan como adelanto de su tercer álbum de larga duración, proyectado para el primer semestre de 2027.",
+        "youtubeVideoId": "oL8RRDTznBc",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -486,7 +488,11 @@
           "alt": "Déjenme Dormir"
         },
         "national": true,
-        "location": "Escenario Gobierno Regional"
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/dejenme.dormir",
+          "spotify": "https://open.spotify.com/intl-ko/artist/0wlw3iBVFnAzSviZyLjxDJ/discography/all"
+        }
       },
       {
         "id": "nando-garcia",

@@ -9,12 +9,43 @@ async function render(override: Record<string, unknown> = {}) {
 }
 
 describe('artist detail', () => {
-  it('renders real data with no invented image, description or activities', async () => {
+  it.each([false, true])('renders the supplied videos below the photos (modal: %s)', async modal => {
+    const container = await AstroContainer.create()
+    for (const [id, video] of [['nino-cohete', 'yYA2XkelDw0'], ['dejenme-dormir', 'oL8RRDTznBc']]) {
+      const artist = artists.find(entry => entry.id === id)!
+      const html = await container.renderToString(ArtistDetail, { props: { artist, modal } })
+      const embed = `https://www.youtube-nocookie.com/embed/${video}`
+      expect(artist.description.length).toBeGreaterThan(0)
+      expect(html).toContain(embed)
+      if (!modal) expect(html).toMatch(/<img\b[^>]*>\s*<\/div>\s*<iframe\b[^>]*aspect-video[^>]*w-full/)
+      expect(html.indexOf(embed)).toBeGreaterThan(html.indexOf(`alt="${artist.name}"`))
+      if (id === 'dejenme-dormir') {
+        expect(html).toContain('https://www.instagram.com/dejenme.dormir')
+        expect(html).toContain('https://open.spotify.com/intl-ko/artist/0wlw3iBVFnAzSviZyLjxDJ/discography/all')
+        expect(html).not.toContain('start_radio')
+      }
+    }
+  })
+
+  it('renders self-contained social icons in multiple artist modal templates', async () => {
+    const container = await AstroContainer.create()
+    for (const id of ['nino-cohete', 'dejenme-dormir']) {
+      const artist = artists.find(entry => entry.id === id)!
+      const html = await container.renderToString(ArtistDetail, { props: { artist, modal: true } })
+      for (const icon of ['instagram', 'spotify']) {
+        expect(html).toMatch(new RegExp(`<svg[^>]*data-icon="simple-icons:${icon}"[^>]*>\\s*<path`))
+      }
+    }
+  })
+
+  it('renders the supplied Polter photo without invented video or activities', async () => {
     const html = await render()
     expect(html).toContain('Polter')
+    expect(html).toMatch(/<h1[^>]*class="[^"]*font-sans[^"]*font-black[^"]*"[^>]*>Polter<\/h1>/)
     expect(html).toContain('Música')
     expect(html).toContain('Sábado 28 de noviembre · 22:00 hrs.')
-    expect(html).not.toContain('<img')
+    expect(html).toContain('alt="Polter"')
+    expect(html).not.toContain('<iframe')
     expect(html).not.toMatch(/demostración|ejemplo|Actividades/i)
   })
 

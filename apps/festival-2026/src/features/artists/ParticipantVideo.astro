@@ -1,0 +1,12 @@
+---
+interface Props { videoId?: string, artistName: string }
+const { videoId, artistName } = Astro.props
+---
+{videoId && <iframe
+  class='mt-5 aspect-video w-full rounded-lg'
+  src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+  title={`Video de ${artistName} en YouTube`}
+  loading='lazy'
+  referrerpolicy='strict-origin-when-cross-origin'
+  allowfullscreen
+/>}

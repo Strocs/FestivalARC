@@ -10,6 +10,6 @@ const links = [
 ---
 {links.length > 0 && <nav aria-label={`Redes sociales de ${artist.name}`} class='flex shrink-0 flex-wrap gap-0'>
   {links.map(link => <a href={link.url} aria-label={`${link.name} de ${artist.name}`} class='inline-flex size-8 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2'>
-    <Icon name={link.icon} size={16} aria-hidden='true' />
+    <Icon name={link.icon} size={16} aria-hidden='true' is:inline />
   </a>)}
 </nav>}

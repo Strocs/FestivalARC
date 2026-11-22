@@ -24,6 +24,7 @@ const performerSchema = z.strictObject({
   ),
   description: z.string(),
   location: z.string().min(1).optional(),
+  youtubeVideoId: z.string().regex(/^[A-Za-z0-9_-]{11}$/).optional(),
   socialLinks: z.strictObject({
     instagram: z.string().url().startsWith('https://www.instagram.com/').optional(),
     spotify: z.string().url().startsWith('https://open.spotify.com/').optional(),

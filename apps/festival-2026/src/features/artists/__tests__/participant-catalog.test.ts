@@ -169,7 +169,8 @@ describe('2026 participant catalog', () => {
         expect(participant.date).toEqual({ day: 'Domingo 29', time: '17:00', month: 'noviembre' })
         return
       }
-      expect(participant.description).toBe('')
+      if (participant.id === 'dejenme-dormir') expect(participant.description).toContain('primer semestre de 2027.')
+      else expect(participant.description).toBe('')
       if (category === 'expo' || category === 'market') expect(participant.image).toBeNull()
       if (category === 'music') {
         expect((participant as { location?: string }).location).toBeTypeOf('string')
