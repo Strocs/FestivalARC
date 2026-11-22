@@ -67,6 +67,7 @@ const slotClasses =
       <h1 id='page-title' class='font-sans text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl'>
         {category.name.split(category.key === 'expo' ? /(Arte|Co)/g : /(creativo|DAZ)/gi).map(part => <span class:list={{ 'text-primary': /^(Arte|creativo)$/i.test(part), 'text-accent': /^(Co|DAZ)$/i.test(part) }}>{part}</span>)}
       </h1>
+      {category.key === 'market' && <p class='mt-3 text-lg font-bold sm:text-xl'>Estacionamiento Subterráneo Plaza de Armas</p>}
       <p class='mx-auto mt-4 max-w-3xl text-sm/6 sm:text-base/7'>{category.description}</p>
     </header>}
     <PosterDefinitions />

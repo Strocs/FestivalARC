@@ -54,6 +54,13 @@ describe('shared poster scopes', () => {
     }
     expect(html).toContain('Filtrar artistas por día')
   })
+  it('shows the venue directly below the market title and not on the expo page', async () => {
+    const market = await render(categories.find(category => category.key === 'market')!)
+    const expo = await render(categories.find(category => category.key === 'expo')!)
+    expect(market).toMatch(/<\/h1>\s*<p[^>]*font-bold[^>]*>Estacionamiento Subterráneo Plaza de Armas<\/p>/)
+    expect(expo).not.toContain('Estacionamiento Subterráneo Plaza de Armas')
+  })
+
   it.each([0, 1, 2, 3])('renders category %i with only its members and actual title, without absent information reservations', async index => {
     const category = categories[index]
     const html = await render(category)
