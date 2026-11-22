@@ -64,7 +64,7 @@ const catalogSchema = z.strictObject({
   music: z.strictObject({ name: z.literal('Música'), participants: z.array(musicSchema).min(1) }),
   stage: z.strictObject({ name: z.literal('Artes Escénicas'), participants: z.array(performerSchema).min(1) }),
   expo: z.strictObject({ name: z.literal('Expo Arte.Co'), participants: z.array(participantSchema).min(1) }),
-  market: z.strictObject({ name: z.literal('Mercado Creativo y DAZ'), participants: z.array(participantSchema).min(1) }),
+  market: z.strictObject({ name: z.literal('Mercado Creativo y DAZ'), description: z.string().min(1).optional(), participants: z.array(participantSchema).min(1) }),
 }).superRefine((catalog, context) => {
   const ids = new Set<string>()
   for (const [category, { participants }] of Object.entries(catalog)) {

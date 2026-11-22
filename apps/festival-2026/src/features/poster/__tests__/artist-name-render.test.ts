@@ -11,6 +11,13 @@ async function renderArtist() {
 }
 
 describe('ArtistName interaction', () => {
+  it('adds vertical padding inside the gradient and fits the name within that padded area', async () => {
+    const html = await renderArtist()
+    expect(html).toContain('inset-y-[min(1.5rem,15%)]')
+    expect(html).toContain('py-[min(1rem,10cqh)]')
+    expect(html).toContain('[container-type:size]')
+    expect(html).toContain('100cqh /')
+  })
   it('keeps keyboard focus visible without translating the surface, title or schedule on focus return', async () => {
     const html = await renderArtist()
     expect(html).toContain('focus-visible:outline-2')

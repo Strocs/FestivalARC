@@ -5,9 +5,11 @@ import { getArtistCompositions, getArtistFitRanges } from './artist-name'
 
 interface Props {
   artist: ParticipantView
+  interactive?: boolean
 }
 
-const { artist } = Astro.props
+const { artist, interactive = true } = Astro.props
+const Wrapper = interactive ? 'a' : 'div'
 const words = artist.name.trim().split(/\s+/)
 const compositions = getArtistCompositions(artist.name)
 const ranges = getArtistFitRanges(compositions)
@@ -35,12 +37,12 @@ const rules = ranges
 <article
   class='bg-background group relative min-h-0 w-full min-w-0'
   aria-label={artist.name}>
-  <a
-    href={publicPath(artist.canonicalPath)}
-    data-event-trigger
-    data-event-id={artist.id}
-    aria-label={artist.name}
-    class='focus-visible:outline-primary absolute inset-0 size-full cursor-pointer appearance-none border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-[-2px]'>
+  <Wrapper
+    href={interactive ? publicPath(artist.canonicalPath) : undefined}
+    data-event-trigger={interactive ? '' : undefined}
+    data-event-id={interactive ? artist.id : undefined}
+    aria-label={interactive ? artist.name : undefined}
+    class='focus-visible:outline-primary absolute inset-0 size-full appearance-none border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-[-2px]'>
     <span
       class='absolute inset-x-6 inset-y-[min(1.5rem,15%)] grid grid-cols-1 grid-rows-[minmax(0,1fr)_auto_auto] [container-type:size]'>
       <!-- Shared auto tracks split the date's height: half overlaps the surface,
@@ -50,7 +52,7 @@ const rules = ranges
         class='to-accent from-arc-rose motion-reduce:translate-none relative col-start-1 row-start-1 row-end-3 min-h-0 rounded-lg bg-gradient-to-b transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'
       ></span>
       <span
-        class='motion-reduce:translate-none relative col-start-1 row-start-1 mx-3 mb-1 mt-0.5 flex min-h-0 items-center justify-center transition-transform duration-300 [container-name:artist-name] [container-type:size] motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'>
+        class='motion-reduce:translate-none relative col-start-1 row-start-1 mx-3 py-[min(1rem,10cqh)] flex min-h-0 items-center justify-center transition-transform duration-300 [container-name:artist-name] [container-type:size] motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none'>
         <span
           data-artist-name
           class:list={[
@@ -72,13 +74,13 @@ const rules = ranges
           }</span
         >
       </span>
-      <span
+      {interactive && <span
         data-artist-meta
         class='relative col-start-1 row-start-2 row-end-4 -mx-4 flex max-w-[calc(100%+2rem)] items-start gap-2 justify-self-center whitespace-nowrap text-[min(0.75rem,calc((100cqw-1.5rem)/14))]'>
-        <time
+        {artist.date && <time
           class='bg-primary text-background motion-reduce:translate-none rounded-full px-4 py-1 transition-transform duration-300 motion-safe:group-hover:translate-y-0.5 motion-reduce:transition-none'
           >{artist.date.day} - <strong>{artist.date.time}hrs</strong></time
-        >
+        >}
         <!-- Visual cue for the whole-tile link, not a nested control. -->
         <span
           data-artist-view
@@ -86,8 +88,8 @@ const rules = ranges
           class='bg-arc-rose text-foreground motion-reduce:translate-none rounded-full px-3 py-1 transition-transform duration-300 motion-safe:group-hover:translate-x-1 motion-reduce:transition-none'
           >Ver <strong>más</strong></span
         >
-      </span>
+      </span>}
     </span>
-  </a>
+  </Wrapper>
   <style is:inline set:html={rules}></style>
 </article>

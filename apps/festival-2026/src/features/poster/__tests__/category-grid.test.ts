@@ -57,19 +57,30 @@ describe('shared poster scopes', () => {
   it.each([0, 1, 2, 3])('renders category %i with only its members and actual title, without absent information reservations', async index => {
     const category = categories[index]
     const html = await render(category)
-    expect(triggerIds(html)).toEqual(category.participants.map(({ id }) => id))
-    expect(html.match(/<dialog\b/g)).toHaveLength(1)
-    expect([...html.matchAll(/data-event-template="([^"]+)"/g)].map(match => match[1])).toEqual(category.participants.map(({ id }) => id))
+    const interactive = category.key !== 'expo' && category.key !== 'market'
+    expect(triggerIds(html)).toEqual(interactive ? category.participants.map(({ id }) => id) : [])
+    expect(html.match(/<dialog\b/g) ?? []).toHaveLength(interactive ? 1 : 0)
+    expect([...html.matchAll(/data-event-template="([^"]+)"/g)].map(match => match[1])).toEqual(interactive ? category.participants.map(({ id }) => id) : [])
+    if (category.key === 'expo' || category.key === 'market') {
+      expect(html.indexOf('id="page-title"')).toBeLessThan(html.indexOf('data-poster-grid'))
+      if (category.description) expect(html.indexOf(category.description)).toBeGreaterThan(html.indexOf('id="page-title"'))
+    }
     expect(html.match(/<h1\b/g)).toHaveLength(1)
-    expect(html).toContain(`>${category.name}</h1>`)
-    expect(html.match(/information-slot/g)).toHaveLength(createCategoryTitle(category.name).information.length)
+    if (category.key === 'expo' || category.key === 'market') {
+      expect(html).toContain(category.key === 'expo' ? '>Expo ' : '>Mercado ')
+      expect(html).toContain('text-primary')
+      expect(html).toContain('text-accent')
+    } else {
+      expect(html).toContain(`>${category.name}</h1>`)
+    }
+    const title = category.key === 'expo' || category.key === 'market' ? { information: [], lines: [] } : createCategoryTitle(category.name)
+    expect(html.match(/information-slot/g) ?? []).toHaveLength(title.information.length)
     expect(html).not.toContain('El arte de habitar la ciudad')
     expect(html).not.toContain('28.11')
     expect(html).not.toContain('https://www.instagram.com/festivalarc')
     if (category.key === 'music') expect(html).toContain('aria-label="Instagram de Niño Cohete"')
     expect(html).not.toContain('Disciplinas')
     const ids = category.participants.map(({ id }) => id)
-    const title = createCategoryTitle(category.name)
     const layouts = (['desktop', 'tablet', 'mobile'] as const).map(range =>
       calculatePosterLayout(ids, range === 'desktop' ? 10 : range === 'tablet' ? 6 : 8,
         title.information.map(block => block.positions[range]!)))
@@ -92,12 +103,9 @@ describe('shared poster scopes', () => {
   it('keeps an empty category to its real heading without invented events or home holes', async () => {
     const html = await render({ ...categories[2], participants: [] })
     expect(triggerIds(html)).toEqual([])
-    const title = createCategoryTitle(categories[2].name)
-    expect(html.match(/information-slot/g)).toHaveLength(title.information.length)
-    for (const range of ['mobile', 'tablet', 'desktop'] as const) {
-      expect(html).toContain(`--${range}-rows:${title.lines.length * (range === 'mobile' ? 2 : 1)}`)
-    }
-    expect(html).toContain('pattern-slot')
+    expect(html.match(/information-slot/g) ?? []).toHaveLength(0)
+    expect(html).toContain('Expo Arte.Co')
+    expect(html).not.toContain('pattern-slot')
   })
 
   it('preserves the homepage mixed roster, title, information and original static footprints', async () => {
