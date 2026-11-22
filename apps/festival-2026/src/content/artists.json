@@ -14,7 +14,10 @@
           "time": "22:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/polter.webp",
+          "alt": "Polter"
+        },
         "national": false,
         "location": "Plaza Gabriel González Videla"
       },
@@ -53,7 +56,10 @@
           "time": "21:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/shicris.webp",
+          "alt": "Shicris"
+        },
         "national": false,
         "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
@@ -85,7 +91,10 @@
           "time": "17:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/dulce-y-agraz.webp",
+          "alt": "Dulce y Agraz"
+        },
         "national": true,
         "location": "Escenario Gobierno Regional"
       },
@@ -101,7 +110,10 @@
           "time": "17:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/freshki.webp",
+          "alt": "Freshki"
+        },
         "national": false,
         "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
@@ -117,7 +129,10 @@
           "time": "22:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/gepe.webp",
+          "alt": "Gepe"
+        },
         "national": true,
         "location": "Escenario Gobierno Regional"
       },
@@ -149,7 +164,10 @@
           "time": "16:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/quita-de-bulla.webp",
+          "alt": "Quitá de Bulla"
+        },
         "national": false,
         "location": "Plaza Gabriel González Videla"
       },
@@ -165,7 +183,10 @@
           "time": "22:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/fernando-milagros.webp",
+          "alt": "Fernando Milagros"
+        },
         "national": true,
         "location": "Balcones del Arzobispado"
       },
@@ -181,7 +202,10 @@
           "time": "21:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/jazztacuatico.webp",
+          "alt": "Jazztacuatico"
+        },
         "national": false,
         "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
@@ -197,7 +221,10 @@
           "time": "16:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/rosario-alfonso.webp",
+          "alt": "Rosario Alfonso"
+        },
         "national": true,
         "location": "Odeón Plaza de Armas"
       },
@@ -213,7 +240,10 @@
           "time": "18:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/duerme-y-cae.webp",
+          "alt": "Duerme y Cae!"
+        },
         "national": false,
         "location": "Odeón Plaza de Armas"
       },
@@ -245,7 +275,10 @@
           "time": "16:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/fernando-ubiergo.webp",
+          "alt": "Fernando Ubiergo"
+        },
         "national": true,
         "location": "Odeón Plaza de Armas"
       },
@@ -261,7 +294,10 @@
           "time": "16:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/kalishe.webp",
+          "alt": "Kalishe"
+        },
         "national": false,
         "location": "Plaza Gabriel González Videla"
       },
@@ -277,7 +313,10 @@
           "time": "19:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/pedropiedra.webp",
+          "alt": "Pedropiedra"
+        },
         "national": true,
         "location": "Escenario Gobierno Regional"
       },
@@ -293,7 +332,10 @@
           "time": "20:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/weinkeys-blackbeat.webp",
+          "alt": "Weinkeys + Blackbeat"
+        },
         "national": false,
         "location": "Plaza Gabriel González Videla"
       },
@@ -309,7 +351,10 @@
           "time": "20:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/nunez-briceno.webp",
+          "alt": "Núñez Briceño"
+        },
         "national": true,
         "location": "Plaza Gabriel González Videla"
       },
@@ -325,7 +370,10 @@
           "time": "17:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/stendhal.webp",
+          "alt": "Stendhal"
+        },
         "national": false,
         "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
@@ -357,7 +405,10 @@
           "time": "19:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/last-whisper.webp",
+          "alt": "Last Whisper"
+        },
         "national": false,
         "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
@@ -373,7 +424,10 @@
           "time": "15:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/innundaremos.webp",
+          "alt": "Innundaremos"
+        },
         "national": true,
         "location": "Escenario Gobierno Regional"
       },
@@ -389,7 +443,10 @@
           "time": "15:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/guaypes-club.webp",
+          "alt": "Guaypes Club"
+        },
         "national": true,
         "location": "Escenario Gobierno Regional"
       },
@@ -405,7 +462,10 @@
           "time": "18:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/medinamico.webp",
+          "alt": "Medinamico"
+        },
         "national": false,
         "location": "Plaza Gabriel González Videla"
       },
@@ -421,7 +481,10 @@
           "time": "19:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/dejenme-dormir.webp",
+          "alt": "Déjenme Dormir"
+        },
         "national": true,
         "location": "Escenario Gobierno Regional"
       },
@@ -437,7 +500,10 @@
           "time": "21:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/nando-garcia.webp",
+          "alt": "Nando García"
+        },
         "national": true,
         "location": "Terraza Cordovez"
       },
@@ -453,7 +519,10 @@
           "time": "20:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/laro.webp",
+          "alt": "Laró"
+        },
         "national": true,
         "location": "Odeón Plaza de Armas"
       },
@@ -469,7 +538,10 @@
           "time": "19:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/esteban-y-los-hurtados.webp",
+          "alt": "Esteban y los Hurtados"
+        },
         "national": false,
         "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
@@ -485,7 +557,10 @@
           "time": "18:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/dj-sepha.webp",
+          "alt": "DJ Sepha"
+        },
         "national": true,
         "location": "Plaza Gabriel González Videla"
       }
@@ -507,7 +582,10 @@
           "time": "21:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/lobas.webp",
+          "alt": "Lobas"
+        },
         "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
@@ -523,7 +601,10 @@
           "time": "19:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/yaru.webp",
+          "alt": "Yaru"
+        },
         "location": "Teatro Vive Centenario"
       },
       {
@@ -539,7 +620,10 @@
           "time": "16:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/el-humedal.webp",
+          "alt": "Humedal, un viaje en el tiempo"
+        },
         "location": "Teatro Vive Centenario"
       },
       {
@@ -571,7 +655,10 @@
           "time": "20:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/removernos-a-cielo-abierto.webp",
+          "alt": "Removernos a Cielo Abierto"
+        },
         "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
@@ -587,7 +674,10 @@
           "time": "16:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/yatiri.webp",
+          "alt": "Yatiri"
+        },
         "location": "Teatro Vive Centenario"
       },
       {
@@ -619,7 +709,10 @@
           "time": "18:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/awicha-la-tejedora-de-memorias.webp",
+          "alt": "Awicha, la Tejedora de Memorias"
+        },
         "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
@@ -635,7 +728,10 @@
           "time": "18:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/narrando-mundos-en-bicicuentera.webp",
+          "alt": "Narrando Mundos en Bicicuentera"
+        },
         "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
@@ -651,7 +747,10 @@
           "time": "16:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/bendita-agua.webp",
+          "alt": "Bendita Agua"
+        },
         "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
@@ -683,7 +782,10 @@
           "time": "21:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/llamada-de-emergencia.webp",
+          "alt": "Llamada de Emergencia"
+        },
         "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
       {
@@ -715,7 +817,10 @@
           "time": "19:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/trans-humante.webp",
+          "alt": "Trans-Humante"
+        },
         "location": "Teatro Vive Centenario"
       },
       {

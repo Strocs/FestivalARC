@@ -141,6 +141,23 @@ describe('2026 participant catalog', () => {
     }
   })
 
+  it('assigns the supplied WebP photos to the matching music and stage participants', () => {
+    const photographedIds = [
+      'awicha-la-tejedora-de-memorias', 'bendita-agua', 'dejenme-dormir', 'dj-sepha',
+      'duerme-y-cae', 'dulce-y-agraz', 'el-humedal', 'esteban-y-los-hurtados',
+      'fernando-milagros', 'fernando-ubiergo', 'freshki', 'gepe', 'guaypes-club',
+      'innundaremos', 'jazztacuatico', 'kalishe', 'laro', 'last-whisper', 'llamada-de-emergencia',
+      'lobas', 'medinamico', 'nando-garcia', 'narrando-mundos-en-bicicuentera', 'nino-cohete',
+      'nunez-briceno', 'pedropiedra', 'polter', 'quita-de-bulla', 'removernos-a-cielo-abierto',
+      'rosario-alfonso', 'shicris', 'stendhal', 'trans-humante', 'weinkeys-blackbeat', 'yaru', 'yatiri',
+    ]
+    const photographed = artists.filter(artist => artist.image)
+    expect(photographed.map(artist => artist.id).sort()).toEqual(photographedIds)
+    for (const artist of photographed) {
+      expect(artist.image).toEqual({ url: `/src/assets/artists/${artist.id}.webp`, alt: artist.name })
+    }
+  })
+
   it.each([
     ['music', 16], ['stage', 9], ['expo', 4], ['market', 20],
   ] as const)('preserves provisional defaults for %s except supplied Niño Cohete details', (category, saturdayCount) => {
@@ -152,7 +169,8 @@ describe('2026 participant catalog', () => {
         expect(participant.date).toEqual({ day: 'Domingo 29', time: '17:00', month: 'noviembre' })
         return
       }
-      expect(participant).toMatchObject({ description: '', image: null })
+      expect(participant.description).toBe('')
+      if (category === 'expo' || category === 'market') expect(participant.image).toBeNull()
       if (category === 'music') {
         expect((participant as { location?: string }).location).toBeTypeOf('string')
       } else if (category !== 'stage' && category !== 'expo') {
