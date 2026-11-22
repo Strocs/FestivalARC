@@ -504,7 +504,7 @@
         "name": "Nando García",
         "order": 42,
         "disciplines": "musica",
-        "description": "",
+        "description": "Nando García es un cantautor y productor oriundo de la ciudad de Los Andes, Chile. Su proyecto solista inicia formalmente en 2020 y se caracteriza por una búsqueda musical ligada al folk, la música alternativa y el rock, construida desde una sensibilidad autoral honesta e intimista.\n\nCuenta con cinco producciones discográficas publicadas: \"Tripa o Cable\" (2020), \"Pirueta\" (2021), \"Material Particulado en Suspensión\" (2023), \"Decir Amor\" (2024) y su más reciente álbum \"Lover Man\" (2026), trabajos en los que explora temáticas como el fracaso, la inseguridad, la identidad y la muerte.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -516,7 +516,12 @@
           "alt": "Nando García"
         },
         "national": true,
-        "location": "Terraza Cordovez"
+        "location": "Terraza Cordovez",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/nandogarciamusica/",
+          "spotify": "https://open.spotify.com/intl-es/artist/1sjAiXfRnlaJk1zNhmHSpf"
+        },
+        "youtubeVideoId": "QNMj7uYm-uM"
       },
       {
         "id": "laro",
