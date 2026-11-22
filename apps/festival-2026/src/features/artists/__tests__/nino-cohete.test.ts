@@ -40,7 +40,7 @@ it('publishes Niño Cohete biography, schedule, venue, image and social links in
       expect(header).not.toContain('flex-1')
       expect(header).toContain('items-end gap-x-6')
       expect(header).not.toContain('aria-label="Instagram de Niño Cohete"')
-      const textColumn = html.match(/<div data-participant-copy[\s\S]*?<\/div>\s*<img/)![0]
+      const textColumn = html.match(/<div data-participant-copy[\s\S]*?alt="Niño Cohete"/)![0]
       expect(textColumn).toContain('Música')
       expect(textColumn).toContain('data-modal-meta')
       expect(textColumn.indexOf('Música')).toBeLessThan(textColumn.indexOf('Domingo 29'))

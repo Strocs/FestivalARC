@@ -78,6 +78,7 @@ describe('general artist contract', () => {
         continue
       }
       if (artist.id === 'dejenme-dormir') expect(artist.description).toContain('primer semestre de 2027.')
+      else if (artist.id === 'inundaremos') expect(artist.description).toContain('indie rock e indie pop')
       else expect(artist.description).toBe('')
       expect(artist.ticketUrl).toBeNull()
       if (artist.image) expect(artist.image.url).toBe(`/src/assets/artists/${artist.id}.webp`)

@@ -11,7 +11,7 @@ const fixedOrder = [
   'narrando-mundos-en-bicicuentera', 'pedropiedra', 'weinkeys-blackbeat',
   'bendita-agua', 'nunez-briceno', 'las-luciernagas-y-el-origen-del-fuego',
   'stendhal', 'jose-alfredo-fuentes', 'llamada-de-emergencia',
-  'last-whisper', 'innundaremos', 'martin-v-s-trampolino-maletines',
+  'last-whisper', 'inundaremos', 'martin-v-s-trampolino-maletines',
   'guaypes-club', 'medinamico', 'trans-humante', 'dejenme-dormir',
   'juan-manotas-y-el-origen-del-carnaval', 'nando-garcia', 'de-papel',
   'laro', 'esteban-y-los-hurtados', 'dj-sepha', 'carpe-diem', 'la-gran-troupe-circo', 'viaje-a-la-luna',

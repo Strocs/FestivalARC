@@ -414,11 +414,16 @@
         "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
       },
       {
-        "id": "innundaremos",
-        "name": "Innundaremos",
+        "id": "inundaremos",
+        "name": "Inundaremos",
         "order": 35,
         "disciplines": "musica",
-        "description": "",
+        "description": "Inundaremos es una banda chilena de indie rock e indie pop formada en Santiago en 2021. Con una identidad artística marcada por el liderazgo femenino, la agrupación ha evolucionado desde una delicadeza acústica hacia una propuesta más frontal, eléctrica y cargada de carácter.   En su más reciente lanzamiento, \"tanquemante\", despliegan un sonido donde conviven la distorsión y la melodía, integrando guitarra eléctrica, batería y sintetizadores con instrumentos como cello, saxofón y charango. Su propuesta ha sido destacada este 2026 en playlists como EQUAL, ChileMúsica y Ruidosa, además de plataformas especializadas como Rate Your Music.",
+        "youtubeVideoId": "PjAEL4nk_Jo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/inundadores/",
+          "spotify": "https://open.spotify.com/intl-es/artist/7ttDbtyzbPTrvAfdfd4aSS"
+        },
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -426,8 +431,8 @@
           "month": "noviembre"
         },
         "image": {
-          "url": "/src/assets/artists/innundaremos.webp",
-          "alt": "Innundaremos"
+          "url": "/src/assets/artists/inundaremos.webp",
+          "alt": "Inundadores"
         },
         "national": true,
         "location": "Escenario Gobierno Regional"
@@ -853,7 +858,11 @@
         "disciplines": "artes-escenicas",
         "description": "",
         "ticketUrl": null,
-        "date": { "day": "Sábado 28", "time": "17:00", "month": "noviembre" },
+        "date": {
+          "day": "Sábado 28",
+          "time": "17:00",
+          "month": "noviembre"
+        },
         "image": null,
         "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
@@ -865,7 +874,11 @@
         "disciplines": "artes-escenicas",
         "description": "",
         "ticketUrl": null,
-        "date": { "day": "Domingo 29", "time": "21:00", "month": "noviembre" },
+        "date": {
+          "day": "Domingo 29",
+          "time": "21:00",
+          "month": "noviembre"
+        },
         "image": null,
         "location": "Interior de la Plaza de Armas (Sector Cordovez)"
       },
@@ -877,7 +890,11 @@
         "disciplines": "artes-escenicas",
         "description": "",
         "ticketUrl": null,
-        "date": { "day": "Sábado 28", "time": "22:00", "month": "noviembre" },
+        "date": {
+          "day": "Sábado 28",
+          "time": "22:00",
+          "month": "noviembre"
+        },
         "image": null,
         "location": "Interior de la Plaza de Armas (Esquina Matta)"
       },
@@ -889,7 +906,11 @@
         "disciplines": "artes-escenicas",
         "description": "",
         "ticketUrl": null,
-        "date": { "day": "Domingo 29", "time": "20:00", "month": "noviembre" },
+        "date": {
+          "day": "Domingo 29",
+          "time": "20:00",
+          "month": "noviembre"
+        },
         "image": null,
         "location": "Interior de la Plaza de Armas (Esquina Matta)"
       }

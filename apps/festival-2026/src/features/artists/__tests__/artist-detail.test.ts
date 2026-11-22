@@ -11,7 +11,7 @@ async function render(override: Record<string, unknown> = {}) {
 describe('artist detail', () => {
   it.each([false, true])('renders the supplied videos below the photos (modal: %s)', async modal => {
     const container = await AstroContainer.create()
-    for (const [id, video] of [['nino-cohete', 'yYA2XkelDw0'], ['dejenme-dormir', 'oL8RRDTznBc']]) {
+    for (const [id, video] of [['nino-cohete', 'yYA2XkelDw0'], ['dejenme-dormir', 'oL8RRDTznBc'], ['inundaremos', 'PjAEL4nk_Jo']]) {
       const artist = artists.find(entry => entry.id === id)!
       const html = await container.renderToString(ArtistDetail, { props: { artist, modal } })
       const embed = `https://www.youtube-nocookie.com/embed/${video}`
@@ -23,6 +23,10 @@ describe('artist detail', () => {
         expect(html).toContain('https://www.instagram.com/dejenme.dormir')
         expect(html).toContain('https://open.spotify.com/intl-ko/artist/0wlw3iBVFnAzSviZyLjxDJ/discography/all')
         expect(html).not.toContain('start_radio')
+      }
+      if (id === 'inundaremos') {
+        expect(html).toContain('https://www.instagram.com/inundadores/')
+        expect(html).toContain('https://open.spotify.com/intl-es/artist/7ttDbtyzbPTrvAfdfd4aSS')
       }
     }
   })

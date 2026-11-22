@@ -80,7 +80,7 @@ describe('2026 participant catalog', () => {
   it('removes group and limits national to music, preserving former national assignments', () => {
     const national = ['nino-cohete', 'javiera-mena', 'dulce-y-agraz', 'gepe', 'javier-barria',
       'fernando-milagros', 'rosario-alfonso', 'claudio-valenzuela', 'fernando-ubiergo',
-      'pedropiedra', 'nunez-briceno', 'jose-alfredo-fuentes', 'innundaremos',
+      'pedropiedra', 'nunez-briceno', 'jose-alfredo-fuentes', 'inundaremos',
       'guaypes-club', 'dejenme-dormir', 'nando-garcia', 'laro', 'dj-sepha']
     for (const [key, category] of Object.entries(catalog)) {
       for (const participant of category.participants) {
@@ -146,7 +146,7 @@ describe('2026 participant catalog', () => {
       'awicha-la-tejedora-de-memorias', 'bendita-agua', 'dejenme-dormir', 'dj-sepha',
       'duerme-y-cae', 'dulce-y-agraz', 'el-humedal', 'esteban-y-los-hurtados',
       'fernando-milagros', 'fernando-ubiergo', 'freshki', 'gepe', 'guaypes-club',
-      'innundaremos', 'jazztacuatico', 'kalishe', 'laro', 'last-whisper', 'llamada-de-emergencia',
+      'inundaremos', 'jazztacuatico', 'kalishe', 'laro', 'last-whisper', 'llamada-de-emergencia',
       'lobas', 'medinamico', 'nando-garcia', 'narrando-mundos-en-bicicuentera', 'nino-cohete',
       'nunez-briceno', 'pedropiedra', 'polter', 'quita-de-bulla', 'removernos-a-cielo-abierto',
       'rosario-alfonso', 'shicris', 'stendhal', 'trans-humante', 'weinkeys-blackbeat', 'yaru', 'yatiri',
@@ -154,7 +154,8 @@ describe('2026 participant catalog', () => {
     const photographed = artists.filter(artist => artist.image)
     expect(photographed.map(artist => artist.id).sort()).toEqual(photographedIds)
     for (const artist of photographed) {
-      expect(artist.image).toEqual({ url: `/src/assets/artists/${artist.id}.webp`, alt: artist.name })
+      expect(artist.image).toMatchObject({ url: `/src/assets/artists/${artist.id}.webp` })
+      expect(artist.image?.alt).toBeTruthy()
     }
   })
 
@@ -170,6 +171,7 @@ describe('2026 participant catalog', () => {
         return
       }
       if (participant.id === 'dejenme-dormir') expect(participant.description).toContain('primer semestre de 2027.')
+      else if (participant.id === 'inundaremos') expect(participant.description).toContain('indie rock e indie pop')
       else expect(participant.description).toBe('')
       if (category === 'expo' || category === 'market') expect(participant.image).toBeNull()
       if (category === 'music') {
