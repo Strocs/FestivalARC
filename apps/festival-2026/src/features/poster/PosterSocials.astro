@@ -6,53 +6,31 @@ import type { PosterRange } from './poster'
 
 type Placement = Partial<Record<PosterRange, SlotRect>>
 interface Props {
-  instagram: Placement
-  facebook: Placement
-  twitter: Placement
-  informationIds?: Partial<Record<'instagram' | 'facebook' | 'twitter', string>>
+  placement: Placement
+  informationId?: string
 }
-const { instagram, facebook, twitter, informationIds } = Astro.props
+const { placement, informationId } = Astro.props
+const links = [
+  { label: 'Instagram', href: 'https://www.instagram.com/festival_arc' },
+  { label: 'Facebook', href: 'https://www.facebook.com/FestivalARC' },
+  { label: 'X', href: 'https://x.com/FestivalARC' },
+]
 ---
 
-<PosterInformation {...instagram} informationId={informationIds?.instagram}>
-  <a
-    href='https://www.instagram.com/festival_arc'
-    target='_blank'
-    rel='noopener noreferrer'
-    aria-label='Instagram'
-    class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-end gap-3 px-6 py-3 font-black transition-colors duration-300'>
-    <span
-      class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'
-      >Instagram</span
-    >
-    <PosterArrow class='group-hover/social:-rotate-45' />
-  </a>
-</PosterInformation>
-<PosterInformation {...facebook} informationId={informationIds?.facebook}>
-  <a
-    href='https://www.facebook.com/FestivalARC'
-    target='_blank'
-    rel='noopener noreferrer'
-    aria-label='Facebook'
-    class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-start gap-3 px-6 py-3 font-black transition-colors duration-300'>
-    <span
-      class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'
-      >Facebook</span
-    >
-    <PosterArrow class='group-hover/social:-rotate-45' />
-  </a>
-</PosterInformation>
-<PosterInformation {...twitter} informationId={informationIds?.twitter}>
-  <a
-    href='https://x.com/FestivalARC'
-    target='_blank'
-    rel='noopener noreferrer'
-    aria-label='Twitter'
-    class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-end gap-3 px-6 py-3 font-black transition-colors duration-300'>
-    <span
-      class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'
-      >X</span
-    >
-    <PosterArrow class='group-hover/social:-rotate-45' />
-  </a>
+<PosterInformation {...placement} informationId={informationId}>
+  <div class='grid h-full min-h-0 grid-rows-3'>
+    {links.map(({ label, href }) => (
+      <a
+        href={href}
+        target='_blank'
+        rel='noopener noreferrer'
+        aria-label={label}
+        class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-start gap-3 px-6 py-2 font-black transition-colors duration-300'>
+        <span class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'>
+          {label}
+        </span>
+        <PosterArrow class='group-hover/social:-rotate-45' />
+      </a>
+    ))}
+  </div>
 </PosterInformation>

@@ -103,7 +103,7 @@ const slotClasses =
       }
       {!category && <>
         <PosterPlace {...posterPlacePlacement} informationId='place' />
-        <PosterSocials {...posterSocialsPlacement} informationIds={{ instagram: 'instagram', facebook: 'facebook', twitter: 'twitter' }} />
+        <PosterSocials placement={posterSocialsPlacement} informationId='socials' />
       </>}
     </section>
   <script is:inline type='application/json' data-poster-plans set:html={serializedPlans} />

@@ -67,8 +67,8 @@ describe('general artist contract', () => {
   })
 
   it('preserves all real artists, requested defaults and category discipline assignments', () => {
-    expect(artists).toHaveLength(46)
-    expect(artists.map(({ order }) => order)).toEqual(Array.from({ length: 46 }, (_, index) => index + 1))
+    expect(artists).toHaveLength(49)
+    expect(artists.map(({ order }) => order)).toEqual(Array.from({ length: 49 }, (_, index) => index + 1))
     for (const artist of artists) {
       expect(artist.disciplines).toBe(artist.category === 'stage' ? 'artes-escenicas' : 'musica')
       if (artist.id === 'nino-cohete') {
@@ -89,8 +89,8 @@ describe('general artist contract', () => {
       }
       expect(artist).not.toHaveProperty('demo')
     }
-    expect(artists.filter(({ date }) => date.day === 'Sábado 28')).toHaveLength(24)
-    expect(artists.filter(({ date }) => date.day === 'Domingo 29')).toHaveLength(22)
+    expect(artists.filter(({ date }) => date.day === 'Sábado 28')).toHaveLength(25)
+    expect(artists.filter(({ date }) => date.day === 'Domingo 29')).toHaveLength(24)
     expect(JSON.stringify(disciplines)).not.toContain('(ejemplo)')
   })
 })

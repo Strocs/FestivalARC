@@ -3,15 +3,15 @@ import { artists, participantCatalog } from '../artists'
 import { categories, participants, heroParticipants, safeTicketUrl } from '../categories'
 
 describe('public participant scopes', () => {
-  it('maps the four stored categories to distinct public routes and all 93 members', () => {
+  it('maps the four stored categories to distinct public routes and all 96 members', () => {
     expect(categories.map(({ key, slug, name, path }) => ({ key, slug, name, path }))).toEqual([
       { key: 'music', slug: 'musica', name: 'Música', path: '/musica/' },
       { key: 'stage', slug: 'artes-escenicas', name: 'Artes Escénicas', path: '/artes-escenicas/' },
       { key: 'expo', slug: 'expo-arte-co', name: 'Expo Arte.Co', path: '/expo-arte-co/' },
       { key: 'market', slug: 'mercado-creativo-y-daz', name: 'Mercado Creativo y DAZ', path: '/mercado-creativo-y-daz/' },
     ])
-    expect(participants).toHaveLength(93)
-    expect(new Set(participants.map(({ canonicalPath }) => canonicalPath)).size).toBe(93)
+    expect(participants).toHaveLength(96)
+    expect(new Set(participants.map(({ canonicalPath }) => canonicalPath)).size).toBe(96)
     for (const category of categories) {
       expect(category.participants.map(({ id }) => id)).toEqual(participantCatalog[category.key].participants.map(({ id }) => id))
       for (const participant of category.participants) {
@@ -22,9 +22,9 @@ describe('public participant scopes', () => {
     }
   })
 
-  it('preserves all 46 music/stage works in editorial order, independent of national status', () => {
+  it('preserves all 49 music/stage works in editorial order, independent of national status', () => {
     expect(heroParticipants.map(({ id }) => id)).toEqual(artists.map(({ id }) => id))
-    expect(heroParticipants).toHaveLength(46)
+    expect(heroParticipants).toHaveLength(49)
     expect(new Set(heroParticipants.map(({ category }) => category))).toEqual(new Set(['music', 'stage']))
     for (const artist of participantCatalog.music.participants) {
       expect(heroParticipants.some(({ id }) => id === artist.id)).toBe(true)

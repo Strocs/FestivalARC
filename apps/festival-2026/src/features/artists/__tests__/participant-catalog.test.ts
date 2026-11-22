@@ -60,7 +60,7 @@ describe('2026 participant catalog', () => {
     expect(Object.values(catalog).map(category => category.name)).toEqual([
       'Música', 'Artes Escénicas', 'Expo Arte.Co', 'Mercado Creativo y DAZ',
     ])
-    expect(Object.values(catalog).map(category => category.participants.length)).toEqual([30, 16, 8, 39])
+    expect(Object.values(catalog).map(category => category.participants.length)).toEqual([30, 19, 8, 39])
   })
 
   it('matches authoritative catalog IDs to current participant names in every category', () => {
@@ -142,7 +142,7 @@ describe('2026 participant catalog', () => {
   })
 
   it.each([
-    ['music', 16], ['stage', 8], ['expo', 4], ['market', 20],
+    ['music', 16], ['stage', 9], ['expo', 4], ['market', 20],
   ] as const)('preserves provisional defaults for %s except supplied Niño Cohete details', (category, saturdayCount) => {
     const participants = participantCatalog[category].participants
     participants.forEach((participant, index) => {
@@ -165,7 +165,7 @@ describe('2026 participant catalog', () => {
       expect(participants.every(entry => !('date' in entry))).toBe(true)
     } else {
       expect(participants.filter(entry => entry.date?.day === 'Sábado 28')).toHaveLength(saturdayCount)
-      expect(participants.filter(entry => entry.date?.day === 'Domingo 29')).toHaveLength(participants.length - saturdayCount)
+      expect(participants.filter(entry => entry.date?.day === 'Domingo 29')).toHaveLength(category === 'stage' ? 10 : participants.length - saturdayCount)
     }
   })
 
@@ -178,14 +178,18 @@ describe('2026 participant catalog', () => {
       pulsando: ['Domingo 29', '19:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
       'removernos-a-cielo-abierto': ['Sábado 28', '20:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
       yatiri: ['Domingo 29', '16:00', 'Teatro Vive Centenario'],
-      awicha: ['Sábado 28', '18:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
-      'narrando-mundos-en-bicicleta': ['Domingo 29', '18:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
+      'awicha-la-tejedora-de-memorias': ['Sábado 28', '18:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
+      'narrando-mundos-en-bicicuentera': ['Domingo 29', '18:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
       'bendita-agua': ['Domingo 29', '16:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
       'las-luciernagas-y-el-origen-del-fuego': ['Sábado 28', '16:00', 'Interior de la Plaza de Armas (Sector Los Carreras)'],
       'llamada-de-emergencia': ['Sábado 28', '21:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
       'martin-v-s-trampolino-maletines': ['Sábado 28', '19:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
       'trans-humante': ['Sábado 28', '19:00', 'Teatro Vive Centenario'],
       'juan-manotas-y-el-origen-del-carnaval': ['Domingo 29', '17:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
+      'de-papel': ['Sábado 28', '17:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
+      'carpe-diem': ['Domingo 29', '21:00', 'Interior de la Plaza de Armas (Sector Cordovez'],
+      'la-gran-troupe-circo': ['Sábado 28', '22:00', 'Interior de la Plaza de Armas (Esquina Matta)'],
+      'viaje-a-la-luna': ['Domingo 29', '20:00', 'Interior de la Plaza de Armas (Esquina Matta)'],
     }
     for (const [id, [day, time, location]] of Object.entries(assignments)) {
       expect(byId[id]).toMatchObject({ date: { day, time, month: 'noviembre' }, location })
@@ -199,9 +203,16 @@ describe('2026 participant catalog', () => {
       ...participantCatalog.stage.participants.map(entry => ({ ...entry, category: 'stage' })),
     ].sort((left, right) => left.order - right.order)
     expect(artists).toEqual(performers)
-    expect(artists).toHaveLength(46)
+    expect(artists).toHaveLength(49)
     expect(artists.filter(entry => entry.category === 'music')).toHaveLength(30)
-    expect(artists.filter(entry => entry.category === 'stage')).toHaveLength(16)
+    expect(artists.filter(entry => entry.category === 'stage')).toHaveLength(19)
+    expect(artists.some(entry => entry.id === 'absurdo')).toBe(false)
+    expect(Object.fromEntries(artists.filter(entry => ['de-papel', 'carpe-diem', 'la-gran-troupe-circo', 'viaje-a-la-luna'].includes(entry.id)).map(({ id, company }) => [id, company]))).toEqual({
+      'de-papel': 'Compañia Silencio Blanco',
+      'carpe-diem': 'Malabicirco',
+      'la-gran-troupe-circo': 'Malabicirco',
+      'viaje-a-la-luna': 'La Patogallina',
+    })
     expect(artists.filter(entry => entry.category === 'music' && !entry.national)).toHaveLength(12)
     expect(disciplines).toHaveLength(7)
   })
@@ -222,12 +233,15 @@ describe('2026 participant catalog', () => {
     expect(byId.lobas).toMatchObject({ name: 'Lobas', company: 'Kaleidoscopio Circo' })
     expect(byId.yaru).toMatchObject({ name: 'Yaru', company: 'La Feroz Compañía' })
     expect(byId['bendita-agua']).toMatchObject({ name: 'Bendita Agua', company: 'Compañía de Títeres La Boda' })
-    expect(byId['narrando-mundos-en-bicicleta'].company).toBe('Títeres Ojos de Agua')
+    expect(byId['narrando-mundos-en-bicicuentera'].company).toBe('Títeres Ojos de Agua')
     expect(byId['trans-humante'].company).toBe('Espacio La Isla')
-    expect(byId['red-lambe-norte'].company).toBe('Red Lambe Norte Chile')
+    expect(byId['un-derrotero-nortino-con-marionetas']).toMatchObject({
+      name: 'Un Derrotero Nortino con Marionetas', company: 'Red Lambe Norte',
+      date: { day: 'Domingo 29', time: '18:00', month: 'noviembre' },
+    })
     expect(byId.pulsando).toMatchObject({ name: 'Pulsando', company: 'Agrupación Flamenco Elqui' })
     expect(JSON.stringify(data)).not.toContain('Zapato Rojo')
-    expect(artists).toHaveLength(46)
+    expect(artists).toHaveLength(49)
   })
 
   it('loads the supplied expo and market lists with provisional details, not invented disciplines', () => {

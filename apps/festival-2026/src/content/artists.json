@@ -591,22 +591,23 @@
         "location": "Teatro Vive Centenario"
       },
       {
-        "id": "red-lambe-norte",
-        "name": "Red Lambe Norte",
-        "company": "Red Lambe Norte Chile",
+        "id": "un-derrotero-nortino-con-marionetas",
+        "name": "Un Derrotero Nortino con Marionetas",
+        "company": "Red Lambe Norte",
         "order": 19,
         "disciplines": "artes-escenicas",
         "description": "",
         "ticketUrl": null,
         "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+          "day": "Domingo 29",
+          "time": "18:00",
+          "month": "noviembre"
         },
         "image": null
       },
       {
-        "id": "awicha",
-        "name": "Awicha",
+        "id": "awicha-la-tejedora-de-memorias",
+        "name": "Awicha, la Tejedora de Memorias",
         "company": "Laboratorio Creativo Remolino",
         "order": 22,
         "disciplines": "artes-escenicas",
@@ -621,8 +622,8 @@
         "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
       },
       {
-        "id": "narrando-mundos-en-bicicleta",
-        "name": "Narrando Mundos en Bicicleta",
+        "id": "narrando-mundos-en-bicicuentera",
+        "name": "Narrando Mundos en Bicicuentera",
         "company": "Títeres Ojos de Agua",
         "order": 25,
         "disciplines": "artes-escenicas",
@@ -733,18 +734,52 @@
         "location": "Interior de la Plaza de Armas (Sector Cordovez"
       },
       {
-        "id": "absurdo",
-        "name": "Absurdo",
-        "company": "Circo Kalendero",
+        "id": "de-papel",
+        "name": "De Papel",
+        "company": "Compañia Silencio Blanco",
         "order": 43,
         "disciplines": "artes-escenicas",
         "description": "",
         "ticketUrl": null,
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
-        },
-        "image": null
+        "date": { "day": "Sábado 28", "time": "17:00", "month": "noviembre" },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez"
+      },
+      {
+        "id": "carpe-diem",
+        "name": "Carpe Diem",
+        "company": "Malabicirco",
+        "order": 47,
+        "disciplines": "artes-escenicas",
+        "description": "",
+        "ticketUrl": null,
+        "date": { "day": "Domingo 29", "time": "21:00", "month": "noviembre" },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez"
+      },
+      {
+        "id": "la-gran-troupe-circo",
+        "name": "La Gran Troupe Circo",
+        "company": "Malabicirco",
+        "order": 48,
+        "disciplines": "artes-escenicas",
+        "description": "",
+        "ticketUrl": null,
+        "date": { "day": "Sábado 28", "time": "22:00", "month": "noviembre" },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Esquina Matta)"
+      },
+      {
+        "id": "viaje-a-la-luna",
+        "name": "Viaje a la Luna",
+        "company": "La Patogallina",
+        "order": 49,
+        "disciplines": "artes-escenicas",
+        "description": "",
+        "ticketUrl": null,
+        "date": { "day": "Domingo 29", "time": "20:00", "month": "noviembre" },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Esquina Matta)"
       }
     ]
   },

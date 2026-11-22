@@ -45,13 +45,13 @@ describe('finite scoped poster filter plans', () => {
     expect(result.plans.saturday.ids).toEqual(['a'])
     expect(result.plans.sunday.ids).toEqual(['b'])
     for (const fixture of [[], participants.slice(0, 1), participants.slice(2)]) expect(home(fixture).available).toBe(false)
-    expect(home().plans.all.ids).toHaveLength(46)
-    expect(home().plans.saturday.ids).toHaveLength(24)
-    expect(home().plans.sunday.ids).toHaveLength(22)
+    expect(home().plans.all.ids).toHaveLength(49)
+    expect(home().plans.saturday.ids).toHaveLength(25)
+    expect(home().plans.sunday.ids).toHaveLength(24)
   })
 
   it('intersects each authoritative category without changing its order or borrowing home information', () => {
-    const expected = [[30, 16, 14], [16, 8, 8], [8, 0, 0], [39, 20, 19]]
+    const expected = [[30, 16, 14], [19, 9, 10], [8, 0, 0], [39, 20, 19]]
     categories.forEach((category, index) => {
       const participants = narrow(category.participants)
       const information = category.key === 'expo' ? [] : categoryInformation
@@ -77,7 +77,7 @@ describe('finite scoped poster filter plans', () => {
         const information = Object.values(plan.information[range])
         const envelopeHeight = range === 'mobile' ? 3 : 2
         expect(layout.artists.map(a => a.id)).toEqual(plan.ids)
-        expect(information).toHaveLength(range === 'mobile' ? 6 : 7)
+        expect(information).toHaveLength(range === 'mobile' ? 4 : 5)
         for (const [index, block] of information.entries()) {
           expect(information.slice(index + 1).some(other => overlaps(block, other))).toBe(false)
           expect(layout.artists.some(artist => overlaps(block, { ...artist, height: envelopeHeight }))).toBe(false)
