@@ -307,7 +307,7 @@
         "name": "Pedropiedra",
         "order": 26,
         "disciplines": "musica",
-        "description": "",
+        "description": "Pedro Subercaseaux García de la Huerta (Santiago, 1978), conocido artísticamente como Pedropiedra, es un cantautor, compositor y multiinstrumentista chileno con más de dos décadas de trayectoria en la escena independiente nacional. A lo largo de su carrera ha desarrollado un lenguaje propio que cruza el pop, el rock alternativo, el hip hop y los ritmos latinos.\n\nCon seis álbumes de estudio en solitario y una activa participación en diversos proyectos musicales paralelos, su propuesta destaca por combinar arreglos rítmicos y melodías directas con letras cargadas de humor, ironía y aguda observación cotidiana.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -319,7 +319,12 @@
           "alt": "Pedropiedra"
         },
         "national": true,
-        "location": "Escenario Gobierno Regional"
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/pedropiedraoficial/",
+          "spotify": "https://open.spotify.com/intl-es/artist/0WCbmGMzwvFFx0JT8k7THP"
+        },
+        "youtubeVideoId": "JE0jz9oRkZY"
       },
       {
         "id": "weinkeys-blackbeat",
