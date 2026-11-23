@@ -7,7 +7,7 @@
         "name": "Polter",
         "order": 1,
         "disciplines": "musica",
-        "description": "",
+        "description": "Formada en Ovalle en 2001 y parte de la activa generación de rock-pop de ascendente indie de los años dos mil, Polter retoma sus actividades este 2026 junto a Iván Toro y Óscar Hauyon. Su propuesta sonora combina líneas de bajo envolventes, guitarras cargadas de reverberación, sintetizadores y bases programadas, construyendo una atmósfera melódica e introspectiva con sello propio desde la Región de Coquimbo.\n\nEsta nueva etapa creativa fue inaugurada con el lanzamiento de su álbum compilatorio \"Esencial 2001–2026\" y el sencillo \"Siempre Fuiste Tú\", reafirmando una trayectoria que dialoga con las vertientes del indie, el rock-pop y el post-punk en una puesta en escena de intensa conexión con el público.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -19,7 +19,12 @@
           "alt": "Polter"
         },
         "national": false,
-        "location": "Plaza Gabriel González Videla"
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/polterchile/",
+          "spotify": "https://open.spotify.com/intl-es/artist/0Ib5T2tipzgV6BuoRy5FVW"
+        },
+        "youtubeVideoId": "piiK5twuq90"
       },
       {
         "id": "nino-cohete",

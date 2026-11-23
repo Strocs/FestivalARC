@@ -24,7 +24,7 @@ describe('progressive day controls', () => {
       expect(html).toMatch(/<fieldset[^>]*hidden[^>]*data-day-filter/)
       expect(html).toContain('Filtrar artistas por día')
       expect(html.match(/type="radio"/g)).toHaveLength(3)
-      expect(html).toContain('Todos'); expect(html).toContain('Sábado'); expect(html).toContain('Domingo')
+      expect(html).toContain('Todos'); expect(html).toContain('Sábado 28'); expect(html).toContain('Domingo 29')
       expect(html).toContain('role="status"')
     }
   })
