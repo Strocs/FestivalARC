@@ -14,7 +14,7 @@ import PosterSocials from './PosterSocials.astro'
 import { heroParticipants, type CategoryView } from '../artists/categories'
 import { slotSize, type PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
-import { createPosterFilterPlans } from './poster-filter-layout'
+import { createPosterFilterPlans, createPosterSimplePlans } from './poster-filter-layout'
 import { createPosterOrder } from './poster-order'
 import {
   posterIntroPlacement, posterTitleExtensionPlacement,
@@ -25,14 +25,16 @@ import {
 interface Props { category?: CategoryView }
 const { category } = Astro.props
 const lineup = category?.participants ?? heroParticipants
+const information = category?.key === 'expo' || category?.key === 'market' ? [] : category ? createCategoryTitle(category.name).information : homeInformation
 const filterPlans = createPosterFilterPlans({
   scope: category ? 'category' : 'home',
   participants: lineup.map(({ id, date }) => ({ id, day: date?.day ?? '' })),
-  information: category?.key === 'expo' || category?.key === 'market' ? [] : category ? createCategoryTitle(category.name).information : homeInformation,
+  information,
 })
 const presentation = filterPlans.available && (!category || category.key === 'music' || category.key === 'stage')
 const order = presentation ? createPosterOrder(lineup.map(({ date, location }) => ({ day: date?.day, time: date?.time, location }))) : undefined
-const serializedPlans = JSON.stringify({ ...filterPlans, order }).replace(/</g, '\\u003c')
+const simple = presentation ? createPosterSimplePlans(filterPlans, information) : undefined
+const serializedPlans = JSON.stringify({ ...filterPlans, order, simple }).replace(/</g, '\\u003c')
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const { layouts } = filterPlans.plans.all
 type Positions = Record<PosterRange, SlotRect | undefined>
@@ -117,48 +119,32 @@ const slotClasses =
 </main>
 
 <style>
-  [data-poster-grid][data-poster-ordered]:not([data-poster-simple]) > [data-poster-artist] {
-    grid-area: var(--poster-sorted-mobile);
-  }
-  [data-poster-grid][data-poster-simple] {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: none;
-  }
-  [data-poster-grid][data-poster-simple] > :global([data-poster-motif]),
-  [data-poster-grid][data-poster-simple] > :global([data-poster-information]:not([data-poster-information='intro'])),
-  [data-poster-grid][data-poster-simple] > :global([data-poster-information='intro'] [role='group']) {
+  [data-poster-grid][data-poster-simple] > [data-poster-motif] {
     display: none;
   }
-  [data-poster-grid][data-poster-simple] > :global([data-poster-information='intro']) {
-    /* Keep the home heading available without reserving a cell. */
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    grid-area: auto;
-  }
-  [data-poster-grid][data-poster-simple] > [data-poster-artist]:not([hidden]) {
-    display: grid;
-    grid-area: auto;
+  [data-poster-grid][data-poster-ordered] > [data-poster-artist] {
+    grid-area: var(--poster-sorted-mobile);
   }
   @media (width >= 48rem) {
-    [data-poster-grid][data-poster-ordered]:not([data-poster-simple]) > [data-poster-artist] {
+    [data-poster-grid][data-poster-ordered] > [data-poster-artist] {
       grid-area: var(--poster-sorted-tablet);
-    }
-    [data-poster-grid][data-poster-simple] {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    [data-poster-grid][data-poster-simple] > [data-poster-artist] {
-      aspect-ratio: calc(2 * var(--slot-width)) / var(--slot-height);
     }
   }
   @media (width >= 80rem) {
-    [data-poster-grid][data-poster-ordered]:not([data-poster-simple]) > [data-poster-artist] {
+    [data-poster-grid][data-poster-ordered] > [data-poster-artist] {
       grid-area: var(--poster-sorted-desktop);
     }
-    [data-poster-grid][data-poster-simple] {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
+  }
+  [data-poster-grid][data-poster-simple] {
+    --poster-simple-fallback-track: minmax(calc(var(--slot-height)*var(--unit)), auto);
+    grid-template-rows: var(--poster-simple-tracks);
+  }
+  [data-poster-grid][data-poster-simple] > [data-poster-artist] {
+    /* An intrinsic mobile minimum must not overhang fixed, sampled tracks. */
+    min-height: 0;
+  }
+  [data-poster-grid][data-poster-simple] > [data-poster-artist],
+  [data-poster-grid][data-poster-simple] > :global([data-poster-information]) {
+    grid-area: var(--poster-simple-area);
   }
 </style>

@@ -12,6 +12,12 @@ export interface FilterGridGeometry {
 
 const pixels = (value: string): number => /^\d+(?:\.\d+)?px$/.test(value) ? Number.parseFloat(value) : Number.NaN
 
+export function resolvedFilterTracks(template: string, rows: number): number[] | undefined {
+  if (rows === 0 && template === 'none') return []
+  const tracks = template.replace(/\[[^\]]*\]/g, ' ').trim().split(/\s+/).map(pixels)
+  return tracks.length === rows && tracks.every(Number.isFinite) ? tracks : undefined
+}
+
 /** Auto/minmax rows need resolved track sizes, not a uniform module. Read the
  * grid only, once per endpoint. Unsupported/unresolved tracks settle safely.
  */
@@ -20,7 +26,7 @@ export function readFilterGridGeometry(grid: HTMLElement, columns: number, rows:
   const style = getComputedStyle(grid)
   // Resolved CSSOM tracks are pixel lists, optionally interspersed with line
   // names. Do not interpret unresolved repeat()/minmax() as track dimensions.
-  const tracks = style.gridTemplateRows.replace(/\[[^\]]*\]/g, ' ').trim().split(/\s+/).map(pixels)
+  const tracks = resolvedFilterTracks(style.gridTemplateRows, rows)
   const borderLeft = pixels(style.borderLeftWidth)
   const borderRight = pixels(style.borderRightWidth)
   const borderTop = pixels(style.borderTopWidth)
@@ -32,7 +38,7 @@ export function readFilterGridGeometry(grid: HTMLElement, columns: number, rows:
   const rowGap = style.rowGap === 'normal' ? 0 : pixels(style.rowGap)
   const contentWidth = bounds.width - borderLeft - borderRight - paddingLeft - paddingRight
   const columnWidth = (contentWidth - columnGap * (columns - 1)) / columns
-  if (tracks.length !== rows || ![...tracks, borderLeft, borderRight, borderTop, borderBottom,
+  if (!tracks || ![borderLeft, borderRight, borderTop, borderBottom,
     paddingLeft, paddingRight, paddingTop, columnGap, rowGap, columnWidth, bounds.left, bounds.top,
     bounds.width, bounds.height].every(Number.isFinite) || columnWidth <= 0) return undefined
   const rowOffsets = [0]

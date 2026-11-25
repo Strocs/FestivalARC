@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mountEventModal } from '../../artists/event-modal'
-import { createPosterFilterPlans } from '../poster-filter-layout'
+import { createPosterFilterPlans, createPosterSimplePlans } from '../poster-filter-layout'
 import { homeInformation } from '../poster-layout'
 import type { FilterMotionInput } from '../poster-filter-motion'
 import { compilePosterFilterTransitions, diffPosterPositions } from '../poster-filter-transitions'
@@ -34,7 +34,7 @@ beforeEach(() => {
   const gridTracks = (node: HTMLElement) => {
     const range = window.innerWidth >= 1280 ? 'desktop' : window.innerWidth >= 768 ? 'tablet' : 'mobile'
     const columns = range === 'desktop' ? 10 : range === 'tablet' ? 6 : 8
-    const rows = Number(node.style.getPropertyValue(`--${range}-rows`))
+    const rows = Number(node.style.getPropertyValue(node.hasAttribute('data-poster-simple') ? '--poster-simple-rows' : `--${range}-rows`))
     const trackHeight = 100 / columns * 152 / 160
     return { rows, trackHeight }
   }
@@ -66,7 +66,7 @@ describe('day filtering through the sole modal owner', () => {
   function mountPresentation() {
     dispose()
     root.querySelector('[data-day-count]')!.insertAdjacentHTML('beforebegin', '<select data-poster-sort><option value="">Poster</option><option value="time">Horario</option><option value="location">Escenario</option></select><input type="checkbox" data-poster-simple-toggle>')
-    root.querySelector('script')!.textContent = JSON.stringify({ ...plans, order: { time: [0, 1], location: [1, 0] } })
+    root.querySelector('script')!.textContent = JSON.stringify({ ...plans, simple: createPosterSimplePlans(plans, []), order: { time: [0, 1], location: [1, 0] } })
     mount()
     const set = (node: HTMLInputElement | HTMLSelectElement) => node.dispatchEvent(new Event('change', { bubbles: true }))
     return {
@@ -82,8 +82,9 @@ describe('day filtering through the sole modal owner', () => {
     }
   }
 
-  it('filters the same cards in simple view without geometry reads and keeps the modal and day', () => {
+  it('filters the same cards without animation geometry in reduced motion and keeps the modal and day', () => {
     const { grid, setSimple, sort } = mountPresentation()
+    media.matches = true
     const artist = root.querySelector<HTMLElement>('[data-event-id="b"]')!
     vi.mocked(window.getComputedStyle).mockClear()
     vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockClear()
@@ -94,12 +95,93 @@ describe('day filtering through the sole modal owner', () => {
     expect(root.querySelector('[data-day-count]')!.textContent).toBe('1 artistas')
     expect(root.querySelector('[data-event-id="b"]')).toBe(artist)
     expect(inputs).toHaveLength(0)
-    expect(window.getComputedStyle).not.toHaveBeenCalled()
+    expect(vi.mocked(window.getComputedStyle).mock.calls).toEqual([[grid], [grid]])
     expect(HTMLElement.prototype.getBoundingClientRect).not.toHaveBeenCalled()
     artist.click()
     expect(root.querySelector('dialog')!.open).toBe(true)
     expect(root.querySelector('[data-modal-content]')!.textContent).toBe('b')
     dispose()
+    expect(grid.hasAttribute('data-poster-simple')).toBe(false)
+  })
+
+  it('packs desktop cards side-by-side and animates from the compact sorted endpoint', () => {
+    vi.stubGlobal('innerWidth', 1440)
+    const { grid, setSimple, sort } = mountPresentation()
+    const a = grid.querySelector<HTMLElement>('[data-poster-artist="a"]')!
+    const b = grid.querySelector<HTMLElement>('[data-poster-artist="b"]')!
+    sort('location'); setSimple(true)
+    expect(grid.style.getPropertyValue('--poster-simple-rows')).toBe('1')
+    expect(grid.style.getPropertyValue('--poster-simple-tracks')).toBe('9.5px')
+    expect(b.style.getPropertyValue('--poster-simple-area')).toBe('1/1/span 1/span 2')
+    expect(a.style.getPropertyValue('--poster-simple-area')).toBe('1/3/span 1/span 2')
+    vi.stubGlobal('innerWidth', 390)
+    window.dispatchEvent(new Event('resize'))
+    expect(grid.style.getPropertyValue('--poster-simple-rows')).toBe('4')
+    expect(a.style.getPropertyValue('--poster-simple-area')).toBe('3/1/span 2/span 8')
+    vi.stubGlobal('innerWidth', 1440)
+    window.dispatchEvent(new Event('resize'))
+    choose('saturday')
+    expect(a.style.getPropertyValue('--poster-simple-area')).toBe('1/1/span 1/span 2')
+    expect(inputs).toHaveLength(1)
+    const moved = inputs[0].items.find(item => item.node === a)
+    expect(moved?.first?.left).toBe(20)
+    expect(moved?.last?.left).toBe(0)
+    expect(inputs[0].items.every(({ node }) => !node.hasAttribute('data-poster-motif'))).toBe(true)
+    inputs[0].onComplete()
+    expect(visible()).toEqual(['a'])
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe('1 artistas')
+  })
+
+  it('keeps the exact resolved poster track prefix and captures only once per day at the current width', () => {
+    vi.stubGlobal('innerWidth', 390)
+    const { grid, setSimple, sort } = mountPresentation()
+    media.matches = true
+    const computed = vi.mocked(window.getComputedStyle)
+    computed.mockClear()
+    vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockClear()
+    const sampled: string[] = []
+    const original = computed.getMockImplementation()!
+    computed.mockImplementation(node => {
+      expect(node).toBe(grid)
+      expect(grid.hasAttribute('data-poster-simple')).toBe(false)
+      const style = original(node)
+      const rows = style.gridTemplateRows.split(' ').length
+      const first = Number(window.innerWidth) / 10 + (root.querySelector<HTMLInputElement>('input[value="sunday"]')!.checked ? 5 : 0)
+      const text = Array.from({ length: rows }, (_, i) => `${first + 0.25 * i}px`).join(' ')
+      sampled.push(text)
+      return { ...style, gridTemplateRows: text }
+    })
+    const tracks = () => grid.style.getPropertyValue('--poster-simple-tracks')
+    setSimple(true)
+    expect(tracks()).toBe('39px 39.25px 39.5px 39.75px')
+    sort('location'); setSimple(false); setSimple(true)
+    choose('sunday')
+    expect(tracks()).toBe('44px 44.25px')
+    choose('all')
+    expect(tracks()).toBe('39px 39.25px 39.5px 39.75px')
+    expect(sampled).toHaveLength(2)
+    vi.stubGlobal('innerWidth', 320)
+    window.dispatchEvent(new Event('resize'))
+    expect(tracks()).toBe('32px 32.25px 32.5px 32.75px')
+    window.dispatchEvent(new Event('resize'))
+    expect(sampled).toHaveLength(3)
+    expect(HTMLElement.prototype.getBoundingClientRect).not.toHaveBeenCalled()
+  })
+
+  it('preserves the original sorted poster motion endpoints', () => {
+    vi.stubGlobal('innerWidth', 390)
+    const { grid, sort } = mountPresentation()
+    sort('location')
+    choose('sunday')
+    expect(inputs).toHaveLength(1)
+    const { items, gridRect } = inputs[0]
+    const moved = items.find(({ node }) => node.dataset.posterArtist === 'a')
+    const oldRow = plans.plans.all.layouts.mobile.artists[1].row
+    const oldTrack = gridRect.height / plans.plans.sunday.layouts.mobile.rows
+    expect(moved?.first?.top).toBeCloseTo(100 + oldRow * oldTrack)
+    expect(moved?.last).toBeUndefined()
+    inputs[0].onComplete()
+    expect(visible()).toEqual(['b'])
     expect(grid.hasAttribute('data-poster-simple')).toBe(false)
   })
 

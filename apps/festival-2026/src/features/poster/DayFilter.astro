@@ -6,7 +6,10 @@ const { presentation = false } = Astro.props
 <fieldset
   hidden
   data-day-filter
-  class='bg-background text-foreground fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-1/2 z-30 m-0 w-max max-w-[calc(100%-1rem)] -translate-x-1/2 rounded-full border border-foreground/30 p-2 shadow-lg'>
+  class:list={[
+    'bg-background text-foreground fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-1/2 z-30 m-0 w-max max-w-[calc(100%-1rem)] -translate-x-1/2 border border-foreground/30 p-2 shadow-lg',
+    presentation ? 'rounded-2xl px-3' : 'rounded-full',
+  ]}>
   <legend class='sr-only'>Filtrar artistas por día</legend>
   <div class='flex flex-wrap justify-center gap-1'>
     {(['Todos', 'Sábado 28', 'Domingo 29'] as const).map((label, index) => (
@@ -21,17 +24,17 @@ const { presentation = false } = Astro.props
       </label>
     ))}
   </div>
-  {presentation && <div class='flex flex-wrap items-center justify-center gap-x-4 pt-1'>
-    <label class='flex min-h-11 items-center gap-1.5 text-sm font-bold'>
-      Ordenar por
-      <select data-poster-sort class='bg-background text-foreground min-h-11 rounded-full border border-foreground/30 px-2 focus-visible:outline-2 focus-visible:outline-primary'>
+  {presentation && <div class='mt-1 grid grid-cols-2 items-end gap-2 border-t border-foreground/20 pt-2'>
+    <label class='grid min-w-0 gap-1 text-sm font-bold'>
+      <span class='px-1 text-xs'>Ordenar por</span>
+      <select data-poster-sort class='bg-background text-foreground min-h-11 w-full min-w-0 rounded-xl border border-foreground/30 px-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'>
         <option value=''>Afiche</option>
         <option value='time'>Horario</option>
         <option value='location'>Escenario</option>
       </select>
     </label>
-    <label class='flex min-h-11 cursor-pointer items-center gap-1.5 text-sm font-bold'>
-      <input data-poster-simple-toggle type='checkbox' class='size-4 accent-arc-yellow focus-visible:outline-2 focus-visible:outline-primary' />
+    <label class='flex min-h-11 min-w-0 cursor-pointer items-center justify-center gap-2 rounded-xl border border-foreground/30 px-2 text-sm font-bold has-checked:border-arc-yellow has-checked:bg-arc-yellow has-checked:text-background has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary'>
+      <input data-poster-simple-toggle type='checkbox' class='size-4 shrink-0 accent-arc-yellow' />
       Vista simple
     </label>
   </div>}

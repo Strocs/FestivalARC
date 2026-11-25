@@ -4,6 +4,7 @@ import { selectPosterMotifs } from './poster-motif-distribution'
 import { stabilizePosterFilterArtwork } from './poster-filter-artwork'
 import type { PosterInformationBlock, PosterPositions } from './poster-layout'
 import { compilePosterFilterTransitions, type PosterFilterTransition } from './poster-filter-transitions'
+import { calculateDensePosterLayout, type PosterSimplePlans } from './poster-simple-layout'
 
 export type DayKey = 'all' | 'saturday' | 'sunday'
 export interface FilterParticipant { id: string; day: string }
@@ -48,7 +49,7 @@ function rangeInformation(blocks: readonly PosterInformationBlock[], range: Post
 
 function compact(
   ids: readonly string[], baseline: PosterLayout, blocks: readonly PosterInformationBlock[],
-  range: PosterRange, startRow: number,
+  range: PosterRange, startRow: number, pack = calculatePosterLayout,
 ): { layout: PosterLayout; information: Record<string, SlotRect> } {
   const information = rangeInformation(blocks.filter(block => block.fixed), range)
   const movable = blocks.filter(block => !block.fixed && block.positions[range])
@@ -64,7 +65,7 @@ function compact(
     // A boundary counts retained predecessor identities, never the original numeric rank.
     const predecessors = new Set(baseline.artists.filter(artist => before(artist, original)).map(artist => artist.id))
     const prefix = ids.filter(id => predecessors.has(id))
-    const established = calculatePosterLayout(prefix, columns[range], Object.values(information), anchors, startRow)
+    const established = pack(prefix, columns[range], Object.values(information), anchors, startRow)
     anchors = established.artists.map(({ id, column, row }) => ({ id, column, row }))
     const lastArtist = established.artists.at(-1)
     // Movable information must not consume the homepage's reserved opening band.
@@ -78,7 +79,7 @@ function compact(
         const candidate = { column, row, width: original.width, height: original.height }
         if (lastBlock && before(candidate, lastBlock)) continue
         try {
-          calculatePosterLayout(prefix, columns[range], [...Object.values(information), candidate], anchors, startRow)
+          pack(prefix, columns[range], [...Object.values(information), candidate], anchors, startRow)
         } catch {
           continue
         }
@@ -90,11 +91,23 @@ function compact(
     }
     if (!placed) throw new Error('Information compaction exceeds row limit')
   }
-  const layout = calculatePosterLayout(ids, columns[range], Object.values(information), anchors, startRow)
+  const layout = pack(ids, columns[range], Object.values(information), anchors, startRow)
   if (layout.rows > limit || layout.artists.some((artist, index) => artist.id !== ids[index])) {
     throw new Error('Compaction cannot preserve canonical artist order')
   }
   return { layout, information }
+}
+
+/** Serialize starts only; card/block dimensions and identities are already in the poster plans. */
+export function createPosterSimplePlans(plans: PosterFilterPlans, blocks: readonly PosterInformationBlock[]): PosterSimplePlans {
+  return Object.fromEntries((['all', 'saturday', 'sunday'] as const).map(key => [key,
+    Object.fromEntries(ranges.map(range => {
+      const day = plans.plans[key]
+      const { layout, information } = compact(day.ids, plans.plans.all.layouts[range], blocks, range, 0, calculateDensePosterLayout)
+      const start = (rect: SlotRect) => rect.row * layout.columns + rect.column
+      return [range, [layout.artists.map(start), Object.keys(day.information[range]).map(id => start(information[id]))]]
+    })),
+  ])) as PosterSimplePlans
 }
 
 /** Build the finite endpoints atomically. No input or catalog state is written. */

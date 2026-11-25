@@ -3,12 +3,13 @@ import type { PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
 import type { PosterOrders } from './poster-order'
 import type { FilterMotion, FilterMotionInput, FilterMotionSample } from './poster-filter-motion'
-import { filterCellRect, filterPaintRect, readFilterGridGeometry, type FilterGridGeometry } from './poster-filter-geometry'
+import { filterCellRect, filterPaintRect, readFilterGridGeometry, resolvedFilterTracks, type FilterGridGeometry } from './poster-filter-geometry'
 import { createLazyFilterMotion, isMotionReady, preloadMotion } from '../artists/lazy-motion'
 import { matchPosterMotifs } from './poster-motif-match'
 import type { PosterPositions } from './poster-layout'
 import { canonicalPosterPosition, posterPositionFields, posterPositionMask, type PosterPositionMasks } from './poster-filter-transitions'
 import { validatePosterFilterTransitions, type PosterFilterIndex } from './poster-filter-transition-validation'
+import { createPosterSimpleLayout, type PosterSimplePlans } from './poster-simple-layout'
 
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const keys = ['all', 'saturday', 'sunday'] as const
@@ -116,7 +117,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const originalMotifs = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')]
   const sortControl = controls?.querySelector<HTMLSelectElement>('[data-poster-sort]')
   const simpleToggle = controls?.querySelector<HTMLInputElement>('[data-poster-simple-toggle]')
-  let plans: PosterFilterPlans & { order?: PosterOrders }
+  let plans: PosterFilterPlans & { order?: PosterOrders; simple?: PosterSimplePlans }
   let index: PosterFilterIndex | undefined
   let media: MediaQueryList
   try {
@@ -124,19 +125,28 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (!grid || !controls || !status || radios.length !== 3 || radios.some((r, i) => r.value !== keys[i]) || !validate(plans, artists, information, originalMotifs)) return inactive
     index = validatePosterFilterTransitions(plans)
     if (!index) return inactive
+    if (plans.simple) for (const key of keys) for (const r of ranges) {
+      const plan = plans.plans[key]
+      const compact = createPosterSimpleLayout(plan, r, plan.ids, plans.simple[key][r])
+      for (const [id, cell] of compact.information) if (id === 'intro' || id === 'title-extension' || /^category-title(?:-|$)/.test(id)) {
+        const fixed = plan.information[r][id]
+        if (cell.row !== fixed.row || cell.column !== fixed.column) return inactive
+      }
+    }
     media = window.matchMedia('(prefers-reduced-motion: reduce)')
   } catch { return inactive }
   const abort = new AbortController()
   let destroyed = false
-  // The poster retains its last painted day while the simple grid filters independently.
   let selected: DayKey = 'all'
-  let simpleDay: DayKey | undefined
+  let simple = false
   let sort: keyof PosterOrders | undefined
-  const activeDay = () => simpleDay ?? selected
   const order = plans.order
-  const presentation = sortControl && simpleToggle && order
+  const presentation = sortControl && simpleToggle && plans.simple && order
     && isPermutation(order.time, artists.length) && isPermutation(order.location, artists.length)
   const artistBoundary = artists.at(-1)?.nextSibling ?? null
+  const simpleArea = '--poster-simple-area'
+  const simpleRows = '--poster-simple-rows'
+  const simpleTracks = '--poster-simple-tracks'
   const artistIDs = plans.participants.map(({ id }) => id)
   const sortedProperty = (r: PosterRange) => `--poster-sorted-${r}`
   let generation = 0
@@ -152,7 +162,10 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const transitions = index.transitions
   const saved = [grid, ...artists, ...information, ...originalMotifs].map(node => ({
     node,
-    restore: options.ownStyles(node, node === grid ? ranges.map(r => `--${r}-rows`) : ['display', ...ranges.flatMap(r => ['display', 'column', 'row', 'width', 'height'].map(p => `--${r}-${p}`))]),
+    restore: options.ownStyles(node, node === grid
+      ? [...ranges.map(r => `--${r}-rows`), ...(presentation ? [simpleRows, simpleTracks] : [])]
+      : ['display', ...ranges.flatMap(r => ['display', 'column', 'row', 'width', 'height'].map(p => `--${r}-${p}`)),
+        ...(presentation && !node.hasAttribute('data-poster-motif') ? [simpleArea] : [])]),
     hidden: node.hidden, inert: node.inert, index: node.getAttribute('data-poster-motif-index'),
   }))
   const tabIndices = new Map<HTMLElement, string | null>()
@@ -167,7 +180,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let observer: ResizeObserver | undefined
   let disconnect: MutationObserver | undefined
   const range = (): PosterRange => window.innerWidth >= 1280 ? 'desktop' : window.innerWidth >= 768 ? 'tablet' : 'mobile'
-  const syncRadios = () => { for (const radio of radios) radio.checked = radio.value === activeDay() }
+  const syncRadios = () => { for (const radio of radios) radio.checked = radio.value === selected }
   // Only canonical endpoint metadata is remembered, never painted geometry.
   // Check initial inline declarations lazily once, so valid SSR benefits on click 1.
   const initialized = new WeakSet<HTMLElement>()
@@ -212,31 +225,68 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const ranked = sort ? order![sort].map(index => artists[index]) : artists
     for (const node of ranked) grid.insertBefore(node, artistBoundary)
   }
+  const sortedEndpoints = new Map<DayKey, Map<HTMLElement, PosterPositions>>()
+  const sortedSlots = () => {
+    if (!sort) return
+    let slots = sortedEndpoints.get(selected)
+    if (!slots) {
+      slots = new Map()
+      const { ids, artists: canonical } = indexedPlans.get(selected)!
+      let slot = 0
+      for (const index of order![sort]) {
+        if (ids.has(artistIDs[index])) slots.set(artists[index], canonical.get(endpoint().ids[slot++])!)
+      }
+      sortedEndpoints.set(selected, slots)
+    }
+    return slots
+  }
   const applySortedSlots = () => {
-    if (sort) {
-      const endpointIDs = indexedPlans.get(selected)!.ids
-      const ordered = order![sort].filter(index => endpointIDs.has(artistIDs[index]))
-      for (const r of ranges) {
-        const cells = endpoint().layouts[r].artists
-        for (const [i, { row, column, width, height }] of cells.entries()) {
-          // Overlay the same cells without changing canonical endpoint styles or masks.
-          artists[ordered[i]].style.setProperty(sortedProperty(r), `${row + 1}/${column + 1}/span ${height}/span ${width}`)
-        }
+    // Motion and CSS use the same mapping; the canonical endpoints still own sparse writes.
+    const slots = sortedSlots()
+    if (slots) for (const [node, positions] of slots) for (const r of ranges) {
+      const { row, column, width, height } = positions[r]!
+      node.style.setProperty(sortedProperty(r), `${row + 1}/${column + 1}/span ${height}/span ${width}`)
+    }
+    grid.toggleAttribute('data-poster-ordered', !!slots)
+  }
+  let compact: ReturnType<typeof createPosterSimpleLayout> | undefined
+  let trackWidth: number | undefined
+  const posterTracks = new Map<DayKey, number[] | undefined>()
+  const capturePosterTracks = (rows: number) => {
+    if (trackWidth !== window.innerWidth) {
+      posterTracks.clear()
+      trackWidth = window.innerWidth
+    }
+    if (!posterTracks.has(selected)) {
+      // On a new day/width, canonical placements have already been written.
+      // Restore only the poster CSS during this synchronous, grid-only sample.
+      const restoreSimple = grid.hasAttribute('data-poster-simple')
+      if (restoreSimple) grid.removeAttribute('data-poster-simple')
+      try {
+        posterTracks.set(selected, resolvedFilterTracks(getComputedStyle(grid).gridTemplateRows, rows))
+      } finally {
+        if (restoreSimple) grid.setAttribute('data-poster-simple', '')
       }
     }
-    grid.toggleAttribute('data-poster-ordered', !!sort)
+    return posterTracks.get(selected)
   }
-  const updateSimpleVisibility = (from: DayKey, to: DayKey) => {
-    const previous = indexedPlans.get(from)!.ids
-    const next = indexedPlans.get(to)!.ids
-    artists.forEach((node, index) => {
-      const id = artistIDs[index]
-      const included = next.has(id)
-      if (included === previous.has(id)) return
-      accessible(node, included)
-      node.hidden = !included
-      if (included) node.style.removeProperty('display'); else node.style.display = 'none'
-    })
+  const applySimpleSlots = () => {
+    const compactRange = range()
+    const slots = sortedSlots()
+    const ranked = slots ? [...slots.keys()].map(node => node.dataset.posterArtist!) : endpoint().ids
+    const plan = endpoint()
+    compact = createPosterSimpleLayout(plan, compactRange, ranked, plans.simple![selected][compactRange])
+    grid.style.setProperty(simpleRows, String(compact.rows))
+    const prefix = capturePosterTracks(plan.layouts[compactRange].rows)?.slice(0, compact.rows) ?? []
+    const tracks = prefix.map(height => `${height}px`)
+    const extra = compact.rows - prefix.length
+    if (extra) tracks.push(`repeat(${extra},var(--poster-simple-fallback-track))`)
+    grid.style.setProperty(simpleTracks, tracks.join(' ') || 'none')
+    const place = (node: HTMLElement, cell?: SlotRect) => {
+      if (cell) node.style.setProperty(simpleArea, `${cell.row + 1}/${cell.column + 1}/span ${cell.height}/span ${cell.width}`)
+    }
+    for (const node of artists) place(node, compact.artists.get(node.dataset.posterArtist!))
+    for (const node of information) place(node, compact.information.get(node.dataset.posterInformation!))
   }
   const finish = () => {
     motion?.dispose(); motion = undefined; motionPaint = undefined
@@ -265,33 +315,35 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     // ResizeObserver supplies laid-out border-box geometry without a forced read.
     document.body.style.paddingBottom = `calc(${basePadding} + ${Math.ceil(height)}px + 2rem + env(safe-area-inset-bottom))`
   }
-  const select = (key: DayKey, immediate = false) => {
+  const select = (key: DayKey) => {
     if (destroyed || !options.canInteract()) { syncRadios(); return }
-    if (key === activeDay()) { syncRadios(); return }
-    if (simpleDay !== undefined) {
-      updateSimpleVisibility(simpleDay, key)
-      simpleDay = key; syncRadios(); announce(plans.plans[key].ids.length)
-      return
-    }
+    if (key === selected) { syncRadios(); return }
     const activeRange = range()
-    const scroll = immediate || sort ? undefined : { x: window.scrollX, y: window.scrollY }
-    let animate = !!scroll && !media.matches && (!!options.createMotion || isMotionReady())
-    if (scroll && !media.matches && !options.createMotion) preloadMotion()
+    const scroll = { x: window.scrollX, y: window.scrollY }
+    let animate = !media.matches && (!!options.createMotion || isMotionReady())
+    if (!media.matches && !options.createMotion) preloadMotion()
     const displayed = (node: HTMLElement) => !node.hidden && node.style.display !== 'none'
       && node.style.getPropertyValue(`--${activeRange}-display`) !== 'none'
     const endpointRects = (geometry: FilterGridGeometry) => {
       const rects = new Map<HTMLElement, DOMRect>()
       const current = indexedPlans.get(selected)!
+      const rankedSlots = sortedSlots()
       const add = (node: HTMLElement, cell?: SlotRect) => {
         const rect = filterCellRect(geometry, cell)
         if (rect) rects.set(node, rect)
       }
-      for (const node of artists) add(node, current.artists.get(node.dataset.posterArtist!)?.[activeRange])
-      for (const node of information) add(node, current.information.get(node.dataset.posterInformation!)?.[activeRange])
-      motifNodes.forEach((node, index) => add(node, motifEndpoints[index].positions[activeRange]))
+      for (const node of artists) {
+        const positions = rankedSlots ? rankedSlots.get(node) : current.artists.get(node.dataset.posterArtist!)
+        add(node, compact ? compact.artists.get(node.dataset.posterArtist!) : positions?.[activeRange])
+      }
+      for (const node of information) {
+        const id = node.dataset.posterInformation!
+        add(node, compact ? compact.information.get(id) : current.information.get(id)?.[activeRange])
+      }
+      if (!simple) motifNodes.forEach((node, index) => add(node, motifEndpoints[index].positions[activeRange]))
       return rects
     }
-    const sourceLayout = endpoint().layouts[activeRange]
+    const sourceLayout = compact ?? endpoint().layouts[activeRange]
     const sourceGeometry = animate ? readFilterGridGeometry(grid, sourceLayout.columns, sourceLayout.rows) : undefined
     // If resolved tracks are unavailable, settle rather than measuring tiles.
     if (!sourceGeometry) animate = false
@@ -319,14 +371,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     ++generation
     motion?.dispose(); motion = undefined; motionPaint = undefined
     releaseScroll?.()
-    if (scroll) {
-      const restoreHtml = options.ownStyles(document.documentElement, ['overflow-anchor', 'scroll-behavior'])
-      const restoreGrid = options.ownStyles(grid, ['overflow-anchor'])
-      document.documentElement.style.setProperty('overflow-anchor', 'none')
-      document.documentElement.style.setProperty('scroll-behavior', 'auto')
-      grid.style.setProperty('overflow-anchor', 'none')
-      releaseScroll = () => { restoreHtml(); restoreGrid() }
-    }
+    const restoreHtml = options.ownStyles(document.documentElement, ['overflow-anchor', 'scroll-behavior'])
+    const restoreGrid = options.ownStyles(grid, ['overflow-anchor'])
+    document.documentElement.style.setProperty('overflow-anchor', 'none')
+    document.documentElement.style.setProperty('scroll-behavior', 'auto')
+    grid.style.setProperty('overflow-anchor', 'none')
+    releaseScroll = () => { restoreHtml(); restoreGrid() }
     const previousNodes = motifNodes
     const cells = (endpoints: typeof motifEndpoints) => endpoints.map(m => ({ variant: m.variant, ...m.positions[activeRange] }))
     const matches = transition ? transition.motifs[activeRange] : matchPosterMotifs(cells(motifEndpoints), cells(target.motifs), activeRange === 'mobile' ? 0 : 4)
@@ -395,7 +445,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     }
     for (const node of pool) if (!assigned.has(node)) { node.hidden = true; node.style.display = 'none' }
     if (sort) applySortedSlots()
-    if (!scroll) { finish(); return }
+    if (simple) applySimpleSlots()
     // Keep the document coordinate, not an artist reference. Shrinking content
     // may clamp it naturally; restore only within the new document bounds.
     const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
@@ -405,7 +455,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     // A necessary bottom clamp changes viewport coordinates, not tile positions.
     const shift = scroll.y - y
     if (shift) for (const [node, rect] of first) first.set(node, new DOMRect(rect.left, rect.top + shift, rect.width, rect.height))
-    const layout = target.layouts[activeRange]
+    const layout = compact ?? target.layouts[activeRange]
     const targetGeometry = readFilterGridGeometry(grid, layout.columns, layout.rows)
     if (!targetGeometry) { finish(); return }
     const last = endpointRects(targetGeometry)
@@ -441,21 +491,16 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       const next = isSort(sortControl.value) ? sortControl.value : undefined
       if (!options.canInteract()) { sortControl.value = sort ?? ''; return }
       if (next === sort) return
-      settle(); sort = next; reorder()
-      if (!simpleDay || !sort) applySortedSlots()
+      settle(); sort = next; sortedEndpoints.clear(); reorder(); applySortedSlots()
+      if (simple) applySimpleSlots()
       return
     }
     if (presentation && input === simpleToggle) {
-      if (!options.canInteract()) { simpleToggle.checked = !!simpleDay; return }
-      if (simpleToggle.checked === !!simpleDay) return
-      if (simpleToggle.checked) {
-        settle(); simpleDay = selected; grid.setAttribute('data-poster-simple', '')
-      } else {
-        const day = simpleDay!
-        simpleDay = undefined; grid.removeAttribute('data-poster-simple')
-        if (day !== selected) select(day, true)
-        else applySortedSlots()
-      }
+      if (!options.canInteract()) { simpleToggle.checked = simple; return }
+      if (simpleToggle.checked === simple) return
+      settle(); simple = simpleToggle.checked
+      if (simple) applySimpleSlots(); else compact = undefined
+      grid.toggleAttribute('data-poster-simple', simple)
       return
     }
     if (!(input instanceof HTMLInputElement) || !radios.includes(input)) return
@@ -469,7 +514,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (presentation) {
       if (sort) { sort = undefined; reorder() }
       for (const node of artists) for (const r of ranges) node.style.removeProperty(sortedProperty(r))
-      simpleDay = undefined; grid.removeAttribute('data-poster-simple'); grid.removeAttribute('data-poster-ordered')
+      simple = false; grid.removeAttribute('data-poster-simple'); grid.removeAttribute('data-poster-ordered')
       sortControl.value = ''; simpleToggle.checked = false
     }
     for (const node of pool) if (!originalMotifSet.has(node)) node.remove()
@@ -485,9 +530,20 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     controls.addEventListener('change', change, { signal: abort.signal })
     root.addEventListener('click', event => {
       const link = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-event-trigger]') : null
-      if (link && !indexedPlans.get(activeDay())!.ids.has(link.dataset.eventId!)) event.preventDefault()
+      if (link && !indexedPlans.get(selected)!.ids.has(link.dataset.eventId!)) event.preventDefault()
     }, { signal: abort.signal, capture: true })
-    window.addEventListener('resize', settle, { signal: abort.signal })
+    window.addEventListener('resize', () => {
+      settle()
+      if (trackWidth !== window.innerWidth) {
+        posterTracks.clear()
+        if (simple) applySimpleSlots()
+      }
+    }, { signal: abort.signal })
+    const refreshFontTracks = () => {
+      posterTracks.clear()
+      if (simple) { settle(); applySimpleSlots() }
+    }
+    if (presentation) document.fonts?.addEventListener('loadingdone', refreshFontTracks, { signal: abort.signal })
     media.addEventListener('change', settle)
     observer = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(entries => {
       const entry = entries[0]
@@ -503,5 +559,5 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     controls.hidden = false; syncRadios()
     if (!observer) requestAnimationFrame(() => { if (!destroyed) clearance(controls.getBoundingClientRect().height) })
   } catch { destroy(); return inactive }
-  return { settle, includes: id => !!id && indexedPlans.get(activeDay())!.ids.has(id), destroy }
+  return { settle, includes: id => !!id && indexedPlans.get(selected)!.ids.has(id), destroy }
 }
