@@ -66,7 +66,7 @@ const participantSchema = performerSchema.pick({
 })
 const expoParticipantSchema = performerSchema.pick({
   id: true, name: true, description: true, image: true,
-}).extend({ date: z.undefined().optional() })
+}).extend({ date: scheduleSchema.optional() })
 const catalogSchema = z.strictObject({
   music: z.strictObject({ name: z.literal('Música'), participants: z.array(musicSchema).min(1) }),
   stage: z.strictObject({ name: z.literal('Artes Escénicas'), participants: z.array(performerSchema).min(1) }),
