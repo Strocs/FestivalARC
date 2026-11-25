@@ -5,6 +5,7 @@ import { stabilizePosterFilterArtwork } from './poster-filter-artwork'
 import type { PosterInformationBlock, PosterPositions } from './poster-layout'
 import { compilePosterFilterTransitions, type PosterFilterTransition } from './poster-filter-transitions'
 import { calculateDensePosterLayout, type PosterSimplePlans } from './poster-simple-layout'
+import { assignProjectedMobileArtwork, projectPosterMobileStrips } from './poster-mobile-strips'
 
 export type DayKey = 'all' | 'saturday' | 'sunday'
 export interface FilterParticipant { id: string; day: string }
@@ -26,6 +27,7 @@ export interface PosterFilterPlans {
   participants: FilterParticipant[]
   plans: Record<DayKey, PosterFilterPlan>
   transitions?: PosterFilterTransition[]
+  simple?: PosterSimplePlans
 }
 
 const ranges = ['desktop', 'tablet', 'mobile'] as const
@@ -111,7 +113,7 @@ export function createPosterSimplePlans(plans: PosterFilterPlans, blocks: readon
 }
 
 /** Build the finite endpoints atomically. No input or catalog state is written. */
-export function createPosterFilterPlans(input: PosterFilterInput): PosterFilterPlans {
+export function createPosterFilterPlans(input: PosterFilterInput, options?: { mobileStrips: boolean }): PosterFilterPlans {
   if (!input || (input.scope !== 'home' && input.scope !== 'category')) throw new Error('Invalid poster scope')
   if (!Array.isArray(input.participants) || input.participants.length > 512
     || input.participants.some(participant => !participant || typeof participant.id !== 'string' || !participant.id.trim() || typeof participant.day !== 'string')) {
@@ -183,13 +185,25 @@ export function createPosterFilterPlans(input: PosterFilterInput): PosterFilterP
     }
   }
   const plans = { all: build('all'), saturday: build('saturday'), sunday: build('sunday') }
-  stabilizePosterFilterArtwork(plans)
-  return {
+  const result: PosterFilterPlans = {
     version: 1,
     scope: input.scope,
     available: participants.some(participant => participant.day === days.saturday) && participants.some(participant => participant.day === days.sunday),
     participants,
     plans,
-    transitions: compilePosterFilterTransitions(plans),
   }
+  if (options?.mobileStrips) {
+    // Dense placement uses the original boundaries and fixed offsets, not the
+    // decorative rows added to (or removed from) the normal presentation.
+    if (result.available) result.simple = createPosterSimplePlans(result, informationBlocks)
+    const interior = new Set(informationBlocks.filter(block => !block.fixed && block.positions.mobile
+      && ['disciplines', 'place', 'socials'].includes(block.id)).map(block => block.id))
+    if (input.scope === 'home' && interior.size) {
+      for (const plan of Object.values(plans)) projectPosterMobileStrips(plan, interior)
+      assignProjectedMobileArtwork(plans.all)
+    }
+  }
+  stabilizePosterFilterArtwork(plans)
+  result.transitions = compilePosterFilterTransitions(plans)
+  return result
 }

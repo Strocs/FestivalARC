@@ -710,6 +710,42 @@ describe('day filtering through the sole modal owner', () => {
       expect(root.querySelector<HTMLElement>('[data-poster-grid]')!.style.getPropertyValue(`--${range}-rows`)).toBe(String(target.layouts[range].rows))
     }
   })
+  it('mounts projected Todos and filtered endpoints with unshifted simple information and sampled mobile card tracks', () => {
+    dispose()
+    vi.stubGlobal('innerWidth', 390)
+    media.matches = true
+    const config = createPosterFilterPlans({ scope: 'home', participants: plans.participants, information: homeInformation }, { mobileStrips: true })
+    root.querySelector('script')!.textContent = JSON.stringify({ ...config, order: { time: [0, 1], location: [1, 0] } })
+    root.querySelector('[data-day-count]')!.insertAdjacentHTML('beforebegin', '<select data-poster-sort></select><button type="button" aria-pressed="false" data-poster-simple-toggle>Vista simple</button>')
+    const grid = root.querySelector<HTMLElement>('[data-poster-grid]')!
+    grid.style.setProperty('--mobile-rows', String(config.plans.all.layouts.mobile.rows))
+    for (const node of grid.querySelectorAll('[data-poster-motif]')) node.remove()
+    grid.insertAdjacentHTML('beforeend', config.plans.all.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join('') + homeInformation.map(({ id }) => `<div data-poster-information="${id}"></div>`).join(''))
+    const computed = vi.mocked(window.getComputedStyle)
+    const originalStyle = computed.getMockImplementation()!
+    computed.mockImplementation((node, pseudo) => {
+      const style = originalStyle(node, pseudo)
+      if (node === grid) style.gridTemplateRows = Array.from({ length: Number(grid.style.getPropertyValue('--mobile-rows')) }, (_, row) => `${20 + row}px`).join(' ')
+      return style
+    })
+    mount()
+    expect(root.querySelector('fieldset')!.hidden).toBe(false)
+    root.querySelector<HTMLButtonElement>('[data-poster-simple-toggle]')!.click()
+    const intro = grid.querySelector<HTMLElement>('[data-poster-information="intro"]')!
+    expect(grid.hasAttribute('data-poster-simple')).toBe(true)
+    for (const key of ['saturday', 'sunday', 'all'] as const) {
+      choose(key)
+      expect(visible()).toEqual(config.plans[key].ids)
+      expect(intro.style.getPropertyValue('--mobile-row')).toBe('0')
+      expect(intro.style.getPropertyValue('--poster-simple-area')).toBe('1/1/span 4/span 8')
+      const tracks = grid.style.getPropertyValue('--poster-simple-tracks').split(' ')
+      for (const [index, artist] of config.plans[key].layouts.mobile.artists.entries()) {
+        const simpleRow = config.simple![key].mobile[0][index] / 8
+        expect(tracks.slice(simpleRow, simpleRow + 2)).toEqual([`${20 + artist.row}px`, `${21 + artist.row}px`])
+      }
+    }
+  })
+
   it('accepts the home opening band and restores every pooled destination dimension for each day and Todos', () => {
     dispose()
     const config = createPosterFilterPlans({ scope: 'home', participants: plans.participants, information: [homeInformation[0]] })

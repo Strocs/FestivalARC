@@ -14,13 +14,9 @@ import PosterSocials from './PosterSocials.astro'
 import { heroParticipants, type CategoryView } from '../artists/categories'
 import { slotSize, type PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
-import { createPosterFilterPlans, createPosterSimplePlans } from './poster-filter-layout'
+import { createPosterFilterPlans } from './poster-filter-layout'
 import { createPosterOrder } from './poster-order'
-import {
-  posterIntroPlacement, posterTitleExtensionPlacement,
-  posterDisciplinesPlacement, posterPlacePlacement,
-  posterSocialsPlacement, homeInformation,
-} from './poster-layout'
+import { homeInformation } from './poster-layout'
 
 interface Props { category?: CategoryView }
 const { category } = Astro.props
@@ -30,13 +26,16 @@ const filterPlans = createPosterFilterPlans({
   scope: category ? 'category' : 'home',
   participants: lineup.map(({ id, date }) => ({ id, day: date?.day ?? '' })),
   information,
-})
+}, { mobileStrips: true })
 const presentation = filterPlans.available && (!category || category.key === 'music' || category.key === 'stage')
 const order = presentation ? createPosterOrder(lineup.map(({ date, location }) => ({ day: date?.day, time: date?.time, location }))) : undefined
-const simple = presentation ? createPosterSimplePlans(filterPlans, information) : undefined
+const simple = presentation ? filterPlans.simple : undefined
 const serializedPlans = JSON.stringify({ ...filterPlans, order, simple }).replace(/</g, '\\u003c')
 const ranges = ['mobile', 'tablet', 'desktop'] as const
-const { layouts } = filterPlans.plans.all
+const { layouts, information: endpoints } = filterPlans.plans.all
+const placement = (id: string) => Object.fromEntries(ranges.flatMap(range =>
+  endpoints[range][id] ? [[range, endpoints[range][id]]] : [],
+)) as Partial<Record<PosterRange, SlotRect>>
 type Positions = Record<PosterRange, SlotRect | undefined>
 const positions = (values: Positions, display: 'block' | 'grid' = 'block') =>
   ranges
@@ -99,8 +98,8 @@ const slotClasses =
         ))
       }
       {category && category.key !== 'expo' && category.key !== 'market' ? <CategoryTitle name={category.name} /> : !category && <>
-        <PosterIntro {...posterIntroPlacement} titleExtension={posterTitleExtensionPlacement} informationId='intro' titleExtensionId='title-extension' />
-        <PosterDisciplines {...posterDisciplinesPlacement} informationId='disciplines' />
+        <PosterIntro {...placement('intro')} titleExtension={placement('title-extension')} informationId='intro' titleExtensionId='title-extension' />
+        <PosterDisciplines {...placement('disciplines')} informationId='disciplines' />
       </>}
       {
         lineup.map((artist) => (
@@ -113,8 +112,8 @@ const slotClasses =
         ))
       }
       {!category && <>
-        <PosterPlace {...posterPlacePlacement} informationId='place' />
-        <PosterSocials placement={posterSocialsPlacement} informationId='socials' />
+        <PosterPlace {...placement('place')} informationId='place' />
+        <PosterSocials placement={placement('socials')} informationId='socials' />
       </>}
     </section>
   <script is:inline type='application/json' data-poster-plans set:html={serializedPlans} />

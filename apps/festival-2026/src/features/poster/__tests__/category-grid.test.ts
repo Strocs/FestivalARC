@@ -15,6 +15,17 @@ async function render(category?: (typeof categories)[number]) {
 const triggerIds = (html: string) => [...html.matchAll(/data-event-id="([^"]+)"/g)].map(match => match[1])
 
 describe('shared poster scopes', () => {
+  it('renders the original homepage intro and 4×2 opening tiles before hydration', async () => {
+    const html = await render()
+    const intro = html.match(/<div\b[^>]*data-poster-information="intro"[^>]*>/)?.[0]
+    expect(intro).toContain('--mobile-column:0;--mobile-row:0;--mobile-width:8;--mobile-height:4')
+    const tiles = [...html.matchAll(/<div\b[^>]*data-poster-motif="[^"]+"[^>]*>/g)].map(([tag]) => tag)
+    const opening = tiles.filter(tag => tag.includes('--mobile-display:block') && /--mobile-row:[0-7];/.test(tag))
+    expect(opening).toHaveLength(8)
+    for (const row of [4, 6]) for (const column of [0, 2, 4, 6]) {
+      expect(opening.some(tag => tag.includes(`--mobile-column:${column};--mobile-row:${row};--mobile-width:2;--mobile-height:2`))).toBe(true)
+    }
+  })
   it('omits the homepage Programación link and information slot', async () => {
     const html = await render()
     expect(html).not.toMatch(/<a\b[^>]*href="\/programacion\/?"/)

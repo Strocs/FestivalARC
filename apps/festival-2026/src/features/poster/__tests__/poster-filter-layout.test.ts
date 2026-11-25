@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { categories, heroParticipants, type ParticipantView } from '../../artists/categories'
 import { calculatePosterLayout, type SlotRect } from '../poster-grid'
-import { createPosterFilterPlans, getPosterFilterPlan, type FilterParticipant } from '../poster-filter-layout'
+import { createPosterFilterPlans, createPosterSimplePlans, getPosterFilterPlan, type FilterParticipant } from '../poster-filter-layout'
+import { createCategoryTitle } from '../category-title'
 import { homeInformation, categoryInformation } from '../poster-layout'
 
 const ranges = ['desktop', 'tablet', 'mobile'] as const
@@ -10,6 +11,68 @@ const overlaps = (a: SlotRect, b: SlotRect) => a.column < b.column + b.width && 
 const home = (participants = narrow(heroParticipants)) => createPosterFilterPlans({ scope: 'home', participants, information: homeInformation })
 
 describe('finite scoped poster filter plans', () => {
+  it('leaves the complete category title layout and its artwork alone', () => {
+    const input = { scope: 'category' as const, participants: narrow(categories[1].participants), information: createCategoryTitle(categories[1].name).information }
+    const original = createPosterFilterPlans(input)
+    const projected = createPosterFilterPlans(input, { mobileStrips: true })
+    expect(projected.plans).toEqual(original.plans)
+    expect(projected.transitions).toEqual(original.transitions)
+    expect(projected.simple).toEqual(createPosterSimplePlans(original, input.information))
+  })
+
+  it('projects one shared mobile strip around home interior information without changing the opening, wide or simple endpoints', () => {
+    const input = { scope: 'home' as const, participants: narrow(heroParticipants), information: homeInformation }
+    const original = createPosterFilterPlans(input)
+    const projected = createPosterFilterPlans(input, { mobileStrips: true })
+    for (const day of ['all', 'saturday', 'sunday'] as const) {
+      const from = original.plans[day]
+      const to = projected.plans[day]
+      const content = (plan: typeof from) => [
+        ...plan.layouts.mobile.artists.map(rect => ({ id: rect.id, rect, info: false })),
+        ...Object.entries(plan.information.mobile).map(([id, rect]) => ({ id, rect, info: true })),
+      ].sort((a, b) => a.rect.row - b.rect.row || a.rect.column - b.rect.column)
+      const cells = content(to)
+      expect(cells.map(({ id, rect: { column, width, height } }) => [id, column, width, height]))
+        .toEqual(content(from).map(({ id, rect: { column, width, height } }) => [id, column, width, height]))
+      const opening = (plan: typeof from) => plan.motifs.flatMap(({ variant, positions }) => {
+        const cell = positions.mobile
+        return cell && cell.row < 8 ? [{ variant, ...cell }] : []
+      }).sort((a, b) => a.row - b.row || a.column - b.column)
+      expect(opening(to)).toEqual(opening(from))
+      expect(opening(to)).toHaveLength(8)
+      const strip = (row: number) => expect(to.layouts.mobile.motifs.filter(m => m.row === row))
+        .toEqual(Array.from({ length: 8 }, (_, column) => ({ column, row, width: 1, height: 1 })))
+      let end = 0
+      for (const [i, { rect, id, info }] of cells.entries()) {
+        const previous = cells[i - 1]
+        const original = content(from)
+        const prior = original[i - 1]?.rect
+        const oldGap = original[i].rect.row - (prior ? prior.row + prior.height : 0)
+        const gap = previous?.id === 'intro' || !(info || previous?.info) || id === 'intro' ? oldGap : 1
+        expect(rect.row - end, `${day}: before ${id}`).toBe(gap)
+        if (gap === 1) strip(end)
+        for (let row = rect.row; row < rect.row + rect.height; row++) {
+          expect(to.layouts.mobile.motifs.filter(m => m.row === row)).toEqual(
+            Array.from({ length: 8 }, (_, column) => column)
+              .filter(column => column < rect.column || column >= rect.column + rect.width)
+              .map(column => ({ column, row, width: 1, height: 1 })),
+          )
+        }
+        end = rect.row + rect.height
+      }
+      const tail = cells.at(-1)?.info ? 1 : 0
+      expect(to.layouts.mobile.rows).toBe(end + tail)
+      if (tail) strip(end)
+      for (const range of ['tablet', 'desktop'] as const) {
+        expect(to.layouts[range]).toEqual(from.layouts[range])
+        expect(to.information[range]).toEqual(from.information[range])
+        const artwork = (plan: typeof from) => plan.motifs.flatMap(({ index, variant, positions }) => positions[range] ? [{ index, variant, cell: positions[range] }] : [])
+        expect(artwork(to)).toEqual(artwork(from))
+      }
+    }
+    expect(projected.simple).toEqual(createPosterSimplePlans(original, input.information))
+  })
+
   it('does not reserve a program information block for any day or range', () => {
     const result = home()
     for (const key of ['all', 'saturday', 'sunday'] as const) {
