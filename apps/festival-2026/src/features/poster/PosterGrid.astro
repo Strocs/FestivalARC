@@ -82,7 +82,7 @@ const slotClasses =
     {!presentation && category?.key !== 'expo' && filterPlans.available && <DayFilter />}
     <section
       data-poster-grid
-      class='relative isolate grid grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] [--columns:8] [--poster-text:#d5d5d5] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]'
+      class='group/poster relative isolate grid grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] [--columns:8] [--poster-text:#d5d5d5] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]'
       style={gridStyle}
       aria-label={category ? `${category.name}: artistas y obras` : 'Festival ARC: artistas y obras'}>
       {
