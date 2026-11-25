@@ -111,12 +111,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const grid = root.querySelector<HTMLElement>('[data-poster-grid]')
   const controls = root.querySelector<HTMLFieldSetElement>('[data-day-filter]')
   const status = controls?.querySelector<HTMLElement>('[data-day-count]')
-  const radios = [...(controls?.querySelectorAll<HTMLInputElement>('input[type="radio"]') ?? [])]
+  const radios = [...(controls?.querySelectorAll<HTMLInputElement>('input[type="radio"][name="poster-day"]') ?? [])]
   const artists = [...root.querySelectorAll<HTMLElement>('[data-poster-artist]')]
   const information = [...root.querySelectorAll<HTMLElement>('[data-poster-information]')]
   const originalMotifs = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')]
   const sortControl = controls?.querySelector<HTMLSelectElement>('[data-poster-sort]')
-  const simpleToggle = controls?.querySelector<HTMLInputElement>('[data-poster-simple-toggle]')
+  const simpleToggle = controls?.querySelector<HTMLButtonElement>('button[data-poster-simple-toggle]')
   let plans: PosterFilterPlans & { order?: PosterOrders; simple?: PosterSimplePlans }
   let index: PosterFilterIndex | undefined
   let media: MediaQueryList
@@ -175,10 +175,8 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     focusables.set(artist, links)
     for (const link of links) tabIndices.set(link, link.getAttribute('tabindex'))
   }
-  const restorePadding = options.ownStyles(document.body, ['padding-bottom'])
-  const basePadding = getComputedStyle(document.body).paddingBottom
-  let observer: ResizeObserver | undefined
   let disconnect: MutationObserver | undefined
+  let disconnectToolbar: (() => void) | undefined
   const range = (): PosterRange => window.innerWidth >= 1280 ? 'desktop' : window.innerWidth >= 768 ? 'tablet' : 'mobile'
   const syncRadios = () => { for (const radio of radios) radio.checked = radio.value === selected }
   // Only canonical endpoint metadata is remembered, never painted geometry.
@@ -309,11 +307,6 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     ++generation
     if (!pending && !motion && !releaseScroll) return
     finish()
-  }
-  const clearance = (height: number) => {
-    if (destroyed) return
-    // ResizeObserver supplies laid-out border-box geometry without a forced read.
-    document.body.style.paddingBottom = `calc(${basePadding} + ${Math.ceil(height)}px + 2rem + env(safe-area-inset-bottom))`
   }
   const select = (key: DayKey) => {
     if (destroyed || !options.canInteract()) { syncRadios(); return }
@@ -495,27 +488,27 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       if (simple) applySimpleSlots()
       return
     }
-    if (presentation && input === simpleToggle) {
-      if (!options.canInteract()) { simpleToggle.checked = simple; return }
-      if (simpleToggle.checked === simple) return
-      settle(); simple = simpleToggle.checked
-      if (simple) applySimpleSlots(); else compact = undefined
-      grid.toggleAttribute('data-poster-simple', simple)
-      return
-    }
     if (!(input instanceof HTMLInputElement) || !radios.includes(input)) return
     if (!isKey(input.value)) { syncRadios(); return }
     select(input.value)
   }
+  const syncSimple = () => simpleToggle?.setAttribute('aria-pressed', String(simple))
+  const toggleSimple = () => {
+    if (!presentation || !options.canInteract()) return
+    settle(); simple = !simple
+    if (simple) applySimpleSlots(); else compact = undefined
+    grid.toggleAttribute('data-poster-simple', simple)
+    syncSimple()
+  }
   const destroy = () => {
     if (destroyed) return
     destroyed = true; ++generation; abort.abort(); motion?.dispose(); releaseScroll?.()
-    observer?.disconnect(); disconnect?.disconnect(); media.removeEventListener?.('change', settle)
+    disconnect?.disconnect(); disconnectToolbar?.(); media.removeEventListener?.('change', settle)
     if (presentation) {
       if (sort) { sort = undefined; reorder() }
       for (const node of artists) for (const r of ranges) node.style.removeProperty(sortedProperty(r))
       simple = false; grid.removeAttribute('data-poster-simple'); grid.removeAttribute('data-poster-ordered')
-      sortControl.value = ''; simpleToggle.checked = false
+      sortControl.value = ''; syncSimple()
     }
     for (const node of pool) if (!originalMotifSet.has(node)) node.remove()
     for (const { node, restore, hidden, inert, index } of saved) {
@@ -524,10 +517,11 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       if (index !== null) node.setAttribute('data-poster-motif-index', index)
     }
     for (const [node, value] of tabIndices) { if (value === null) node.removeAttribute('tabindex'); else node.setAttribute('tabindex', value) }
-    restorePadding(); selected = 'all'; syncRadios(); controls.hidden = true; status.textContent = ''
+    selected = 'all'; syncRadios(); controls.hidden = true; status.textContent = ''
   }
   try {
     controls.addEventListener('change', change, { signal: abort.signal })
+    if (presentation) simpleToggle.addEventListener('click', toggleSimple, { signal: abort.signal })
     root.addEventListener('click', event => {
       const link = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-event-trigger]') : null
       if (link && !indexedPlans.get(selected)!.ids.has(link.dataset.eventId!)) event.preventDefault()
@@ -545,19 +539,59 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     }
     if (presentation) document.fonts?.addEventListener('loadingdone', refreshFontTracks, { signal: abort.signal })
     media.addEventListener('change', settle)
-    observer = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(entries => {
-      const entry = entries[0]
-      if (entry) clearance(entry.borderBoxSize?.[0]?.blockSize ?? controls.getBoundingClientRect().height)
-    })
-    observer?.observe(controls)
     disconnect = new MutationObserver(() => { if (!root.isConnected) { destroy(); options.onDisconnect() } })
     disconnect.observe(document.documentElement, { childList: true, subtree: true })
     if (sortControl && simpleToggle) {
       sortControl.disabled = simpleToggle.disabled = !presentation
-      sortControl.value = ''; simpleToggle.checked = false
+      sortControl.value = ''; syncSimple()
+    }
+    if (presentation) {
+      disconnectToolbar = mountStickyToolbar(controls, sortControl, options.ownStyles, abort.signal)
     }
     controls.hidden = false; syncRadios()
-    if (!observer) requestAnimationFrame(() => { if (!destroyed) clearance(controls.getBoundingClientRect().height) })
   } catch { destroy(); return inactive }
   return { settle, includes: id => !!id && indexedPlans.get(selected)!.ids.has(id), destroy }
+}
+
+function mountStickyToolbar(panel: HTMLElement, picker: HTMLSelectElement, ownStyles: FilterOptions['ownStyles'], signal: AbortSignal) {
+  const header = panel.ownerDocument.querySelector<HTMLElement>('[data-poster-header]')
+  if (!header || typeof ResizeObserver === 'undefined') return
+  const heightProperty = '--poster-header-height'
+  const concealedAttribute = 'data-poster-toolbar-concealed'
+  const restoreHeight = ownStyles(panel, [heightProperty])
+  const setHeight = (height: number) => panel.style.setProperty(heightProperty, `${height}px`)
+  // Seed the inset once, including on scroll restoration. Further changes come
+  // from the observer, never from a layout read in the scroll handler.
+  setHeight(header.getBoundingClientRect().height)
+  const observer = new ResizeObserver(([entry]) => {
+    if (!signal.aborted && entry) setHeight(entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height)
+  })
+  observer.observe(header, { box: 'border-box' })
+
+  const offset = () => Math.max(0, window.scrollY)
+  const threshold = 12
+  const supportsOpen = window.CSS?.supports('selector(:open)') ?? false
+  let anchor = offset()
+  let concealed = false
+  const setConcealed = (next: boolean) => {
+    if (concealed === next) return
+    concealed = next
+    panel.toggleAttribute(concealedAttribute, next)
+  }
+  const reveal = () => { anchor = offset(); setConcealed(false) }
+  panel.addEventListener('focusin', reveal, { signal })
+  window.addEventListener('scroll', () => {
+    const y = offset()
+    if (y === 0 || panel.contains(panel.ownerDocument.activeElement) || (supportsOpen && picker.matches(':open'))) {
+      anchor = y
+      setConcealed(false)
+    } else if (concealed) {
+      anchor = Math.max(anchor, y)
+      if (anchor - y >= threshold) { anchor = y; setConcealed(false) }
+    } else {
+      anchor = Math.min(anchor, y)
+      if (y - anchor >= threshold) { anchor = y; setConcealed(true) }
+    }
+  }, { passive: true, signal })
+  return () => { observer.disconnect(); restoreHeight(); setConcealed(false) }
 }

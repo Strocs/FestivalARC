@@ -14,11 +14,19 @@ Checks: focused Vitest and browser tests, compressed output comparison, reposito
 - S8: “[Image#1] Te parece eso una UI correcta?”
 - S9: “Creo que estás cambiando las dimensiones del os rows y columns? al usar vista simple no debería moverse una card que está bien puesta pero se mueve hacia arriba, como si cambiara algun padding o algo así”
 - S10: “ademas de que los slots de informació no se posicionann correctamennte en su espacio reservado”
+- S11: “Primero quiero que lo movamos a la parte superior, debajo del header. Eso implica añádir una separación unn poco mayor a la parte superior del área del grid.” “el panel debe quedar fijo. y quedar mas cerca del header.”
+- S12: “En desktop debe estar en linnea, el filtro de fecha conn el ordenar por y el botón de vista simple.”
+- S13: “El botón de vista simple debe tener un ícono, no tener el esapcio de check, si no que el botón dar a entender que estamos en vista simple o no, Puedes ser sin ícono, pero en apado esta levemente opacity y en prendida con color y solido.”
+- S14: “El ordenar por, cambiar el diseñño del dropdown a lago más acorde al aestética del sitio y añádirle animación de apertaura y cierre.” “además hay que refinar el diseñno también, mejorar los roundeds, el input del dropdown, etc.”
+
+- S15: “Al scrollear hacia abajo este floating panel se oculta, al scrollear hacia arriba vuelve a aparecer. Se oculta por detrás del header y con un leve fade out. Y aparece de la misma manera inversa.”
+- S16: “Haz todo rounnded full, añáde más separación entre los filtros y el ordenar por, prefiero que pongas le ordenar por ecima del iput y hagas el iput más agosto, no es necesario que sea tan largo igual.” “quita el bg gris de los filetros tambine” “pero el alto del input del dropdown y su texto debe ser el mismo de todo el resto po hermano”
 
 ## Tasks
 
-- T1 — S1–S10 — functionally verified; final work-unit commit, independent verifier and native review pending — initial commit `b986975`; correction preserves responsive track sizes and packs simple cards around adaptive information reservations.
+- T1 — S1–S10 — done, functionally and independently verified; native review declined for this committed candidate — commits `b986975` and `1850852`.
 - T2 — acceptance check — blocked — the full suite cannot be marked green until the existing artist-detail/catalog failures on base `30a7e16` are resolved independently; leave the main worktree's artist edits alone.
+- T3 — S11–S16 — functionally verified — final pill toolbar and motion passed; commit, independent verification and native review pending.
 
 ## Log
 
@@ -72,3 +80,27 @@ Checks: focused Vitest and browser tests, compressed output comparison, reposito
 - L20: “fixealo”. Dense track candidate passed 86 focused tests and browser packing/footprints/reservation checks, but its analytical CSS floors changed 48 shared mobile tracks at both 320 and 390 px; tablet and desktop were within 1 px. The failed TypeScript strategy assignment was corrected by making the dense information argument optional, matching the established strategy; app type and build then passed. Need exact bounded grid-track capture, not another CSS floor approximation.
 - L21: “o sea no sé, yo sigo viendo que las rows y columns no mantienen las dimensiones en desktop”. Expand final CSSOM checks to 1280/1366/1440/1600/1920, not just 1440. “ademas de que los slots de informació no se posicionann correctamennte en su espacio reservado”. Check rendered information placement as well as compiled footprints. User next reported “Ahora sí”; keep current visuals and finish verification rather than introducing unrelated layout changes.
 - L22: Exact sizing uses one computed-grid-style read per uncached day and viewport; no per-card geometry reads. Targeted Vitest passed 96 tests. `pnpm build` composed 594 files. Chromium passed actual shared track sizes at 320/390/768/1280/1366/1440/1600/1920 px, dense placements and card wrappers, reservation positions and links, and live filter animation in both views. All temporary browser sessions closed. Home initial JS delta against `30a7e16`: +1363 gzip bytes; Home HTML: +1025; CSS: +148. No full suite green claim because of T2.
+- L23 (new UI request):
+  ```text
+  Debemos trabajar sobnre la UI del panel ahora. No me gusta. Primero quiero que lo movamos a la parte superior, debajo del header. Eso implica añádir una separación unn poco mayor a la parte superior del área del grid.
+
+  En desktop debe estar en linnea, el filtro de fecha conn el ordenar por y el botón de vista simple. El botón de vista simple debe tener un ícono, no tener el esapcio de check, si no que el botón dar a entender que estamos en vista simple o no, Puedes ser sin ícono, pero en apado esta levemente opacity y en prendida con color y solido.
+
+  El ordenar por, cambiar el diseñño del dropdown a lago más acorde al aestética del sitio y añádirle animación de apertaura y cierre.
+  ```
+- L24: Initial panel build and Chromium checks passed (320/390/768/1280/1440 px, both picker transitions, keyboard and reduced motion), but desktop screenshot showed the undesired 80 px gap. User correction:
+  ```text
+  el panel debe quedar fijo. y quedar mas cerca del header. /tmp/gpcQgkQy/pi-clipboard-fbfdba66-f991-4635-8e37-98823849312a.png
+
+  además hay que refinar el diseñno también, mejorar los roundeds, el input del dropdown, etc.
+  ```
+- L25 (scroll behavior):
+  ```text
+  Además haremos lo siguiente:
+
+  - Al scrollear hacia abajo este floating panel se oculta, al scrollear hacia arriba vuelve a aparecer. Se oculta por detrás del header y con un leve fade out. Y aparece de la misma manera inversa.
+  ```
+- L26: The independent verifier passed T1 on committed `1850852` (87 focused tests, 12 Chromium cases, app type and both edition builds). Confirmed dense packing, motion and preserved dimensions and reservations; original poster behavior matched the baseline. T3 sticky/scroll changes are separate.
+- L27: `pnpm build` passed (594 files); 96 targeted tests passed. Chromium passed at 320/390/768/1280/1440 px: 12 px from header, desktop controls aligned, sticky hides and returns with intermediate opacity samples and no grid shift, and picker opens/closes with motion and honors reduced motion.
+- L28 (visual refinement, with screenshot): “Haz todo rounnded full, añáde más separación entre los filtros y el ordenar por, prefiero que pongas le ordenar por ecima del iput y hagas el iput más agosto, no es necesario que sea tan largo igual.” Next message: “quita el bg gris de los filetros tambine”. Then: “pero el alto del input del dropdown y su texto debe ser el mismo de todo el resto po hermano”.
+- L29: The final distribution contains the shared sizing classes. `pnpm build` and 96 focused tests passed. Chromium at 320/390/768/1280/1440 passed equal computed control height (44 px), font family, size (14 px), weight (700) and line-height (20 px), and verified the label above, selector width, transparent day group, pill radii, and unchanged scroll/picker transitions. Desktop screenshot inspected.

@@ -23,7 +23,7 @@ function mount() {
   dispose = mountEventModal(root, { createFilterMotion: input => { inputs.push(input); return { dispose: vi.fn() } }, createMotion: () => ({ dispose() {}, reverse() {} }) })
 }
 beforeEach(() => {
-  document.body.innerHTML = `<main data-event-scope><section data-poster-grid>${plans.plans.all.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join('')}${['a', 'b'].map(id => `<div data-poster-artist="${id}"><a href="/musica/${id}/" data-event-trigger data-event-id="${id}"><span data-artist-surface></span><span data-artist-name>${id}</span></a></div>`).join('')}</section><fieldset hidden data-day-filter><legend>Filtrar artistas por día</legend>${['all', 'saturday', 'sunday'].map(key => `<label><input name="day" type="radio" value="${key}" ${key === 'all' ? 'checked' : ''}>${key}</label>`).join('')}<span role="status" data-day-count></span></fieldset><script type="application/json" data-poster-plans>${JSON.stringify(plans)}</script><dialog><div data-modal-panel><button data-modal-close>Close</button><div data-modal-content></div></div></dialog>${['a', 'b'].map(id => `<template data-event-template="${id}"><h2 id="event-modal-title" tabindex="-1">${id}</h2></template>`).join('')}</main>`
+  document.body.innerHTML = `<main data-event-scope><section data-poster-grid>${plans.plans.all.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join('')}${['a', 'b'].map(id => `<div data-poster-artist="${id}"><a href="/musica/${id}/" data-event-trigger data-event-id="${id}"><span data-artist-surface></span><span data-artist-name>${id}</span></a></div>`).join('')}</section><fieldset hidden data-day-filter><legend>Filtrar artistas por día</legend>${['all', 'saturday', 'sunday'].map(key => `<label><input name="poster-day" type="radio" value="${key}" ${key === 'all' ? 'checked' : ''}>${key}</label>`).join('')}<span role="status" data-day-count></span></fieldset><script type="application/json" data-poster-plans>${JSON.stringify(plans)}</script><dialog><div data-modal-panel><button data-modal-close>Close</button><div data-modal-content></div></div></dialog>${['a', 'b'].map(id => `<template data-event-template="${id}"><h2 id="event-modal-title" tabindex="-1">${id}</h2></template>`).join('')}</main>`
   root = document.querySelector('main')!
   const grid = root.querySelector<HTMLElement>('[data-poster-grid]')!
   for (const range of ['mobile', 'tablet', 'desktop'] as const) {
@@ -65,15 +65,17 @@ afterEach(() => { dispose(); document.body.innerHTML = ''; document.body.removeA
 describe('day filtering through the sole modal owner', () => {
   function mountPresentation() {
     dispose()
-    root.querySelector('[data-day-count]')!.insertAdjacentHTML('beforebegin', '<select data-poster-sort><option value="">Poster</option><option value="time">Horario</option><option value="location">Escenario</option></select><input type="checkbox" data-poster-simple-toggle>')
+    root.querySelector('[data-day-count]')!.insertAdjacentHTML('beforebegin', '<select data-poster-sort><option value="">Afiche</option><option value="time">Horario</option><option value="location">Escenario</option></select><button type="button" aria-pressed="false" data-poster-simple-toggle>Vista simple</button>')
     root.querySelector('script')!.textContent = JSON.stringify({ ...plans, simple: createPosterSimplePlans(plans, []), order: { time: [0, 1], location: [1, 0] } })
     mount()
     const set = (node: HTMLInputElement | HTMLSelectElement) => node.dispatchEvent(new Event('change', { bubbles: true }))
     return {
       grid: root.querySelector<HTMLElement>('[data-poster-grid]')!,
       setSimple(checked: boolean) {
-        const node = root.querySelector<HTMLInputElement>('[data-poster-simple-toggle]')!
-        node.checked = checked; set(node)
+        const node = root.querySelector<HTMLButtonElement>('[data-poster-simple-toggle]')!
+        expect(node.getAttribute('aria-pressed')).toBe(String(!checked))
+        node.click()
+        expect(node.getAttribute('aria-pressed')).toBe(String(checked))
       },
       sort(value: string) {
         const node = root.querySelector<HTMLSelectElement>('[data-poster-sort]')!
@@ -81,6 +83,89 @@ describe('day filtering through the sole modal owner', () => {
       },
     }
   }
+
+  it('pins to the live header height and only changes visibility on deliberate scroll direction', () => {
+    vi.stubGlobal('scrollY', 0)
+    vi.stubGlobal('CSS', { supports: (feature: string) => feature === 'selector(:open)' })
+    document.body.insertAdjacentHTML('afterbegin', '<div data-poster-header></div>')
+    const header = document.querySelector<HTMLElement>('[data-poster-header]')!
+    const observe = vi.fn(); const disconnect = vi.fn()
+    let report!: (entries: Partial<ResizeObserverEntry>[]) => void
+    vi.stubGlobal('ResizeObserver', class {
+      private target?: Element
+      constructor(private callback: typeof report) {}
+      observe(target: Element, options?: ResizeObserverOptions) {
+        this.target = target
+        if (target === header) { report = this.callback; observe(options) }
+      }
+      disconnect() { if (this.target === header) disconnect() }
+    })
+    const geometry = vi.mocked(HTMLElement.prototype.getBoundingClientRect)
+    geometry.mockClear()
+    mountPresentation()
+    const panel = root.querySelector('fieldset')!
+    const concealed = () => panel.hasAttribute('data-poster-toolbar-concealed')
+    const scroll = (y: number) => { vi.stubGlobal('scrollY', y); window.dispatchEvent(new Event('scroll')) }
+    const resize = (height: number) => report([{ target: header, borderBoxSize: [{ blockSize: height, inlineSize: 100 }] }])
+    expect(observe).toHaveBeenCalledExactlyOnceWith({ box: 'border-box' })
+    expect(panel.style.getPropertyValue('--poster-header-height')).toBe('50px')
+    expect(geometry.mock.contexts).toEqual([header])
+    resize(73.5)
+    expect(panel.style.getPropertyValue('--poster-header-height')).toBe('73.5px')
+    expect(concealed()).toBe(false)
+    scroll(3); expect(concealed()).toBe(false)
+    scroll(45); expect(concealed()).toBe(true)
+    scroll(42); expect(concealed()).toBe(true)
+    scroll(25); expect(concealed()).toBe(false)
+    const picker = panel.querySelector('select')!
+    let pickerOpen = false
+    const matches = picker.matches.bind(picker)
+    vi.spyOn(picker, 'matches').mockImplementation(selector => selector === ':open' ? pickerOpen : matches(selector))
+    picker.focus(); scroll(95); expect(concealed()).toBe(false)
+    picker.blur(); scroll(97); expect(concealed()).toBe(false)
+    scroll(115); expect(concealed()).toBe(true)
+    panel.querySelector('button')!.focus(); expect(concealed()).toBe(false)
+    panel.querySelector('button')!.blur()
+    scroll(140); expect(concealed()).toBe(true)
+    pickerOpen = true
+    scroll(160); expect(concealed()).toBe(false)
+    pickerOpen = false
+    scroll(180); expect(concealed()).toBe(true)
+    scroll(0); expect(concealed()).toBe(false)
+    expect(geometry.mock.contexts).toEqual([header])
+    dispose()
+    expect(disconnect).toHaveBeenCalledOnce()
+    resize(75); scroll(150)
+    expect(panel.style.getPropertyValue('--poster-header-height')).toBe('')
+    expect(concealed()).toBe(false)
+  })
+
+  it('initializes in flow without reading body padding or measuring the panel', () => {
+    dispose()
+    document.body.style.paddingBottom = '13px'
+    const computed = vi.mocked(window.getComputedStyle)
+    const geometry = vi.mocked(HTMLElement.prototype.getBoundingClientRect)
+    computed.mockClear(); geometry.mockClear()
+    mount()
+    expect(root.querySelector('fieldset')!.hidden).toBe(false)
+    expect(computed).not.toHaveBeenCalledWith(document.body)
+    expect(geometry).not.toHaveBeenCalled()
+    expect(document.body.style.paddingBottom).toBe('13px')
+    dispose()
+    expect(document.body.style.paddingBottom).toBe('13px')
+  })
+
+  it('only handles the three named day radios, even with unrelated inputs in the panel', () => {
+    dispose()
+    root.querySelector('fieldset')!.insertAdjacentHTML('beforeend', '<input name="other" type="radio" value="sunday">')
+    mount()
+    expect(root.querySelector('fieldset')!.hidden).toBe(false)
+    root.querySelector<HTMLInputElement>('input[name="other"]')!.click()
+    expect(visible()).toEqual(['a', 'b'])
+    expect(inputs).toHaveLength(0)
+    choose('saturday')
+    expect(visible()).toEqual(['a'])
+  })
 
   it('filters the same cards without animation geometry in reduced motion and keeps the modal and day', () => {
     const { grid, setSimple, sort } = mountPresentation()
@@ -100,7 +185,12 @@ describe('day filtering through the sole modal owner', () => {
     artist.click()
     expect(root.querySelector('dialog')!.open).toBe(true)
     expect(root.querySelector('[data-modal-content]')!.textContent).toBe('b')
+    const toggle = root.querySelector<HTMLButtonElement>('[data-poster-simple-toggle]')!
+    toggle.click()
+    expect(toggle.getAttribute('aria-pressed')).toBe('true')
+    expect(grid.hasAttribute('data-poster-simple')).toBe(true)
     dispose()
+    expect(toggle.getAttribute('aria-pressed')).toBe('false')
     expect(grid.hasAttribute('data-poster-simple')).toBe(false)
   })
 

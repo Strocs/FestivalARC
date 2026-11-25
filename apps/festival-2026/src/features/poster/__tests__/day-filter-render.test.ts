@@ -24,11 +24,33 @@ describe('progressive day controls', () => {
         continue
       }
       expect(html).toMatch(/<fieldset[^>]*hidden[^>]*data-day-filter/)
+      if (category && category.key !== 'stage' && category.key !== 'music') {
+        expect(html).not.toContain('data-poster-toolbar')
+        expect(html.match(/<main[^>]*>/)?.[0]).toContain('xl:py-20')
+      }
       expect(html).toContain('Filtrar artistas por día')
       expect(html.match(/type="radio"/g)).toHaveLength(3)
       expect(html).toContain('Todos'); expect(html).toContain('Sábado 28'); expect(html).toContain('Domingo 29')
       expect(html).toContain('role="status"')
     }
+  })
+  it.each([undefined, ...categories.filter(({ key }) => key === 'music' || key === 'stage')])('renders the in-flow presentation panel before the poster ($key)', async category => {
+    const container = await AstroContainer.create()
+    const html = await container.renderToString(PosterGrid, { props: { category } })
+    const panel = html.match(/<fieldset[^>]*data-day-filter[^>]*>([\s\S]*?)<\/fieldset>/)!
+    expect(panel.index).toBeLessThan(html.indexOf('data-poster-grid'))
+    expect(panel[0]).toMatch(/\bmb-\d+\b/)
+    expect(panel[0]).toContain('data-poster-toolbar')
+    expect(html.match(/<main[^>]*>/)?.[0]).toContain('pt-3')
+    if (category) expect(panel.index).toBeLessThan(html.indexOf('Ruta de navegación'))
+    expect(panel[0]).not.toMatch(/\b(?:fixed|bottom-)\b/)
+    expect(panel[0]).toContain('md:flex-row')
+    expect(panel[1]).toMatch(/<label[^>]*>[\s\S]*?Ordenar por[\s\S]*?<select[^>]*data-poster-sort[^>]*>/)
+    expect([...panel[1].matchAll(/<option value="([^"]*)"[^>]*>([^<]+)<\/option>/g)].map(match => match.slice(1))).toEqual([
+      ['', 'Afiche'], ['time', 'Horario'], ['location', 'Escenario'],
+    ])
+    expect(panel[1]).toMatch(/<button[^>]*type="button"[^>]*data-poster-simple-toggle[^>]*aria-pressed="false"[^>]*>\s*<svg[^>]*aria-hidden="true"[\s\S]*?<\/svg>\s*Vista simple\s*<\/button>/)
+    expect(panel[1]).not.toContain('type="checkbox"')
   })
   it('projects the real home and music handoffs onto occupied, compact rows for each day', async () => {
     const container = await AstroContainer.create()
