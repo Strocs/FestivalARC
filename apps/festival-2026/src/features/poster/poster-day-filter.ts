@@ -115,6 +115,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const artists = [...root.querySelectorAll<HTMLElement>('[data-poster-artist]')]
   const information = [...root.querySelectorAll<HTMLElement>('[data-poster-information]')]
   const originalMotifs = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')]
+  const daySelect = controls?.querySelector<HTMLSelectElement>('[data-poster-day-select]')
   const sortControl = controls?.querySelector<HTMLSelectElement>('[data-poster-sort]')
   const simpleToggle = controls?.querySelector<HTMLButtonElement>('button[data-poster-simple-toggle]')
   let plans: PosterFilterPlans & { order?: PosterOrders; simple?: PosterSimplePlans }
@@ -135,6 +136,11 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     }
     media = window.matchMedia('(prefers-reduced-motion: reduce)')
   } catch { return inactive }
+  const staticToolbar = controls.hasAttribute('data-poster-toolbar')
+  const setControlsReady = (ready: boolean) => {
+    if (staticToolbar) controls.disabled = !ready
+    else controls.hidden = !ready
+  }
   const abort = new AbortController()
   let destroyed = false
   let selected: DayKey = 'all'
@@ -178,7 +184,10 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let disconnect: MutationObserver | undefined
   let disconnectToolbar: (() => void) | undefined
   const range = (): PosterRange => window.innerWidth >= 1280 ? 'desktop' : window.innerWidth >= 768 ? 'tablet' : 'mobile'
-  const syncRadios = () => { for (const radio of radios) radio.checked = radio.value === selected }
+  const syncDayControls = () => {
+    for (const radio of radios) radio.checked = radio.value === selected
+    if (daySelect) daySelect.value = selected
+  }
   // Only canonical endpoint metadata is remembered, never painted geometry.
   // Check initial inline declarations lazily once, so valid SSR benefits on click 1.
   const initialized = new WeakSet<HTMLElement>()
@@ -275,10 +284,27 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const plan = endpoint()
     compact = createPosterSimpleLayout(plan, compactRange, ranked, plans.simple![selected][compactRange])
     grid.style.setProperty(simpleRows, String(compact.rows))
-    const prefix = capturePosterTracks(plan.layouts[compactRange].rows)?.slice(0, compact.rows) ?? []
+    const sourceTracks = capturePosterTracks(plan.layouts[compactRange].rows)
+    const prefix = sourceTracks?.slice(0, compact.rows) ?? []
     const tracks = prefix.map(height => `${height}px`)
     const extra = compact.rows - prefix.length
-    if (extra) tracks.push(`repeat(${extra},var(--poster-simple-fallback-track))`)
+    if (compactRange === 'mobile' && sourceTracks) {
+      for (let i = 0; i < extra; i++) tracks.push('var(--poster-simple-fallback-track)')
+      // Mobile cards occupy full-width rows, so their original tracks can move
+      // with them without changing the footprint of adjacent information blocks.
+      const canonical = indexedPlans.get(selected)!.artists
+      for (const node of artists) {
+        const id = node.dataset.posterArtist!
+        const destination = compact.artists.get(id)
+        const source = (slots?.get(node) ?? canonical.get(id))?.mobile
+        if (!destination || !source) continue
+        for (let i = 0; i < destination.height; i++) {
+          tracks[destination.row + i] = `${sourceTracks[source.row + i]}px`
+        }
+      }
+    } else if (extra) {
+      tracks.push(`repeat(${extra},var(--poster-simple-fallback-track))`)
+    }
     grid.style.setProperty(simpleTracks, tracks.join(' ') || 'none')
     const place = (node: HTMLElement, cell?: SlotRect) => {
       if (cell) node.style.setProperty(simpleArea, `${cell.row + 1}/${cell.column + 1}/span ${cell.height}/span ${cell.width}`)
@@ -309,8 +335,8 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     finish()
   }
   const select = (key: DayKey) => {
-    if (destroyed || !options.canInteract()) { syncRadios(); return }
-    if (key === selected) { syncRadios(); return }
+    if (destroyed || !options.canInteract()) { syncDayControls(); return }
+    if (key === selected) { syncDayControls(); return }
     const activeRange = range()
     const scroll = { x: window.scrollX, y: window.scrollY }
     let animate = !media.matches && (!!options.createMotion || isMotionReady())
@@ -415,7 +441,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       return node
     })
     motifEndpoints = target.motifs
-    selected = key; pending = true; syncRadios()
+    selected = key; pending = true; syncDayControls()
     // One final-flow write batch, including actual information and all ranges.
     if (transition && !rowsInitialized) rowsInitialized = ranges.every(r =>
       grid.style.getPropertyValue(`--${r}-rows`) === String(plans.plans[transition.from].layouts[r].rows)
@@ -488,9 +514,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       if (simple) applySimpleSlots()
       return
     }
-    if (!(input instanceof HTMLInputElement) || !radios.includes(input)) return
-    if (!isKey(input.value)) { syncRadios(); return }
-    select(input.value)
+    let value: string
+    if (daySelect && input === daySelect) value = daySelect.value
+    else if (input instanceof HTMLInputElement && radios.includes(input)) value = input.value
+    else return
+    if (!isKey(value)) { syncDayControls(); return }
+    select(value)
   }
   const syncSimple = () => simpleToggle?.setAttribute('aria-pressed', String(simple))
   const toggleSimple = () => {
@@ -517,7 +546,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       if (index !== null) node.setAttribute('data-poster-motif-index', index)
     }
     for (const [node, value] of tabIndices) { if (value === null) node.removeAttribute('tabindex'); else node.setAttribute('tabindex', value) }
-    selected = 'all'; syncRadios(); controls.hidden = true; status.textContent = ''
+    selected = 'all'; syncDayControls(); setControlsReady(false); status.textContent = ''
   }
   try {
     controls.addEventListener('change', change, { signal: abort.signal })
@@ -546,14 +575,14 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       sortControl.value = ''; syncSimple()
     }
     if (presentation) {
-      disconnectToolbar = mountStickyToolbar(controls, sortControl, options.ownStyles, abort.signal)
+      disconnectToolbar = mountStickyToolbar(controls, daySelect ? [sortControl, daySelect] : [sortControl], options.ownStyles, abort.signal)
     }
-    controls.hidden = false; syncRadios()
+    setControlsReady(true); syncDayControls()
   } catch { destroy(); return inactive }
   return { settle, includes: id => !!id && indexedPlans.get(selected)!.ids.has(id), destroy }
 }
 
-function mountStickyToolbar(panel: HTMLElement, picker: HTMLSelectElement, ownStyles: FilterOptions['ownStyles'], signal: AbortSignal) {
+function mountStickyToolbar(panel: HTMLElement, pickers: HTMLSelectElement[], ownStyles: FilterOptions['ownStyles'], signal: AbortSignal) {
   const header = panel.ownerDocument.querySelector<HTMLElement>('[data-poster-header]')
   if (!header || typeof ResizeObserver === 'undefined') return
   const heightProperty = '--poster-header-height'
@@ -582,7 +611,7 @@ function mountStickyToolbar(panel: HTMLElement, picker: HTMLSelectElement, ownSt
   panel.addEventListener('focusin', reveal, { signal })
   window.addEventListener('scroll', () => {
     const y = offset()
-    if (y === 0 || panel.contains(panel.ownerDocument.activeElement) || (supportsOpen && picker.matches(':open'))) {
+    if (y === 0 || panel.contains(panel.ownerDocument.activeElement) || (supportsOpen && pickers.some(picker => picker.matches(':open')))) {
       anchor = y
       setConcealed(false)
     } else if (concealed) {

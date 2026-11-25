@@ -6,7 +6,7 @@ import { createPosterSimpleLayout, type PosterSimplePlans } from '../poster-simp
 import type { DayKey, PosterFilterPlans } from '../poster-filter-layout'
 
 describe('progressive day controls', () => {
-  it('renders initially hidden native labelled radios for every both-day scope', async () => {
+  it('renders native labelled radios for every both-day scope and keeps legacy controls initially hidden', async () => {
     const container = await AstroContainer.create()
     for (const category of [undefined, ...categories]) {
       const html = await container.renderToString(PosterGrid, { props: { category } })
@@ -23,8 +23,8 @@ describe('progressive day controls', () => {
         expect(html.match(/data-poster-artist=/g)).toHaveLength(8)
         continue
       }
-      expect(html).toMatch(/<fieldset[^>]*hidden[^>]*data-day-filter/)
       if (category && category.key !== 'stage' && category.key !== 'music') {
+        expect(html).toMatch(/<fieldset[^>]*hidden[^>]*data-day-filter/)
         expect(html).not.toContain('data-poster-toolbar')
         expect(html.match(/<main[^>]*>/)?.[0]).toContain('xl:py-20')
       }
@@ -40,16 +40,25 @@ describe('progressive day controls', () => {
     const panel = html.match(/<fieldset[^>]*data-day-filter[^>]*>([\s\S]*?)<\/fieldset>/)!
     expect(panel.index).toBeLessThan(html.indexOf('data-poster-grid'))
     expect(panel[0]).toMatch(/\bmb-\d+\b/)
-    expect(panel[0]).toContain('data-poster-toolbar')
+    const openingTag = panel[0].slice(0, panel[0].indexOf('>'))
+    expect(openingTag).toContain('data-poster-toolbar')
+    expect(openingTag).toMatch(/\sdisabled(?:\s|$)/)
+    expect(openingTag).not.toMatch(/\shidden(?:\s|$)/)
     expect(html.match(/<main[^>]*>/)?.[0]).toContain('pt-3')
     if (category) expect(panel.index).toBeLessThan(html.indexOf('Ruta de navegación'))
     expect(panel[0]).not.toMatch(/\b(?:fixed|bottom-)\b/)
-    expect(panel[0]).toContain('md:flex-row')
+    expect(panel[0]).toContain('hidden md:flex')
+    expect(panel[0]).toContain('md:hidden')
     expect(panel[1]).toMatch(/<label[^>]*>[\s\S]*?Ordenar por[\s\S]*?<select[^>]*data-poster-sort[^>]*>/)
-    expect([...panel[1].matchAll(/<option value="([^"]*)"[^>]*>([^<]+)<\/option>/g)].map(match => match.slice(1))).toEqual([
-      ['', 'Afiche'], ['time', 'Horario'], ['location', 'Escenario'],
+    expect([...(panel[1].match(/<select[^>]*data-poster-sort[^>]*>([\s\S]*?)<\/select>/)?.[1] ?? '').matchAll(/<option value="([^"]*)"[^>]*>([^<]+)<\/option>/g)].map(match => match.slice(1))).toEqual([
+      ['', 'Original'], ['time', 'Horario'], ['location', 'Escenario'],
     ])
-    expect(panel[1]).toMatch(/<button[^>]*type="button"[^>]*data-poster-simple-toggle[^>]*aria-pressed="false"[^>]*>\s*<svg[^>]*aria-hidden="true"[\s\S]*?<\/svg>\s*Vista simple\s*<\/button>/)
+    expect(panel[1]).toMatch(/<label[^>]*>[\s\S]*?Día[\s\S]*?<select[^>]*data-poster-day-select[^>]*>/)
+    const daySelect = panel[1].match(/<select[^>]*data-poster-day-select[^>]*>([\s\S]*?)<\/select>/)?.[1] ?? ''
+    expect([...daySelect.matchAll(/<option value="([^"]*)"[^>]*>([^<]+)<\/option>/g)].map(match => match.slice(1))).toEqual([
+      ['all', 'Todos'], ['saturday', 'Sábado 28'], ['sunday', 'Domingo 29'],
+    ])
+    expect(panel[1]).toMatch(/<button[^>]*type="button"[^>]*data-poster-simple-toggle[^>]*aria-pressed="false"[^>]*>\s*<svg[^>]*aria-hidden="true"[\s\S]*?<\/svg>\s*<span[^>]*>Vista simple<\/span>\s*<\/button>/)
     expect(panel[1]).not.toContain('type="checkbox"')
   })
   it('projects the real home and music handoffs onto occupied, compact rows for each day', async () => {

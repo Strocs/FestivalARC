@@ -65,7 +65,7 @@ afterEach(() => { dispose(); document.body.innerHTML = ''; document.body.removeA
 describe('day filtering through the sole modal owner', () => {
   function mountPresentation() {
     dispose()
-    root.querySelector('[data-day-count]')!.insertAdjacentHTML('beforebegin', '<select data-poster-sort><option value="">Afiche</option><option value="time">Horario</option><option value="location">Escenario</option></select><button type="button" aria-pressed="false" data-poster-simple-toggle>Vista simple</button>')
+    root.querySelector('[data-day-count]')!.insertAdjacentHTML('beforebegin', '<select data-poster-sort><option value="">Original</option><option value="time">Horario</option><option value="location">Escenario</option></select><select data-poster-day-select><option value="all">Todos</option><option value="saturday">Sábado 28</option><option value="sunday">Domingo 29</option></select><button type="button" aria-pressed="false" data-poster-simple-toggle>Vista simple</button>')
     root.querySelector('script')!.textContent = JSON.stringify({ ...plans, simple: createPosterSimplePlans(plans, []), order: { time: [0, 1], location: [1, 0] } })
     mount()
     const set = (node: HTMLInputElement | HTMLSelectElement) => node.dispatchEvent(new Event('change', { bubbles: true }))
@@ -84,7 +84,22 @@ describe('day filtering through the sole modal owner', () => {
     }
   }
 
-  it('pins to the live header height and only changes visibility on deliberate scroll direction', () => {
+  it('syncs the responsive day controls in both directions and resets them on teardown', () => {
+    mountPresentation()
+    const day = root.querySelector<HTMLSelectElement>('[data-poster-day-select]')!
+    day.value = 'saturday'
+    day.dispatchEvent(new Event('change', { bubbles: true }))
+    expect(root.querySelector<HTMLInputElement>('input[value="saturday"]')!.checked).toBe(true)
+    expect(visible()).toEqual(['a'])
+    choose('sunday')
+    expect(day.value).toBe('sunday')
+    expect(visible()).toEqual(['b'])
+    dispose()
+    expect(day.value).toBe('all')
+    expect(root.querySelector<HTMLInputElement>('input[value="all"]')!.checked).toBe(true)
+  })
+
+  it.each(['data-poster-sort', 'data-poster-day-select'])('pins to the live header height and protects the open %s picker', attribute => {
     vi.stubGlobal('scrollY', 0)
     vi.stubGlobal('CSS', { supports: (feature: string) => feature === 'selector(:open)' })
     document.body.insertAdjacentHTML('afterbegin', '<div data-poster-header></div>')
@@ -117,7 +132,7 @@ describe('day filtering through the sole modal owner', () => {
     scroll(45); expect(concealed()).toBe(true)
     scroll(42); expect(concealed()).toBe(true)
     scroll(25); expect(concealed()).toBe(false)
-    const picker = panel.querySelector('select')!
+    const picker = panel.querySelector<HTMLSelectElement>(`[${attribute}]`)!
     let pickerOpen = false
     const matches = picker.matches.bind(picker)
     vi.spyOn(picker, 'matches').mockImplementation(selector => selector === ':open' ? pickerOpen : matches(selector))
@@ -222,7 +237,7 @@ describe('day filtering through the sole modal owner', () => {
     expect(root.querySelector('[data-day-count]')!.textContent).toBe('1 artistas')
   })
 
-  it('keeps the exact resolved poster track prefix and captures only once per day at the current width', () => {
+  it('carries resolved mobile card tracks into the compact rows and samples once per day and width', () => {
     vi.stubGlobal('innerWidth', 390)
     const { grid, setSimple, sort } = mountPresentation()
     media.matches = true
@@ -243,16 +258,16 @@ describe('day filtering through the sole modal owner', () => {
     })
     const tracks = () => grid.style.getPropertyValue('--poster-simple-tracks')
     setSimple(true)
-    expect(tracks()).toBe('39px 39.25px 39.5px 39.75px')
+    expect(tracks()).toBe('39px 39.25px 39.75px 40px')
     sort('location'); setSimple(false); setSimple(true)
     choose('sunday')
     expect(tracks()).toBe('44px 44.25px')
     choose('all')
-    expect(tracks()).toBe('39px 39.25px 39.5px 39.75px')
+    expect(tracks()).toBe('39px 39.25px 39.75px 40px')
     expect(sampled).toHaveLength(2)
     vi.stubGlobal('innerWidth', 320)
     window.dispatchEvent(new Event('resize'))
-    expect(tracks()).toBe('32px 32.25px 32.5px 32.75px')
+    expect(tracks()).toBe('32px 32.25px 32.75px 33px')
     window.dispatchEvent(new Event('resize'))
     expect(sampled).toHaveLength(3)
     expect(HTMLElement.prototype.getBoundingClientRect).not.toHaveBeenCalled()
