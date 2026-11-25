@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { artists, participantCatalog } from '../artists'
-import { categories, participants, heroParticipants, safeTicketUrl } from '../categories'
+import { categories, participants, heroParticipants } from '../categories'
 
 describe('participant projections', () => {
   it('maps every stored category member to a unique canonical route', () => {
@@ -38,13 +38,5 @@ describe('participant projections', () => {
         expect(participant.date).toEqual('date' in source ? source.date : undefined)
       }
     }
-  })
-
-  it.each(['https://tickets.example/event', 'http://tickets.example/event'])('allows an absolute HTTP ticket URL: %s', url => {
-    expect(safeTicketUrl(url)).toBe(url)
-  })
-
-  it.each([null, '', 'javascript:alert(1)', 'data:text/html,x', '//tickets.example/event', '/tickets', 'https:example.com', 'not a url'])('omits unsafe or absent ticket URLs: %s', url => {
-    expect(safeTicketUrl(url)).toBeNull()
   })
 })

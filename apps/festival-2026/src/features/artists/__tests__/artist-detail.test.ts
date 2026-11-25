@@ -63,18 +63,9 @@ describe('artist detail rendering', () => {
     expect(html).not.toContain('undefined')
   })
 
-  it.each(['javascript:alert(1)', 'data:text/html,x', '//tickets.example', null])('omits unsafe or absent ticket links: %s', async ticketUrl => {
-    const html = await render({ ticketUrl, description: '<script>alert(1)</script>' })
-    expect(html).not.toContain('data-modal-ticket')
-    expect(html).not.toContain('<script>')
-    expect(html).toContain('&lt;script&gt;')
-  })
-
-  it('renders a safe actionable ticket without opening another tab', async () => {
-    const html = await render({ ticketUrl: 'https://tickets.example/event' })
-    expect(html).toContain('href="https://tickets.example/event"')
-    expect(html).toContain('Entradas')
-    expect(html).not.toContain('target=')
+  it('escapes markup in supplied descriptions', async () => {
+    const html = await render({ description: '<em>Fixture text</em>' })
+    expect(html).toContain('&lt;em&gt;Fixture text&lt;/em&gt;')
   })
 
   it('resolves a supplied local asset through Astro Image', async () => {

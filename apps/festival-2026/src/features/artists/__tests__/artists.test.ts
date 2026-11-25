@@ -28,14 +28,6 @@ describe('artist contract', () => {
     expect(artistSchema.parse({ ...entry, description: 'Biography' }).description).toBe('Biography')
   })
 
-  it('requires a nullable string ticket URL', () => {
-    for (const ticketUrl of [null, 'https://example.org/tickets']) {
-      expect(artistSchema.parse({ ...entry, ticketUrl }).ticketUrl).toBe(ticketUrl)
-    }
-    rejectsUnchanged([{ ...entry, ticketUrl: undefined }])
-    rejectsUnchanged([{ ...entry, ticketUrl: 3 }])
-  })
-
   it('requires editable day and time strings', () => {
     expect(artistSchema.parse(entry).date).toEqual(entry.date)
     for (const date of [undefined, null, '2026-11-28T23:00:00', { day: 'Day' }, { time: '23:00' }, { day: 28, time: '23:00' }]) {

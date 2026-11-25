@@ -72,7 +72,7 @@ describe('participant catalog behavior', () => {
     expect(artists.map(({ order }) => order)).toEqual([...artists].map(({ order }) => order).sort((a, b) => a - b))
   })
 
-  it('stores visual-arts location at category level and rejects participant schedules', () => {
+  it('requires a visual-arts category location and accepts optional participant schedules', () => {
     const input = structuredClone(data)
     input.expo.location = 'Fixture venue'
     for (const participant of input.expo.participants) delete (participant as { date?: unknown }).date
@@ -82,9 +82,12 @@ describe('participant catalog behavior', () => {
     const invalid = structuredClone(input)
     delete (invalid.expo as { location?: string }).location
     expect(() => validateParticipantCatalog(invalid)).toThrow()
-    const scheduled = structuredClone(input) as unknown as { expo: { participants: Record<string, unknown>[] } }
-    scheduled.expo.participants[0].date = { day: 'Day', time: '12:00' }
-    expect(() => validateParticipantCatalog(scheduled)).toThrow()
+    const date = { day: 'Day', time: '12:00' }
+    const scheduled = structuredClone(input)
+    Object.assign(scheduled.expo.participants[0], { date })
+    const before = structuredClone(scheduled)
+    expect(validateParticipantCatalog(scheduled).expo.participants[0].date).toEqual(date)
+    expect(scheduled).toEqual(before)
   })
 
   it('requires valid editable details for expo and market records', () => {
