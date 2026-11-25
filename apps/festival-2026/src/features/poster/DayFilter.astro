@@ -6,7 +6,7 @@ const controlSize = `${controlText} h-11`
 const days = [['all', 'Todos'], ['saturday', 'Sábado 28'], ['sunday', 'Domingo 29']] as const
 const pickerLabel = 'flex min-w-0 flex-col gap-0.5'
 const pickerCaption = 'px-3 text-xs/3 font-medium text-foreground/80'
-const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-background px-3 py-0 text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-background px-3 py-0 text-foreground max-md:rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
 ---
 
 <fieldset
@@ -17,7 +17,7 @@ const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-
   class:list={[
     'min-w-0 border bg-background text-foreground',
     presentation
-      ? 'mx-auto w-fit rounded-full border-primary/10 p-2 shadow-md max-md:max-w-[calc(100%_-_1rem)]'
+      ? 'mx-auto w-[calc(100%_-_1rem)] rounded-xl border-primary/10 p-2 md:w-fit md:rounded-full md:shadow-md'
       : 'mx-3 rounded-2xl border-foreground/25 p-2 sm:mx-auto sm:w-fit',
     beforeBreadcrumb ? 'mb-4' : 'mb-8 md:mb-12',
   ]}>
@@ -40,24 +40,24 @@ const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-
         </label>
       ))}
     </div>
-    {presentation && <div class='flex items-center justify-center gap-2 md:gap-3'>
-      <label class:list={[pickerLabel, 'md:hidden']}>
+    {presentation && <div class='flex items-center justify-center gap-2 max-md:w-full md:gap-3'>
+      <label class:list={[pickerLabel, 'flex-1 md:hidden']}>
         <span id='poster-day-select-label' class={pickerCaption}>Día</span>
-        <select aria-labelledby='poster-day-select-label' data-poster-picker data-poster-day-select class:list={[controlText, pickerSize, 'w-28']}>
+        <select aria-labelledby='poster-day-select-label' data-poster-picker data-poster-day-select class:list={[controlText, pickerSize, 'w-full']}>
           {days.map(([value, label]) => <option value={value}>{label}</option>)}
         </select>
       </label>
-      <label class={pickerLabel}>
+      <label class:list={[pickerLabel, 'max-md:flex-1']}>
         <span class={pickerCaption}>Ordenar por</span>
-        <select data-poster-picker data-poster-sort class:list={[controlText, pickerSize, 'w-26 md:w-28']}>
+        <select data-poster-picker data-poster-sort class:list={[controlText, pickerSize, 'w-full md:w-28']}>
           <option value=''>Original</option>
           <option value='time'>Horario</option>
           <option value='location'>Escenario</option>
         </select>
       </label>
-      <button type='button' data-poster-simple-toggle aria-pressed='false' class:list={[controlSize, 'flex cursor-pointer items-center justify-center gap-1.5 w-11 shrink-0 min-[375px]:w-auto min-[375px]:px-2 md:gap-2 md:px-3 opacity-75 hover:bg-foreground/10 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary aria-pressed:bg-arc-yellow aria-pressed:text-background aria-pressed:opacity-100 aria-pressed:hover:bg-arc-yellow']}>
+      <button type='button' data-poster-simple-toggle aria-pressed='false' class:list={[controlSize, 'flex cursor-pointer items-center justify-center gap-2 w-11 shrink-0 opacity-75 md:w-auto md:px-3 hover:bg-foreground/10 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary aria-pressed:bg-arc-yellow aria-pressed:text-background aria-pressed:opacity-100 aria-pressed:hover:bg-arc-yellow']}>
         <svg aria-hidden='true' class='size-4 shrink-0' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><path d='M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01' /></svg>
-        <span class='sr-only whitespace-nowrap min-[375px]:not-sr-only max-md:text-xs/4'>Vista simple</span>
+        <span class='sr-only whitespace-nowrap md:not-sr-only'>Vista simple</span>
       </button>
     </div>}
   </div>

@@ -30,7 +30,7 @@ Checks: focused Vitest and browser tests, compressed output comparison, reposito
 - T2 — acceptance check — blocked — the full suite cannot be marked green until the existing artist-detail/catalog failures on base `30a7e16` are resolved independently; leave the main worktree's artist edits alone.
 - T3 — S11–S16 — functionally verified — final pill toolbar and motion passed; commit `25d1ab6`; independent verification unavailable (scratch preparer rejects linked worktrees), native review declined for this candidate.
 
-- T4 — S17 — verified — mobile-only interior separator projection and tests — work unit `fix(arc2026): normalize mobile interior tile strips`.
+- T4 — S17 — verified — mobile-only interior separator projection and tests — commit `2ae3c28`.
 
 ## Log
 
@@ -121,3 +121,5 @@ Checks: focused Vitest and browser tests, compressed output comparison, reposito
 - L40: “Necesito que en mobile siempre haya una barra de tiles arriba y abajo de cada slot de info. Y evitar que existen dos o tres barras de tiles entre cada item. Eso pasa a veces, verificalo y dime porq ué pasa y cóµo corregirlo sin afectar las demas layouts”. “Qué pasó con el tema de las doble o triple tiles en mobile?” “procede con el fix”. Built Todos output showed Plaza de Armas had two full rows above and zero below, while Redes had three above and two below.
 - L41: “[Image#12] hay un problema, quizá fue mi culpa, pero el title no debe tener el tile arriba. Y abajo debía conservar los tiles que tenian, que creo que eran 4x2”. “era solo para los info slots interiores excepto el titulo”. Preserve all title openings and the homepage’s original 4×2 band; scope separator changes to interior information only.
 - L42: T4 focused RED: 3 failed against the wider, superseded projection; GREEN: 122 tests passed. Build and Chromium passed across 16 day/order/viewport combinations. A differential of generated plans matched the old homepage opening (including artwork), category mobile layouts, tablet and desktop, and simple-view placement plans exactly.
+- L43: Card refinements verified in Chromium: bold schedule and location below the artist name, a cyan “Ver más” cue moving down on hover, white metadata and full-coverage gradient only on simple view, and unchanged modal keyboard behavior. The known two-card track variance at 768 px remains outside this visual change. Updated four obsolete card render expectations; all four passed.
+- L44: Mobile toolbar refinements verified in Chromium at 320/375/390/767 px: wider day and order selectors with 8 px corners, a centered icon-only toggle, and a visible outline matching the header. Desktop 1440 px checked unchanged. The direct browser checks passed; the repository Playwright command could not start because its JSON import lacks a Node import attribute.
