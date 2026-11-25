@@ -28,7 +28,7 @@ export interface PosterFilterPlans {
 }
 
 const ranges = ['desktop', 'tablet', 'mobile'] as const
-const days = { saturday: 'Sábado 28', sunday: 'Domingo 29' } as const
+export const days = { saturday: 'Sábado 28', sunday: 'Domingo 29' } as const
 const columns: Record<PosterRange, GridColumns> = { desktop: 10, tablet: 6, mobile: 8 }
 const limit = 4096
 const before = (a: SlotRect, b: SlotRect) => a.row < b.row || (a.row === b.row && a.column < b.column)

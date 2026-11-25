@@ -63,6 +63,66 @@ beforeEach(() => {
 afterEach(() => { dispose(); document.body.innerHTML = ''; document.body.removeAttribute('style'); document.documentElement.removeAttribute('style'); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 
 describe('day filtering through the sole modal owner', () => {
+  function mountPresentation() {
+    dispose()
+    root.querySelector('[data-day-count]')!.insertAdjacentHTML('beforebegin', '<select data-poster-sort><option value="">Poster</option><option value="time">Horario</option><option value="location">Escenario</option></select><input type="checkbox" data-poster-simple-toggle>')
+    root.querySelector('script')!.textContent = JSON.stringify({ ...plans, order: { time: [0, 1], location: [1, 0] } })
+    mount()
+    const set = (node: HTMLInputElement | HTMLSelectElement) => node.dispatchEvent(new Event('change', { bubbles: true }))
+    return {
+      grid: root.querySelector<HTMLElement>('[data-poster-grid]')!,
+      setSimple(checked: boolean) {
+        const node = root.querySelector<HTMLInputElement>('[data-poster-simple-toggle]')!
+        node.checked = checked; set(node)
+      },
+      sort(value: string) {
+        const node = root.querySelector<HTMLSelectElement>('[data-poster-sort]')!
+        node.value = value; set(node)
+      },
+    }
+  }
+
+  it('filters the same cards in simple view without geometry reads and keeps the modal and day', () => {
+    const { grid, setSimple, sort } = mountPresentation()
+    const artist = root.querySelector<HTMLElement>('[data-event-id="b"]')!
+    vi.mocked(window.getComputedStyle).mockClear()
+    vi.mocked(HTMLElement.prototype.getBoundingClientRect).mockClear()
+    setSimple(true)
+    expect(grid.hasAttribute('data-poster-simple')).toBe(true)
+    choose('sunday'); sort('location')
+    expect(visible()).toEqual(['b'])
+    expect(root.querySelector('[data-day-count]')!.textContent).toBe('1 artistas')
+    expect(root.querySelector('[data-event-id="b"]')).toBe(artist)
+    expect(inputs).toHaveLength(0)
+    expect(window.getComputedStyle).not.toHaveBeenCalled()
+    expect(HTMLElement.prototype.getBoundingClientRect).not.toHaveBeenCalled()
+    artist.click()
+    expect(root.querySelector('dialog')!.open).toBe(true)
+    expect(root.querySelector('[data-modal-content]')!.textContent).toBe('b')
+    dispose()
+    expect(grid.hasAttribute('data-poster-simple')).toBe(false)
+  })
+
+  it('sorts in either view and keeps the day when returning to the poster', () => {
+    const { grid, setSimple, sort } = mountPresentation()
+    sort('location')
+    expect(visible()).toEqual(['b', 'a'])
+    expect(grid.hasAttribute('data-poster-ordered')).toBe(true)
+    setSimple(true); sort('time'); choose('saturday')
+    expect(visible()).toEqual(['a'])
+    setSimple(false)
+    expect(grid.hasAttribute('data-poster-simple')).toBe(false)
+    expect(visible()).toEqual(['a'])
+    choose('all')
+    expect(visible()).toEqual(['a', 'b'])
+    setSimple(true); sort(''); choose('sunday'); setSimple(false)
+    expect(grid.hasAttribute('data-poster-ordered')).toBe(false)
+    expect(visible()).toEqual(['b'])
+    choose('all')
+    window.dispatchEvent(new Event('resize'))
+    expect(visible()).toEqual(['a', 'b'])
+  })
+
   it('preserves isolated background paint and publication base through clones, interruption and teardown', () => {
     dispose()
     for (const node of root.querySelectorAll<HTMLElement>('[data-poster-motif]')) {

@@ -1,6 +1,7 @@
 import type { DayKey, PosterFilterPlan, PosterFilterPlans } from './poster-filter-layout'
 import type { PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
+import type { PosterOrders } from './poster-order'
 import type { FilterMotion, FilterMotionInput, FilterMotionSample } from './poster-filter-motion'
 import { filterCellRect, filterPaintRect, readFilterGridGeometry, type FilterGridGeometry } from './poster-filter-geometry'
 import { createLazyFilterMotion, isMotionReady, preloadMotion } from '../artists/lazy-motion'
@@ -25,6 +26,9 @@ export interface DayFilter {
 }
 const inactive: DayFilter = { settle() {}, includes: () => true, destroy() {} }
 const isKey = (value: unknown): value is DayKey => keys.includes(value as DayKey)
+const isSort = (value: string): value is keyof PosterOrders => value === 'time' || value === 'location'
+const isPermutation = (values: number[] | undefined, count: number) => Array.isArray(values) && values.length === count
+  && new Set(values).size === count && values.every(i => Number.isSafeInteger(i) && i >= 0 && i < count)
 const patternPaint = (node: HTMLElement) => node.querySelector<SVGSVGElement>('svg[data-pattern-base]')
 const validPatternPaint = (node: HTMLElement, variant: string) => {
   const paint = patternPaint(node)
@@ -110,7 +114,9 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const artists = [...root.querySelectorAll<HTMLElement>('[data-poster-artist]')]
   const information = [...root.querySelectorAll<HTMLElement>('[data-poster-information]')]
   const originalMotifs = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')]
-  let plans: PosterFilterPlans
+  const sortControl = controls?.querySelector<HTMLSelectElement>('[data-poster-sort]')
+  const simpleToggle = controls?.querySelector<HTMLInputElement>('[data-poster-simple-toggle]')
+  let plans: PosterFilterPlans & { order?: PosterOrders }
   let index: PosterFilterIndex | undefined
   let media: MediaQueryList
   try {
@@ -122,7 +128,17 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   } catch { return inactive }
   const abort = new AbortController()
   let destroyed = false
+  // The poster retains its last painted day while the simple grid filters independently.
   let selected: DayKey = 'all'
+  let simpleDay: DayKey | undefined
+  let sort: keyof PosterOrders | undefined
+  const activeDay = () => simpleDay ?? selected
+  const order = plans.order
+  const presentation = sortControl && simpleToggle && order
+    && isPermutation(order.time, artists.length) && isPermutation(order.location, artists.length)
+  const artistBoundary = artists.at(-1)?.nextSibling ?? null
+  const artistIDs = plans.participants.map(({ id }) => id)
+  const sortedProperty = (r: PosterRange) => `--poster-sorted-${r}`
   let generation = 0
   let motion: FilterMotion | undefined
   let motionPaint: { gridRect: DOMRect; bases: Map<HTMLElement, DOMRect> } | undefined
@@ -140,13 +156,18 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     hidden: node.hidden, inert: node.inert, index: node.getAttribute('data-poster-motif-index'),
   }))
   const tabIndices = new Map<HTMLElement, string | null>()
-  for (const artist of artists) for (const link of artist.querySelectorAll<HTMLElement>('a,button,input,select,textarea,[tabindex]')) tabIndices.set(link, link.getAttribute('tabindex'))
+  const focusables = new Map<HTMLElement, HTMLElement[]>()
+  for (const artist of artists) {
+    const links = [...artist.querySelectorAll<HTMLElement>('a,button,input,select,textarea,[tabindex]')]
+    focusables.set(artist, links)
+    for (const link of links) tabIndices.set(link, link.getAttribute('tabindex'))
+  }
   const restorePadding = options.ownStyles(document.body, ['padding-bottom'])
   const basePadding = getComputedStyle(document.body).paddingBottom
   let observer: ResizeObserver | undefined
   let disconnect: MutationObserver | undefined
   const range = (): PosterRange => window.innerWidth >= 1280 ? 'desktop' : window.innerWidth >= 768 ? 'tablet' : 'mobile'
-  const syncRadios = () => { for (const radio of radios) radio.checked = radio.value === selected }
+  const syncRadios = () => { for (const radio of radios) radio.checked = radio.value === activeDay() }
   // Only canonical endpoint metadata is remembered, never painted geometry.
   // Check initial inline declarations lazily once, so valid SSR benefits on click 1.
   const initialized = new WeakSet<HTMLElement>()
@@ -174,7 +195,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let rowsInitialized = false
   const accessible = (node: HTMLElement, included: boolean) => {
     node.inert = !included
-    for (const link of node.querySelectorAll<HTMLElement>('a,button,input,select,textarea,[tabindex]')) {
+    for (const link of focusables.get(node) ?? []) {
       if (!included) link.setAttribute('tabindex', '-1')
       else {
         const previous = tabIndices.get(link)
@@ -184,6 +205,39 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     }
   }
   const endpoint = (): PosterFilterPlan => plans.plans[selected]
+  const announce = (count: number) => {
+    status.textContent = count ? `${count} artistas` : 'No hay artistas para este filtro.'
+  }
+  const reorder = () => {
+    const ranked = sort ? order![sort].map(index => artists[index]) : artists
+    for (const node of ranked) grid.insertBefore(node, artistBoundary)
+  }
+  const applySortedSlots = () => {
+    if (sort) {
+      const endpointIDs = indexedPlans.get(selected)!.ids
+      const ordered = order![sort].filter(index => endpointIDs.has(artistIDs[index]))
+      for (const r of ranges) {
+        const cells = endpoint().layouts[r].artists
+        for (const [i, { row, column, width, height }] of cells.entries()) {
+          // Overlay the same cells without changing canonical endpoint styles or masks.
+          artists[ordered[i]].style.setProperty(sortedProperty(r), `${row + 1}/${column + 1}/span ${height}/span ${width}`)
+        }
+      }
+    }
+    grid.toggleAttribute('data-poster-ordered', !!sort)
+  }
+  const updateSimpleVisibility = (from: DayKey, to: DayKey) => {
+    const previous = indexedPlans.get(from)!.ids
+    const next = indexedPlans.get(to)!.ids
+    artists.forEach((node, index) => {
+      const id = artistIDs[index]
+      const included = next.has(id)
+      if (included === previous.has(id)) return
+      accessible(node, included)
+      node.hidden = !included
+      if (included) node.style.removeProperty('display'); else node.style.display = 'none'
+    })
+  }
   const finish = () => {
     motion?.dispose(); motion = undefined; motionPaint = undefined
     const artistIDs = indexedPlans.get(selected)!.ids
@@ -197,7 +251,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       if (node.hidden) node.style.display = 'none'; else node.style.removeProperty('display')
     }
     releaseScroll?.(); releaseScroll = undefined
-    if (pending) status.textContent = endpoint().ids.length ? `${endpoint().ids.length} artistas` : 'No hay artistas para este filtro.'
+    if (pending) announce(endpoint().ids.length)
     pending = false
   }
   const settle = () => {
@@ -211,13 +265,18 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     // ResizeObserver supplies laid-out border-box geometry without a forced read.
     document.body.style.paddingBottom = `calc(${basePadding} + ${Math.ceil(height)}px + 2rem + env(safe-area-inset-bottom))`
   }
-  const select = (key: DayKey) => {
+  const select = (key: DayKey, immediate = false) => {
     if (destroyed || !options.canInteract()) { syncRadios(); return }
-    if (key === selected) { syncRadios(); return }
+    if (key === activeDay()) { syncRadios(); return }
+    if (simpleDay !== undefined) {
+      updateSimpleVisibility(simpleDay, key)
+      simpleDay = key; syncRadios(); announce(plans.plans[key].ids.length)
+      return
+    }
     const activeRange = range()
-    const scroll = { x: window.scrollX, y: window.scrollY }
-    let animate = !media.matches && (!!options.createMotion || isMotionReady())
-    if (!media.matches && !options.createMotion) preloadMotion()
+    const scroll = immediate || sort ? undefined : { x: window.scrollX, y: window.scrollY }
+    let animate = !!scroll && !media.matches && (!!options.createMotion || isMotionReady())
+    if (scroll && !media.matches && !options.createMotion) preloadMotion()
     const displayed = (node: HTMLElement) => !node.hidden && node.style.display !== 'none'
       && node.style.getPropertyValue(`--${activeRange}-display`) !== 'none'
     const endpointRects = (geometry: FilterGridGeometry) => {
@@ -260,12 +319,14 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     ++generation
     motion?.dispose(); motion = undefined; motionPaint = undefined
     releaseScroll?.()
-    const restoreHtml = options.ownStyles(document.documentElement, ['overflow-anchor', 'scroll-behavior'])
-    const restoreGrid = options.ownStyles(grid, ['overflow-anchor'])
-    document.documentElement.style.setProperty('overflow-anchor', 'none')
-    document.documentElement.style.setProperty('scroll-behavior', 'auto')
-    grid.style.setProperty('overflow-anchor', 'none')
-    releaseScroll = () => { restoreHtml(); restoreGrid() }
+    if (scroll) {
+      const restoreHtml = options.ownStyles(document.documentElement, ['overflow-anchor', 'scroll-behavior'])
+      const restoreGrid = options.ownStyles(grid, ['overflow-anchor'])
+      document.documentElement.style.setProperty('overflow-anchor', 'none')
+      document.documentElement.style.setProperty('scroll-behavior', 'auto')
+      grid.style.setProperty('overflow-anchor', 'none')
+      releaseScroll = () => { restoreHtml(); restoreGrid() }
+    }
     const previousNodes = motifNodes
     const cells = (endpoints: typeof motifEndpoints) => endpoints.map(m => ({ variant: m.variant, ...m.positions[activeRange] }))
     const matches = transition ? transition.motifs[activeRange] : matchPosterMotifs(cells(motifEndpoints), cells(target.motifs), activeRange === 'mobile' ? 0 : 4)
@@ -333,6 +394,8 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       position(node, targetIndex.information.get(id) ?? {}, 'grid', informationPatches && (informationPatches.get(id) ?? noChange), previousIndex.information.get(id) ?? {})
     }
     for (const node of pool) if (!assigned.has(node)) { node.hidden = true; node.style.display = 'none' }
+    if (sort) applySortedSlots()
+    if (!scroll) { finish(); return }
     // Keep the document coordinate, not an artist reference. Shrinking content
     // may clamp it naturally; restore only within the new document bounds.
     const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
@@ -374,6 +437,27 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   }
   const change = (event: Event) => {
     const input = event.target
+    if (presentation && input === sortControl) {
+      const next = isSort(sortControl.value) ? sortControl.value : undefined
+      if (!options.canInteract()) { sortControl.value = sort ?? ''; return }
+      if (next === sort) return
+      settle(); sort = next; reorder()
+      if (!simpleDay || !sort) applySortedSlots()
+      return
+    }
+    if (presentation && input === simpleToggle) {
+      if (!options.canInteract()) { simpleToggle.checked = !!simpleDay; return }
+      if (simpleToggle.checked === !!simpleDay) return
+      if (simpleToggle.checked) {
+        settle(); simpleDay = selected; grid.setAttribute('data-poster-simple', '')
+      } else {
+        const day = simpleDay!
+        simpleDay = undefined; grid.removeAttribute('data-poster-simple')
+        if (day !== selected) select(day, true)
+        else applySortedSlots()
+      }
+      return
+    }
     if (!(input instanceof HTMLInputElement) || !radios.includes(input)) return
     if (!isKey(input.value)) { syncRadios(); return }
     select(input.value)
@@ -382,6 +466,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (destroyed) return
     destroyed = true; ++generation; abort.abort(); motion?.dispose(); releaseScroll?.()
     observer?.disconnect(); disconnect?.disconnect(); media.removeEventListener?.('change', settle)
+    if (presentation) {
+      if (sort) { sort = undefined; reorder() }
+      for (const node of artists) for (const r of ranges) node.style.removeProperty(sortedProperty(r))
+      simpleDay = undefined; grid.removeAttribute('data-poster-simple'); grid.removeAttribute('data-poster-ordered')
+      sortControl.value = ''; simpleToggle.checked = false
+    }
     for (const node of pool) if (!originalMotifSet.has(node)) node.remove()
     for (const { node, restore, hidden, inert, index } of saved) {
       restore()
@@ -395,7 +485,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     controls.addEventListener('change', change, { signal: abort.signal })
     root.addEventListener('click', event => {
       const link = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-event-trigger]') : null
-      if (link && !indexedPlans.get(selected)!.ids.has(link.dataset.eventId!)) event.preventDefault()
+      if (link && !indexedPlans.get(activeDay())!.ids.has(link.dataset.eventId!)) event.preventDefault()
     }, { signal: abort.signal, capture: true })
     window.addEventListener('resize', settle, { signal: abort.signal })
     media.addEventListener('change', settle)
@@ -406,8 +496,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     observer?.observe(controls)
     disconnect = new MutationObserver(() => { if (!root.isConnected) { destroy(); options.onDisconnect() } })
     disconnect.observe(document.documentElement, { childList: true, subtree: true })
+    if (sortControl && simpleToggle) {
+      sortControl.disabled = simpleToggle.disabled = !presentation
+      sortControl.value = ''; simpleToggle.checked = false
+    }
     controls.hidden = false; syncRadios()
     if (!observer) requestAnimationFrame(() => { if (!destroyed) clearance(controls.getBoundingClientRect().height) })
   } catch { destroy(); return inactive }
-  return { settle, includes: id => !!id && indexedPlans.get(selected)!.ids.has(id), destroy }
+  return { settle, includes: id => !!id && indexedPlans.get(activeDay())!.ids.has(id), destroy }
 }

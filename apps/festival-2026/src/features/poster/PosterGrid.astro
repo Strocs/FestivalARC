@@ -15,6 +15,7 @@ import { heroParticipants, type CategoryView } from '../artists/categories'
 import { slotSize, type PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
 import { createPosterFilterPlans } from './poster-filter-layout'
+import { createPosterOrder } from './poster-order'
 import {
   posterIntroPlacement, posterTitleExtensionPlacement,
   posterDisciplinesPlacement, posterPlacePlacement,
@@ -29,7 +30,9 @@ const filterPlans = createPosterFilterPlans({
   participants: lineup.map(({ id, date }) => ({ id, day: date?.day ?? '' })),
   information: category?.key === 'expo' || category?.key === 'market' ? [] : category ? createCategoryTitle(category.name).information : homeInformation,
 })
-const serializedPlans = JSON.stringify(filterPlans).replace(/</g, '\\u003c')
+const presentation = filterPlans.available && (!category || category.key === 'music' || category.key === 'stage')
+const order = presentation ? createPosterOrder(lineup.map(({ date, location }) => ({ day: date?.day, time: date?.time, location }))) : undefined
+const serializedPlans = JSON.stringify({ ...filterPlans, order }).replace(/</g, '\\u003c')
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const { layouts } = filterPlans.plans.all
 type Positions = Record<PosterRange, SlotRect | undefined>
@@ -108,7 +111,54 @@ const slotClasses =
       </>}
     </section>
   <script is:inline type='application/json' data-poster-plans set:html={serializedPlans} />
-  {category?.key !== 'expo' && filterPlans.available && <DayFilter />}
+  {category?.key !== 'expo' && filterPlans.available && <DayFilter {presentation} />}
   {category?.key !== 'expo' && category?.key !== 'market' && <EventModal participants={lineup} />}
   </div>
 </main>
+
+<style>
+  [data-poster-grid][data-poster-ordered]:not([data-poster-simple]) > [data-poster-artist] {
+    grid-area: var(--poster-sorted-mobile);
+  }
+  [data-poster-grid][data-poster-simple] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+  [data-poster-grid][data-poster-simple] > :global([data-poster-motif]),
+  [data-poster-grid][data-poster-simple] > :global([data-poster-information]:not([data-poster-information='intro'])),
+  [data-poster-grid][data-poster-simple] > :global([data-poster-information='intro'] [role='group']) {
+    display: none;
+  }
+  [data-poster-grid][data-poster-simple] > :global([data-poster-information='intro']) {
+    /* Keep the home heading available without reserving a cell. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    grid-area: auto;
+  }
+  [data-poster-grid][data-poster-simple] > [data-poster-artist]:not([hidden]) {
+    display: grid;
+    grid-area: auto;
+  }
+  @media (width >= 48rem) {
+    [data-poster-grid][data-poster-ordered]:not([data-poster-simple]) > [data-poster-artist] {
+      grid-area: var(--poster-sorted-tablet);
+    }
+    [data-poster-grid][data-poster-simple] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    [data-poster-grid][data-poster-simple] > [data-poster-artist] {
+      aspect-ratio: calc(2 * var(--slot-width)) / var(--slot-height);
+    }
+  }
+  @media (width >= 80rem) {
+    [data-poster-grid][data-poster-ordered]:not([data-poster-simple]) > [data-poster-artist] {
+      grid-area: var(--poster-sorted-desktop);
+    }
+    [data-poster-grid][data-poster-simple] {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+</style>
