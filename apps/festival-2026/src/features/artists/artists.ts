@@ -17,6 +17,8 @@ const performerSchema = z.strictObject({
   id: slug,
   name: z.string().min(1),
   company: z.string().min(1).optional(),
+  audienceType: z.string().min(1).optional(),
+  durationMinutes: z.number().int().positive().optional(),
   order: z.number().int().nonnegative(),
   disciplines: z.string().refine(
     id => disciplines.some(discipline => discipline.id === id),

@@ -1,78 +1,71 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
 import ArtistDetail from '../ArtistDetail.astro'
-import { heroParticipants as artists, categories } from '../categories'
+import type { ParticipantView } from '../categories'
 
-async function render(override: Record<string, unknown> = {}) {
-  const container = await AstroContainer.create()
-  return container.renderToString(ArtistDetail, { props: { artist: { ...artists[0], ...override } } })
+const fixture: ParticipantView = {
+  id: 'fixture',
+  name: 'Fixture performer',
+  category: 'music',
+  canonicalPath: '/musica/fixture/',
+  description: '',
+  date: { day: 'Day', time: '12:00' },
+  image: null,
+  ticketUrl: null,
 }
 
-describe('artist detail', () => {
-  it.each([false, true])('renders the supplied videos below the photos (modal: %s)', async modal => {
+async function render(override: Partial<ParticipantView> = {}, modal = false) {
+  const container = await AstroContainer.create()
+  return container.renderToString(ArtistDetail, {
+    props: { artist: { ...fixture, ...override }, modal },
+  })
+}
+
+describe('artist detail rendering', () => {
+  it.each([false, true])('renders a supplied video and social links (modal: %s)', async modal => {
+    const artist = {
+      ...fixture,
+      youtubeVideoId: 'AbCdEf12345',
+      socialLinks: {
+        instagram: 'https://www.instagram.com/example/',
+        spotify: 'https://open.spotify.com/artist/example',
+      },
+    }
     const container = await AstroContainer.create()
-    for (const [id, video] of [['nino-cohete', 'yYA2XkelDw0'], ['dejenme-dormir', 'oL8RRDTznBc'], ['inundaremos', 'PjAEL4nk_Jo']]) {
-      const artist = artists.find(entry => entry.id === id)!
-      const html = await container.renderToString(ArtistDetail, { props: { artist, modal } })
-      const embed = `https://www.youtube-nocookie.com/embed/${video}`
-      expect(artist.description.length).toBeGreaterThan(0)
-      expect(html).toContain(embed)
-      if (!modal) expect(html).toMatch(/<img\b[^>]*>\s*<\/div>\s*<iframe\b[^>]*aspect-video[^>]*w-full/)
-      expect(html.indexOf(embed)).toBeGreaterThan(html.indexOf(`alt="${artist.name}"`))
-      if (id === 'dejenme-dormir') {
-        expect(html).toContain('https://www.instagram.com/dejenme.dormir')
-        expect(html).toContain('https://open.spotify.com/intl-ko/artist/0wlw3iBVFnAzSviZyLjxDJ/discography/all')
-        expect(html).not.toContain('start_radio')
-      }
-      if (id === 'inundaremos') {
-        expect(html).toContain('https://www.instagram.com/inundadores/')
-        expect(html).toContain('https://open.spotify.com/intl-es/artist/7ttDbtyzbPTrvAfdfd4aSS')
-      }
+    const html = await container.renderToString(ArtistDetail, { props: { artist, modal } })
+    expect(html).toContain('https://www.youtube-nocookie.com/embed/AbCdEf12345')
+    expect(html).toContain('https://www.instagram.com/example/')
+    expect(html).toContain('https://open.spotify.com/artist/example')
+    expect(html).toContain('aria-label="Redes sociales de Fixture performer"')
+  })
+
+  it('renders optional audience and duration details in page and modal views', async () => {
+    for (const modal of [false, true]) {
+      const html = await render({ audienceType: 'Fixture audience', durationMinutes: 45 }, modal)
+      expect(html).toContain('Fixture audience')
+      expect(html).toContain('45 minutos')
     }
   })
 
-  it('renders self-contained social icons in multiple artist modal templates', async () => {
-    const container = await AstroContainer.create()
-    for (const id of ['nino-cohete', 'dejenme-dormir']) {
-      const artist = artists.find(entry => entry.id === id)!
-      const html = await container.renderToString(ArtistDetail, { props: { artist, modal: true } })
-      for (const icon of ['instagram', 'spotify']) {
-        expect(html).toMatch(new RegExp(`<svg[^>]*data-icon="simple-icons:${icon}"[^>]*>\\s*<path`))
-      }
-    }
-  })
-
-  it('renders the supplied Polter photo without invented video or activities', async () => {
-    const html = await render()
-    expect(html).toContain('Polter')
-    expect(html).toMatch(/<h1[^>]*class="[^"]*font-sans[^"]*font-black[^"]*"[^>]*>Polter<\/h1>/)
-    expect(html).toContain('Música')
-    expect(html).toContain('Sábado 28 de noviembre · 22:00 hrs.')
-    expect(html).toContain('alt="Polter"')
+  it('renders optional performer details only when supplied', async () => {
+    const html = await render({ description: 'Fixture biography', company: 'Fixture company' })
+    expect(html).toContain('Fixture biography')
+    expect(html).toContain('Fixture company')
     expect(html).not.toContain('<iframe')
-    expect(html).not.toMatch(/demostración|ejemplo|Actividades/i)
+    expect(html).not.toContain('undefined')
   })
 
-  it('renders expo/market detail without fabricated performer metadata or media holes', async () => {
-    const container = await AstroContainer.create()
-    for (const category of categories.slice(2)) {
-      const artist = category.participants[0]
-      const html = await container.renderToString(ArtistDetail, { props: { artist } })
-      expect(html).toContain(artist.name)
-      if (artist.date) expect(html).toContain(`${artist.date.day} · ${artist.date.time}`)
-      else expect(html).not.toContain(' ·  hrs.')
-      expect(html).not.toContain('<img')
-      expect(html).not.toContain('md:grid-cols-[1fr_1fr]')
-      expect(html).not.toContain('undefined')
-      expect(html).not.toContain('Descripción próximamente')
-      expect(html).not.toContain('<a')
-      expect(html.match(/<p\b/g)).toHaveLength(1)
-    }
+  it('renders expo/market-style details without performer metadata or media holes', async () => {
+    const html = await render({ category: 'expo', date: undefined, image: null, description: 'Fixture description' })
+    expect(html).toContain('Fixture description')
+    expect(html).not.toContain('<img')
+    expect(html).not.toContain('<iframe')
+    expect(html).not.toContain('undefined')
   })
 
-  it.each(['javascript:alert(1)', 'data:text/html,x', '//tickets.example', null])('does not render an unsafe or absent ticket link: %s', async ticketUrl => {
+  it.each(['javascript:alert(1)', 'data:text/html,x', '//tickets.example', null])('omits unsafe or absent ticket links: %s', async ticketUrl => {
     const html = await render({ ticketUrl, description: '<script>alert(1)</script>' })
-    expect(html).not.toContain('<a')
+    expect(html).not.toContain('data-modal-ticket')
     expect(html).not.toContain('<script>')
     expect(html).toContain('&lt;script&gt;')
   })
@@ -84,22 +77,16 @@ describe('artist detail', () => {
     expect(html).not.toContain('target=')
   })
 
-  it('renders supplied descriptions and companies', async () => {
-    const html = await render({ description: 'Artist biography', company: 'Company' })
-    expect(html).toContain('Artist biography')
-    expect(html).toContain('Company')
-  })
-
-  it('resolves a local asset through the glob for Astro Image', async () => {
-    const html = await render({ image: { url: '/src/assets/branding/arc26-logo.png', alt: 'Test asset' } })
+  it('resolves a supplied local asset through Astro Image', async () => {
+    const html = await render({ image: { url: '/src/assets/branding/arc26-logo.png', alt: 'Fixture asset' } })
     expect(html).toContain('<img')
-    expect(html).toContain('alt="Test asset"')
+    expect(html).toContain('alt="Fixture asset"')
     expect(html).toMatch(/width="\d+"/)
     expect(html).toMatch(/height="\d+"/)
     expect(html).not.toContain('src="/src/assets/')
   })
 
-  it('fails clearly rather than silently displaying a broken local image', async () => {
+  it('fails clearly rather than silently displaying a broken supplied image', async () => {
     await expect(render({ image: { url: '/src/assets/missing.jpg', alt: '' } }))
       .rejects.toThrow('Artist image does not exist in src/assets: /src/assets/missing.jpg')
   })

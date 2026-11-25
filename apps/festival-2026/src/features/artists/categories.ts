@@ -15,6 +15,8 @@ export interface ParticipantView {
   youtubeVideoId?: string
   socialLinks?: { instagram?: string, spotify?: string }
   company?: string
+  audienceType?: string
+  durationMinutes?: number
   disciplineName?: string
   ticketUrl: string | null
 }
@@ -67,6 +69,8 @@ export const categories: readonly CategoryView[] = (Object.keys(publicSlugs) as 
       ...('youtubeVideoId' in participant ? { youtubeVideoId: participant.youtubeVideoId } : {}),
       ...('socialLinks' in participant ? { socialLinks: participant.socialLinks } : {}),
       ...('company' in participant ? { company: participant.company } : {}),
+      ...('audienceType' in participant ? { audienceType: participant.audienceType } : {}),
+      ...('durationMinutes' in participant ? { durationMinutes: participant.durationMinutes } : {}),
       ...('disciplines' in participant ? { disciplineName: disciplines.find(({ id }) => id === participant.disciplines)!.name } : {}),
       ticketUrl: safeTicketUrl('ticketUrl' in participant ? participant.ticketUrl : null),
     })),

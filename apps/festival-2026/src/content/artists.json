@@ -7,7 +7,7 @@
         "name": "Polter",
         "order": 1,
         "disciplines": "musica",
-        "description": "Formada en Ovalle en 2001 y parte de la activa generación de rock-pop de ascendente indie de los años dos mil, Polter retoma sus actividades este 2026 junto a Iván Toro y Óscar Hauyon. Su propuesta sonora combina líneas de bajo envolventes, guitarras cargadas de reverberación, sintetizadores y bases programadas, construyendo una atmósfera melódica e introspectiva con sello propio desde la Región de Coquimbo.\n\nEsta nueva etapa creativa fue inaugurada con el lanzamiento de su álbum compilatorio \"Esencial 2001–2026\" y el sencillo \"Siempre Fuiste Tú\", reafirmando una trayectoria que dialoga con las vertientes del indie, el rock-pop y el post-punk en una puesta en escena de intensa conexión con el público.",
+        "description": "Polter es una banda chilena formada en Ovalle a comienzos de los años 2000 por Iván Toro y Oscar Hauyon. Su propuesta cruza rock alternativo, electrónica y pop, consolidando una trayectoria proyectada desde la Región de Coquimbo hacia circuitos nacionales que incluyó el álbum debut homónimo Polter (2005, Sello Azul de la SCD), Moderno (2008, Feria Music), rotación audiovisual en señales como MTV Latino y Vía X, y presentaciones en diversos escenarios del país.\n\nTras editar el doble sencillo «Camanchaca / Tal Vez» en 2022, en 2026 Toro y Hauyon reactivan Polter en formato dúo combinando guitarras, voces, sintetizadores y secuencias electrónicas. Esta nueva etapa reúne su repertorio histórico con material reciente, incluyendo el sencillo «Siempre Fuiste Tú» y el compilatorio Esencial 2001-2026, que sintetiza 25 años de trayectoria.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -20,10 +20,7 @@
         },
         "national": false,
         "location": "Plaza Gabriel González Videla",
-        "socialLinks": {
-          "instagram": "https://www.instagram.com/polterchile/",
-          "spotify": "https://open.spotify.com/intl-es/artist/0Ib5T2tipzgV6BuoRy5FVW"
-        },
+        "socialLinks": {"instagram":"https://www.instagram.com/polterchile/","spotify":"https://open.spotify.com/intl-es/artist/0Ib5T2tipzgV6BuoRy5FVW?si=Xh6TkD7dSwycctbhHUW8mg"},
         "youtubeVideoId": "piiK5twuq90"
       },
       {
@@ -55,7 +52,7 @@
         "name": "Shicris",
         "order": 5,
         "disciplines": "musica",
-        "description": "",
+        "description": "ShiCris es un artista, instrumentista y productor chileno oriundo de Coquimbo. Su proyecto combina letras conscientes con ritmos enérgicos que viajan desde el rap y el funk hasta el folclor latinoamericano, pasando por la salsa y el pulso de las batucadas. Con influencias de Joe Vasconcellos y Vicente García, despliega un repertorio original sostenido en percusión latina en vivo y sección de vientos, abordando temáticas como el amor propio, la resiliencia, la amistad y la celebración.\n\nEn abril de 2025 publicó su álbum Bosque de Canciones, antecedido por los sencillos «Lito Chocolito» y «Sigue Así» y la sesión en vivo Recompensa. Su recorrido en vivo incluye haber teloneado a Joe Vasconcellos en el Teatro Centenario de La Serena, además de presentaciones en el Festival Día de la Juventud en la Plaza de Armas de Coquimbo y en carnavales culturales en Tierras Blancas, Paihuano, El Palqui y Los Andes.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -67,7 +64,11 @@
           "alt": "Shicris"
         },
         "national": false,
-        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
+        "location": "Plaza Santo Domingo"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/shicris.cl/","spotify":"https://open.spotify.com/intl-es/artist/5s468mFUjqdJaa1VfikhOT?si=1Zkl0ynOTBW5biWcLShZYA"}
+      ,
+        "youtubeVideoId": "4Yy_FtbM2k4"
       },
       {
         "id": "javiera-mena",
@@ -109,7 +110,7 @@
         "name": "Freshki",
         "order": 9,
         "disciplines": "musica",
-        "description": "",
+        "description": "Freshki nació en 2022 en La Serena como un proyecto solista independiente que cruza R&B, hip hop y estética lo-fi, ampliando luego su paleta hacia el bedroom pop, el indie y el jazz. Despliega dos propuestas en vivo: un formato live set con beats y secuencias, y un formato banda enfocado en la improvisación sobre bases instrumentales.\n\nSu discografía incluye el álbum homónimo Freshki (2022), el EP en vivo Fresh Live! (2024), el mixtape Pulpa (2025) y el LP Luces del Tártaro (2026), trabajo con el que estrenó nueva formación y estética. En escena ha participado en instancias como el Festival Escandalosos, el Festival ARC (en el Espacio Estelar de IMREC), el Festival Astromúsica y Sesiones en el Jardín en Ovalle, sumando además presentaciones en La Serena y Santiago.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -121,7 +122,9 @@
           "alt": "Freshki"
         },
         "national": false,
-        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
+        "location": "Plaza Santo Domingo"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/freshkivel/","spotify":"https://open.spotify.com/intl-es/artist/4NTLFGANmtpQZw3PS5GSfE?si=aXsb2X-2TaSkqs_j_rJvDw"}
       },
       {
         "id": "gepe",
@@ -147,7 +150,7 @@
         "name": "Javier Barría",
         "order": 12,
         "disciplines": "musica",
-        "description": "",
+        "description": "Javier Barría es un cantautor, multiinstrumentista y productor musical chileno reconocido como una de las voces más prolíficas y versátiles de la escena independiente contemporánea. Su propuesta transita con naturalidad entre el folk, el pop de autor, la canción acústica y la experimentación electrónica, destacando por un trabajo minucioso en los arreglos y la producción sonora.\n\nA lo largo de más de dos décadas de carrera ha publicado una extensa discografía solista que incluye títulos fundamentales como El día después, Estación Pirque, Folclor y Estereotipo, además de colaborar como productor y arreglista con destacados exponentes de la música chilena. En vivo, su espectáculo combina cercanía interpretativa, destreza instrumental y una aguda mirada poética sobre la memoria y lo cotidiano.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -156,14 +159,19 @@
         },
         "image": null,
         "national": true,
-        "location": "Terraza Cordovez"
+        "location": "Terraza Cordovez",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/javierbarria/",
+          "spotify": "https://open.spotify.com/intl-es/artist/2v63mEwpd09o5Oo3ALq0l6"
+        },
+        "youtubeVideoId": "13GQ3ea-EwY"
       },
       {
         "id": "quita-de-bulla",
         "name": "Quitá de Bulla",
         "order": 13,
         "disciplines": "musica",
-        "description": "",
+        "description": "Quitá de Bulla es el proyecto solista más íntimo de Margarita Jazmín (Salamanca, 1982), cantautora y artista de la Región de Coquimbo cuya propuesta cruza el indie rock y el pop experimental. Enraizada en los paisajes del Norte Chico —entre valles, ríos, cerros y quebradas—, su música combina rimas y cantos inspirados en la naturaleza, la introspección y las luchas de las mujeres del campo y la ciudad.\n\nCon una trayectoria sostenida en la escena regional junto a agrupaciones de fusión como Asamblea del Dub y Yawar-Mallku, en 2026 dio forma a su debut solista con el EP homónimo Quitá de Bulla, un trabajo de cuatro canciones que consolida esta etapa autoral.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -176,6 +184,8 @@
         },
         "national": false,
         "location": "Plaza Gabriel González Videla"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/bruja.margarita_quitadebulla/"}
       },
       {
         "id": "fernando-milagros",
@@ -201,11 +211,11 @@
         "name": "Jazztacuatico",
         "order": 17,
         "disciplines": "musica",
-        "description": "",
+        "description": "Jazztacuático es una banda de la Región de Coquimbo formada en 2023 que desarrolla una propuesta desde el jazz y la fusión con foco en la temática socioambiental. Sus composiciones abordan la crisis hídrica y la defensa de los recursos naturales —con especial énfasis en el agua—, buscando generar conciencia a través de una sonoridad expresiva inspirada en la fuerza de la naturaleza.\n\nEn su recorrido por la escena regional destaca su EP Sequía en el Elqui, trabajo que profundiza en la urgencia hídrica del territorio, además de presentaciones en instancias locales como el festival Astromúsica y el Festival de Blues & Jazz del Elqui en La Serena.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "21:00",
+          "time": "20:00",
           "month": "noviembre"
         },
         "image": {
@@ -213,7 +223,9 @@
           "alt": "Jazztacuatico"
         },
         "national": false,
-        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
+        "location": "Terraza Cordovez"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/jazztacuatico/","spotify":"https://open.spotify.com/intl-es/artist/2sEtRKW8ZAkGtbVV8IhpoE?si=51rtMunjRIKZ0BH4Vr8ehw"}
       },
       {
         "id": "rosario-alfonso",
@@ -239,7 +251,7 @@
         "name": "Duerme y Cae!",
         "order": 20,
         "disciplines": "musica",
-        "description": "",
+        "description": "Duerme & Cae! es un proyecto de pop alternativo de la Región de Coquimbo integrado por Sebastián Olivares y Sofía Cortés. Su música combina guitarras, sintetizadores y melodías influenciadas por el rock alternativo y el pop contemporáneo, transitando entre la nostalgia, la intensidad emocional y el pulso bailable a partir de relatos cotidianos.\n\nEn su discografía destacan el EP Tienes Todo Menos Alma (2024) y sencillos como «9c» y «Fantasmas» (2026), lanzamiento con el que emprendieron su primera gira nacional por distintas ciudades del país, consolidando su presencia tras pasar también por escenarios como el festival Astromúsica.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -252,6 +264,8 @@
         },
         "national": false,
         "location": "Odeón Plaza de Armas"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/duermeycae/","spotify":"https://open.spotify.com/intl-es/artist/5RMewTvifqaXzb2uFHPNHu?si=HqeuCNOdRguhiv7og_8rOg"}
       },
       {
         "id": "claudio-valenzuela",
@@ -293,7 +307,7 @@
         "name": "Kalishe",
         "order": 24,
         "disciplines": "musica",
-        "description": "",
+        "description": "Kalishe es un proyecto musical nacido en Las Rojas, comuna de La Serena, que define su propuesta como rap rururbano. Su sonido cruza el rap y el trip hop con elementos del jazz y el R&B, articulando los lenguajes de la música urbana con relatos del campo, el trabajo, los afectos, las memorias familiares y la vida comunitaria de la Región de Coquimbo.\n\nEn vivo, la agrupación despliega voz, guitarra, bajo, teclados, trompeta, secuencias y visuales, dando forma a una puesta en escena envolvente. En agosto de 2026 publicó el EP Extrañamientos, trabajo que profundiza en su búsqueda por crear música contemporánea desde las historias y sensibilidades del territorio.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -306,6 +320,10 @@
         },
         "national": false,
         "location": "Plaza Gabriel González Videla"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/kalishe.es/","spotify":"https://open.spotify.com/intl-es/artist/0bXKIgeSG5KohnSiQcJhmf?si=oic_x9dSSVeyIY-9u9b32w"}
+      ,
+        "youtubeVideoId": "Gm2NzEi03JE"
       },
       {
         "id": "pedropiedra",
@@ -336,7 +354,7 @@
         "name": "Weinkeys + Blackbeat",
         "order": 27,
         "disciplines": "musica",
-        "description": "",
+        "description": "Weinkeys + Blackbeat es una colaboración musical de hip hop, funk, soul, R&B y jazz oriunda de la Región de Coquimbo. El proyecto une al compositor, productor y tecladista Weinkeys con la banda Blackbeat para llevar al escenario los trabajos discográficos Ronda (álbum) y 12D95 (EP), sintetizando una búsqueda creativa centrada en los teclados, el groove y la producción contemporánea.\n\nFormado en la Universidad de La Serena, Weinkeys cuenta con más de dos décadas de trayectoria en la escena regional, donde destaca como fundador, compositor y tecladista de la banda serenense FonkMachine (2012-2023), además de su labor como productor musical, compositor para proyectos audiovisuales, docente y ganador del segundo lugar en el Concurso Nacional de Composición Luis Advis 2012.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -349,6 +367,8 @@
         },
         "national": false,
         "location": "Plaza Gabriel González Videla"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/weinkeyss/","spotify":"https://open.spotify.com/intl-es/album/7MQIEtf0sj0tbsUWsZlD7F"}
       },
       {
         "id": "nunez-briceno",
@@ -374,7 +394,7 @@
         "name": "Stendhal",
         "order": 31,
         "disciplines": "musica",
-        "description": "",
+        "description": "Originaria de La Serena, Stendhal es una banda chilena que canaliza emociones intensas a través de paisajes sonoros densos, melancólicos y etéreos. Influenciada por el metal alternativo, el alt-rock y el post-hardcore atmosférico, su propuesta busca construir una identidad donde la fragilidad emocional y la fuerza sonora coexistan sobre el escenario.\n\nDentro de la escena independiente de la Región de Coquimbo, la agrupación ha formado parte de diversas fechas y encuentros en vivo —pasando por escenarios locales como Calaca Bar y compartiendo cartel con proyectos regionales y nacionales—, consolidando un directo cargado de intensidad y atmósfera.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -386,7 +406,11 @@
           "alt": "Stendhal"
         },
         "national": false,
-        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
+        "location": "Plaza Santo Domingo"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/stendhal.banda/","spotify":"https://open.spotify.com/intl-es/artist/4pAFyj9RLmbGP6MfAGVjmv?si=cBwGv6-QTFC8Pw-bXWPj0g"}
+      ,
+        "youtubeVideoId": "NefPMTu5SIs"
       },
       {
         "id": "jose-alfredo-fuentes",
@@ -409,11 +433,11 @@
         "name": "Last Whisper",
         "order": 34,
         "disciplines": "musica",
-        "description": "",
+        "description": "Originaria de La Serena, Last Whisper es una banda chilena de metal que cruza elementos del metalcore, el metal alternativo y el progresivo, consolidando una propuesta intensa y moderna dentro de la escena regional.\n\nSu trayectoria reciente incluye su participación en el festival Astro Música —en ruta hacia Rockódromo— y haber sido seleccionada para telonear a la banda alemana Rage. En el plano discográfico, tras lanzar los sencillos «Pray», «Gotta Go Fast» e «Inhuman», en febrero de 2026 publicó su álbum debut, Beyond.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "19:00",
+          "time": "17:00",
           "month": "noviembre"
         },
         "image": {
@@ -421,7 +445,12 @@
           "alt": "Last Whisper"
         },
         "national": false,
-        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/lastwhisper_cl/",
+          "spotify": "https://open.spotify.com/intl-es/artist/2dhgpwzEwahuRRxii0AXQy?si=80GSQN2BQI2gSBPT3AfxYQ"
+        },
+        "youtubeVideoId": "sBG-nnHF9Bs"
       },
       {
         "id": "inundaremos",
@@ -468,10 +497,10 @@
       },
       {
         "id": "medinamico",
-        "name": "Medinamico",
+        "name": "Medinámico",
         "order": 38,
         "disciplines": "musica",
-        "description": "",
+        "description": "Medinámico es un proyecto musical independiente de la Región de Coquimbo que fusiona jazz-rock y funk con poesía, exploración sonora y una mirada crítica sobre la vida cotidiana. Inspirado en la literatura y el pensamiento filosófico, transforma experiencias personales, sociales y existenciales en composiciones orientadas a provocar reflexión y emoción.\n\nCon cerca de un centenar de presentaciones en La Serena, Coquimbo y distintas localidades del territorio, ha consolidado una presencia constante en festivales, ciclos y espacios culturales. En el plano discográfico, cuenta con el álbum Muriendo y Aprendiendo (2021) y el EP Sombras & Arquetipos, además de sencillos y nuevo material en desarrollo.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -484,6 +513,10 @@
         },
         "national": false,
         "location": "Plaza Gabriel González Videla"
+      ,
+        "socialLinks": {"instagram":"https://www.instagram.com/medinamico.cl/","spotify":"https://open.spotify.com/intl-es/artist/4wrRxeeUSrgOrRqlBBxQ47?si=KuUArBWEQ3yQytqbhLYUQg"}
+      ,
+        "youtubeVideoId": "5tjyaiXt0LA"
       },
       {
         "id": "dejenme-dormir",
@@ -554,10 +587,10 @@
       },
       {
         "id": "esteban-y-los-hurtados",
-        "name": "Esteban y los Hurtados",
+        "name": "Esteban y Los Hurtados",
         "order": 45,
         "disciplines": "musica",
-        "description": "",
+        "description": "Esteban y Los Hurtados es un proyecto de rock nacional que nace desde el trabajo solista de Esteban Hurtado. Con un repertorio original de 17 canciones, su propuesta conecta con guiños al rock chileno de los años 2000 y la energía del rock clásico de los sesenta, desplegando un sonido directo en formato de banda en vivo.\n\nCon presentaciones en las regiones de Coquimbo, Atacama y Metropolitana, el grupo se encuentra en etapa de consolidación y difusión de su catálogo de estudio, además de promover su LP grabado en vivo. A lo largo de su recorrido ha pasado por espacios como Audiomusica Megatienda Ñuñoa, Cocina Clandestina Bellavista, Mall Plaza Copiapó, Pueblito Peñuelas y distintos escenarios de La Serena, Coquimbo y Copiapó.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -566,10 +599,15 @@
         },
         "image": {
           "url": "/src/assets/artists/esteban-y-los-hurtados.webp",
-          "alt": "Esteban y los Hurtados"
+          "alt": "Esteban y Los Hurtados"
         },
         "national": false,
-        "location": "Plaza Santo Domingo (Feria Ilustración y Diseño)"
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/estebanyloshurtados/",
+          "spotify": "https://open.spotify.com/intl-es/artist/62MoRspip9gbMS1Zk8cRfG?si=7yfhE4esTTWqMZ8XXlyBew"
+        },
+        "youtubeVideoId": "OoYQ-z2KwIs"
       },
       {
         "id": "dj-sepha",
@@ -598,10 +636,12 @@
       {
         "id": "lobas",
         "name": "Lobas",
-        "company": "Kaleidoscopio Circo",
+        "company": "Circo kaleidoscopio",
+        "audienceType": "Todo Público",
+        "durationMinutes": 20,
         "order": 2,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Show de fuego inspirado en seis cuentos del libro Mujeres que corren con los lobos, de Clarissa Pinkola Estés, que reúne a cuatro mujeres en escena para mantener vivo el fuego del arquetipo de la Mujer Salvaje.\n\nTodo se sostiene a través de la manipulación de distintos malabares, donde cada elemento marca un llamado y representa un estado de ser femenino, transitando de lo colectivo a lo individual. La obra resignifica necesidades, inquietudes, deseos, miedos y luchas desde una mirada feminista en un territorio que convoca a estar organizadas y juntas. Lobas es una relectura encarnada desde la valentía de sus intérpretes.\n\n«Loba, tu aullido es flama que acompaña la sabiduría, confianza, valentía y grito de la mujer salvaje». ",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -612,15 +652,20 @@
           "url": "/src/assets/artists/lobas.webp",
           "alt": "Lobas"
         },
-        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/kaleidoscopio_circo/reels/"
+        }
       },
       {
         "id": "yaru",
-        "name": "Yaru",
+        "name": "Yaru, la heroína Diaguita",
         "company": "La Feroz Compañía",
+        "audienceType": "Infantil",
+        "durationMinutes": 40,
         "order": 4,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "En los valles diaguitas, una larga sequía comienza a transformar la vida de la comunidad: los ríos se apagan, las semillas dejan de crecer y la tierra pierde su fuerza. Yaru, una niña curiosa e inquieta, recibe la misteriosa visita de Yacurmana, la voz del agua, quien le revela que deberá emprender un viaje más allá de las montañas conocidas hasta llegar al gran mar, recoger su fuerza y devolver el equilibrio a la Pachamama.\n\nA través del teatro físico, el mimo narrador, el teatro de objetos y las técnicas circenses, el escenario se transforma en montañas, ríos y océanos en un espectáculo poético y visual para toda la familia. Yaru, la heroína diaguita invita a observar el mundo con curiosidad, valorar la riqueza de los pueblos originarios y descubrir cómo la valentía y la solidaridad pueden transformar los momentos más difíciles.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -631,15 +676,20 @@
           "url": "/src/assets/artists/yaru.webp",
           "alt": "Yaru"
         },
-        "location": "Teatro Vive Centenario"
+        "location": "Teatro Vive Centenario",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/laferoz.compania/"
+        }
       },
       {
         "id": "el-humedal",
-        "name": "Humedal, un viaje en el tiempo",
-        "company": "Compañía Los Mil Nombres",
+        "name": "El Humedal, un viaje por el tiempo",
+        "company": "Compañía de teatro Los Mil Nombres",
+        "audienceType": "Todo Público",
+        "durationMinutes": 60,
         "order": 7,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Este montaje reúne teatro, danza, circo, acrobacia, cantos y música en vivo para abordar el peligro que enfrentan los humedales y los restos arqueológicos ante el avance inmobiliario.\n\nCon un lenguaje de teatro físico, el elenco asume distintos roles según la escena en un recorrido de estética poética y realismo mágico. El humedal actúa como testigo silencioso a través del tiempo: parte en las culturas originarias, avanza por los años 30 y los 80, y llega hasta hoy. En escena, la acrobacia —con manipulación de telas y muñecos— da vida a figuras simbólicas y oníricas, mientras la música cruza instrumentos vernaculares con sonidos electrónicos y la iluminación acompaña los cambios de época y clima emocional.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -648,17 +698,22 @@
         },
         "image": {
           "url": "/src/assets/artists/el-humedal.webp",
-          "alt": "Humedal, un viaje en el tiempo"
+          "alt": "El Humedal, un viaje por el tiempo"
         },
-        "location": "Teatro Vive Centenario"
+        "location": "Teatro Vive Centenario",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/losmilnombres.teatro/"
+        }
       },
       {
         "id": "pulsando",
-        "name": "Pulsando",
-        "company": "Agrupación Flamenco Elqui",
+        "name": "PulSando",
+        "company": "Agrupación flamenco Elqui",
+        "audienceType": "Todo Público",
+        "durationMinutes": 60,
         "order": 11,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Bajo el lema PulSando, este espectáculo nace de un periodo de vivencias humanas complejas que encuentran cauce y reflejo en el baile, el cante y el toque. Es un encuentro de pulso individual y colectivo donde los cuerpos y la música avanzan hacia un nuevo horizonte.\n\nLa propuesta reúne a tres escuelas de la región de Coquimbo —Rincón Flamenco, Zapato Rojo y Bordón Dorao— para recorrer distintos palos y estilos de la tradición flamenca a través de sus montajes más recientes, combinando danza, música en vivo y cante.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -666,15 +721,20 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/flamenco.aflel/"
+        }
       },
       {
         "id": "removernos-a-cielo-abierto",
-        "name": "Removernos a Cielo Abierto",
-        "company": "Colectivo Zona de Obras",
+        "name": "Removernos a Cielo Abierto: Estrategia de Supervivencia",
+        "company": "Colectivo de Artes Escénicas Zona de Obras de Coquimbo",
+        "audienceType": "Todo Público",
+        "durationMinutes": 59,
         "order": 14,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Obra colaborativa de danza, investigación coreográfica, concebida para espacios públicos abiertos y explanadas sin techo. A través del cuerpo, el sonido y el diseño visual, cuestiona el aislamiento y el anquilosamiento social, apostando por la creatividad, el territorio y el encuentro colectivo como formas de resistencia y vitalidad.\n\nCon un elenco de cinco personas —cuatro bailarines/as y un diseñador sonoro— vestidos con ropa formal de colores saturados, la pieza aprovecha el tránsito de la luz del atardecer a la iluminación artificial y el desplazamiento constante de siete plataformas rojas y sistemas de amplificación para construir imágenes poéticas en escena. Proyecto financiado por el Fondo Nacional de Fomento y Desarrollo de las Artes Escénicas 2025.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -683,17 +743,22 @@
         },
         "image": {
           "url": "/src/assets/artists/removernos-a-cielo-abierto.webp",
-          "alt": "Removernos a Cielo Abierto"
+          "alt": "Removernos a Cielo Abierto: Estrategia de Supervivencia"
         },
-        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/circolacuartaestacion/"
+        }
       },
       {
         "id": "yatiri",
-        "name": "Yatiri",
+        "name": "Yatiri y las Perlas de Pachamama",
         "company": "Fundación Sociedad Bach La Serena",
+        "audienceType": "Familiar",
+        "durationMinutes": 45,
         "order": 16,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Yatiri y las Perlas de Pachamama es una experiencia escénica de artes integradas —desde la danza con música en vivo y narración— que sigue a Yatiri, un niño del desierto norteño, en su viaje para pedir ayuda a la Pachamama cuando su familia decide abandonar su hogar en busca de un lugar más fértil. A través de la danza, la música y el relato teatral, el público recorre paisajes, descubre personajes y reflexiona sobre el valor del hogar, la naturaleza y los vínculos familiares. Es una obra familiar, sensible y lúdica, dirigida a niños y niñas de 5 a 10 años y público familiar, que conecta la imaginación infantil con un mensaje ecológico sobre la naturaleza, el hogar y la conexión con la Pachamama, con funciones previas en Vicuña, Ovalle y La Serena.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -702,17 +767,22 @@
         },
         "image": {
           "url": "/src/assets/artists/yatiri.webp",
-          "alt": "Yatiri"
+          "alt": "Yatiri y las Perlas de Pachamama"
         },
-        "location": "Teatro Vive Centenario"
+        "location": "Teatro Vive Centenario",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/sociedadbachlaserena/"
+        }
       },
       {
         "id": "un-derrotero-nortino-con-marionetas",
         "name": "Un Derrotero Nortino con Marionetas",
         "company": "Red Lambe Norte",
+        "audienceType": "Familiar",
+        "durationMinutes": 180,
         "order": 19,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Muestra simultánea de cuatro obras de teatro Lambe Lambe diseñadas para un espectador por vez, con funciones continuas durante 180 minutos. A través de pequeñas cajas escénicas portátiles, cada historia rescata el patrimonio cultural inmaterial de los territorios del norte de Chile en un formato íntimo y accesible para toda la familia.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -720,15 +790,20 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/redlambenorte/"
+        }
       },
       {
         "id": "awicha-la-tejedora-de-memorias",
         "name": "Awicha, la Tejedora de Memorias",
-        "company": "Laboratorio Creativo Remolino",
+        "company": "Fundación Círculo Remolino - Laboratorio Creativo Remolino",
+        "audienceType": "Familiar",
+        "durationMinutes": 40,
         "order": 22,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "La mágica abuela de Azul y Violeta posee el don de interpretar el canto de los colibríes y transmitir sus mensajes entre las urdimbres y tramas de su histórico oficio textil. A través de los hilos, los relatos y la memoria, comparte saberes que conectan a las nuevas generaciones con la naturaleza y la tradición.\n\nEsta experiencia escénica pensada para las infancias nace desde el Laboratorio Creativo Remolino, en un trabajo colaborativo junto a mujeres del territorio y trabajadoras de las artes, invitando a disfrutar en familia de un encuentro sensible y cercano.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -739,15 +814,20 @@
           "url": "/src/assets/artists/awicha-la-tejedora-de-memorias.webp",
           "alt": "Awicha, la Tejedora de Memorias"
         },
-        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/fundacion_circulo_remolino/"
+        }
       },
       {
         "id": "narrando-mundos-en-bicicuentera",
-        "name": "Narrando Mundos en Bicicuentera",
-        "company": "Títeres Ojos de Agua",
+        "name": "Narrando Mundos en la Bicicuentera",
+        "company": "Compañía de Ojos de Agua",
+        "audienceType": "Familiar",
+        "durationMinutes": 40,
         "order": 25,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Flor es una mujer migrante que disfraza su tránsito errante por el mundo como una gran aventura. En el fondo, fue obligada a dejar su país por problemas climáticos y añora volver, pero mientras tanto no se echa a morir y enfrenta las dificultades con humor. Continúa su viaje con esperanza y optimismo, porque siempre aparecen personas y animales —como el simpático \"señor ratón\"— dispuestos a ayudarla.\n\nComo regalo y retribución, Flor dedica su vida a contar historias para abrigar los corazones y reflexionar sobre la diversidad y la paz. La obra recorre culturas y paisajes diversos —Japón, África, Colombia, Inglaterra, India y Chile— a través de una ficción autobiográfica en la que la narradora utiliza kamishibai, títeres de mesa, títeres planos y música en vivo, entre otros recursos escénicos que enriquecen los relatos.\n\nAunque la obra aborda temas complejos como la guerra, la esclavitud, la migración y la discriminación, su tono lúdico y humorístico crea un ambiente motivador y cercano para niños y niñas de entre 4 y 14 años. La bicicuentera y el carro-teatrino funcionan como el hogar ambulante de Flor —su tesoro más preciado—, un dispositivo versátil desde donde extrae los elementos escénicos para sorprender al público en distintos momentos de la función.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -756,17 +836,22 @@
         },
         "image": {
           "url": "/src/assets/artists/narrando-mundos-en-bicicuentera.webp",
-          "alt": "Narrando Mundos en Bicicuentera"
+          "alt": "Narrando Mundos en la Bicicuentera"
         },
-        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/titeresojosdeagua/"
+        }
       },
       {
         "id": "bendita-agua",
         "name": "Bendita Agua",
-        "company": "Compañía de Títeres La Boda",
+        "company": "Compañía de Títeres \"La Boda\"",
+        "audienceType": "Familiar",
+        "durationMinutes": 40,
         "order": 28,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Guaina vive feliz en el campo, trabaja la tierra, planta semillas y cosecha sus frutos. Sin embargo, la tranquilidad de su hogar se ve amenazada por la ambición de Juan Mandinga, quien desea quemar la tierra para venderla por pedazos.\n\nJunto a su amiga Rosita —y con la participación y ayuda del público—, Guaina deberá enfrentar este desafío y salvar su tierra en una historia cercana y participativa.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -777,15 +862,20 @@
           "url": "/src/assets/artists/bendita-agua.webp",
           "alt": "Bendita Agua"
         },
-        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/titereslaboda/"
+        }
       },
       {
         "id": "las-luciernagas-y-el-origen-del-fuego",
         "name": "Las Luciérnagas y el Origen del Fuego",
-        "company": "Compañía Cuenta Cuentos Tricahue",
+        "company": "Compañía de Cuenta Cuentos Tricahue",
+        "audienceType": "Todo Público",
+        "durationMinutes": 45,
         "order": 30,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Al principio, la humanidad y los animales sufrían por el frío extremo y comían carne cruda, hasta que un astuto zorro prometió traer calor y luz al mundo.\n\nJunto a su amigo, el caballo Panchito, sigue las pistas de la serpiente Martita hasta los patos de la laguna, quienes los llevan volando tras las montañas donde las luciérnagas cuidan una gran fogata. Tras engañar a las luciérnagas para obtener la llama, un imponente cóndor los ayuda a elevarla y, juntos, reparten el calor por todo el mundo, transformando la vida gracias al trabajo en equipo, la valentía y la amistad.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -793,15 +883,20 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Los Carreras)"
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/tricahuecuentos/"
+        }
       },
       {
         "id": "llamada-de-emergencia",
         "name": "Llamada de Emergencia",
-        "company": "Compañía Noche de Payasas",
+        "company": "Compañia Noche de Payasas",
+        "audienceType": "Adulto",
+        "durationMinutes": 60,
         "order": 33,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Llamado de Emergencia es una comedia clown que transcurre en un delirante quirófano donde cada consulta puede convertirse en una cuestión de vida o muerte. A través de situaciones absurdas, humor físico y personajes entrañablemente desastrosos, la obra explora la relación entre médicos y pacientes, poniendo en escena las fragilidades, miedos y contradicciones que rodean la salud física y mental en nuestra sociedad.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -812,15 +907,20 @@
           "url": "/src/assets/artists/llamada-de-emergencia.webp",
           "alt": "Llamada de Emergencia"
         },
-        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/nochedepayasas/"
+        }
       },
       {
         "id": "martin-v-s-trampolino-maletines",
         "name": "Martín V/S Trampolino Maletines",
         "company": "Compañía de Teatro Viento Norte",
+        "audienceType": "Infantil",
+        "durationMinutes": 45,
         "order": 36,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Martín es un niño feliz cuya parte favorita del día es jugar y leer cuentos con su madre tras la escuela. Sin embargo, esa armonía se quiebra con la llegada de Don Trampolino Maletínez, un extravagante personaje que, mediante engaños, logra que la madre firme un contrato tramposo. Tras el chasquido de su misterioso maletín negro, ella queda atrapada trabajando sin descanso en una fábrica.\n\nLa vida de Martín se vuelve un caos al intentar asumir solo las tareas del hogar y cuidar a sus hermanos bebés. Aprovechándose de su desesperación, Don Trampolino regresa y lo obliga a firmar un segundo contrato para vender dulces en la calle. Tras una dura jornada a cambio de una escasa moneda, Martín decide rebelarse y, rompiendo la cuarta pared, une fuerzas con el público infantil para enfrentar al villano y romper los papeles al unísono: «¡La trampa terminó, el contrato se rompió!». Una propuesta colorida e interactiva que releva los derechos de la infancia y el valor del tiempo en familia.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -828,15 +928,20 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/cia.teatrodelviento/"
+        }
       },
       {
         "id": "trans-humante",
         "name": "Trans-Humante",
         "company": "Espacio La Isla",
+        "audienceType": "Familiar",
+        "durationMinutes": 45,
         "order": 39,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Trans - Humante cuenta la historia de Miguel, un niño que vive la trashumancia caprina junto a sus abuelos en la provincia del Limarí. En este recorrido por el mundo rural y los cerros, transita también un proceso de reconocimiento de su identidad de género, poniendo en diálogo las tradiciones del campo con las miradas actuales sobre las infancias trans.\n\nA través de muñecos y una puesta en escena sensible y cercana, la obra invita a reflexionar sobre la identidad, los vínculos familiares y las distintas formas de habitar el territorio y el mundo.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -847,15 +952,20 @@
           "url": "/src/assets/artists/trans-humante.webp",
           "alt": "Trans-Humante"
         },
-        "location": "Teatro Vive Centenario"
+        "location": "Teatro Vive Centenario",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/espacio_la_isla/"
+        }
       },
       {
         "id": "juan-manotas-y-el-origen-del-carnaval",
         "name": "Juan Manotas y el Origen del Carnaval",
         "company": "Compañía de Teatro Pucará",
+        "audienceType": "Todo Público",
+        "durationMinutes": 60,
         "order": 41,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "El Hombre de Negro es un estafador itinerante que, bajo una fachada humana, esconde la identidad del mismísimo Diablo. Recorre los pueblos de América —pasando por cafetales en Colombia, donde conoce a Guadalupe, y por Centroamérica, donde desafía a Gerardo el bananero en un duelo de tambores— apostando oro, joyas y falsas riquezas para engañar a la clase trabajadora y arrebatarle sus almas y recursos naturales.\n\nA través de cuatro cuadros teatrales habitados por personajes entrañables, la obra construye un espejo cercano para el público. Todo parece ir a favor del Diablo hasta que se topa con Juan Manotas, un humilde trabajador rural que lo enfrenta en un duelo de ritmo y usa el poder del tambor para condenarlo a bailar cada vez que suene un parche, revelando el origen de la figura del diablo en los carnavales.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -869,9 +979,11 @@
         "id": "de-papel",
         "name": "De Papel",
         "company": "Compañia Silencio Blanco",
+        "audienceType": "Todo Público",
+        "durationMinutes": 40,
         "order": 43,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Un escenario sencillo, algunas bolas de papel y expectación en la sala. Poco a poco, a través del movimiento, el silencio y la delicadeza de sus intérpretes, el papel cobra vida frente a los ojos del público.\n\nEstrenada en 2010, De Papel gira en torno a Luchito, una marioneta de papel creada para aquel montaje original que sigue recorriendo escenarios y conectando con nuevas audiencias, transformando un material cotidiano en un personaje lleno de expresión y emociones.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -879,15 +991,19 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/silencioblanco/"
+        }
       },
       {
         "id": "carpe-diem",
         "name": "Carpe Diem",
-        "company": "Malabicirco",
+        "company": "Malabi Circo",
+        "audienceType": "Todo Público",
         "order": 47,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "La compañía de artes circenses de Valparaíso presenta Carpe Diem, un espectáculo familiar en el que los payasos Demencio Vicuña Mackenna y Bartolomé de San Martín invitan al público a vivir el presente entre risas, malabarismo y participación directa.\n\nEstos personajes despliegan distintas técnicas circenses y humor blanco para abrir espacios de juego y encuentro, donde la audiencia es parte clave de la función. Una propuesta pensada para hacer una pausa en medio de la rutina acelerada y compartir un momento cercano y lúdico.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -895,15 +1011,20 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/malabicirco/"
+        }
       },
       {
         "id": "la-gran-troupe-circo",
         "name": "La Gran Troupe Circo",
-        "company": "Malabicirco",
+        "company": "Malabi Circo",
+        "audienceType": "Todo Público",
+        "durationMinutes": 60,
         "order": 48,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Compañía de artes circenses integradas de Valparaíso presenta La Gran Troupé del Circo, un espectáculo de variedades que combina destreza física, humor y puesta en escena. El montaje reúne a un elenco de artistas circenses nacionales e internacionales, guiados por un maestro de ceremonias que va hilando cada presentación con anécdotas y divertidas historias del mundo del circo.\n\nEl programa incluye contorsión aérea, pole dance, malabares con diábolos, magia de escenario y el humor blanco de los payasos. Con una dinámica ágil y cercana, la función invita al público familiar a compartir una experiencia llena de ritmo, asombro y entretención en vivo.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -911,15 +1032,20 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Esquina Matta)"
+        "location": "Interior de la Plaza de Armas (Esquina Matta)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/malabicirco/"
+        }
       },
       {
         "id": "viaje-a-la-luna",
         "name": "Viaje a la Luna",
-        "company": "La Patogallina",
+        "company": "Colectivo La Patogallina",
+        "audienceType": "Todo Público",
+        "durationMinutes": 70,
         "order": 49,
         "disciplines": "artes-escenicas",
-        "description": "",
+        "description": "Viaje a la Luna es un espectáculo inspirado en la película muda de Georges Méliès, Le Voyage dans la Lune (1902), obra clave de la historia del cine que abrió paso a la ciencia ficción y dio un nuevo espacio a la fantasía en la pantalla.\n\nEsta comedia sigue las peripecias de Pelotillehue Films, una modesta productora integrada por seis payasos que intenta rodar en un solo día su propia versión de Viaje a la Luna. Entre el apuro, los enredos absurdos y los imprevistos, la puesta en escena suma música en vivo, proyección en circuito cerrado de las escenas grabadas y la participación del público.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -927,7 +1053,10 @@
           "month": "noviembre"
         },
         "image": null,
-        "location": "Interior de la Plaza de Armas (Esquina Matta)"
+        "location": "Interior de la Plaza de Armas (Esquina Matta)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/lapatogallina/?hl=es"
+        }
       }
     ]
   },

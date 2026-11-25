@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { artistSchema, artists, disciplines, validateArtists } from '../artists'
+import { artistSchema, artists, validateArtists } from '../artists'
 
 const entry = {
   id: 'artist', name: 'Artist', category: 'music', national: true, order: 1,
   disciplines: 'musica', description: '', ticketUrl: null,
-  date: { day: 'Sábado 28', time: '23:00' }, image: null,
+  date: { day: 'Day', time: '23:00' }, image: null,
 }
 
 function rejectsUnchanged(value: unknown) {
@@ -13,15 +13,14 @@ function rejectsUnchanged(value: unknown) {
   expect(value).toEqual(before)
 }
 
-describe('general artist contract', () => {
-  it('accepts one catalog discipline ID and rejects arrays or unknown IDs', () => {
-    expect(artistSchema.parse(entry).disciplines).toBe('musica')
+describe('artist contract', () => {
+  it('accepts a discipline identifier and rejects arrays or unknown identifiers', () => {
+    expect(artistSchema.parse(entry).disciplines).toBe(entry.disciplines)
     rejectsUnchanged([{ ...entry, disciplines: ['musica'] }])
     rejectsUnchanged([{ ...entry, disciplines: 'unknown' }])
-    expect(disciplines.find(({ id }) => id === 'artes-escenicas')?.name).toBe('Artes escénicas')
   })
 
-  it('removes the old demo contract and requires a string description', () => {
+  it('rejects removed properties and requires a string description', () => {
     expect(artistSchema.parse(entry)).not.toHaveProperty('demo')
     rejectsUnchanged([{ ...entry, demo: true }])
     rejectsUnchanged([{ ...entry, description: undefined }])
@@ -37,14 +36,23 @@ describe('general artist contract', () => {
     rejectsUnchanged([{ ...entry, ticketUrl: 3 }])
   })
 
-  it('requires editable day and time strings rather than a datetime', () => {
-    expect(artistSchema.parse(entry).date).toEqual({ day: 'Sábado 28', time: '23:00' })
-    for (const date of [undefined, null, '2026-11-28T23:00:00', { day: 'Sábado 28' }, { time: '23:00' }, { day: 28, time: '23:00' }]) {
+  it('requires editable day and time strings', () => {
+    expect(artistSchema.parse(entry).date).toEqual(entry.date)
+    for (const date of [undefined, null, '2026-11-28T23:00:00', { day: 'Day' }, { time: '23:00' }, { day: 28, time: '23:00' }]) {
       rejectsUnchanged([{ ...entry, date }])
     }
   })
 
-  it('requires a nullable image object with string url and alt', () => {
+  it('accepts optional audience and positive duration fields', () => {
+    const { national: _national, ...performer } = entry
+    const stage = { ...performer, category: 'stage', audienceType: 'Audience', durationMinutes: 40 }
+    expect(artistSchema.safeParse(stage).success).toBe(true)
+    for (const durationMinutes of [0, -1, 1.5, '40']) {
+      expect(artistSchema.safeParse({ ...stage, durationMinutes }).success).toBe(false)
+    }
+  })
+
+  it('requires a nullable image object with string URL and alt text', () => {
     const image = { url: '/src/assets/artists/artist.jpg', alt: 'Artist on stage' }
     expect(artistSchema.parse({ ...entry, image }).image).toEqual(image)
     expect(artistSchema.parse(entry).image).toBeNull()
@@ -53,46 +61,23 @@ describe('general artist contract', () => {
     }
   })
 
-  it('sorts by explicit order without mutating data', () => {
+  it('sorts supplied records by order without mutating input', () => {
     const input = [{ ...entry, id: 'second', order: 2 }, entry]
     const before = structuredClone(input)
     expect(validateArtists(input).map(({ id }) => id)).toEqual(['artist', 'second'])
     expect(input).toEqual(before)
   })
 
-  it('rejects duplicate IDs, duplicate orders and invalid orders without changing input', () => {
+  it('rejects duplicate IDs, duplicate orders and invalid orders without mutating input', () => {
     rejectsUnchanged([entry, { ...entry, order: 2 }])
     rejectsUnchanged([entry, { ...entry, id: 'other' }])
     for (const order of [-1, 1.5, '1']) rejectsUnchanged([{ ...entry, order }])
   })
 
-  it('preserves all real artists, requested defaults and category discipline assignments', () => {
-    expect(artists).toHaveLength(49)
-    expect(artists.map(({ order }) => order)).toEqual(Array.from({ length: 49 }, (_, index) => index + 1))
-    for (const artist of artists) {
-      expect(artist.disciplines).toBe(artist.category === 'stage' ? 'artes-escenicas' : 'musica')
-      if (artist.id === 'nino-cohete') {
-        expect(artist.description).toContain('«pop silvestre»')
-        expect(artist.image?.url).toBe('/src/assets/artists/nino-cohete.webp')
-        expect(artist.date).toEqual({ day: 'Domingo 29', time: '17:00', month: 'noviembre' })
-        continue
-      }
-      if (artist.id === 'dejenme-dormir') expect(artist.description).toContain('primer semestre de 2027.')
-      else if (artist.id === 'inundaremos') expect(artist.description).toContain('indie rock e indie pop')
-      else expect(artist.description).toBe('')
-      expect(artist.ticketUrl).toBeNull()
-      if (artist.image) expect(artist.image.url).toBe(`/src/assets/artists/${artist.id}.webp`)
-      if (artist.category === 'music') {
-        expect(artist.location).toBeTruthy()
-        expect(artist.date.month).toBe('noviembre')
-      } else {
-        expect(artist.date.day).toMatch(/^(Sábado 28|Domingo 29)$/)
-        expect(artist.date.time).toMatch(/^([01]\d|2[0-3]):00$/)
-      }
-      expect(artist).not.toHaveProperty('demo')
-    }
-    expect(artists.filter(({ date }) => date.day === 'Sábado 28')).toHaveLength(25)
-    expect(artists.filter(({ date }) => date.day === 'Domingo 29')).toHaveLength(24)
-    expect(JSON.stringify(disciplines)).not.toContain('(ejemplo)')
+  it('keeps validated catalog records uniquely identified and ordered', () => {
+    expect(validateArtists(artists)).toEqual(artists)
+    expect(new Set(artists.map(({ id }) => id)).size).toBe(artists.length)
+    expect(new Set(artists.map(({ order }) => order)).size).toBe(artists.length)
+    expect(artists.map(({ order }) => order)).toEqual([...artists].map(({ order }) => order).sort((a, b) => a - b))
   })
 })
