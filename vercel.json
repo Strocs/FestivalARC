@@ -1,5 +1,40 @@
 {
-  "buildCommand": "pnpm build",
+  "buildCommand": "pnpm build:vercel",
   "outputDirectory": ".output",
-  "framework": null
+  "framework": null,
+  "headers": [
+    {
+      "source": "/poster-variants/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    }
+  ],
+  "rewrites": [
+    { "source": "/", "has": [{ "type": "query", "key": "dia", "value": "sabado" }, { "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/home/saturday-time.html" },
+    { "source": "/", "has": [{ "type": "query", "key": "dia", "value": "sabado" }, { "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/home/saturday-location.html" },
+    { "source": "/", "has": [{ "type": "query", "key": "dia", "value": "domingo" }, { "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/home/sunday-time.html" },
+    { "source": "/", "has": [{ "type": "query", "key": "dia", "value": "domingo" }, { "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/home/sunday-location.html" },
+    { "source": "/", "has": [{ "type": "query", "key": "dia", "value": "sabado" }], "destination": "/poster-variants/home/saturday-original.html" },
+    { "source": "/", "has": [{ "type": "query", "key": "dia", "value": "domingo" }], "destination": "/poster-variants/home/sunday-original.html" },
+    { "source": "/", "has": [{ "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/home/all-time.html" },
+    { "source": "/", "has": [{ "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/home/all-location.html" },
+    { "source": "/", "destination": "/poster-variants/home/all-original.html" },
+    { "source": "/musica{/}?", "has": [{ "type": "query", "key": "dia", "value": "sabado" }, { "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/music/saturday-time.html" },
+    { "source": "/musica{/}?", "has": [{ "type": "query", "key": "dia", "value": "sabado" }, { "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/music/saturday-location.html" },
+    { "source": "/musica{/}?", "has": [{ "type": "query", "key": "dia", "value": "domingo" }, { "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/music/sunday-time.html" },
+    { "source": "/musica{/}?", "has": [{ "type": "query", "key": "dia", "value": "domingo" }, { "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/music/sunday-location.html" },
+    { "source": "/musica{/}?", "has": [{ "type": "query", "key": "dia", "value": "sabado" }], "destination": "/poster-variants/music/saturday-original.html" },
+    { "source": "/musica{/}?", "has": [{ "type": "query", "key": "dia", "value": "domingo" }], "destination": "/poster-variants/music/sunday-original.html" },
+    { "source": "/musica{/}?", "has": [{ "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/music/all-time.html" },
+    { "source": "/musica{/}?", "has": [{ "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/music/all-location.html" },
+    { "source": "/musica{/}?", "destination": "/poster-variants/music/all-original.html" },
+    { "source": "/artes-escenicas{/}?", "has": [{ "type": "query", "key": "dia", "value": "sabado" }, { "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/stage/saturday-time.html" },
+    { "source": "/artes-escenicas{/}?", "has": [{ "type": "query", "key": "dia", "value": "sabado" }, { "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/stage/saturday-location.html" },
+    { "source": "/artes-escenicas{/}?", "has": [{ "type": "query", "key": "dia", "value": "domingo" }, { "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/stage/sunday-time.html" },
+    { "source": "/artes-escenicas{/}?", "has": [{ "type": "query", "key": "dia", "value": "domingo" }, { "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/stage/sunday-location.html" },
+    { "source": "/artes-escenicas{/}?", "has": [{ "type": "query", "key": "dia", "value": "sabado" }], "destination": "/poster-variants/stage/saturday-original.html" },
+    { "source": "/artes-escenicas{/}?", "has": [{ "type": "query", "key": "dia", "value": "domingo" }], "destination": "/poster-variants/stage/sunday-original.html" },
+    { "source": "/artes-escenicas{/}?", "has": [{ "type": "query", "key": "orden", "value": "horario" }], "destination": "/poster-variants/stage/all-time.html" },
+    { "source": "/artes-escenicas{/}?", "has": [{ "type": "query", "key": "orden", "value": "escenario" }], "destination": "/poster-variants/stage/all-location.html" },
+    { "source": "/artes-escenicas{/}?", "destination": "/poster-variants/stage/all-original.html" }
+  ]
 }

@@ -5,6 +5,7 @@ import { dirname, join, posix, resolve, sep } from 'node:path'
 import type { Stats } from 'node:fs'
 import type { Publication, PublicationBase, PublicationConfig } from '@festivalarc/editions'
 import { baseForPublication, configurationDigest, validatePublicationConfig } from '@festivalarc/editions'
+import { isPosterVariant, packageVercelPosters } from './vercel.js'
 
 type EntryStat = Pick<Stats, 'isSymbolicLink' | 'isDirectory' | 'isFile'>
 export type NormalizedFile = Readonly<{ relativePath: string; bytes: Uint8Array }>
@@ -19,7 +20,7 @@ export type BuildAdapterOptions = Omit<BuildContext, 'env'> & Readonly<{
 }>
 export type ManifestEntry = Readonly<{ path: string; owner: string; bytes: number; sha256: string }>
 export type ComposeRequest = Readonly<{
-  config: PublicationConfig; inputs: readonly NormalizedInput[]; outputRoot: string
+  config: PublicationConfig; inputs: readonly NormalizedInput[]; outputRoot: string; profile?: 'vercel'
   operations?: Readonly<{ writeFile?: (path: string, data: Uint8Array | string) => void; rename?: (from: string, to: string) => void }>
 }>
 export type ComposeResult = Readonly<{
@@ -128,7 +129,7 @@ function publicPath(path: string): string {
 
 export function routeInventory(config: PublicationConfig, files: readonly { path: string; owner: string; bytes: Uint8Array }[]): string[] {
   const origin = config.siteOrigin.replace(/\/$/, '')
-  return [...new Set(files.filter(file => file.owner === config.active.id && /\.html$/i.test(file.path) && !globalName(file.path) && !/(^|\/)evidence\//.test(file.path)).map(file => `${origin}${publicPath(file.path)}`))].sort()
+  return [...new Set(files.filter(file => file.owner === config.active.id && /\.html$/i.test(file.path) && !globalName(file.path) && !isPosterVariant(file.path) && !/(^|\/)evidence\//.test(file.path)).map(file => `${origin}${publicPath(file.path)}`))].sort()
 }
 
 const robotsMeta = '<meta name="robots" content="noindex, follow">'
@@ -139,9 +140,9 @@ const metaAttribute = (tag: string, name: string): string | undefined => {
   return undefined
 }
 
-function noindexArchivedHtml(html: string, path: string): Uint8Array {
+function noindexHtml(html: string, path: string, kind: 'archived' | 'poster variant'): Uint8Array {
   const head = /(<head\b[^>]*>)([\s\S]*?)(<\/head\s*>)/i.exec(html)
-  if (!head || head.index === undefined) throw new DistributionError([`archived HTML missing head: ${path}`])
+  if (!head || head.index === undefined) throw new DistributionError([`${kind} HTML missing head: ${path}`])
   let found = false
   const content = head[2].replace(metaTag, tag => {
     if (metaAttribute(tag, 'name')?.trim().toLowerCase() !== 'robots') return tag
@@ -156,7 +157,7 @@ function noindexArchivedHtml(html: string, path: string): Uint8Array {
 function transformArchivedHtml(config: PublicationConfig, files: readonly { path: string; owner: string; bytes: Uint8Array }[]): Array<{ path: string; owner: string; bytes: Uint8Array }> {
   const archives = new Set<string>(config.archives.map(archive => archive.id))
   return files.map(file => archives.has(file.owner) && /\.html$/i.test(file.path)
-    ? { ...file, bytes: noindexArchivedHtml(Buffer.from(file.bytes).toString('utf8'), file.path) }
+    ? { ...file, bytes: noindexHtml(Buffer.from(file.bytes).toString('utf8'), file.path, 'archived') }
     : file)
 }
 
@@ -214,7 +215,12 @@ export function scanReferences(config: PublicationConfig, inputs: readonly Norma
 export function compose(request: ComposeRequest): ComposeResult {
   const config = validatePublicationConfig(request.config), inputs = loadInputs(config, request.inputs), appFiles = transformArchivedHtml(config, candidates(inputs))
   scanReferences(config, inputs)
-  const files = [{ path: '404.html', bytes: bytes(generateNotFoundHtml()), owner: 'distribution' }, ...appFiles, ...generateDiscoveryFiles(config, routeInventory(config, appFiles)).map(file => ({ ...file, owner: 'distribution' }))]
+  const publishedFiles = request.profile === 'vercel'
+    ? packageVercelPosters(config, appFiles)
+    : appFiles.map(file => file.owner === config.active.id && isPosterVariant(file.path)
+      ? { ...file, bytes: noindexHtml(Buffer.from(file.bytes).toString('utf8'), file.path, 'poster variant') }
+      : file)
+  const files = [{ path: '404.html', bytes: bytes(generateNotFoundHtml()), owner: 'distribution' }, ...publishedFiles, ...generateDiscoveryFiles(config, routeInventory(config, appFiles)).map(file => ({ ...file, owner: 'distribution' }))]
     .sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : a.owner < b.owner ? -1 : a.owner > b.owner ? 1 : 0)
   const manifest = files.map(file => ({ path: file.path, owner: file.owner, bytes: file.bytes.byteLength, sha256: createHash('sha256').update(file.bytes).digest('hex') }))
   const manifestText = JSON.stringify(manifest), outputRoot = resolve(request.outputRoot), stage = mkdtempSync(join(dirname(outputRoot), `.${outputRoot.split(sep).pop()}-staging-`)), write = request.operations?.writeFile ?? writeFileSync, rename = request.operations?.rename ?? renameSync

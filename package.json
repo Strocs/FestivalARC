@@ -10,6 +10,7 @@
     "dev": "node scripts/run-active.mjs dev",
     "start": "node scripts/run-active.mjs start",
     "build": "pnpm --filter @festivalarc/distribution build",
+    "build:vercel": "pnpm --filter @festivalarc/distribution build --vercel",
     "preview": "python3 -m http.server 4173 --directory .output",
     "astro": "node scripts/run-active.mjs astro",
     "type": "pnpm -r --if-present run type",

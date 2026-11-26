@@ -6,6 +6,12 @@ import { baseForPublication } from '@festivalarc/editions'
 import type { PublicationConfig } from '@festivalarc/editions'
 import { buildApp, compose } from './index.js'
 
+const args = process.argv.slice(2)
+if (args.length > 1 || (args.length === 1 && args[0] !== '--vercel')) {
+  throw new Error('Usage: vite-node src/build.ts [--vercel]')
+}
+const profile = args[0] === '--vercel' ? 'vercel' : undefined
+
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../../..')
 const { publicationConfig } = await import(pathToFileURL(join(repositoryRoot, 'editions.config.ts')).href) as { publicationConfig: PublicationConfig }
 const appDirectories = new Map<string, string>()
@@ -38,7 +44,7 @@ try {
       base,
     }))
   }
-  const result = compose({ config: publicationConfig, inputs, outputRoot: join(repositoryRoot, '.output') })
+  const result = compose({ config: publicationConfig, inputs, outputRoot: join(repositoryRoot, '.output'), profile })
   console.log(`Composed ${result.manifest.length} files into ${result.outputRoot}`)
   console.log(`Manifest SHA-256: ${result.manifestSha256}`)
   console.log(`Configuration SHA-256: ${result.configSha256}`)
