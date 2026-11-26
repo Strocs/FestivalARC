@@ -50,15 +50,17 @@ describe('ArtistName interaction', () => {
     expect(html).not.toContain('<button')
   })
 
-  it('renders the unboxed bold schedule over the location, with the gradient scoped to simple view', async () => {
+  it('renders the unboxed bold schedule over the location, with a translucent pink border only in simple view', async () => {
     const html = await renderArtist()
     expect(html).toContain('aria-label="Gepe"')
     expect(html).toContain('text-arc-yellow')
     const surface = html.match(/<span\b[^>]*data-artist-surface[^>]*>/)?.[0] ?? ''
     expect(surface).toContain('bg-background')
-    for (const token of ['bg-linear-to-b', 'to-accent', 'from-arc-rose']) {
-      expect(surface).toContain(`group-data-[poster-simple]/poster:${token}`)
-    }
+    expect(surface).toContain('group-data-[poster-simple]/poster:border ')
+    expect(surface).toContain('group-data-[poster-simple]/poster:border-arc-rose/60')
+    expect(surface).toContain('group-data-[poster-simple]/poster:rounded-xl')
+    expect(surface).toContain(' rounded-lg ')
+    expect(surface).not.toMatch(/gradient|bg-linear|poster:border-2/)
     expect(html).toContain('group-data-[poster-simple]/poster:text-white')
     expect(html).toMatch(/<time[^>]*class="font-bold"[^>]*>Domingo 29 - 20:30hrs<\/time>\s*<span[^>]*data-artist-location[^>]*>Escenario Gobierno Regional<\/span>/)
     expect(html).not.toContain('datetime=')
