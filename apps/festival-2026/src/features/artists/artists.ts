@@ -15,6 +15,8 @@ export const disciplines = z.array(z.strictObject({
 
 const instagramUrl = z.string().url().startsWith('https://www.instagram.com/')
 
+const websiteUrl = z.url({ protocol: /^https?$/ }).regex(/^https?:\/\//i)
+
 const performerSchema = z.strictObject({
   id: slug,
   name: z.string().min(1),
@@ -38,11 +40,16 @@ const performerSchema = z.strictObject({
   image: z.strictObject({ url: z.string().min(1), alt: z.string() }).nullable(),
 })
 
+const stageSchema = performerSchema.extend({
+  website: websiteUrl.optional(),
+  instagramReelUrl: instagramUrl.regex(/^https:\/\/www\.instagram\.com\/reels?\/[A-Za-z0-9_-]+\/?$/).optional(),
+})
+
 /** Music's national flag records national status, not hero eligibility. */
 const musicSchema = performerSchema.extend({ national: z.boolean() })
 export const artistSchema = z.discriminatedUnion('category', [
   musicSchema.extend({ category: z.literal('music') }),
-  performerSchema.extend({ category: z.literal('stage') }),
+  stageSchema.extend({ category: z.literal('stage') }),
 ])
 export type Artist = z.infer<typeof artistSchema>
 
@@ -69,14 +76,17 @@ const participantSchema = performerSchema.pick({
   socialLinks: performerSchema.shape.socialLinks.unwrap().extend({
     instagram: z.union([instagramUrl, z.array(instagramUrl).min(1)]).optional(),
   }).optional(),
-  website: z.url({ protocol: /^https?$/ }).regex(/^https?:\/\//i).optional(),
+  website: websiteUrl.optional(),
 })
 const expoParticipantSchema = participantSchema.extend({ date: scheduleSchema.optional() })
+const marketParticipantSchema = participantSchema.extend({
+  website: z.union([websiteUrl, z.array(websiteUrl).min(1)]).optional(),
+})
 const catalogSchema = z.strictObject({
   music: z.strictObject({ name: z.literal('Música'), participants: z.array(musicSchema).min(1) }),
-  stage: z.strictObject({ name: z.literal('Artes Escénicas'), participants: z.array(performerSchema).min(1) }),
+  stage: z.strictObject({ name: z.literal('Artes Escénicas'), participants: z.array(stageSchema).min(1) }),
   expo: z.strictObject({ name: z.literal('Expo Arte.Co'), description: z.string().min(1), location: z.string().min(1), participants: z.array(expoParticipantSchema).min(1) }),
-  market: z.strictObject({ name: z.literal('Mercado Creativo y DAZ'), description: z.string().min(1).optional(), participants: z.array(participantSchema).min(1) }),
+  market: z.strictObject({ name: z.literal('Mercado Creativo y DAZ'), description: z.string().min(1).optional(), participants: z.array(marketParticipantSchema).min(1) }),
 }).superRefine((catalog, context) => {
   const ids = new Set<string>()
   for (const [category, { participants }] of Object.entries(catalog)) {

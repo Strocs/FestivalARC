@@ -6,12 +6,13 @@ Edit `src/content/artists.json`. Existing entries remain valid without the optio
 - `date.month`: optional month label (for example, `noviembre`), appended to the existing day without changing day-filter keys.
 - `socialLinks.instagram`: HTTPS URL starting with `https://www.instagram.com/`.
 - `socialLinks.spotify`: HTTPS URL starting with `https://open.spotify.com/`.
+- Stage performers may have a `website` (an absolute HTTP(S) URL, shown as a globe beside social links) and an `instagramReelUrl` (shown as a link only when there is no YouTube video).
 
 Social links use the Simple Icons provider through `astro-icon`, with accessible platform and participant labels. Links open in the current tab.
 
 ## Mercado Creativo y DAZ and Expo Arte.Co
 
-Use `description` for optional participant copy, `socialLinks` for the supported networks above, and `website` for an optional absolute HTTP(S) URL. For Expo and Mercado, `socialLinks.instagram` accepts one URL or a nonempty array of URLs in display order; each URL must meet the same Instagram validation rule. Compare incoming names with the catalog using case-insensitive equality only; keep the stored name and confirm any other discrepancy before editing. Omitted or whitespace-only descriptions, with no links, leave the card passive. **Ver más** opens the shared dialog or follows the existing participant URL if JavaScript is disabled.
+Use `description` for optional participant copy, `socialLinks` for the supported networks above, and `website` for an optional absolute HTTP(S) URL. Mercado also accepts a nonempty `website` array of absolute HTTP(S) URLs in display order. For Expo and Mercado, `socialLinks.instagram` accepts one URL or a nonempty array of URLs in display order; each URL must meet the same Instagram validation rule. Compare incoming names with the catalog using case-insensitive equality only; keep the stored name and confirm any other discrepancy before editing. Omitted or whitespace-only descriptions, with no links, leave the card passive. **Ver más** opens the shared dialog or follows the existing participant URL if JavaScript is disabled.
 
 Images reference `/src/assets/` files and include alt text. Niño Cohete's source is `refs/IMG_4058.JPG.jpeg`; its WebP is auto-oriented, 600 × 900 px, quality 100, and 276,948 bytes. The original is preserved. Astro renders it at quality 100 with intrinsic dimensions.
 

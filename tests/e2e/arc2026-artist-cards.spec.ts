@@ -84,7 +84,7 @@ test('artist cards omit city suffixes but preserve descriptors and identities', 
   ).toBeVisible()
   await expect(
     page.getByRole('article', { name: 'Quitá de Bulla', exact: true }),
-  ).toBeVisible()
+  ).toHaveCount(0)
   await expect(
     page.getByRole('article', { name: 'Josefa Errazuriz (DJ)', exact: true }),
   ).toBeVisible()

@@ -4,7 +4,7 @@ import { artists as lineup } from '../../artists/artists'
 const fixedOrder = [
   'polter', 'lobas', 'nino-cohete', 'yaru', 'shicris',
   'javiera-mena', 'el-humedal', 'dulce-y-agraz', 'freshki', 'gepe',
-  'pulsando', 'javier-barria', 'quita-de-bulla',
+  'pulsando', 'javier-barria',
   'removernos-a-cielo-abierto', 'fernando-milagros', 'yatiri',
   'jazztacuatico', 'rosario-alfonso', 'un-derrotero-nortino-con-marionetas', 'duerme-y-cae',
   'claudio-valenzuela', 'awicha-la-tejedora-de-memorias', 'fernando-ubiergo', 'kalishe',
@@ -31,11 +31,11 @@ describe('fixed editorial lineup order', () => {
     }
   })
 
-  it('preserves all 49 unique confirmed artists and category/company associations', () => {
-    expect(lineup).toHaveLength(49)
-    expect(new Set(lineup.map(artist => artist.id)).size).toBe(49)
+  it('preserves all 48 unique confirmed artists and category/company associations', () => {
+    expect(lineup).toHaveLength(48)
+    expect(new Set(lineup.map(artist => artist.id)).size).toBe(48)
     expect(lineup.filter(artist => artist.category === 'music' && artist.national)).toHaveLength(18)
-    expect(lineup.filter(artist => artist.category === 'music' && !artist.national)).toHaveLength(12)
+    expect(lineup.filter(artist => artist.category === 'music' && !artist.national)).toHaveLength(11)
     expect(lineup.filter(artist => artist.category === 'stage')).toHaveLength(19)
     expect(lineup.filter(artist => artist.company)).toHaveLength(19)
   })

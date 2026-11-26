@@ -14,7 +14,8 @@ export interface ParticipantView {
   location?: string
   youtubeVideoId?: string
   socialLinks?: { instagram?: string | string[], spotify?: string }
-  website?: string
+  website?: string | string[]
+  instagramReelUrl?: string
   company?: string
   audienceType?: string
   durationMinutes?: number
@@ -79,6 +80,7 @@ export const categories: readonly CategoryView[] = (Object.keys(publicSlugs) as 
       ...('location' in participant ? { location: participant.location } : {}),
       ...('youtubeVideoId' in participant ? { youtubeVideoId: participant.youtubeVideoId } : {}),
       ...('socialLinks' in participant ? { socialLinks: participant.socialLinks } : {}),
+      ...('instagramReelUrl' in participant ? { instagramReelUrl: participant.instagramReelUrl } : {}),
       ...('website' in participant ? { website: participant.website } : {}),
       ...('company' in participant ? { company: participant.company } : {}),
       ...('audienceType' in participant ? { audienceType: participant.audienceType } : {}),

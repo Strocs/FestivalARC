@@ -95,6 +95,7 @@
       },
       {
         "id": "dulce-y-agraz",
+        "youtubeVideoId": "C9Eh-IViMw0",
         "name": "Dulce y Agraz",
         "order": 8,
         "disciplines": "musica",
@@ -139,6 +140,7 @@
       },
       {
         "id": "gepe",
+        "youtubeVideoId": "-uQPd8wtm1M",
         "name": "Gepe",
         "order": 10,
         "disciplines": "musica",
@@ -185,28 +187,8 @@
         "youtubeVideoId": "13GQ3ea-EwY"
       },
       {
-        "id": "quita-de-bulla",
-        "name": "Quitá de Bulla",
-        "order": 13,
-        "disciplines": "musica",
-        "description": "Quitá de Bulla es el proyecto solista más íntimo de Margarita Jazmín (Salamanca, 1982), cantautora y artista de la Región de Coquimbo cuya propuesta cruza el indie rock y el pop experimental. Enraizada en los paisajes del Norte Chico —entre valles, ríos, cerros y quebradas—, su música combina rimas y cantos inspirados en la naturaleza, la introspección y las luchas de las mujeres del campo y la ciudad.\n\nCon una trayectoria sostenida en la escena regional junto a agrupaciones de fusión como Asamblea del Dub y Yawar-Mallku, en 2026 dio forma a su debut solista con el EP homónimo Quitá de Bulla, un trabajo de cuatro canciones que consolida esta etapa autoral.",
-        "ticketUrl": null,
-        "date": {
-          "day": "Sábado 28",
-          "time": "16:00",
-          "month": "noviembre"
-        },
-        "image": {
-          "url": "/src/assets/artists/quita-de-bulla.webp",
-          "alt": "Quitá de Bulla"
-        },
-        "national": false,
-        "location": "Plaza Gabriel González Videla"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/bruja.margarita_quitadebulla/"}
-      },
-      {
         "id": "fernando-milagros",
+        "youtubeVideoId": "X4gZGFimSz4",
         "name": "Fernando Milagros",
         "order": 15,
         "disciplines": "musica",
@@ -230,6 +212,7 @@
       },
       {
         "id": "jazztacuatico",
+        "youtubeVideoId": "0-7UusJtwOE",
         "name": "Jazztacuatico",
         "order": 17,
         "disciplines": "musica",
@@ -274,6 +257,7 @@
       },
       {
         "id": "duerme-y-cae",
+        "youtubeVideoId": "Y0jLaJQqLHI",
         "name": "Duerme y Cae!",
         "order": 20,
         "disciplines": "musica",
@@ -295,6 +279,7 @@
       },
       {
         "id": "claudio-valenzuela",
+        "youtubeVideoId": "QTA1EiRaUjo",
         "name": "Claudio Valenzuela",
         "order": 21,
         "disciplines": "musica",
@@ -318,6 +303,7 @@
       },
       {
         "id": "fernando-ubiergo",
+        "youtubeVideoId": "FwYu70nkKsI",
         "name": "Fernando Ubiergo",
         "order": 23,
         "disciplines": "musica",
@@ -388,6 +374,7 @@
       },
       {
         "id": "weinkeys-blackbeat",
+        "youtubeVideoId": "6AOy8Vo2LBQ",
         "name": "Weinkeys + Blackbeat",
         "order": 27,
         "disciplines": "musica",
@@ -455,6 +442,7 @@
       },
       {
         "id": "jose-alfredo-fuentes",
+        "youtubeVideoId": "Gplnjtb6Syg",
         "name": "José Alfredo Fuentes",
         "order": 32,
         "disciplines": "musica",
@@ -526,10 +514,11 @@
       },
       {
         "id": "guaypes-club",
+        "youtubeVideoId": "cmJzdmPXVj4",
         "name": "Guaypes Club",
         "order": 37,
         "disciplines": "musica",
-        "description": "Guaypes Club es el pionero proyecto musical chileno protagonizado por títeres —Jota, Papo y El Pibe— que cruza la estética callejera, el humor y la puesta en escena teatral con sonidos urbanos como el reggaetón, el rap y el dembow. Creada en Santiago en 2019, la agrupación marcó un hito en la escena nacional gracias a su propuesta visual única y a éxitos virales como «Feka» y «Pégate», llevando su show a grandes escenarios como Lollapalooza Chile y Lollapalooza Argentina.\n\nEn vivo, el colectivo despliega un espectáculo cargado de energía, interacción con el público y visuales que trasladan el universo de sus muñecos directamente al escenario, repasando sus canciones más populares junto a sus lanzamientos más recientes dentro del circuito urbano chileno.",
+        "description": "Guaypes Club es el pionero proyecto musical chileno protagonizado por títeres —Jota, Papo y El Pibe— que cruza la estética callejera, el humor y la puesta en escena teatral con sonidos urbanos como el reggaetón, el rap y el dembow. Creada en Santiago en 2019, la agrupación marcó un hito en la escena nacional gracias a su propuesta visual única, llevando su show a grandes escenarios como Lollapalooza Chile y Lollapalooza Argentina.\n\nEn vivo, el colectivo despliega un espectáculo cargado de energía, interacción con el público y visuales que trasladan el universo de sus muñecos directamente al escenario, repasando sus canciones más populares junto a sus lanzamientos más recientes dentro del circuito urbano chileno.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -694,6 +683,7 @@
     "participants": [
       {
         "id": "lobas",
+        "instagramReelUrl": "https://www.instagram.com/reels/DSydSDbkauE/",
         "name": "Lobas",
         "company": "Circo kaleidoscopio",
         "audienceType": "Todo Público",
@@ -862,6 +852,7 @@
       },
       {
         "id": "awicha-la-tejedora-de-memorias",
+        "website": "https://www.fundacioncirculoremolino.com/",
         "youtubeVideoId": "PCY9toFB5Iw",
         "name": "Awicha, la Tejedora de Memorias",
         "company": "Fundación Círculo Remolino - Laboratorio Creativo Remolino",
@@ -887,6 +878,7 @@
       },
       {
         "id": "narrando-mundos-en-bicicuentera",
+        "website": "https://ojosdeagua.cl/",
         "youtubeVideoId": "6_BdVN10wQI",
         "name": "Narrando Mundos en la Bicicuentera",
         "company": "Compañía de Ojos de Agua",
@@ -912,6 +904,7 @@
       },
       {
         "id": "bendita-agua",
+        "website": "https://titereslaboda.blogspot.com/",
         "youtubeVideoId": "vZy3O5Asn_c",
         "name": "Bendita Agua",
         "company": "Compañía de Títeres \"La Boda\"",
@@ -959,7 +952,7 @@
       {
         "id": "llamada-de-emergencia",
         "youtubeVideoId": "ntIeEiGwU-Y",
-        "name": "Llamada de Emergencia",
+        "name": "Llamado de Emergencia",
         "company": "Compañia Noche de Payasas",
         "audienceType": "Adulto",
         "durationMinutes": 60,
@@ -974,7 +967,7 @@
         },
         "image": {
           "url": "/src/assets/artists/llamada-de-emergencia.webp",
-          "alt": "Llamada de Emergencia"
+          "alt": "Llamado de Emergencia"
         },
         "location": "Interior de la Plaza de Armas (Sector Cordovez)",
         "socialLinks": {
@@ -1071,6 +1064,7 @@
       },
       {
         "id": "carpe-diem",
+        "website": "https://malabicirco.com/",
         "youtubeVideoId": "dH936_tDPzQ",
         "name": "Carpe Diem",
         "company": "Malabi Circo",
@@ -1095,6 +1089,7 @@
       },
       {
         "id": "la-gran-troupe-circo",
+        "website": "https://malabicirco.com/",
         "youtubeVideoId": "mua0ZKcuKfA",
         "name": "La Gran Troupe Circo",
         "company": "Malabi Circo",
@@ -1120,6 +1115,7 @@
       },
       {
         "id": "viaje-a-la-luna",
+        "website": "https://lapatogallina.cl/inicio/viaje-a-la-luna/",
         "name": "Viaje a la Luna",
         "company": "Colectivo La Patogallina",
         "audienceType": "Todo Público",
@@ -1234,7 +1230,7 @@
         "name": "NATIVA JOYAS DEL ELQUI",
         "description": "Proyecto de orfebrería del Valle de Elqui dedicado a la creación de piezas hechas a mano en plata y cobre, inspiradas en las formas, texturas y elementos de la naturaleza. Su trabajo nace de un proceso pausado de observación, inspiración y oficio, alejado de las modas pasajeras, para transformar historias y paisajes del entorno en joyas con identidad y significado propio.",
         "socialLinks": {
-          "instagram": "https://www.instagram.com/expoforjadas/?hl=es"
+          "instagram": "https://www.instagram.com/nativajoyaselqui/?hl=es"
         },
         "website": "https://forjadas.cl/",
         "image": null
@@ -1301,7 +1297,7 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/anima.rojas/"
         },
-        "website": "https://animared.myportfolio.com/portafolio",
+        "website": ["https://animared.myportfolio.com/portafolio", "https://esponsor.com/animarojas"],
         "image": null
       },
       {

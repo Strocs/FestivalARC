@@ -5,6 +5,7 @@ interface Props { artist: ParticipantView }
 const { artist } = Astro.props
 const instagram = artist.socialLinks?.instagram
 const profiles = Array.isArray(instagram) ? instagram : instagram ? [instagram] : []
+const websites = Array.isArray(artist.website) ? artist.website : artist.website ? [artist.website] : []
 const links = [
   ...profiles.map((url, index) => ({
     url,
@@ -12,11 +13,22 @@ const links = [
     icon: 'simple-icons:instagram',
   })),
   { url: artist.socialLinks?.spotify, name: 'Spotify', icon: 'simple-icons:spotify' },
+  { url: artist.youtubeVideoId ? undefined : artist.instagramReelUrl, name: 'Reel de Instagram', icon: 'simple-icons:instagram' },
 ].filter(link => link.url)
 ---
-{(links.length > 0 || artist.website) && <nav aria-label={`${artist.website ? 'Enlaces' : 'Redes sociales'} de ${artist.name}`} class='flex shrink-0 flex-wrap gap-0'>
+{(links.length > 0 || websites.length > 0) && <nav aria-label={`${websites.length ? 'Enlaces' : 'Redes sociales'} de ${artist.name}`} class='flex shrink-0 flex-wrap gap-0'>
   {links.map(link => <a href={link.url} aria-label={`${link.name} de ${artist.name}`} class='inline-flex size-8 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2'>
     <Icon name={link.icon} size={16} aria-hidden='true' is:inline />
   </a>)}
-  {artist.website && <a href={artist.website} class='inline-flex min-h-8 items-center rounded-full px-2 text-sm underline hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2'>Sitio web</a>}
+  {websites.map((url, index) => artist.category === 'stage' ? (
+    <a href={url} aria-label={`Sitio web de ${artist.name}`} class='inline-flex size-8 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2'>
+      <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' aria-hidden='true' data-icon='site-globe'>
+        <circle cx='12' cy='12' r='9' />
+        <ellipse cx='12' cy='12' rx='4' ry='9' />
+        <path d='M3 12h18' />
+      </svg>
+    </a>
+  ) : (
+    <a href={url} class='inline-flex min-h-8 items-center rounded-full px-2 text-sm underline hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2'>Sitio web{websites.length > 1 ? ` ${index + 1}` : ''}</a>
+  ))}
 </nav>}

@@ -83,6 +83,31 @@ describe('artist detail rendering', () => {
     }
   })
 
+  it.each([false, true])('renders stage websites and shows a reel only without YouTube (modal: %s)', async modal => {
+    const instagram = 'https://www.instagram.com/fixture/'
+    const instagramReelUrl = 'https://www.instagram.com/reels/DSydSDbkauE/'
+    const website = 'https://example.org/stage/'
+    const stage = { category: 'stage' as const, socialLinks: { instagram }, website, instagramReelUrl }
+    const html = await render(stage, modal)
+    expect(html).toContain(`href="${website}" aria-label="Sitio web de Fixture performer"`)
+    expect(html).toContain('data-icon="site-globe"')
+    expect(html).toContain(`href="${instagramReelUrl}" aria-label="Reel de Instagram de Fixture performer"`)
+    expect(html.indexOf(instagram)).toBeLessThan(html.indexOf(website))
+    expect(html).not.toContain('<iframe')
+
+    const youtube = await render({ ...stage, youtubeVideoId: 'AbCdEf12345' }, modal)
+    expect(youtube).not.toContain(instagramReelUrl)
+    expect(youtube).toContain('/embed/AbCdEf12345')
+  })
+
+  it.each([false, true])('renders multiple market websites in order (modal: %s)', async modal => {
+    const website = ['https://example.org/portfolio/', 'https://example.com/support/']
+    const html = await render({ category: 'market', website }, modal)
+    expect([...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)].map(link => link[1])).toEqual(website)
+    expect(html).toContain('>Sitio web 1</a>')
+    expect(html).toContain('>Sitio web 2</a>')
+  })
+
   it('escapes markup in supplied descriptions', async () => {
     const html = await render({ description: '<em>Fixture text</em>' })
     expect(html).toContain('&lt;em&gt;Fixture text&lt;/em&gt;')
