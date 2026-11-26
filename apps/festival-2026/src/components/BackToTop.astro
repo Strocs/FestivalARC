@@ -14,9 +14,12 @@
   const button = document.querySelector<HTMLButtonElement>('[data-back-to-top]')
   const threshold = document.querySelector<HTMLElement>('[data-back-to-top-threshold]')
 
-  if (button && threshold) {
+  const footer = document.querySelector<HTMLElement>('[data-festival-footer]')
+
+  if (button && threshold && footer) {
     const update = () => {
-      button.inert = window.scrollY < threshold.offsetHeight
+      const footerVisible = footer.getBoundingClientRect().top < window.innerHeight
+      button.inert = window.scrollY < threshold.offsetHeight || footerVisible
     }
 
     button.addEventListener('click', () => {
