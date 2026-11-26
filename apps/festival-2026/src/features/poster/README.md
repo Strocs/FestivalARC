@@ -48,6 +48,15 @@ For new homepage content, create a wrapper using the base slot, define its respo
 
 ## Finite day plans and client filtering
 
+Home, Music, and Artes Escénicas use `dia=sabado|domingo` and
+`orden=horario|escenario`; missing, default, or unrecognized values use Todos
+and Original respectively. The non-default combinations prerender at
+`/poster-variants/<home|music|stage>/<day>-<order>/` with their public URL as the
+canonical. The client starts from that markup and pushes filter edits into
+browser history without navigation. Back/Forward restores the filters without
+changing Vista simple. The ordinary local static server does not route public
+query URLs to variants; use the build paths when checking the HTML locally.
+
 `createPosterFilterPlans(input): PosterFilterPlans` in `poster-filter-layout.ts` takes only `scope: 'home' | 'category'`, ordered `participants: { id, day }[]`, and `information: PosterInformationBlock[]`. Each information entry has a unique `id`, responsive `positions`, and optional `fixed`. `poster-layout.ts` is the authoritative original baseline; the similarly named presets in `poster.ts` are unchanged. Callers select authoritative `heroParticipants` or `category.participants` before projecting IDs/day strings. Neither the adapter nor a browser consumer imports the build-only catalog/schema.
 
 The client may **type-import** `DayKey`, `PosterFilterPlans` and `PosterFilterPlan`; no runtime packing is needed. `getPosterFilterPlan(plans, key)` rejects anything except `all`, `saturday`, `sunday`. The DTO has:

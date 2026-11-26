@@ -1,6 +1,9 @@
 ---
-interface Props { presentation?: boolean; beforeBreadcrumb?: boolean }
-const { presentation = false, beforeBreadcrumb = false } = Astro.props
+import type { DayKey } from './poster-filter-layout'
+import type { PosterOrders } from './poster-order'
+
+interface Props { presentation?: boolean; beforeBreadcrumb?: boolean; initialDay?: DayKey; initialSort?: keyof PosterOrders }
+const { presentation = false, beforeBreadcrumb = false, initialDay = 'all', initialSort } = Astro.props
 const controlText = 'rounded-full text-sm/5 font-bold'
 const controlSize = `${controlText} h-11`
 const days = [['all', 'Todos'], ['saturday', 'Sábado 28'], ['sunday', 'Domingo 29']] as const
@@ -30,7 +33,7 @@ const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-
             type='radio'
             name='poster-day'
             value={value}
-            checked={value === 'all'}
+            checked={value === initialDay}
             class='peer sr-only' />
           <span class:list={[
             controlSize,
@@ -44,15 +47,15 @@ const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-
       <label class:list={[pickerLabel, 'flex-1 md:hidden']}>
         <span id='poster-day-select-label' class={pickerCaption}>Día</span>
         <select aria-labelledby='poster-day-select-label' data-poster-picker data-poster-day-select class:list={[controlText, pickerSize, 'w-full']}>
-          {days.map(([value, label]) => <option value={value}>{label}</option>)}
+          {days.map(([value, label]) => <option value={value} selected={initialDay !== 'all' && value === initialDay}>{label}</option>)}
         </select>
       </label>
       <label class:list={[pickerLabel, 'max-md:flex-1']}>
         <span class={pickerCaption}>Ordenar por</span>
         <select data-poster-picker data-poster-sort class:list={[controlText, pickerSize, 'w-full md:w-28']}>
           <option value=''>Original</option>
-          <option value='time'>Horario</option>
-          <option value='location'>Escenario</option>
+          <option value='time' selected={initialSort === 'time'}>Horario</option>
+          <option value='location' selected={initialSort === 'location'}>Escenario</option>
         </select>
       </label>
       <button type='button' data-poster-simple-toggle aria-pressed='false' class:list={[controlSize, 'flex cursor-pointer items-center justify-center gap-2 w-11 shrink-0 opacity-75 md:w-auto md:px-3 hover:bg-foreground/10 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary aria-pressed:bg-arc-yellow aria-pressed:text-background aria-pressed:opacity-100 aria-pressed:hover:bg-arc-yellow']}>

@@ -17,9 +17,11 @@ import type { SlotRect } from './poster-grid'
 import { createPosterFilterPlans } from './poster-filter-layout'
 import { createPosterOrder } from './poster-order'
 import { homeInformation } from './poster-layout'
+import type { PosterFilterState } from './poster-filter-url'
+import { publicPath } from '../../utils/publication'
 
-interface Props { category?: CategoryView }
-const { category } = Astro.props
+interface Props { category?: CategoryView; filters?: PosterFilterState }
+const { category, filters } = Astro.props
 const lineup = category?.participants ?? heroParticipants
 const information = category?.key === 'expo' || category?.key === 'market' ? [] : category ? createCategoryTitle(category.name).information : homeInformation
 const filterPlans = createPosterFilterPlans({
@@ -32,7 +34,10 @@ const order = presentation ? createPosterOrder(lineup.map(({ date, location }) =
 const simple = presentation ? filterPlans.simple : undefined
 const serializedPlans = JSON.stringify({ ...filterPlans, order, simple }).replace(/</g, '\\u003c')
 const ranges = ['mobile', 'tablet', 'desktop'] as const
-const { layouts, information: endpoints } = filterPlans.plans.all
+const initialDay = presentation ? filters?.day ?? 'all' : 'all'
+const initialSort = order && filters && filters.order !== 'original' ? filters.order : undefined
+const initialPlan = filterPlans.plans[initialDay]
+const { layouts, information: endpoints } = initialPlan
 const placement = (id: string) => Object.fromEntries(ranges.flatMap(range =>
   endpoints[range][id] ? [[range, endpoints[range][id]]] : [],
 )) as Partial<Record<PosterRange, SlotRect>>
@@ -49,7 +54,21 @@ const artistPositions = (id: string): Positions => ({
   tablet: layouts.tablet.artists.find((artist) => artist.id === id),
   desktop: layouts.desktop.artists.find((artist) => artist.id === id),
 })
-const motifSlots = filterPlans.plans.all.motifs.map(({ index, variant, positions: endpoints }) => ({
+const rankedLineup = initialSort && order ? order[initialSort].map(index => lineup[index]) : lineup
+const initialIds = new Set(initialPlan.ids)
+const sortedSlots = new Map<string, string>()
+if (initialSort) {
+  let slot = 0
+  for (const { id } of rankedLineup) {
+    if (!initialIds.has(id)) continue
+    const target = artistPositions(initialPlan.ids[slot++])
+    sortedSlots.set(id, ranges.map(range => {
+      const { row, column, height, width } = target[range]!
+      return `;--poster-sorted-${range}:${row + 1}/${column + 1}/span ${height}/span ${width}`
+    }).join(''))
+  }
+}
+const motifSlots = initialPlan.motifs.map(({ index, variant, positions: endpoints }) => ({
   index,
   motif: variant,
   style: positions({ mobile: endpoints.mobile, tablet: endpoints.tablet, desktop: endpoints.desktop }),
@@ -69,7 +88,7 @@ const slotClasses =
   aria-labelledby='page-title'
   data-event-scope={category?.key ?? 'home'}>
   <div class='@container mx-auto w-full max-w-[1600px]'>
-    {presentation && <DayFilter presentation beforeBreadcrumb={!!category} />}
+    {presentation && <DayFilter presentation beforeBreadcrumb={!!category} {initialDay} {initialSort} />}
     {category && <div class='px-4 md:px-0'><Breadcrumbs {category} /></div>}
     {(category?.key === 'expo' || category?.key === 'market') && <header class='mx-auto mb-8 max-w-4xl px-4 text-center'>
       <h1 id='page-title' class='font-sans text-4xl font-black uppercase leading-none tracking-tight sm:text-6xl'>
@@ -82,6 +101,10 @@ const slotClasses =
     {!presentation && category?.key !== 'expo' && filterPlans.available && <DayFilter />}
     <section
       data-poster-grid
+      data-poster-initial-day={initialDay === 'all' ? undefined : initialDay}
+      data-poster-initial-sort={initialSort}
+      data-poster-ordered={initialSort ? '' : undefined}
+      data-poster-filter-url={presentation ? publicPath(category?.path ?? '/') : undefined}
       class='group/poster relative isolate grid grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] [--columns:8] [--poster-text:#d5d5d5] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]'
       style={gridStyle}
       aria-label={category ? `${category.name}: artistas y obras` : 'Festival ARC: artistas y obras'}>
@@ -102,10 +125,12 @@ const slotClasses =
         <PosterDisciplines {...placement('disciplines')} informationId='disciplines' />
       </>}
       {
-        lineup.map((artist) => (
+        rankedLineup.map((artist) => (
           <div
             class:list={[slotClasses, 'z-2 relative min-h-[calc(3*var(--slot-height)*var(--unit))] md:min-h-0']}
-            style={positions(artistPositions(artist.id), 'grid')}
+            style={positions(artistPositions(artist.id), 'grid') + (sortedSlots.get(artist.id) ?? '')}
+            hidden={!initialIds.has(artist.id) || undefined}
+            inert={!initialIds.has(artist.id) || undefined}
             data-poster-artist={artist.id}>
             <ArtistName artist={artist} interactive={category?.key !== 'expo' && category?.key !== 'market'} />
           </div>

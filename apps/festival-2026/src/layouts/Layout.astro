@@ -8,16 +8,17 @@ import '../styles/global.css'
 interface Props {
   title?: string
   description?: string
+  canonicalPath?: string
 }
 
 const {
   title = 'Festival ARC 2026 | El arte de habitar la ciudad',
   description = 'Descubre el Festival ARC 2026 este 28 y 29 de noviembre. Música, arte, diseño y cultura regional en una celebración gratuita en la Plaza de Armas de La Serena.',
+  canonicalPath,
 } = Astro.props
-const path =
-  Astro.url.pathname === appBase
-    ? '/'
-    : Astro.url.pathname.replace(`${appBase}/`, '/')
+const path = canonicalPath ?? (
+  Astro.url.pathname === appBase ? '/' : Astro.url.pathname.replace(`${appBase}/`, '/')
+)
 const siteUrl = 'https://festivalarc.com'
 const canonical = new URL(publicPath(path), siteUrl)
   .toString()
@@ -58,7 +59,7 @@ const socialImage = new URL(publicPath('/og-image.jpg'), siteUrl).toString()
   <!-- Low-specificity defaults let existing element utilities retain their overrides. -->
   <body
     class='bg-background text-foreground [:where(&_a:focus-visible)]:outline-offset-3 m-0 flex h-full min-h-svh w-screen flex-col font-sans [:where(&_a:focus-visible)]:[outline:3px_solid_var(--color-primary)] [:where(&_h1,&_h2)]:font-normal [:where(&_h1,&_h2)]:[font-synthesis:none]'>
-    <Header />
+    <Header currentPath={canonicalPath === undefined ? undefined : publicPath(canonicalPath)} />
     <slot />
     <Footer />
   </body>

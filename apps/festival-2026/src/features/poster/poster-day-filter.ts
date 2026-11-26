@@ -11,6 +11,8 @@ import { canonicalPosterPosition, posterPositionFields, posterPositionMask, type
 import { validatePosterFilterTransitions, type PosterFilterIndex } from './poster-filter-transition-validation'
 import { createPosterSimpleLayout, type PosterSimplePlans } from './poster-simple-layout'
 
+import { readPosterFilters, writePosterFilters } from './poster-filter-url'
+
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const keys = ['all', 'saturday', 'sunday'] as const
 const variants = new Set(['lightning', 'rosette-yellow', 'chevrons-right', 'rings', 'orbits-rose', 'star', 'sparks', 'rosette-pink', 'orbits-cyan', 'chevrons-left', 'rosette-cyan'])
@@ -40,7 +42,7 @@ const validPatternPaint = (node: HTMLElement, variant: string) => {
 }
 
 /** Validate the entire finite handoff before changing any live endpoint. No packing. */
-function validate(value: PosterFilterPlans, artists: HTMLElement[], information: HTMLElement[], motifs: HTMLElement[]): boolean {
+function validate(value: PosterFilterPlans, artists: HTMLElement[], information: HTMLElement[], motifs: HTMLElement[], initialDay: DayKey): boolean {
   if (!value || value.version !== 1 || (value.scope !== 'home' && value.scope !== 'category') || value.available !== true || !Array.isArray(value.participants) || value.participants.length > 512) return false
   const ids = value.participants.map(p => p.id)
   if (value.participants.some(p => typeof p.id !== 'string' || !p.id || typeof p.day !== 'string') || new Set(ids).size !== ids.length
@@ -100,19 +102,30 @@ function validate(value: PosterFilterPlans, artists: HTMLElement[], information:
         || remaining.size !== 0) return false
     }
   }
-  if (motifs.length !== value.plans.all.motifs.length || motifs.some((node, index) => node.dataset.posterMotif !== value.plans.all.motifs[index].variant
+  const initialMotifs = value.plans[initialDay].motifs
+  if (motifs.length !== initialMotifs.length || motifs.some((node, index) => node.dataset.posterMotif !== initialMotifs[index].variant
     || node.dataset.posterMotifIndex !== String(index)
-    || (!validPatternPaint(node, value.plans.all.motifs[index].variant) && !node.querySelector('svg use')) || node.querySelector('[id]'))) return false
+    || (!validPatternPaint(node, initialMotifs[index].variant) && !node.querySelector('svg use')) || node.querySelector('[id]'))) return false
   return infoIDs.every(id => ranges.some(range => value.plans.all.information[range][id]))
 }
 
-/** Adapter owned exclusively by mountEventModal. Failed setup leaves static Todos. */
+/** Adapter owned exclusively by mountEventModal. Failed setup leaves the static endpoint. */
 export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFilter {
   const grid = root.querySelector<HTMLElement>('[data-poster-grid]')
+  const dayFromMarkup = grid?.dataset.posterInitialDay
+  const sortFromMarkup = grid?.dataset.posterInitialSort
+  const initialDay = isKey(dayFromMarkup) ? dayFromMarkup : 'all'
+  const initialSort = sortFromMarkup && isSort(sortFromMarkup) ? sortFromMarkup : undefined
+  const filterPath = grid?.dataset.posterFilterUrl
+  const landingPath = window.location.pathname
+  const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/'
+  // Local previews can access the prerendered document directly at its build path.
+  const directVariant = filterPath && normalizePath(filterPath) !== normalizePath(landingPath)
   const controls = root.querySelector<HTMLFieldSetElement>('[data-day-filter]')
   const status = controls?.querySelector<HTMLElement>('[data-day-count]')
   const radios = [...(controls?.querySelectorAll<HTMLInputElement>('input[type="radio"][name="poster-day"]') ?? [])]
-  const artists = [...root.querySelectorAll<HTMLElement>('[data-poster-artist]')]
+  const domArtists = [...root.querySelectorAll<HTMLElement>('[data-poster-artist]')]
+  let artists = domArtists
   const information = [...root.querySelectorAll<HTMLElement>('[data-poster-information]')]
   const originalMotifs = [...root.querySelectorAll<HTMLElement>('[data-poster-motif]')]
   const daySelect = controls?.querySelector<HTMLSelectElement>('[data-poster-day-select]')
@@ -123,7 +136,14 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let media: MediaQueryList
   try {
     plans = JSON.parse(root.querySelector('script[data-poster-plans]')?.textContent ?? '')
-    if (!grid || !controls || !status || radios.length !== 3 || radios.some((r, i) => r.value !== keys[i]) || !validate(plans, artists, information, originalMotifs)) return inactive
+    if (initialSort) {
+      const permutation = plans.order?.[initialSort]
+      if (!permutation || !isPermutation(permutation, domArtists.length)) return inactive
+      // Plans always index canonical lineup order, even when HTML is ranked.
+      artists = []
+      permutation.forEach((canonicalIndex, domIndex) => { artists[canonicalIndex] = domArtists[domIndex] })
+    }
+    if (!grid || !controls || !status || radios.length !== 3 || radios.some((r, i) => r.value !== keys[i]) || !validate(plans, artists, information, originalMotifs, initialDay)) return inactive
     index = validatePosterFilterTransitions(plans)
     if (!index) return inactive
     if (plans.simple) for (const key of keys) for (const r of ranges) {
@@ -143,13 +163,15 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   }
   const abort = new AbortController()
   let destroyed = false
-  let selected: DayKey = 'all'
+  let selected: DayKey = initialDay
   let simple = false
-  let sort: keyof PosterOrders | undefined
+  let sort = initialSort
   const order = plans.order
   const presentation = sortControl && simpleToggle && plans.simple && order
     && isPermutation(order.time, artists.length) && isPermutation(order.location, artists.length)
-  const artistBoundary = artists.at(-1)?.nextSibling ?? null
+  if (initialSort && !presentation) return inactive
+  const syncUrl = presentation && filterPath
+  const artistBoundary = domArtists.at(-1)?.nextSibling ?? null
   const simpleArea = '--poster-simple-area'
   const simpleRows = '--poster-simple-rows'
   const simpleTracks = '--poster-simple-tracks'
@@ -161,7 +183,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let pending = false
   let releaseScroll: (() => void) | undefined
   let motifNodes = [...originalMotifs]
-  let motifEndpoints = plans.plans.all.motifs
+  let motifEndpoints = plans.plans[initialDay].motifs
   const pool = new Set(originalMotifs)
   const originalMotifSet = new Set(originalMotifs)
   const indexedPlans = index.plans
@@ -171,7 +193,8 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     restore: options.ownStyles(node, node === grid
       ? [...ranges.map(r => `--${r}-rows`), ...(presentation ? [simpleRows, simpleTracks] : [])]
       : ['display', ...ranges.flatMap(r => ['display', 'column', 'row', 'width', 'height'].map(p => `--${r}-${p}`)),
-        ...(presentation && !node.hasAttribute('data-poster-motif') ? [simpleArea] : [])]),
+        ...(presentation && !node.hasAttribute('data-poster-motif') ? [simpleArea] : []),
+        ...(initialSort && node.hasAttribute('data-poster-artist') ? ranges.map(sortedProperty) : [])]),
     hidden: node.hidden, inert: node.inert, index: node.getAttribute('data-poster-motif-index'),
   }))
   const tabIndices = new Map<HTMLElement, string | null>()
@@ -187,6 +210,13 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const syncDayControls = () => {
     for (const radio of radios) radio.checked = radio.value === selected
     if (daySelect) daySelect.value = selected
+  }
+  const pushFilterUrl = () => {
+    if (!syncUrl) return
+    const url = new URL(window.location.href)
+    if (directVariant) url.pathname = syncUrl
+    writePosterFilters(url, selected, sort)
+    if (url.href !== window.location.href) window.history.pushState(window.history.state, '', url)
   }
   // Only canonical endpoint metadata is remembered, never painted geometry.
   // Check initial inline declarations lazily once, so valid SSR benefits on click 1.
@@ -334,13 +364,13 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (!pending && !motion && !releaseScroll) return
     finish()
   }
-  const select = (key: DayKey) => {
-    if (destroyed || !options.canInteract()) { syncDayControls(); return }
+  const select = (key: DayKey, fromHistory = false) => {
+    if (destroyed || (!fromHistory && !options.canInteract())) { syncDayControls(); return }
     if (key === selected) { syncDayControls(); return }
     const activeRange = range()
     const scroll = { x: window.scrollX, y: window.scrollY }
-    let animate = !media.matches && (!!options.createMotion || isMotionReady())
-    if (!media.matches && !options.createMotion) preloadMotion()
+    let animate = !fromHistory && !media.matches && (!!options.createMotion || isMotionReady())
+    if (!fromHistory && !media.matches && !options.createMotion) preloadMotion()
     const displayed = (node: HTMLElement) => !node.hidden && node.style.display !== 'none'
       && node.style.getPropertyValue(`--${activeRange}-display`) !== 'none'
     const endpointRects = (geometry: FilterGridGeometry) => {
@@ -504,14 +534,27 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       else created.dispose()
     } catch { finish() }
   }
+  const setSort = (next: keyof PosterOrders | undefined) => {
+    if (!presentation || next === sort) return
+    settle(); sort = next; sortedEndpoints.clear(); reorder(); applySortedSlots()
+    if (simple) applySimpleSlots()
+  }
+  const restoreFilters = () => {
+    if (!syncUrl || !sortControl) return
+    const { day, order } = readPosterFilters(new URL(window.location.href).searchParams)
+    const localVariant = directVariant && window.location.pathname === landingPath
+    select(localVariant ? initialDay : day, true)
+    setSort(localVariant ? initialSort : order === 'original' ? undefined : order)
+    sortControl.value = sort ?? ''
+  }
   const change = (event: Event) => {
     const input = event.target
     if (presentation && input === sortControl) {
       const next = isSort(sortControl.value) ? sortControl.value : undefined
       if (!options.canInteract()) { sortControl.value = sort ?? ''; return }
       if (next === sort) return
-      settle(); sort = next; sortedEndpoints.clear(); reorder(); applySortedSlots()
-      if (simple) applySimpleSlots()
+      setSort(next)
+      pushFilterUrl()
       return
     }
     let value: string
@@ -519,7 +562,9 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     else if (input instanceof HTMLInputElement && radios.includes(input)) value = input.value
     else return
     if (!isKey(value)) { syncDayControls(); return }
+    const previous = selected
     select(value)
+    if (selected !== previous) pushFilterUrl()
   }
   const syncSimple = () => simpleToggle?.setAttribute('aria-pressed', String(simple))
   const toggleSimple = () => {
@@ -534,10 +579,10 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     destroyed = true; ++generation; abort.abort(); motion?.dispose(); releaseScroll?.()
     disconnect?.disconnect(); disconnectToolbar?.(); media.removeEventListener?.('change', settle)
     if (presentation) {
-      if (sort) { sort = undefined; reorder() }
-      for (const node of artists) for (const r of ranges) node.style.removeProperty(sortedProperty(r))
-      simple = false; grid.removeAttribute('data-poster-simple'); grid.removeAttribute('data-poster-ordered')
-      sortControl.value = ''; syncSimple()
+      if (sort !== initialSort) { sort = initialSort; reorder() }
+      if (!initialSort) for (const node of artists) for (const r of ranges) node.style.removeProperty(sortedProperty(r))
+      simple = false; grid.removeAttribute('data-poster-simple'); grid.toggleAttribute('data-poster-ordered', !!initialSort)
+      sortControl.value = initialSort ?? ''; syncSimple()
     }
     for (const node of pool) if (!originalMotifSet.has(node)) node.remove()
     for (const { node, restore, hidden, inert, index } of saved) {
@@ -546,10 +591,11 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       if (index !== null) node.setAttribute('data-poster-motif-index', index)
     }
     for (const [node, value] of tabIndices) { if (value === null) node.removeAttribute('tabindex'); else node.setAttribute('tabindex', value) }
-    selected = 'all'; syncDayControls(); setControlsReady(false); status.textContent = ''
+    selected = initialDay; syncDayControls(); setControlsReady(false); status.textContent = ''
   }
   try {
     controls.addEventListener('change', change, { signal: abort.signal })
+    if (syncUrl) window.addEventListener('popstate', restoreFilters, { signal: abort.signal })
     if (presentation) simpleToggle.addEventListener('click', toggleSimple, { signal: abort.signal })
     root.addEventListener('click', event => {
       const link = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-event-trigger]') : null
@@ -572,7 +618,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     disconnect.observe(document.documentElement, { childList: true, subtree: true })
     if (sortControl && simpleToggle) {
       sortControl.disabled = simpleToggle.disabled = !presentation
-      sortControl.value = ''; syncSimple()
+      sortControl.value = initialSort ?? ''; syncSimple()
     }
     if (presentation) {
       disconnectToolbar = mountStickyToolbar(controls, daySelect ? [sortControl, daySelect] : [sortControl], options.ownStyles, abort.signal)

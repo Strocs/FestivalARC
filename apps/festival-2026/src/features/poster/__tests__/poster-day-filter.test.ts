@@ -63,14 +63,16 @@ beforeEach(() => {
 afterEach(() => { dispose(); document.body.innerHTML = ''; document.body.removeAttribute('style'); document.documentElement.removeAttribute('style'); vi.unstubAllGlobals(); vi.restoreAllMocks() })
 
 describe('day filtering through the sole modal owner', () => {
-  function mountPresentation() {
+  function mountPresentation(prepare?: (grid: HTMLElement) => void) {
     dispose()
     root.querySelector('[data-day-count]')!.insertAdjacentHTML('beforebegin', '<select data-poster-sort><option value="">Original</option><option value="time">Horario</option><option value="location">Escenario</option></select><select data-poster-day-select><option value="all">Todos</option><option value="saturday">Sábado 28</option><option value="sunday">Domingo 29</option></select><button type="button" aria-pressed="false" data-poster-simple-toggle>Vista simple</button>')
     root.querySelector('script')!.textContent = JSON.stringify({ ...plans, simple: createPosterSimplePlans(plans, []), order: { time: [0, 1], location: [1, 0] } })
+    const grid = root.querySelector<HTMLElement>('[data-poster-grid]')!
+    prepare?.(grid)
     mount()
     const set = (node: HTMLInputElement | HTMLSelectElement) => node.dispatchEvent(new Event('change', { bubbles: true }))
     return {
-      grid: root.querySelector<HTMLElement>('[data-poster-grid]')!,
+      grid,
       setSimple(checked: boolean) {
         const node = root.querySelector<HTMLButtonElement>('[data-poster-simple-toggle]')!
         expect(node.getAttribute('aria-pressed')).toBe(String(!checked))
@@ -83,6 +85,76 @@ describe('day filtering through the sole modal owner', () => {
       },
     }
   }
+
+  it('changes URL filters only for user edits and restores both filters without changing the view', () => {
+    const previous = location.href
+    history.replaceState(null, '', '/musica/?campaign=arc&dia=todos&orden=original#poster')
+    try {
+      const push = vi.spyOn(history, 'pushState').mockImplementation((state, title, url) => history.replaceState(state, title, url))
+      const presentation = mountPresentation(grid => { grid.dataset.posterFilterUrl = '/musica/' })
+      const day = root.querySelector<HTMLSelectElement>('[data-poster-day-select]')!
+      const sort = root.querySelector<HTMLSelectElement>('[data-poster-sort]')!
+      media.matches = true
+      expect(push).not.toHaveBeenCalled()
+      expect([day.value, sort.value]).toEqual(['all', ''])
+      choose('saturday')
+      expect(location.href).toBe(new URL('/musica/?campaign=arc&dia=sabado#poster', previous).href)
+      expect(visible()).toEqual(['a'])
+      presentation.sort('time')
+      expect(location.href).toBe(new URL('/musica/?campaign=arc&dia=sabado&orden=horario#poster', previous).href)
+      presentation.setSimple(true)
+      expect(push).toHaveBeenCalledTimes(2)
+      const traverse = (query: string) => {
+        history.replaceState(null, '', `/musica/?campaign=arc&${query}#poster`)
+        window.dispatchEvent(new PopStateEvent('popstate'))
+      }
+      traverse('dia=domingo&orden=escenario')
+      expect([day.value, sort.value]).toEqual(['sunday', 'location'])
+      expect(visible()).toEqual(['b'])
+      expect(presentation.grid.hasAttribute('data-poster-simple')).toBe(true)
+      traverse('dia=unknown&orden=unknown')
+      expect([day.value, sort.value]).toEqual(['all', ''])
+      expect(visible()).toEqual(['a', 'b'])
+      expect(push).toHaveBeenCalledTimes(2)
+      dispose()
+      traverse('dia=domingo&orden=escenario')
+      expect([day.value, sort.value]).toEqual(['all', ''])
+      expect(visible()).toEqual(['a', 'b'])
+      expect(push).toHaveBeenCalledTimes(2)
+    } finally {
+      history.replaceState(null, '', previous)
+    }
+  })
+
+  it('hydrates and restores the prerendered day and sorted DOM on teardown', () => {
+    const { grid } = mountPresentation(grid => {
+      grid.dataset.posterInitialDay = 'sunday'
+      grid.dataset.posterInitialSort = 'location'
+      grid.setAttribute('data-poster-ordered', '')
+      for (const node of grid.querySelectorAll('[data-poster-motif]')) node.remove()
+      grid.insertAdjacentHTML('afterbegin', plans.plans.sunday.motifs.map(m => `<div data-poster-motif="${m.variant}" data-poster-motif-index="${m.index}"><svg><use href="#${m.variant}"></use></svg></div>`).join(''))
+      const a = grid.querySelector<HTMLElement>('[data-poster-artist="a"]')!
+      const b = grid.querySelector<HTMLElement>('[data-poster-artist="b"]')!
+      a.hidden = a.inert = true
+      b.style.setProperty('--poster-sorted-mobile', '1/1/span 2/span 8')
+      grid.insertBefore(b, a)
+    })
+    const day = root.querySelector<HTMLSelectElement>('[data-poster-day-select]')!
+    const sort = root.querySelector<HTMLSelectElement>('[data-poster-sort]')!
+    media.matches = true
+    expect([day.value, sort.value]).toEqual(['sunday', 'location'])
+    expect(visible()).toEqual(['b'])
+    choose('all')
+    expect(visible()).toEqual(['b', 'a'])
+    sort.value = ''
+    sort.dispatchEvent(new Event('change', { bubbles: true }))
+    expect(visible()).toEqual(['a', 'b'])
+    dispose()
+    expect([day.value, sort.value]).toEqual(['sunday', 'location'])
+    expect(visible()).toEqual(['b'])
+    expect(grid.hasAttribute('data-poster-ordered')).toBe(true)
+    expect(grid.querySelector<HTMLElement>('[data-poster-artist="b"]')!.style.getPropertyValue('--poster-sorted-mobile')).toBe('1/1/span 2/span 8')
+  })
 
   it('syncs the responsive day controls in both directions and resets them on teardown', () => {
     mountPresentation()
