@@ -1,7 +1,7 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container'
 import { describe, expect, it } from 'vitest'
 import ArtistDetail from '../ArtistDetail.astro'
-import type { ParticipantView } from '../categories'
+import { participants, type ParticipantView } from '../categories'
 
 const fixture: ParticipantView = {
   id: 'fixture',
@@ -61,6 +61,26 @@ describe('artist detail rendering', () => {
     expect(html).not.toContain('<img')
     expect(html).not.toContain('<iframe')
     expect(html).not.toContain('undefined')
+  })
+
+  it('keeps the renamed Mercado participant at its canonical path', () => {
+    const artist = participants.find(({ id }) => id === 'nativa-joyas-del-elqui')
+    expect(artist?.canonicalPath).toBe('/mercado-creativo-y-daz/nativa-joyas-del-elqui/')
+    expect(participants.some(({ id }) => id === 'forjadas')).toBe(false)
+  })
+
+  it.each(['market', 'expo'] as const)('renders ordered, individually labelled Instagram and website links for %s', async category => {
+    const profiles = ['https://www.instagram.com/zeta/', 'https://www.instagram.com/alpha/']
+    const website = 'https://example.org/participant/'
+    for (const modal of [false, true]) {
+      const html = await render({ category, socialLinks: { instagram: profiles }, website }, modal)
+      const links = [...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)]
+      expect(links.map(link => link[1])).toEqual([...profiles, website])
+      expect(links[0][0]).toContain('aria-label="Instagram 1 de Fixture performer"')
+      expect(links[1][0]).toContain('aria-label="Instagram 2 de Fixture performer"')
+      expect(html).toContain('aria-label="Enlaces de Fixture performer"')
+      expect(html).toContain('>Sitio web</a>')
+    }
   })
 
   it('escapes markup in supplied descriptions', async () => {

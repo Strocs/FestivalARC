@@ -1,5 +1,5 @@
 ---
-import type { ParticipantView } from '../artists/categories'
+import { canOpenParticipantDetails, usesCompactParticipantDetails, type ParticipantView } from '../artists/categories'
 import { publicPath } from '../../utils/publication'
 import { getArtistCompositions, getArtistFitRanges } from './artist-name'
 
@@ -8,7 +8,9 @@ interface Props {
   interactive?: boolean
 }
 
-const { artist, interactive = true } = Astro.props
+const { artist, interactive: allowInteraction = true } = Astro.props
+const compactDetails = usesCompactParticipantDetails(artist.category)
+const interactive = allowInteraction && canOpenParticipantDetails(artist)
 const Wrapper = interactive ? 'a' : 'div'
 const words = artist.name.trim().split(/\s+/)
 const compositions = getArtistCompositions(artist.name)
@@ -41,7 +43,7 @@ const rules = ranges
     href={interactive ? publicPath(artist.canonicalPath) : undefined}
     data-event-trigger={interactive ? '' : undefined}
     data-event-id={interactive ? artist.id : undefined}
-    aria-label={interactive ? artist.name : undefined}
+    aria-label={interactive ? (compactDetails ? `Ver más sobre ${artist.name}` : artist.name) : undefined}
     class='focus-visible:outline-primary absolute inset-0 size-full appearance-none border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-[-2px]'>
     <span
       class:list={[
@@ -81,7 +83,7 @@ const rules = ranges
       {interactive && <span
         data-artist-meta
         class='relative col-start-1 row-start-2 flex min-w-0 flex-col items-center gap-px text-center text-xs/3 text-foreground group-data-[poster-simple]/poster:text-white'>
-        {(artist.date || artist.location) && <span
+        {!compactDetails && (artist.date || artist.location) && <span
           class='flex min-w-0 flex-col items-center gap-px motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-translate-y-0.5'>
           {artist.date && <time class='font-bold'>{artist.date.day} - {artist.date.time}hrs</time>}
           {artist.location && <span data-artist-location class='text-pretty font-medium'>{artist.location}</span>}

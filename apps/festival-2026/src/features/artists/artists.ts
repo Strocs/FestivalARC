@@ -13,6 +13,8 @@ export const disciplines = z.array(z.strictObject({
   'Discipline IDs must be unique.',
 ).parse(disciplineData)
 
+const instagramUrl = z.string().url().startsWith('https://www.instagram.com/')
+
 const performerSchema = z.strictObject({
   id: slug,
   name: z.string().min(1),
@@ -28,7 +30,7 @@ const performerSchema = z.strictObject({
   location: z.string().min(1).optional(),
   youtubeVideoId: z.string().regex(/^[A-Za-z0-9_-]{11}$/).optional(),
   socialLinks: z.strictObject({
-    instagram: z.string().url().startsWith('https://www.instagram.com/').optional(),
+    instagram: instagramUrl.optional(),
     spotify: z.string().url().startsWith('https://open.spotify.com/').optional(),
   }).optional(),
   ticketUrl: z.string().nullable(),
@@ -62,11 +64,14 @@ export function validateArtists(input: unknown): Artist[] {
 }
 
 const participantSchema = performerSchema.pick({
-  id: true, name: true, description: true, date: true, image: true,
+  id: true, name: true, description: true, image: true, socialLinks: true,
+}).partial({ description: true }).extend({
+  socialLinks: performerSchema.shape.socialLinks.unwrap().extend({
+    instagram: z.union([instagramUrl, z.array(instagramUrl).min(1)]).optional(),
+  }).optional(),
+  website: z.url({ protocol: /^https?$/ }).regex(/^https?:\/\//i).optional(),
 })
-const expoParticipantSchema = performerSchema.pick({
-  id: true, name: true, description: true, image: true,
-}).extend({ date: scheduleSchema.optional() })
+const expoParticipantSchema = participantSchema.extend({ date: scheduleSchema.optional() })
 const catalogSchema = z.strictObject({
   music: z.strictObject({ name: z.literal('Música'), participants: z.array(musicSchema).min(1) }),
   stage: z.strictObject({ name: z.literal('Artes Escénicas'), participants: z.array(performerSchema).min(1) }),

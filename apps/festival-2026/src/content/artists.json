@@ -168,8 +168,8 @@
         "description": "Javier Barría es un cantautor, multiinstrumentista y productor musical chileno reconocido como una de las voces más prolíficas y versátiles de la escena independiente contemporánea. Su propuesta transita con naturalidad entre el folk, el pop de autor, la canción acústica y la experimentación electrónica, destacando por un trabajo minucioso en los arreglos y la producción sonora.\n\nA lo largo de más de dos décadas de carrera ha publicado una extensa discografía solista que incluye títulos fundamentales como El día después, Estación Pirque, Folclor y Estereotipo, además de colaborar como productor y arreglista con destacados exponentes de la música chilena. En vivo, su espectáculo combina cercanía interpretativa, destreza instrumental y una aguda mirada poética sobre la memoria y lo cotidiano.",
         "ticketUrl": null,
         "date": {
-          "day": "Domingo 29",
-          "time": "20:00",
+          "day": "Sábado 28",
+          "time": "18:00",
           "month": "noviembre"
         },
         "image": {
@@ -718,6 +718,7 @@
       },
       {
         "id": "yaru",
+        "youtubeVideoId": "Eq5NsW8Ybq8",
         "name": "Yaru, la heroína Diaguita",
         "company": "La Feroz Compañía",
         "audienceType": "Infantil",
@@ -742,6 +743,7 @@
       },
       {
         "id": "el-humedal",
+        "youtubeVideoId": "idumzDvHy2Q",
         "name": "El Humedal, un viaje por el tiempo",
         "company": "Compañía de teatro Los Mil Nombres",
         "audienceType": "Todo Público",
@@ -766,6 +768,7 @@
       },
       {
         "id": "pulsando",
+        "youtubeVideoId": "LcWkn5k9yMA",
         "name": "PulSando",
         "company": "Agrupación flamenco Elqui",
         "audienceType": "Todo Público",
@@ -787,6 +790,7 @@
       },
       {
         "id": "removernos-a-cielo-abierto",
+        "youtubeVideoId": "exiMwE886d0",
         "name": "Removernos a Cielo Abierto: Estrategia de Supervivencia",
         "company": "Colectivo de Artes Escénicas Zona de Obras de Coquimbo",
         "audienceType": "Todo Público",
@@ -811,6 +815,7 @@
       },
       {
         "id": "yatiri",
+        "youtubeVideoId": "bvDsu6xjvgs",
         "name": "Yatiri y las Perlas de Pachamama",
         "company": "Fundación Sociedad Bach La Serena",
         "audienceType": "Familiar",
@@ -835,6 +840,7 @@
       },
       {
         "id": "un-derrotero-nortino-con-marionetas",
+        "youtubeVideoId": "yzKtnqsCwzA",
         "name": "Un Derrotero Nortino con Marionetas",
         "company": "Red Lambe Norte",
         "audienceType": "Familiar",
@@ -856,6 +862,7 @@
       },
       {
         "id": "awicha-la-tejedora-de-memorias",
+        "youtubeVideoId": "PCY9toFB5Iw",
         "name": "Awicha, la Tejedora de Memorias",
         "company": "Fundación Círculo Remolino - Laboratorio Creativo Remolino",
         "audienceType": "Familiar",
@@ -880,6 +887,7 @@
       },
       {
         "id": "narrando-mundos-en-bicicuentera",
+        "youtubeVideoId": "6_BdVN10wQI",
         "name": "Narrando Mundos en la Bicicuentera",
         "company": "Compañía de Ojos de Agua",
         "audienceType": "Familiar",
@@ -904,6 +912,7 @@
       },
       {
         "id": "bendita-agua",
+        "youtubeVideoId": "vZy3O5Asn_c",
         "name": "Bendita Agua",
         "company": "Compañía de Títeres \"La Boda\"",
         "audienceType": "Familiar",
@@ -949,6 +958,7 @@
       },
       {
         "id": "llamada-de-emergencia",
+        "youtubeVideoId": "ntIeEiGwU-Y",
         "name": "Llamada de Emergencia",
         "company": "Compañia Noche de Payasas",
         "audienceType": "Adulto",
@@ -994,6 +1004,7 @@
       },
       {
         "id": "trans-humante",
+        "youtubeVideoId": "PYkV97F7-Jw",
         "name": "Trans-Humante",
         "company": "Espacio La Isla",
         "audienceType": "Familiar",
@@ -1137,49 +1148,75 @@
       {
         "id": "la-velocidad-de-la-luz",
         "name": "La Velocidad de la Luz",
-        "description": "",
+        "description": "Colectivo chileno de experimentación visual de la Región de Coquimbo, cofundado por el arquitecto y artista visual Pablo Godoy Codoceo junto a Luis González Loyola. Su propuesta cruza arquitectura, arte digital y artes escénicas mediante videomapping, instalaciones audiovisuales, diseño escénico e intervenciones urbanas de rescate patrimonial, destacando obras y colaboraciones como Víctor Trasciende, la ópera ciudadana Todos para uno y la muestra interdisciplinaria Liminal: el ruido que queda.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/lavelocidad.delaluz/"
+        },
         "image": null
       },
       {
         "id": "maria-piedad-aguirre",
         "name": "María Piedad Aguirre",
-        "description": "",
+        "description": "Artista visual y arquitecta residente en La Serena, especializada en fotografía experimental sin cámara. Su propuesta cruza arquitectura, ecología local y procesos fotoquímicos a partir de la cianotipia y materiales fotosensibles, explorando el diálogo entre cuerpo, clima y paso del tiempo con paletas cromáticas poco habituales, con muestras en espacios como Flach Galería y el Museo del Limarí, además de becas y publicaciones internacionales de fotografía alternativa.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/piedad11111/"
+        },
         "image": null
       },
       {
         "id": "ivan-jorquera",
         "name": "Iván Jorquera",
-        "description": "",
+        "description": "Diseñador en comunicación visual, muralista y académico de la Escuela de Diseño de la Universidad de La Serena, conocido en la escena del arte urbano como El Menese. Su propuesta cruza graffiti, muralismo patrimonial y pintura de estudio en técnicas mixtas para rescatar la memoria de los barrios mediante obras participativas y talleres comunitarios, trasladando también su lenguaje callejero a sala con muestras como De la calle a la Galería en la Casa de las Artes del Barrio Inglés de Coquimbo.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/elmenese/"
+        },
         "image": null
       },
       {
         "id": "camila-montoya",
         "name": "Camila Montoya",
-        "description": "",
+        "description": "Artista visual y profesora de artes plásticas nacida y radicada en Canela. Su práctica se vincula con la vida rural y el territorio a través de la investigación con tierra, arcillas, pigmentos naturales y materia vegetal, cruzando muralismo, cerámica, pintura, grabado y fotografía orgánica para explorar cómo la materia, la luz y la huella transforman nuestra forma de observar el entorno.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/camilaefemontoya/"
+        },
+        "website": "https://canelterra.com/",
         "image": null
       },
       {
         "id": "oskar-huerta",
         "name": "Oskar Huerta",
-        "description": "",
+        "description": "Fotógrafo documental, artista visual y gestor cultural radicado en Ovalle, Provincia del Limarí (nombre artístico de Juan Pablo Martínez Huerta). Trabaja principalmente con fotografía analógica en blanco y negro y Polaroid para retratar problemáticas sociales, políticas y medioambientales del Norte Chico —como la megasequía, la desertificación y el éxodo rural—, destacando sus fotolibros y muestras como Sindemia, De pie junto a las ruinas, Animales Heridos y Umbra, además de su rol como programador del Encuentro Foto Limarí.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/oskarhuertafoto/?hl=en"
+        },
         "image": null
       },
       {
         "id": "andrea-cantillanes",
         "name": "Andrea Cantillanes",
-        "description": "",
+        "description": "Fotógrafa documental, reportera gráfica y gestora cultural radicada en la conurbación La Serena-Coquimbo, con cerca de 20 años de trayectoria. Su trabajo cruza el fotoperiodismo con la investigación patrimonial y social de la costa regional, destacando proyectos autorales como Coquimbo y Su Gente y el fotolibro Entre Mareas: Memoria Visual de las Mujeres Orilleras de Caleta San Pedro, además de su labor como presidenta de la Fundación Fotográfica Focus y formadora en fotografía analógica y digital.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/cantillanesfabres/"
+        },
         "image": null
       },
       {
         "id": "sandy-barrera",
         "name": "Sandy Barrera",
-        "description": "",
+        "description": "Artista visual, muralista, mosaiquista y gestora cultural radicada en La Serena, conocida artísticamente como Sandy Baptista. Su propuesta cruza la experimentación plástica en sala —a través de pintura, mosaico, instalación y técnicas mixtas en muestras como Cotidiano Violento y Las huellas que dejas— con el arte comunitario y los murales colaborativos junto a agrupaciones de mujeres, trayectoria por la que fue distinguida como Mujer Patrimonio por la Municipalidad de La Serena e integra la corporación regional Vicrea.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/sandybaptistaartistavisual/"
+        },
+        "website": "https://sandyvisualarts.wixsite.com/artesandy/sobre-mi",
         "image": null
       },
       {
         "id": "daniela-pizarro",
         "name": "Daniela Pizarro",
-        "description": "",
+        "description": "Artista y trabajadora comunitaria de Ovalle, conocida artísticamente como Dani Negri, cuya práctica entreteje la investigación y la acción colectiva a través del hacer textil. Su propuesta explora la memoria personal como territorio común y el rol social del arte mediante textiles testimoniales, registros gráficos, títeres de mano y libros que dan forma al proyecto Archivo Emotivo amateur, generando espacios de encuentro para recordar colectivamente, cuidar e imaginar nuevas formas de pertenencia.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/_dani_negri_/"
+        },
         "image": null
       }
     ],
@@ -1191,392 +1228,347 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus, nulla gravida orci a odio, vitae facilisis turpis urna sed justo.",
     "participants": [
       {
-        "id": "forjadas",
-        "name": "Forjadas",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "id": "nativa-joyas-del-elqui",
+        "name": "NATIVA JOYAS DEL ELQUI",
+        "description": "Proyecto de orfebrería del Valle de Elqui dedicado a la creación de piezas hechas a mano en plata y cobre, inspiradas en las formas, texturas y elementos de la naturaleza. Su trabajo nace de un proceso pausado de observación, inspiración y oficio, alejado de las modas pasajeras, para transformar historias y paisajes del entorno en joyas con identidad y significado propio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/expoforjadas/?hl=es"
         },
         "image": null
       },
+        "website": "https://forjadas.cl/",
       {
         "id": "reproduccion-arqueologica-de-la-ceramica-diaguita",
         "name": "Reproducción Arqueológica de la Cerámica Diaguita",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Taller de cerámica dedicado a la reproducción arqueológica de piezas diaguitas mediante el uso de greda, engobes y técnicas tradicionales de alfarería. Su trabajo recrea vasos, cuencos, jarros pato, aríbalos con influencia inca, silbatos y réplicas de hallazgos del sitio El Olivar.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/eduardo_artesano/reels/"
         },
         "image": null
       },
       {
         "id": "pilpintuvellon",
         "name": "Pilpintuvellon",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto textil fundado en 2016 por Emma, dedicado a dar vida a figuras elaboradas con lana de oveja, materiales naturales y telas recicladas. Sus creaciones representan la fuerza de lo femenino ancestral y personajes de pueblos originarios, uniendo el diseño artesanal con el rescate cultural y la identidad del territorio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/pilpintuvellon/"
         },
         "image": null
       },
       {
         "id": "scarlett-christiansen-joyas-de-autora",
         "name": "Scarlett Christiansen Joyas de Autora",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Proyecto de joyería de autora creado en El Panul, Región de Coquimbo, dedicado a la elaboración artesanal de piezas en metal y fuego producidas en series pequeñas. Sus colecciones —como Mi Paisaje, Polvo de Estrellas y Nativa— traducen la observación del océano Pacífico y la naturaleza del norte de Chile en joyas únicas con enfoque sustentable.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/scarlettchj/"
         },
         "image": null
       },
+        "website": "https://www.scarlettchristiansen.cl/sobre-mi",
       {
         "id": "taller-artesanal-jacaranda",
         "name": "Taller Artesanal Jacarandá",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Taller textil y de cestería ubicado en el Valle del Elqui, liderado por la artesana Cecilia Ramírez, dedicado al rescate de oficios y culturas ancestrales. Confeccionan a mano piezas utilitarias y decorativas utilizando algodón, lana de oveja, cáñamo y fibras vegetales tejidas en telar y teñidas artesanalmente, plasmando iconografía diaguita y colores del territorio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/jacarandatallerartesanal/"
         },
         "image": null
       },
       {
         "id": "artesana-neurotica",
         "name": "Artesana Neurótica",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Proyecto de artesanía textil dedicado a la creación de piezas personalizadas mediante fieltro agujado en vellón de oveja y crochet. Elaboran figuras a pedido, animales, retratos y cuadros decorativos en relieve sobre bases de madera, esculpiendo lana natural cardada y teñida.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/artesananeurotica/"
         },
         "image": null
       },
       {
         "id": "alicate-veloz",
         "name": "Alicate Veloz",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto de artesanía en metal y madera del creador Jorge Pedrero, reconocido por su trabajo hecho a mano en el modelado de esculturas y figuras detalladas en miniatura. Con más de 40 años dedicado al oficio, transforma alambre, aluminio y metal reciclado en piezas como bicicletas, triciclos de reparto e instrumentos musicales.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/alicateveloz/"
         },
         "image": null
       },
       {
         "id": "anima-rojas",
         "name": "Ánima Rojas",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Ilustradora y artista visual nacida en Coquimbo con formación en arquitectura, dedicada a crear mundos donde convergen fantasía, naturaleza y personajes imaginarios. Trabaja principalmente con técnicas tradicionales como acuarela, acrílico, gouache y grafito —además de medios mixtos y sketchbooks autogestionados—, contando con una destacada proyección internacional en revistas, libros y exhibiciones en Chile, México, Argentina y Estados Unidos.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/anima.rojas/"
         },
         "image": null
       },
+        "website": "https://animared.myportfolio.com/portafolio",
       {
         "id": "catana",
         "name": "Catana",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Artista visual e ilustradora radicada en La Serena, dedicada a la creación gráfica artesanal, editorial y de autor. Su trabajo abarca la autoedición de fanzines y libros ilustrados, el diseño de papelería y afiches con estética retro, y la producción de láminas en tirajes limitados mediante grabado e impresión artesanal como xilografía, linograbado y serigrafía.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/c_a_t_a_n_a/"
         },
         "image": null
       },
       {
         "id": "creavida",
         "name": "Creavida",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Marca de streetwear y naturalwear originaria de la Región de Coquimbo que utiliza la ilustración aplicada como eje central de su indumentaria y accesorios. A través de colaboraciones con artistas y estudios gráficos, transforma la flora, la fauna y la cultura local —como sus colecciones cápsula inspiradas en balnearios de la zona— en gráficos estampados con identidad territorial.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/creavida.chile/"
         },
         "image": null
       },
       {
         "id": "alpacosas",
         "name": "Alpacosas",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto independiente de ilustración y diseño de la Región de Coquimbo enfocado en la creación de papelería de autor y objetos ilustrados con estética kawaii. Sus diseños originales —protagonizados por roedores antropomórficos pintados en acuarela— cobran vida en artículos coleccionables como libretas, esquelas, stickers, estampillas, marcapáginas y postales.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/alpacosas_/"
         },
         "image": null
       },
       {
         "id": "javiiilustrations",
         "name": "Javiiilustrations",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Proyecto creativo de La Serena liderado por Javiera Ramírez que reúne ilustraciones originales, encargos personalizados y piezas de diseño con estética anime, pop y gráfica contemporánea. Su propuesta se traduce en papelería de autor funcional y coleccionable —como cuadernos, libretas encuadernadas a mano, stickers, postales, marcapáginas y planificadores— con identidad visual propia.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/javiiilustrations_/"
         },
         "image": null
       },
       {
         "id": "ilustravel",
         "name": "Ilustravel",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto de ilustración independiente y papelería de autor creado por la ilustradora Vel, dedicado al desarrollo de productos ilustrados y publicaciones editoriales de tiraje corto. Su trabajo combina personajes originales y estética anime/cómic en libros de colorear temáticos —como la serie Gatitos Patrimoniales—, fanzines y piezas impresas de colección.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/bel.ilustravel/"
         },
         "image": null
       },
       {
         "id": "futuro-comics",
         "name": "Futuro Comics",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Sello editorial autogestionado creado por el dibujante Diego Maya en Vicuña, dedicado a la creación de historietas de aventuras y ciencia ficción. Nacido como fanzine independiente, publica títulos en formato físico y digital —como Meka: Guerrero Cósmico— llevando narrativa gráfica de género desde el Valle del Elqui.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/futurocomics/"
         },
         "image": null
       },
+        "website": "https://linktr.ee/futurocomics",
       {
         "id": "rotten-monkey-inc",
         "name": "Rotten Monkey Inc",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto creativo del dibujante, diseñador gráfico y periodista serenense Rodán Castro, enfocado en la narrativa gráfica, la ilustración y el diseño de productos independientes. Su propuesta combina humor negro y crítica social en fanzines y novelas gráficas como Los Perdedores, además de trasladar su trazo crudo y expresivo a afiches, stickers e indumentaria de autor.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/rottenmonkey_inc/"
         },
         "image": null
       },
       {
         "id": "daniela-trigo",
         "name": "Daniela Trigo",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Diseñadora e ilustradora de la Región de Coquimbo, cuyo proyecto creativo (Efetrigo) cruza el diseño editorial, el arte gráfico y los objetos de autor con inspiración en la identidad y estética del norte diaguita. Con formación en Comunicación Visual, traslada sus ilustraciones originales a papelería, láminas impresas, indumentaria bordada y estampada, y piezas utilitarias producidas a pequeña escala.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/da.trigo/"
         },
         "image": null
       },
       {
         "id": "colectivo-fugaz",
         "name": "Colectivo Fugaz",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Agrupación artística y organización cultural con sede en La Serena, dedicada a la creación, exhibición y difusión de ilustración, arte gráfico y papelería de autor. Como red colaborativa de ilustradores de la Región de Coquimbo, desarrollan piezas originales de diseño independiente —como libretas, láminas ilustradas, stickers y postales— y promueven activamente ferias itinerantes y encuentros gráficos en espacios culturales de la zona.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/colectivofugaz/"
         },
         "image": null
       },
       {
         "id": "seba-endless",
         "name": "Seba Endless",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Proyecto creativo de arte gráfico, ilustración y papelería de autor que combina técnicas de dibujo tradicional con estética contemporánea. Su propuesta cruza influencias del Art Nouveau, el anime, el manga y los videojuegos para dar vida a obras originales y fanarts con sello propio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/seba.endless/reels/"
         },
         "image": null
       },
       {
         "id": "dimension-d",
-        "name": "Dimensión D",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "name": "Colectivo Dimensión D",
+        "description": "Comunidad creativa de diseño gráfico emergente nacida en el Instituto Profesional Santo Tomás de La Serena, que reúne a estudiantes, egresados, docentes y diseñadores emprendedores bajo una propuesta colaborativa de autor. Desarrollan papelería, fanzines, afiches, ilustración aplicada y objetos de diseño como tote bags, pins y bitácoras de tiraje independiente.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/dimension.d/"
         },
         "image": null
       },
       {
         "id": "colectivo-voyeartistas",
         "name": "Colectivo Voyeartistas",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Colectivo oriundo de la Región de Coquimbo especializado en narrativa gráfica, escritura, cómic e ilustración. Su propuesta creativa articula diversas estéticas y lenguajes visuales que cruzan el relato fantástico y territorial —con obras como Seiyam: Sangre en la Camanchaca y Aqalli—, el diseño multimedia y la reimaginación de personajes de colores vibrantes, junto a la exploración del manga y el humor adaptado a códigos locales.",
+        "socialLinks": {
+          "instagram": [
+            "https://www.instagram.com/noezzal/",
+            "https://www.instagram.com/francisco.llimy/",
+            "https://www.instagram.com/cyanworkssss/"
+          ]
         },
         "image": null
       },
       {
         "id": "alesol",
         "name": "Alesol",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto creativo de objetos hechos a mano con base en Coquimbo, enfocado en el modelado y la pintura artesanal en cerámica fría, yeso y arcilla. Su propuesta incluye posavasos, portainciensos, portallaves, worry stones y pequeñas figuras pintadas a mano con temáticas de naturaleza, magia y cultura pop.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/alesol.art/"
         },
         "image": null
       },
       {
         "id": "infini-art",
         "name": "Infini Art",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Proyecto de diseño y creación de autor de la diseñadora gráfica y artista visual serenense Marcia Rojas Solari. Su trabajo reúne papelería de autor, arte gráfico, ilustración aplicada, indumentaria intervenida y objetos utilitarios o decorativos que integran gráfica original y elementos reutilizados en ediciones limitadas.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/marciarojassolari/"
         },
         "image": null
       },
       {
         "id": "bosque-marino",
         "name": "Bosque Marino",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto de papelería de autor e ilustración científica y aplicada creado por la ilustradora Sol Pacheco Ortiz, enfocado en la biodiversidad marino-costera de Chile. A través de objetos cotidianos que conectan con la naturaleza marina que habitamos, combina arte y divulgación ambiental en libretas encuadernadas a mano con papel ecológico de caña de azúcar, estuches y piezas ilustradas de la flora y fauna nativa del litoral.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/bosquemarino/"
+        },
+        "image": null
+      },
+      {
+        "id": "intercultural-arte",
+        "name": "Intercultural Arte",
+        "description": "Proyecto creativo y de diseño de autor originario de La Serena, liderado por el artista autodidacta José Cifuentes (Schino Molle). Su propuesta rescata el patrimonio natural, histórico y cultural del norte de Chile mediante técnicas gráficas tradicionales y oficios manuales, dando vida a poleras estampadas en serigrafía, afiches, objetos cotidianos y libretas encuadernadas a mano con identidad territorial.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/intercultural_arte_/"
         },
         "image": null
       },
       {
         "id": "intercultural-arte-elementa",
         "name": "Intercultural Arte Elementa",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Laboratorio creativo dedicado a la exploración y difusión de procesos fotográficos artesanales que dialogan con el entorno y el territorio. A través de técnicas sensibles a la luz solar y las condiciones del ambiente, desarrollan libretas, marcapáginas, materiales especializados y experiencias de mediación artística que invitan a mirar el paisaje desde otra perspectiva.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/elementa_lab/"
         },
         "image": null
       },
+        "website": "https://www.elementalab.cl/",
       {
         "id": "ulises-lopez-grabador",
         "name": "Ulises López Grabador",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Artista visual y grabador radicado en La Serena, cuya obra gráfica explora el imaginario mítico urbano, paisajes, fauna e identidad territorial. Con una sólida base en el dibujo y los lenguajes del cartel y la ilustración, trabaja técnicas tradicionales como serigrafía, xilografía, litografía y grabado en metal, presentando sus piezas en enmarcaciones clásicas, telas tensadas y montajes tipo póster recovero sobre madera.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/uliseslo/"
         },
         "image": null
       },
       {
         "id": "la-cartoleria-taller",
         "name": "La Cartolería Taller",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Emprendimiento de La Serena dedicado a la encuadernación artesanal, el diseño editorial y la creación de fotolibros a medida. Destacan por sus costuras hechas a mano, terminaciones personalizadas y formatos adaptables —desde recuerdos familiares hasta portafolios de arquitectura o diseño—, además de impartir talleres presenciales en espacios locales.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/lacartoleriataller/"
         },
         "image": null
       },
+        "website": "https://lacartoleria.cl/",
       {
         "id": "koko",
         "name": "Kokó",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Emprendimiento local de la conurbación Coquimbo–La Serena dedicado a la papelería ilustrada, el tejido a crochet y los accesorios hechos a mano. Su propuesta destaca por mezclar diseño gráfico y trabajo textil en piezas creativas y de carácter local.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/koko_diseno/"
         },
         "image": null
       },
       {
         "id": "bordelibre-ediciones",
         "name": "Bordelibre Ediciones",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Editorial y librería independiente de La Serena dedicada a difundir la literatura nacional, con especial énfasis en autores regionales y voces emergentes. Su propuesta se distingue por impulsar el catálogo local y el rescate de obras patrimoniales desde una mirada editorial cercana al territorio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/bordelibre/"
         },
         "image": null
       },
+        "website": "https://www.bordelibre.cl/",
       {
         "id": "yatiediciones",
         "name": "Yatiediciones",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto editorial independiente de la Región de Coquimbo enfocado en literatura infantil, juvenil y familiar con identidad cultural y rescate de pueblos originarios. Liderado por Carmen Clavijo Morales, combina cuentos, libros para colorear y cuadernos educativos con cosmovisiones, lenguas y tradiciones andinas, diaguitas, selk'nam y mapuches en formatos interactivos.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/editorial_yatiediciones/"
         },
         "image": null
       },
+        "website": "https://www.yatiediciones.cl/",
       {
         "id": "taller-editorial-me-pego-un-tiro",
         "name": "Taller Editorial Me Pego un Tiro",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Proyecto editorial independiente y de oficios del libro con sede en La Serena, liderado por Pía Ahumada. Se especializa en publicaciones de formato no convencional, fanzines, plaquettes, encuadernación artesanal, reparación de libros y talleres de autopublicación, apostando por ediciones breves, experimentales y comunitarias.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/mepegountiro/?hl=es"
         },
         "image": null
       },
       {
         "id": "draco-herrera",
         "name": "Draco Herrera",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Ilustrador chileno de fantasía heroica y mitología con más de dos décadas de trayectoria y vínculo docente en La Serena. Su trabajo destaca por el diseño anatómico y expresivo de criaturas y dragones, abarcando cartas coleccionables como Mitos y Leyendas, ilustración editorial y arte conceptual mediante técnicas tradicionales y digitales.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/carlosdracoherrera/"
         },
         "image": null
       },
       {
         "id": "mauricio-ramos",
         "name": "Mauricio Ramos",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Diseñador gráfico, ilustrador, modelador 3D y docente de La Serena que cruza técnicas tradicionales y digitales con herramientas tridimensionales. Su propuesta abarca ilustración manual y digital, diseño de identidad y packaging, modelado 3D, impresión en resina y pintura de miniaturas, sumando participación activa en encuentros culturales y formación académica local.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/drako.artwork/"
         },
         "image": null
       },
       {
         "id": "astro-glitter",
         "name": "Astro Glitter",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Proyecto de ilustración y diseño de autor de La Serena que cruza medios digitales y análogos con una mirada sensible y contemplativa. Su propuesta reúne prints, stickers, libretas, postales y accesorios ilustrados en torno a la fantasía, la naturaleza y la calma, sumando docencia, comisiones e impulso a encuentros culturales independientes en la zona.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/astroglitter.studio/"
         },
         "image": null
       },
       {
         "id": "colectivo-crisol",
         "name": "Colectivo Crisol",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
-        },
-        "image": null
-      },
-      {
-        "id": "pierina-basilio",
-        "name": "Pierina Basilio",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Agrupación estudiantil de ilustración vinculada a INACAP Sede La Serena, integrada por jóvenes creadores en formación. Su propuesta reúne stickers, chapitas, llaveros y piezas originales nacidas del trabajo colaborativo del club, con una energía fresca y formativa que acerca la producción gráfica estudiantil al público local.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/colectivocrisol.ilus/reels/"
         },
         "image": null
       },
       {
         "id": "estudiantes-de-diseno-digital-inacap",
         "name": "Estudiantes de Diseño Digital Inacap",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
+        "description": "Agrupación de alumnos de la carrera de Diseño Digital de INACAP Sede La Serena, enfocados en la creación de soluciones visuales contemporáneas. Su trabajo abarca el diseño gráfico, la ilustración digital, el modelado 3D, el branding y el desarrollo de interfaces interactivas.  Participan exhibiendo una selección de sus proyectos académicos, prototipos e intervenciones visuales, conectando la innovación estudiantil con el público general.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/disenoinacaplaserena/"
         },
         "image": null
       },
       {
         "id": "club-audiovisual-area-diseno-inacap",
         "name": "Club Audiovisual Área Diseño Inacap",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
-        },
-        "image": null
-      },
-      {
-        "id": "christel-horn",
-        "name": "Christel Horn",
-        "description": "",
-        "date": {
-          "day": "Domingo 29",
-          "time": "23:00"
-        },
-        "image": null
-      },
-      {
-        "id": "sofia-rodriguez",
-        "name": "Sofía Rodríguez",
-        "description": "",
-        "date": {
-          "day": "Sábado 28",
-          "time": "23:00"
+        "description": "Comunidad extracurricular integrada por estudiantes del Área de Diseño e Industria Digital de INACAP Sede La Serena, dedicada a la exploración y producción de medios visuales en movimiento. Se especializan en realización audiovisual, fotografía, edición de video y motion graphics.  Convergen aportando la exhibición de cápsulas creativas, proyectos multimedia y el registro audiovisual de las distintas activaciones y muestras del encuentro.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/disenoinacaplaserena/"
         },
         "image": null
       }

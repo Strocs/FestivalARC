@@ -6,33 +6,34 @@ import { createPosterSimpleLayout, type PosterSimplePlans } from '../poster-simp
 import type { DayKey, PosterFilterPlans } from '../poster-filter-layout'
 
 describe('progressive day controls', () => {
-  it('renders native labelled radios for every both-day scope and keeps legacy controls initially hidden', async () => {
+  it('renders native labelled radios for home and both performer categories', async () => {
     const container = await AstroContainer.create()
-    for (const category of [undefined, ...categories]) {
+    for (const category of [undefined, ...categories.filter(({ key }) => key === 'music' || key === 'stage')]) {
       const html = await container.renderToString(PosterGrid, { props: { category } })
-      if (category?.key === 'expo') {
-        expect(html).toContain('data-poster-grid')
-        expect(html).toContain('Lorem ipsum dolor sit amet')
-        expect(html.indexOf('id="page-title"')).toBeLessThan(html.indexOf('data-poster-grid'))
-        expect(html.indexOf('Lorem ipsum')).toBeGreaterThan(html.indexOf('id="page-title"'))
-        expect(html).not.toContain('data-day-filter')
-        expect(html).not.toContain('<dialog')
-        expect(html).not.toContain('<button')
-        expect(html).not.toContain('data-event-trigger')
-        expect(html).not.toContain('data-event-id')
-        expect(html.match(/data-poster-artist=/g)).toHaveLength(8)
-        continue
-      }
-      if (category && category.key !== 'stage' && category.key !== 'music') {
-        expect(html).toMatch(/<fieldset[^>]*hidden[^>]*data-day-filter/)
-        expect(html).not.toContain('data-poster-toolbar')
-        expect(html.match(/<main[^>]*>/)?.[0]).toContain('xl:py-20')
-      }
       expect(html).toContain('Filtrar artistas por día')
       expect(html.match(/type="radio"/g)).toHaveLength(3)
       expect(html).toContain('Todos'); expect(html).toContain('Sábado 28'); expect(html).toContain('Domingo 29')
       expect(html).toContain('role="status"')
     }
+  })
+
+  it.each(['market', 'expo'] as const)('keeps all %s cards visible without a day filter', async key => {
+    const container = await AstroContainer.create()
+    const category = categories.find(category => category.key === key)!
+    const participants = ['Sábado 28', 'Domingo 29', undefined].map((day, index) => ({
+      id: `fixture-${index}`, name: `Fixture ${index}`, category: key,
+      canonicalPath: `${category.path}fixture-${index}/`, image: null, ticketUrl: null,
+      ...(key === 'expo' && day ? { date: { day, time: '12:00' } } : {}),
+    }))
+    const html = await container.renderToString(PosterGrid, {
+      props: { category: { ...category, participants }, filters: { day: 'saturday', order: 'original' } },
+    })
+    expect(html).not.toMatch(/data-day-filter|data-poster-toolbar|data-poster-initial-day|data-poster-filter-url/)
+    const grid = html.match(/<section\b[^>]*data-poster-grid[\s\S]*?<\/section>/)?.[0] ?? ''
+    const cards = [...grid.matchAll(/<div\b[^>]*data-poster-artist="([^"]+)"[^>]*>/g)]
+    expect(cards.map(card => card[1])).toEqual(participants.map(({ id }) => id))
+    for (const [tag] of cards) expect(tag).not.toMatch(/\s(?:hidden|inert)(?=\s|>|=)/)
+    if (key === 'market') expect(html.match(/<main[^>]*>/)?.[0]).toContain('xl:py-20')
   })
   it.each([undefined, ...categories.filter(({ key }) => key === 'music' || key === 'stage')])('renders the in-flow presentation panel before the poster ($key)', async category => {
     const container = await AstroContainer.create()

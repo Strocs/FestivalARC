@@ -1,13 +1,17 @@
 ---
 import ArtistDetail from './ArtistDetail.astro'
-import type { ParticipantView } from './categories'
+import { usesCompactParticipantDetails, type ParticipantView } from './categories'
 interface Props { participants: readonly ParticipantView[] }
 const { participants } = Astro.props
+const compact = participants.length > 0 && participants.every(({ category }) => usesCompactParticipantDetails(category))
 ---
 <div>
   <dialog
     aria-labelledby='event-modal-title'
-    class='m-auto max-h-none w-[calc(100%-2rem)] max-w-3xl overflow-visible border-0 bg-transparent p-0 text-foreground [--event-backdrop:0] backdrop:bg-background/80 backdrop:opacity-[var(--event-backdrop)]'>
+    class:list={[
+      'm-auto max-h-none w-[calc(100%-2rem)] overflow-visible border-0 bg-transparent p-0 text-foreground [--event-backdrop:0] backdrop:bg-background/80 backdrop:opacity-[var(--event-backdrop)]',
+      compact ? 'max-w-prose' : 'max-w-3xl',
+    ]}>
     <div data-modal-panel class='relative isolate flex max-h-[calc(100dvh-2rem-env(safe-area-inset-top)-env(safe-area-inset-bottom))] min-h-0 flex-col'>
       <button data-modal-close type='button' class='bg-background text-foreground absolute top-5 right-5 z-10 rounded-full px-3 py-2 text-sm transition-colors duration-200 hover:cursor-pointer hover:bg-accent hover:text-foreground motion-reduce:transition-none sm:top-8 sm:right-8 focus-visible:outline-2 focus-visible:outline-offset-2'>Cerrar</button>
       <div data-modal-content class='flex min-h-0 flex-1 flex-col'></div>
@@ -19,6 +23,7 @@ const { participants } = Astro.props
   import { mountEventModal } from './event-modal'
 
   for (const root of document.querySelectorAll<HTMLElement>('[data-event-scope]')) {
-    mountEventModal(root)
+    const scope = root.dataset.eventScope
+    mountEventModal(root, { withDayFilter: scope !== 'market' && scope !== 'expo' })
   }
 </script>

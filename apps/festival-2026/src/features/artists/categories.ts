@@ -8,12 +8,13 @@ export interface ParticipantView {
   name: string
   category: CategoryKey
   canonicalPath: string
-  description: string
+  description?: string
   date?: { day: string, time: string, month?: string }
   image: { url: string, alt: string } | null
   location?: string
   youtubeVideoId?: string
-  socialLinks?: { instagram?: string, spotify?: string }
+  socialLinks?: { instagram?: string | string[], spotify?: string }
+  website?: string
   company?: string
   audienceType?: string
   durationMinutes?: number
@@ -29,6 +30,16 @@ export interface CategoryView {
   location?: string
   description?: string
   participants: readonly ParticipantView[]
+}
+
+export function usesCompactParticipantDetails(category: CategoryKey): boolean {
+  return category === 'market' || category === 'expo'
+}
+
+export function canOpenParticipantDetails(participant: ParticipantView): boolean {
+  return !usesCompactParticipantDetails(participant.category) || Boolean(
+    participant.description?.trim() || participant.socialLinks?.instagram?.length || participant.socialLinks?.spotify || participant.website,
+  )
 }
 
 /** An actionable ticket must be absolute HTTP(S), not a browser-relative URL. */
@@ -63,11 +74,12 @@ export const categories: readonly CategoryView[] = (Object.keys(publicSlugs) as 
       category: key,
       canonicalPath: `${path}${participant.id}/`,
       description: participant.description,
-      ...(participant.date ? { date: participant.date } : {}),
+      ...('date' in participant && participant.date ? { date: participant.date } : {}),
       image: participant.image,
       ...('location' in participant ? { location: participant.location } : {}),
       ...('youtubeVideoId' in participant ? { youtubeVideoId: participant.youtubeVideoId } : {}),
       ...('socialLinks' in participant ? { socialLinks: participant.socialLinks } : {}),
+      ...('website' in participant ? { website: participant.website } : {}),
       ...('company' in participant ? { company: participant.company } : {}),
       ...('audienceType' in participant ? { audienceType: participant.audienceType } : {}),
       ...('durationMinutes' in participant ? { durationMinutes: participant.durationMinutes } : {}),

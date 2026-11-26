@@ -11,7 +11,7 @@ import PosterIntro from './PosterIntro.astro'
 import PosterPattern from './PosterPattern.astro'
 import PosterPlace from './PosterPlace.astro'
 import PosterSocials from './PosterSocials.astro'
-import { heroParticipants, type CategoryView } from '../artists/categories'
+import { canOpenParticipantDetails, heroParticipants, usesCompactParticipantDetails, type CategoryView } from '../artists/categories'
 import { slotSize, type PosterRange } from './poster'
 import type { SlotRect } from './poster-grid'
 import { createPosterFilterPlans } from './poster-filter-layout'
@@ -23,6 +23,8 @@ import { publicPath } from '../../utils/publication'
 interface Props { category?: CategoryView; filters?: PosterFilterState }
 const { category, filters } = Astro.props
 const lineup = category?.participants ?? heroParticipants
+const compactDetails = category ? usesCompactParticipantDetails(category.key) : false
+const modalParticipants = compactDetails ? lineup.filter(canOpenParticipantDetails) : lineup
 const information = category?.key === 'expo' || category?.key === 'market' ? [] : category ? createCategoryTitle(category.name).information : homeInformation
 const filterPlans = createPosterFilterPlans({
   scope: category ? 'category' : 'home',
@@ -132,7 +134,7 @@ const slotClasses =
             hidden={!initialIds.has(artist.id) || undefined}
             inert={!initialIds.has(artist.id) || undefined}
             data-poster-artist={artist.id}>
-            <ArtistName artist={artist} interactive={category?.key !== 'expo' && category?.key !== 'market'} />
+            <ArtistName artist={artist} />
           </div>
         ))
       }
@@ -142,7 +144,7 @@ const slotClasses =
       </>}
     </section>
   <script is:inline type='application/json' data-poster-plans set:html={serializedPlans} />
-  {category?.key !== 'expo' && category?.key !== 'market' && <EventModal participants={lineup} />}
+  {(!compactDetails || modalParticipants.length > 0) && <EventModal participants={modalParticipants} />}
   </div>
 </main>
 

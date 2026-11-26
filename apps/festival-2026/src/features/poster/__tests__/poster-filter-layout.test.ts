@@ -108,22 +108,23 @@ describe('finite scoped poster filter plans', () => {
     expect(result.plans.saturday.ids).toEqual(['a'])
     expect(result.plans.sunday.ids).toEqual(['b'])
     for (const fixture of [[], participants.slice(0, 1), participants.slice(2)]) expect(home(fixture).available).toBe(false)
-    expect(home().plans.all.ids).toHaveLength(49)
-    expect(home().plans.saturday.ids).toHaveLength(25)
-    expect(home().plans.sunday.ids).toHaveLength(24)
+    const actual = home()
+    const lineup = narrow(heroParticipants)
+    expect(actual.plans.all.ids).toEqual(lineup.map(({ id }) => id))
+    expect(actual.plans.saturday.ids).toEqual(lineup.filter(({ day }) => day === 'Sábado 28').map(({ id }) => id))
+    expect(actual.plans.sunday.ids).toEqual(lineup.filter(({ day }) => day === 'Domingo 29').map(({ id }) => id))
   })
 
   it('intersects each authoritative category without changing its order or borrowing home information', () => {
-    const expected = [[30, 16, 14], [19, 9, 10], [8, 0, 0], [39, 20, 19]]
-    categories.forEach((category, index) => {
+    categories.forEach(category => {
       const participants = narrow(category.participants)
-      const information = category.key === 'expo' ? [] : categoryInformation
+      const hasCategoryTitle = category.key === 'music' || category.key === 'stage'
+      const information = hasCategoryTitle ? categoryInformation : []
       const result = createPosterFilterPlans({ scope: 'category', participants, information })
-      expect(['all', 'saturday', 'sunday'].map(key => result.plans[key as 'all'].ids.length)).toEqual(expected[index])
       for (const key of ['all', 'saturday', 'sunday'] as const) {
         expect(result.plans[key].ids).toEqual(participants.filter(p => key === 'all' || p.day === (key === 'saturday' ? 'Sábado 28' : 'Domingo 29')).map(p => p.id))
         for (const range of ranges) {
-          const expectedInformation = category.key === 'expo' ? {} : { 'category-title': categoryInformation[0].positions[range] }
+          const expectedInformation = hasCategoryTitle ? { 'category-title': categoryInformation[0].positions[range] } : {}
           expect(result.plans[key].information[range]).toEqual(expectedInformation)
         }
       }

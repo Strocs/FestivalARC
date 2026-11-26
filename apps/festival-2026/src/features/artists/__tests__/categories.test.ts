@@ -4,9 +4,9 @@ import { categories, participants, heroParticipants } from '../categories'
 
 describe('participant projections', () => {
   it('maps every stored category member to a unique canonical route', () => {
-    const sourceMembers = Object.values(participantCatalog).flatMap(({ participants }) => participants)
+    const sourceCount = Object.values(participantCatalog).reduce((count, category) => count + category.participants.length, 0)
     expect(categories.map(({ key }) => key)).toEqual(Object.keys(participantCatalog))
-    expect(participants).toHaveLength(sourceMembers.length)
+    expect(participants).toHaveLength(sourceCount)
     expect(new Set(participants.map(({ canonicalPath }) => canonicalPath)).size).toBe(participants.length)
     for (const category of categories) {
       const source = participantCatalog[category.key]
@@ -33,6 +33,8 @@ describe('participant projections', () => {
       for (const participant of category.participants) {
         const source = sourceById.get(participant.id)!
         expect(participant.description).toBe(source.description)
+        expect(participant.socialLinks).toEqual(source.socialLinks)
+        expect(participant.website).toBe('website' in source ? source.website : undefined)
         expect(participant.image).toEqual(source.image)
         expect(participant.company).toBe('company' in source ? source.company : undefined)
         expect(participant.date).toEqual('date' in source ? source.date : undefined)

@@ -8,6 +8,7 @@ interface ModalOptions {
   createMotion?: (input: MotionInput) => ModalMotion
   navigate?: (href: string) => void
   createFilterMotion?: (input: FilterMotionInput) => FilterMotion
+  withDayFilter?: boolean
 }
 type Phase = 'closed' | 'opening' | 'open' | 'closing'
 const mounted = new WeakMap<HTMLElement, () => void>()
@@ -30,11 +31,11 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   const existing = mounted.get(root)
   if (existing) return existing
   let phase: Phase = 'closed'
-  const filter = mountDayFilter(root, {
+  const filter = options.withDayFilter === false ? undefined : mountDayFilter(root, {
     canInteract: () => phase === 'closed', onDisconnect: () => mounted.get(root)?.(),
     ownStyles, createMotion: options.createFilterMotion,
   })
-  const filterOnly = () => { filter.destroy(); mounted.delete(root) }
+  const filterOnly = () => { filter?.destroy(); mounted.delete(root) }
   const dialog = root.querySelector<HTMLDialogElement>('dialog')
   const panel = dialog?.querySelector<HTMLElement>('[data-modal-panel]')
   const content = dialog?.querySelector<HTMLElement>('[data-modal-content]')
@@ -85,7 +86,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     if (dialog.open) dialog.close()
     content.replaceChildren()
     if (restoreFocus && root.isConnected) {
-      const remaining = links().filter(link => link.isConnected && filter.includes(link.dataset.eventId)
+      const remaining = links().filter(link => link.isConnected && filter?.includes(link.dataset.eventId) !== false
         && !link.closest('[hidden], [inert]') && link.getAttribute('aria-disabled') !== 'true')
       const target = previousOrigin && remaining.includes(previousOrigin) ? previousOrigin : remaining[Math.min(originIndex, remaining.length - 1)]
       target?.focus({ preventScroll: true })
@@ -157,7 +158,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     if (target?.closest('[data-modal-close]') && dialog.contains(target)) { requestClose(); return }
     const link = target?.closest<HTMLAnchorElement>('a[data-event-trigger]')
     if (!link || !root.contains(link)) return
-    if (phase !== 'closed' || !filter.includes(link.dataset.eventId)) { event.preventDefault(); return }
+    if (phase !== 'closed' || filter?.includes(link.dataset.eventId) === false) { event.preventDefault(); return }
     if (link.hasAttribute('download') || (link.target && link.target !== '_self')) return
     const template = [...root.querySelectorAll<HTMLTemplateElement>('template[data-event-template]')]
       .find(node => node.dataset.eventTemplate === link.dataset.eventId)
@@ -165,7 +166,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
     event.preventDefault()
     const fallback = link.href
     try {
-      filter.settle()
+      filter?.settle()
       origin = link
       originIndex = links().indexOf(link)
       // First viewport reads precede showModal and scroll locking.
@@ -242,7 +243,7 @@ export function mountEventModal(root: HTMLElement, options: ModalOptions = {}): 
   function destroy() {
     if (destroyed) return
     destroyed = true
-    filter.destroy()
+    filter?.destroy()
     mounted.delete(root)
     abort.abort()
     media.removeEventListener?.('change', settle)

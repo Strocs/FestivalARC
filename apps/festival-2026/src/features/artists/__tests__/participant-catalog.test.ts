@@ -72,7 +72,7 @@ describe('participant catalog behavior', () => {
     expect(artists.map(({ order }) => order)).toEqual([...artists].map(({ order }) => order).sort((a, b) => a - b))
   })
 
-  it('requires a visual-arts category location and accepts optional participant schedules', () => {
+  it('requires an Expo category location and accepts optional Expo participant dates', () => {
     const input = structuredClone(data)
     input.expo.location = 'Fixture venue'
     for (const participant of input.expo.participants) delete (participant as { date?: unknown }).date
@@ -90,32 +90,81 @@ describe('participant catalog behavior', () => {
     expect(scheduled).toEqual(before)
   })
 
-  it('requires valid editable details for expo and market records', () => {
-    for (const category of ['market'] as const) {
-      const input = structuredClone(data)
-      const participant = input[category].participants[0] as Record<string, unknown>
-      Object.assign(participant, { date: { day: 'Day', time: '23:00' }, description: '', image: null })
+  it.each(['market', 'expo'] as const)('accepts omitted descriptions and optional validated links for %s', category => {
+    const input = structuredClone(data)
+    const participant = input[category].participants[0] as Record<string, unknown>
+    delete participant.description
+    delete participant.socialLinks
+    delete participant.website
+    expect(validateParticipantCatalog(input)[category].participants[0]).toEqual(participant)
+
+    Object.assign(participant, {
+      socialLinks: { instagram: 'https://www.instagram.com/example/' },
+      website: 'https://example.org/participant/',
+    })
+    const before = structuredClone(input)
+    expect(validateParticipantCatalog(input)[category].participants[0]).toEqual(participant)
+    expect(input).toEqual(before)
+
+    for (const fields of [
+      { website: '/relative' }, { website: 'ftp://example.com/' }, { website: 'https://' },
+      { socialLinks: { instagram: 'https://example.com/profile' } },
+      { socialLinks: { spotify: '/artist/test' } }, { socialLinks: { other: 'https://example.com/' } },
+    ]) {
+      const invalid = structuredClone(input)
+      Object.assign(invalid[category].participants[0], fields)
+      const unchanged = structuredClone(invalid)
+      expect(() => validateParticipantCatalog(invalid)).toThrow()
+      expect(invalid).toEqual(unchanged)
+    }
+  })
+
+  it.each(['market', 'expo'] as const)('accepts nonempty ordered Instagram lists and validates each entry for %s', category => {
+    const input = structuredClone(data)
+    const profiles = ['https://www.instagram.com/zeta/', 'https://www.instagram.com/alpha/']
+    for (const instagram of [profiles.slice(0, 1), profiles]) {
+      Object.assign(input[category].participants[0], { socialLinks: { instagram } })
       const before = structuredClone(input)
-      expect(validateParticipantCatalog(input)[category].participants[0]).toEqual(participant)
+      expect(validateParticipantCatalog(input)[category].participants[0].socialLinks?.instagram).toEqual(instagram)
       expect(input).toEqual(before)
-      const invalidFields = [
-        { date: undefined }, { date: null }, { date: '2026-11-28T23:00:00' },
-        { date: { day: 'Day' } }, { date: { time: '23:00' } },
-        { date: { day: 28, time: '23:00' } }, { date: { day: 'Day', time: 23 } },
-        { date: { day: '', time: '23:00' } }, { date: { day: 'Day', time: '' } },
-        { description: undefined }, { description: null }, { description: 3 },
-        { image: undefined }, { image: 'image.jpg' }, { image: {} },
-        { image: { url: 'image.jpg' } }, { image: { alt: 'Participant' } },
-        { image: { url: 3, alt: '' } }, { image: { url: 'image.jpg', alt: 3 } },
-        { image: { url: '', alt: '' } },
-      ]
-      for (const fields of invalidFields) {
-        const invalid = structuredClone(input)
-        Object.assign(invalid[category].participants[0], fields)
-        const unchanged = structuredClone(invalid)
-        expect(() => validateParticipantCatalog(invalid)).toThrow()
-        expect(invalid).toEqual(unchanged)
-      }
+    }
+    for (const instagram of [[], ['https://example.org/profile', profiles[1]], [profiles[0], 'https://example.org/profile']]) {
+      Object.assign(input[category].participants[0], { socialLinks: { instagram } })
+      const before = structuredClone(input)
+      expect(() => validateParticipantCatalog(input)).toThrow()
+      expect(input).toEqual(before)
+    }
+  })
+
+  it('still requires a text description for music and stage performers', () => {
+    for (const category of ['music', 'stage'] as const) {
+      const input = structuredClone(data)
+      delete (input[category].participants[0] as { description?: string }).description
+      expect(() => validateParticipantCatalog(input)).toThrow()
+    }
+  })
+
+  it('rejects dates for market records and still validates their editable details', () => {
+    const input = structuredClone(data)
+    const participant = input.market.participants[0]
+    Object.assign(participant, { description: '', image: null })
+    const before = structuredClone(input)
+    expect(validateParticipantCatalog(input).market.participants[0]).toEqual(participant)
+    expect(input).toEqual(before)
+    const invalidFields = [
+      { date: { day: 'Day', time: '23:00' } }, { date: null },
+      { description: null }, { description: 3 },
+      { image: undefined }, { image: 'image.jpg' }, { image: {} },
+      { image: { url: 'image.jpg' } }, { image: { alt: 'Participant' } },
+      { image: { url: 3, alt: '' } }, { image: { url: 'image.jpg', alt: 3 } },
+      { image: { url: '', alt: '' } },
+    ]
+    for (const fields of invalidFields) {
+      const invalid = structuredClone(input)
+      Object.assign(invalid.market.participants[0], fields)
+      const unchanged = structuredClone(invalid)
+      expect(() => validateParticipantCatalog(invalid)).toThrow()
+      expect(invalid).toEqual(unchanged)
     }
   })
 
