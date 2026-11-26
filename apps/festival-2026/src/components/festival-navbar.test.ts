@@ -172,6 +172,14 @@ describe('FestivalNavbar public contract', () => {
     expect(html).not.toContain('data-header-close')
   })
 
+  it('hides the 2026 editions menu at every viewport width', async () => {
+    const container = await AstroContainer.create()
+    const html = await container.renderToString(Header)
+    const wrapper = html.match(/<div\b[^>]*data-poster-header[^>]*>/)?.[0] ?? ''
+    expect(wrapper.match(/class="([^"]*)"/)?.[1].replaceAll('&amp;', '&').split(' ')).toContain('[&_[data-header-editions]]:hidden')
+    expect(html.match(/\bdata-header-editions(?=[\s>])/g)).toHaveLength(2)
+  })
+
   it('renders the same five category destinations in the 2026 desktop group and mobile panel', async () => {
     const container = await AstroContainer.create()
     const html = await container.renderToString(Header)
