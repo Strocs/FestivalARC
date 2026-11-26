@@ -1,5 +1,5 @@
 ---
-import { publicPath } from '../utils/publication'
+import { categoryLink, publicPath } from '../utils/publication'
 import NavigationTile from './NavigationTile.astro'
 
 interface Props {
@@ -14,7 +14,7 @@ const linkClass = 'hover:text-arc-yellow focus-visible:outline-2 focus-visible:o
     <li><a href={publicPath('/')} class={linkClass}>Inicio</a></li>
     <li aria-hidden='true'><NavigationTile motif='chevrons-right' /></li>
     <li>
-      {participant ? <a href={publicPath(category.path)} class={linkClass}>{category.name}</a> : <span aria-current='page' class='font-bold'>{category.name}</span>}
+      {participant ? <a href={categoryLink(category.path)} class={linkClass}>{category.name}</a> : <span aria-current='page' class='font-bold'>{category.name}</span>}
     </li>
     {participant && <>
       <li aria-hidden='true'><NavigationTile motif='rosette-yellow' /></li>

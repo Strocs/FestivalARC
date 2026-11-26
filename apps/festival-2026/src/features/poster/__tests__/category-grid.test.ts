@@ -140,7 +140,7 @@ describe('shared poster scopes', () => {
     const categoryBox = html.match(/<aside\b[^>]*aria-label="Categorías"[\s\S]*?<\/aside>/)?.[0] ?? ''
     expect(categoryBox.match(/<a\b/g)).toHaveLength(4)
     for (const category of categories) {
-      expect(categoryBox).toContain(`href="${category.path}"`)
+      expect(categoryBox).toContain(`href="${category.key === 'music' ? '/musica' : category.path}"`)
       expect(categoryBox).toContain(`>${category.name}</span>`)
     }
     // Every retained home information footprint remains represented in all ranges.

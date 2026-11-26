@@ -5,7 +5,7 @@ import NavigationTile from './NavigationTile.astro'
 import { publicationConfig } from '../../../../editions.config'
 import arc26Logo from '../assets/branding/arc26-logo.png'
 import { previousEditionTargets } from './previousEditions'
-import { publicPath } from '../utils/publication'
+import { categoryLink, publicPath } from '../utils/publication'
 import { categories } from '../features/artists/categories'
 
 interface Props { currentPath?: string }
@@ -13,7 +13,7 @@ const { currentPath = Astro.url.pathname } = Astro.props
 const editions = previousEditionTargets(publicationConfig)
 const links = [
   { label: 'Inicio', href: publicPath('/') },
-  ...categories.map(({ name, path }) => ({ label: name, href: publicPath(path) })),
+  ...categories.map(({ name, path }) => ({ label: name, href: categoryLink(path) })),
 ]
 ---
 <div data-poster-header class='sticky top-0 z-40 font-sans [&_[data-header-brand]]:flex-wrap [&_a[aria-current]]:text-arc-yellow [&_nav_a:hover]:text-arc-yellow [&_nav_a:focus-visible]:text-arc-yellow [--header-bg-color:var(--color-background)] [--header-text-color:var(--color-foreground)] [&_[data-festival-header]]:border-b [--header-border-color:color-mix(in_oklab,var(--color-primary)_10%,transparent)] [--header-panel-bg-color:var(--color-background)] [--header-panel-text-color:var(--color-foreground)]'>

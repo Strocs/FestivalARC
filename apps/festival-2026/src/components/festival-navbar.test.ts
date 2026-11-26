@@ -5,7 +5,11 @@ import { createPublicationUrlTools } from '../utils/publication'
 const publicationBase = vi.hoisted(() => ({ value: '/' }))
 vi.mock('../utils/publication', async importOriginal => {
   const original = await importOriginal<typeof import('../utils/publication')>()
-  return { ...original, publicPath: (path: string) => original.createPublicationUrlTools(publicationBase.value).publicPath(path) }
+  return {
+    ...original,
+    publicPath: (path: string) => original.createPublicationUrlTools(publicationBase.value).publicPath(path),
+    categoryLink: (path: string) => original.createPublicationUrlTools(publicationBase.value).categoryLink(path),
+  }
 })
 import FestivalNavbar from '@festivalarc/ui/FestivalNavbar.astro'
 import PosterIntro from '../features/poster/PosterIntro.astro'
@@ -47,7 +51,8 @@ describe('FestivalNavbar public contract', () => {
           const selected = anchors.filter(anchor => anchor.includes('aria-current='))
           expect(selected).toHaveLength(active ? 1 : 0)
           if (active) {
-            expect(selected[0]).toContain(`href="${publicPath(active)}"`)
+            const activeHref = base === '/' && active === '/musica/' ? '/musica' : publicPath(active)
+            expect(selected[0]).toContain(`href="${activeHref}"`)
             expect(selected[0]).toContain(`aria-current="${current}"`)
             expect(html).toContain('[&amp;_a[aria-current]]:text-arc-yellow')
           }
@@ -172,7 +177,7 @@ describe('FestivalNavbar public contract', () => {
     const html = await container.renderToString(Header)
     const desktop = html.match(/<nav\b[^>]*data-header-nav[\s\S]*?<\/nav>/)?.[0] ?? ''
     const panel = html.match(/<dialog\b[\s\S]*?<\/dialog>/)?.[0] ?? ''
-    const expected = [['Inicio', '/'], ['Música', '/musica/'], ['Artes Escénicas', '/artes-escenicas/'], ['Expo Arte.Co', '/expo-arte-co/'], ['Mercado Creativo y DAZ', '/mercado-creativo-y-daz/']]
+    const expected = [['Inicio', '/'], ['Música', '/musica'], ['Artes Escénicas', '/artes-escenicas/'], ['Expo Arte.Co', '/expo-arte-co/'], ['Mercado Creativo y DAZ', '/mercado-creativo-y-daz/']]
     for (const section of [desktop, panel]) {
       const group = section.match(/<ul\b[\s\S]*?<\/ul>/)?.[0] ?? ''
       expect(group.match(/<a\b/g)).toHaveLength(5)
