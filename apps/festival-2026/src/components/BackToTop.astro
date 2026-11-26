@@ -1,0 +1,32 @@
+<span aria-hidden='true' data-back-to-top-threshold class='invisible fixed top-0 h-screen w-0'></span>
+<button
+  type='button'
+  aria-label='Volver arriba'
+  data-back-to-top
+  inert
+  class='invisible fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] z-30 grid size-11 cursor-pointer place-items-center rounded-full border border-primary/10 bg-background text-arc-rose opacity-0 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary transition-[opacity,visibility,background-color,border-color] duration-200 hover:border-arc-rose/60 hover:bg-[color-mix(in_oklab,var(--color-background),var(--color-arc-rose)_10%)] not-inert:visible not-inert:opacity-100 motion-reduce:transition-none'>
+  <svg aria-hidden='true' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' class='size-5'>
+    <path d='M12 19V5m-6 6 6-6 6 6' />
+  </svg>
+</button>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-back-to-top]')
+  const threshold = document.querySelector<HTMLElement>('[data-back-to-top-threshold]')
+
+  if (button && threshold) {
+    const update = () => {
+      button.inert = window.scrollY < threshold.offsetHeight
+    }
+
+    button.addEventListener('click', () => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      window.scrollTo({ top: 0, behavior: reduceMotion ? 'instant' : 'smooth' })
+    })
+
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    window.addEventListener('pageshow', update)
+    update()
+  }
+</script>

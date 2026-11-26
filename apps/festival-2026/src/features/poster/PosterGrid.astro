@@ -101,48 +101,50 @@ const slotClasses =
     </header>}
     <PosterDefinitions />
     {!presentation && category?.key !== 'expo' && filterPlans.available && <DayFilter />}
-    <section
-      data-poster-grid
-      data-poster-initial-day={initialDay === 'all' ? undefined : initialDay}
-      data-poster-initial-sort={initialSort}
-      data-poster-ordered={initialSort ? '' : undefined}
-      data-poster-filter-url={presentation ? publicPath(category?.path ?? '/') : undefined}
-      class='group/poster relative isolate grid grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] [--columns:8] [--poster-text:#d5d5d5] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]'
-      style={gridStyle}
-      aria-label={category ? `${category.name}: artistas y obras` : 'Festival ARC: artistas y obras'}>
-      {
-        motifSlots.map((tile) => (
-          <div
-            class:list={[slotClasses, 'pattern-slot aspect-[160/152] min-h-0 md:aspect-auto']}
-            style={tile.style}
-            data-poster-motif={tile.motif}
-            data-poster-motif-index={tile.index}
-            aria-hidden='true'>
-            <PosterPattern motif={tile.motif} />
-          </div>
-        ))
-      }
-      {category && category.key !== 'expo' && category.key !== 'market' ? <CategoryTitle name={category.name} /> : !category && <>
-        <PosterIntro {...placement('intro')} titleExtension={placement('title-extension')} informationId='intro' titleExtensionId='title-extension' />
-        <PosterDisciplines {...placement('disciplines')} informationId='disciplines' />
-      </>}
-      {
-        rankedLineup.map((artist) => (
-          <div
-            class:list={[slotClasses, 'z-2 relative min-h-[calc(3*var(--slot-height)*var(--unit))] md:min-h-0']}
-            style={positions(artistPositions(artist.id), 'grid') + (sortedSlots.get(artist.id) ?? '')}
-            hidden={!initialIds.has(artist.id) || undefined}
-            inert={!initialIds.has(artist.id) || undefined}
-            data-poster-artist={artist.id}>
-            <ArtistName artist={artist} />
-          </div>
-        ))
-      }
-      {!category && <>
-        <PosterPlace {...placement('place')} informationId='place' />
-        <PosterSocials placement={placement('socials')} informationId='socials' />
-      </>}
-    </section>
+    <div class='@container px-4 md:px-0'>
+      <section
+        data-poster-grid
+        data-poster-initial-day={initialDay === 'all' ? undefined : initialDay}
+        data-poster-initial-sort={initialSort}
+        data-poster-ordered={initialSort ? '' : undefined}
+        data-poster-filter-url={presentation ? publicPath(category?.path ?? '/') : undefined}
+        class='group/poster relative isolate grid grid-cols-[repeat(var(--columns),minmax(0,1fr))] grid-rows-[repeat(var(--rows),auto)] [--columns:8] [--poster-text:#d5d5d5] [--rows:var(--mobile-rows)] [--unit:calc(100cqw/(var(--columns)*var(--slot-width)))] md:grid-rows-[repeat(var(--rows),minmax(calc(var(--slot-height)*var(--unit)),auto))] md:[--columns:6] md:[--rows:var(--tablet-rows)] xl:[--columns:10] xl:[--rows:var(--desktop-rows)]'
+        style={gridStyle}
+        aria-label={category ? `${category.name}: artistas y obras` : 'Festival ARC: artistas y obras'}>
+        {
+          motifSlots.map((tile) => (
+            <div
+              class:list={[slotClasses, 'pattern-slot aspect-[160/152] min-h-0 md:aspect-auto']}
+              style={tile.style}
+              data-poster-motif={tile.motif}
+              data-poster-motif-index={tile.index}
+              aria-hidden='true'>
+              <PosterPattern motif={tile.motif} />
+            </div>
+          ))
+        }
+        {category && category.key !== 'expo' && category.key !== 'market' ? <CategoryTitle name={category.name} /> : !category && <>
+          <PosterIntro {...placement('intro')} titleExtension={placement('title-extension')} informationId='intro' titleExtensionId='title-extension' />
+          <PosterDisciplines {...placement('disciplines')} informationId='disciplines' />
+        </>}
+        {
+          rankedLineup.map((artist) => (
+            <div
+              class:list={[slotClasses, 'z-2 relative min-h-[calc(3*var(--slot-height)*var(--unit))] md:min-h-0']}
+              style={positions(artistPositions(artist.id), 'grid') + (sortedSlots.get(artist.id) ?? '')}
+              hidden={!initialIds.has(artist.id) || undefined}
+              inert={!initialIds.has(artist.id) || undefined}
+              data-poster-artist={artist.id}>
+              <ArtistName artist={artist} />
+            </div>
+          ))
+        }
+        {!category && <>
+          <PosterPlace {...placement('place')} informationId='place' />
+          <PosterSocials placement={placement('socials')} informationId='socials' />
+        </>}
+      </section>
+    </div>
   <script is:inline type='application/json' data-poster-plans set:html={serializedPlans} />
   {(!compactDetails || modalParticipants.length > 0) && <EventModal participants={modalParticipants} />}
   </div>

@@ -1,5 +1,6 @@
 ---
 import { Font } from 'astro:assets'
+import BackToTop from '../components/BackToTop.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
 import { appBase, publicPath } from '../utils/publication'
@@ -62,5 +63,6 @@ const socialImage = new URL(publicPath('/og-image.jpg'), siteUrl).toString()
     <Header currentPath={canonicalPath === undefined ? undefined : publicPath(canonicalPath)} />
     <slot />
     <Footer />
+    <BackToTop />
   </body>
 </html>
