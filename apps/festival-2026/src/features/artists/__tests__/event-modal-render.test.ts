@@ -45,7 +45,7 @@ describe('prerendered modal boundary', () => {
       expect(cards[index]).toContain('Ver <strong>más</strong>')
       expect(template).toMatch(/<h2 id="event-modal-title"/)
       expect(template).toContain(name)
-      expect(template).not.toMatch(/Fixture day|Fixture venue|Ver página del participante|Entradas|<img|<iframe/)
+      expect(template).not.toMatch(/Fixture day|Fixture venue|Ver perfil completo|Entradas|<img|<iframe/)
       expect(template!.includes(description)).toBe(index === 0)
       expect(template!.includes(`href="${website}"`)).toBe(index === 1)
       expect(template!.includes(`href="${instagram}"`)).toBe(index === 2)
@@ -70,7 +70,7 @@ describe('prerendered modal boundary', () => {
     expect(template).toContain('Fixture day · 21:00')
     expect(template).toContain('Fixture venue')
     expect(template).toContain(`href="${artist.canonicalPath}"`)
-    expect(template).toContain('Ver página del participante')
+    expect(template).toContain('Ver perfil completo')
   })
 
   it('escapes text and optimizes supplied images with dimensions', async () => {
@@ -84,6 +84,6 @@ describe('prerendered modal boundary', () => {
     const withoutImage = await render([{ ...participant, image: null }])
     expect(withoutImage).not.toContain('<img')
     expect(withoutImage).toContain(`href="${participant.canonicalPath}"`)
-    expect(withoutImage).toContain('Ver página del participante')
+    expect(withoutImage).toContain('Ver perfil completo')
   })
 })
