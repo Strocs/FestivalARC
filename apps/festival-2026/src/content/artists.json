@@ -1071,6 +1071,7 @@
       },
       {
         "id": "carpe-diem",
+        "youtubeVideoId": "dH936_tDPzQ",
         "name": "Carpe Diem",
         "company": "Malabi Circo",
         "audienceType": "Todo Público",
@@ -1094,6 +1095,7 @@
       },
       {
         "id": "la-gran-troupe-circo",
+        "youtubeVideoId": "mua0ZKcuKfA",
         "name": "La Gran Troupe Circo",
         "company": "Malabi Circo",
         "audienceType": "Todo Público",
@@ -1221,11 +1223,11 @@
       }
     ],
     "location": "Estacionamiento subterráneo",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus, nulla gravida orci a odio, vitae facilisis turpis urna sed justo."
+    "description": "Este 28 y 29 de noviembre el arte contemporáneo baja al subsuelo de la ciudad y transforma el gran estacionamiento subterráneo de la Plaza de Armas de La Serena en una sala de exhibición con Expo Arte Co. Liderada por la curatoría de Francisco Belarmino —artista visual y docente oriundo de Illapel — bajo la propuesta «Un espesor sensible. Observación situada del territorio», la muestra reúne a ocho artistas de Elqui, Limarí y Choapa que cruzan investigación, ciencia y saberes comunitarios mediante nuevos medios, fotografía, sonido y materialidades locales para repensar nuestra forma de habitar la región. ¡Conoce a los creadores seleccionados!"
   },
   "market": {
     "name": "Mercado Creativo y DAZ",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus, nulla gravida orci a odio, vitae facilisis turpis urna sed justo.",
+    "description": "El Mercado creativo y DAZ se toman la Plaza de Armas en el Festival ARC 2026 como una vitrina abierta en pleno corazón de La Serena. Por un lado, el Mercado reúne a creadores independientes, editoriales, oficios y emprendimientos regionales con ilustración, papelería, grabado, fanzines, literatura y artesanía; por otro, DAZ ——encuentro multidisciplinario impulsado por el Área de Diseño e Industria Digital de INACAP Sede La Serena— suma el talento de estudiantes, docentes y creadores en diseño digital, moda, audiovisual, animación y videojuegos. Una invitación a recorrer los puestos, conversar directamente con quienes producen y descubrir el pulso creativo de la región. ¡Conoce a quienes dan vida a este espacio!",
     "participants": [
       {
         "id": "nativa-joyas-del-elqui",
@@ -1234,9 +1236,9 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/expoforjadas/?hl=es"
         },
+        "website": "https://forjadas.cl/",
         "image": null
       },
-        "website": "https://forjadas.cl/",
       {
         "id": "reproduccion-arqueologica-de-la-ceramica-diaguita",
         "name": "Reproducción Arqueológica de la Cerámica Diaguita",
@@ -1262,9 +1264,9 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/scarlettchj/"
         },
+        "website": "https://www.scarlettchristiansen.cl/sobre-mi",
         "image": null
       },
-        "website": "https://www.scarlettchristiansen.cl/sobre-mi",
       {
         "id": "taller-artesanal-jacaranda",
         "name": "Taller Artesanal Jacarandá",
@@ -1299,9 +1301,9 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/anima.rojas/"
         },
+        "website": "https://animared.myportfolio.com/portafolio",
         "image": null
       },
-        "website": "https://animared.myportfolio.com/portafolio",
       {
         "id": "catana",
         "name": "Catana",
@@ -1354,9 +1356,9 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/futurocomics/"
         },
+        "website": "https://linktr.ee/futurocomics",
         "image": null
       },
-        "website": "https://linktr.ee/futurocomics",
       {
         "id": "rotten-monkey-inc",
         "name": "Rotten Monkey Inc",
@@ -1458,9 +1460,9 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/elementa_lab/"
         },
+        "website": "https://www.elementalab.cl/",
         "image": null
       },
-        "website": "https://www.elementalab.cl/",
       {
         "id": "ulises-lopez-grabador",
         "name": "Ulises López Grabador",
@@ -1477,9 +1479,9 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/lacartoleriataller/"
         },
+        "website": "https://lacartoleria.cl/",
         "image": null
       },
-        "website": "https://lacartoleria.cl/",
       {
         "id": "koko",
         "name": "Kokó",
@@ -1496,9 +1498,9 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/bordelibre/"
         },
+        "website": "https://www.bordelibre.cl/",
         "image": null
       },
-        "website": "https://www.bordelibre.cl/",
       {
         "id": "yatiediciones",
         "name": "Yatiediciones",
@@ -1506,9 +1508,9 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/editorial_yatiediciones/"
         },
+        "website": "https://www.yatiediciones.cl/",
         "image": null
       },
-        "website": "https://www.yatiediciones.cl/",
       {
         "id": "taller-editorial-me-pego-un-tiro",
         "name": "Taller Editorial Me Pego un Tiro",
