@@ -75,23 +75,30 @@
         "name": "Javiera Mena",
         "order": 6,
         "disciplines": "musica",
-        "description": "",
+        "description": "Javiera Mena es una de las figuras fundamentales del pop electrónico latinoamericano, con una carrera de dos décadas marcada por hits bailables, letras confesionales y una estética synth-pop inconfundible. Desde el lanzamiento de su influyente álbum debut Esquemas Juveniles (2006) —que en 2026 cumple veinte años—, pasando por discos esenciales como Mena (2010), Otra Era (2014) y Nocturna (2022), ha llevado su propuesta a escenarios internacionales de América y Europa.\n\nEn su etapa actual, la cantante, compositora y productora chilena continúa expandiendo su universo sonoro con su más reciente álbum de estudio Inmersión (2025) y una gira que celebra los veinte años de Esquemas Juveniles, combinando sus nuevas composiciones con los clásicos que definieron a toda una generación.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
           "time": "23:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/javiera-mena.webp",
+          "alt": "Javiera Mena"
+        },
         "national": true,
-        "location": "Escenario Gobierno Regional"
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/javieramena/",
+          "spotify": "https://open.spotify.com/intl-es/artist/6c0qylj1D1gqcUUN2P8Ofp"
+        }
       },
       {
         "id": "dulce-y-agraz",
         "name": "Dulce y Agraz",
         "order": 8,
         "disciplines": "musica",
-        "description": "",
+        "description": "Dulce y Agraz es el proyecto musical de la cantante, compositora y poeta penquista Daniela González, una de las voces más distintivas de la escena pop independiente chilena. Con una propuesta que cruza el pop alternativo, la canción de autor y arreglos atmosféricos cargados de sensibilidad, ha construido un repertorio íntimo y emotivo desde su EP debut Dulce y Agraz (2015) y álbumes como Trino (2018) y Albor (2022), presentándose en destacados escenarios de Chile y México.\n\nTras lanzar su disco Vida Mía (2025) y adelantar nueva música con sencillos como «Todo» en 2026, la artista continúa expandiendo su universo poético y sonoro en vivo con un espectáculo que combina sus estrenos recientes junto a canciones emblemáticas como «Súbitamente» y «Más».",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -103,7 +110,11 @@
           "alt": "Dulce y Agraz"
         },
         "national": true,
-        "location": "Escenario Gobierno Regional"
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/dulceyagrazmusic/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5cD6bctPV8wtKpO4o8ZtTQ"
+        }
       },
       {
         "id": "freshki",
@@ -131,7 +142,7 @@
         "name": "Gepe",
         "order": 10,
         "disciplines": "musica",
-        "description": "",
+        "description": "Gepe es uno de los nombres centrales del pop contemporáneo chileno, con una trayectoria de más de dos décadas que cruza el folclor andino, la canción de autor y los ritmos latinoamericanos con arreglos modernos y bailables. Desde álbumes fundamentales como Gepinto (2005), Audiovisión (2010), GP (2012) y Estilo Libre (2015), ha construido un cancionero transversal que lo ha llevado a escenarios de toda América y Europa, consolidándose como un referente clave de la música chilena actual.\n\nEn 2026 presenta Oro, trabajo discográfico con el que celebra las dos décadas de su debut Gepinto tras el ciclo de su álbum Undesastre, desplegando un espectáculo de alta energía que entrelaza sus lanzamientos recientes con clásicos infaltables de su repertorio como «Fruta y Té», «Hablar de Ti» y «Hambre».",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -143,7 +154,11 @@
           "alt": "Gepe"
         },
         "national": true,
-        "location": "Escenario Gobierno Regional"
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/gepegepegepe/",
+          "spotify": "https://open.spotify.com/intl-es/artist/1fHGzTSloWCtrlKfbLNVhM"
+        }
       },
       {
         "id": "javier-barria",
@@ -157,7 +172,10 @@
           "time": "20:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/javier-barria.webp",
+          "alt": "Javier Barría"
+        },
         "national": true,
         "location": "Terraza Cordovez",
         "socialLinks": {
@@ -192,7 +210,7 @@
         "name": "Fernando Milagros",
         "order": 15,
         "disciplines": "musica",
-        "description": "",
+        "description": "Fernando Milagros es uno de los cantautores y compositores más prolíficos de la escena independiente chilena, con una carrera que transita entre el folk rock, el pop alternativo y la experimentación rítmica latinoamericana. Desde su debut Vacaciones en el Patio de Mi Casa (2007) y discos fundamentales como Por Su Atención Gracias (2009), San Sebastián (2011), Nuevo Sol (2014) y Obsydiana (2022), ha consolidado una identidad sonora personal que lo ha llevado a escenarios de América y Europa.\n\nEn su etapa reciente, tras celebrar las dos décadas desde el inicio de su proyecto solista y presentar material nuevo junto a lanzamientos como Antología y sencillos de estudio, regresa a los escenarios con un espectáculo que cruza sus composiciones actuales con canciones esenciales de su repertorio como «Reina Japonesa», «Carnaval» y «Piedra Angular».",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -204,7 +222,11 @@
           "alt": "Fernando Milagros"
         },
         "national": true,
-        "location": "Balcones del Arzobispado"
+        "location": "Balcones del Arzobispado",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/fmilagros/",
+          "spotify": "https://open.spotify.com/intl-es/artist/73swvRHLV2DJfD57xx5CBN"
+        }
       },
       {
         "id": "jazztacuatico",
@@ -232,7 +254,7 @@
         "name": "Rosario Alfonso",
         "order": 18,
         "disciplines": "musica",
-        "description": "",
+        "description": "Rosario Alfonso es una cantautora, compositora y artista visual chilena que se ha consolidado como una de las voces más sensibles y luminosas de la nueva canción chilena. Con un estilo íntimo que entrelaza el folk, el bolero, el pop alternativo y arreglos acústicos de gran delicadeza, ha cautivado al público tanto en su faceta solista como en su paso por el colectivo Uva Robot, debutando con el elogiado álbum Lo Primero (2018) y continuando con De Canciones Tristes y Otras Sutilezas (2022).\n\nTras lanzar su tercer álbum de estudio Cómo Quieres Que Te Quiera (2025) y continuar presentando sus canciones en escenarios de Chile y Latinoamérica, la artista despliega un espectáculo cercano y emotivo que combina sus composiciones recientes con piezas queridas de su repertorio como «Dejar de Pensar» y «Negación».",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -244,7 +266,11 @@
           "alt": "Rosario Alfonso"
         },
         "national": true,
-        "location": "Odeón Plaza de Armas"
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/rosarioalfonsocanta/",
+          "spotify": "https://open.spotify.com/intl-es/artist/7mirwC8eaTt7tswix93TFZ"
+        }
       },
       {
         "id": "duerme-y-cae",
@@ -272,23 +298,30 @@
         "name": "Claudio Valenzuela",
         "order": 21,
         "disciplines": "musica",
-        "description": "",
+        "description": "Claudio Valenzuela es una de las voces más emblemáticas del rock alternativo chileno y latinoamericano, reconocido internacionalmente como vocalista, guitarrista y compositor principal de Lucybell. Desde el debut de la banda con Peces (1995) y álbumes fundamentales como Viajar (1996) y Amanece (2000), ha desarrollado en paralelo una sólida carrera solista marcada por atmósferas introspectivas, texturas electrónicas y guitarras envolventes, plasmada en discos como Gemini (2009), Simple (2011) y Nocturnal (2014).\n\nEn su etapa actual, tras el receso indefinido anunciado por Lucybell luego de su gira de cierre, el músico retoma con fuerza su faceta individual y nueva música de estudio, presentando en vivo un espectáculo íntimo y poderoso que combina sus composiciones solistas con himnos esenciales de su trayectoria.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
           "time": "21:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/claudio-valenzuela.webp",
+          "alt": "Claudio Valenzuela"
+        },
         "national": true,
-        "location": "Balcones del Arzobispado"
+        "location": "Balcones del Arzobispado",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/claudiovalenzuelaoficial/",
+          "spotify": "https://open.spotify.com/intl-es/artist/20XFyUIDpgHen9Lxmx6VhE"
+        }
       },
       {
         "id": "fernando-ubiergo",
         "name": "Fernando Ubiergo",
         "order": 23,
         "disciplines": "musica",
-        "description": "",
+        "description": "Fernando Ubiergo es uno de los cantautores y compositores más trascendentes de la música popular chilena e iberoamericana, con una trayectoria de casi cinco décadas marcada por una profunda sensibilidad poética y narrativa. A lo largo de su carrera ha obtenido algunos de los máximos galardones de la canción hispana, entre ellos el primer lugar en la Competencia Internacional del Festival de Viña del Mar (1978, con «El tiempo en las bastillas»), el Festival de la OTI (1984, con «Agualuna») y el Festival de Benidorm (1982, con «Yo pienso en ti»), además de ser reconocido como Figura Fundamental de la Música Chilena por la SCD y recibir distinciones a su trayectoria como el Premio Presidente de la República.\n\nEn plena actividad creativa, el músico continúa recorriendo escenarios de todo el país repasando su vasto cancionero —que incluye álbumes esenciales y clásicos intergeneracionales como «Cuando agosto era 21», «Un café para Platón» y «Los ojos de Rodrigo»—, manteniendo vigente un repertorio que forma parte del patrimonio cultural de Chile",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -300,7 +333,11 @@
           "alt": "Fernando Ubiergo"
         },
         "national": true,
-        "location": "Odeón Plaza de Armas"
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/fernandoubiergo/",
+          "spotify": "https://open.spotify.com/intl-es/artist/4o3U8RAOoLpRDFvqKoJYvA"
+        }
       },
       {
         "id": "kalishe",
@@ -375,7 +412,7 @@
         "name": "Núñez Briceño",
         "order": 29,
         "disciplines": "musica",
-        "description": "",
+        "description": "Núñez Briceño es el proyecto musical formado por el cantautor chileno Cristóbal Briceño (líder de Fother Muckers y Ases Falsos) junto a Gonzalo Núñez, enfocado en rescatar el repertorio clásico de la cumbia chilena y latinoamericana en formato de guitarra acústica y canto. Con un sonido cercano a la bohemia y a la tradición popular, la agrupación reinterpreta clásicos tropicales mediante popurrís cargados de calidez rítmica y camaradería.\n\nSu trabajo discográfico se cristalizó en el álbum Cumbias Guitarreadas (2018) y en una serie de entregas en formato medley tituladas desde «Combo Uno» hasta «Combo Seis» (editadas entre 2017 y 2021 a través de CBA Discos), donde versionan himnos bailables como «El Galeón Español», «La Piragua» y «Pedacito de Mi Vida»",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -387,7 +424,11 @@
           "alt": "Núñez Briceño"
         },
         "national": true,
-        "location": "Plaza Gabriel González Videla"
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/nunez_briceno/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5suhUD88dg0N7wHId8xUuX"
+        }
       },
       {
         "id": "stendhal",
@@ -417,16 +458,23 @@
         "name": "José Alfredo Fuentes",
         "order": 32,
         "disciplines": "musica",
-        "description": "",
+        "description": "José Alfredo «Pollo» Fuentes es uno de los cantantes, compositores y animadores más icónicos de la música popular chilena, figura fundamental de la Nueva Ola desde su explosivo debut en 1966 con éxitos inmediatos como «Te Perdí» y «Dirladadá». Con casi seis décadas de trayectoria artística, ha dejado una huella imborrable en la historia cultural del país con clásicos transversales como «Era Solo un Chiquillo», «El Amor No Tiene Olvido» y «Con Mi Bombo y Mi Chin Chin», siendo distinguido como Figura Fundamental de la Música Chilena por la SCD y galardonado con el Premio a la Música Nacional Presidente de la República.\n\nEn plena vigencia sobre los escenarios, celebra los sesenta años de su debut artístico recorriendo Chile con un espectáculo lleno de nostalgia, carisma y cercanía, repasando los grandes himnos románticos y festivos de su cancionero ante distintas generaciones de público.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
           "time": "18:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/jose-alfredo-fuentes.webp",
+          "alt": "José Alfredo Fuentes"
+        },
         "national": true,
-        "location": "Odeón Plaza de Armas"
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/pollofuentesoficial/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5yrOkBwyi9ePzOYQX4V3iW"
+        }
       },
       {
         "id": "last-whisper",
@@ -481,7 +529,7 @@
         "name": "Guaypes Club",
         "order": 37,
         "disciplines": "musica",
-        "description": "",
+        "description": "Guaypes Club es el pionero proyecto musical chileno protagonizado por títeres —Jota, Papo y El Pibe— que cruza la estética callejera, el humor y la puesta en escena teatral con sonidos urbanos como el reggaetón, el rap y el dembow. Creada en Santiago en 2019, la agrupación marcó un hito en la escena nacional gracias a su propuesta visual única y a éxitos virales como «Feka» y «Pégate», llevando su show a grandes escenarios como Lollapalooza Chile y Lollapalooza Argentina.\n\nEn vivo, el colectivo despliega un espectáculo cargado de energía, interacción con el público y visuales que trasladan el universo de sus muñecos directamente al escenario, repasando sus canciones más populares junto a sus lanzamientos más recientes dentro del circuito urbano chileno.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -493,7 +541,11 @@
           "alt": "Guaypes Club"
         },
         "national": true,
-        "location": "Escenario Gobierno Regional"
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/guaypesclub/",
+          "spotify": "https://open.spotify.com/intl-es/artist/6OmpXe9rFVRCcgjkxm7yMV"
+        }
       },
       {
         "id": "medinamico",
@@ -571,7 +623,7 @@
         "name": "Laró",
         "order": 44,
         "disciplines": "musica",
-        "description": "",
+        "description": "Laró —proyecto del cantautor y productor chileno Diego Laroze— es una propuesta de indie pop, folk y canción de autor caracterizada por melodías sensibles, texturas acústicas y una mirada íntima y melancólica. Desde su álbum debut Abriendo Latidos (2020), el EP Vuela Lejos (Abriendo Latidos) (2022) y el trabajo (re) definiciones (2024), ha construido un repertorio con canciones como «Abriendo Latidos» y «Maldito Jazz» —videoclip que sumó nominaciones en IN-EDIT Chile— y colaboraciones junto a nombres de la escena nacional como Rosario Alfonso, Vicente Cifuentes y Nando García.\n\nEn su etapa más reciente, tras adelantar el sencillo «Ya No Te Hago Falta» (2026), publica su tercer álbum de estudio Niño Triste (2026) y sale a recorrer escenarios de distintas ciudades de Chile con una gira que lleva su nuevo cancionero en vivo.",
         "ticketUrl": null,
         "date": {
           "day": "Sábado 28",
@@ -583,7 +635,10 @@
           "alt": "Laró"
         },
         "national": true,
-        "location": "Odeón Plaza de Armas"
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/laro_musica/"
+        }
       },
       {
         "id": "esteban-y-los-hurtados",
@@ -614,7 +669,7 @@
         "name": "DJ Sepha",
         "order": 46,
         "disciplines": "musica",
-        "description": "",
+        "description": "DJ Sepha —alias de la DJ y productora chilena Josefa Errázuriz— es una de las figuras emergentes más destacadas de la escena electrónica nacional, reconocida por un sonido hipnótico y envolvente que cruza el progressive house, el melodic house y matices de techno. Con una proyección ascendente que la ha llevado a presentarse en clubes y festivales de alto calibre en Chile, Latinoamérica y Europa —incluyendo escenarios como Ultra Chile, DGTL Santiago y fechas en ciudades como Berlín, Barcelona y Bogotá—, encabeza la nueva generación de selectoras nacionales.\n\nEn su etapa actual, además de consolidar su faceta como productora incorporando sus propios tracks en sus sesiones y recorrer escenarios internacionales con giras como su Argentina Winter Tour en 2026, presenta sets dinámicos y de gran narrativa sonora diseñados para sumergir al público en una experiencia de pista de baile continua.",
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
@@ -626,7 +681,11 @@
           "alt": "DJ Sepha"
         },
         "national": true,
-        "location": "Plaza Gabriel González Videla"
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/sepha.music/"
+        },
+        "youtubeVideoId": "zwSyUObn9CY"
       }
     ]
   },
@@ -990,7 +1049,10 @@
           "time": "17:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/de-papel.webp",
+          "alt": "De Papel"
+        },
         "location": "Interior de la Plaza de Armas (Sector Cordovez)",
         "socialLinks": {
           "instagram": "https://www.instagram.com/silencioblanco/"
@@ -1010,7 +1072,10 @@
           "time": "21:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/carpe-diem.webp",
+          "alt": "Carpe Diem"
+        },
         "location": "Interior de la Plaza de Armas (Sector Cordovez)",
         "socialLinks": {
           "instagram": "https://www.instagram.com/malabicirco/"
@@ -1031,7 +1096,10 @@
           "time": "22:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/la-gran-troupe-circo.webp",
+          "alt": "La Gran Troupe Circo"
+        },
         "location": "Interior de la Plaza de Armas (Esquina Matta)",
         "socialLinks": {
           "instagram": "https://www.instagram.com/malabicirco/"
@@ -1052,7 +1120,10 @@
           "time": "20:00",
           "month": "noviembre"
         },
-        "image": null,
+        "image": {
+          "url": "/src/assets/artists/viaje-a-la-luna.webp",
+          "alt": "Viaje a la Luna"
+        },
         "location": "Interior de la Plaza de Armas (Esquina Matta)",
         "socialLinks": {
           "instagram": "https://www.instagram.com/lapatogallina/?hl=es"
