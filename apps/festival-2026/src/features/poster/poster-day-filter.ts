@@ -12,6 +12,7 @@ import { validatePosterFilterTransitions, type PosterFilterIndex } from './poste
 import { createPosterSimpleLayout, type PosterSimplePlans } from './poster-simple-layout'
 
 import { readPosterFilters, writePosterFilters } from './poster-filter-url'
+import { withMobilePosterBaseline } from './poster-mobile-card-resize'
 
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const keys = ['all', 'saturday', 'sunday'] as const
@@ -289,7 +290,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   let compact: ReturnType<typeof createPosterSimpleLayout> | undefined
   let trackWidth: number | undefined
   const posterTracks = new Map<DayKey, number[] | undefined>()
-  const capturePosterTracks = (rows: number) => {
+  const capturePosterTracks = (rows: number, mobile: boolean) => {
     if (trackWidth !== window.innerWidth) {
       posterTracks.clear()
       trackWidth = window.innerWidth
@@ -299,9 +300,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       // Restore only the poster CSS during this synchronous, grid-only sample.
       const restoreSimple = grid.hasAttribute('data-poster-simple')
       if (restoreSimple) grid.removeAttribute('data-poster-simple')
+      grid.setAttribute('data-poster-sampling-tracks', '')
       try {
-        posterTracks.set(selected, resolvedFilterTracks(getComputedStyle(grid).gridTemplateRows, rows))
+        const sample = () => resolvedFilterTracks(getComputedStyle(grid).gridTemplateRows, rows)
+        posterTracks.set(selected, mobile ? withMobilePosterBaseline(sample) : sample())
       } finally {
+        grid.removeAttribute('data-poster-sampling-tracks')
         if (restoreSimple) grid.setAttribute('data-poster-simple', '')
       }
     }
@@ -314,7 +318,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const plan = endpoint()
     compact = createPosterSimpleLayout(plan, compactRange, ranked, plans.simple![selected][compactRange])
     grid.style.setProperty(simpleRows, String(compact.rows))
-    const sourceTracks = capturePosterTracks(plan.layouts[compactRange].rows)
+    const sourceTracks = capturePosterTracks(plan.layouts[compactRange].rows, compactRange === 'mobile')
     const prefix = sourceTracks?.slice(0, compact.rows) ?? []
     const tracks = prefix.map(height => `${height}px`)
     const extra = compact.rows - prefix.length

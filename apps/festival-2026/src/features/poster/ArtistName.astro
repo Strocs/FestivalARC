@@ -46,6 +46,7 @@ const rules = ranges
     aria-label={interactive ? (compactDetails ? `Ver más sobre ${artist.name}` : artist.name) : undefined}
     class='focus-visible:outline-primary absolute inset-0 size-full appearance-none border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-[-2px]'>
     <span
+      data-artist-content
       class:list={[
         'absolute inset-x-6 grid grid-cols-1 grid-rows-[minmax(0,1fr)_auto] [container-type:size]',
         interactive ? 'top-[min(0.75rem,8%)] bottom-[min(1.5rem,15%)]' : 'inset-y-[min(1.5rem,15%)]',
@@ -55,6 +56,7 @@ const rules = ranges
         class='bg-background motion-reduce:translate-none relative col-start-1 row-start-1 min-h-0 rounded-lg transition-transform duration-300 motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none group-data-[poster-simple]/poster:absolute group-data-[poster-simple]/poster:inset-x-0 group-data-[poster-simple]/poster:top-0 group-data-[poster-simple]/poster:bottom-2.5 group-data-[poster-simple]/poster:col-auto group-data-[poster-simple]/poster:row-auto group-data-[poster-simple]/poster:rounded-xl'
       ></span>
       <span
+        data-artist-name-box
         class:list={[
           'motion-reduce:translate-none relative col-start-1 row-start-1 mx-3 flex min-h-0 items-center justify-center transition-transform duration-300 [container-name:artist-name] [container-type:size] motion-safe:group-hover:-translate-y-0.5 motion-reduce:transition-none',
           interactive ? 'pt-1 pb-0.5' : 'py-[min(1rem,10cqh)]',
@@ -82,7 +84,7 @@ const rules = ranges
       </span>
       {interactive && <span
         data-artist-meta
-        class='relative col-start-1 row-start-2 flex min-w-0 flex-col items-center gap-px text-center text-xs/3 text-foreground group-data-[poster-simple]/poster:text-white'>
+        class='relative col-start-1 row-start-2 flex min-w-0 flex-col items-center gap-px text-center text-xs/[1] text-foreground group-data-[poster-simple]/poster:text-white'>
         {!compactDetails && (artist.date || artist.location) && <span
           class='flex min-w-0 flex-col items-center gap-px motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-translate-y-0.5'>
           {artist.date && <time class='font-bold'>{artist.date.day} - {artist.date.time}hrs</time>}
@@ -100,3 +102,18 @@ const rules = ranges
   </Wrapper>
   <style is:inline set:html={rules}></style>
 </article>
+
+<style is:global>
+  @media (width < 48rem) {
+    [data-artist-content][style*='--poster-expanded-name-row:'] {
+      top: var(--poster-expanded-content-top);
+      bottom: var(--poster-expanded-content-bottom);
+      grid-template-rows: var(--poster-expanded-name-row) auto;
+    }
+    [data-artist-content][style*='--poster-expanded-name-row:'] > [data-artist-name-box] {
+      justify-self: center;
+      width: var(--poster-expanded-name-width);
+      padding: var(--poster-expanded-name-padding);
+    }
+  }
+</style>

@@ -7,9 +7,9 @@ const { presentation = false, beforeBreadcrumb = false, initialDay = 'all', init
 const controlText = 'rounded-full text-sm/5 font-bold'
 const controlSize = `${controlText} h-11`
 const days = [['all', 'Todos'], ['saturday', 'Sábado 28'], ['sunday', 'Domingo 29']] as const
-const pickerLabel = 'flex min-w-0 flex-col gap-0.5'
-const pickerCaption = 'px-3 text-xs/3 font-medium text-foreground/80'
-const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-background px-3 py-0 text-foreground max-md:rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+const pickerLabel = 'flex min-w-0 flex-col gap-0.5 max-md:min-w-max'
+const pickerCaption = 'px-3 text-xs/[1] font-medium text-foreground/80'
+const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-background px-3 py-0 text-foreground max-md:min-h-[1.35em] max-md:rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
 ---
 
 <fieldset
@@ -43,7 +43,7 @@ const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-
         </label>
       ))}
     </div>
-    {presentation && <div class='flex items-center justify-center gap-2 max-md:w-full md:gap-3'>
+    {presentation && <div class='flex items-center justify-center gap-2 max-md:w-full max-md:flex-wrap md:gap-3'>
       <label class:list={[pickerLabel, 'flex-1 md:hidden']}>
         <span id='poster-day-select-label' class={pickerCaption}>Día</span>
         <select aria-labelledby='poster-day-select-label' data-poster-picker data-poster-day-select class:list={[controlText, pickerSize, 'w-full']}>

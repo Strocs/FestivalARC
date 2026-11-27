@@ -39,7 +39,7 @@ it('renders performer biography, schedule, venue, image and social links in both
     expect(html).toContain('inline-flex size-8')
     expect(html).toContain('width="16" height="16"')
     expect(html).toMatch(/class="flex flex-wrap items-center gap-2">\s*<p>Fixture discipline<\/p>\s*<nav/)
-    expect(html).toContain(`<p class="text-base/6 font-black text-white">${location}</p>`)
+    expect(html).toContain(`<p class="text-base/[1.5] font-black text-white">${location}</p>`)
     expect(html).toContain('mt-5 space-y-0.5')
     if (modal) {
       expect(html.indexOf(description)).toBeLessThan(html.indexOf('<img'))
@@ -54,7 +54,7 @@ it('renders performer biography, schedule, venue, image and social links in both
       expect(textColumn).toContain('data-modal-meta')
       expect(textColumn.indexOf('Fixture discipline')).toBeLessThan(textColumn.indexOf(dateLabel))
       expect(textColumn.indexOf(dateLabel)).toBeLessThan(textColumn.indexOf(location))
-      expect(textColumn).toContain('text-base/6 font-black text-white')
+      expect(textColumn).toContain('text-base/[1.5] font-black text-white')
       expect(textColumn).not.toContain('bg-primary')
     }
   }

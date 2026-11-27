@@ -319,6 +319,7 @@ describe('day filtering through the sole modal owner', () => {
     const sampled: string[] = []
     const original = computed.getMockImplementation()!
     computed.mockImplementation(node => {
+      if (node === document.documentElement) return original(node)
       expect(node).toBe(grid)
       expect(grid.hasAttribute('data-poster-simple')).toBe(false)
       const style = original(node)
