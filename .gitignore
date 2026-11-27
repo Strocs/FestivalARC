@@ -35,7 +35,8 @@ pnpm-debug.log*
 .pi/
 .codegraph/
 
-# Workspace tooling caches
+# Local worktrees and workspace tooling caches
+/.worktrees/
 .turbo/
 
 # Generated distribution artifacts
