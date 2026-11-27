@@ -1,0 +1,160 @@
+---
+import type { DayKey } from './poster-filter-layout'
+import type { PosterOrders } from './poster-order'
+
+interface Props { presentation?: boolean; beforeBreadcrumb?: boolean; initialDay?: DayKey; initialSort?: keyof PosterOrders }
+const { presentation = false, beforeBreadcrumb = false, initialDay = 'all', initialSort } = Astro.props
+const controlText = 'rounded-full text-sm/5 font-bold'
+const controlSize = `${controlText} h-11`
+const days = [['all', 'Todos'], ['saturday', 'Sábado 28'], ['sunday', 'Domingo 29']] as const
+const pickerLabel = 'flex min-w-0 flex-col gap-0.5'
+const pickerCaption = 'px-3 text-xs/3 font-medium text-foreground/80'
+const pickerSize = 'h-7.5 max-w-full cursor-pointer border border-primary/10 bg-background px-3 py-0 text-foreground max-md:rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+---
+
+<fieldset
+  hidden={!presentation}
+  disabled={presentation}
+  data-day-filter
+  data-poster-toolbar={presentation || undefined}
+  class:list={[
+    'min-w-0 border bg-background text-foreground',
+    presentation
+      ? 'mx-auto w-[calc(100%_-_1rem)] rounded-xl border-primary/10 p-2 md:w-fit md:rounded-full md:shadow-md'
+      : 'mx-3 rounded-2xl border-foreground/25 p-2 sm:mx-auto sm:w-fit',
+    beforeBreadcrumb ? 'mb-4' : 'mb-8 md:mb-12',
+  ]}>
+  <legend class='sr-only'>Filtrar artistas por día</legend>
+  <div class:list={[presentation ? 'flex items-center justify-center gap-2 md:gap-6' : 'flex flex-col items-stretch gap-2 md:flex-row md:items-center md:gap-6']}>
+    <div class:list={['flex-wrap justify-center gap-1', presentation ? 'hidden md:flex' : 'flex']}>
+      {days.map(([value, label]) => (
+        <label class='relative cursor-pointer'>
+          <input
+            type='radio'
+            name='poster-day'
+            value={value}
+            checked={value === initialDay}
+            class='peer sr-only' />
+          <span class:list={[
+            controlSize,
+            'flex items-center justify-center peer-checked:bg-arc-yellow peer-checked:text-background peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary md:px-4',
+            presentation ? 'px-2.5 hover:bg-foreground/10 peer-checked:hover:bg-arc-yellow' : 'px-3',
+          ]}>{label}</span>
+        </label>
+      ))}
+    </div>
+    {presentation && <div class='flex items-center justify-center gap-2 max-md:w-full md:gap-3'>
+      <label class:list={[pickerLabel, 'flex-1 md:hidden']}>
+        <span id='poster-day-select-label' class={pickerCaption}>Día</span>
+        <select aria-labelledby='poster-day-select-label' data-poster-picker data-poster-day-select class:list={[controlText, pickerSize, 'w-full']}>
+          {days.map(([value, label]) => <option value={value} selected={initialDay !== 'all' && value === initialDay}>{label}</option>)}
+        </select>
+      </label>
+      <label class:list={[pickerLabel, 'max-md:flex-1']}>
+        <span class={pickerCaption}>Ordenar por</span>
+        <select data-poster-picker data-poster-sort class:list={[controlText, pickerSize, 'w-full md:w-28']}>
+          <option value=''>Original</option>
+          <option value='time' selected={initialSort === 'time'}>Horario</option>
+          <option value='location' selected={initialSort === 'location'}>Escenario</option>
+        </select>
+      </label>
+      <button type='button' data-poster-simple-toggle aria-pressed='false' class:list={[controlSize, 'flex cursor-pointer items-center justify-center gap-2 w-11 shrink-0 opacity-75 md:w-auto md:px-3 hover:bg-foreground/10 hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary aria-pressed:bg-arc-yellow aria-pressed:text-background aria-pressed:opacity-100 aria-pressed:hover:bg-arc-yellow']}>
+        <svg aria-hidden='true' class='size-4 shrink-0' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><path d='M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01' /></svg>
+        <span class='sr-only whitespace-nowrap md:not-sr-only'>Vista simple</span>
+      </button>
+    </div>}
+  </div>
+  <span data-day-count role='status' aria-live='polite' aria-atomic='true' class='sr-only'></span>
+</fieldset>
+
+<style>
+  @reference '../../styles/global.css';
+
+  [data-poster-toolbar] {
+    --poster-toolbar-gap: .75rem;
+    position: sticky;
+    top: calc(var(--poster-header-height) + var(--poster-toolbar-gap));
+    z-index: 30;
+  }
+  [data-poster-toolbar-concealed]:not(:focus-within) {
+    opacity: 0;
+    translate: 0 calc(-100% - var(--poster-toolbar-gap));
+    pointer-events: none;
+  }
+  /* The picker can also be opened programmatically without moving focus. */
+  [data-poster-toolbar-concealed]:has([data-poster-picker]:open) {
+    opacity: 1;
+    translate: none;
+    pointer-events: auto;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    [data-poster-toolbar]:not(:focus-within) {
+      transition: translate 200ms ease, opacity 200ms ease;
+    }
+  }
+
+  /* The native select remains usable without customizable picker support. */
+  @supports (appearance: base-select) and selector(::picker(select)) {
+    [data-poster-picker],
+    [data-poster-picker]::picker(select) {
+      appearance: base-select;
+    }
+    [data-poster-picker] {
+      --poster-picker-radius: var(--radius-xl);
+      --poster-picker-padding: var(--spacing);
+      --poster-picker-option-radius: calc(var(--poster-picker-radius) - var(--poster-picker-padding));
+      align-items: center;
+    }
+    [data-poster-picker]::picker-icon {
+      color: var(--color-arc-yellow);
+    }
+    [data-poster-picker]::picker(select) {
+      margin-block: .375rem;
+      padding: var(--poster-picker-padding);
+      border: 1px solid color-mix(in oklab, var(--color-foreground) 30%, transparent);
+      border-radius: var(--poster-picker-radius);
+      background: var(--color-background);
+      color: var(--color-foreground);
+      box-shadow: 0 .5rem 1.25rem rgb(0 0 0 / .35);
+    }
+    [data-poster-picker] > option {
+      @apply min-h-7.5 rounded-(--poster-picker-option-radius) px-2 py-0.5 text-sm font-bold;
+    }
+    [data-poster-picker] > option::checkmark {
+      @apply hidden;
+    }
+    [data-poster-picker] > option + option {
+      @apply mt-1;
+    }
+    [data-poster-picker] > option:hover:not(:checked) {
+      @apply bg-foreground/10;
+    }
+    [data-poster-picker] > option:checked {
+      @apply bg-arc-yellow text-background;
+    }
+    [data-poster-picker] > option:focus-visible {
+      @apply outline-2 -outline-offset-2 outline-primary;
+    }
+  }
+  @supports (appearance: base-select) and selector(::picker(select)) and (transition-behavior: allow-discrete) and (overlay: auto) {
+    @media (prefers-reduced-motion: no-preference) {
+      [data-poster-picker]::picker(select) {
+        opacity: 0;
+        transform: translateY(-.25rem);
+        /* Keep the picker painted in the top layer until the exit completes. */
+        transition: opacity 160ms ease-out, transform 160ms ease-out,
+          display 160ms allow-discrete, overlay 160ms allow-discrete;
+      }
+      [data-poster-picker]:open::picker(select) {
+        opacity: 1;
+        transform: none;
+      }
+      @starting-style {
+        [data-poster-picker]:open::picker(select) {
+          opacity: 0;
+          transform: translateY(-.25rem);
+        }
+      }
+    }
+  }
+</style>

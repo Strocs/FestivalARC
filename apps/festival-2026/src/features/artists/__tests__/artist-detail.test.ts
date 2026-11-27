@@ -1,0 +1,129 @@
+import { experimental_AstroContainer as AstroContainer } from 'astro/container'
+import { describe, expect, it } from 'vitest'
+import ArtistDetail from '../ArtistDetail.astro'
+import { participants, type ParticipantView } from '../categories'
+
+const fixture: ParticipantView = {
+  id: 'fixture',
+  name: 'Fixture performer',
+  category: 'music',
+  canonicalPath: '/musica/fixture/',
+  description: '',
+  date: { day: 'Day', time: '12:00' },
+  image: null,
+  ticketUrl: null,
+}
+
+async function render(override: Partial<ParticipantView> = {}, modal = false) {
+  const container = await AstroContainer.create()
+  return container.renderToString(ArtistDetail, {
+    props: { artist: { ...fixture, ...override }, modal },
+  })
+}
+
+describe('artist detail rendering', () => {
+  it.each([false, true])('renders a supplied video and social links (modal: %s)', async modal => {
+    const artist = {
+      ...fixture,
+      youtubeVideoId: 'AbCdEf12345',
+      socialLinks: {
+        instagram: 'https://www.instagram.com/example/',
+        spotify: 'https://open.spotify.com/artist/example',
+      },
+    }
+    const container = await AstroContainer.create()
+    const html = await container.renderToString(ArtistDetail, { props: { artist, modal } })
+    expect(html).toContain('https://www.youtube-nocookie.com/embed/AbCdEf12345')
+    expect(html).toContain('https://www.instagram.com/example/')
+    expect(html).toContain('https://open.spotify.com/artist/example')
+    expect(html).toContain('aria-label="Redes sociales de Fixture performer"')
+  })
+
+  it('renders optional audience and duration details in page and modal views', async () => {
+    for (const modal of [false, true]) {
+      const html = await render({ audienceType: 'Fixture audience', durationMinutes: 45 }, modal)
+      expect(html).toContain('Fixture audience')
+      expect(html).toContain('45 minutos')
+    }
+  })
+
+  it('renders optional performer details only when supplied', async () => {
+    const html = await render({ description: 'Fixture biography', company: 'Fixture company' })
+    expect(html).toContain('Fixture biography')
+    expect(html).toContain('Fixture company')
+    expect(html).not.toContain('<iframe')
+    expect(html).not.toContain('undefined')
+  })
+
+  it('renders expo/market-style details without performer metadata or media holes', async () => {
+    const html = await render({ category: 'expo', date: undefined, image: null, description: 'Fixture description' })
+    expect(html).toContain('Fixture description')
+    expect(html).not.toContain('<img')
+    expect(html).not.toContain('<iframe')
+    expect(html).not.toContain('undefined')
+  })
+
+  it('keeps the renamed Mercado participant at its canonical path', () => {
+    const artist = participants.find(({ id }) => id === 'nativa-joyas-del-elqui')
+    expect(artist?.canonicalPath).toBe('/mercado-creativo-y-daz/nativa-joyas-del-elqui/')
+    expect(participants.some(({ id }) => id === 'forjadas')).toBe(false)
+  })
+
+  it.each(['market', 'expo'] as const)('renders ordered, individually labelled Instagram and website links for %s', async category => {
+    const profiles = ['https://www.instagram.com/zeta/', 'https://www.instagram.com/alpha/']
+    const website = 'https://example.org/participant/'
+    for (const modal of [false, true]) {
+      const html = await render({ category, socialLinks: { instagram: profiles }, website }, modal)
+      const links = [...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)]
+      expect(links.map(link => link[1])).toEqual([...profiles, website])
+      expect(links[0][0]).toContain('aria-label="Instagram 1 de Fixture performer"')
+      expect(links[1][0]).toContain('aria-label="Instagram 2 de Fixture performer"')
+      expect(html).toContain('aria-label="Enlaces de Fixture performer"')
+      expect(html).toContain('>Sitio web</a>')
+    }
+  })
+
+  it.each([false, true])('renders stage websites and shows a reel only without YouTube (modal: %s)', async modal => {
+    const instagram = 'https://www.instagram.com/fixture/'
+    const instagramReelUrl = 'https://www.instagram.com/reels/DSydSDbkauE/'
+    const website = 'https://example.org/stage/'
+    const stage = { category: 'stage' as const, socialLinks: { instagram }, website, instagramReelUrl }
+    const html = await render(stage, modal)
+    expect(html).toContain(`href="${website}" aria-label="Sitio web de Fixture performer"`)
+    expect(html).toContain('data-icon="site-globe"')
+    expect(html).toContain(`href="${instagramReelUrl}" aria-label="Reel de Instagram de Fixture performer"`)
+    expect(html.indexOf(instagram)).toBeLessThan(html.indexOf(website))
+    expect(html).not.toContain('<iframe')
+
+    const youtube = await render({ ...stage, youtubeVideoId: 'AbCdEf12345' }, modal)
+    expect(youtube).not.toContain(instagramReelUrl)
+    expect(youtube).toContain('/embed/AbCdEf12345')
+  })
+
+  it.each([false, true])('renders multiple market websites in order (modal: %s)', async modal => {
+    const website = ['https://example.org/portfolio/', 'https://example.com/support/']
+    const html = await render({ category: 'market', website }, modal)
+    expect([...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>/g)].map(link => link[1])).toEqual(website)
+    expect(html).toContain('>Sitio web 1</a>')
+    expect(html).toContain('>Sitio web 2</a>')
+  })
+
+  it('escapes markup in supplied descriptions', async () => {
+    const html = await render({ description: '<em>Fixture text</em>' })
+    expect(html).toContain('&lt;em&gt;Fixture text&lt;/em&gt;')
+  })
+
+  it('resolves a supplied local asset through Astro Image', async () => {
+    const html = await render({ image: { url: '/src/assets/branding/arc26-logo.png', alt: 'Fixture asset' } })
+    expect(html).toContain('<img')
+    expect(html).toContain('alt="Fixture asset"')
+    expect(html).toMatch(/width="\d+"/)
+    expect(html).toMatch(/height="\d+"/)
+    expect(html).not.toContain('src="/src/assets/')
+  })
+
+  it('fails clearly rather than silently displaying a broken supplied image', async () => {
+    await expect(render({ image: { url: '/src/assets/missing.jpg', alt: '' } }))
+      .rejects.toThrow('Artist image does not exist in src/assets: /src/assets/missing.jpg')
+  })
+})

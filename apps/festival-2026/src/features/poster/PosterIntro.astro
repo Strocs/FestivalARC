@@ -1,0 +1,40 @@
+---
+import PosterInformation from './PosterInformation.astro'
+import type { PosterRange } from './poster'
+import type { SlotRect } from './poster-grid'
+
+type Placement = Partial<Record<PosterRange, SlotRect>>
+interface Props extends Placement {
+  titleExtension?: Placement
+  informationId?: string
+  titleExtensionId?: string
+}
+const { mobile, tablet, desktop, titleExtension, informationId, titleExtensionId } = Astro.props
+---
+
+<PosterInformation {mobile} {tablet} {desktop} {informationId} class='z-3'>
+  <header class='my-auto px-4 py-4 md:px-0'>
+    <div class='@container space-y-8'>
+    <div
+      role='group'
+      class='text-foreground font-mono text-[length:clamp(1rem,calc(0.75rem+3cqw),2.5rem)] font-semibold leading-none md:text-[length:clamp(1rem,calc(0.75rem+6cqw),2.5rem)]'
+      aria-label='28 y 29 de noviembre de 2026'>
+      <time datetime='2026-11-28'>28.11</time><br />
+      <time datetime='2026-11-29'>29.11</time>
+    </div>
+
+    <h1
+      id='page-title'
+      class='text-foreground w-full font-sans text-[length:clamp(2rem,calc(0.35rem+15.8cqw),9rem)] font-bold leading-[0.9] tracking-tighter [overflow-wrap:anywhere] md:w-[133%] md:text-[length:clamp(2rem,calc(0.5rem+22cqw),7rem)]'
+      aria-label='El arte de habitar la ciudad'>
+      <span class='block md:w-3/4'
+        >EL <span class='text-[#5ce1e6]'>ARTE</span></span
+      >
+      <span class='block'>DE HABITAR</span>
+      <span class='block md:w-3/4'>LA</span>
+      <span class='block text-[#e50070] md:w-3/4'>CIUDAD</span>
+    </h1>
+    </div>
+  </header>
+</PosterInformation>
+{titleExtension && <PosterInformation {...titleExtension} informationId={titleExtensionId} aria-hidden='true' />}

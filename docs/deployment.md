@@ -1,18 +1,22 @@
 # Deployment
 
-FestivalARC has one Vercel deployment. Vercel runs the root build, which composes the selected active publication and archives into `.output`; it does not deploy an app directory directly.
+FestivalARC has one Vercel deployment. Vercel runs a dedicated root build profile that composes the active publication and archives into `.output`; it does not deploy an app directory directly.
 
 ## Vercel contract
 
-`vercel.json` is intentionally minimal:
+`vercel.json` configures a static build and its routing:
 
 | Setting | Value |
 | --- | --- |
-| Build command | `pnpm build` |
+| Build command | `pnpm build:vercel` |
 | Output directory | `.output` |
 | Framework | `null` |
 
 Do not change the Vercel output directory to an individual app's `dist/` directory. The root artifact contains the active site, archives, and distribution-owned global files.
+
+For ARC2026, `build:vercel` packages the 24 prerendered poster variants and the three default documents as flat `.html` files under `poster-variants/`. The defaults for `/`, `/musica`, and `/artes-escenicas` move too: leaving a matching filesystem page would take precedence over the rewrites. The ordered rules match both `dia` and `orden` first, then either recognized non-default filter alone, then the default document. Missing, default, and unrecognized values fall back independently. No middleware or function is used.
+
+The sitemap contains the public routes, not the internal destinations. Direct `/poster-variants/*` requests receive `X-Robots-Tag: noindex, follow`. Keep the documents and the matching rules in sync; the focused `pnpm --filter @festivalarc/distribution test src/vercel.test.ts` test checks them together.
 
 ## Build and composition flow
 
@@ -33,7 +37,7 @@ The distribution runner:
 7. Writes `.distribution-manifest.json` with the configuration digest and file ownership/hash data.
 8. Atomically replaces `.output` with the composed staging tree.
 
-`pnpm turbo run build` runs the workspace `build` tasks that are defined in package manifests. The explicit root composition entrypoint for deployment is `pnpm build`.
+`pnpm turbo run build` runs the workspace `build` tasks that are defined in package manifests. Use `pnpm build` for local composition and `pnpm build:vercel` for the Vercel artifact. Both replace `.output` and write its matching `.distribution-manifest.json`; only the Vercel profile relocates the three default documents.
 
 The current selection is:
 
@@ -42,8 +46,9 @@ The current selection is:
 | `festival-2026` | active results | `/` |
 | `festival-2023` | final archive | `/ediciones/2023` |
 | `festival-2024` | final archive | `/ediciones/2024` |
+| `festival-2025` | final archive | `/ediciones/2025` |
 
-Change the selection only in `editions.config.ts`. See [Annual publishing](annual-publishing.md) for calls-to-final operations and [Adding an app](adding-an-app.md) for the app contract.
+Change the publication selection only in `editions.config.ts`. When retiring ARC2026 as the active publication, also retire or update its Vercel poster routing and packaging; the current deployment profile requires `festival-2026` at the root. See [Annual publishing](annual-publishing.md) for calls-to-final operations and [Adding an app](adding-an-app.md) for the app contract.
 
 ## Pre-deployment checks
 
@@ -55,7 +60,9 @@ pnpm test
 pnpm turbo run build
 pnpm build
 pnpm --filter @festivalarc/distribution test
+node --test scripts/home-redirect.test.mjs
 pnpm run test:e2e
+pnpm build:vercel
 ```
 
 The end-to-end suite serves `.output` at port 4173. Run it after the composed build, not against an individual app output.
@@ -73,8 +80,9 @@ find .output -maxdepth 2 -type f | sort
 
 Confirm at minimum:
 
-- `.output/index.html` exists for the active publication.
-- Archive output exists under `ediciones/2023/` and `ediciones/2024/`.
+- After `pnpm build`, `.output/index.html`, `.output/musica/index.html`, and `.output/artes-escenicas/index.html` exist for local preview.
+- After `pnpm build:vercel`, none of those three files exists; every rewrite destination in `vercel.json` exists, including the three defaults.
+- Archive output exists in both profiles under `ediciones/2023/`, `ediciones/2024/`, and `ediciones/2025/`.
 - `.output/404.html`, `.output/robots.txt`, `.output/sitemap-index.xml`, and the sitemap shard exist.
 - `.distribution-manifest.json` has the expected configuration digest and lists distribution ownership for global files.
 - The artifact contains no calls archive directory or calls-only routes after a calls-to-final replacement.

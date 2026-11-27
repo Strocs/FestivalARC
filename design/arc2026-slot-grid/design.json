@@ -1,0 +1,21 @@
+{
+  "title": "ARC 2026 — la grilla del afiche",
+  "brief": "Corrección fiel al afiche: contenido solamente, diez columnas, escalonado fijo 3/2, título original y 46 nombres estáticos. Sin navbar, filtros, footer ni interacción.",
+  "feature": "odd/tasks/arc2026-slot-grid.md",
+  "artboards": [
+    {
+      "file": "02-poster-grid.html",
+      "title": "Afiche — contenido y escalonado 3/2",
+      "tradeoff": "Prioriza fidelidad a la referencia y nombres de tamaño constante; interactividad y layout móvil quedan fuera de esta pasada.",
+      "width": 1920,
+      "height": 3900
+    },
+    {
+      "file": "01-motif-library.html",
+      "title": "Repertorio gráfico — siete familias, once variantes",
+      "tradeoff": "Permite cotejar cada reconstrucción con el afiche; el raster no sustituye los originales vectoriales.",
+      "width": 1440,
+      "height": 1700
+    }
+  ]
+}

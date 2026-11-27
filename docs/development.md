@@ -56,6 +56,20 @@ pnpm test
 
 These root scripts run each workspace package's `type` or `test` script when present.
 
+For ARC2026 alone, run `pnpm --filter festival-2026 type`. It uses `astro check` to check TypeScript and Astro modules, including `.astro` imports that standalone `tsc` cannot resolve.
+
+### Shared lint
+
+Run ESLint from the repository root:
+
+```bash
+pnpm lint
+```
+
+`pnpm lint` checks the full repository; use `pnpm exec eslint apps/festival-2026/src` to check only the active app. The root `eslint.config.js` owns the shared rules and dependencies. It parses TypeScript and JSX, applies Astro's recommended rules, rejects debugger statements, and checks JSX keys and duplicate props. It does not enable type-aware or formatting rules, run autofix, or replace `pnpm type` and `pnpm build`.
+
+Generated builds, dependency directories, caches, browser reports, output captures, and local references are excluded. Legacy app-local ESLint dependencies/configuration remain untouched; the root command uses the shared flat configuration for every edition.
+
 Run the distribution package tests directly when changing composition behavior:
 
 ```bash
@@ -70,7 +84,7 @@ Run all workspace build tasks that expose a `build` script:
 pnpm turbo run build
 ```
 
-Build the selected active publication and archives, and compose the deployable site:
+Build the selected active publication and archives, and compose the local preview site:
 
 ```bash
 pnpm build
@@ -128,7 +142,7 @@ Preview the composed root artifact with the repository's Python server:
 pnpm preview
 ```
 
-It serves `.output` at `http://localhost:4173`. For an individual app, use that app's `preview` script after building it; the 2024 script builds before previewing, while the other app scripts expect an existing app build.
+It serves `.output` at `http://localhost:4173`. Use `pnpm build` before running preview. The Python server does not emulate Vercel query rewrites: direct requests to the public routes serve the default document, and filters apply in the browser. To inspect prerendered variants locally, open their build paths, for example `/poster-variants/music/saturday-time/`. The Vercel-only `pnpm build:vercel` replaces `.output` with a different layout; rerun `pnpm build` to restore local preview or E2E. For an individual app, use that app's `preview` script after building it; the 2024 script builds before previewing, while the other app scripts expect an existing app build.
 
 ## Generated directories and files
 
@@ -138,7 +152,7 @@ Do not edit or manually compose generated output.
 | --- | --- |
 | `apps/*/dist/` | Per-app fallback build output when `DISTRIBUTION_OUTPUT_DIR` is not set |
 | `apps/*/.astro/` | Astro-generated project state; tracked by the Turbo build task's output definition |
-| `.output/` | Final composed site served by preview and deployed to Vercel |
+| `.output/` | Composed site; uses the local layout after `pnpm build` and the Vercel routing layout after `pnpm build:vercel` |
 | `.distribution-manifest.json` | Composition manifest with configuration digest, file owners, sizes, and SHA-256 values |
 | `.distribution-build-*/` and `..output-staging-*/` | Temporary distribution staging directories; removed after the build |
 

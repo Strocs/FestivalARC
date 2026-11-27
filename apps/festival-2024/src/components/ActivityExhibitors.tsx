@@ -1,4 +1,5 @@
 import type { Exhibitors } from '@cTypes/types'
+import type { JSX } from 'react'
 
 interface Props {
   exhibitors: Exhibitors[] | undefined

@@ -1,0 +1,28 @@
+{
+  "title": "ARC 2026 — propuestas de ritmo y jerarquía",
+  "brief": "Compare three proposal-only spatial directions using the same supplied artwork, palette and approved responsive frame. Human selection gates app implementation.",
+  "feature": "odd/tasks/arc2026-prototype.md",
+  "artboards": [
+    {
+      "file": "01-offset-mosaic.html",
+      "title": "Mosaico desplazado",
+      "tradeoff": "Campo continuo y equilibrado; las fichas son más pequeñas que en las otras propuestas.",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "02-editorial-clusters.html",
+      "title": "Grupos editoriales",
+      "tradeoff": "Agrupación más clara y retratos mayores; descubrimiento menos espontáneo.",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "03-open-rhythm.html",
+      "title": "Ritmo abierto",
+      "tradeoff": "Más protagonismo del retrato y espacio negativo intencional; mosaico menos continuo.",
+      "width": 1440,
+      "height": 1000
+    }
+  ]
+}

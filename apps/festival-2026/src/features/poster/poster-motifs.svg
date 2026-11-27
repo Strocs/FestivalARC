@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<!-- Poster-derived reconstructions, not original vector artwork. Source: refs/afiche-diseño.jpeg. -->
+<defs>
+<symbol id="chevrons-right" viewBox="0 0 100 100"><g style="--ground:#ff64cf"><rect width="100" height="100" fill="#ff64cf"/><path fill="#ff008a" fill-rule="evenodd" d="M0 0L50 50 0 100ZM50 0L100 50 50 100Z"/></g></symbol>
+<symbol id="chevrons-left" viewBox="0 0 100 100"><g style="--ground:#ff008a"><rect width="100" height="100" fill="#ff008a"/><path fill="#ff64cf" fill-rule="evenodd" d="M50 0L0 50 50 100ZM100 0L50 50 100 100Z"/></g></symbol>
+<symbol id="lightning" viewBox="0 0 100 100">
+  <rect width="100" height="100" fill="#ff008a"/>
+  <!-- Straight-sided reconstruction: do not trace the source JPEG's pixel steps. -->
+  <path fill="#00ffff" d="M20 0H40L20 50ZM60 0H80L60 50ZM40 50V100H20ZM80 50V100H60Z"/>
+</symbol>
+<symbol id="rosette-yellow" viewBox="0 0 100 100"><g style="--ground:#ff64cf"><rect width="100" height="100" fill="#ff64cf"/><g fill="#f8e701"><circle cx="50" cy="50" r="25"/><path d="M3 25A22 22 0 0 1 25 3V25ZM25 25A25 25 0 0 1 75 25ZM75 3A22 22 0 0 1 97 25H75ZM25 25A25 25 0 0 0 25 75ZM75 25A25 25 0 0 1 75 75ZM3 75H25V97A22 22 0 0 1 3 75ZM25 75A25 25 0 0 0 75 75ZM75 75H97A22 22 0 0 1 75 97Z"/></g></g></symbol>
+<symbol id="rosette-pink" viewBox="0 0 100 100"><g style="--ground:#ff64cf"><rect width="100" height="100" fill="#ff64cf"/><g fill="#ff008a"><circle cx="50" cy="50" r="25"/><path d="M3 25A22 22 0 0 1 25 3V25ZM25 25A25 25 0 0 1 75 25ZM75 3A22 22 0 0 1 97 25H75ZM25 25A25 25 0 0 0 25 75ZM75 25A25 25 0 0 1 75 75ZM3 75H25V97A22 22 0 0 1 3 75ZM25 75A25 25 0 0 0 75 75ZM75 75H97A22 22 0 0 1 75 97Z"/></g></g></symbol>
+<symbol id="rosette-cyan" viewBox="0 0 100 100"><g style="--ground:#00ffff"><rect width="100" height="100" fill="#00ffff"/><g fill="#ff008a"><circle cx="50" cy="50" r="25"/><path d="M3 25A22 22 0 0 1 25 3V25ZM25 25A25 25 0 0 1 75 25ZM75 3A22 22 0 0 1 97 25H75ZM25 25A25 25 0 0 0 25 75ZM75 25A25 25 0 0 1 75 75ZM3 75H25V97A22 22 0 0 1 3 75ZM25 75A25 25 0 0 0 75 75ZM75 75H97A22 22 0 0 1 75 97Z"/></g></g></symbol>
+<symbol id="sparks" viewBox="0 0 100 100"><g style="--ground:#f8e701"><rect width="100" height="100" fill="#f8e701"/><g fill="#ff64cf"><path d="M0 50Q25 50 25 0Q25 50 50 50Q25 50 25 100Q25 50 0 50ZM50 50Q75 50 75 0Q75 50 100 50Q75 50 75 100Q75 50 50 50Z"/></g></g></symbol>
+<symbol id="star" viewBox="0 0 100 100"><g style="--ground:#ff008a"><rect width="100" height="100" fill="#ff008a"/><g fill="#ff64cf"><path d="M50 2 57 34 82 14 66 40 98 42 68 55 91 74 61 65 66 97 50 70 34 97 39 65 9 74 32 55 2 42 34 40 18 14 43 34Z"/></g></g></symbol>
+<symbol id="orbits-rose" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ff64cf"/>
+  <circle cx="50" cy="50" r="48" fill="#ff008a"/>
+  <!-- Four equal quadrants with rounded tips and tighter shoulders; shared by both cyan contours. -->
+  <path id="orbits-rose-contour" fill="#ff64cf" d="M50 6C60 6 66 15 74 23C83 32 94 40 94 50C94 60 85 66 77 74C68 83 60 94 50 94C40 94 34 85 26 77C17 68 6 60 6 50C6 40 15 34 23 26C32 17 40 6 50 6Z"/>
+  <circle cx="50" cy="50" r="33" fill="#ff008a"/>
+  <use href="#orbits-rose-contour" transform="translate(50 50) scale(0.66) translate(-50 -50) rotate(90 50 50)"/>
+  <circle cx="50" cy="50" r="21" fill="#ff008a"/></symbol>
+<symbol id="orbits-cyan" viewBox="0 0 100 100"><rect width="100" height="100" fill="#00ffff"/>
+  <circle cx="50" cy="50" r="48" fill="#ff008a"/>
+  <!-- Four equal quadrants with rounded tips and tighter shoulders; shared by both cyan contours. -->
+  <path id="orbits-cyan-contour" fill="#00ffff" d="M50 6C60 6 66 15 74 23C83 32 94 40 94 50C94 60 85 66 77 74C68 83 60 94 50 94C40 94 34 85 26 77C17 68 6 60 6 50C6 40 15 34 23 26C32 17 40 6 50 6Z"/>
+  <circle cx="50" cy="50" r="33" fill="#ff008a"/>
+  <use href="#orbits-cyan-contour" transform="translate(50 50) scale(0.66) translate(-50 -50) rotate(90 50 50)"/>
+  <circle cx="50" cy="50" r="21" fill="#ff008a"/></symbol>
+<symbol id="rings" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ff008a"/>
+  <defs>
+    <!-- One concentric family, reused on both sides with matching radii and strokes. -->
+    <g id="poster-rings-family">
+      <circle cx="0" cy="0" r="35" stroke-width="0.7"/>
+      <circle cx="0" cy="0" r="42" stroke-width="1.3"/>
+      <circle cx="0" cy="0" r="49" stroke-width="1.9"/>
+      <circle cx="0" cy="0" r="56.5" stroke-width="2.5"/>
+      <circle cx="0" cy="0" r="64.5" stroke-width="3.2"/>
+      <circle cx="0" cy="0" r="73" stroke-width="3.8"/>
+      <circle cx="0" cy="0" r="82.5" stroke-width="4.4"/>
+      <circle cx="0" cy="0" r="92" stroke-width="5"/>
+    </g>
+  </defs>
+  <g transform="scale(0.469483568 0.492610837)" fill="none" stroke="#ff64cf" stroke-opacity="0.9">
+    <use href="#poster-rings-family" transform="translate(-1.5 102)"/>
+    <use href="#poster-rings-family" transform="translate(214.5 102)"/>
+  </g></symbol>
+</defs>
+</svg>

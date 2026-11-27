@@ -1,0 +1,21 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import PosterGrid from '../../../features/poster/PosterGrid.astro'
+import { categories, type CategoryView } from '../../../features/artists/categories'
+import { posterVariantStates, type PosterFilterState } from '../../../features/poster/poster-filter-url'
+
+export function getStaticPaths() {
+  const scopes = [{ scope: 'home' }, ...categories.filter(({ key }) => key === 'music' || key === 'stage')
+    .map(category => ({ scope: category.key, category }))]
+  return scopes.flatMap(({ scope, ...props }) => posterVariantStates.map(filters => ({
+    params: { scope, variant: `${filters.day}-${filters.order}` },
+    props: { ...props, filters },
+  })))
+}
+
+interface Props { category?: CategoryView; filters: PosterFilterState }
+const { category, filters } = Astro.props
+---
+<Layout title={category && `${category.name} | Festival ARC 2026`} canonicalPath={category?.path ?? '/'}>
+  <PosterGrid {category} {filters} />
+</Layout>

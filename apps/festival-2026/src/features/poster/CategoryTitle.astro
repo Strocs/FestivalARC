@@ -1,0 +1,31 @@
+---
+import PosterInformation from './PosterInformation.astro'
+import { createCategoryTitle } from './category-title'
+
+interface Props { name: string }
+const { name } = Astro.props
+const title = createCategoryTitle(name)
+---
+<h1 id='page-title' class='sr-only'>{name}</h1>
+{title.lines.map((line, index) => {
+  const block = title.information[index]
+  const fontStyle = (['mobile', 'tablet', 'desktop'] as const).map(range =>
+    `--${range}-title-size:${100 * line.fontUnits[range] / (block.positions[range]!.width * 160)}cqw;--${range}-title-height:${100 * 152 * block.positions[range]!.height / (block.positions[range]!.width * 160)}cqw`,
+  ).join(';')
+  return <PosterInformation {...block.positions} informationId={block.id} class='z-3' aria-hidden='true'>
+    <div style={fontStyle} class:list={[
+      '@container flex min-h-[var(--mobile-title-height)] items-center px-4 md:min-h-[var(--tablet-title-height)] md:px-0 xl:min-h-[var(--desktop-title-height)]',
+      { 'pt-4': index === 0, 'pb-4': index === title.lines.length - 1 },
+    ]}>
+      <span class='text-foreground whitespace-nowrap font-sans text-[length:var(--mobile-title-size)] font-black uppercase leading-none tracking-tighter md:text-[length:var(--tablet-title-size)] xl:text-[length:var(--desktop-title-size)]'>
+        {line.text.split(/(creativo|DAZ|Arte(?=\.)|CO|escénicas)/gi).map(part => (
+          <span class:list={{
+            'text-primary': /^(creativo|Arte|escénicas)$/i.test(part),
+            'text-accent': /^(DAZ|CO)$/i.test(part),
+          }}>{part}</span>
+        ))}
+      </span>
+
+    </div>
+  </PosterInformation>
+})}

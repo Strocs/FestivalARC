@@ -1,0 +1,1593 @@
+{
+  "music": {
+    "name": "Música",
+    "participants": [
+      {
+        "id": "polter",
+        "name": "Polter",
+        "order": 1,
+        "disciplines": "musica",
+        "description": "Polter es una banda chilena formada en Ovalle a comienzos de los años 2000 por Iván Toro y Oscar Hauyon. Su propuesta cruza rock alternativo, electrónica y pop, consolidando una trayectoria proyectada desde la Región de Coquimbo hacia circuitos nacionales que incluyó el álbum debut homónimo Polter (2005, Sello Azul de la SCD), Moderno (2008, Feria Music), rotación audiovisual en señales como MTV Latino y Vía X, y presentaciones en diversos escenarios del país.\n\nTras editar el doble sencillo «Camanchaca / Tal Vez» en 2022, en 2026 Toro y Hauyon reactivan Polter en formato dúo combinando guitarras, voces, sintetizadores y secuencias electrónicas. Esta nueva etapa reúne su repertorio histórico con material reciente, incluyendo el sencillo «Siempre Fuiste Tú» y el compilatorio Esencial 2001-2026, que sintetiza 25 años de trayectoria.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "22:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/polter.webp",
+          "alt": "Polter"
+        },
+        "national": false,
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/polterchile/",
+          "spotify": "https://open.spotify.com/intl-es/artist/0Ib5T2tipzgV6BuoRy5FVW?si=Xh6TkD7dSwycctbhHUW8mg"
+        },
+        "youtubeVideoId": "piiK5twuq90"
+      },
+      {
+        "id": "nino-cohete",
+        "name": "Niño Cohete",
+        "order": 3,
+        "disciplines": "musica",
+        "description": "Agrupación surgida en Concepción en 2010, conocida por una propuesta que sus integrantes han denominado «pop silvestre». Su música combina melodías pop, recursos electrónicos y referencias al folclor, con letras e imágenes vinculadas a la naturaleza. Tras una primera etapa que concluyó en 2017, el grupo retomó su actividad en 2023, reafirmando su lugar en la escena independiente penquista.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "17:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/nino-cohete.webp",
+          "alt": "Niño Cohete"
+        },
+        "national": true,
+        "location": "Escenario Gobierno Regional",
+        "youtubeVideoId": "yYA2XkelDw0",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/ncohete",
+          "spotify": "https://open.spotify.com/intl-es/artist/00kBFCMv8iB3aMpHy043LO"
+        }
+      },
+      {
+        "id": "shicris",
+        "name": "Shicris",
+        "order": 5,
+        "disciplines": "musica",
+        "description": "ShiCris es un artista, instrumentista y productor chileno oriundo de Coquimbo. Su proyecto combina letras conscientes con ritmos enérgicos que viajan desde el rap y el funk hasta el folclor latinoamericano, pasando por la salsa y el pulso de las batucadas. Con influencias de Joe Vasconcellos y Vicente García, despliega un repertorio original sostenido en percusión latina en vivo y sección de vientos, abordando temáticas como el amor propio, la resiliencia, la amistad y la celebración.\n\nEn abril de 2025 publicó su álbum Bosque de Canciones, antecedido por los sencillos «Lito Chocolito» y «Sigue Así» y la sesión en vivo Recompensa. Su recorrido en vivo incluye haber teloneado a Joe Vasconcellos en el Teatro Centenario de La Serena, además de presentaciones en el Festival Día de la Juventud en la Plaza de Armas de Coquimbo y en carnavales culturales en Tierras Blancas, Paihuano, El Palqui y Los Andes.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "21:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/shicris.webp",
+          "alt": "Shicris"
+        },
+        "national": false,
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/shicris.cl/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5s468mFUjqdJaa1VfikhOT?si=1Zkl0ynOTBW5biWcLShZYA"
+        },
+        "youtubeVideoId": "4Yy_FtbM2k4"
+      },
+      {
+        "id": "javiera-mena",
+        "name": "Javiera Mena",
+        "order": 6,
+        "disciplines": "musica",
+        "description": "Javiera Mena es una de las figuras fundamentales del pop electrónico latinoamericano, con una carrera de dos décadas marcada por hits bailables, letras confesionales y una estética synth-pop inconfundible. Desde el lanzamiento de su influyente álbum debut Esquemas Juveniles (2006) —que en 2026 cumple veinte años—, pasando por discos esenciales como Mena (2010), Otra Era (2014) y Nocturna (2022), ha llevado su propuesta a escenarios internacionales de América y Europa.\n\nEn su etapa actual, la cantante, compositora y productora chilena continúa expandiendo su universo sonoro con su más reciente álbum de estudio Inmersión (2025) y una gira que celebra los veinte años de Esquemas Juveniles, combinando sus nuevas composiciones con los clásicos que definieron a toda una generación.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "23:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/javiera-mena.webp",
+          "alt": "Javiera Mena"
+        },
+        "national": true,
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/javieramena/",
+          "spotify": "https://open.spotify.com/intl-es/artist/6c0qylj1D1gqcUUN2P8Ofp"
+        }
+      },
+      {
+        "id": "dulce-y-agraz",
+        "youtubeVideoId": "C9Eh-IViMw0",
+        "name": "Dulce y Agraz",
+        "order": 8,
+        "disciplines": "musica",
+        "description": "Dulce y Agraz es el proyecto musical de la cantante, compositora y poeta penquista Daniela González, una de las voces más distintivas de la escena pop independiente chilena. Con una propuesta que cruza el pop alternativo, la canción de autor y arreglos atmosféricos cargados de sensibilidad, ha construido un repertorio íntimo y emotivo desde su EP debut Dulce y Agraz (2015) y álbumes como Trino (2018) y Albor (2022), presentándose en destacados escenarios de Chile y México.\n\nTras lanzar su disco Vida Mía (2025) y adelantar nueva música con sencillos como «Todo» en 2026, la artista continúa expandiendo su universo poético y sonoro en vivo con un espectáculo que combina sus estrenos recientes junto a canciones emblemáticas como «Súbitamente» y «Más».",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "17:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/dulce-y-agraz.webp",
+          "alt": "Dulce y Agraz"
+        },
+        "national": true,
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/dulceyagrazmusic/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5cD6bctPV8wtKpO4o8ZtTQ"
+        }
+      },
+      {
+        "id": "freshki",
+        "name": "Freshki",
+        "order": 9,
+        "disciplines": "musica",
+        "description": "Freshki nació en 2022 en La Serena como un proyecto solista independiente que cruza R&B, hip hop y estética lo-fi, ampliando luego su paleta hacia el bedroom pop, el indie y el jazz. Despliega dos propuestas en vivo: un formato live set con beats y secuencias, y un formato banda enfocado en la improvisación sobre bases instrumentales.\n\nSu discografía incluye el álbum homónimo Freshki (2022), el EP en vivo Fresh Live! (2024), el mixtape Pulpa (2025) y el LP Luces del Tártaro (2026), trabajo con el que estrenó nueva formación y estética. En escena ha participado en instancias como el Festival Escandalosos, el Festival ARC (en el Espacio Estelar de IMREC), el Festival Astromúsica y Sesiones en el Jardín en Ovalle, sumando además presentaciones en La Serena y Santiago.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "17:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/freshki.webp",
+          "alt": "Freshki"
+        },
+        "national": false,
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/freshkivel/",
+          "spotify": "https://open.spotify.com/intl-es/artist/4NTLFGANmtpQZw3PS5GSfE?si=aXsb2X-2TaSkqs_j_rJvDw"
+        }
+      },
+      {
+        "id": "gepe",
+        "youtubeVideoId": "-uQPd8wtm1M",
+        "name": "Gepe",
+        "order": 10,
+        "disciplines": "musica",
+        "description": "Gepe es uno de los nombres centrales del pop contemporáneo chileno, con una trayectoria de más de dos décadas que cruza el folclor andino, la canción de autor y los ritmos latinoamericanos con arreglos modernos y bailables. Desde álbumes fundamentales como Gepinto (2005), Audiovisión (2010), GP (2012) y Estilo Libre (2015), ha construido un cancionero transversal que lo ha llevado a escenarios de toda América y Europa, consolidándose como un referente clave de la música chilena actual.\n\nEn 2026 presenta Oro, trabajo discográfico con el que celebra las dos décadas de su debut Gepinto tras el ciclo de su álbum Undesastre, desplegando un espectáculo de alta energía que entrelaza sus lanzamientos recientes con clásicos infaltables de su repertorio como «Fruta y Té», «Hablar de Ti» y «Hambre».",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "22:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/gepe.webp",
+          "alt": "Gepe"
+        },
+        "national": true,
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/gepegepegepe/",
+          "spotify": "https://open.spotify.com/intl-es/artist/1fHGzTSloWCtrlKfbLNVhM"
+        }
+      },
+      {
+        "id": "javier-barria",
+        "name": "Javier Barría",
+        "order": 12,
+        "disciplines": "musica",
+        "description": "Javier Barría es un cantautor, multiinstrumentista y productor musical chileno reconocido como una de las voces más prolíficas y versátiles de la escena independiente contemporánea. Su propuesta transita con naturalidad entre el folk, el pop de autor, la canción acústica y la experimentación electrónica, destacando por un trabajo minucioso en los arreglos y la producción sonora.\n\nA lo largo de más de dos décadas de carrera ha publicado una extensa discografía solista que incluye títulos fundamentales como El día después, Estación Pirque, Folclor y Estereotipo, además de colaborar como productor y arreglista con destacados exponentes de la música chilena. En vivo, su espectáculo combina cercanía interpretativa, destreza instrumental y una aguda mirada poética sobre la memoria y lo cotidiano.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "18:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/javier-barria.webp",
+          "alt": "Javier Barría"
+        },
+        "national": true,
+        "location": "Terraza Cordovez",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/javierbarria/",
+          "spotify": "https://open.spotify.com/intl-es/artist/2v63mEwpd09o5Oo3ALq0l6"
+        },
+        "youtubeVideoId": "13GQ3ea-EwY"
+      },
+      {
+        "id": "fernando-milagros",
+        "youtubeVideoId": "X4gZGFimSz4",
+        "name": "Fernando Milagros",
+        "order": 15,
+        "disciplines": "musica",
+        "description": "Fernando Milagros es uno de los cantautores y compositores más prolíficos de la escena independiente chilena, con una carrera que transita entre el folk rock, el pop alternativo y la experimentación rítmica latinoamericana. Desde su debut Vacaciones en el Patio de Mi Casa (2007) y discos fundamentales como Por Su Atención Gracias (2009), San Sebastián (2011), Nuevo Sol (2014) y Obsydiana (2022), ha consolidado una identidad sonora personal que lo ha llevado a escenarios de América y Europa.\n\nEn su etapa reciente, tras celebrar las dos décadas desde el inicio de su proyecto solista y presentar material nuevo junto a lanzamientos como Antología y sencillos de estudio, regresa a los escenarios con un espectáculo que cruza sus composiciones actuales con canciones esenciales de su repertorio como «Reina Japonesa», «Carnaval» y «Piedra Angular».",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "22:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/fernando-milagros.webp",
+          "alt": "Fernando Milagros"
+        },
+        "national": true,
+        "location": "Balcones del Arzobispado",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/fmilagros/",
+          "spotify": "https://open.spotify.com/intl-es/artist/73swvRHLV2DJfD57xx5CBN"
+        }
+      },
+      {
+        "id": "jazztacuatico",
+        "youtubeVideoId": "0-7UusJtwOE",
+        "name": "Jazztacuatico",
+        "order": 17,
+        "disciplines": "musica",
+        "description": "Jazztacuático es una banda de la Región de Coquimbo formada en 2023 que desarrolla una propuesta desde el jazz y la fusión con foco en la temática socioambiental. Sus composiciones abordan la crisis hídrica y la defensa de los recursos naturales —con especial énfasis en el agua—, buscando generar conciencia a través de una sonoridad expresiva inspirada en la fuerza de la naturaleza.\n\nEn su recorrido por la escena regional destaca su EP Sequía en el Elqui, trabajo que profundiza en la urgencia hídrica del territorio, además de presentaciones en instancias locales como el festival Astromúsica y el Festival de Blues & Jazz del Elqui en La Serena.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "20:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/jazztacuatico.webp",
+          "alt": "Jazztacuatico"
+        },
+        "national": false,
+        "location": "Terraza Cordovez",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/jazztacuatico/",
+          "spotify": "https://open.spotify.com/intl-es/artist/2sEtRKW8ZAkGtbVV8IhpoE?si=51rtMunjRIKZ0BH4Vr8ehw"
+        }
+      },
+      {
+        "id": "rosario-alfonso",
+        "name": "Rosario Alfonso",
+        "order": 18,
+        "disciplines": "musica",
+        "description": "Rosario Alfonso es una cantautora, compositora y artista visual chilena que se ha consolidado como una de las voces más sensibles y luminosas de la nueva canción chilena. Con un estilo íntimo que entrelaza el folk, el bolero, el pop alternativo y arreglos acústicos de gran delicadeza, ha cautivado al público tanto en su faceta solista como en su paso por el colectivo Uva Robot, debutando con el elogiado álbum Lo Primero (2018) y continuando con De Canciones Tristes y Otras Sutilezas (2022).\n\nTras lanzar su tercer álbum de estudio Cómo Quieres Que Te Quiera (2025) y continuar presentando sus canciones en escenarios de Chile y Latinoamérica, la artista despliega un espectáculo cercano y emotivo que combina sus composiciones recientes con piezas queridas de su repertorio como «Dejar de Pensar» y «Negación».",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "16:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/rosario-alfonso.webp",
+          "alt": "Rosario Alfonso"
+        },
+        "national": true,
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/rosarioalfonsocanta/",
+          "spotify": "https://open.spotify.com/intl-es/artist/7mirwC8eaTt7tswix93TFZ"
+        }
+      },
+      {
+        "id": "duerme-y-cae",
+        "youtubeVideoId": "Y0jLaJQqLHI",
+        "name": "Duerme y Cae!",
+        "order": 20,
+        "disciplines": "musica",
+        "description": "Duerme & Cae! es un proyecto de pop alternativo de la Región de Coquimbo integrado por Sebastián Olivares y Sofía Cortés. Su música combina guitarras, sintetizadores y melodías influenciadas por el rock alternativo y el pop contemporáneo, transitando entre la nostalgia, la intensidad emocional y el pulso bailable a partir de relatos cotidianos.\n\nEn su discografía destacan el EP Tienes Todo Menos Alma (2024) y sencillos como «9c» y «Fantasmas» (2026), lanzamiento con el que emprendieron su primera gira nacional por distintas ciudades del país, consolidando su presencia tras pasar también por escenarios como el festival Astromúsica.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "18:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/duerme-y-cae.webp",
+          "alt": "Duerme y Cae!"
+        },
+        "national": false,
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/duermeycae/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5RMewTvifqaXzb2uFHPNHu?si=HqeuCNOdRguhiv7og_8rOg"
+        }
+      },
+      {
+        "id": "claudio-valenzuela",
+        "youtubeVideoId": "QTA1EiRaUjo",
+        "name": "Claudio Valenzuela",
+        "order": 21,
+        "disciplines": "musica",
+        "description": "Claudio Valenzuela es una de las voces más emblemáticas del rock alternativo chileno y latinoamericano, reconocido internacionalmente como vocalista, guitarrista y compositor principal de Lucybell. Desde el debut de la banda con Peces (1995) y álbumes fundamentales como Viajar (1996) y Amanece (2000), ha desarrollado en paralelo una sólida carrera solista marcada por atmósferas introspectivas, texturas electrónicas y guitarras envolventes, plasmada en discos como Gemini (2009), Simple (2011) y Nocturnal (2014).\n\nEn su etapa actual, tras el receso indefinido anunciado por Lucybell luego de su gira de cierre, el músico retoma con fuerza su faceta individual y nueva música de estudio, presentando en vivo un espectáculo íntimo y poderoso que combina sus composiciones solistas con himnos esenciales de su trayectoria.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "21:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/claudio-valenzuela.webp",
+          "alt": "Claudio Valenzuela"
+        },
+        "national": true,
+        "location": "Balcones del Arzobispado",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/claudiovalenzuelaoficial/",
+          "spotify": "https://open.spotify.com/intl-es/artist/20XFyUIDpgHen9Lxmx6VhE"
+        }
+      },
+      {
+        "id": "fernando-ubiergo",
+        "youtubeVideoId": "FwYu70nkKsI",
+        "name": "Fernando Ubiergo",
+        "order": 23,
+        "disciplines": "musica",
+        "description": "Fernando Ubiergo es uno de los cantautores y compositores más trascendentes de la música popular chilena e iberoamericana, con una trayectoria de casi cinco décadas marcada por una profunda sensibilidad poética y narrativa. A lo largo de su carrera ha obtenido algunos de los máximos galardones de la canción hispana, entre ellos el primer lugar en la Competencia Internacional del Festival de Viña del Mar (1978, con «El tiempo en las bastillas»), el Festival de la OTI (1984, con «Agualuna») y el Festival de Benidorm (1982, con «Yo pienso en ti»), además de ser reconocido como Figura Fundamental de la Música Chilena por la SCD y recibir distinciones a su trayectoria como el Premio Presidente de la República.\n\nEn plena actividad creativa, el músico continúa recorriendo escenarios de todo el país repasando su vasto cancionero —que incluye álbumes esenciales y clásicos intergeneracionales como «Cuando agosto era 21», «Un café para Platón» y «Los ojos de Rodrigo»—, manteniendo vigente un repertorio que forma parte del patrimonio cultural de Chile",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "16:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/fernando-ubiergo.webp",
+          "alt": "Fernando Ubiergo"
+        },
+        "national": true,
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/fernandoubiergo/",
+          "spotify": "https://open.spotify.com/intl-es/artist/4o3U8RAOoLpRDFvqKoJYvA"
+        }
+      },
+      {
+        "id": "kalishe",
+        "name": "Kalishe",
+        "order": 24,
+        "disciplines": "musica",
+        "description": "Kalishe es un proyecto musical nacido en Las Rojas, comuna de La Serena, que define su propuesta como rap rururbano. Su sonido cruza el rap y el trip hop con elementos del jazz y el R&B, articulando los lenguajes de la música urbana con relatos del campo, el trabajo, los afectos, las memorias familiares y la vida comunitaria de la Región de Coquimbo.\n\nEn vivo, la agrupación despliega voz, guitarra, bajo, teclados, trompeta, secuencias y visuales, dando forma a una puesta en escena envolvente. En agosto de 2026 publicó el EP Extrañamientos, trabajo que profundiza en su búsqueda por crear música contemporánea desde las historias y sensibilidades del territorio.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "16:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/kalishe.webp",
+          "alt": "Kalishe"
+        },
+        "national": false,
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/kalishe.es/",
+          "spotify": "https://open.spotify.com/intl-es/artist/0bXKIgeSG5KohnSiQcJhmf?si=oic_x9dSSVeyIY-9u9b32w"
+        },
+        "youtubeVideoId": "Gm2NzEi03JE"
+      },
+      {
+        "id": "pedropiedra",
+        "name": "Pedropiedra",
+        "order": 26,
+        "disciplines": "musica",
+        "description": "Pedro Subercaseaux García de la Huerta (Santiago, 1978), conocido artísticamente como Pedropiedra, es un cantautor, compositor y multiinstrumentista chileno con más de dos décadas de trayectoria en la escena independiente nacional. A lo largo de su carrera ha desarrollado un lenguaje propio que cruza el pop, el rock alternativo, el hip hop y los ritmos latinos.\n\nCon seis álbumes de estudio en solitario y una activa participación en diversos proyectos musicales paralelos, su propuesta destaca por combinar arreglos rítmicos y melodías directas con letras cargadas de humor, ironía y aguda observación cotidiana.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "19:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/pedropiedra.webp",
+          "alt": "Pedropiedra"
+        },
+        "national": true,
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/pedropiedraoficial/",
+          "spotify": "https://open.spotify.com/intl-es/artist/0WCbmGMzwvFFx0JT8k7THP"
+        },
+        "youtubeVideoId": "JE0jz9oRkZY"
+      },
+      {
+        "id": "weinkeys-blackbeat",
+        "youtubeVideoId": "6AOy8Vo2LBQ",
+        "name": "Weinkeys + Blackbeat",
+        "order": 27,
+        "disciplines": "musica",
+        "description": "Weinkeys + Blackbeat es una colaboración musical de hip hop, funk, soul, R&B y jazz oriunda de la Región de Coquimbo. El proyecto une al compositor, productor y tecladista Weinkeys con la banda Blackbeat para llevar al escenario los trabajos discográficos Ronda (álbum) y 12D95 (EP), sintetizando una búsqueda creativa centrada en los teclados, el groove y la producción contemporánea.\n\nFormado en la Universidad de La Serena, Weinkeys cuenta con más de dos décadas de trayectoria en la escena regional, donde destaca como fundador, compositor y tecladista de la banda serenense FonkMachine (2012-2023), además de su labor como productor musical, compositor para proyectos audiovisuales, docente y ganador del segundo lugar en el Concurso Nacional de Composición Luis Advis 2012.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "20:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/weinkeys-blackbeat.webp",
+          "alt": "Weinkeys + Blackbeat"
+        },
+        "national": false,
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/weinkeyss/",
+          "spotify": "https://open.spotify.com/intl-es/album/7MQIEtf0sj0tbsUWsZlD7F"
+        }
+      },
+      {
+        "id": "nunez-briceno",
+        "name": "Núñez Briceño",
+        "order": 29,
+        "disciplines": "musica",
+        "description": "Núñez Briceño es el proyecto musical formado por el cantautor chileno Cristóbal Briceño (líder de Fother Muckers y Ases Falsos) junto a Gonzalo Núñez, enfocado en rescatar el repertorio clásico de la cumbia chilena y latinoamericana en formato de guitarra acústica y canto. Con un sonido cercano a la bohemia y a la tradición popular, la agrupación reinterpreta clásicos tropicales mediante popurrís cargados de calidez rítmica y camaradería.\n\nSu trabajo discográfico se cristalizó en el álbum Cumbias Guitarreadas (2018) y en una serie de entregas en formato medley tituladas desde «Combo Uno» hasta «Combo Seis» (editadas entre 2017 y 2021 a través de CBA Discos), donde versionan himnos bailables como «El Galeón Español», «La Piragua» y «Pedacito de Mi Vida»",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "20:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/nunez-briceno.webp",
+          "alt": "Núñez Briceño"
+        },
+        "national": true,
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/nunez_briceno/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5suhUD88dg0N7wHId8xUuX"
+        }
+      },
+      {
+        "id": "stendhal",
+        "name": "Stendhal",
+        "order": 31,
+        "disciplines": "musica",
+        "description": "Originaria de La Serena, Stendhal es una banda chilena que canaliza emociones intensas a través de paisajes sonoros densos, melancólicos y etéreos. Influenciada por el metal alternativo, el alt-rock y el post-hardcore atmosférico, su propuesta busca construir una identidad donde la fragilidad emocional y la fuerza sonora coexistan sobre el escenario.\n\nDentro de la escena independiente de la Región de Coquimbo, la agrupación ha formado parte de diversas fechas y encuentros en vivo —pasando por escenarios locales como Calaca Bar y compartiendo cartel con proyectos regionales y nacionales—, consolidando un directo cargado de intensidad y atmósfera.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "17:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/stendhal.webp",
+          "alt": "Stendhal"
+        },
+        "national": false,
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/stendhal.banda/",
+          "spotify": "https://open.spotify.com/intl-es/artist/4pAFyj9RLmbGP6MfAGVjmv?si=cBwGv6-QTFC8Pw-bXWPj0g"
+        },
+        "youtubeVideoId": "NefPMTu5SIs"
+      },
+      {
+        "id": "jose-alfredo-fuentes",
+        "youtubeVideoId": "Gplnjtb6Syg",
+        "name": "José Alfredo Fuentes",
+        "order": 32,
+        "disciplines": "musica",
+        "description": "José Alfredo «Pollo» Fuentes es uno de los cantantes, compositores y animadores más icónicos de la música popular chilena, figura fundamental de la Nueva Ola desde su explosivo debut en 1966 con éxitos inmediatos como «Te Perdí» y «Dirladadá». Con casi seis décadas de trayectoria artística, ha dejado una huella imborrable en la historia cultural del país con clásicos transversales como «Era Solo un Chiquillo», «El Amor No Tiene Olvido» y «Con Mi Bombo y Mi Chin Chin», siendo distinguido como Figura Fundamental de la Música Chilena por la SCD y galardonado con el Premio a la Música Nacional Presidente de la República.\n\nEn plena vigencia sobre los escenarios, celebra los sesenta años de su debut artístico recorriendo Chile con un espectáculo lleno de nostalgia, carisma y cercanía, repasando los grandes himnos románticos y festivos de su cancionero ante distintas generaciones de público.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "18:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/jose-alfredo-fuentes.webp",
+          "alt": "José Alfredo Fuentes"
+        },
+        "national": true,
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/pollofuentesoficial/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5yrOkBwyi9ePzOYQX4V3iW"
+        }
+      },
+      {
+        "id": "last-whisper",
+        "name": "Last Whisper",
+        "order": 34,
+        "disciplines": "musica",
+        "description": "Originaria de La Serena, Last Whisper es una banda chilena de metal que cruza elementos del metalcore, el metal alternativo y el progresivo, consolidando una propuesta intensa y moderna dentro de la escena regional.\n\nSu trayectoria reciente incluye su participación en el festival Astro Música —en ruta hacia Rockódromo— y haber sido seleccionada para telonear a la banda alemana Rage. En el plano discográfico, tras lanzar los sencillos «Pray», «Gotta Go Fast» e «Inhuman», en febrero de 2026 publicó su álbum debut, Beyond.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "19:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/last-whisper.webp",
+          "alt": "Last Whisper"
+        },
+        "national": false,
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/lastwhisper_cl/",
+          "spotify": "https://open.spotify.com/intl-es/artist/2dhgpwzEwahuRRxii0AXQy?si=80GSQN2BQI2gSBPT3AfxYQ"
+        },
+        "youtubeVideoId": "sBG-nnHF9Bs"
+      },
+      {
+        "id": "inundaremos",
+        "name": "Inundaremos",
+        "order": 35,
+        "disciplines": "musica",
+        "description": "Inundaremos es una banda chilena de indie rock e indie pop formada en Santiago en 2021. Con una identidad artística marcada por el liderazgo femenino, la agrupación ha evolucionado desde una delicadeza acústica hacia una propuesta más frontal, eléctrica y cargada de carácter.   En su más reciente lanzamiento, \"tanquemante\", despliegan un sonido donde conviven la distorsión y la melodía, integrando guitarra eléctrica, batería y sintetizadores con instrumentos como cello, saxofón y charango. Su propuesta ha sido destacada este 2026 en playlists como EQUAL, ChileMúsica y Ruidosa, además de plataformas especializadas como Rate Your Music.",
+        "youtubeVideoId": "PjAEL4nk_Jo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/inundadores/",
+          "spotify": "https://open.spotify.com/intl-es/artist/7ttDbtyzbPTrvAfdfd4aSS"
+        },
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "15:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/inundaremos.webp",
+          "alt": "Inundadores"
+        },
+        "national": true,
+        "location": "Escenario Gobierno Regional"
+      },
+      {
+        "id": "guaypes-club",
+        "youtubeVideoId": "cmJzdmPXVj4",
+        "name": "Guaypes Club",
+        "order": 37,
+        "disciplines": "musica",
+        "description": "Guaypes Club es el pionero proyecto musical chileno protagonizado por títeres —Jota, Papo y El Pibe— que cruza la estética callejera, el humor y la puesta en escena teatral con sonidos urbanos como el reggaetón, el rap y el dembow. Creada en Santiago en 2019, la agrupación marcó un hito en la escena nacional gracias a su propuesta visual única, llevando su show a grandes escenarios como Lollapalooza Chile y Lollapalooza Argentina.\n\nEn vivo, el colectivo despliega un espectáculo cargado de energía, interacción con el público y visuales que trasladan el universo de sus muñecos directamente al escenario, repasando sus canciones más populares junto a sus lanzamientos más recientes dentro del circuito urbano chileno.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "15:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/guaypes-club.webp",
+          "alt": "Guaypes Club"
+        },
+        "national": true,
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/guaypesclub/",
+          "spotify": "https://open.spotify.com/intl-es/artist/6OmpXe9rFVRCcgjkxm7yMV"
+        }
+      },
+      {
+        "id": "medinamico",
+        "name": "Medinámico",
+        "order": 38,
+        "disciplines": "musica",
+        "description": "Medinámico es un proyecto musical independiente de la Región de Coquimbo que fusiona jazz-rock y funk con poesía, exploración sonora y una mirada crítica sobre la vida cotidiana. Inspirado en la literatura y el pensamiento filosófico, transforma experiencias personales, sociales y existenciales en composiciones orientadas a provocar reflexión y emoción.\n\nCon cerca de un centenar de presentaciones en La Serena, Coquimbo y distintas localidades del territorio, ha consolidado una presencia constante en festivales, ciclos y espacios culturales. En el plano discográfico, cuenta con el álbum Muriendo y Aprendiendo (2021) y el EP Sombras & Arquetipos, además de sencillos y nuevo material en desarrollo.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "18:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/medinamico.webp",
+          "alt": "Medinamico"
+        },
+        "national": false,
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/medinamico.cl/",
+          "spotify": "https://open.spotify.com/intl-es/artist/4wrRxeeUSrgOrRqlBBxQ47?si=KuUArBWEQ3yQytqbhLYUQg"
+        },
+        "youtubeVideoId": "5tjyaiXt0LA"
+      },
+      {
+        "id": "dejenme-dormir",
+        "name": "Déjenme Dormir",
+        "order": 40,
+        "disciplines": "musica",
+        "description": "Déjenme Dormir es una banda de indie rock formada en Santiago de Chile en 2019, consolidada como uno de los nombres relevantes del nuevo rock chileno. A través de presentaciones en vivo intensas y frenéticas, la agrupación ha madurado un sonido potente y melancólico que rescata elementos del indie rock y el rock alternativo de los años noventa.\n\nActualmente atraviesan una nueva etapa creativa marcada por el estreno de los sencillos \"El Día de Mi Santo\", \"Ramón Ramón\" y \"A Propósito de los Incendios\", canciones que funcionan como adelanto de su tercer álbum de larga duración, proyectado para el primer semestre de 2027.",
+        "youtubeVideoId": "oL8RRDTznBc",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "19:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/dejenme-dormir.webp",
+          "alt": "Déjenme Dormir"
+        },
+        "national": true,
+        "location": "Escenario Gobierno Regional",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/dejenme.dormir",
+          "spotify": "https://open.spotify.com/intl-ko/artist/0wlw3iBVFnAzSviZyLjxDJ/discography/all"
+        }
+      },
+      {
+        "id": "nando-garcia",
+        "name": "Nando García",
+        "order": 42,
+        "disciplines": "musica",
+        "description": "Nando García es un cantautor y productor oriundo de la ciudad de Los Andes, Chile. Su proyecto solista inicia formalmente en 2020 y se caracteriza por una búsqueda musical ligada al folk, la música alternativa y el rock, construida desde una sensibilidad autoral honesta e intimista.\n\nCuenta con cinco producciones discográficas publicadas: \"Tripa o Cable\" (2020), \"Pirueta\" (2021), \"Material Particulado en Suspensión\" (2023), \"Decir Amor\" (2024) y su más reciente álbum \"Lover Man\" (2026), trabajos en los que explora temáticas como el fracaso, la inseguridad, la identidad y la muerte.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "21:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/nando-garcia.webp",
+          "alt": "Nando García"
+        },
+        "national": true,
+        "location": "Terraza Cordovez",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/nandogarciamusica/",
+          "spotify": "https://open.spotify.com/intl-es/artist/1sjAiXfRnlaJk1zNhmHSpf"
+        },
+        "youtubeVideoId": "QNMj7uYm-uM"
+      },
+      {
+        "id": "laro",
+        "name": "Laró",
+        "order": 44,
+        "disciplines": "musica",
+        "description": "Laró —proyecto del cantautor y productor chileno Diego Laroze— es una propuesta de indie pop, folk y canción de autor caracterizada por melodías sensibles, texturas acústicas y una mirada íntima y melancólica. Desde su álbum debut Abriendo Latidos (2020), el EP Vuela Lejos (Abriendo Latidos) (2022) y el trabajo (re) definiciones (2024), ha construido un repertorio con canciones como «Abriendo Latidos» y «Maldito Jazz» —videoclip que sumó nominaciones en IN-EDIT Chile— y colaboraciones junto a nombres de la escena nacional como Rosario Alfonso, Vicente Cifuentes y Nando García.\n\nEn su etapa más reciente, tras adelantar el sencillo «Ya No Te Hago Falta» (2026), publica su tercer álbum de estudio Niño Triste (2026) y sale a recorrer escenarios de distintas ciudades de Chile con una gira que lleva su nuevo cancionero en vivo.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "20:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/laro.webp",
+          "alt": "Laró"
+        },
+        "national": true,
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/laro_musica/"
+        }
+      },
+      {
+        "id": "esteban-y-los-hurtados",
+        "name": "Esteban y Los Hurtados",
+        "order": 45,
+        "disciplines": "musica",
+        "description": "Esteban y Los Hurtados es un proyecto de rock nacional que nace desde el trabajo solista de Esteban Hurtado. Con un repertorio original de 17 canciones, su propuesta conecta con guiños al rock chileno de los años 2000 y la energía del rock clásico de los sesenta, desplegando un sonido directo en formato de banda en vivo.\n\nCon presentaciones en las regiones de Coquimbo, Atacama y Metropolitana, el grupo se encuentra en etapa de consolidación y difusión de su catálogo de estudio, además de promover su LP grabado en vivo. A lo largo de su recorrido ha pasado por espacios como Audiomusica Megatienda Ñuñoa, Cocina Clandestina Bellavista, Mall Plaza Copiapó, Pueblito Peñuelas y distintos escenarios de La Serena, Coquimbo y Copiapó.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "19:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/esteban-y-los-hurtados.webp",
+          "alt": "Esteban y Los Hurtados"
+        },
+        "national": false,
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/estebanyloshurtados/",
+          "spotify": "https://open.spotify.com/intl-es/artist/62MoRspip9gbMS1Zk8cRfG?si=7yfhE4esTTWqMZ8XXlyBew"
+        },
+        "youtubeVideoId": "OoYQ-z2KwIs"
+      },
+      {
+        "id": "dj-sepha",
+        "name": "DJ Sepha",
+        "order": 46,
+        "disciplines": "musica",
+        "description": "DJ Sepha —alias de la DJ y productora chilena Josefa Errázuriz— es una de las figuras emergentes más destacadas de la escena electrónica nacional, reconocida por un sonido hipnótico y envolvente que cruza el progressive house, el melodic house y matices de techno. Con una proyección ascendente que la ha llevado a presentarse en clubes y festivales de alto calibre en Chile, Latinoamérica y Europa —incluyendo escenarios como Ultra Chile, DGTL Santiago y fechas en ciudades como Berlín, Barcelona y Bogotá—, encabeza la nueva generación de selectoras nacionales.\n\nEn su etapa actual, además de consolidar su faceta como productora incorporando sus propios tracks en sus sesiones y recorrer escenarios internacionales con giras como su Argentina Winter Tour en 2026, presenta sets dinámicos y de gran narrativa sonora diseñados para sumergir al público en una experiencia de pista de baile continua.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "18:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/dj-sepha.webp",
+          "alt": "DJ Sepha"
+        },
+        "national": true,
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/sepha.music/"
+        },
+        "youtubeVideoId": "zwSyUObn9CY"
+      }
+    ]
+  },
+  "stage": {
+    "name": "Artes Escénicas",
+    "participants": [
+      {
+        "id": "lobas",
+        "instagramReelUrl": "https://www.instagram.com/reels/DSydSDbkauE/",
+        "name": "Lobas",
+        "company": "Circo kaleidoscopio",
+        "audienceType": "Todo Público",
+        "durationMinutes": 20,
+        "order": 2,
+        "disciplines": "artes-escenicas",
+        "description": "Show de fuego inspirado en seis cuentos del libro Mujeres que corren con los lobos, de Clarissa Pinkola Estés, que reúne a cuatro mujeres en escena para mantener vivo el fuego del arquetipo de la Mujer Salvaje.\n\nTodo se sostiene a través de la manipulación de distintos malabares, donde cada elemento marca un llamado y representa un estado de ser femenino, transitando de lo colectivo a lo individual. La obra resignifica necesidades, inquietudes, deseos, miedos y luchas desde una mirada feminista en un territorio que convoca a estar organizadas y juntas. Lobas es una relectura encarnada desde la valentía de sus intérpretes.\n\n«Loba, tu aullido es flama que acompaña la sabiduría, confianza, valentía y grito de la mujer salvaje». ",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "21:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/lobas.webp",
+          "alt": "Lobas"
+        },
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/kaleidoscopio_circo/reels/"
+        }
+      },
+      {
+        "id": "yaru",
+        "youtubeVideoId": "Eq5NsW8Ybq8",
+        "name": "Yaru, la heroína Diaguita",
+        "company": "La Feroz Compañía",
+        "audienceType": "Infantil",
+        "durationMinutes": 40,
+        "order": 4,
+        "disciplines": "artes-escenicas",
+        "description": "En los valles diaguitas, una larga sequía comienza a transformar la vida de la comunidad: los ríos se apagan, las semillas dejan de crecer y la tierra pierde su fuerza. Yaru, una niña curiosa e inquieta, recibe la misteriosa visita de Yacurmana, la voz del agua, quien le revela que deberá emprender un viaje más allá de las montañas conocidas hasta llegar al gran mar, recoger su fuerza y devolver el equilibrio a la Pachamama.\n\nA través del teatro físico, el mimo narrador, el teatro de objetos y las técnicas circenses, el escenario se transforma en montañas, ríos y océanos en un espectáculo poético y visual para toda la familia. Yaru, la heroína diaguita invita a observar el mundo con curiosidad, valorar la riqueza de los pueblos originarios y descubrir cómo la valentía y la solidaridad pueden transformar los momentos más difíciles.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "19:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/yaru.webp",
+          "alt": "Yaru"
+        },
+        "location": "Teatro Vive Centenario",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/laferoz.compania/"
+        }
+      },
+      {
+        "id": "el-humedal",
+        "youtubeVideoId": "idumzDvHy2Q",
+        "name": "El Humedal, un viaje por el tiempo",
+        "company": "Compañía de teatro Los Mil Nombres",
+        "audienceType": "Todo Público",
+        "durationMinutes": 60,
+        "order": 7,
+        "disciplines": "artes-escenicas",
+        "description": "Este montaje reúne teatro, danza, circo, acrobacia, cantos y música en vivo para abordar el peligro que enfrentan los humedales y los restos arqueológicos ante el avance inmobiliario.\n\nCon un lenguaje de teatro físico, el elenco asume distintos roles según la escena en un recorrido de estética poética y realismo mágico. El humedal actúa como testigo silencioso a través del tiempo: parte en las culturas originarias, avanza por los años 30 y los 80, y llega hasta hoy. En escena, la acrobacia —con manipulación de telas y muñecos— da vida a figuras simbólicas y oníricas, mientras la música cruza instrumentos vernaculares con sonidos electrónicos y la iluminación acompaña los cambios de época y clima emocional.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "16:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/el-humedal.webp",
+          "alt": "El Humedal, un viaje por el tiempo"
+        },
+        "location": "Teatro Vive Centenario",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/losmilnombres.teatro/"
+        }
+      },
+      {
+        "id": "pulsando",
+        "youtubeVideoId": "LcWkn5k9yMA",
+        "name": "PulSando",
+        "company": "Agrupación flamenco Elqui",
+        "audienceType": "Todo Público",
+        "durationMinutes": 60,
+        "order": 11,
+        "disciplines": "artes-escenicas",
+        "description": "Bajo el lema PulSando, este espectáculo nace de un periodo de vivencias humanas complejas que encuentran cauce y reflejo en el baile, el cante y el toque. Es un encuentro de pulso individual y colectivo donde los cuerpos y la música avanzan hacia un nuevo horizonte.\n\nLa propuesta reúne a tres escuelas de la región de Coquimbo —Rincón Flamenco, Zapato Rojo y Bordón Dorao— para recorrer distintos palos y estilos de la tradición flamenca a través de sus montajes más recientes, combinando danza, música en vivo y cante.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "19:00",
+          "month": "noviembre"
+        },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/flamenco.aflel/"
+        }
+      },
+      {
+        "id": "removernos-a-cielo-abierto",
+        "youtubeVideoId": "exiMwE886d0",
+        "name": "Removernos a Cielo Abierto: Estrategia de Supervivencia",
+        "company": "Colectivo de Artes Escénicas Zona de Obras de Coquimbo",
+        "audienceType": "Todo Público",
+        "durationMinutes": 59,
+        "order": 14,
+        "disciplines": "artes-escenicas",
+        "description": "Obra colaborativa de danza, investigación coreográfica, concebida para espacios públicos abiertos y explanadas sin techo. A través del cuerpo, el sonido y el diseño visual, cuestiona el aislamiento y el anquilosamiento social, apostando por la creatividad, el territorio y el encuentro colectivo como formas de resistencia y vitalidad.\n\nCon un elenco de cinco personas —cuatro bailarines/as y un diseñador sonoro— vestidos con ropa formal de colores saturados, la pieza aprovecha el tránsito de la luz del atardecer a la iluminación artificial y el desplazamiento constante de siete plataformas rojas y sistemas de amplificación para construir imágenes poéticas en escena. Proyecto financiado por el Fondo Nacional de Fomento y Desarrollo de las Artes Escénicas 2025.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "20:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/removernos-a-cielo-abierto.webp",
+          "alt": "Removernos a Cielo Abierto: Estrategia de Supervivencia"
+        },
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/circolacuartaestacion/"
+        }
+      },
+      {
+        "id": "yatiri",
+        "youtubeVideoId": "bvDsu6xjvgs",
+        "name": "Yatiri y las Perlas de Pachamama",
+        "company": "Fundación Sociedad Bach La Serena",
+        "audienceType": "Familiar",
+        "durationMinutes": 45,
+        "order": 16,
+        "disciplines": "artes-escenicas",
+        "description": "Yatiri y las Perlas de Pachamama es una experiencia escénica de artes integradas —desde la danza con música en vivo y narración— que sigue a Yatiri, un niño del desierto norteño, en su viaje para pedir ayuda a la Pachamama cuando su familia decide abandonar su hogar en busca de un lugar más fértil. A través de la danza, la música y el relato teatral, el público recorre paisajes, descubre personajes y reflexiona sobre el valor del hogar, la naturaleza y los vínculos familiares. Es una obra familiar, sensible y lúdica, dirigida a niños y niñas de 5 a 10 años y público familiar, que conecta la imaginación infantil con un mensaje ecológico sobre la naturaleza, el hogar y la conexión con la Pachamama, con funciones previas en Vicuña, Ovalle y La Serena.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "16:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/yatiri.webp",
+          "alt": "Yatiri y las Perlas de Pachamama"
+        },
+        "location": "Teatro Vive Centenario",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/sociedadbachlaserena/"
+        }
+      },
+      {
+        "id": "un-derrotero-nortino-con-marionetas",
+        "youtubeVideoId": "yzKtnqsCwzA",
+        "name": "Un Derrotero Nortino con Marionetas",
+        "company": "Red Lambe Norte",
+        "audienceType": "Familiar",
+        "durationMinutes": 180,
+        "order": 19,
+        "disciplines": "artes-escenicas",
+        "description": "Muestra simultánea de cuatro obras de teatro Lambe Lambe diseñadas para un espectador por vez, con funciones continuas durante 180 minutos. A través de pequeñas cajas escénicas portátiles, cada historia rescata el patrimonio cultural inmaterial de los territorios del norte de Chile en un formato íntimo y accesible para toda la familia.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "18:00",
+          "month": "noviembre"
+        },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/redlambenorte/"
+        }
+      },
+      {
+        "id": "awicha-la-tejedora-de-memorias",
+        "website": "https://www.fundacioncirculoremolino.com/",
+        "youtubeVideoId": "PCY9toFB5Iw",
+        "name": "Awicha, la Tejedora de Memorias",
+        "company": "Fundación Círculo Remolino - Laboratorio Creativo Remolino",
+        "audienceType": "Familiar",
+        "durationMinutes": 40,
+        "order": 22,
+        "disciplines": "artes-escenicas",
+        "description": "La mágica abuela de Azul y Violeta posee el don de interpretar el canto de los colibríes y transmitir sus mensajes entre las urdimbres y tramas de su histórico oficio textil. A través de los hilos, los relatos y la memoria, comparte saberes que conectan a las nuevas generaciones con la naturaleza y la tradición.\n\nEsta experiencia escénica pensada para las infancias nace desde el Laboratorio Creativo Remolino, en un trabajo colaborativo junto a mujeres del territorio y trabajadoras de las artes, invitando a disfrutar en familia de un encuentro sensible y cercano.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "18:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/awicha-la-tejedora-de-memorias.webp",
+          "alt": "Awicha, la Tejedora de Memorias"
+        },
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/fundacion_circulo_remolino/"
+        }
+      },
+      {
+        "id": "narrando-mundos-en-bicicuentera",
+        "website": "https://ojosdeagua.cl/",
+        "youtubeVideoId": "6_BdVN10wQI",
+        "name": "Narrando Mundos en la Bicicuentera",
+        "company": "Compañía de Ojos de Agua",
+        "audienceType": "Familiar",
+        "durationMinutes": 40,
+        "order": 25,
+        "disciplines": "artes-escenicas",
+        "description": "Flor es una mujer migrante que disfraza su tránsito errante por el mundo como una gran aventura. En el fondo, fue obligada a dejar su país por problemas climáticos y añora volver, pero mientras tanto no se echa a morir y enfrenta las dificultades con humor. Continúa su viaje con esperanza y optimismo, porque siempre aparecen personas y animales —como el simpático \"señor ratón\"— dispuestos a ayudarla.\n\nComo regalo y retribución, Flor dedica su vida a contar historias para abrigar los corazones y reflexionar sobre la diversidad y la paz. La obra recorre culturas y paisajes diversos —Japón, África, Colombia, Inglaterra, India y Chile— a través de una ficción autobiográfica en la que la narradora utiliza kamishibai, títeres de mesa, títeres planos y música en vivo, entre otros recursos escénicos que enriquecen los relatos.\n\nAunque la obra aborda temas complejos como la guerra, la esclavitud, la migración y la discriminación, su tono lúdico y humorístico crea un ambiente motivador y cercano para niños y niñas de entre 4 y 14 años. La bicicuentera y el carro-teatrino funcionan como el hogar ambulante de Flor —su tesoro más preciado—, un dispositivo versátil desde donde extrae los elementos escénicos para sorprender al público en distintos momentos de la función.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "18:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/narrando-mundos-en-bicicuentera.webp",
+          "alt": "Narrando Mundos en la Bicicuentera"
+        },
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/titeresojosdeagua/"
+        }
+      },
+      {
+        "id": "bendita-agua",
+        "website": "https://titereslaboda.blogspot.com/",
+        "youtubeVideoId": "vZy3O5Asn_c",
+        "name": "Bendita Agua",
+        "company": "Compañía de Títeres \"La Boda\"",
+        "audienceType": "Familiar",
+        "durationMinutes": 40,
+        "order": 28,
+        "disciplines": "artes-escenicas",
+        "description": "Guaina vive feliz en el campo, trabaja la tierra, planta semillas y cosecha sus frutos. Sin embargo, la tranquilidad de su hogar se ve amenazada por la ambición de Juan Mandinga, quien desea quemar la tierra para venderla por pedazos.\n\nJunto a su amiga Rosita —y con la participación y ayuda del público—, Guaina deberá enfrentar este desafío y salvar su tierra en una historia cercana y participativa.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "16:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/bendita-agua.webp",
+          "alt": "Bendita Agua"
+        },
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/titereslaboda/"
+        }
+      },
+      {
+        "id": "las-luciernagas-y-el-origen-del-fuego",
+        "name": "Las Luciérnagas y el Origen del Fuego",
+        "company": "Compañía de Cuenta Cuentos Tricahue",
+        "audienceType": "Todo Público",
+        "durationMinutes": 45,
+        "order": 30,
+        "disciplines": "artes-escenicas",
+        "description": "Al principio, la humanidad y los animales sufrían por el frío extremo y comían carne cruda, hasta que un astuto zorro prometió traer calor y luz al mundo.\n\nJunto a su amigo, el caballo Panchito, sigue las pistas de la serpiente Martita hasta los patos de la laguna, quienes los llevan volando tras las montañas donde las luciérnagas cuidan una gran fogata. Tras engañar a las luciérnagas para obtener la llama, un imponente cóndor los ayuda a elevarla y, juntos, reparten el calor por todo el mundo, transformando la vida gracias al trabajo en equipo, la valentía y la amistad.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "16:00",
+          "month": "noviembre"
+        },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Los Carreras)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/tricahuecuentos/"
+        }
+      },
+      {
+        "id": "llamada-de-emergencia",
+        "youtubeVideoId": "ntIeEiGwU-Y",
+        "name": "Llamado de Emergencia",
+        "company": "Compañia Noche de Payasas",
+        "audienceType": "Adulto",
+        "durationMinutes": 60,
+        "order": 33,
+        "disciplines": "artes-escenicas",
+        "description": "Llamado de Emergencia es una comedia clown que transcurre en un delirante quirófano donde cada consulta puede convertirse en una cuestión de vida o muerte. A través de situaciones absurdas, humor físico y personajes entrañablemente desastrosos, la obra explora la relación entre médicos y pacientes, poniendo en escena las fragilidades, miedos y contradicciones que rodean la salud física y mental en nuestra sociedad.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "21:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/llamada-de-emergencia.webp",
+          "alt": "Llamado de Emergencia"
+        },
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/nochedepayasas/"
+        }
+      },
+      {
+        "id": "martin-v-s-trampolino-maletines",
+        "name": "Martín V/S Trampolino Maletines",
+        "company": "Compañía de Teatro Viento Norte",
+        "audienceType": "Infantil",
+        "durationMinutes": 45,
+        "order": 36,
+        "disciplines": "artes-escenicas",
+        "description": "Martín es un niño feliz cuya parte favorita del día es jugar y leer cuentos con su madre tras la escuela. Sin embargo, esa armonía se quiebra con la llegada de Don Trampolino Maletínez, un extravagante personaje que, mediante engaños, logra que la madre firme un contrato tramposo. Tras el chasquido de su misterioso maletín negro, ella queda atrapada trabajando sin descanso en una fábrica.\n\nLa vida de Martín se vuelve un caos al intentar asumir solo las tareas del hogar y cuidar a sus hermanos bebés. Aprovechándose de su desesperación, Don Trampolino regresa y lo obliga a firmar un segundo contrato para vender dulces en la calle. Tras una dura jornada a cambio de una escasa moneda, Martín decide rebelarse y, rompiendo la cuarta pared, une fuerzas con el público infantil para enfrentar al villano y romper los papeles al unísono: «¡La trampa terminó, el contrato se rompió!». Una propuesta colorida e interactiva que releva los derechos de la infancia y el valor del tiempo en familia.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "19:00",
+          "month": "noviembre"
+        },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/cia.teatrodelviento/"
+        }
+      },
+      {
+        "id": "trans-humante",
+        "youtubeVideoId": "PYkV97F7-Jw",
+        "name": "Trans-Humante",
+        "company": "Espacio La Isla",
+        "audienceType": "Familiar",
+        "durationMinutes": 45,
+        "order": 39,
+        "disciplines": "artes-escenicas",
+        "description": "Trans - Humante cuenta la historia de Miguel, un niño que vive la trashumancia caprina junto a sus abuelos en la provincia del Limarí. En este recorrido por el mundo rural y los cerros, transita también un proceso de reconocimiento de su identidad de género, poniendo en diálogo las tradiciones del campo con las miradas actuales sobre las infancias trans.\n\nA través de muñecos y una puesta en escena sensible y cercana, la obra invita a reflexionar sobre la identidad, los vínculos familiares y las distintas formas de habitar el territorio y el mundo.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "19:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/trans-humante.webp",
+          "alt": "Trans-Humante"
+        },
+        "location": "Teatro Vive Centenario",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/espacio_la_isla/"
+        }
+      },
+      {
+        "id": "juan-manotas-y-el-origen-del-carnaval",
+        "name": "Juan Manotas y el Origen del Carnaval",
+        "company": "Compañía de Teatro Pucará",
+        "audienceType": "Todo Público",
+        "durationMinutes": 60,
+        "order": 41,
+        "disciplines": "artes-escenicas",
+        "description": "El Hombre de Negro es un estafador itinerante que, bajo una fachada humana, esconde la identidad del mismísimo Diablo. Recorre los pueblos de América —pasando por cafetales en Colombia, donde conoce a Guadalupe, y por Centroamérica, donde desafía a Gerardo el bananero en un duelo de tambores— apostando oro, joyas y falsas riquezas para engañar a la clase trabajadora y arrebatarle sus almas y recursos naturales.\n\nA través de cuatro cuadros teatrales habitados por personajes entrañables, la obra construye un espejo cercano para el público. Todo parece ir a favor del Diablo hasta que se topa con Juan Manotas, un humilde trabajador rural que lo enfrenta en un duelo de ritmo y usa el poder del tambor para condenarlo a bailar cada vez que suene un parche, revelando el origen de la figura del diablo en los carnavales.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "17:00",
+          "month": "noviembre"
+        },
+        "image": null,
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)"
+      },
+      {
+        "id": "de-papel",
+        "name": "De Papel",
+        "company": "Compañia Silencio Blanco",
+        "audienceType": "Todo Público",
+        "durationMinutes": 40,
+        "order": 43,
+        "disciplines": "artes-escenicas",
+        "description": "Un escenario sencillo, algunas bolas de papel y expectación en la sala. Poco a poco, a través del movimiento, el silencio y la delicadeza de sus intérpretes, el papel cobra vida frente a los ojos del público.\n\nEstrenada en 2010, De Papel gira en torno a Luchito, una marioneta de papel creada para aquel montaje original que sigue recorriendo escenarios y conectando con nuevas audiencias, transformando un material cotidiano en un personaje lleno de expresión y emociones.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "17:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/de-papel.webp",
+          "alt": "De Papel"
+        },
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/silencioblanco/"
+        }
+      },
+      {
+        "id": "carpe-diem",
+        "website": "https://malabicirco.com/",
+        "youtubeVideoId": "dH936_tDPzQ",
+        "name": "Carpe Diem",
+        "company": "Malabi Circo",
+        "audienceType": "Todo Público",
+        "order": 47,
+        "disciplines": "artes-escenicas",
+        "description": "La compañía de artes circenses de Valparaíso presenta Carpe Diem, un espectáculo familiar en el que los payasos Demencio Vicuña Mackenna y Bartolomé de San Martín invitan al público a vivir el presente entre risas, malabarismo y participación directa.\n\nEstos personajes despliegan distintas técnicas circenses y humor blanco para abrir espacios de juego y encuentro, donde la audiencia es parte clave de la función. Una propuesta pensada para hacer una pausa en medio de la rutina acelerada y compartir un momento cercano y lúdico.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "21:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/carpe-diem.webp",
+          "alt": "Carpe Diem"
+        },
+        "location": "Interior de la Plaza de Armas (Sector Cordovez)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/malabicirco/"
+        }
+      },
+      {
+        "id": "la-gran-troupe-circo",
+        "website": "https://malabicirco.com/",
+        "youtubeVideoId": "mua0ZKcuKfA",
+        "name": "La Gran Troupe Circo",
+        "company": "Malabi Circo",
+        "audienceType": "Todo Público",
+        "durationMinutes": 60,
+        "order": 48,
+        "disciplines": "artes-escenicas",
+        "description": "Compañía de artes circenses integradas de Valparaíso presenta La Gran Troupé del Circo, un espectáculo de variedades que combina destreza física, humor y puesta en escena. El montaje reúne a un elenco de artistas circenses nacionales e internacionales, guiados por un maestro de ceremonias que va hilando cada presentación con anécdotas y divertidas historias del mundo del circo.\n\nEl programa incluye contorsión aérea, pole dance, malabares con diábolos, magia de escenario y el humor blanco de los payasos. Con una dinámica ágil y cercana, la función invita al público familiar a compartir una experiencia llena de ritmo, asombro y entretención en vivo.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Sábado 28",
+          "time": "22:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/la-gran-troupe-circo.webp",
+          "alt": "La Gran Troupe Circo"
+        },
+        "location": "Interior de la Plaza de Armas (Esquina Matta)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/malabicirco/"
+        }
+      },
+      {
+        "id": "viaje-a-la-luna",
+        "website": "https://lapatogallina.cl/inicio/viaje-a-la-luna/",
+        "name": "Viaje a la Luna",
+        "company": "Colectivo La Patogallina",
+        "audienceType": "Todo Público",
+        "durationMinutes": 70,
+        "order": 49,
+        "disciplines": "artes-escenicas",
+        "description": "Viaje a la Luna es un espectáculo inspirado en la película muda de Georges Méliès, Le Voyage dans la Lune (1902), obra clave de la historia del cine que abrió paso a la ciencia ficción y dio un nuevo espacio a la fantasía en la pantalla.\n\nEsta comedia sigue las peripecias de Pelotillehue Films, una modesta productora integrada por seis payasos que intenta rodar en un solo día su propia versión de Viaje a la Luna. Entre el apuro, los enredos absurdos y los imprevistos, la puesta en escena suma música en vivo, proyección en circuito cerrado de las escenas grabadas y la participación del público.",
+        "ticketUrl": null,
+        "date": {
+          "day": "Domingo 29",
+          "time": "20:00",
+          "month": "noviembre"
+        },
+        "image": {
+          "url": "/src/assets/artists/viaje-a-la-luna.webp",
+          "alt": "Viaje a la Luna"
+        },
+        "location": "Interior de la Plaza de Armas (Esquina Matta)",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/lapatogallina/?hl=es"
+        }
+      }
+    ]
+  },
+  "expo": {
+    "name": "Expo Arte.Co",
+    "participants": [
+      {
+        "id": "la-velocidad-de-la-luz",
+        "name": "La Velocidad de la Luz",
+        "description": "Colectivo chileno de experimentación visual de la Región de Coquimbo, cofundado por el arquitecto y artista visual Pablo Godoy Codoceo junto a Luis González Loyola. Su propuesta cruza arquitectura, arte digital y artes escénicas mediante videomapping, instalaciones audiovisuales, diseño escénico e intervenciones urbanas de rescate patrimonial, destacando obras y colaboraciones como Víctor Trasciende, la ópera ciudadana Todos para uno y la muestra interdisciplinaria Liminal: el ruido que queda.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/lavelocidad.delaluz/"
+        },
+        "image": null
+      },
+      {
+        "id": "maria-piedad-aguirre",
+        "name": "María Piedad Aguirre",
+        "description": "Artista visual y arquitecta residente en La Serena, especializada en fotografía experimental sin cámara. Su propuesta cruza arquitectura, ecología local y procesos fotoquímicos a partir de la cianotipia y materiales fotosensibles, explorando el diálogo entre cuerpo, clima y paso del tiempo con paletas cromáticas poco habituales, con muestras en espacios como Flach Galería y el Museo del Limarí, además de becas y publicaciones internacionales de fotografía alternativa.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/piedad11111/"
+        },
+        "image": null
+      },
+      {
+        "id": "ivan-jorquera",
+        "name": "Iván Jorquera",
+        "description": "Diseñador en comunicación visual, muralista y académico de la Escuela de Diseño de la Universidad de La Serena, conocido en la escena del arte urbano como El Menese. Su propuesta cruza graffiti, muralismo patrimonial y pintura de estudio en técnicas mixtas para rescatar la memoria de los barrios mediante obras participativas y talleres comunitarios, trasladando también su lenguaje callejero a sala con muestras como De la calle a la Galería en la Casa de las Artes del Barrio Inglés de Coquimbo.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/elmenese/"
+        },
+        "image": null
+      },
+      {
+        "id": "camila-montoya",
+        "name": "Camila Montoya",
+        "description": "Artista visual y profesora de artes plásticas nacida y radicada en Canela. Su práctica se vincula con la vida rural y el territorio a través de la investigación con tierra, arcillas, pigmentos naturales y materia vegetal, cruzando muralismo, cerámica, pintura, grabado y fotografía orgánica para explorar cómo la materia, la luz y la huella transforman nuestra forma de observar el entorno.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/camilaefemontoya/"
+        },
+        "website": "https://canelterra.com/",
+        "image": null
+      },
+      {
+        "id": "oskar-huerta",
+        "name": "Oskar Huerta",
+        "description": "Fotógrafo documental, artista visual y gestor cultural radicado en Ovalle, Provincia del Limarí (nombre artístico de Juan Pablo Martínez Huerta). Trabaja principalmente con fotografía analógica en blanco y negro y Polaroid para retratar problemáticas sociales, políticas y medioambientales del Norte Chico —como la megasequía, la desertificación y el éxodo rural—, destacando sus fotolibros y muestras como Sindemia, De pie junto a las ruinas, Animales Heridos y Umbra, además de su rol como programador del Encuentro Foto Limarí.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/oskarhuertafoto/?hl=en"
+        },
+        "image": null
+      },
+      {
+        "id": "andrea-cantillanes",
+        "name": "Andrea Cantillanes",
+        "description": "Fotógrafa documental, reportera gráfica y gestora cultural radicada en la conurbación La Serena-Coquimbo, con cerca de 20 años de trayectoria. Su trabajo cruza el fotoperiodismo con la investigación patrimonial y social de la costa regional, destacando proyectos autorales como Coquimbo y Su Gente y el fotolibro Entre Mareas: Memoria Visual de las Mujeres Orilleras de Caleta San Pedro, además de su labor como presidenta de la Fundación Fotográfica Focus y formadora en fotografía analógica y digital.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/cantillanesfabres/"
+        },
+        "image": null
+      },
+      {
+        "id": "sandy-barrera",
+        "name": "Sandy Barrera",
+        "description": "Artista visual, muralista, mosaiquista y gestora cultural radicada en La Serena, conocida artísticamente como Sandy Baptista. Su propuesta cruza la experimentación plástica en sala —a través de pintura, mosaico, instalación y técnicas mixtas en muestras como Cotidiano Violento y Las huellas que dejas— con el arte comunitario y los murales colaborativos junto a agrupaciones de mujeres, trayectoria por la que fue distinguida como Mujer Patrimonio por la Municipalidad de La Serena e integra la corporación regional Vicrea.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/sandybaptistaartistavisual/"
+        },
+        "website": "https://sandyvisualarts.wixsite.com/artesandy/sobre-mi",
+        "image": null
+      },
+      {
+        "id": "daniela-pizarro",
+        "name": "Daniela Pizarro",
+        "description": "Artista y trabajadora comunitaria de Ovalle, conocida artísticamente como Dani Negri, cuya práctica entreteje la investigación y la acción colectiva a través del hacer textil. Su propuesta explora la memoria personal como territorio común y el rol social del arte mediante textiles testimoniales, registros gráficos, títeres de mano y libros que dan forma al proyecto Archivo Emotivo amateur, generando espacios de encuentro para recordar colectivamente, cuidar e imaginar nuevas formas de pertenencia.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/_dani_negri_/"
+        },
+        "image": null
+      }
+    ],
+    "location": "Estacionamiento subterráneo",
+    "description": "Este 28 y 29 de noviembre el arte contemporáneo baja al subsuelo de la ciudad y transforma el gran estacionamiento subterráneo de la Plaza de Armas de La Serena en una sala de exhibición con Expo Arte Co. Liderada por la curatoría de Francisco Belarmino —artista visual y docente oriundo de Illapel — bajo la propuesta «Un espesor sensible. Observación situada del territorio», la muestra reúne a ocho artistas de Elqui, Limarí y Choapa que cruzan investigación, ciencia y saberes comunitarios mediante nuevos medios, fotografía, sonido y materialidades locales para repensar nuestra forma de habitar la región. ¡Conoce a los creadores seleccionados!"
+  },
+  "market": {
+    "name": "Mercado Creativo y DAZ",
+    "description": "El Mercado creativo y DAZ se toman la Plaza de Armas en el Festival ARC 2026 como una vitrina abierta en pleno corazón de La Serena. Por un lado, el Mercado reúne a creadores independientes, editoriales, oficios y emprendimientos regionales con ilustración, papelería, grabado, fanzines, literatura y artesanía; por otro, DAZ ——encuentro multidisciplinario impulsado por el Área de Diseño e Industria Digital de INACAP Sede La Serena— suma el talento de estudiantes, docentes y creadores en diseño digital, moda, audiovisual, animación y videojuegos. Una invitación a recorrer los puestos, conversar directamente con quienes producen y descubrir el pulso creativo de la región. ¡Conoce a quienes dan vida a este espacio!",
+    "participants": [
+      {
+        "id": "nativa-joyas-del-elqui",
+        "name": "NATIVA JOYAS DEL ELQUI",
+        "description": "Proyecto de orfebrería del Valle de Elqui dedicado a la creación de piezas hechas a mano en plata y cobre, inspiradas en las formas, texturas y elementos de la naturaleza. Su trabajo nace de un proceso pausado de observación, inspiración y oficio, alejado de las modas pasajeras, para transformar historias y paisajes del entorno en joyas con identidad y significado propio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/nativajoyaselqui/?hl=es"
+        },
+        "website": "https://forjadas.cl/",
+        "image": null
+      },
+      {
+        "id": "reproduccion-arqueologica-de-la-ceramica-diaguita",
+        "name": "Reproducción Arqueológica de la Cerámica Diaguita",
+        "description": "Taller de cerámica dedicado a la reproducción arqueológica de piezas diaguitas mediante el uso de greda, engobes y técnicas tradicionales de alfarería. Su trabajo recrea vasos, cuencos, jarros pato, aríbalos con influencia inca, silbatos y réplicas de hallazgos del sitio El Olivar.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/eduardo_artesano/reels/"
+        },
+        "image": null
+      },
+      {
+        "id": "pilpintuvellon",
+        "name": "Pilpintuvellon",
+        "description": "Proyecto textil fundado en 2016 por Emma, dedicado a dar vida a figuras elaboradas con lana de oveja, materiales naturales y telas recicladas. Sus creaciones representan la fuerza de lo femenino ancestral y personajes de pueblos originarios, uniendo el diseño artesanal con el rescate cultural y la identidad del territorio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/pilpintuvellon/"
+        },
+        "image": null
+      },
+      {
+        "id": "scarlett-christiansen-joyas-de-autora",
+        "name": "Scarlett Christiansen Joyas de Autora",
+        "description": "Proyecto de joyería de autora creado en El Panul, Región de Coquimbo, dedicado a la elaboración artesanal de piezas en metal y fuego producidas en series pequeñas. Sus colecciones —como Mi Paisaje, Polvo de Estrellas y Nativa— traducen la observación del océano Pacífico y la naturaleza del norte de Chile en joyas únicas con enfoque sustentable.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/scarlettchj/"
+        },
+        "website": "https://www.scarlettchristiansen.cl/sobre-mi",
+        "image": null
+      },
+      {
+        "id": "taller-artesanal-jacaranda",
+        "name": "Taller Artesanal Jacarandá",
+        "description": "Taller textil y de cestería ubicado en el Valle del Elqui, liderado por la artesana Cecilia Ramírez, dedicado al rescate de oficios y culturas ancestrales. Confeccionan a mano piezas utilitarias y decorativas utilizando algodón, lana de oveja, cáñamo y fibras vegetales tejidas en telar y teñidas artesanalmente, plasmando iconografía diaguita y colores del territorio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/jacarandatallerartesanal/"
+        },
+        "image": null
+      },
+      {
+        "id": "artesana-neurotica",
+        "name": "Artesana Neurótica",
+        "description": "Proyecto de artesanía textil dedicado a la creación de piezas personalizadas mediante fieltro agujado en vellón de oveja y crochet. Elaboran figuras a pedido, animales, retratos y cuadros decorativos en relieve sobre bases de madera, esculpiendo lana natural cardada y teñida.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/artesananeurotica/"
+        },
+        "image": null
+      },
+      {
+        "id": "alicate-veloz",
+        "name": "Alicate Veloz",
+        "description": "Proyecto de artesanía en metal y madera del creador Jorge Pedrero, reconocido por su trabajo hecho a mano en el modelado de esculturas y figuras detalladas en miniatura. Con más de 40 años dedicado al oficio, transforma alambre, aluminio y metal reciclado en piezas como bicicletas, triciclos de reparto e instrumentos musicales.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/alicateveloz/"
+        },
+        "image": null
+      },
+      {
+        "id": "anima-rojas",
+        "name": "Ánima Rojas",
+        "description": "Ilustradora y artista visual nacida en Coquimbo con formación en arquitectura, dedicada a crear mundos donde convergen fantasía, naturaleza y personajes imaginarios. Trabaja principalmente con técnicas tradicionales como acuarela, acrílico, gouache y grafito —además de medios mixtos y sketchbooks autogestionados—, contando con una destacada proyección internacional en revistas, libros y exhibiciones en Chile, México, Argentina y Estados Unidos.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/anima.rojas/"
+        },
+        "website": [
+          "https://animared.myportfolio.com/portafolio",
+          "https://esponsor.com/animarojas"
+        ],
+        "image": null
+      },
+      {
+        "id": "catana",
+        "name": "Catana",
+        "description": "Artista visual e ilustradora radicada en La Serena, dedicada a la creación gráfica artesanal, editorial y de autor. Su trabajo abarca la autoedición de fanzines y libros ilustrados, el diseño de papelería y afiches con estética retro, y la producción de láminas en tirajes limitados mediante grabado e impresión artesanal como xilografía, linograbado y serigrafía.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/c_a_t_a_n_a/"
+        },
+        "image": null
+      },
+      {
+        "id": "creavida",
+        "name": "Creavida",
+        "description": "Marca de streetwear y naturalwear originaria de la Región de Coquimbo que utiliza la ilustración aplicada como eje central de su indumentaria y accesorios. A través de colaboraciones con artistas y estudios gráficos, transforma la flora, la fauna y la cultura local —como sus colecciones cápsula inspiradas en balnearios de la zona— en gráficos estampados con identidad territorial.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/creavida.chile/"
+        },
+        "image": null
+      },
+      {
+        "id": "alpacosas",
+        "name": "Alpacosas",
+        "description": "Proyecto independiente de ilustración y diseño de la Región de Coquimbo enfocado en la creación de papelería de autor y objetos ilustrados con estética kawaii. Sus diseños originales —protagonizados por roedores antropomórficos pintados en acuarela— cobran vida en artículos coleccionables como libretas, esquelas, stickers, estampillas, marcapáginas y postales.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/alpacosas_/"
+        },
+        "image": null
+      },
+      {
+        "id": "javiiilustrations",
+        "name": "Javiiilustrations",
+        "description": "Proyecto creativo de La Serena liderado por Javiera Ramírez que reúne ilustraciones originales, encargos personalizados y piezas de diseño con estética anime, pop y gráfica contemporánea. Su propuesta se traduce en papelería de autor funcional y coleccionable —como cuadernos, libretas encuadernadas a mano, stickers, postales, marcapáginas y planificadores— con identidad visual propia.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/javiiilustrations_/"
+        },
+        "image": null
+      },
+      {
+        "id": "ilustravel",
+        "name": "Ilustravel",
+        "description": "Proyecto de ilustración independiente y papelería de autor creado por la ilustradora Vel, dedicado al desarrollo de productos ilustrados y publicaciones editoriales de tiraje corto. Su trabajo combina personajes originales y estética anime/cómic en libros de colorear temáticos —como la serie Gatitos Patrimoniales—, fanzines y piezas impresas de colección.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/bel.ilustravel/"
+        },
+        "image": null
+      },
+      {
+        "id": "futuro-comics",
+        "name": "Futuro Comics",
+        "description": "Sello editorial autogestionado creado por el dibujante Diego Maya en Vicuña, dedicado a la creación de historietas de aventuras y ciencia ficción. Nacido como fanzine independiente, publica títulos en formato físico y digital —como Meka: Guerrero Cósmico— llevando narrativa gráfica de género desde el Valle del Elqui.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/futurocomics/"
+        },
+        "website": "https://linktr.ee/futurocomics",
+        "image": null
+      },
+      {
+        "id": "rotten-monkey-inc",
+        "name": "Rotten Monkey Inc",
+        "description": "Proyecto creativo del dibujante, diseñador gráfico y periodista serenense Rodán Castro, enfocado en la narrativa gráfica, la ilustración y el diseño de productos independientes. Su propuesta combina humor negro y crítica social en fanzines y novelas gráficas como Los Perdedores, además de trasladar su trazo crudo y expresivo a afiches, stickers e indumentaria de autor.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/rottenmonkey_inc/"
+        },
+        "image": null
+      },
+      {
+        "id": "daniela-trigo",
+        "name": "Daniela Trigo",
+        "description": "Diseñadora e ilustradora de la Región de Coquimbo, cuyo proyecto creativo (Efetrigo) cruza el diseño editorial, el arte gráfico y los objetos de autor con inspiración en la identidad y estética del norte diaguita. Con formación en Comunicación Visual, traslada sus ilustraciones originales a papelería, láminas impresas, indumentaria bordada y estampada, y piezas utilitarias producidas a pequeña escala.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/da.trigo/"
+        },
+        "image": null
+      },
+      {
+        "id": "colectivo-fugaz",
+        "name": "Colectivo Fugaz",
+        "description": "Agrupación artística y organización cultural con sede en La Serena, dedicada a la creación, exhibición y difusión de ilustración, arte gráfico y papelería de autor. Como red colaborativa de ilustradores de la Región de Coquimbo, desarrollan piezas originales de diseño independiente —como libretas, láminas ilustradas, stickers y postales— y promueven activamente ferias itinerantes y encuentros gráficos en espacios culturales de la zona.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/colectivofugaz/"
+        },
+        "image": null
+      },
+      {
+        "id": "seba-endless",
+        "name": "Seba Endless",
+        "description": "Proyecto creativo de arte gráfico, ilustración y papelería de autor que combina técnicas de dibujo tradicional con estética contemporánea. Su propuesta cruza influencias del Art Nouveau, el anime, el manga y los videojuegos para dar vida a obras originales y fanarts con sello propio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/seba.endless/reels/"
+        },
+        "image": null
+      },
+      {
+        "id": "dimension-d",
+        "name": "Colectivo Dimensión D",
+        "description": "Comunidad creativa de diseño gráfico emergente nacida en el Instituto Profesional Santo Tomás de La Serena, que reúne a estudiantes, egresados, docentes y diseñadores emprendedores bajo una propuesta colaborativa de autor. Desarrollan papelería, fanzines, afiches, ilustración aplicada y objetos de diseño como tote bags, pins y bitácoras de tiraje independiente.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/dimension.d/"
+        },
+        "image": null
+      },
+      {
+        "id": "colectivo-voyeartistas",
+        "name": "Colectivo Voyeartistas",
+        "description": "Colectivo oriundo de la Región de Coquimbo especializado en narrativa gráfica, escritura, cómic e ilustración. Su propuesta creativa articula diversas estéticas y lenguajes visuales que cruzan el relato fantástico y territorial —con obras como Seiyam: Sangre en la Camanchaca y Aqalli—, el diseño multimedia y la reimaginación de personajes de colores vibrantes, junto a la exploración del manga y el humor adaptado a códigos locales.",
+        "socialLinks": {
+          "instagram": [
+            "https://www.instagram.com/noezzal/",
+            "https://www.instagram.com/francisco.llimy/",
+            "https://www.instagram.com/cyanworkssss/"
+          ]
+        },
+        "image": null
+      },
+      {
+        "id": "alesol",
+        "name": "Alesol",
+        "description": "Proyecto creativo de objetos hechos a mano con base en Coquimbo, enfocado en el modelado y la pintura artesanal en cerámica fría, yeso y arcilla. Su propuesta incluye posavasos, portainciensos, portallaves, worry stones y pequeñas figuras pintadas a mano con temáticas de naturaleza, magia y cultura pop.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/alesol.art/"
+        },
+        "image": null
+      },
+      {
+        "id": "infini-art",
+        "name": "Infini Art",
+        "description": "Proyecto de diseño y creación de autor de la diseñadora gráfica y artista visual serenense Marcia Rojas Solari. Su trabajo reúne papelería de autor, arte gráfico, ilustración aplicada, indumentaria intervenida y objetos utilitarios o decorativos que integran gráfica original y elementos reutilizados en ediciones limitadas.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/marciarojassolari/"
+        },
+        "image": null
+      },
+      {
+        "id": "bosque-marino",
+        "name": "Bosque Marino",
+        "description": "Proyecto de papelería de autor e ilustración científica y aplicada creado por la ilustradora Sol Pacheco Ortiz, enfocado en la biodiversidad marino-costera de Chile. A través de objetos cotidianos que conectan con la naturaleza marina que habitamos, combina arte y divulgación ambiental en libretas encuadernadas a mano con papel ecológico de caña de azúcar, estuches y piezas ilustradas de la flora y fauna nativa del litoral.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/bosquemarino/"
+        },
+        "image": null
+      },
+      {
+        "id": "intercultural-arte",
+        "name": "Intercultural Arte",
+        "description": "Proyecto creativo y de diseño de autor originario de La Serena, liderado por el artista autodidacta José Cifuentes (Schino Molle). Su propuesta rescata el patrimonio natural, histórico y cultural del norte de Chile mediante técnicas gráficas tradicionales y oficios manuales, dando vida a poleras estampadas en serigrafía, afiches, objetos cotidianos y libretas encuadernadas a mano con identidad territorial.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/intercultural_arte_/"
+        },
+        "image": null
+      },
+      {
+        "id": "intercultural-arte-elementa",
+        "name": "Intercultural Arte Elementa",
+        "description": "Laboratorio creativo dedicado a la exploración y difusión de procesos fotográficos artesanales que dialogan con el entorno y el territorio. A través de técnicas sensibles a la luz solar y las condiciones del ambiente, desarrollan libretas, marcapáginas, materiales especializados y experiencias de mediación artística que invitan a mirar el paisaje desde otra perspectiva.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/elementa_lab/"
+        },
+        "website": "https://www.elementalab.cl/",
+        "image": null
+      },
+      {
+        "id": "ulises-lopez-grabador",
+        "name": "Ulises López Grabador",
+        "description": "Artista visual y grabador radicado en La Serena, cuya obra gráfica explora el imaginario mítico urbano, paisajes, fauna e identidad territorial. Con una sólida base en el dibujo y los lenguajes del cartel y la ilustración, trabaja técnicas tradicionales como serigrafía, xilografía, litografía y grabado en metal, presentando sus piezas en enmarcaciones clásicas, telas tensadas y montajes tipo póster recovero sobre madera.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/uliseslo/"
+        },
+        "image": null
+      },
+      {
+        "id": "la-cartoleria-taller",
+        "name": "La Cartolería Taller",
+        "description": "Emprendimiento de La Serena dedicado a la encuadernación artesanal, el diseño editorial y la creación de fotolibros a medida. Destacan por sus costuras hechas a mano, terminaciones personalizadas y formatos adaptables —desde recuerdos familiares hasta portafolios de arquitectura o diseño—, además de impartir talleres presenciales en espacios locales.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/lacartoleriataller/"
+        },
+        "website": "https://lacartoleria.cl/",
+        "image": null
+      },
+      {
+        "id": "koko",
+        "name": "Kokó",
+        "description": "Emprendimiento local de la conurbación Coquimbo–La Serena dedicado a la papelería ilustrada, el tejido a crochet y los accesorios hechos a mano. Su propuesta destaca por mezclar diseño gráfico y trabajo textil en piezas creativas y de carácter local.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/koko_diseno/"
+        },
+        "image": null
+      },
+      {
+        "id": "bordelibre-ediciones",
+        "name": "Bordelibre Ediciones",
+        "description": "Editorial y librería independiente de La Serena dedicada a difundir la literatura nacional, con especial énfasis en autores regionales y voces emergentes. Su propuesta se distingue por impulsar el catálogo local y el rescate de obras patrimoniales desde una mirada editorial cercana al territorio.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/bordelibre/"
+        },
+        "website": "https://www.bordelibre.cl/",
+        "image": null
+      },
+      {
+        "id": "yatiediciones",
+        "name": "Yatiediciones",
+        "description": "Proyecto editorial independiente de la Región de Coquimbo enfocado en literatura infantil, juvenil y familiar con identidad cultural y rescate de pueblos originarios. Liderado por Carmen Clavijo Morales, combina cuentos, libros para colorear y cuadernos educativos con cosmovisiones, lenguas y tradiciones andinas, diaguitas, selk'nam y mapuches en formatos interactivos.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/editorial_yatiediciones/"
+        },
+        "website": "https://www.yatiediciones.cl/",
+        "image": null
+      },
+      {
+        "id": "taller-editorial-me-pego-un-tiro",
+        "name": "Taller Editorial Me Pego un Tiro",
+        "description": "Proyecto editorial independiente y de oficios del libro con sede en La Serena, liderado por Pía Ahumada. Se especializa en publicaciones de formato no convencional, fanzines, plaquettes, encuadernación artesanal, reparación de libros y talleres de autopublicación, apostando por ediciones breves, experimentales y comunitarias.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/mepegountiro/?hl=es"
+        },
+        "image": null
+      },
+      {
+        "id": "draco-herrera",
+        "name": "Draco Herrera",
+        "description": "Ilustrador chileno de fantasía heroica y mitología con más de dos décadas de trayectoria y vínculo docente en La Serena. Su trabajo destaca por el diseño anatómico y expresivo de criaturas y dragones, abarcando cartas coleccionables como Mitos y Leyendas, ilustración editorial y arte conceptual mediante técnicas tradicionales y digitales.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/carlosdracoherrera/"
+        },
+        "image": null
+      },
+      {
+        "id": "mauricio-ramos",
+        "name": "Mauricio Ramos",
+        "description": "Diseñador gráfico, ilustrador, modelador 3D y docente de La Serena que cruza técnicas tradicionales y digitales con herramientas tridimensionales. Su propuesta abarca ilustración manual y digital, diseño de identidad y packaging, modelado 3D, impresión en resina y pintura de miniaturas, sumando participación activa en encuentros culturales y formación académica local.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/drako.artwork/"
+        },
+        "image": null
+      },
+      {
+        "id": "astro-glitter",
+        "name": "Astro Glitter",
+        "description": "Proyecto de ilustración y diseño de autor de La Serena que cruza medios digitales y análogos con una mirada sensible y contemplativa. Su propuesta reúne prints, stickers, libretas, postales y accesorios ilustrados en torno a la fantasía, la naturaleza y la calma, sumando docencia, comisiones e impulso a encuentros culturales independientes en la zona.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/astroglitter.studio/"
+        },
+        "image": null
+      },
+      {
+        "id": "colectivo-crisol",
+        "name": "Colectivo Crisol",
+        "description": "Agrupación estudiantil de ilustración vinculada a INACAP Sede La Serena, integrada por jóvenes creadores en formación. Su propuesta reúne stickers, chapitas, llaveros y piezas originales nacidas del trabajo colaborativo del club, con una energía fresca y formativa que acerca la producción gráfica estudiantil al público local.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/colectivocrisol.ilus/reels/"
+        },
+        "image": null
+      },
+      {
+        "id": "estudiantes-de-diseno-digital-inacap",
+        "name": "Estudiantes de Diseño Digital Inacap",
+        "description": "Agrupación de alumnos de la carrera de Diseño Digital de INACAP Sede La Serena, enfocados en la creación de soluciones visuales contemporáneas. Su trabajo abarca el diseño gráfico, la ilustración digital, el modelado 3D, el branding y el desarrollo de interfaces interactivas.  Participan exhibiendo una selección de sus proyectos académicos, prototipos e intervenciones visuales, conectando la innovación estudiantil con el público general.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/disenoinacaplaserena/"
+        },
+        "image": null
+      },
+      {
+        "id": "club-audiovisual-area-diseno-inacap",
+        "name": "Club Audiovisual Área Diseño Inacap",
+        "description": "Comunidad extracurricular integrada por estudiantes del Área de Diseño e Industria Digital de INACAP Sede La Serena, dedicada a la exploración y producción de medios visuales en movimiento. Se especializan en realización audiovisual, fotografía, edición de video y motion graphics.  Convergen aportando la exhibición de cápsulas creativas, proyectos multimedia y el registro audiovisual de las distintas activaciones y muestras del encuentro.",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/disenoinacaplaserena/"
+        },
+        "image": null
+      }
+    ]
+  }
+}

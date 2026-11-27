@@ -1,29 +1,37 @@
 ---
 import { Image } from 'astro:assets'
-import logo from '../assets/logo.png'
-import PreviousEditions from './PreviousEditions.astro'
-import { publicPath } from '../utils/publication'
+import FestivalNavbar from '@festivalarc/ui/FestivalNavbar.astro'
+import NavigationTile from './NavigationTile.astro'
+import ParticipantSearch from '../features/artists/ParticipantSearch.astro'
+import { publicationConfig } from '../../../../editions.config'
+import arc26Logo from '../assets/branding/arc26-logo.png'
+import { previousEditionTargets } from './previousEditions'
+import { categoryLink, publicPath } from '../utils/publication'
+import { categories } from '../features/artists/categories'
+
+interface Props { currentPath?: string }
+const { currentPath = Astro.url.pathname } = Astro.props
+const editions = previousEditionTargets(publicationConfig)
+const links = [
+  { label: 'Inicio', href: publicPath('/') },
+  ...categories.map(({ name, path }) => ({ label: name, href: categoryLink(path) })),
+]
 ---
-<header class='z-10 border-b border-primary/10 px-5 py-3 sm:px-8 lg:px-12'>
-  <div class='mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-4'>
-    <div class='flex items-center gap-3 sm:gap-4'>
-      <a
-        href={publicPath('/')}
-        aria-label='Ir al inicio'
-        class='block shrink-0 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
-      >
-        <Image
-          src={logo}
-          alt='Logotipo del Festival ARC'
-          class='block h-auto w-24 sm:w-28'
-          loading='eager'
-        />
-      </a>
-      <div class='text-xs leading-tight text-foreground sm:text-sm'>
-        <p class='font-bold'>28 y 29 de Noviembre</p>
-        <p>Plaza de Armas, La Serena</p>
-      </div>
-    </div>
-    <PreviousEditions />
-  </div>
-</header>
+<div data-poster-header class:list={[
+  'sticky top-0 z-40 font-sans [&_[data-header-editions]]:hidden [&_[data-festival-header]]:border-b',
+  'max-sm:[&_[data-festival-header]>div]:gap-1 max-sm:[&_[data-festival-header]>div]:px-3',
+  'max-sm:[&_[data-header-brand]]:gap-2 max-sm:[&_[data-header-brand]>a]:w-16 max-lg:[&_[data-header-date]]:whitespace-nowrap lg:[&_[data-header-brand]]:flex-wrap',
+  '[&_a[aria-current]]:text-arc-yellow [&_nav_a:hover]:text-arc-yellow [&_nav_a:focus-visible]:text-arc-yellow',
+  '[--header-bg-color:var(--color-background)] [--header-text-color:var(--color-foreground)] [--header-border-color:color-mix(in_oklab,var(--color-primary)_10%,transparent)] [--header-panel-bg-color:var(--color-background)] [--header-panel-text-color:var(--color-foreground)]',
+]}>
+  <FestivalNavbar editions={editions} {links} mobilePanelMode='layered' centeredLinks homeHref={publicPath('/')} {currentPath} underlineLinks={false}>
+    <NavigationTile slot='separator-1' motif='chevrons-right' />
+    <NavigationTile slot='separator-2' motif='rosette-yellow' />
+    <NavigationTile slot='separator-3' motif='lightning' />
+    <NavigationTile slot='separator-4' motif='sparks' />
+    <Image slot='logo' src={arc26Logo} width={128} widths={[128, 256, 384]} sizes='128px' alt='Logotipo del Festival ARC 2026' class='block h-11 w-full object-contain object-left' loading='eager' />
+    <span slot='date'>28 y 29 de noviembre</span>
+    <span slot='location'>Plaza de Armas de La Serena</span>
+    <ParticipantSearch slot='header-utility' />
+  </FestivalNavbar>
+</div>

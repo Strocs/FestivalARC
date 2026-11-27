@@ -1,0 +1,91 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import ArtistDetail from '../../features/artists/ArtistDetail.astro'
+import { categories, type ParticipantView, type CategoryView } from '../../features/artists/categories'
+import Breadcrumbs from '../../components/Breadcrumbs.astro'
+import PosterPattern from '../../features/poster/PosterPattern.astro'
+import { motifSequence } from '../../features/poster/poster'
+
+export function getStaticPaths() {
+  return categories.flatMap(category => category.participants.map(artist => ({
+    params: { category: category.slug, slug: artist.id },
+    props: { artist, category },
+  })))
+}
+interface Props { artist: ParticipantView, category: CategoryView }
+const { artist, category } = Astro.props
+let seed = Array.from(artist.id).reduce((value, character) => (value * 31 + character.charCodeAt(0)) >>> 0, 1)
+const random = () => {
+  seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0
+  return seed / 4294967296
+}
+const motifs = Array.from({ length: 5 }, () => {
+  const deck = [...motifSequence]
+  for (let index = deck.length - 1; index > 0; index--) {
+    const target = Math.floor(random() * (index + 1))
+    const previous = deck[index]
+    deck[index] = deck[target]
+    deck[target] = previous
+  }
+  return deck
+}).flat()
+---
+<Layout title={`${artist.name} | ${category.name} | Festival ARC 2026`}>
+  <main class='w-full flex-1 px-0 py-8 md:px-8 md:py-12 xl:px-[8.333333vw] xl:py-20' aria-label={`Ficha de ${artist.name}`}>
+    <div class='mx-auto w-full max-w-[1600px]'>
+      <div class='px-4 md:px-0'><Breadcrumbs {category} participant={artist.name} /></div>
+      <div class='grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,4fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,4fr)_minmax(0,1fr)]'>
+        <div class='grid grid-cols-8 md:col-span-3 md:grid-cols-12' aria-hidden='true'>
+          {Array.from({ length: 12 }, (_, index) => <div class:list={['aspect-[160/152] min-w-0 overflow-hidden', { 'hidden md:block': index >= 8 }]}><PosterPattern motif={motifs[index + 36]} /></div>)}
+        </div>
+        <div data-tile-column class='relative hidden min-h-0 md:block' aria-hidden='true'>
+          <template>
+            {motifs.map(motif => <div class='min-h-0 min-w-0'><PosterPattern {motif} /></div>)}
+          </template>
+          <div data-column-tiles class='absolute inset-0 grid grid-cols-2'></div>
+        </div>
+        <div data-participant-frame class='flex min-w-0 items-center [min-height:var(--participant-frame-height,0px)]'>
+          <div data-participant-body class='w-full min-w-0'><ArtistDetail {artist} /></div>
+        </div>
+        <div data-tile-column class='relative hidden min-h-0 md:block' aria-hidden='true'>
+          <template>
+            {motifs.map((_, index) => <div class='min-h-0 min-w-0'><PosterPattern motif={motifs[(index + 12) % motifs.length]} /></div>)}
+          </template>
+          <div data-column-tiles class='absolute inset-0 grid grid-cols-2'></div>
+        </div>
+        <div class='grid grid-cols-8 md:col-span-3 md:grid-cols-12' aria-hidden='true'>
+          {Array.from({ length: 12 }, (_, index) => <div class:list={['aspect-[160/152] min-w-0 overflow-hidden', { 'hidden md:block': index >= 8 }]}><PosterPattern motif={motifs[index + 24]} /></div>)}
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const frame = document.querySelector<HTMLElement>('[data-participant-frame]')
+  const body = document.querySelector<HTMLElement>('[data-participant-body]')
+  const columns = Array.from(document.querySelectorAll<HTMLElement>('[data-tile-column]'))
+
+  if (frame && body && columns.length) {
+    let previousRows = -1
+    const observer = new ResizeObserver(() => {
+      const tileHeight = columns[0].getBoundingClientRect().width / 2 * 152 / 160
+      const rows = tileHeight ? Math.ceil(body.getBoundingClientRect().height / tileHeight) : 0
+      frame.style.setProperty('--participant-frame-height', `${rows * tileHeight}px`)
+      if (rows === previousRows) return
+      previousRows = rows
+      for (const column of columns) {
+        const template = column.querySelector<HTMLTemplateElement>('template')!
+        const tiles = column.querySelector<HTMLElement>('[data-column-tiles]')!
+        const variants = Array.from(template.content.children)
+        tiles.style.gridTemplateRows = rows ? `repeat(${rows}, minmax(0, 1fr))` : ''
+        tiles.replaceChildren(...Array.from({ length: rows * 2 }, (_, index) =>
+          variants[index % variants.length].cloneNode(true),
+        ))
+      }
+    })
+    observer.observe(body)
+    observer.observe(columns[0])
+    window.addEventListener('pagehide', () => observer.disconnect(), { once: true })
+  }
+</script>

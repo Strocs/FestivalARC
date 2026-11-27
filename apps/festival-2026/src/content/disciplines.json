@@ -1,0 +1,30 @@
+[
+  {
+    "id": "musica",
+    "name": "Música"
+  },
+  {
+    "id": "artesania",
+    "name": "Artesanía"
+  },
+  {
+    "id": "diseno",
+    "name": "Diseño"
+  },
+  {
+    "id": "ilustracion",
+    "name": "Ilustración"
+  },
+  {
+    "id": "literatura",
+    "name": "Literatura"
+  },
+  {
+    "id": "artes-escenicas",
+    "name": "Artes escénicas"
+  },
+  {
+    "id": "artes-visuales",
+    "name": "Artes visuales"
+  }
+]

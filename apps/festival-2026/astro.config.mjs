@@ -7,6 +7,9 @@ const distributionOutput = process.env.DISTRIBUTION_OUTPUT_DIR
 
 export default defineConfig({
   base: publicationBase,
+  server: {
+    allowedHosts: ['ongoing-emacs-digest-improving.trycloudflare.com'],
+  },
   outDir: distributionOutput || './dist',
   output: 'static',
   site: 'https://festivalarc.com',
@@ -14,17 +17,19 @@ export default defineConfig({
     icon({
       include: {
         lucide: ['arrow-right'],
+        'simple-icons': ['instagram', 'spotify'],
       },
     }),
   ],
   fonts: [
     {
-      provider: fontProviders.fontsource(),
+      provider: fontProviders.google(),
       name: 'Poppins',
       cssVariable: '--font-poppins',
       weights: [200, 300, 400, 600, 700, 800, 900],
       styles: ['normal'],
       subsets: ['latin'],
+      display: 'swap',
     },
   ],
   vite: {
