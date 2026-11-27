@@ -17,7 +17,7 @@ export default defineConfig({
     icon({
       include: {
         lucide: ['arrow-right'],
-        'simple-icons': ['instagram', 'spotify'],
+        'simple-icons': ['instagram', 'spotify', 'x'],
       },
     }),
   ],
