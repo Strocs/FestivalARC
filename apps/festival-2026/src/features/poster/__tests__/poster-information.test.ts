@@ -30,10 +30,10 @@ describe('PosterInformation', () => {
       expect(link.match(/<svg\b/g)).toHaveLength(1)
       expect(link).toContain('M8 42H65L42 18H64L94 50 64 82H42L65 58H8Z')
       const fit = Number(link.match(/--category-fit:([\d.]+)/)?.[1])
-      expect(fit).toBeCloseTo(0.96 / measureArtistName(categories[index].name), 6)
-      // Width intent, not pixel proof: subtract UL padding, arrow and gap first.
-      for (const width of [288, 384, 640]) {
-        const available = width - 32
+      expect(fit).toBeCloseTo(0.9 / measureArtistName(categories[index].name), 6)
+      // The list is unpadded on mobile and has 24px on each side from md.
+      for (const [width, horizontalPadding] of [[288, 0], [384, 0], [768, 48]]) {
+        const available = width - horizontalPadding
         const arrow = Math.min(80, Math.max(32, available * 0.12))
         const font = (available - arrow - 12) * fit
         expect(font * measureArtistName(categories[index].name)).toBeLessThan(available - arrow - 12)

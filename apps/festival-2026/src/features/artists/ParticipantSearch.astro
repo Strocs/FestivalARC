@@ -1,0 +1,264 @@
+---
+import { participants } from './categories'
+import { publicPath } from '../../utils/publication'
+
+const panelId = `participant-search-${crypto.randomUUID()}`
+const index = participants.map(({ name, canonicalPath }) => ({
+  name,
+  href: publicPath(canonicalPath),
+}))
+---
+
+<participant-search
+  class='flex justify-end lg:relative'
+  data-index={JSON.stringify(index)}>
+  <button
+    type='button'
+    aria-label='Buscar participantes'
+    aria-expanded='false'
+    aria-controls={panelId}
+    class='hover:text-primary focus-visible:outline-primary aria-expanded:text-primary grid size-11 shrink-0 cursor-pointer place-items-center rounded-full focus-visible:outline-2 focus-visible:-outline-offset-2'>
+    <svg
+      aria-hidden='true'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      stroke-width='2'
+      stroke-linecap='round'>
+      <circle cx='10.5' cy='10.5' r='6.5'></circle>
+      <path d='m16 16 4 4'></path>
+    </svg>
+  </button>
+  <div
+    id={panelId}
+    role='search'
+    aria-label='Buscar participantes'
+    class='text-foreground absolute inset-x-4 top-full z-10 -mt-2 min-w-0 origin-top lg:left-0 lg:right-12 lg:top-1 lg:mt-0 lg:origin-right'
+    hidden>
+    <input
+      type='search'
+      aria-label='Buscar participantes'
+      placeholder='Buscar por nombre'
+      autocomplete='off'
+      spellcheck='false'
+      class='bg-background outline-hidden placeholder:text-foreground/70 focus:border-primary/25 mx-auto block h-10 w-full max-w-prose rounded-lg border border-[var(--header-border-color)] px-4 text-base shadow-md transition-colors duration-150 motion-reduce:transition-none md:rounded-full'
+    />
+    <div
+      data-search-feedback
+      class='bg-background border-primary/25 mt-2 rounded-xl border p-1 shadow-md'
+      hidden>
+      <ul
+        aria-label='Resultados de búsqueda'
+        data-search-results
+        class='empty:hidden'>
+      </ul>
+      <p role='status' class='px-3 py-2 text-sm empty:sr-only'></p>
+    </div>
+  </div>
+  <template>
+    <li>
+      <a
+        class='hover:bg-foreground/10 hover:text-arc-yellow focus-visible:outline-primary block min-h-11 truncate rounded-lg px-3 py-3 text-sm focus-visible:outline-2 focus-visible:-outline-offset-2'
+      ></a>
+    </li>
+  </template>
+</participant-search>
+
+<script>
+  interface SearchEntry {
+    name: string
+    href: string
+  }
+
+  const normalize = (text: string) =>
+    text.trim().normalize('NFD').replace(/\p{M}/gu, '').toLowerCase()
+
+  class ParticipantSearch extends HTMLElement {
+    private controller?: AbortController
+
+    connectedCallback() {
+      if (this.controller) return
+      this.controller = new AbortController()
+      const { signal } = this.controller
+      const trigger = this.querySelector('button')!
+      const panel = this.querySelector<HTMLElement>('[role="search"]')!
+      const input = this.querySelector('input')!
+      const feedback = this.querySelector<HTMLElement>(
+        '[data-search-feedback]',
+      )!
+      const results = this.querySelector('[data-search-results]')!
+      const status = this.querySelector('[role="status"]')!
+      const template = this.querySelector('template')!
+      const navbar = this.closest('festival-navbar')
+      const mobileMenu = navbar?.querySelector<HTMLDialogElement>(
+        '[data-header-panel]',
+      )
+      const menuToggle = navbar?.querySelector('[data-header-toggle]')
+      const entries = (JSON.parse(this.dataset.index!) as SearchEntry[]).map(
+        (entry) => ({
+          ...entry,
+          normalizedName: normalize(entry.name),
+        }),
+      )
+      const desktop = window.matchMedia('(min-width: 64rem)')
+      const reducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      )
+
+      const renderResults = () => {
+        const query = normalize(input.value)
+        const matches = query
+          ? entries.filter((entry) => entry.normalizedName.includes(query))
+          : []
+        const rank = (name: string) =>
+          name === query ? 0 : name.startsWith(query) ? 1 : 2
+        matches.sort(
+          (a, b) =>
+            rank(a.normalizedName) - rank(b.normalizedName) ||
+            a.name.localeCompare(b.name, 'es'),
+        )
+        results.replaceChildren(
+          ...matches.slice(0, 3).map(({ href, name }) => {
+            const row = template.content.cloneNode(true) as DocumentFragment
+            const link = row.querySelector('a')!
+            link.href = href
+            link.textContent = name
+            return row
+          }),
+        )
+        feedback.hidden = !query
+        status.textContent =
+          query && matches.length === 0 ? 'No encontramos coincidencias' : ''
+      }
+      let expanded = false
+      let motion: Animation | undefined
+      const setExpanded = (open: boolean) => {
+        expanded = open
+        trigger.setAttribute('aria-expanded', String(open))
+        panel.inert = !open
+      }
+      const collapsedFrame = () => ({
+        opacity: 0,
+        transform: desktop.matches ? 'scaleX(0.88)' : 'translateY(-6px)',
+      })
+      const currentFrame = () => {
+        const { opacity, transform } = getComputedStyle(panel)
+        return { opacity, transform }
+      }
+      const cancelMotion = () => {
+        motion?.cancel()
+        motion = undefined
+      }
+      const animate = (from: Keyframe, to: Keyframe) => {
+        cancelMotion()
+        const animation = panel.animate([from, to], {
+          duration: 180,
+          easing: expanded ? 'ease-out' : 'ease-in',
+          fill: 'forwards',
+        })
+        motion = animation
+        animation.onfinish = () => {
+          if (motion !== animation) return
+          if (!expanded) panel.hidden = true
+          cancelMotion()
+        }
+      }
+      const close = (restoreFocus = false) => {
+        if (!expanded) return
+        if (restoreFocus) trigger.focus({ preventScroll: true })
+        setExpanded(false)
+        if (reducedMotion.matches) {
+          cancelMotion()
+          panel.hidden = true
+        } else {
+          animate(currentFrame(), collapsedFrame())
+        }
+      }
+      const reset = () => {
+        setExpanded(false)
+        cancelMotion()
+        panel.hidden = true
+        input.value = ''
+        renderResults()
+      }
+      signal.addEventListener('abort', reset, { once: true })
+
+      trigger.addEventListener(
+        'click',
+        () => {
+          if (expanded) {
+            close(true)
+            return
+          }
+          if (mobileMenu?.open) mobileMenu.close('header-utility')
+          const from = panel.hidden ? collapsedFrame() : currentFrame()
+          panel.hidden = false
+          setExpanded(true)
+          input.focus({ preventScroll: true })
+          if (reducedMotion.matches) cancelMotion()
+          else animate(from, { opacity: 1, transform: 'none' })
+        },
+        { signal },
+      )
+      input.addEventListener('input', renderResults, { signal })
+      // Keep the input from blurring before an inside click on browsers that don't focus clicked links or buttons.
+      this.addEventListener(
+        'mousedown',
+        (event) => {
+          if (
+            event.button === 0 &&
+            expanded &&
+            event.target instanceof Element &&
+            event.target.closest('a, button')
+          ) {
+            event.preventDefault()
+          }
+        },
+        { signal },
+      )
+      this.addEventListener(
+        'focusout',
+        (event) => {
+          if (!this.contains(event.relatedTarget as Node | null)) close()
+        },
+        { signal },
+      )
+      this.addEventListener(
+        'keydown',
+        (event) => {
+          if (event.key !== 'Escape' || !expanded) return
+          event.preventDefault()
+          close(true)
+        },
+        { signal },
+      )
+      document.addEventListener(
+        'pointerdown',
+        (event) => {
+          if (!this.contains(event.target as Node | null)) close()
+        },
+        { capture: true, signal },
+      )
+      menuToggle?.addEventListener('click', () => close(), { signal })
+      document.addEventListener('astro:before-swap', reset, { signal })
+      window.addEventListener('pagehide', reset, { signal })
+      window.addEventListener(
+        'pageshow',
+        (event) => {
+          if (event.persisted) reset()
+        },
+        { signal },
+      )
+    }
+
+    disconnectedCallback() {
+      this.controller?.abort()
+      this.controller = undefined
+    }
+  }
+
+  if (!customElements.get('participant-search'))
+    customElements.define('participant-search', ParticipantSearch)
+</script>

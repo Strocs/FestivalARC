@@ -21,6 +21,8 @@ const editions = [{ label: 'ARC 2025', href: '/ediciones/2025/' }]
 ```
 
 Required slots: `logo`, `date`. Optional slots: `location`, `cta`, `mobile-extra`, and `separator-N` (1-based index of the link following the separator). Separators render only between desktop route links as decorative, `aria-hidden` list items. Supply noninteractive, ID-free artwork; omitted slots produce no extra markup. Mobile may omit decorations.
+Use `header-utility` for a single control rendered before the mobile menu toggle and in the right column of the centered desktop layout. Leave that desktop column free of visible CTA/edition controls when using the slot. A utility can call the layered navigation dialog's `close('header-utility')` and take focus. Other dismissals restore focus to the hamburger.
+
 Required prop: `editions` (a non-empty list of `{ label, href }`).
 Optional props: `links` (same shape, defaults to empty), `homeHref` (defaults to `/`), and `centeredLinks` (boolean, defaults to `false`).
 `centeredLinks` opts into a three-column desktop layout: brand left, wrapping route-link group centered, CTA/editions right. It does not change mobile destinations or panel behavior. ARC 2026 uses it for Inicio plus its four categories; existing consumers keep the default right-aligned navigation.

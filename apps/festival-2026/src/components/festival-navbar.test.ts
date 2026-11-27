@@ -175,8 +175,9 @@ describe('FestivalNavbar public contract', () => {
   it('hides the 2026 editions menu at every viewport width', async () => {
     const container = await AstroContainer.create()
     const html = await container.renderToString(Header)
-    const wrapper = html.match(/<div\b[^>]*data-poster-header[^>]*>/)?.[0] ?? ''
-    expect(wrapper.match(/class="([^"]*)"/)?.[1].replaceAll('&amp;', '&').split(' ')).toContain('[&_[data-header-editions]]:hidden')
+    const wrapper = html.match(/<div\s+data-poster-header\b(?:[^"'<>]|"[^"]*"|'[^']*')*>/)?.[0] ?? ''
+    const classes = wrapper.match(/class="([^"]*)"/)?.[1].replaceAll('&amp;', '&').split(/\s+/) ?? []
+    expect(classes).toContain('[&_[data-header-editions]]:hidden')
     expect(html.match(/\bdata-header-editions(?=[\s>])/g)).toHaveLength(2)
   })
 

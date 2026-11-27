@@ -20,7 +20,10 @@
         },
         "national": false,
         "location": "Plaza Gabriel González Videla",
-        "socialLinks": {"instagram":"https://www.instagram.com/polterchile/","spotify":"https://open.spotify.com/intl-es/artist/0Ib5T2tipzgV6BuoRy5FVW?si=Xh6TkD7dSwycctbhHUW8mg"},
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/polterchile/",
+          "spotify": "https://open.spotify.com/intl-es/artist/0Ib5T2tipzgV6BuoRy5FVW?si=Xh6TkD7dSwycctbhHUW8mg"
+        },
         "youtubeVideoId": "piiK5twuq90"
       },
       {
@@ -64,10 +67,11 @@
           "alt": "Shicris"
         },
         "national": false,
-        "location": "Plaza Santo Domingo"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/shicris.cl/","spotify":"https://open.spotify.com/intl-es/artist/5s468mFUjqdJaa1VfikhOT?si=1Zkl0ynOTBW5biWcLShZYA"}
-      ,
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/shicris.cl/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5s468mFUjqdJaa1VfikhOT?si=1Zkl0ynOTBW5biWcLShZYA"
+        },
         "youtubeVideoId": "4Yy_FtbM2k4"
       },
       {
@@ -134,9 +138,11 @@
           "alt": "Freshki"
         },
         "national": false,
-        "location": "Plaza Santo Domingo"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/freshkivel/","spotify":"https://open.spotify.com/intl-es/artist/4NTLFGANmtpQZw3PS5GSfE?si=aXsb2X-2TaSkqs_j_rJvDw"}
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/freshkivel/",
+          "spotify": "https://open.spotify.com/intl-es/artist/4NTLFGANmtpQZw3PS5GSfE?si=aXsb2X-2TaSkqs_j_rJvDw"
+        }
       },
       {
         "id": "gepe",
@@ -228,9 +234,11 @@
           "alt": "Jazztacuatico"
         },
         "national": false,
-        "location": "Terraza Cordovez"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/jazztacuatico/","spotify":"https://open.spotify.com/intl-es/artist/2sEtRKW8ZAkGtbVV8IhpoE?si=51rtMunjRIKZ0BH4Vr8ehw"}
+        "location": "Terraza Cordovez",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/jazztacuatico/",
+          "spotify": "https://open.spotify.com/intl-es/artist/2sEtRKW8ZAkGtbVV8IhpoE?si=51rtMunjRIKZ0BH4Vr8ehw"
+        }
       },
       {
         "id": "rosario-alfonso",
@@ -273,9 +281,11 @@
           "alt": "Duerme y Cae!"
         },
         "national": false,
-        "location": "Odeón Plaza de Armas"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/duermeycae/","spotify":"https://open.spotify.com/intl-es/artist/5RMewTvifqaXzb2uFHPNHu?si=HqeuCNOdRguhiv7og_8rOg"}
+        "location": "Odeón Plaza de Armas",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/duermeycae/",
+          "spotify": "https://open.spotify.com/intl-es/artist/5RMewTvifqaXzb2uFHPNHu?si=HqeuCNOdRguhiv7og_8rOg"
+        }
       },
       {
         "id": "claudio-valenzuela",
@@ -342,10 +352,11 @@
           "alt": "Kalishe"
         },
         "national": false,
-        "location": "Plaza Gabriel González Videla"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/kalishe.es/","spotify":"https://open.spotify.com/intl-es/artist/0bXKIgeSG5KohnSiQcJhmf?si=oic_x9dSSVeyIY-9u9b32w"}
-      ,
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/kalishe.es/",
+          "spotify": "https://open.spotify.com/intl-es/artist/0bXKIgeSG5KohnSiQcJhmf?si=oic_x9dSSVeyIY-9u9b32w"
+        },
         "youtubeVideoId": "Gm2NzEi03JE"
       },
       {
@@ -390,9 +401,11 @@
           "alt": "Weinkeys + Blackbeat"
         },
         "national": false,
-        "location": "Plaza Gabriel González Videla"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/weinkeyss/","spotify":"https://open.spotify.com/intl-es/album/7MQIEtf0sj0tbsUWsZlD7F"}
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/weinkeyss/",
+          "spotify": "https://open.spotify.com/intl-es/album/7MQIEtf0sj0tbsUWsZlD7F"
+        }
       },
       {
         "id": "nunez-briceno",
@@ -434,10 +447,11 @@
           "alt": "Stendhal"
         },
         "national": false,
-        "location": "Plaza Santo Domingo"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/stendhal.banda/","spotify":"https://open.spotify.com/intl-es/artist/4pAFyj9RLmbGP6MfAGVjmv?si=cBwGv6-QTFC8Pw-bXWPj0g"}
-      ,
+        "location": "Plaza Santo Domingo",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/stendhal.banda/",
+          "spotify": "https://open.spotify.com/intl-es/artist/4pAFyj9RLmbGP6MfAGVjmv?si=cBwGv6-QTFC8Pw-bXWPj0g"
+        },
         "youtubeVideoId": "NefPMTu5SIs"
       },
       {
@@ -473,7 +487,7 @@
         "ticketUrl": null,
         "date": {
           "day": "Domingo 29",
-          "time": "17:00",
+          "time": "19:00",
           "month": "noviembre"
         },
         "image": {
@@ -553,10 +567,11 @@
           "alt": "Medinamico"
         },
         "national": false,
-        "location": "Plaza Gabriel González Videla"
-      ,
-        "socialLinks": {"instagram":"https://www.instagram.com/medinamico.cl/","spotify":"https://open.spotify.com/intl-es/artist/4wrRxeeUSrgOrRqlBBxQ47?si=KuUArBWEQ3yQytqbhLYUQg"}
-      ,
+        "location": "Plaza Gabriel González Videla",
+        "socialLinks": {
+          "instagram": "https://www.instagram.com/medinamico.cl/",
+          "spotify": "https://open.spotify.com/intl-es/artist/4wrRxeeUSrgOrRqlBBxQ47?si=KuUArBWEQ3yQytqbhLYUQg"
+        },
         "youtubeVideoId": "5tjyaiXt0LA"
       },
       {
@@ -1297,7 +1312,10 @@
         "socialLinks": {
           "instagram": "https://www.instagram.com/anima.rojas/"
         },
-        "website": ["https://animared.myportfolio.com/portafolio", "https://esponsor.com/animarojas"],
+        "website": [
+          "https://animared.myportfolio.com/portafolio",
+          "https://esponsor.com/animarojas"
+        ],
         "image": null
       },
       {

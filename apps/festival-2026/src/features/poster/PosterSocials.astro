@@ -18,19 +18,21 @@ const links = [
 ---
 
 <PosterInformation {...placement} informationId={informationId}>
-  <div class='grid h-full min-h-0 grid-rows-3'>
-    {links.map(({ label, href }) => (
-      <a
-        href={href}
-        target='_blank'
-        rel='noopener noreferrer'
-        aria-label={label}
-        class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-start gap-3 px-6 py-2 font-black transition-colors duration-300'>
-        <span class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'>
-          {label}
-        </span>
-        <PosterArrow class='group-hover/social:-rotate-45' />
-      </a>
-    ))}
+  <div class='flex h-full min-h-0 flex-col justify-center'>
+    {
+      links.map(({ label, href }) => (
+        <a
+          href={href}
+          target='_blank'
+          rel='noopener noreferrer'
+          aria-label={label}
+          class='group/social text-foreground hover:text-arc-rose flex min-h-0 items-center justify-start gap-2 px-0 md:px-6 py-2 font-black transition-colors duration-300'>
+          <span class='wrap-anywhere min-w-0 text-[length:clamp(1rem,calc(0.5rem+7cqw),3rem)] uppercase leading-[.94] tracking-[-.04em]'>
+            {label}
+          </span>
+          <PosterArrow class='group-hover/social:-rotate-45' />
+        </a>
+      ))
+    }
   </div>
 </PosterInformation>

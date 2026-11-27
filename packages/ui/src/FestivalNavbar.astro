@@ -11,81 +11,240 @@ interface Props {
   underlineLinks?: boolean
   mobilePanelMode?: 'modal' | 'layered'
 }
-const { editions, links = [], homeHref = '/', centeredLinks = false, currentPath, underlineLinks = true, mobilePanelMode = 'modal' } = Astro.props
+const {
+  editions,
+  links = [],
+  homeHref = '/',
+  centeredLinks = false,
+  currentPath,
+  underlineLinks = true,
+  mobilePanelMode = 'modal',
+} = Astro.props
 for (const name of ['logo', 'date']) {
-  if (!Astro.slots.has(name)) throw new Error(`FestivalNavbar requires the "${name}" slot`)
+  if (!Astro.slots.has(name))
+    throw new Error(`FestivalNavbar requires the "${name}" slot`)
 }
 if (!Array.isArray(editions) || editions.length === 0) {
   throw new Error('FestivalNavbar requires at least one other edition')
 }
-const mobileLinks = [{ label: 'Inicio', href: homeHref }, ...links.filter(link => link.href !== homeHref && link.label !== 'Inicio')]
+const mobileLinks = [
+  { label: 'Inicio', href: homeHref },
+  ...links.filter((link) => link.href !== homeHref && link.label !== 'Inicio'),
+]
 // Match complete path segments, with home exact-only. Longest match wins so
 // overlapping destinations cannot expose two active links in the same group.
 const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/'
-const pathname = currentPath === undefined ? undefined : normalizePath(currentPath)
-const destinations = [homeHref, ...links.map(link => link.href)]
-const activeHref = pathname === undefined ? undefined : destinations
-  .filter(href => pathname === normalizePath(href)
-    || (normalizePath(href) !== normalizePath(homeHref) && pathname.startsWith(`${normalizePath(href)}/`)))
-  .sort((a, b) => b.length - a.length)[0]
-const current = (href: string) => href === activeHref
-  ? pathname === normalizePath(href) ? 'page' as const : 'true' as const
-  : undefined
-const linkClass = [underlineLinks && 'hover:underline', 'focus-visible:outline-2 focus-visible:outline-offset-2']
-const separators = await Promise.all(links.map((_, index) => {
-  const slot = `separator-${index}`
-  return index > 0 && Astro.slots.has(slot) ? Astro.slots.render(slot) : ''
-}))
+const pathname =
+  currentPath === undefined ? undefined : normalizePath(currentPath)
+const destinations = [homeHref, ...links.map((link) => link.href)]
+const activeHref =
+  pathname === undefined
+    ? undefined
+    : destinations
+        .filter(
+          (href) =>
+            pathname === normalizePath(href) ||
+            (normalizePath(href) !== normalizePath(homeHref) &&
+              pathname.startsWith(`${normalizePath(href)}/`)),
+        )
+        .sort((a, b) => b.length - a.length)[0]
+const current = (href: string) =>
+  href === activeHref
+    ? pathname === normalizePath(href)
+      ? ('page' as const)
+      : ('true' as const)
+    : undefined
+const linkClass = [
+  underlineLinks && 'hover:underline',
+  'focus-visible:outline-2 focus-visible:outline-offset-2',
+]
+const separators = await Promise.all(
+  links.map((_, index) => {
+    const slot = `separator-${index}`
+    return index > 0 && Astro.slots.has(slot) ? Astro.slots.render(slot) : ''
+  }),
+)
 const panelId = `festival-navigation-${crypto.randomUUID()}`
 const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
+const hasHeaderUtility = Astro.slots.has('header-utility')
 ---
+
 <festival-navbar class='contents' data-mobile-panel-mode={mobilePanelMode}>
-  <header data-festival-header class='relative z-30 border-[var(--header-border-color,currentColor)] bg-[var(--header-bg-color,transparent)] py-1 text-[color:var(--header-text-color,inherit)]'>
-    <div class:list={['relative mx-auto flex min-h-16 w-full items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-14', centeredLinks && 'lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]']}>
+  <header
+    data-festival-header
+    class='relative z-30 border-[var(--header-border-color,currentColor)] bg-[var(--header-bg-color,transparent)] py-1 text-[color:var(--header-text-color,inherit)]'>
+    <div
+      class:list={[
+        'relative mx-auto flex min-h-16 w-full items-center justify-between gap-3 px-4 py-2 sm:gap-6 sm:px-14',
+        centeredLinks &&
+          'lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)]',
+      ]}>
       <div data-header-brand class='flex min-w-0 items-center gap-3'>
-        <a href={homeHref} aria-label='Inicio' class='block w-20 shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-32'>
+        <a
+          href={homeHref}
+          aria-label='Inicio'
+          class='block w-20 shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-32'>
           <slot name='logo' />
         </a>
         <div class='min-w-0 text-xs leading-4 sm:text-sm'>
           <div data-header-date class='font-bold'><slot name='date' /></div>
-          {Astro.slots.has('location') && <div data-header-location><slot name='location' /></div>}
+          {
+            Astro.slots.has('location') && (
+              <div data-header-location>
+                <slot name='location' />
+              </div>
+            )
+          }
         </div>
       </div>
-      <nav data-header-nav aria-label='Navegación principal' class={centeredLinks ? 'hidden shrink-0 items-center gap-4 lg:contents' : 'hidden shrink-0 items-center gap-4 lg:flex'}>
-        {links.length > 0 && <ul data-header-links={centeredLinks ? 'centered' : undefined} class:list={['flex items-center gap-4', centeredLinks && 'col-start-2 row-start-1 min-w-0 flex-wrap justify-center text-center']}>
-          {links.map(({ label, href }, index) => <>
-            {separators[index] && <li data-link-separator aria-hidden='true' class='shrink-0' set:html={separators[index]} />}
-            <li><a href={href} aria-current={current(href)} class:list={linkClass}>{label}</a></li>
-          </>)}
-        </ul>}
-        {centeredLinks ? <div class='col-start-3 row-start-1 flex min-w-0 flex-wrap items-center justify-end gap-4'>
-          {cta && <div data-header-cta set:html={cta} />}
-          <EditionMenu editions={editions} />
-        </div> : <>
-          {cta && <div data-header-cta set:html={cta} />}
-          <EditionMenu editions={editions} />
-        </>}
+      <nav
+        data-header-nav
+        aria-label='Navegación principal'
+        class={centeredLinks
+          ? 'hidden shrink-0 items-center gap-4 lg:contents'
+          : 'hidden shrink-0 items-center gap-4 lg:flex'}>
+        {
+          links.length > 0 && (
+            <ul
+              data-header-links={centeredLinks ? 'centered' : undefined}
+              class:list={[
+                'flex items-center gap-4',
+                centeredLinks &&
+                  'col-start-2 row-start-1 min-w-0 flex-wrap justify-center text-center',
+              ]}>
+              {links.map(({ label, href }, index) => (
+                <>
+                  {separators[index] && (
+                    <li
+                      data-link-separator
+                      aria-hidden='true'
+                      class='shrink-0'
+                      set:html={separators[index]}
+                    />
+                  )}
+                  <li>
+                    <a
+                      href={href}
+                      aria-current={current(href)}
+                      class:list={linkClass}>
+                      {label}
+                    </a>
+                  </li>
+                </>
+              ))}
+            </ul>
+          )
+        }
+        {
+          centeredLinks ? (
+            <div class='col-start-3 row-start-1 flex min-w-0 flex-wrap items-center justify-end gap-4'>
+              {cta && <div data-header-cta set:html={cta} />}
+              <EditionMenu editions={editions} />
+            </div>
+          ) : (
+            <>
+              {cta && <div data-header-cta set:html={cta} />}
+              <EditionMenu editions={editions} />
+            </>
+          )
+        }
       </nav>
-      <button data-header-toggle type='button' aria-label='Abrir navegación' aria-controls={panelId} aria-expanded='false' class='group shrink-0 cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-2 lg:hidden'>
-        <svg data-icon-menu aria-hidden='true' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'>
-          <path data-icon-line='top' d='M4 12h16' class='origin-[12px_12px] -translate-y-[6px] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[icon-open=true]:translate-y-0 group-data-[icon-open=true]:rotate-45 motion-reduce:transition-none' />
-          <path data-icon-line='middle' d='M4 12h8' class='origin-[4px_12px] transition-[transform,opacity] duration-200 group-data-[icon-open=true]:scale-x-0 group-data-[icon-open=true]:opacity-0 motion-reduce:transition-none' />
-          <path data-icon-line='bottom' d='M4 12h16' class='origin-[12px_12px] translate-y-[6px] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[icon-open=true]:translate-y-0 group-data-[icon-open=true]:-rotate-45 motion-reduce:transition-none' />
+      {
+        hasHeaderUtility && (
+          <div
+            data-header-utility
+            class='ms-auto shrink-0 lg:col-start-3 lg:row-start-1 lg:ms-0 lg:w-full'>
+            <slot name='header-utility' />
+          </div>
+        )
+      }
+      <button
+        data-header-toggle
+        type='button'
+        aria-label='Abrir navegación'
+        aria-controls={panelId}
+        aria-expanded='false'
+        class='group shrink-0 cursor-pointer p-2 focus-visible:outline-2 focus-visible:outline-offset-2 lg:hidden'>
+        <svg
+          data-icon-menu
+          aria-hidden='true'
+          width='24'
+          height='24'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'>
+          <path
+            data-icon-line='top'
+            d='M4 12h16'
+            class='origin-[12px_12px] -translate-y-[6px] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[icon-open=true]:translate-y-0 group-data-[icon-open=true]:rotate-45 motion-reduce:transition-none'
+          ></path>
+          <path
+            data-icon-line='middle'
+            d='M4 12h8'
+            class='origin-[4px_12px] transition-[transform,opacity] duration-200 group-data-[icon-open=true]:scale-x-0 group-data-[icon-open=true]:opacity-0 motion-reduce:transition-none'
+          ></path>
+          <path
+            data-icon-line='bottom'
+            d='M4 12h16'
+            class='origin-[12px_12px] translate-y-[6px] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[icon-open=true]:translate-y-0 group-data-[icon-open=true]:-rotate-45 motion-reduce:transition-none'
+          ></path>
         </svg>
       </button>
     </div>
   </header>
-  <dialog id={panelId} data-header-panel aria-label='Navegación del festival' class='fixed inset-0 z-20 m-0 h-auto max-h-none w-full max-w-none overflow-hidden border-0 bg-transparent p-0 text-[color:var(--header-panel-text-color,CanvasText)] backdrop:bg-transparent'>
-    <div data-header-surface class:list={['absolute inset-0 flex flex-col gap-8 overflow-y-auto bg-[var(--header-panel-bg-color,Canvas)] px-6 pb-6 pt-[var(--navigation-header-height)]', mobilePanelMode === 'layered' && 'min-h-dvh pb-[max(1.5rem,env(safe-area-inset-bottom))]']}>
-      <nav aria-label='Navegación móvil' class:list={['flex flex-col items-center gap-6 text-center', mobilePanelMode === 'layered' ? 'flex-1 shrink-0 justify-center' : 'my-auto']}>
-        {<ul class='flex flex-col items-center gap-6 text-2xl'>
-          {mobileLinks.map(({ label, href }) => <li><a href={href} aria-current={current(href)} class:list={linkClass}>{label}</a></li>)}
-        </ul>}
+  <dialog
+    id={panelId}
+    data-header-panel
+    aria-label='Navegación del festival'
+    class='fixed inset-0 z-20 m-0 h-auto max-h-none w-full max-w-none overflow-hidden border-0 bg-transparent p-0 text-[color:var(--header-panel-text-color,CanvasText)] backdrop:bg-transparent'>
+    <div
+      data-header-surface
+      class:list={[
+        'absolute inset-0 flex flex-col gap-8 overflow-y-auto bg-[var(--header-panel-bg-color,Canvas)] px-6 pb-6 pt-[var(--navigation-header-height)]',
+        mobilePanelMode === 'layered' &&
+          'min-h-dvh pb-[max(1.5rem,env(safe-area-inset-bottom))]',
+      ]}>
+      <nav
+        aria-label='Navegación móvil'
+        class:list={[
+          'flex flex-col items-center gap-6 text-center',
+          mobilePanelMode === 'layered'
+            ? 'flex-1 shrink-0 justify-center'
+            : 'my-auto',
+        ]}>
+        {
+          (
+            <ul class='flex flex-col items-center gap-6 text-2xl'>
+              {mobileLinks.map(({ label, href }) => (
+                <li>
+                  <a
+                    href={href}
+                    aria-current={current(href)}
+                    class:list={linkClass}>
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
         {cta && <div data-header-cta set:html={cta} />}
-        {mobilePanelMode !== 'layered' && <EditionMenu editions={editions} expanded />}
+        {
+          mobilePanelMode !== 'layered' && (
+            <EditionMenu editions={editions} expanded />
+          )
+        }
       </nav>
       <slot name='mobile-extra' />
-      {mobilePanelMode === 'layered' && <div class='mt-auto shrink-0'><EditionMenu editions={editions} expanded /></div>}
+      {
+        mobilePanelMode === 'layered' && (
+          <div class='mt-auto shrink-0'>
+            <EditionMenu editions={editions} expanded />
+          </div>
+        )
+      }
     </div>
   </dialog>
 </festival-navbar>
@@ -96,15 +255,22 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
 
     connectedCallback() {
       if (this.cleanup) return
-      const panel = this.querySelector<HTMLDialogElement>('[data-header-panel]')!
-      const toggle = this.querySelector<HTMLButtonElement>('[data-header-toggle]')!
+      const panel = this.querySelector<HTMLDialogElement>(
+        '[data-header-panel]',
+      )!
+      const toggle = this.querySelector<HTMLButtonElement>(
+        '[data-header-toggle]',
+      )!
       const header = this.querySelector<HTMLElement>('[data-festival-header]')!
       const surface = this.querySelector<HTMLElement>('[data-header-surface]')!
       const layered = this.dataset.mobilePanelMode === 'layered'
       let placeholder: HTMLDivElement | undefined
       const setExpanded = (open: boolean) => {
         toggle.setAttribute('aria-expanded', String(open))
-        toggle.setAttribute('aria-label', open ? 'Cerrar navegación' : 'Abrir navegación')
+        toggle.setAttribute(
+          'aria-label',
+          open ? 'Cerrar navegación' : 'Abrir navegación',
+        )
         toggle.dataset.iconOpen = String(open)
         toggle.style.transform = open ? 'rotate(-90deg)' : 'rotate(0deg)'
       }
@@ -144,19 +310,25 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
         if (previousAriaModal === null) panel.removeAttribute('aria-modal')
         else panel.setAttribute('aria-modal', previousAriaModal)
       }
-      const containsFocus = (target: EventTarget | null) => target instanceof Node
-        && (header.contains(target) || panel.contains(target))
+      const containsFocus = (target: EventTarget | null) =>
+        target instanceof Node &&
+        (header.contains(target) || panel.contains(target))
       const restoreScroll = () => {
         if (!locked) return
-        if (previousOverflow) document.documentElement.style.setProperty('overflow', previousOverflow, previousOverflowPriority)
+        if (previousOverflow)
+          document.documentElement.style.setProperty(
+            'overflow',
+            previousOverflow,
+            previousOverflowPriority,
+          )
         else document.documentElement.style.removeProperty('overflow')
         locked = false
       }
       let motionGeneration = 0
       const cancelMotion = () => {
         motionGeneration++
-        surface.getAnimations().forEach(animation => animation.cancel())
-        toggle.getAnimations().forEach(animation => animation.cancel())
+        surface.getAnimations().forEach((animation) => animation.cancel())
+        toggle.getAnimations().forEach((animation) => animation.cancel())
       }
       let closing = false
       const closePanel = () => {
@@ -171,114 +343,207 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
         const surfaceTransform = getComputedStyle(surface).transform
         const toggleTransform = getComputedStyle(toggle).transform
         cancelMotion()
-        toggle.animate([{ transform: toggleTransform }, { transform: 'rotate(0deg)' }], { duration: 300, easing: 'ease', fill: 'forwards' })
-        const exit = surface.animate([{ transform: surfaceTransform }, { transform: 'translateX(100%)' }], { duration: 500, easing: 'ease', fill: 'forwards' })
+        toggle.animate(
+          [{ transform: toggleTransform }, { transform: 'rotate(0deg)' }],
+          { duration: 300, easing: 'ease', fill: 'forwards' },
+        )
+        const exit = surface.animate(
+          [{ transform: surfaceTransform }, { transform: 'translateX(100%)' }],
+          { duration: 500, easing: 'ease', fill: 'forwards' },
+        )
         const generation = motionGeneration
         exit.onfinish = () => {
           if (generation === motionGeneration && closing) panel.close()
         }
       }
-      panel.addEventListener('cancel', event => {
-        event.preventDefault()
-        closePanel()
-      }, { signal })
-      toggle.addEventListener('click', () => {
-        if (panel.open) {
+      panel.addEventListener(
+        'cancel',
+        (event) => {
+          event.preventDefault()
           closePanel()
-          return
-        }
-        previousOverflow = document.documentElement.style.overflow
-        previousOverflowPriority = document.documentElement.style.getPropertyPriority('overflow')
-        const height = header.getBoundingClientRect().height
-        if (!layered) {
-          placeholder = document.createElement('div')
-          placeholder.style.height = `${height}px`
-          header.before(placeholder)
-          // Default consumers retain the native modal top-layer header.
-          panel.prepend(header)
-        }
-        panel.style.setProperty('--navigation-header-height', `${height}px`)
-        if (layered) {
-          panel.show()
-          isolateBackground()
-        } else panel.showModal()
-        setExpanded(true)
-        toggle.focus()
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          surface.animate([{ transform: 'translateX(100%)' }, { transform: 'translateX(0)' }], { duration: 500, easing: 'ease' })
-          toggle.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-90deg)' }], { duration: 300, easing: 'ease' })
-        }
-        document.documentElement.style.overflow = 'hidden'
-        locked = true
-      }, { signal })
-      panel.addEventListener('close', () => {
-        closing = false
-        cancelMotion()
-        restoreScroll()
-        restoreBackground()
-        restoreHeader()
-        setExpanded(false)
-        if (!desktop.matches && this.isConnected) toggle.focus()
-      }, { signal })
-      if (layered) {
-        document.addEventListener('focusin', event => {
-          if (panel.open && !containsFocus(event.target)) toggle.focus({ preventScroll: true })
-        }, { signal })
-        document.addEventListener('keydown', event => {
-          if (!panel.open || event.defaultPrevented) return
-          if (event.key === 'Escape') {
-            event.preventDefault()
+        },
+        { signal },
+      )
+      toggle.addEventListener(
+        'click',
+        () => {
+          if (panel.open) {
             closePanel()
-          } else if (event.key === 'Tab') {
-            const controls = [...header.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, [tabindex]'),
-              ...panel.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, [tabindex]')]
-              .filter(element => element.tabIndex >= 0 && !element.matches(':disabled')
-                && !element.closest('[hidden], [inert]') && element.getClientRects().length > 0
-                && getComputedStyle(element).visibility !== 'hidden')
-            const first = controls[0] ?? toggle
-            const last = controls.at(-1) ?? toggle
-            if (!containsFocus(document.activeElement) || (event.shiftKey ? document.activeElement === first : document.activeElement === last)) {
+            return
+          }
+          previousOverflow = document.documentElement.style.overflow
+          previousOverflowPriority =
+            document.documentElement.style.getPropertyPriority('overflow')
+          const height = header.getBoundingClientRect().height
+          if (!layered) {
+            placeholder = document.createElement('div')
+            placeholder.style.height = `${height}px`
+            header.before(placeholder)
+            // Default consumers retain the native modal top-layer header.
+            panel.prepend(header)
+          }
+          panel.style.setProperty('--navigation-header-height', `${height}px`)
+          if (layered) {
+            panel.show()
+            isolateBackground()
+          } else panel.showModal()
+          setExpanded(true)
+          toggle.focus()
+          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            surface.animate(
+              [
+                { transform: 'translateX(100%)' },
+                { transform: 'translateX(0)' },
+              ],
+              { duration: 500, easing: 'ease' },
+            )
+            toggle.animate(
+              [{ transform: 'rotate(0)' }, { transform: 'rotate(-90deg)' }],
+              { duration: 300, easing: 'ease' },
+            )
+          }
+          document.documentElement.style.overflow = 'hidden'
+          locked = true
+        },
+        { signal },
+      )
+      panel.addEventListener(
+        'close',
+        () => {
+          const utilityHandoff =
+            layered && panel.returnValue === 'header-utility'
+          if (utilityHandoff) panel.returnValue = ''
+          closing = false
+          cancelMotion()
+          restoreScroll()
+          restoreBackground()
+          restoreHeader()
+          setExpanded(false)
+          const utilityHasFocus =
+            utilityHandoff &&
+            header.querySelector('[data-header-utility]:focus-within')
+          if (!desktop.matches && this.isConnected && !utilityHasFocus)
+            toggle.focus()
+        },
+        { signal },
+      )
+      if (layered) {
+        document.addEventListener(
+          'focusin',
+          (event) => {
+            if (panel.open && !containsFocus(event.target))
+              toggle.focus({ preventScroll: true })
+          },
+          { signal },
+        )
+        document.addEventListener(
+          'keydown',
+          (event) => {
+            if (!panel.open || event.defaultPrevented) return
+            if (event.key === 'Escape') {
               event.preventDefault()
-              ;(event.shiftKey ? last : first).focus({ preventScroll: true })
+              closePanel()
+            } else if (event.key === 'Tab') {
+              const controls = [
+                ...header.querySelectorAll<HTMLElement>(
+                  'a[href], button, input, select, textarea, [tabindex]',
+                ),
+                ...panel.querySelectorAll<HTMLElement>(
+                  'a[href], button, input, select, textarea, [tabindex]',
+                ),
+              ].filter(
+                (element) =>
+                  element.tabIndex >= 0 &&
+                  !element.matches(':disabled') &&
+                  !element.closest('[hidden], [inert]') &&
+                  element.getClientRects().length > 0 &&
+                  getComputedStyle(element).visibility !== 'hidden',
+              )
+              const first = controls[0] ?? toggle
+              const last = controls.at(-1) ?? toggle
+              if (
+                !containsFocus(document.activeElement) ||
+                (event.shiftKey
+                  ? document.activeElement === first
+                  : document.activeElement === last)
+              ) {
+                event.preventDefault()
+                ;(event.shiftKey ? last : first).focus({ preventScroll: true })
+              }
+            }
+          },
+          { signal },
+        )
+      }
+      panel.addEventListener(
+        'click',
+        (event) => {
+          if ((event.target as Element).closest('a')) closePanel()
+        },
+        { signal },
+      )
+      desktop.addEventListener(
+        'change',
+        () => {
+          if (desktop.matches) closePanel()
+        },
+        { signal },
+      )
+
+      this.querySelectorAll<HTMLElement>('[data-header-editions]').forEach(
+        (menu) => {
+          if (menu.hasAttribute('data-editions-expanded')) return
+          const button = menu.querySelector<HTMLButtonElement>('button')!
+          const list = menu.querySelector<HTMLUListElement>('ul')!
+          const setOpen = (open: boolean) => {
+            button.setAttribute('aria-expanded', String(open))
+            list.hidden = !open
+            if (
+              open &&
+              !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ) {
+              list.animate(
+                [
+                  { opacity: 0, transform: 'translateY(0.5rem)' },
+                  { opacity: 1, transform: 'translateY(0)' },
+                ],
+                { duration: 180, easing: 'ease' },
+              )
             }
           }
-        }, { signal })
-      }
-      panel.addEventListener('click', event => {
-        if ((event.target as Element).closest('a')) closePanel()
-      }, { signal })
-      desktop.addEventListener('change', () => {
-        if (desktop.matches) closePanel()
-      }, { signal })
-
-      this.querySelectorAll<HTMLElement>('[data-header-editions]').forEach(menu => {
-        if (menu.hasAttribute('data-editions-expanded')) return
-        const button = menu.querySelector<HTMLButtonElement>('button')!
-        const list = menu.querySelector<HTMLUListElement>('ul')!
-        const setOpen = (open: boolean) => {
-          button.setAttribute('aria-expanded', String(open))
-          list.hidden = !open
-          if (open && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            list.animate([{ opacity: 0, transform: 'translateY(0.5rem)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 180, easing: 'ease' })
-          }
-        }
-        button.addEventListener('click', () => setOpen(list.hidden), { signal })
-        menu.addEventListener('focusout', event => {
-          if (!menu.contains(event.relatedTarget as Node | null)) setOpen(false)
-        }, { signal })
-        menu.addEventListener('keydown', event => {
-          if (event.key !== 'Escape') return
-          setOpen(false)
-          if (!panel.open) {
-            event.stopPropagation()
-            button.focus()
-          }
-        }, { signal })
-        document.addEventListener('click', event => {
-          if (!menu.contains(event.target as Node)) setOpen(false)
-        }, { signal })
-        panel.addEventListener('close', () => setOpen(false), { signal })
-      })
+          button.addEventListener('click', () => setOpen(list.hidden), {
+            signal,
+          })
+          menu.addEventListener(
+            'focusout',
+            (event) => {
+              if (!menu.contains(event.relatedTarget as Node | null))
+                setOpen(false)
+            },
+            { signal },
+          )
+          menu.addEventListener(
+            'keydown',
+            (event) => {
+              if (event.key !== 'Escape') return
+              setOpen(false)
+              if (!panel.open) {
+                event.stopPropagation()
+                button.focus()
+              }
+            },
+            { signal },
+          )
+          document.addEventListener(
+            'click',
+            (event) => {
+              if (!menu.contains(event.target as Node)) setOpen(false)
+            },
+            { signal },
+          )
+          panel.addEventListener('close', () => setOpen(false), { signal })
+        },
+      )
 
       this.cleanup = () => {
         controller.abort()
@@ -290,7 +555,10 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
         restoreScroll()
         restoreBackground()
       }
-      document.addEventListener('astro:before-swap', () => this.cleanup?.(), { signal, once: true })
+      document.addEventListener('astro:before-swap', () => this.cleanup?.(), {
+        signal,
+        once: true,
+      })
     }
 
     disconnectedCallback() {
@@ -299,5 +567,6 @@ const cta = Astro.slots.has('cta') ? await Astro.slots.render('cta') : ''
     }
   }
 
-  if (!customElements.get('festival-navbar')) customElements.define('festival-navbar', FestivalNavbar)
+  if (!customElements.get('festival-navbar'))
+    customElements.define('festival-navbar', FestivalNavbar)
 </script>
