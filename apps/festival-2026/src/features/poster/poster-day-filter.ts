@@ -12,7 +12,7 @@ import { validatePosterFilterTransitions, type PosterFilterIndex } from './poste
 import { createPosterSimpleLayout, type PosterSimplePlans } from './poster-simple-layout'
 
 import { readPosterFilters, writePosterFilters } from './poster-filter-url'
-import { withMobilePosterBaseline } from './poster-mobile-card-resize'
+import { refreshMobileCardBaselines, withMobilePosterBaseline } from './poster-mobile-card-resize'
 
 const ranges = ['mobile', 'tablet', 'desktop'] as const
 const keys = ['all', 'saturday', 'sunday'] as const
@@ -176,6 +176,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const simpleArea = '--poster-simple-area'
   const simpleRows = '--poster-simple-rows'
   const simpleTracks = '--poster-simple-tracks'
+  const simpleFlowTracks = '--poster-simple-flow-tracks'
   const artistIDs = plans.participants.map(({ id }) => id)
   const sortedProperty = (r: PosterRange) => `--poster-sorted-${r}`
   let generation = 0
@@ -192,7 +193,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
   const saved = [grid, ...artists, ...information, ...originalMotifs].map(node => ({
     node,
     restore: options.ownStyles(node, node === grid
-      ? [...ranges.map(r => `--${r}-rows`), ...(presentation ? [simpleRows, simpleTracks] : [])]
+      ? [...ranges.map(r => `--${r}-rows`), ...(presentation ? [simpleRows, simpleTracks, simpleFlowTracks] : [])]
       : ['display', ...ranges.flatMap(r => ['display', 'column', 'row', 'width', 'height'].map(p => `--${r}-${p}`)),
         ...(presentation && !node.hasAttribute('data-poster-motif') ? [simpleArea] : []),
         ...(initialSort && node.hasAttribute('data-poster-artist') ? ranges.map(sortedProperty) : [])]),
@@ -300,12 +301,10 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       // Restore only the poster CSS during this synchronous, grid-only sample.
       const restoreSimple = grid.hasAttribute('data-poster-simple')
       if (restoreSimple) grid.removeAttribute('data-poster-simple')
-      grid.setAttribute('data-poster-sampling-tracks', '')
       try {
         const sample = () => resolvedFilterTracks(getComputedStyle(grid).gridTemplateRows, rows)
-        posterTracks.set(selected, mobile ? withMobilePosterBaseline(sample) : sample())
+        posterTracks.set(selected, mobile ? withMobilePosterBaseline(grid, sample) : sample())
       } finally {
-        grid.removeAttribute('data-poster-sampling-tracks')
         if (restoreSimple) grid.setAttribute('data-poster-simple', '')
       }
     }
@@ -322,6 +321,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     const prefix = sourceTracks?.slice(0, compact.rows) ?? []
     const tracks = prefix.map(height => `${height}px`)
     const extra = compact.rows - prefix.length
+    const cardTracks = new Set<number>()
     if (compactRange === 'mobile' && sourceTracks) {
       for (let i = 0; i < extra; i++) tracks.push('var(--poster-simple-fallback-track)')
       // Mobile cards occupy full-width rows, so their original tracks can move
@@ -334,12 +334,15 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
         if (!destination || !source) continue
         for (let i = 0; i < destination.height; i++) {
           tracks[destination.row + i] = `${sourceTracks[source.row + i]}px`
+          cardTracks.add(destination.row + i)
         }
       }
     } else if (extra) {
       tracks.push(`repeat(${extra},var(--poster-simple-fallback-track))`)
     }
     grid.style.setProperty(simpleTracks, tracks.join(' ') || 'none')
+    const flowTracks = tracks.map((track, i) => cardTracks.has(i) ? `minmax(${track},auto)` : track)
+    grid.style.setProperty(simpleFlowTracks, flowTracks.join(' ') || 'none')
     const place = (node: HTMLElement, cell?: SlotRect) => {
       if (cell) node.style.setProperty(simpleArea, `${cell.row + 1}/${cell.column + 1}/span ${cell.height}/span ${cell.width}`)
     }
@@ -499,6 +502,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     for (const node of pool) if (!assigned.has(node)) { node.hidden = true; node.style.display = 'none' }
     if (sort) applySortedSlots()
     if (simple) applySimpleSlots()
+    refreshMobileCardBaselines(grid)
     // Keep the document coordinate, not an artist reference. Shrinking content
     // may clamp it naturally; restore only within the new document bounds.
     const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
@@ -542,6 +546,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     if (!presentation || next === sort) return
     settle(); sort = next; sortedEndpoints.clear(); reorder(); applySortedSlots()
     if (simple) applySimpleSlots()
+    refreshMobileCardBaselines(grid)
   }
   const restoreFilters = () => {
     if (!syncUrl || !sortControl) return
@@ -576,6 +581,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
     settle(); simple = !simple
     if (simple) applySimpleSlots(); else compact = undefined
     grid.toggleAttribute('data-poster-simple', simple)
+    refreshMobileCardBaselines(grid)
     syncSimple()
   }
   const destroy = () => {
@@ -595,6 +601,7 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       if (index !== null) node.setAttribute('data-poster-motif-index', index)
     }
     for (const [node, value] of tabIndices) { if (value === null) node.removeAttribute('tabindex'); else node.setAttribute('tabindex', value) }
+    refreshMobileCardBaselines(grid)
     selected = initialDay; syncDayControls(); setControlsReady(false); status.textContent = ''
   }
   try {
@@ -609,12 +616,12 @@ export function mountDayFilter(root: HTMLElement, options: FilterOptions): DayFi
       settle()
       if (trackWidth !== window.innerWidth) {
         posterTracks.clear()
-        if (simple) applySimpleSlots()
+        if (simple) { applySimpleSlots(); refreshMobileCardBaselines(grid) }
       }
     }, { signal: abort.signal })
     const refreshFontTracks = () => {
       posterTracks.clear()
-      if (simple) { settle(); applySimpleSlots() }
+      if (simple) { settle(); applySimpleSlots(); refreshMobileCardBaselines(grid) }
     }
     if (presentation) document.fonts?.addEventListener('loadingdone', refreshFontTracks, { signal: abort.signal })
     media.addEventListener('change', settle)

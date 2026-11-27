@@ -20,7 +20,7 @@ const links = [
 <div data-poster-header class:list={[
   'sticky top-0 z-40 font-sans [&_[data-header-editions]]:hidden [&_[data-festival-header]]:border-b',
   'max-sm:[&_[data-festival-header]>div]:gap-1 max-sm:[&_[data-festival-header]>div]:px-3',
-  'max-sm:[&_[data-header-brand]]:gap-2 max-sm:[&_[data-header-brand]>a]:w-16 max-lg:[&_[data-header-date]]:whitespace-nowrap lg:[&_[data-header-brand]]:flex-wrap',
+  'max-sm:[&_[data-header-brand]]:gap-2 max-sm:[&_[data-header-brand]>a]:w-[min(4rem,64px)] max-md:[&_[data-header-date]]:wrap-break-word max-md:[&_[data-header-location]]:wrap-break-word md:max-lg:[&_[data-header-date]]:whitespace-nowrap lg:[&_[data-header-brand]]:flex-wrap',
   '[&_a[aria-current]]:text-arc-yellow [&_nav_a:hover]:text-arc-yellow [&_nav_a:focus-visible]:text-arc-yellow',
   '[--header-bg-color:var(--color-background)] [--header-text-color:var(--color-foreground)] [--header-border-color:color-mix(in_oklab,var(--color-primary)_10%,transparent)] [--header-panel-bg-color:var(--color-background)] [--header-panel-text-color:var(--color-foreground)]',
 ]}>
@@ -35,3 +35,46 @@ const links = [
     <ParticipantSearch slot='header-utility' />
   </FestivalNavbar>
 </div>
+
+<script>
+  const compact = matchMedia('(width < 48rem)')
+  for (const header of document.querySelectorAll<HTMLElement>('[data-poster-header]')) {
+    const update = () => header.toggleAttribute('data-header-tall', compact.matches &&
+      header.offsetHeight > Math.min(96, window.innerHeight / 5))
+    new ResizeObserver(update).observe(header)
+    window.addEventListener('resize', update)
+    compact.addEventListener('change', update)
+    update()
+  }
+</script>
+
+<style is:global>
+  [data-poster-header] {
+    container: arc-header / inline-size;
+  }
+  @media (width < 48rem) {
+    @container arc-header (width < max(320px, 20rem)) {
+      [data-poster-header] [data-festival-header] > div {
+        display: grid;
+        grid-template-columns: max-content max-content minmax(0, 1fr);
+      }
+      [data-poster-header] [data-header-brand] { display: contents; }
+      [data-poster-header] [data-header-brand] > a,
+      [data-poster-header] [data-header-brand] > div { grid-column: 1 / -1; }
+      [data-poster-header] [data-header-utility] { grid-column: 1; margin-inline-start: 0; }
+      [data-poster-header] [data-header-toggle] { grid-column: 2; }
+    }
+    [data-poster-header][data-header-tall] {
+      position: relative;
+    }
+    body:has([data-poster-header][data-header-tall]) [data-poster-toolbar] {
+      position: relative;
+      top: auto;
+    }
+    body:has([data-poster-header][data-header-tall]) [data-poster-toolbar][data-poster-toolbar-concealed] {
+      opacity: 1;
+      translate: none;
+      pointer-events: auto;
+    }
+  }
+</style>

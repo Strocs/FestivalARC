@@ -158,8 +158,8 @@ const slotClasses =
 
 <style>
   @media (width < 48rem) {
-    [data-poster-grid]:not([data-poster-sampling-tracks]) > [data-poster-artist][style*='--poster-expanded-card-height:'] {
-      min-height: var(--poster-expanded-card-height);
+    [data-poster-grid][data-poster-simple]:not([data-poster-sampling-tracks]) {
+      grid-template-rows: var(--poster-simple-flow-tracks);
     }
   }
   [data-poster-grid][data-poster-simple] > [data-poster-motif] {
@@ -180,10 +180,10 @@ const slotClasses =
   }
   [data-poster-grid][data-poster-simple] {
     --poster-simple-fallback-track: minmax(calc(var(--slot-height)*var(--unit)), auto);
-    grid-template-rows: var(--poster-expanded-simple-tracks, var(--poster-simple-tracks));
+    grid-template-rows: var(--poster-simple-tracks);
   }
   [data-poster-grid][data-poster-simple] > [data-poster-artist] {
-    /* An intrinsic mobile minimum must not overhang fixed, sampled tracks. */
+    /* Simple view takes its mobile minima from the canonical card tracks. */
     min-height: 0;
   }
   [data-poster-grid][data-poster-simple] > [data-poster-artist],

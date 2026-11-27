@@ -41,6 +41,7 @@ const rules = ranges
   aria-label={artist.name}>
   <Wrapper
     href={interactive ? publicPath(artist.canonicalPath) : undefined}
+    data-artist-card-link
     data-event-trigger={interactive ? '' : undefined}
     data-event-id={interactive ? artist.id : undefined}
     aria-label={interactive ? (compactDetails ? `Ver más sobre ${artist.name}` : artist.name) : undefined}
@@ -105,15 +106,41 @@ const rules = ranges
 
 <style is:global>
   @media (width < 48rem) {
-    [data-artist-content][style*='--poster-expanded-name-row:'] {
-      top: var(--poster-expanded-content-top);
-      bottom: var(--poster-expanded-content-bottom);
-      grid-template-rows: var(--poster-expanded-name-row) auto;
+    /* Only the synchronous design sample uses the original absolute layout. */
+    [data-poster-grid]:not([data-poster-sampling-tracks]) [data-artist-card-link] {
+      position: relative;
+      display: block;
+      height: auto;
     }
-    [data-artist-content][style*='--poster-expanded-name-row:'] > [data-artist-name-box] {
+    [data-poster-grid]:not([data-poster-sampling-tracks]) [data-artist-content] {
+      position: relative;
+      inset: auto;
+      margin-inline: min(24px, 10%);
+      padding-block: var(--poster-name-top, 12px) var(--poster-name-bottom, 12px);
+      container-type: normal;
+      grid-template-rows: var(--poster-name-row, clamp(36px, 15cqw, 58px)) auto;
+    }
+    [data-poster-grid]:not([data-poster-sampling-tracks]) [data-artist-name-box] {
       justify-self: center;
-      width: var(--poster-expanded-name-width);
-      padding: var(--poster-expanded-name-padding);
+      width: var(--poster-name-width, stretch);
+      padding: var(--poster-name-padding, 4px 0 2px);
+    }
+    [data-poster-grid]:not([data-poster-sampling-tracks]) [data-artist-meta] {
+      overflow-wrap: anywhere;
+    }
+    [data-poster-grid][data-poster-sampling-tracks] [data-artist-meta] {
+      text-size-adjust: none;
+      -webkit-text-size-adjust: none;
+    }
+    [data-poster-grid][data-poster-sampling-tracks] :is([data-artist-meta], [data-artist-meta] *) {
+      font-size: 12px !important;
+      line-height: 12px !important;
+      letter-spacing: normal !important;
+      word-spacing: normal !important;
+    }
+    [data-poster-grid][data-poster-sampling-tracks] [data-artist-view],
+    [data-poster-grid][data-poster-sampling-tracks] [data-artist-view] strong {
+      line-height: 16px !important;
     }
   }
 </style>
