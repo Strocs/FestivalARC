@@ -1,0 +1,33 @@
+---
+const socials = [
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/festival_arc',
+    svg: `<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='size-5'><rect x='2' y='2' width='20' height='20' rx='5' ry='5'></rect><path d='M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z'></path><line x1='17.5' y1='17.5' x2='17.51' y2='17.5'></line></svg>`,
+  },
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/FestivalARC',
+    svg: `<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='size-5'><path d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'></path></svg>`,
+  },
+  {
+    label: 'X',
+    href: 'https://x.com/FestivalARC',
+    svg: `<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='size-5'><path d='M18 2v6a6 6 0 0 1-6 6c-1 0-2-.1-3-.4V5H8v4H4v2h10v4H8v4h6l2-3z'></path></svg>`,
+  },
+]
+---
+
+<nav aria-labelledby='social-links-heading' class='shrink-0 text-center pt-4 border-t border-primary/10'>
+  <h2 id='social-links-heading' class='sr-only'>Redes Sociales</h2>
+  <div class='flex justify-center gap-1'>
+    {socials.map(({ label, href, svg }) => (
+      <a
+        href={href}
+        aria-label={label}
+        class='grid size-11 place-items-center rounded transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2'>
+        <span set:html={svg} />
+      </a>
+    ))}
+  </div>
+</nav>

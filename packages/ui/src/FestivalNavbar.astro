@@ -1,5 +1,6 @@
 ---
 import EditionMenu from './EditionMenu.astro'
+import SocialLinks from './SocialLinks.astro'
 import type { NavigationLink } from './types'
 
 interface Props {
@@ -216,7 +217,7 @@ const hasHeaderUtility = Astro.slots.has('header-utility')
         ]}>
         {
           (
-            <ul class='flex flex-col items-center gap-6 text-2xl'>
+            <ul class='flex flex-col items-center gap-4 text-3xl'>
               {mobileLinks.map(({ label, href }) => (
                 <li>
                   <a
@@ -230,6 +231,7 @@ const hasHeaderUtility = Astro.slots.has('header-utility')
             </ul>
           )
         }
+        <SocialLinks />
         {cta && <div data-header-cta set:html={cta} />}
         {
           mobilePanelMode !== 'layered' && (

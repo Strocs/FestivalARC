@@ -46,8 +46,13 @@ export function mountMobileCardResize(grid: HTMLElement) {
       for (const [key, value] of Object.entries(props)) content.style.setProperty(key, value)
     }
   }
+  let lastWidth = window.innerWidth
   refresh.set(grid, update)
-  window.addEventListener('resize', update)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === lastWidth) return
+    lastWidth = window.innerWidth
+    update()
+  }, { passive: true })
   document.fonts?.addEventListener('loadingdone', update)
   update()
 }
