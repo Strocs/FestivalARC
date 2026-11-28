@@ -1,5 +1,6 @@
 import { defineConfig, fontProviders } from 'astro/config'
 import icon from 'astro-icon'
+import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 
 const publicationBase = process.env.PUBLICATION_BASE || '/'
@@ -17,6 +18,7 @@ export default defineConfig({
         'simple-icons': ['instagram', 'spotify', 'x'],
       },
     }),
+    react(),
   ],
   fonts: [
     {

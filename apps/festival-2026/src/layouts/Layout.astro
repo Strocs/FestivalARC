@@ -1,5 +1,6 @@
 ---
 import { Font } from 'astro:assets'
+import { Analytics } from '@vercel/analytics/react'
 import BackToTop from '../components/BackToTop.astro'
 import Header from '../components/Header.astro'
 import Footer from '../components/Footer.astro'
@@ -64,5 +65,6 @@ const socialImage = new URL(publicPath('/og-image.jpg'), siteUrl).toString()
     <slot />
     <Footer />
     <BackToTop />
+    <Analytics client:only />
   </body>
 </html>
