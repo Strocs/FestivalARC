@@ -1,25 +1,13 @@
 ---
 import { Image } from 'astro:assets'
-import { Icon } from 'astro-icon/components'
+import SocialLinks from '@festivalarc/ui/SocialLinks.astro'
 import footerLogos from '../assets/logos-footer.png'
-
-const socials = [
-  { label: 'Instagram', href: 'https://www.instagram.com/festival_arc', icon: 'simple-icons:instagram' },
-  { label: 'Facebook', href: 'https://www.facebook.com/FestivalARC', icon: 'facebook-square' },
-  { label: 'X', href: 'https://x.com/FestivalARC', icon: 'simple-icons:x' },
-]
 ---
 <footer data-festival-footer class='relative border-t border-primary/10 px-4 py-3 sm:px-8 sm:py-4 lg:px-12'>
   <div class='mx-auto flex max-w-4xl flex-col items-center justify-center gap-4 md:flex-row md:gap-8'>
     <nav aria-labelledby='footer-socials-heading' class='shrink-0 text-center'>
       <h2 id='footer-socials-heading' class='text-sm font-semibold'>Redes Sociales</h2>
-      <div class='flex justify-center gap-1'>
-        {socials.map(({ label, href, icon }) => (
-          <a href={href} aria-label={label} class='grid size-11 place-items-center rounded transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2'>
-            <Icon name={icon} is:inline class='size-5' aria-hidden='true' />
-          </a>
-        ))}
-      </div>
+      <SocialLinks />
     </nav>
     <Image
       src={footerLogos}
