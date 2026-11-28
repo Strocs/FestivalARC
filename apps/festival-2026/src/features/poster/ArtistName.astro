@@ -18,22 +18,27 @@ const ranges = getArtistFitRanges(compositions)
 // Encode the identifier so generated selectors contain no unescaped input.
 const labelClass = `artist-fit-${Array.from(artist.id, (character) => character.codePointAt(0)!.toString(16)).join('-')}`
 const selector = `.${labelClass}`
-const rules = ranges
-  .map(({ minRatio, index }, rangeIndex) => {
-    const option = compositions[index]
-    const font = `min(calc(100cqw / ${option.width}), calc(100cqh / ${option.lines.length}))`
-    const cuts = option.breaks
-      .map(
-        (cut) =>
-          `${selector} [data-gap="${cut}"]{display:none}${selector} [data-break="${cut}"]{display:initial}`,
-      )
-      .join('')
-    const css = `${selector}{font-size:${font}}${selector} [data-gap]{display:inline}${selector} [data-break]{display:none}${cuts}`
-    return rangeIndex === 0
-      ? css
-      : `@container artist-name (min-aspect-ratio:${minRatio}){${css}}`
-  })
-  .join('\n')
+const compositionRule = (target: string, index: number, font: string) => {
+  const cuts = compositions[index].breaks
+    .map(cut => `${target} [data-gap="${cut}"]{display:none}${target} [data-break="${cut}"]{display:initial}`)
+    .join('')
+  return `${target}{font-size:${font}}${target} [data-gap]{display:inline}${target} [data-break]{display:none}${cuts}`
+}
+const rules = ranges.map(({ minRatio, index }, rangeIndex) => {
+  const option = compositions[index]
+  const font = `min(calc(100cqw / ${option.width}), calc(100cqh / ${option.lines.length}))`
+  const css = compositionRule(selector, index, font)
+  return rangeIndex === 0 ? css : `@container artist-name (min-aspect-ratio:${minRatio}){${css}}`
+})
+// Preserve the composition chosen at the normal mobile design proportions.
+// This ratio chooses breaks only; mobile type fits width and supplies its own height.
+const mobileDesignAspect = !interactive ? 3.2 : compactDetails ? 4 : 6.8
+const mobileIndex = ranges.reduce((index, range) => range.minRatio <= mobileDesignAspect ? range.index : index, 0)
+const mobileSelector = `[data-poster-grid]:not([data-poster-sampling-tracks]) ${selector}`
+const mobileFit = `calc((100cqw - 1px) / ${compositions[mobileIndex].width})`
+// The scale caps short names without imposing a floor on width-limited names.
+const mobileFont = `min(${mobileFit}, clamp(32px, 15cqw, 88px))`
+const mobileRule = `@media (width < 48rem){${compositionRule(mobileSelector, mobileIndex, mobileFont)}}`
 ---
 
 <article
@@ -101,7 +106,7 @@ const rules = ranges
       </span>}
     </span>
   </Wrapper>
-  <style is:inline set:html={rules}></style>
+  <style is:inline set:html={[...rules, mobileRule].join('\n')}></style>
 </article>
 
 <style is:global>
@@ -115,17 +120,24 @@ const rules = ranges
     [data-poster-grid]:not([data-poster-sampling-tracks]) [data-artist-content] {
       position: relative;
       inset: auto;
-      margin-inline: min(24px, 10%);
       padding-block: var(--poster-name-top, 12px) var(--poster-name-bottom, 12px);
       container-type: normal;
-      grid-template-rows: var(--poster-name-row, clamp(36px, 15cqw, 58px)) auto;
+      grid-template-rows: auto auto;
     }
     [data-poster-grid]:not([data-poster-sampling-tracks]) [data-artist-name-box] {
-      justify-self: center;
-      width: var(--poster-name-width, stretch);
+      align-self: start;
+      margin-inline: clamp(8px, 3%, 16px);
       padding: var(--poster-name-padding, 4px 0 2px);
+      container-type: inline-size;
+      -webkit-text-size-adjust: none;
+      text-size-adjust: none;
+    }
+    /* Keep the existing metadata and surface insets independent of the title gutter. */
+    [data-poster-grid]:not([data-poster-sampling-tracks]) :is([data-artist-surface], [data-artist-meta]) {
+      margin-inline: min(24px, 10%);
     }
     [data-poster-grid]:not([data-poster-sampling-tracks]) [data-artist-meta] {
+      margin-block-start: 6px;
       overflow-wrap: anywhere;
     }
     [data-poster-grid][data-poster-sampling-tracks] [data-artist-meta] {
