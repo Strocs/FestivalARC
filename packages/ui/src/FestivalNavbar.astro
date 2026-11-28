@@ -231,7 +231,9 @@ const hasHeaderUtility = Astro.slots.has('header-utility')
             </ul>
           )
         }
-        <SocialLinks />
+        <div class='pt-4 border-t border-primary/10 w-full'>
+          <SocialLinks />
+        </div>
         {cta && <div data-header-cta set:html={cta} />}
         {
           mobilePanelMode !== 'layered' && (
