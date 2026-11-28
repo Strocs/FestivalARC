@@ -8,5 +8,8 @@
   },
   "peerDependencies": {
     "astro": "^7.0.0"
+  },
+  "dependencies": {
+    "astro-icon": "^1.2.0"
   }
 }
